@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.ApiManagement
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayConfigConnectionResourceData"/>. </summary>
+        public ApiManagementGatewayConfigConnectionResourceData()
+        {
+
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayConfigConnectionResourceData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -36,15 +42,12 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Properties of the API Management gateway config connection. </summary>
-        [WirePath("properties")]
         internal GatewayConfigConnectionBaseProperties Properties { get; set; }
 
         /// <summary> ETag of the resource. </summary>
-        [WirePath("etag")]
         public ETag? ETag { get; }
 
         /// <summary> The current provisioning state of the API Management gateway config connection. </summary>
-        [WirePath("properties.provisioningState")]
         public string ProvisioningState
         {
             get
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> The link to the API Management service workspace. </summary>
-        [WirePath("properties.sourceId")]
         public ResourceIdentifier SourceId
         {
             get
@@ -72,7 +74,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> The default hostname of the data-plane gateway. </summary>
-        [WirePath("properties.defaultHostname")]
         public string DefaultHostname
         {
             get
@@ -82,7 +83,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> The hostnames of the data-plane gateway to which requests can be sent. </summary>
-        [WirePath("properties.hostnames")]
         public IList<string> Hostnames
         {
             get

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -32,12 +31,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> User Token Parameter contract properties. </summary>
-        [WirePath("properties")]
         internal UserTokenParameterProperties Properties { get; set; }
 
         /// <summary> The Key to be used to generate token for user. </summary>
-        [WirePath("properties.keyType")]
-        public KeyType KeyType
+        public TokenGenerationUsedKeyType? KeyType
         {
             get
             {
@@ -46,8 +43,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The Expiry time of the Token. Maximum token expiry time is set to 30 days. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
-        [WirePath("properties.expiry")]
-        public DateTimeOffset Expiry
+        public DateTimeOffset? Expiry
         {
             get
             {

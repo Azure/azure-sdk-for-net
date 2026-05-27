@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -36,15 +35,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Description of the Tag. </summary>
-        [WirePath("description")]
         public string Description { get; set; }
 
         /// <summary> Absolute URL of external resources describing the tag. </summary>
-        [WirePath("externalDocsUrl")]
         public string ExternalDocsUri { get; set; }
 
         /// <summary> Description of the external resources describing the tag. </summary>
-        [WirePath("externalDocsDescription")]
         public string ExternalDocsDescription { get; set; }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -32,7 +31,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Redirect Anonymous users to the Sign-In page. </summary>
-        [WirePath("enabled")]
         public bool? Enabled { get; set; }
     }
 }

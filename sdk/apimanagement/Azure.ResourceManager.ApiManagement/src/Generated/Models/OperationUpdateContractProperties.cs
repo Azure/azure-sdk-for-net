@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -37,15 +36,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Operation Name. </summary>
-        [WirePath("displayName")]
         public string DisplayName { get; set; }
 
         /// <summary> A Valid HTTP Operation Method. Typical Http Methods like GET, PUT, POST but not limited by only them. </summary>
-        [WirePath("method")]
         public string Method { get; set; }
 
         /// <summary> Relative URL template identifying the target resource for this operation. May include parameters. Example: /customers/{cid}/orders/{oid}/?date={date}. </summary>
-        [WirePath("urlTemplate")]
         public string UrlTemplate { get; set; }
     }
 }

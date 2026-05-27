@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ResourceType, out string notificationApiVersion);
             _notificationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _notificationRestClient = new Notification(_notificationClientDiagnostics, Pipeline, Endpoint, notificationApiVersion ?? "2025-03-01-preview");
+            _notificationRestClient = new Notification(_notificationClientDiagnostics, Pipeline, Endpoint, notificationApiVersion ?? "2025-09-01-preview");
             _notificationRecipientUserClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _notificationRecipientUserRestClient = new NotificationRecipientUser(_notificationRecipientUserClientDiagnostics, Pipeline, Endpoint, notificationApiVersion ?? "2025-03-01-preview");
+            _notificationRecipientUserRestClient = new NotificationRecipientUser(_notificationRecipientUserClientDiagnostics, Pipeline, Endpoint, notificationApiVersion ?? "2025-09-01-preview");
             _notificationRecipientEmailClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _notificationRecipientEmailRestClient = new NotificationRecipientEmail(_notificationRecipientEmailClientDiagnostics, Pipeline, Endpoint, notificationApiVersion ?? "2025-03-01-preview");
+            _notificationRecipientEmailRestClient = new NotificationRecipientEmail(_notificationRecipientEmailClientDiagnostics, Pipeline, Endpoint, notificationApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _notificationRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _notificationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementNotificationData> response = Response.FromValue(ApiManagementNotificationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _notificationRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _notificationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementNotificationData> response = Response.FromValue(ApiManagementNotificationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _notificationRecipientUserRestClient.CreateNotificationRecipientUserCheckEntityExistsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, userId, context);
+                HttpMessage message = _notificationRecipientUserRestClient.CreateNotificationRecipientUserCheckEntityExistsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, userId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _notificationRecipientUserRestClient.CreateNotificationRecipientUserCheckEntityExistsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, userId, context);
+                HttpMessage message = _notificationRecipientUserRestClient.CreateNotificationRecipientUserCheckEntityExistsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, userId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _notificationRecipientUserRestClient.CreateNotificationRecipientUserDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, userId, context);
+                HttpMessage message = _notificationRecipientUserRestClient.CreateNotificationRecipientUserDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, userId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _notificationRecipientUserRestClient.CreateNotificationRecipientUserDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, userId, context);
+                HttpMessage message = _notificationRecipientUserRestClient.CreateNotificationRecipientUserDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, userId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _notificationRecipientUserRestClient.CreateNotificationRecipientUserGetByNotificationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _notificationRecipientUserRestClient.CreateNotificationRecipientUserGetByNotificationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RecipientUserListResult> response = Response.FromValue(RecipientUserListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _notificationRecipientUserRestClient.CreateNotificationRecipientUserGetByNotificationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _notificationRecipientUserRestClient.CreateNotificationRecipientUserGetByNotificationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RecipientUserListResult> response = Response.FromValue(RecipientUserListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _notificationRecipientEmailRestClient.CreateNotificationRecipientEmailCheckEntityExistsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, email, context);
+                HttpMessage message = _notificationRecipientEmailRestClient.CreateNotificationRecipientEmailCheckEntityExistsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, email, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _notificationRecipientEmailRestClient.CreateNotificationRecipientEmailCheckEntityExistsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, email, context);
+                HttpMessage message = _notificationRecipientEmailRestClient.CreateNotificationRecipientEmailCheckEntityExistsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, email, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -593,7 +593,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -617,7 +617,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _notificationRecipientEmailRestClient.CreateNotificationRecipientEmailCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, email, context);
+                HttpMessage message = _notificationRecipientEmailRestClient.CreateNotificationRecipientEmailCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, email, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RecipientEmailContract> response = Response.FromValue(RecipientEmailContract.FromResponse(result), result);
                 if (response.Value == null)
@@ -646,7 +646,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -670,7 +670,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _notificationRecipientEmailRestClient.CreateNotificationRecipientEmailCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, email, context);
+                HttpMessage message = _notificationRecipientEmailRestClient.CreateNotificationRecipientEmailCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, email, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RecipientEmailContract> response = Response.FromValue(RecipientEmailContract.FromResponse(result), result);
                 if (response.Value == null)
@@ -699,7 +699,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -723,7 +723,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _notificationRecipientEmailRestClient.CreateNotificationRecipientEmailDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, email, context);
+                HttpMessage message = _notificationRecipientEmailRestClient.CreateNotificationRecipientEmailDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, email, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -747,7 +747,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -771,7 +771,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _notificationRecipientEmailRestClient.CreateNotificationRecipientEmailDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, email, context);
+                HttpMessage message = _notificationRecipientEmailRestClient.CreateNotificationRecipientEmailDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, email, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -795,7 +795,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -814,7 +814,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _notificationRecipientEmailRestClient.CreateNotificationRecipientEmailGetByNotificationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _notificationRecipientEmailRestClient.CreateNotificationRecipientEmailGetByNotificationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RecipientEmailListResult> response = Response.FromValue(RecipientEmailListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -843,7 +843,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -862,7 +862,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _notificationRecipientEmailRestClient.CreateNotificationRecipientEmailGetByNotificationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _notificationRecipientEmailRestClient.CreateNotificationRecipientEmailGetByNotificationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RecipientEmailListResult> response = Response.FromValue(RecipientEmailListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -891,7 +891,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -915,7 +915,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _notificationRecipientUserRestClient.CreateNotificationRecipientUserCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, userId, context);
+                HttpMessage message = _notificationRecipientUserRestClient.CreateNotificationRecipientUserCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, userId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RecipientUserContract> response = Response.FromValue(RecipientUserContract.FromResponse(result), result);
                 if (response.Value == null)
@@ -944,7 +944,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -968,7 +968,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _notificationRecipientUserRestClient.CreateNotificationRecipientUserCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, userId, context);
+                HttpMessage message = _notificationRecipientUserRestClient.CreateNotificationRecipientUserCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, userId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RecipientUserContract> response = Response.FromValue(RecipientUserContract.FromResponse(result), result);
                 if (response.Value == null)
@@ -997,7 +997,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1018,7 +1018,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _notificationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
+                HttpMessage message = _notificationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementNotificationData> response = Response.FromValue(ApiManagementNotificationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -1050,7 +1050,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1071,7 +1071,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _notificationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
+                HttpMessage message = _notificationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementNotificationData> response = Response.FromValue(ApiManagementNotificationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

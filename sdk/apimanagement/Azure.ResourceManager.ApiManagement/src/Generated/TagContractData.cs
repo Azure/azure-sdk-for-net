@@ -38,16 +38,14 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Tag entity contract properties. </summary>
-        [WirePath("properties")]
         internal TagContractProperties Properties { get; }
 
         /// <summary> Tag name. </summary>
-        [WirePath("properties.displayName")]
         public string DisplayName
         {
             get
             {
-                return Properties.DisplayName;
+                return Properties is null ? default : Properties.DisplayName;
             }
         }
     }

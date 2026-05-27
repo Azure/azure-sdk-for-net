@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateNotificationRecipientUserGetByNotificationRequest(string subscriptionId, string resourceGroupName, string serviceName, string notificationName, RequestContext context)
+        internal HttpMessage CreateNotificationRecipientUserGetByNotificationRequest(Guid subscriptionId, string resourceGroupName, string serviceName, string notificationName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.ApiManagement
             return message;
         }
 
-        internal HttpMessage CreateNotificationRecipientUserCheckEntityExistsRequest(string subscriptionId, string resourceGroupName, string serviceName, string notificationName, string userId, RequestContext context)
+        internal HttpMessage CreateNotificationRecipientUserCheckEntityExistsRequest(Guid subscriptionId, string resourceGroupName, string serviceName, string notificationName, string userId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.ApiManagement
             return message;
         }
 
-        internal HttpMessage CreateNotificationRecipientUserCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string notificationName, string userId, RequestContext context)
+        internal HttpMessage CreateNotificationRecipientUserCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string serviceName, string notificationName, string userId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.ApiManagement
             return message;
         }
 
-        internal HttpMessage CreateNotificationRecipientUserDeleteRequest(string subscriptionId, string resourceGroupName, string serviceName, string notificationName, string userId, RequestContext context)
+        internal HttpMessage CreateNotificationRecipientUserDeleteRequest(Guid subscriptionId, string resourceGroupName, string serviceName, string notificationName, string userId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);

@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            SkuType? name = default;
+            ApiManagementServiceSkuType? name = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    name = new SkuType(prop.Value.GetString());
+                    name = new ApiManagementServiceSkuType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

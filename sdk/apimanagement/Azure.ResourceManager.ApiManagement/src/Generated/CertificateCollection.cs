@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(CertificateResource.ResourceType, out string certificateApiVersion);
             _certificateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", CertificateResource.ResourceType.Namespace, Diagnostics);
-            _certificateRestClient = new Certificate(_certificateClientDiagnostics, Pipeline, Endpoint, certificateApiVersion ?? "2025-03-01-preview");
+            _certificateRestClient = new Certificate(_certificateClientDiagnostics, Pipeline, Endpoint, certificateApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             if (id.ResourceType != ApiManagementServiceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementServiceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementServiceResource.ResourceType), nameof(id));
             }
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificateRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateId, CertificateCreateOrUpdateContent.ToRequestContent(content), ifMatch, context);
+                HttpMessage message = _certificateRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateId, CertificateCreateOrUpdateContent.ToRequestContent(content), ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementCertificateData> response = Response.FromValue(ApiManagementCertificateData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificateRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateId, CertificateCreateOrUpdateContent.ToRequestContent(content), ifMatch, context);
+                HttpMessage message = _certificateRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateId, CertificateCreateOrUpdateContent.ToRequestContent(content), ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementCertificateData> response = Response.FromValue(ApiManagementCertificateData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificateRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateId, context);
+                HttpMessage message = _certificateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementCertificateData> response = Response.FromValue(ApiManagementCertificateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificateRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateId, context);
+                HttpMessage message = _certificateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementCertificateData> response = Response.FromValue(ApiManagementCertificateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -296,14 +296,15 @@ namespace Azure.ResourceManager.ApiManagement
             };
             return new AsyncPageableWrapper<ApiManagementCertificateData, CertificateResource>(new CertificateGetByServiceAsyncCollectionResultOfT(
                 _certificateRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 filter,
                 top,
                 skip,
                 isKeyVaultRefreshFailed,
-                context), data => new CertificateResource(Client, data));
+                context,
+                "CertificateCollection.GetAll"), data => new CertificateResource(Client, data));
         }
 
         /// <summary>
@@ -319,7 +320,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -337,14 +338,15 @@ namespace Azure.ResourceManager.ApiManagement
             };
             return new PageableWrapper<ApiManagementCertificateData, CertificateResource>(new CertificateGetByServiceCollectionResultOfT(
                 _certificateRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 filter,
                 top,
                 skip,
                 isKeyVaultRefreshFailed,
-                context), data => new CertificateResource(Client, data));
+                context,
+                "CertificateCollection.GetAll"), data => new CertificateResource(Client, data));
         }
 
         /// <summary>
@@ -360,7 +362,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -380,7 +382,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificateRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateId, context);
+                HttpMessage message = _certificateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiManagementCertificateData> response = default;
@@ -417,7 +419,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -437,7 +439,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificateRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateId, context);
+                HttpMessage message = _certificateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiManagementCertificateData> response = default;
@@ -474,7 +476,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -494,7 +496,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificateRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateId, context);
+                HttpMessage message = _certificateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiManagementCertificateData> response = default;
@@ -535,7 +537,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -555,7 +557,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificateRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateId, context);
+                HttpMessage message = _certificateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiManagementCertificateData> response = default;

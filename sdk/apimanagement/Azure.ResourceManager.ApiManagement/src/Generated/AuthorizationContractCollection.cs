@@ -27,8 +27,6 @@ namespace Azure.ResourceManager.ApiManagement
     {
         private readonly ClientDiagnostics _authorizationClientDiagnostics;
         private readonly Authorization _authorizationRestClient;
-        private readonly ClientDiagnostics _authorizationLoginLinksClientDiagnostics;
-        private readonly AuthorizationLoginLinks _authorizationLoginLinksRestClient;
 
         /// <summary> Initializes a new instance of AuthorizationContractCollection for mocking. </summary>
         protected AuthorizationContractCollection()
@@ -42,9 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(AuthorizationContractResource.ResourceType, out string authorizationContractApiVersion);
             _authorizationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", AuthorizationContractResource.ResourceType.Namespace, Diagnostics);
-            _authorizationRestClient = new Authorization(_authorizationClientDiagnostics, Pipeline, Endpoint, authorizationContractApiVersion ?? "2025-03-01-preview");
-            _authorizationLoginLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", AuthorizationContractResource.ResourceType.Namespace, Diagnostics);
-            _authorizationLoginLinksRestClient = new AuthorizationLoginLinks(_authorizationLoginLinksClientDiagnostics, Pipeline, Endpoint, authorizationContractApiVersion ?? "2025-03-01-preview");
+            _authorizationRestClient = new Authorization(_authorizationClientDiagnostics, Pipeline, Endpoint, authorizationContractApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -54,7 +50,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             if (id.ResourceType != AuthorizationProviderContractResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AuthorizationProviderContractResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AuthorizationProviderContractResource.ResourceType), nameof(id));
             }
         }
 
@@ -71,7 +67,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -95,7 +91,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _authorizationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationId, AuthorizationContractData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _authorizationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationId, AuthorizationContractData.ToRequestContent(data), ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AuthorizationContractData> response = Response.FromValue(AuthorizationContractData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -127,7 +123,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -151,7 +147,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _authorizationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationId, AuthorizationContractData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _authorizationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationId, AuthorizationContractData.ToRequestContent(data), ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AuthorizationContractData> response = Response.FromValue(AuthorizationContractData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -183,7 +179,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -203,7 +199,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _authorizationRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationId, context);
+                HttpMessage message = _authorizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AuthorizationContractData> response = Response.FromValue(AuthorizationContractData.FromResponse(result), result);
                 if (response.Value == null)
@@ -232,7 +228,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -252,7 +248,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _authorizationRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationId, context);
+                HttpMessage message = _authorizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AuthorizationContractData> response = Response.FromValue(AuthorizationContractData.FromResponse(result), result);
                 if (response.Value == null)
@@ -281,7 +277,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,14 +294,15 @@ namespace Azure.ResourceManager.ApiManagement
             };
             return new AsyncPageableWrapper<AuthorizationContractData, AuthorizationContractResource>(new AuthorizationGetByAuthorizationProviderAsyncCollectionResultOfT(
                 _authorizationRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
                 filter,
                 top,
                 skip,
-                context), data => new AuthorizationContractResource(Client, data));
+                context,
+                "AuthorizationContractCollection.GetAll"), data => new AuthorizationContractResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +318,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -338,14 +335,15 @@ namespace Azure.ResourceManager.ApiManagement
             };
             return new PageableWrapper<AuthorizationContractData, AuthorizationContractResource>(new AuthorizationGetByAuthorizationProviderCollectionResultOfT(
                 _authorizationRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
                 filter,
                 top,
                 skip,
-                context), data => new AuthorizationContractResource(Client, data));
+                context,
+                "AuthorizationContractCollection.GetAll"), data => new AuthorizationContractResource(Client, data));
         }
 
         /// <summary>
@@ -361,7 +359,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -381,7 +379,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _authorizationRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationId, context);
+                HttpMessage message = _authorizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AuthorizationContractData> response = default;
@@ -418,7 +416,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -438,7 +436,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _authorizationRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationId, context);
+                HttpMessage message = _authorizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AuthorizationContractData> response = default;
@@ -475,7 +473,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -495,7 +493,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _authorizationRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationId, context);
+                HttpMessage message = _authorizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AuthorizationContractData> response = default;
@@ -536,7 +534,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -556,7 +554,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _authorizationRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationId, context);
+                HttpMessage message = _authorizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AuthorizationContractData> response = default;

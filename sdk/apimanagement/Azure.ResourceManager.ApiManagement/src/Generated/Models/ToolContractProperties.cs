@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -36,15 +35,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Tool Name. MCP tool name must contain only letters, numbers, underscores, and hyphens. </summary>
-        [WirePath("displayName")]
         public string DisplayName { get; set; }
 
         /// <summary> Description of the tool. </summary>
-        [WirePath("description")]
         public string Description { get; set; }
 
         /// <summary> Identifier of the operation this MCP tool is associated with in the form of /apis/{apiId}/operations/{operationId}. </summary>
-        [WirePath("operationId")]
         public string OperationId { get; set; }
     }
 }

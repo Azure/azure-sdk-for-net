@@ -44,23 +44,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The resource of private end point. </summary>
-        [WirePath("privateEndpoint")]
         internal ArmIdWrapper PrivateEndpoint { get; set; }
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-        [WirePath("privateLinkServiceConnectionState")]
         public ApiManagementPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
 
         /// <summary> The provisioning state of the private endpoint connection resource. </summary>
-        [WirePath("provisioningState")]
         public string ProvisioningState { get; }
 
         /// <summary> All the Group ids. </summary>
-        [WirePath("groupIds")]
         public IReadOnlyList<string> GroupIds { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Gets the Id. </summary>
-        [WirePath("privateEndpoint.id")]
         public string PrivateEndpointId
         {
             get

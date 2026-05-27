@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,7 +22,7 @@ namespace Azure.ResourceManager.ApiManagement
     /// Each <see cref="ApiPolicyResource"/> in the collection will belong to the same instance of <see cref="ApiResource"/>.
     /// To get a <see cref="ApiPolicyCollection"/> instance call the GetApiPolicies method from an instance of <see cref="ApiResource"/>.
     /// </summary>
-    public partial class ApiPolicyCollection : ArmCollection, IEnumerable<ApiPolicyResource>, IAsyncEnumerable<ApiPolicyResource>
+    public partial class ApiPolicyCollection : ArmCollection
     {
         private readonly ClientDiagnostics _apiPolicyClientDiagnostics;
         private readonly ApiPolicy _apiPolicyRestClient;
@@ -41,7 +39,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ApiPolicyResource.ResourceType, out string apiPolicyApiVersion);
             _apiPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiPolicyResource.ResourceType.Namespace, Diagnostics);
-            _apiPolicyRestClient = new ApiPolicy(_apiPolicyClientDiagnostics, Pipeline, Endpoint, apiPolicyApiVersion ?? "2025-03-01-preview");
+            _apiPolicyRestClient = new ApiPolicy(_apiPolicyClientDiagnostics, Pipeline, Endpoint, apiPolicyApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -51,7 +49,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             if (id.ResourceType != ApiResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiResource.ResourceType), nameof(id));
             }
         }
 
@@ -68,7 +66,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -90,7 +88,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyId.ToString(), ApiManagementPolicyData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _apiPolicyRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyId.ToString(), ApiManagementPolicyData.ToRequestContent(data), ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementPolicyData> response = Response.FromValue(ApiManagementPolicyData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -122,7 +120,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -144,7 +142,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyId.ToString(), ApiManagementPolicyData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _apiPolicyRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyId.ToString(), ApiManagementPolicyData.ToRequestContent(data), ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementPolicyData> response = Response.FromValue(ApiManagementPolicyData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -176,7 +174,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -193,7 +191,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiPolicyRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyId.ToString(), format?.ToString(), context);
+                HttpMessage message = _apiPolicyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyId.ToString(), format?.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementPolicyData> response = Response.FromValue(ApiManagementPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -222,7 +220,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -239,7 +237,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiPolicyRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyId.ToString(), format?.ToString(), context);
+                HttpMessage message = _apiPolicyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyId.ToString(), format?.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementPolicyData> response = Response.FromValue(ApiManagementPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -268,7 +266,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -285,7 +283,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiPolicyRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyId.ToString(), format?.ToString(), context);
+                HttpMessage message = _apiPolicyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyId.ToString(), format?.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiManagementPolicyData> response = default;
@@ -322,7 +320,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -339,7 +337,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiPolicyRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyId.ToString(), format?.ToString(), context);
+                HttpMessage message = _apiPolicyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyId.ToString(), format?.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiManagementPolicyData> response = default;
@@ -376,7 +374,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -393,7 +391,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiPolicyRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyId.ToString(), format?.ToString(), context);
+                HttpMessage message = _apiPolicyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyId.ToString(), format?.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiManagementPolicyData> response = default;
@@ -434,7 +432,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -451,7 +449,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiPolicyRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyId.ToString(), format?.ToString(), context);
+                HttpMessage message = _apiPolicyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyId.ToString(), format?.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiManagementPolicyData> response = default;
@@ -477,22 +475,6 @@ namespace Azure.ResourceManager.ApiManagement
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        IEnumerator<ApiPolicyResource> IEnumerable<ApiPolicyResource>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<ApiPolicyResource> IAsyncEnumerable<ApiPolicyResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

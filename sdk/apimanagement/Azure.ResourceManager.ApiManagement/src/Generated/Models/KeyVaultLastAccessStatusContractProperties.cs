@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -36,15 +35,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Last status code for sync and refresh of secret from key vault. </summary>
-        [WirePath("code")]
         public string Code { get; }
 
         /// <summary> Details of the error else empty. </summary>
-        [WirePath("message")]
         public string Message { get; }
 
         /// <summary> Last time secret was accessed. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
-        [WirePath("timeStampUtc")]
         public DateTimeOffset? TimeStampUtc { get; }
     }
 }

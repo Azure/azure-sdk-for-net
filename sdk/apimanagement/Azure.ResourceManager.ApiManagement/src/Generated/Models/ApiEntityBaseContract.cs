@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -38,8 +38,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="termsOfServiceUri"> A URL to the Terms of Service for the API. MUST be in the format of a URL. </param>
         /// <param name="contact"> Contact information for the API. </param>
         /// <param name="license"> License information for the API. </param>
+        /// <param name="mcpProperties"> Properties specific to MCP API type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApiEntityBaseContract(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, string apiVersionSetId, bool? subscriptionRequired, Uri termsOfServiceUri, ApiContactInformation contact, ApiLicenseInformation license, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApiEntityBaseContract(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? subscriptionRequired, Uri termsOfServiceUri, ApiContactInformation contact, ApiLicenseInformation license, McpProperties mcpProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             AuthenticationSettings = authenticationSettings;
@@ -56,67 +57,56 @@ namespace Azure.ResourceManager.ApiManagement.Models
             TermsOfServiceUri = termsOfServiceUri;
             Contact = contact;
             License = license;
+            McpProperties = mcpProperties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Description of the API. May include HTML formatting tags. </summary>
-        [WirePath("description")]
         public string Description { get; set; }
 
         /// <summary> Collection of authentication settings included into this API. </summary>
-        [WirePath("authenticationSettings")]
         public AuthenticationSettingsContract AuthenticationSettings { get; set; }
 
         /// <summary> Protocols over which API is made available. </summary>
-        [WirePath("subscriptionKeyParameterNames")]
         public SubscriptionKeyParameterNamesContract SubscriptionKeyParameterNames { get; set; }
 
         /// <summary> Type of API. </summary>
-        [WirePath("type")]
         public ApiType? ApiType { get; set; }
 
         /// <summary> Describes the revision of the API. If no value is provided, default revision 1 is created. </summary>
-        [WirePath("apiRevision")]
         public string ApiRevision { get; set; }
 
         /// <summary> Indicates the version identifier of the API if the API is versioned. </summary>
-        [WirePath("apiVersion")]
         public string ApiVersion { get; set; }
 
         /// <summary> Indicates if API revision is current api revision. </summary>
-        [WirePath("isCurrent")]
         public bool? IsCurrent { get; set; }
 
         /// <summary> Indicates if API revision is accessible via the gateway. </summary>
-        [WirePath("isOnline")]
         public bool? IsOnline { get; }
 
         /// <summary> Description of the API Revision. </summary>
-        [WirePath("apiRevisionDescription")]
         public string ApiRevisionDescription { get; set; }
 
         /// <summary> Description of the API Version. </summary>
-        [WirePath("apiVersionDescription")]
         public string ApiVersionDescription { get; set; }
 
         /// <summary> A resource identifier for the related ApiVersionSet. </summary>
-        [WirePath("apiVersionSetId")]
-        public string ApiVersionSetId { get; set; }
+        public ResourceIdentifier ApiVersionSetId { get; set; }
 
         /// <summary> Specifies whether an API or Product subscription is required for accessing the API. </summary>
-        [WirePath("subscriptionRequired")]
         public bool? SubscriptionRequired { get; set; }
 
         /// <summary> A URL to the Terms of Service for the API. MUST be in the format of a URL. </summary>
-        [WirePath("termsOfServiceUrl")]
         public Uri TermsOfServiceUri { get; set; }
 
         /// <summary> Contact information for the API. </summary>
-        [WirePath("contact")]
         public ApiContactInformation Contact { get; set; }
 
         /// <summary> License information for the API. </summary>
-        [WirePath("license")]
         public ApiLicenseInformation License { get; set; }
+
+        /// <summary> Properties specific to MCP API type. </summary>
+        public McpProperties McpProperties { get; set; }
     }
 }

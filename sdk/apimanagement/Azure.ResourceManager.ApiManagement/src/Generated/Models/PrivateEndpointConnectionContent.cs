@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -34,15 +33,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Private Endpoint Connection Resource Id. </summary>
-        [WirePath("id")]
         public string Id { get; set; }
 
         /// <summary> The connection state of the private endpoint connection. </summary>
-        [WirePath("properties")]
         internal PrivateEndpointConnectionRequestProperties Properties { get; set; }
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-        [WirePath("properties.privateLinkServiceConnectionState")]
         public ApiManagementPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState
         {
             get

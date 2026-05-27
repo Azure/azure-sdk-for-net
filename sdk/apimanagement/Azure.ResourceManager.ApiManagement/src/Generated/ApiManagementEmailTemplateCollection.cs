@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ApiManagementEmailTemplateResource.ResourceType, out string apiManagementEmailTemplateApiVersion);
             _emailTemplateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementEmailTemplateResource.ResourceType.Namespace, Diagnostics);
-            _emailTemplateRestClient = new EmailTemplate(_emailTemplateClientDiagnostics, Pipeline, Endpoint, apiManagementEmailTemplateApiVersion ?? "2025-03-01-preview");
+            _emailTemplateRestClient = new EmailTemplate(_emailTemplateClientDiagnostics, Pipeline, Endpoint, apiManagementEmailTemplateApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             if (id.ResourceType != ApiManagementServiceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementServiceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementServiceResource.ResourceType), nameof(id));
             }
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _emailTemplateRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, templateName.ToString(), ApiManagementEmailTemplateCreateOrUpdateContent.ToRequestContent(content), ifMatch, context);
+                HttpMessage message = _emailTemplateRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, templateName.ToString(), ApiManagementEmailTemplateCreateOrUpdateContent.ToRequestContent(content), ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementEmailTemplateData> response = Response.FromValue(ApiManagementEmailTemplateData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _emailTemplateRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, templateName.ToString(), ApiManagementEmailTemplateCreateOrUpdateContent.ToRequestContent(content), ifMatch, context);
+                HttpMessage message = _emailTemplateRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, templateName.ToString(), ApiManagementEmailTemplateCreateOrUpdateContent.ToRequestContent(content), ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementEmailTemplateData> response = Response.FromValue(ApiManagementEmailTemplateData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _emailTemplateRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, templateName.ToString(), context);
+                HttpMessage message = _emailTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, templateName.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementEmailTemplateData> response = Response.FromValue(ApiManagementEmailTemplateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _emailTemplateRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, templateName.ToString(), context);
+                HttpMessage message = _emailTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, templateName.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementEmailTemplateData> response = Response.FromValue(ApiManagementEmailTemplateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -283,13 +283,14 @@ namespace Azure.ResourceManager.ApiManagement
             };
             return new AsyncPageableWrapper<ApiManagementEmailTemplateData, ApiManagementEmailTemplateResource>(new EmailTemplateGetByServiceAsyncCollectionResultOfT(
                 _emailTemplateRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 filter,
                 top,
                 skip,
-                context), data => new ApiManagementEmailTemplateResource(Client, data));
+                context,
+                "ApiManagementEmailTemplateCollection.GetAll"), data => new ApiManagementEmailTemplateResource(Client, data));
         }
 
         /// <summary>
@@ -305,7 +306,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,13 +323,14 @@ namespace Azure.ResourceManager.ApiManagement
             };
             return new PageableWrapper<ApiManagementEmailTemplateData, ApiManagementEmailTemplateResource>(new EmailTemplateGetByServiceCollectionResultOfT(
                 _emailTemplateRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 filter,
                 top,
                 skip,
-                context), data => new ApiManagementEmailTemplateResource(Client, data));
+                context,
+                "ApiManagementEmailTemplateCollection.GetAll"), data => new ApiManagementEmailTemplateResource(Client, data));
         }
 
         /// <summary>
@@ -344,7 +346,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -360,7 +362,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _emailTemplateRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, templateName.ToString(), context);
+                HttpMessage message = _emailTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, templateName.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiManagementEmailTemplateData> response = default;
@@ -397,7 +399,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -413,7 +415,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _emailTemplateRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, templateName.ToString(), context);
+                HttpMessage message = _emailTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, templateName.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiManagementEmailTemplateData> response = default;
@@ -450,7 +452,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -466,7 +468,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _emailTemplateRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, templateName.ToString(), context);
+                HttpMessage message = _emailTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, templateName.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiManagementEmailTemplateData> response = default;
@@ -507,7 +509,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -523,7 +525,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _emailTemplateRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, templateName.ToString(), context);
+                HttpMessage message = _emailTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, templateName.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiManagementEmailTemplateData> response = default;

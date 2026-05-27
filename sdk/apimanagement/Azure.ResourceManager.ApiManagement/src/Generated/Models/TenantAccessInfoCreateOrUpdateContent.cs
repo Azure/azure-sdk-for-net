@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -32,11 +31,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Tenant access information update parameter properties. </summary>
-        [WirePath("properties")]
         internal AccessInformationCreateParameterProperties Properties { get; set; }
 
         /// <summary> Principal (User) Identifier. </summary>
-        [WirePath("properties.principalId")]
         public string PrincipalId
         {
             get
@@ -54,7 +51,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Primary access key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </summary>
-        [WirePath("properties.primaryKey")]
         public string PrimaryKey
         {
             get
@@ -72,7 +68,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Secondary access key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </summary>
-        [WirePath("properties.secondaryKey")]
         public string SecondaryKey
         {
             get
@@ -90,7 +85,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Determines whether direct access is enabled. </summary>
-        [WirePath("properties.enabled")]
         public bool? Enabled
         {
             get
@@ -103,7 +97,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     Properties = new AccessInformationCreateParameterProperties();
                 }
-                Properties.Enabled = value.Value;
+                Properties.Enabled = value;
             }
         }
     }

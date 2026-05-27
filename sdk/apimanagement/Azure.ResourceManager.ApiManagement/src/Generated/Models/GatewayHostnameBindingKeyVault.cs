@@ -41,15 +41,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The current provisioning state of the API Management gateway hostname binding. </summary>
-        [WirePath("secretId")]
         public string SecretId { get; set; }
 
         /// <summary> The default hostname of the data-plane gateway. </summary>
-        [WirePath("identityClientId")]
         public string IdentityClientId { get; set; }
 
         /// <summary> The last status of the Key Vault certificate fetch process. </summary>
-        [WirePath("lastStatus")]
         public GatewayHostnameBindingKeyVaultLastStatus LastStatus { get; set; }
     }
 }

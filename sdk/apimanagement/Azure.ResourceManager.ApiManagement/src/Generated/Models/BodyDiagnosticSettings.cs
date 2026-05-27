@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -32,7 +31,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Number of request body bytes to log. </summary>
-        [WirePath("bytes")]
         public int? Bytes { get; set; }
     }
 }

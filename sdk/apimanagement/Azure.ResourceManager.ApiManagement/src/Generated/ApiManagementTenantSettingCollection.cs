@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ApiManagementTenantSettingResource.ResourceType, out string apiManagementTenantSettingApiVersion);
             _tenantSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementTenantSettingResource.ResourceType.Namespace, Diagnostics);
-            _tenantSettingsRestClient = new TenantSettings(_tenantSettingsClientDiagnostics, Pipeline, Endpoint, apiManagementTenantSettingApiVersion ?? "2025-03-01-preview");
+            _tenantSettingsRestClient = new TenantSettings(_tenantSettingsClientDiagnostics, Pipeline, Endpoint, apiManagementTenantSettingApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             if (id.ResourceType != ApiManagementServiceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementServiceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementServiceResource.ResourceType), nameof(id));
             }
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantSettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settingsType.ToString(), context);
+                HttpMessage message = _tenantSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, settingsType.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementTenantSettingData> response = Response.FromValue(ApiManagementTenantSettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantSettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settingsType.ToString(), context);
+                HttpMessage message = _tenantSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, settingsType.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementTenantSettingData> response = Response.FromValue(ApiManagementTenantSettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -173,11 +173,12 @@ namespace Azure.ResourceManager.ApiManagement
             };
             return new AsyncPageableWrapper<ApiManagementTenantSettingData, ApiManagementTenantSettingResource>(new TenantSettingsGetByServiceAsyncCollectionResultOfT(
                 _tenantSettingsRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 filter,
-                context), data => new ApiManagementTenantSettingResource(Client, data));
+                context,
+                "ApiManagementTenantSettingCollection.GetAll"), data => new ApiManagementTenantSettingResource(Client, data));
         }
 
         /// <summary>
@@ -193,7 +194,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -208,11 +209,12 @@ namespace Azure.ResourceManager.ApiManagement
             };
             return new PageableWrapper<ApiManagementTenantSettingData, ApiManagementTenantSettingResource>(new TenantSettingsGetByServiceCollectionResultOfT(
                 _tenantSettingsRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 filter,
-                context), data => new ApiManagementTenantSettingResource(Client, data));
+                context,
+                "ApiManagementTenantSettingCollection.GetAll"), data => new ApiManagementTenantSettingResource(Client, data));
         }
 
         /// <summary>
@@ -228,7 +230,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -244,7 +246,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantSettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settingsType.ToString(), context);
+                HttpMessage message = _tenantSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, settingsType.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiManagementTenantSettingData> response = default;
@@ -281,7 +283,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -297,7 +299,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantSettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settingsType.ToString(), context);
+                HttpMessage message = _tenantSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, settingsType.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiManagementTenantSettingData> response = default;
@@ -334,7 +336,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -350,7 +352,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantSettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settingsType.ToString(), context);
+                HttpMessage message = _tenantSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, settingsType.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiManagementTenantSettingData> response = default;
@@ -391,7 +393,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -407,7 +409,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantSettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settingsType.ToString(), context);
+                HttpMessage message = _tenantSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, settingsType.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiManagementTenantSettingData> response = default;

@@ -38,86 +38,77 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> User entity contract properties. </summary>
-        [WirePath("properties")]
         internal UserContractProperties Properties { get; }
 
         /// <summary> Account state. Specifies whether the user is active or not. Blocked users are unable to sign into the developer portal or call any APIs of subscribed products. Default state is Active. </summary>
-        [WirePath("properties.state")]
         public ApiManagementUserState? State
         {
             get
             {
-                return Properties.State;
+                return Properties is null ? default : Properties.State;
             }
         }
 
         /// <summary> Optional note about a user set by the administrator. </summary>
-        [WirePath("properties.note")]
         public string Note
         {
             get
             {
-                return Properties.Note;
+                return Properties is null ? default : Properties.Note;
             }
         }
 
         /// <summary> Collection of user identities. </summary>
-        [WirePath("properties.identities")]
         public IList<UserIdentityContract> Identities
         {
             get
             {
-                return Properties.Identities;
+                return Properties is null ? default : Properties.Identities;
             }
         }
 
         /// <summary> First name. </summary>
-        [WirePath("properties.firstName")]
         public string FirstName
         {
             get
             {
-                return Properties.FirstName;
+                return Properties is null ? default : Properties.FirstName;
             }
         }
 
         /// <summary> Last name. </summary>
-        [WirePath("properties.lastName")]
         public string LastName
         {
             get
             {
-                return Properties.LastName;
+                return Properties is null ? default : Properties.LastName;
             }
         }
 
         /// <summary> Email address. </summary>
-        [WirePath("properties.email")]
         public string Email
         {
             get
             {
-                return Properties.Email;
+                return Properties is null ? default : Properties.Email;
             }
         }
 
         /// <summary> Date of user registration. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
-        [WirePath("properties.registrationDate")]
         public DateTimeOffset? RegistrationOn
         {
             get
             {
-                return Properties.RegistrationOn;
+                return Properties is null ? default : Properties.RegistrationOn;
             }
         }
 
         /// <summary> Collection of groups user is part of. </summary>
-        [WirePath("properties.groups")]
         public IReadOnlyList<GroupContractProperties> Groups
         {
             get
             {
-                return Properties.Groups;
+                return Properties is null ? default : Properties.Groups;
             }
         }
     }

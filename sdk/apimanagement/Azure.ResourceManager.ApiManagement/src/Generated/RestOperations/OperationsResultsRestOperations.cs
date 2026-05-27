@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetOperationResultRequest(string subscriptionId, AzureLocation location, string operationId, RequestContext context)
+        internal HttpMessage CreateGetOperationResultRequest(Guid subscriptionId, AzureLocation location, string operationId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.ApiManagement/locations/", false);
             uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/operationResults/", false);

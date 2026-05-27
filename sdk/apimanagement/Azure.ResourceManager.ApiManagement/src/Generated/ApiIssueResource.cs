@@ -26,10 +26,6 @@ namespace Azure.ResourceManager.ApiManagement
     {
         private readonly ClientDiagnostics _apiIssueClientDiagnostics;
         private readonly ApiIssue _apiIssueRestClient;
-        private readonly ClientDiagnostics _apiIssueAttachmentClientDiagnostics;
-        private readonly ApiIssueAttachment _apiIssueAttachmentRestClient;
-        private readonly ClientDiagnostics _apiIssueCommentClientDiagnostics;
-        private readonly ApiIssueComment _apiIssueCommentRestClient;
         private readonly ApiManagementIssueData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/apis/issues";
@@ -55,11 +51,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ResourceType, out string apiIssueApiVersion);
             _apiIssueClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _apiIssueRestClient = new ApiIssue(_apiIssueClientDiagnostics, Pipeline, Endpoint, apiIssueApiVersion ?? "2025-03-01-preview");
-            _apiIssueAttachmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _apiIssueAttachmentRestClient = new ApiIssueAttachment(_apiIssueAttachmentClientDiagnostics, Pipeline, Endpoint, apiIssueApiVersion ?? "2025-03-01-preview");
-            _apiIssueCommentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _apiIssueCommentRestClient = new ApiIssueComment(_apiIssueCommentClientDiagnostics, Pipeline, Endpoint, apiIssueApiVersion ?? "2025-03-01-preview");
+            _apiIssueRestClient = new ApiIssue(_apiIssueClientDiagnostics, Pipeline, Endpoint, apiIssueApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -97,7 +89,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -114,7 +106,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -134,7 +126,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiIssueRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expandCommentsAttachments, context);
+                HttpMessage message = _apiIssueRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expandCommentsAttachments, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementIssueData> response = Response.FromValue(ApiManagementIssueData.FromResponse(result), result);
                 if (response.Value == null)
@@ -163,7 +155,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -183,7 +175,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiIssueRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expandCommentsAttachments, context);
+                HttpMessage message = _apiIssueRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expandCommentsAttachments, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementIssueData> response = Response.FromValue(ApiManagementIssueData.FromResponse(result), result);
                 if (response.Value == null)
@@ -212,7 +204,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -238,7 +230,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiIssueRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, ApiManagementIssuePatch.ToRequestContent(patch), context);
+                HttpMessage message = _apiIssueRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, ApiManagementIssuePatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementIssueData> response = Response.FromValue(ApiManagementIssueData.FromResponse(result), result);
                 if (response.Value == null)
@@ -267,7 +259,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -293,7 +285,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiIssueRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, ApiManagementIssuePatch.ToRequestContent(patch), context);
+                HttpMessage message = _apiIssueRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, ApiManagementIssuePatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementIssueData> response = Response.FromValue(ApiManagementIssueData.FromResponse(result), result);
                 if (response.Value == null)
@@ -322,7 +314,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -347,7 +339,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiIssueRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, context);
+                HttpMessage message = _apiIssueRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -378,7 +370,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -403,7 +395,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiIssueRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, context);
+                HttpMessage message = _apiIssueRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -413,198 +405,6 @@ namespace Azure.ResourceManager.ApiManagement
                     operation.WaitForCompletionResponse(cancellationToken);
                 }
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the entity state (Etag) version of the issue Attachment for an API specified by its identifier.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/issues/{issueId}/attachments/{attachmentId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> IssueAttachmentContracts_GetEntityTag. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ApiIssueResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="attachmentId"> Attachment identifier within an Issue. Must be unique in the current Issue. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="attachmentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response> ApiIssueAttachmentGetEntityTagAsync(string attachmentId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(attachmentId, nameof(attachmentId));
-
-            using DiagnosticScope scope = _apiIssueAttachmentClientDiagnostics.CreateScope("ApiIssueResource.ApiIssueAttachmentGetEntityTag");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _apiIssueAttachmentRestClient.CreateApiIssueAttachmentGetEntityTagRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, attachmentId, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the entity state (Etag) version of the issue Attachment for an API specified by its identifier.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/issues/{issueId}/attachments/{attachmentId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> IssueAttachmentContracts_GetEntityTag. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ApiIssueResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="attachmentId"> Attachment identifier within an Issue. Must be unique in the current Issue. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="attachmentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response ApiIssueAttachmentGetEntityTag(string attachmentId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(attachmentId, nameof(attachmentId));
-
-            using DiagnosticScope scope = _apiIssueAttachmentClientDiagnostics.CreateScope("ApiIssueResource.ApiIssueAttachmentGetEntityTag");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _apiIssueAttachmentRestClient.CreateApiIssueAttachmentGetEntityTagRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, attachmentId, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the entity state (Etag) version of the issue Comment for an API specified by its identifier.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/issues/{issueId}/comments/{commentId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> IssueCommentContracts_GetEntityTag. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ApiIssueResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="commentId"> Comment identifier within an Issue. Must be unique in the current Issue. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="commentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="commentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response> ApiIssueCommentGetEntityTagAsync(string commentId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(commentId, nameof(commentId));
-
-            using DiagnosticScope scope = _apiIssueCommentClientDiagnostics.CreateScope("ApiIssueResource.ApiIssueCommentGetEntityTag");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _apiIssueCommentRestClient.CreateApiIssueCommentGetEntityTagRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, commentId, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the entity state (Etag) version of the issue Comment for an API specified by its identifier.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/issues/{issueId}/comments/{commentId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> IssueCommentContracts_GetEntityTag. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ApiIssueResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="commentId"> Comment identifier within an Issue. Must be unique in the current Issue. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="commentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="commentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response ApiIssueCommentGetEntityTag(string commentId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(commentId, nameof(commentId));
-
-            using DiagnosticScope scope = _apiIssueCommentClientDiagnostics.CreateScope("ApiIssueResource.ApiIssueCommentGetEntityTag");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _apiIssueCommentRestClient.CreateApiIssueCommentGetEntityTagRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, commentId, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                return response;
             }
             catch (Exception e)
             {

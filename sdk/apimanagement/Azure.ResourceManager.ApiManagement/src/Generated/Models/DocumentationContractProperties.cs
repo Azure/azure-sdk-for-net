@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -34,11 +33,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> documentation title. </summary>
-        [WirePath("title")]
         public string Title { get; set; }
 
         /// <summary> Markdown documentation content. </summary>
-        [WirePath("content")]
         public string Content { get; set; }
     }
 }

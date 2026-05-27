@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateProductGroupGetByProductRequest(string subscriptionId, string resourceGroupName, string serviceName, string productId, string filter, int? top, int? skip, RequestContext context)
+        internal HttpMessage CreateProductGroupGetByProductRequest(Guid subscriptionId, string resourceGroupName, string serviceName, string productId, string filter, int? top, int? skip, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ApiManagement
             return message;
         }
 
-        internal HttpMessage CreateNextProductGroupGetByProductRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string serviceName, string productId, string filter, int? top, int? skip, RequestContext context)
+        internal HttpMessage CreateNextProductGroupGetByProductRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string serviceName, string productId, string filter, int? top, int? skip, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -101,12 +101,12 @@ namespace Azure.ResourceManager.ApiManagement
             return message;
         }
 
-        internal HttpMessage CreateProductGroupCheckEntityExistsRequest(string subscriptionId, string resourceGroupName, string serviceName, string productId, string groupId, RequestContext context)
+        internal HttpMessage CreateProductGroupCheckEntityExistsRequest(Guid subscriptionId, string resourceGroupName, string serviceName, string productId, string groupId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
@@ -126,12 +126,12 @@ namespace Azure.ResourceManager.ApiManagement
             return message;
         }
 
-        internal HttpMessage CreateProductGroupCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string productId, string groupId, RequestContext context)
+        internal HttpMessage CreateProductGroupCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string serviceName, string productId, string groupId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
@@ -152,12 +152,12 @@ namespace Azure.ResourceManager.ApiManagement
             return message;
         }
 
-        internal HttpMessage CreateProductGroupDeleteRequest(string subscriptionId, string resourceGroupName, string serviceName, string productId, string groupId, RequestContext context)
+        internal HttpMessage CreateProductGroupDeleteRequest(Guid subscriptionId, string resourceGroupName, string serviceName, string productId, string groupId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);

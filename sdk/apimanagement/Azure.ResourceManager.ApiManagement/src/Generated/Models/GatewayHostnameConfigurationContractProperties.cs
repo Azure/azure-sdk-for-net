@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -42,27 +41,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Hostname value. Supports valid domain name, partial or full wildcard. </summary>
-        [WirePath("hostname")]
         public string Hostname { get; set; }
 
         /// <summary> Identifier of Certificate entity that will be used for TLS connection establishment. </summary>
-        [WirePath("certificateId")]
         public string CertificateId { get; set; }
 
         /// <summary> Determines whether gateway requests client certificate. </summary>
-        [WirePath("negotiateClientCertificate")]
         public bool? NegotiateClientCertificate { get; set; }
 
         /// <summary> Specifies if TLS 1.0 is supported. </summary>
-        [WirePath("tls10Enabled")]
         public bool? Tls10Enabled { get; set; }
 
         /// <summary> Specifies if TLS 1.1 is supported. </summary>
-        [WirePath("tls11Enabled")]
         public bool? Tls11Enabled { get; set; }
 
         /// <summary> Specifies if HTTP/2.0 is supported. </summary>
-        [WirePath("http2Enabled")]
         public bool? Http2Enabled { get; set; }
     }
 }

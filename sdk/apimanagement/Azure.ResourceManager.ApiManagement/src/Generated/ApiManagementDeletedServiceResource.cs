@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ResourceType, out string apiManagementDeletedServiceApiVersion);
             _deletedServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _deletedServicesRestClient = new DeletedServices(_deletedServicesClientDiagnostics, Pipeline, Endpoint, apiManagementDeletedServiceApiVersion ?? "2025-03-01-preview");
+            _deletedServicesRestClient = new DeletedServices(_deletedServicesClientDiagnostics, Pipeline, Endpoint, apiManagementDeletedServiceApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedServicesRestClient.CreateGetByNameRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _deletedServicesRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementDeletedServiceData> response = Response.FromValue(ApiManagementDeletedServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedServicesRestClient.CreateGetByNameRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _deletedServicesRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementDeletedServiceData> response = Response.FromValue(ApiManagementDeletedServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedServicesRestClient.CreatePurgeRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _deletedServicesRestClient.CreatePurgeRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ApiManagementArmOperation<ApiManagementDeletedServiceResource> operation = new ApiManagementArmOperation<ApiManagementDeletedServiceResource>(
                     new ApiManagementDeletedServiceOperationSource(Client),
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedServicesRestClient.CreatePurgeRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _deletedServicesRestClient.CreatePurgeRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ApiManagementArmOperation<ApiManagementDeletedServiceResource> operation = new ApiManagementArmOperation<ApiManagementDeletedServiceResource>(
                     new ApiManagementDeletedServiceOperationSource(Client),

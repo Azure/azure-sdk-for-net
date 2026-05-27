@@ -72,11 +72,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Publisher email. </summary>
-        [WirePath("publisherEmail")]
         public string PublisherEmail { get; set; }
 
         /// <summary> Publisher name. </summary>
-        [WirePath("publisherName")]
         public string PublisherName { get; set; }
     }
 }

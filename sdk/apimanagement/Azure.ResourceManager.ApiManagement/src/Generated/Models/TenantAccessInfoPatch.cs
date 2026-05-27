@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -32,11 +31,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Tenant access information update parameter properties. </summary>
-        [WirePath("properties")]
         internal AccessInformationUpdateParameterProperties Properties { get; set; }
 
         /// <summary> Determines whether direct access is enabled. </summary>
-        [WirePath("properties.enabled")]
         public bool? Enabled
         {
             get
@@ -49,7 +46,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     Properties = new AccessInformationUpdateParameterProperties();
                 }
-                Properties.Enabled = value.Value;
+                Properties.Enabled = value;
             }
         }
     }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(GatewayHostnameBindingResource.ResourceType, out string gatewayHostnameBindingResourceApiVersion);
             _apiGatewayHostnameBindingClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", GatewayHostnameBindingResource.ResourceType.Namespace, Diagnostics);
-            _apiGatewayHostnameBindingRestClient = new ApiGatewayHostnameBinding(_apiGatewayHostnameBindingClientDiagnostics, Pipeline, Endpoint, gatewayHostnameBindingResourceApiVersion ?? "2025-03-01-preview");
+            _apiGatewayHostnameBindingRestClient = new ApiGatewayHostnameBinding(_apiGatewayHostnameBindingClientDiagnostics, Pipeline, Endpoint, gatewayHostnameBindingResourceApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             if (id.ResourceType != ApiManagementGatewayResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementGatewayResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementGatewayResource.ResourceType), nameof(id));
             }
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiGatewayHostnameBindingRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostnameBindingName, GatewayHostnameBindingResourceData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _apiGatewayHostnameBindingRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hostnameBindingName, GatewayHostnameBindingResourceData.ToRequestContent(data), ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ApiManagementArmOperation<GatewayHostnameBindingResource> operation = new ApiManagementArmOperation<GatewayHostnameBindingResource>(
                     new GatewayHostnameBindingResourceOperationSource(Client),
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiGatewayHostnameBindingRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostnameBindingName, GatewayHostnameBindingResourceData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _apiGatewayHostnameBindingRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hostnameBindingName, GatewayHostnameBindingResourceData.ToRequestContent(data), ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ApiManagementArmOperation<GatewayHostnameBindingResource> operation = new ApiManagementArmOperation<GatewayHostnameBindingResource>(
                     new GatewayHostnameBindingResourceOperationSource(Client),
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiGatewayHostnameBindingRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostnameBindingName, context);
+                HttpMessage message = _apiGatewayHostnameBindingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hostnameBindingName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GatewayHostnameBindingResourceData> response = Response.FromValue(GatewayHostnameBindingResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiGatewayHostnameBindingRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostnameBindingName, context);
+                HttpMessage message = _apiGatewayHostnameBindingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hostnameBindingName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GatewayHostnameBindingResourceData> response = Response.FromValue(GatewayHostnameBindingResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,7 +295,13 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GatewayHostnameBindingResourceData, GatewayHostnameBindingResource>(new ApiGatewayHostnameBindingGetByGatewayAsyncCollectionResultOfT(_apiGatewayHostnameBindingRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new GatewayHostnameBindingResource(Client, data));
+            return new AsyncPageableWrapper<GatewayHostnameBindingResourceData, GatewayHostnameBindingResource>(new ApiGatewayHostnameBindingGetByGatewayAsyncCollectionResultOfT(
+                _apiGatewayHostnameBindingRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "GatewayHostnameBindingResourceCollection.GetAll"), data => new GatewayHostnameBindingResource(Client, data));
         }
 
         /// <summary>
@@ -311,7 +317,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -323,7 +329,13 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GatewayHostnameBindingResourceData, GatewayHostnameBindingResource>(new ApiGatewayHostnameBindingGetByGatewayCollectionResultOfT(_apiGatewayHostnameBindingRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new GatewayHostnameBindingResource(Client, data));
+            return new PageableWrapper<GatewayHostnameBindingResourceData, GatewayHostnameBindingResource>(new ApiGatewayHostnameBindingGetByGatewayCollectionResultOfT(
+                _apiGatewayHostnameBindingRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "GatewayHostnameBindingResourceCollection.GetAll"), data => new GatewayHostnameBindingResource(Client, data));
         }
 
         /// <summary>
@@ -339,7 +351,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -359,7 +371,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiGatewayHostnameBindingRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostnameBindingName, context);
+                HttpMessage message = _apiGatewayHostnameBindingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hostnameBindingName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<GatewayHostnameBindingResourceData> response = default;
@@ -396,7 +408,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -416,7 +428,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiGatewayHostnameBindingRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostnameBindingName, context);
+                HttpMessage message = _apiGatewayHostnameBindingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hostnameBindingName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<GatewayHostnameBindingResourceData> response = default;
@@ -453,7 +465,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -473,7 +485,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiGatewayHostnameBindingRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostnameBindingName, context);
+                HttpMessage message = _apiGatewayHostnameBindingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hostnameBindingName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<GatewayHostnameBindingResourceData> response = default;
@@ -514,7 +526,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -534,7 +546,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiGatewayHostnameBindingRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostnameBindingName, context);
+                HttpMessage message = _apiGatewayHostnameBindingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hostnameBindingName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<GatewayHostnameBindingResourceData> response = default;

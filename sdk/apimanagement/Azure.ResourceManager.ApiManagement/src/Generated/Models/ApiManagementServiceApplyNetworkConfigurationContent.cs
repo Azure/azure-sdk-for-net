@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -25,14 +25,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of <see cref="ApiManagementServiceApplyNetworkConfigurationContent"/>. </summary>
         /// <param name="location"> Location of the Api Management service to update for a multi-region service. For a service deployed in a single region, this parameter is not required. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementServiceApplyNetworkConfigurationContent(string location, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApiManagementServiceApplyNetworkConfigurationContent(AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Location = location;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Location of the Api Management service to update for a multi-region service. For a service deployed in a single region, this parameter is not required. </summary>
-        [WirePath("location")]
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
     }
 }

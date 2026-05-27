@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="accessKey"> Storage account access key. Required only if `accessType` is set to `AccessKey`. </param>
         /// <param name="clientId"> The Client ID of user assigned managed identity. Required only if `accessType` is set to `UserAssignedManagedIdentity`. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementServiceBackupRestoreContent(string storageAccount, string containerName, string backupName, AccessType? accessType, string accessKey, string clientId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApiManagementServiceBackupRestoreContent(string storageAccount, string containerName, string backupName, StorageAccountAccessType? accessType, string accessKey, string clientId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StorageAccount = storageAccount;
             ContainerName = containerName;
@@ -53,27 +53,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The name of the Azure storage account (used to place/retrieve the backup). </summary>
-        [WirePath("storageAccount")]
         public string StorageAccount { get; }
 
         /// <summary> The name of the blob container (used to place/retrieve the backup). </summary>
-        [WirePath("containerName")]
         public string ContainerName { get; }
 
         /// <summary> The name of the backup file to create/retrieve. </summary>
-        [WirePath("backupName")]
         public string BackupName { get; }
 
         /// <summary> The type of access to be used for the storage account. </summary>
-        [WirePath("accessType")]
-        public AccessType? AccessType { get; set; }
+        public StorageAccountAccessType? AccessType { get; set; }
 
         /// <summary> Storage account access key. Required only if `accessType` is set to `AccessKey`. </summary>
-        [WirePath("accessKey")]
         public string AccessKey { get; set; }
 
         /// <summary> The Client ID of user assigned managed identity. Required only if `accessType` is set to `UserAssignedManagedIdentity`. </summary>
-        [WirePath("clientId")]
         public string ClientId { get; set; }
     }
 }

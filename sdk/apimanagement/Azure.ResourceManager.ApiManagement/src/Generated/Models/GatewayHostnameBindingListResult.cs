@@ -37,11 +37,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Result of the List API Management gateway hostname binding operation. </summary>
-        [WirePath("value")]
         public IList<GatewayHostnameBindingResourceData> Value { get; }
 
         /// <summary> Link to the next set of results. Not empty if Value contains incomplete list of API Management gateway hostname bindings. </summary>
-        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

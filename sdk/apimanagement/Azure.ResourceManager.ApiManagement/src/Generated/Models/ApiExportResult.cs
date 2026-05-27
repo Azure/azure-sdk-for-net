@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -36,24 +35,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> ResourceId of the API which was exported. </summary>
-        [WirePath("id")]
         public string Id { get; }
 
         /// <summary> Format in which the API Details are exported to the Storage Blob with Sas Key valid for 5 minutes. </summary>
-        [WirePath("format")]
         public ExportResultFormat? ExportResultFormat { get; }
 
         /// <summary> The object defining the schema of the exported API Detail. </summary>
-        [WirePath("value")]
         internal ApiExportResultValue Value { get; }
 
         /// <summary> Link to the Storage Blob containing the result of the export operation. The Blob Uri is only valid for 5 minutes. </summary>
-        [WirePath("value.link")]
         public string ValueLink
         {
             get
             {
-                return Value.Link;
+                return Value is null ? default : Value.Link;
             }
         }
     }

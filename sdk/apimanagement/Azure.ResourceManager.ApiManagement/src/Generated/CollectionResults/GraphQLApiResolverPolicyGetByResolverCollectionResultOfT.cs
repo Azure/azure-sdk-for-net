@@ -17,12 +17,13 @@ namespace Azure.ResourceManager.ApiManagement
     internal partial class GraphQLApiResolverPolicyGetByResolverCollectionResultOfT : Pageable<ApiManagementPolicyData>
     {
         private readonly GraphQLApiResolverPolicy _client;
-        private readonly string _subscriptionId;
+        private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _serviceName;
         private readonly string _apiId;
         private readonly string _resolverId;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of GraphQLApiResolverPolicyGetByResolverCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The GraphQLApiResolverPolicy client used to send requests. </param>
@@ -32,7 +33,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="apiId"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
         /// <param name="resolverId"> Resolver identifier within a GraphQL API. Must be unique in the current API Management service instance. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public GraphQLApiResolverPolicyGetByResolverCollectionResultOfT(GraphQLApiResolverPolicy client, string subscriptionId, string resourceGroupName, string serviceName, string apiId, string resolverId, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public GraphQLApiResolverPolicyGetByResolverCollectionResultOfT(GraphQLApiResolverPolicy client, Guid subscriptionId, string resourceGroupName, string serviceName, string apiId, string resolverId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -41,6 +43,7 @@ namespace Azure.ResourceManager.ApiManagement
             _apiId = apiId;
             _resolverId = resolverId;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of GraphQLApiResolverPolicyGetByResolverCollectionResultOfT as an enumerable collection. </summary>
@@ -74,7 +77,7 @@ namespace Azure.ResourceManager.ApiManagement
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByResolverRequest(nextLink, _subscriptionId, _resourceGroupName, _serviceName, _apiId, _resolverId, _context) : _client.CreateGetByResolverRequest(_subscriptionId, _resourceGroupName, _serviceName, _apiId, _resolverId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("GraphQLApiResolverPolicyCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

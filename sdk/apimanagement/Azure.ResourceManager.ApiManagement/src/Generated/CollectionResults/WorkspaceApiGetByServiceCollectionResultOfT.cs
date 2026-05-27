@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement
     internal partial class WorkspaceApiGetByServiceCollectionResultOfT : Pageable<ApiData>
     {
         private readonly WorkspaceApi _client;
-        private readonly string _subscriptionId;
+        private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _serviceName;
         private readonly string _workspaceId;
@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly string _tags;
         private readonly bool? _expandApiVersionSet;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of WorkspaceApiGetByServiceCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The WorkspaceApi client used to send requests. </param>
@@ -40,7 +41,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="tags"> Include tags in the response. </param>
         /// <param name="expandApiVersionSet"> Include full ApiVersionSet resource in response. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public WorkspaceApiGetByServiceCollectionResultOfT(WorkspaceApi client, string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string filter, int? top, int? skip, string tags, bool? expandApiVersionSet, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public WorkspaceApiGetByServiceCollectionResultOfT(WorkspaceApi client, Guid subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string filter, int? top, int? skip, string tags, bool? expandApiVersionSet, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -53,6 +55,7 @@ namespace Azure.ResourceManager.ApiManagement
             _tags = tags;
             _expandApiVersionSet = expandApiVersionSet;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of WorkspaceApiGetByServiceCollectionResultOfT as an enumerable collection. </summary>
@@ -86,7 +89,7 @@ namespace Azure.ResourceManager.ApiManagement
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByServiceRequest(nextLink, _subscriptionId, _resourceGroupName, _serviceName, _workspaceId, _filter, _top, _skip, _tags, _expandApiVersionSet, _context) : _client.CreateGetByServiceRequest(_subscriptionId, _resourceGroupName, _serviceName, _workspaceId, _filter, _top, _skip, _tags, _expandApiVersionSet, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("WorkspaceApiCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

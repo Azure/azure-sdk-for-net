@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -26,7 +25,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="name"> The license name used for the API. </param>
         /// <param name="uri"> A URL to the license used for the API. MUST be in the format of a URL. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApiLicenseInformation(string name, string uri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApiLicenseInformation(string name, Uri uri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Uri = uri;
@@ -34,11 +33,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The license name used for the API. </summary>
-        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> A URL to the license used for the API. MUST be in the format of a URL. </summary>
-        [WirePath("url")]
-        public string Uri { get; set; }
+        public Uri Uri { get; set; }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -26,25 +25,27 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="redirectUri"> Redirect URL to be set in the OAuth application. </param>
         /// <param name="grantTypes"> OAuth2 settings. </param>
         /// <param name="keyVault"> Key Vault reference for client secret storage. </param>
+        /// <param name="federatedIdentityCredentialsProperties"> Federated identity credentials properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AuthorizationProviderOAuth2Settings(string redirectUri, AuthorizationProviderOAuth2GrantTypes grantTypes, AuthorizationProviderKeyVaultContract keyVault, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AuthorizationProviderOAuth2Settings(Uri redirectUri, AuthorizationProviderOAuth2GrantTypes grantTypes, AuthorizationProviderKeyVaultContract keyVault, AuthorizationProviderFederatedIdentityCredentialsProperties federatedIdentityCredentialsProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RedirectUri = redirectUri;
             GrantTypes = grantTypes;
             KeyVault = keyVault;
+            FederatedIdentityCredentialsProperties = federatedIdentityCredentialsProperties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Redirect URL to be set in the OAuth application. </summary>
-        [WirePath("redirectUrl")]
-        public string RedirectUri { get; set; }
+        public Uri RedirectUri { get; set; }
 
         /// <summary> OAuth2 settings. </summary>
-        [WirePath("grantTypes")]
         public AuthorizationProviderOAuth2GrantTypes GrantTypes { get; set; }
 
         /// <summary> Key Vault reference for client secret storage. </summary>
-        [WirePath("keyVault")]
         public AuthorizationProviderKeyVaultContract KeyVault { get; set; }
+
+        /// <summary> Federated identity credentials properties. </summary>
+        public AuthorizationProviderFederatedIdentityCredentialsProperties FederatedIdentityCredentialsProperties { get; }
     }
 }

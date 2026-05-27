@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -34,11 +33,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The principal id of user assigned identity. </summary>
-        [WirePath("principalId")]
         public string PrincipalId { get; set; }
 
         /// <summary> The client id of user assigned identity. </summary>
-        [WirePath("clientId")]
         public string ClientId { get; set; }
     }
 }

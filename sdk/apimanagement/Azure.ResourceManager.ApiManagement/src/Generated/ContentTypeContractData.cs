@@ -38,11 +38,9 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Properties of the content type. </summary>
-        [WirePath("properties")]
         internal ContentTypeContractProperties Properties { get; set; }
 
         /// <summary> Content type identifier. </summary>
-        [WirePath("properties.id")]
         public string ContentTypeIdentifier
         {
             get
@@ -60,7 +58,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Content type name. Must be 1 to 250 characters long. </summary>
-        [WirePath("properties.name")]
         public string ContentTypeName
         {
             get
@@ -78,7 +75,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Content type description. </summary>
-        [WirePath("properties.description")]
         public string Description
         {
             get
@@ -96,7 +92,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Content type schema. </summary>
-        [WirePath("properties.schema")]
         public BinaryData Schema
         {
             get
@@ -114,7 +109,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Content type version. </summary>
-        [WirePath("properties.version")]
         public string Version
         {
             get

@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetByOperationRequest(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string operationId, string tagId, RequestContext context)
+        internal HttpMessage CreateGetByOperationRequest(Guid subscriptionId, string resourceGroupName, string serviceName, string apiId, string operationId, string tagId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.ApiManagement
             return message;
         }
 
-        internal HttpMessage CreateGetEntityStateByOperationRequest(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string operationId, string tagId, RequestContext context)
+        internal HttpMessage CreateGetEntityStateByOperationRequest(Guid subscriptionId, string resourceGroupName, string serviceName, string apiId, string operationId, string tagId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.ApiManagement
             return message;
         }
 
-        internal HttpMessage CreateAssignToOperationRequest(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string operationId, string tagId, RequestContext context)
+        internal HttpMessage CreateAssignToOperationRequest(Guid subscriptionId, string resourceGroupName, string serviceName, string apiId, string operationId, string tagId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
@@ -124,12 +124,12 @@ namespace Azure.ResourceManager.ApiManagement
             return message;
         }
 
-        internal HttpMessage CreateDetachFromOperationRequest(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string operationId, string tagId, RequestContext context)
+        internal HttpMessage CreateDetachFromOperationRequest(Guid subscriptionId, string resourceGroupName, string serviceName, string apiId, string operationId, string tagId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
@@ -151,12 +151,12 @@ namespace Azure.ResourceManager.ApiManagement
             return message;
         }
 
-        internal HttpMessage CreateGetByOperationRequest(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string operationId, string filter, int? top, int? skip, RequestContext context)
+        internal HttpMessage CreateGetByOperationRequest(Guid subscriptionId, string resourceGroupName, string serviceName, string apiId, string operationId, string filter, int? top, int? skip, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ApiManagement
             return message;
         }
 
-        internal HttpMessage CreateNextGetByOperationRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string serviceName, string apiId, string operationId, string filter, int? top, int? skip, RequestContext context)
+        internal HttpMessage CreateNextGetByOperationRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string serviceName, string apiId, string operationId, string filter, int? top, int? skip, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

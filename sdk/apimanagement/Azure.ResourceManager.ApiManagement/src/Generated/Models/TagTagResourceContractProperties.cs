@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -34,11 +33,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Tag identifier. </summary>
-        [WirePath("id")]
         public string Id { get; }
 
         /// <summary> Tag Name. </summary>
-        [WirePath("name")]
         public string Name { get; }
     }
 }

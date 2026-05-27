@@ -38,11 +38,9 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Properties of the Resolver Contract. </summary>
-        [WirePath("properties")]
         internal ResolverEntityBaseContract Properties { get; set; }
 
         /// <summary> Resolver Name. </summary>
-        [WirePath("properties.displayName")]
         public string DisplayName
         {
             get
@@ -60,7 +58,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Path is type/field being resolved. </summary>
-        [WirePath("properties.path")]
         public string Path
         {
             get
@@ -78,7 +75,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Description of the resolver. May include HTML formatting tags. </summary>
-        [WirePath("properties.description")]
         public string Description
         {
             get

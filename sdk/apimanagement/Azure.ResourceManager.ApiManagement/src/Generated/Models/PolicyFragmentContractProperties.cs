@@ -43,19 +43,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Contents of the policy fragment. </summary>
-        [WirePath("value")]
         public string Value { get; set; }
 
         /// <summary> Policy fragment description. </summary>
-        [WirePath("description")]
         public string Description { get; set; }
 
         /// <summary> Format of the policy fragment content. </summary>
-        [WirePath("format")]
         public PolicyFragmentContentFormat? Format { get; set; }
 
         /// <summary> The provisioning state. </summary>
-        [WirePath("provisioningState")]
         public string ProvisioningState { get; }
     }
 }

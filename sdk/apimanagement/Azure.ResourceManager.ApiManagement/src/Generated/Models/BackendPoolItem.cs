@@ -44,19 +44,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The unique ARM id of the backend entity. The ARM id should refer to an already existing backend entity. </summary>
-        [WirePath("id")]
         public ResourceIdentifier Id { get; set; }
 
         /// <summary> The weight of the backend entity in the backend pool. Must be between 0 and 100. It can be also null if the value not specified. </summary>
-        [WirePath("weight")]
         public int? Weight { get; set; }
 
         /// <summary> The priority of the backend entity in the backend pool. Must be between 0 and 100. It can be also null if the value not specified. </summary>
-        [WirePath("priority")]
         public int? Priority { get; set; }
 
         /// <summary> Scope 2 carbon emission preference for the backend. When specified, the load balancer will optimize traffic flow by routing to regions that have carbon emission less than or equal to the specified category. However, when all other backends are not available it will route traffic to these regions anyway. This requires the backend to be attributed with 'azureRegion' information. </summary>
-        [WirePath("preferredCarbonEmission")]
         public CarbonEmissionCategory? PreferredCarbonEmission { get; set; }
     }
 }

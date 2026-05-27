@@ -38,11 +38,9 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Cache properties details. </summary>
-        [WirePath("properties")]
         internal CacheContractProperties Properties { get; set; }
 
         /// <summary> Cache description. </summary>
-        [WirePath("properties.description")]
         public string Description
         {
             get
@@ -60,7 +58,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Runtime connection string to cache. </summary>
-        [WirePath("properties.connectionString")]
         public string ConnectionString
         {
             get
@@ -78,7 +75,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Location identifier to use cache from (should be either 'default' or valid Azure region identifier). </summary>
-        [WirePath("properties.useFromLocation")]
         public string UseFromLocation
         {
             get
@@ -96,7 +92,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Original uri of entity in external system cache points to. </summary>
-        [WirePath("properties.resourceId")]
         public string ResourceId
         {
             get

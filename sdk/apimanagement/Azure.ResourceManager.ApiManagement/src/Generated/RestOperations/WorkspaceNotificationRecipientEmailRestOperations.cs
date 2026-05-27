@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateWorkspaceNotificationRecipientEmailGetByNotificationRequest(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string notificationName, RequestContext context)
+        internal HttpMessage CreateWorkspaceNotificationRecipientEmailGetByNotificationRequest(Guid subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string notificationName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
@@ -68,12 +68,12 @@ namespace Azure.ResourceManager.ApiManagement
             return message;
         }
 
-        internal HttpMessage CreateWorkspaceNotificationRecipientEmailCheckEntityExistsRequest(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string notificationName, string email, RequestContext context)
+        internal HttpMessage CreateWorkspaceNotificationRecipientEmailCheckEntityExistsRequest(Guid subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string notificationName, string email, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
@@ -95,12 +95,12 @@ namespace Azure.ResourceManager.ApiManagement
             return message;
         }
 
-        internal HttpMessage CreateWorkspaceNotificationRecipientEmailCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string notificationName, string email, RequestContext context)
+        internal HttpMessage CreateWorkspaceNotificationRecipientEmailCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string notificationName, string email, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
@@ -123,12 +123,12 @@ namespace Azure.ResourceManager.ApiManagement
             return message;
         }
 
-        internal HttpMessage CreateWorkspaceNotificationRecipientEmailDeleteRequest(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string notificationName, string email, RequestContext context)
+        internal HttpMessage CreateWorkspaceNotificationRecipientEmailDeleteRequest(Guid subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string notificationName, string email, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);

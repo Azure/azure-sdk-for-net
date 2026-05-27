@@ -28,8 +28,6 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly ApiOperation _apiOperationRestClient;
         private readonly ClientDiagnostics _apiOperationPolicyClientDiagnostics;
         private readonly ApiOperationPolicy _apiOperationPolicyRestClient;
-        private readonly ClientDiagnostics _operationTagClientDiagnostics;
-        private readonly OperationTag _operationTagRestClient;
         private readonly ApiOperationData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/apis/operations";
@@ -55,11 +53,9 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ResourceType, out string apiOperationApiVersion);
             _apiOperationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _apiOperationRestClient = new ApiOperation(_apiOperationClientDiagnostics, Pipeline, Endpoint, apiOperationApiVersion ?? "2025-03-01-preview");
+            _apiOperationRestClient = new ApiOperation(_apiOperationClientDiagnostics, Pipeline, Endpoint, apiOperationApiVersion ?? "2025-09-01-preview");
             _apiOperationPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _apiOperationPolicyRestClient = new ApiOperationPolicy(_apiOperationPolicyClientDiagnostics, Pipeline, Endpoint, apiOperationApiVersion ?? "2025-03-01-preview");
-            _operationTagClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _operationTagRestClient = new OperationTag(_operationTagClientDiagnostics, Pipeline, Endpoint, apiOperationApiVersion ?? "2025-03-01-preview");
+            _apiOperationPolicyRestClient = new ApiOperationPolicy(_apiOperationPolicyClientDiagnostics, Pipeline, Endpoint, apiOperationApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -97,7 +93,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -114,7 +110,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -133,7 +129,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiOperationRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _apiOperationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiOperationData> response = Response.FromValue(ApiOperationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -162,7 +158,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -181,7 +177,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiOperationRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _apiOperationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiOperationData> response = Response.FromValue(ApiOperationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -210,7 +206,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -236,7 +232,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiOperationRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, OperationUpdateContract.ToRequestContent(operationUpdateContract), context);
+                HttpMessage message = _apiOperationRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, OperationUpdateContract.ToRequestContent(operationUpdateContract), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiOperationData> response = Response.FromValue(ApiOperationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -265,7 +261,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -291,7 +287,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiOperationRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, OperationUpdateContract.ToRequestContent(operationUpdateContract), context);
+                HttpMessage message = _apiOperationRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, OperationUpdateContract.ToRequestContent(operationUpdateContract), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiOperationData> response = Response.FromValue(ApiOperationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -320,7 +316,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -345,7 +341,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiOperationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, context);
+                HttpMessage message = _apiOperationRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -376,7 +372,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -401,7 +397,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiOperationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, context);
+                HttpMessage message = _apiOperationRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -420,19 +416,19 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Gets the entity state (Etag) version of the API operation policy specified by its identifier.
+        /// Get the list of policy configuration at the API Operation level.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/operations/{operationId}/policies/{policyId}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/operations/{operationId}/policies. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PolicyContracts_GetEntityTag. </description>
+        /// <description> PolicyContracts_ListByOperation. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -440,11 +436,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="policyId"> The identifier of the Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetEntityTagAsync(PolicyIdName policyId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PolicyListResult>> GetByOperationAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _apiOperationPolicyClientDiagnostics.CreateScope("ApiOperationResource.GetEntityTag");
+            using DiagnosticScope scope = _apiOperationPolicyClientDiagnostics.CreateScope("ApiOperationResource.GetByOperation");
             scope.Start();
             try
             {
@@ -452,8 +447,13 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiOperationPolicyRestClient.CreateGetEntityTagRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, policyId.ToString(), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                HttpMessage message = _apiOperationPolicyRestClient.CreateGetByOperationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PolicyListResult> response = Response.FromValue(PolicyListResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -464,19 +464,19 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Gets the entity state (Etag) version of the API operation policy specified by its identifier.
+        /// Get the list of policy configuration at the API Operation level.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/operations/{operationId}/policies/{policyId}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/operations/{operationId}/policies. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PolicyContracts_GetEntityTag. </description>
+        /// <description> PolicyContracts_ListByOperation. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -484,11 +484,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="policyId"> The identifier of the Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetEntityTag(PolicyIdName policyId, CancellationToken cancellationToken = default)
+        public virtual Response<PolicyListResult> GetByOperation(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _apiOperationPolicyClientDiagnostics.CreateScope("ApiOperationResource.GetEntityTag");
+            using DiagnosticScope scope = _apiOperationPolicyClientDiagnostics.CreateScope("ApiOperationResource.GetByOperation");
             scope.Start();
             try
             {
@@ -496,104 +495,13 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiOperationPolicyRestClient.CreateGetEntityTagRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, policyId.ToString(), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the entity state version of the tag specified by its identifier.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/operations/{operationId}/tags/{tagId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> TagContracts_GetEntityStateByOperation. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ApiOperationResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tagId"> Tag identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tagId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response> GetEntityStateByOperationAsync(string tagId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
-
-            using DiagnosticScope scope = _operationTagClientDiagnostics.CreateScope("ApiOperationResource.GetEntityStateByOperation");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
+                HttpMessage message = _apiOperationPolicyRestClient.CreateGetByOperationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PolicyListResult> response = Response.FromValue(PolicyListResult.FromResponse(result), result);
+                if (response.Value == null)
                 {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _operationTagRestClient.CreateGetEntityStateByOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, tagId, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the entity state version of the tag specified by its identifier.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/operations/{operationId}/tags/{tagId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> TagContracts_GetEntityStateByOperation. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ApiOperationResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tagId"> Tag identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tagId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response GetEntityStateByOperation(string tagId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
-
-            using DiagnosticScope scope = _operationTagClientDiagnostics.CreateScope("ApiOperationResource.GetEntityStateByOperation");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _operationTagRestClient.CreateGetEntityStateByOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, tagId, context);
-                Response response = Pipeline.ProcessMessage(message, context);
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)

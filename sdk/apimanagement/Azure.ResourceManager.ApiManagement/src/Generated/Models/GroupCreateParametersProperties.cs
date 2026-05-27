@@ -43,19 +43,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Group name. </summary>
-        [WirePath("displayName")]
         public string DisplayName { get; }
 
         /// <summary> Group description. </summary>
-        [WirePath("description")]
         public string Description { get; set; }
 
         /// <summary> Group type. </summary>
-        [WirePath("type")]
         public ApiManagementGroupType? Type { get; set; }
 
         /// <summary> Identifier of the external groups, this property contains the id of the group from the external identity provider, e.g. for Azure Active Directory `aad://&lt;tenant&gt;.onmicrosoft.com/groups/&lt;group object id&gt;`; otherwise the value is null. </summary>
-        [WirePath("externalId")]
         public string ExternalId { get; set; }
     }
 }

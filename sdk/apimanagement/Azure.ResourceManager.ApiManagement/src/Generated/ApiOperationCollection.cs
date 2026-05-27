@@ -27,10 +27,6 @@ namespace Azure.ResourceManager.ApiManagement
     {
         private readonly ClientDiagnostics _apiOperationClientDiagnostics;
         private readonly ApiOperation _apiOperationRestClient;
-        private readonly ClientDiagnostics _apiOperationPolicyClientDiagnostics;
-        private readonly ApiOperationPolicy _apiOperationPolicyRestClient;
-        private readonly ClientDiagnostics _operationTagClientDiagnostics;
-        private readonly OperationTag _operationTagRestClient;
 
         /// <summary> Initializes a new instance of ApiOperationCollection for mocking. </summary>
         protected ApiOperationCollection()
@@ -44,11 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ApiOperationResource.ResourceType, out string apiOperationApiVersion);
             _apiOperationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiOperationResource.ResourceType.Namespace, Diagnostics);
-            _apiOperationRestClient = new ApiOperation(_apiOperationClientDiagnostics, Pipeline, Endpoint, apiOperationApiVersion ?? "2025-03-01-preview");
-            _apiOperationPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiOperationResource.ResourceType.Namespace, Diagnostics);
-            _apiOperationPolicyRestClient = new ApiOperationPolicy(_apiOperationPolicyClientDiagnostics, Pipeline, Endpoint, apiOperationApiVersion ?? "2025-03-01-preview");
-            _operationTagClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiOperationResource.ResourceType.Namespace, Diagnostics);
-            _operationTagRestClient = new OperationTag(_operationTagClientDiagnostics, Pipeline, Endpoint, apiOperationApiVersion ?? "2025-03-01-preview");
+            _apiOperationRestClient = new ApiOperation(_apiOperationClientDiagnostics, Pipeline, Endpoint, apiOperationApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -58,7 +50,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             if (id.ResourceType != ApiResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiResource.ResourceType), nameof(id));
             }
         }
 
@@ -75,7 +67,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,7 +91,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiOperationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, ApiOperationData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _apiOperationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, ApiOperationData.ToRequestContent(data), ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiOperationData> response = Response.FromValue(ApiOperationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -131,7 +123,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -155,7 +147,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiOperationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, ApiOperationData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _apiOperationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, ApiOperationData.ToRequestContent(data), ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiOperationData> response = Response.FromValue(ApiOperationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -187,7 +179,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -207,7 +199,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiOperationRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, context);
+                HttpMessage message = _apiOperationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiOperationData> response = Response.FromValue(ApiOperationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -236,7 +228,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -256,7 +248,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiOperationRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, context);
+                HttpMessage message = _apiOperationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiOperationData> response = Response.FromValue(ApiOperationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -285,7 +277,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -303,7 +295,7 @@ namespace Azure.ResourceManager.ApiManagement
             };
             return new AsyncPageableWrapper<ApiOperationData, ApiOperationResource>(new ApiOperationGetByApiAsyncCollectionResultOfT(
                 _apiOperationRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
@@ -311,7 +303,8 @@ namespace Azure.ResourceManager.ApiManagement
                 top,
                 skip,
                 tags,
-                context), data => new ApiOperationResource(Client, data));
+                context,
+                "ApiOperationCollection.GetAll"), data => new ApiOperationResource(Client, data));
         }
 
         /// <summary>
@@ -327,7 +320,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -345,7 +338,7 @@ namespace Azure.ResourceManager.ApiManagement
             };
             return new PageableWrapper<ApiOperationData, ApiOperationResource>(new ApiOperationGetByApiCollectionResultOfT(
                 _apiOperationRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
@@ -353,7 +346,8 @@ namespace Azure.ResourceManager.ApiManagement
                 top,
                 skip,
                 tags,
-                context), data => new ApiOperationResource(Client, data));
+                context,
+                "ApiOperationCollection.GetAll"), data => new ApiOperationResource(Client, data));
         }
 
         /// <summary>
@@ -369,7 +363,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -389,7 +383,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiOperationRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, context);
+                HttpMessage message = _apiOperationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiOperationData> response = default;
@@ -426,7 +420,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -446,7 +440,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiOperationRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, context);
+                HttpMessage message = _apiOperationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiOperationData> response = default;
@@ -483,7 +477,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -503,7 +497,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiOperationRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, context);
+                HttpMessage message = _apiOperationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiOperationData> response = default;
@@ -544,7 +538,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -564,7 +558,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiOperationRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, context);
+                HttpMessage message = _apiOperationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiOperationData> response = default;

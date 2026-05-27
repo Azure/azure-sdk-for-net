@@ -32,12 +32,6 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly ProductSubscriptions _productSubscriptionsRestClient;
         private readonly ClientDiagnostics _productGroupClientDiagnostics;
         private readonly ProductGroup _productGroupRestClient;
-        private readonly ClientDiagnostics _productPolicyClientDiagnostics;
-        private readonly ProductPolicy _productPolicyRestClient;
-        private readonly ClientDiagnostics _productWikiClientDiagnostics;
-        private readonly ProductWiki _productWikiRestClient;
-        private readonly ClientDiagnostics _productTagClientDiagnostics;
-        private readonly ProductTag _productTagRestClient;
         private readonly ApiManagementProductData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/products";
@@ -63,19 +57,13 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ResourceType, out string productApiVersion);
             _productClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _productRestClient = new Product(_productClientDiagnostics, Pipeline, Endpoint, productApiVersion ?? "2025-03-01-preview");
+            _productRestClient = new Product(_productClientDiagnostics, Pipeline, Endpoint, productApiVersion ?? "2025-09-01-preview");
             _productApiClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _productApiRestClient = new ProductApi(_productApiClientDiagnostics, Pipeline, Endpoint, productApiVersion ?? "2025-03-01-preview");
+            _productApiRestClient = new ProductApi(_productApiClientDiagnostics, Pipeline, Endpoint, productApiVersion ?? "2025-09-01-preview");
             _productSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _productSubscriptionsRestClient = new ProductSubscriptions(_productSubscriptionsClientDiagnostics, Pipeline, Endpoint, productApiVersion ?? "2025-03-01-preview");
+            _productSubscriptionsRestClient = new ProductSubscriptions(_productSubscriptionsClientDiagnostics, Pipeline, Endpoint, productApiVersion ?? "2025-09-01-preview");
             _productGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _productGroupRestClient = new ProductGroup(_productGroupClientDiagnostics, Pipeline, Endpoint, productApiVersion ?? "2025-03-01-preview");
-            _productPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _productPolicyRestClient = new ProductPolicy(_productPolicyClientDiagnostics, Pipeline, Endpoint, productApiVersion ?? "2025-03-01-preview");
-            _productWikiClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _productWikiRestClient = new ProductWiki(_productWikiClientDiagnostics, Pipeline, Endpoint, productApiVersion ?? "2025-03-01-preview");
-            _productTagClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _productTagRestClient = new ProductTag(_productTagClientDiagnostics, Pipeline, Endpoint, productApiVersion ?? "2025-03-01-preview");
+            _productGroupRestClient = new ProductGroup(_productGroupClientDiagnostics, Pipeline, Endpoint, productApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -112,7 +100,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -129,7 +117,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -148,7 +136,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _productRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _productRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementProductData> response = Response.FromValue(ApiManagementProductData.FromResponse(result), result);
                 if (response.Value == null)
@@ -177,7 +165,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -196,7 +184,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _productRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _productRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementProductData> response = Response.FromValue(ApiManagementProductData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +213,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -251,7 +239,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _productRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, ProductPatch.ToRequestContent(patch), context);
+                HttpMessage message = _productRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, ProductPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementProductData> response = Response.FromValue(ApiManagementProductData.FromResponse(result), result);
                 if (response.Value == null)
@@ -280,7 +268,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -306,7 +294,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _productRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, ProductPatch.ToRequestContent(patch), context);
+                HttpMessage message = _productRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, ProductPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementProductData> response = Response.FromValue(ApiManagementProductData.FromResponse(result), result);
                 if (response.Value == null)
@@ -335,7 +323,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -361,7 +349,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _productRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, deleteSubscriptions, context);
+                HttpMessage message = _productRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, deleteSubscriptions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -392,7 +380,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -418,7 +406,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _productRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, deleteSubscriptions, context);
+                HttpMessage message = _productRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, deleteSubscriptions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -449,7 +437,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -473,7 +461,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _productApiRestClient.CreateProductApiCheckEntityExistsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiId, context);
+                HttpMessage message = _productApiRestClient.CreateProductApiCheckEntityExistsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -497,7 +485,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -521,7 +509,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _productApiRestClient.CreateProductApiCheckEntityExistsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiId, context);
+                HttpMessage message = _productApiRestClient.CreateProductApiCheckEntityExistsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -545,7 +533,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -557,23 +545,24 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="UserSubscriptionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<UserSubscriptionResource> GetAllAsync(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ApiManagementSubscriptionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiManagementSubscriptionData> GetAllAsync(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiManagementSubscriptionData, UserSubscriptionResource>(new ProductSubscriptionsGetAllAsyncCollectionResultOfT(
+            return new ProductSubscriptionsGetAllAsyncCollectionResultOfT(
                 _productSubscriptionsRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
                 filter,
                 top,
                 skip,
-                context), data => new UserSubscriptionResource(Client, data));
+                context,
+                "ProductResource.GetAll");
         }
 
         /// <summary>
@@ -589,7 +578,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -601,23 +590,24 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="UserSubscriptionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<UserSubscriptionResource> GetAll(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ApiManagementSubscriptionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiManagementSubscriptionData> GetAll(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiManagementSubscriptionData, UserSubscriptionResource>(new ProductSubscriptionsGetAllCollectionResultOfT(
+            return new ProductSubscriptionsGetAllCollectionResultOfT(
                 _productSubscriptionsRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
                 filter,
                 top,
                 skip,
-                context), data => new UserSubscriptionResource(Client, data));
+                context,
+                "ProductResource.GetAll");
         }
 
         /// <summary>
@@ -633,7 +623,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -645,23 +635,24 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkspaceApiResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WorkspaceApiResource> ProductApiGetByProductAsync(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ApiData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiData> ProductApiGetByProductAsync(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiData, WorkspaceApiResource>(new ProductApiProductApiGetByProductAsyncCollectionResultOfT(
+            return new ProductApiProductApiGetByProductAsyncCollectionResultOfT(
                 _productApiRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
                 filter,
                 top,
                 skip,
-                context), data => new WorkspaceApiResource(Client, data));
+                context,
+                "ProductResource.ProductApiGetByProduct");
         }
 
         /// <summary>
@@ -677,7 +668,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -689,23 +680,24 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkspaceApiResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WorkspaceApiResource> ProductApiGetByProduct(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ApiData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiData> ProductApiGetByProduct(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiData, WorkspaceApiResource>(new ProductApiProductApiGetByProductCollectionResultOfT(
+            return new ProductApiProductApiGetByProductCollectionResultOfT(
                 _productApiRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
                 filter,
                 top,
                 skip,
-                context), data => new WorkspaceApiResource(Client, data));
+                context,
+                "ProductResource.ProductApiGetByProduct");
         }
 
         /// <summary>
@@ -721,7 +713,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -733,7 +725,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="apiId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<WorkspaceApiResource>> ProductApiCreateOrUpdateAsync(string apiId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiData>> ProductApiCreateOrUpdateAsync(string apiId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
 
@@ -745,14 +737,14 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _productApiRestClient.CreateProductApiCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiId, context);
+                HttpMessage message = _productApiRestClient.CreateProductApiCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiData> response = Response.FromValue(ApiData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new WorkspaceApiResource(Client, response.Value), response.GetRawResponse());
+                return response;
             }
             catch (Exception e)
             {
@@ -774,7 +766,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -786,7 +778,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="apiId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<WorkspaceApiResource> ProductApiCreateOrUpdate(string apiId, CancellationToken cancellationToken = default)
+        public virtual Response<ApiData> ProductApiCreateOrUpdate(string apiId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
 
@@ -798,14 +790,14 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _productApiRestClient.CreateProductApiCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiId, context);
+                HttpMessage message = _productApiRestClient.CreateProductApiCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiData> response = Response.FromValue(ApiData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new WorkspaceApiResource(Client, response.Value), response.GetRawResponse());
+                return response;
             }
             catch (Exception e)
             {
@@ -827,7 +819,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -851,7 +843,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _productApiRestClient.CreateProductApiDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiId, context);
+                HttpMessage message = _productApiRestClient.CreateProductApiDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -875,7 +867,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -899,7 +891,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _productApiRestClient.CreateProductApiDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiId, context);
+                HttpMessage message = _productApiRestClient.CreateProductApiDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -923,7 +915,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -947,7 +939,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _productGroupRestClient.CreateProductGroupCheckEntityExistsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, groupId, context);
+                HttpMessage message = _productGroupRestClient.CreateProductGroupCheckEntityExistsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, groupId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -971,7 +963,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -995,7 +987,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _productGroupRestClient.CreateProductGroupCheckEntityExistsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, groupId, context);
+                HttpMessage message = _productGroupRestClient.CreateProductGroupCheckEntityExistsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, groupId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -1019,7 +1011,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1031,7 +1023,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<WorkspaceGroupResource>> ProductGroupCreateOrUpdateAsync(string groupId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementGroupData>> ProductGroupCreateOrUpdateAsync(string groupId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
@@ -1043,14 +1035,14 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _productGroupRestClient.CreateProductGroupCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, groupId, context);
+                HttpMessage message = _productGroupRestClient.CreateProductGroupCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, groupId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementGroupData> response = Response.FromValue(ApiManagementGroupData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new WorkspaceGroupResource(Client, response.Value), response.GetRawResponse());
+                return response;
             }
             catch (Exception e)
             {
@@ -1072,7 +1064,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1084,7 +1076,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<WorkspaceGroupResource> ProductGroupCreateOrUpdate(string groupId, CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementGroupData> ProductGroupCreateOrUpdate(string groupId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
@@ -1096,14 +1088,14 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _productGroupRestClient.CreateProductGroupCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, groupId, context);
+                HttpMessage message = _productGroupRestClient.CreateProductGroupCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, groupId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementGroupData> response = Response.FromValue(ApiManagementGroupData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new WorkspaceGroupResource(Client, response.Value), response.GetRawResponse());
+                return response;
             }
             catch (Exception e)
             {
@@ -1125,7 +1117,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1149,7 +1141,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _productGroupRestClient.CreateProductGroupDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, groupId, context);
+                HttpMessage message = _productGroupRestClient.CreateProductGroupDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, groupId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -1173,7 +1165,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1197,7 +1189,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _productGroupRestClient.CreateProductGroupDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, groupId, context);
+                HttpMessage message = _productGroupRestClient.CreateProductGroupDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, groupId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -1221,7 +1213,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1233,23 +1225,24 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkspaceGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WorkspaceGroupResource> ProductGroupGetByProductAsync(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ApiManagementGroupData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiManagementGroupData> ProductGroupGetByProductAsync(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiManagementGroupData, WorkspaceGroupResource>(new ProductGroupProductGroupGetByProductAsyncCollectionResultOfT(
+            return new ProductGroupProductGroupGetByProductAsyncCollectionResultOfT(
                 _productGroupRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
                 filter,
                 top,
                 skip,
-                context), data => new WorkspaceGroupResource(Client, data));
+                context,
+                "ProductResource.ProductGroupGetByProduct");
         }
 
         /// <summary>
@@ -1265,7 +1258,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1277,293 +1270,24 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkspaceGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WorkspaceGroupResource> ProductGroupGetByProduct(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ApiManagementGroupData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiManagementGroupData> ProductGroupGetByProduct(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiManagementGroupData, WorkspaceGroupResource>(new ProductGroupProductGroupGetByProductCollectionResultOfT(
+            return new ProductGroupProductGroupGetByProductCollectionResultOfT(
                 _productGroupRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
                 filter,
                 top,
                 skip,
-                context), data => new WorkspaceGroupResource(Client, data));
-        }
-
-        /// <summary>
-        /// Get the ETag of the policy configuration at the Product level.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/policies/{policyId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ProductPolicy_GetEntityTag. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ProductResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policyId"> The identifier of the Policy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetEntityTagAsync(PolicyIdName policyId, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _productPolicyClientDiagnostics.CreateScope("ProductResource.GetEntityTag");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _productPolicyRestClient.CreateGetEntityTagRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyId.ToString(), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get the ETag of the policy configuration at the Product level.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/policies/{policyId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ProductPolicy_GetEntityTag. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ProductResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policyId"> The identifier of the Policy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetEntityTag(PolicyIdName policyId, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _productPolicyClientDiagnostics.CreateScope("ProductResource.GetEntityTag");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _productPolicyRestClient.CreateGetEntityTagRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyId.ToString(), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the entity state (Etag) version of the Wiki for a Product specified by its identifier.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/wikis/default. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ProductWiki_GetEntityTag. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ProductResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetEntityTagAsync(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _productWikiClientDiagnostics.CreateScope("ProductResource.GetEntityTag");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _productWikiRestClient.CreateGetEntityTagRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the entity state (Etag) version of the Wiki for a Product specified by its identifier.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/wikis/default. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ProductWiki_GetEntityTag. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ProductResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetEntityTag(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _productWikiClientDiagnostics.CreateScope("ProductResource.GetEntityTag");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _productWikiRestClient.CreateGetEntityTagRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the entity state version of the tag specified by its identifier.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/tags/{tagId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> TagContractOperation_GetEntityStateByProduct. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ProductResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tagId"> Tag identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tagId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response> GetEntityStateByProductAsync(string tagId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
-
-            using DiagnosticScope scope = _productTagClientDiagnostics.CreateScope("ProductResource.GetEntityStateByProduct");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _productTagRestClient.CreateGetEntityStateByProductRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagId, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the entity state version of the tag specified by its identifier.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/tags/{tagId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> TagContractOperation_GetEntityStateByProduct. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ProductResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tagId"> Tag identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tagId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response GetEntityStateByProduct(string tagId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
-
-            using DiagnosticScope scope = _productTagClientDiagnostics.CreateScope("ProductResource.GetEntityStateByProduct");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _productTagRestClient.CreateGetEntityStateByProductRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagId, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                context,
+                "ProductResource.ProductGroupGetByProduct");
         }
 
         /// <summary> Gets a collection of ProductPolicies in the <see cref="ProductResource"/>. </summary>

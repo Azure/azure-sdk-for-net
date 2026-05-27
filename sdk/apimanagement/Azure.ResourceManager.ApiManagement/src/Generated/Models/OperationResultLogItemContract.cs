@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -36,15 +35,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The type of entity contract. </summary>
-        [WirePath("objectType")]
         public string ObjectType { get; }
 
         /// <summary> Action like create/update/delete. </summary>
-        [WirePath("action")]
         public string Action { get; }
 
         /// <summary> Identifier of the entity being created/updated/deleted. </summary>
-        [WirePath("objectKey")]
         public string ObjectKey { get; }
     }
 }

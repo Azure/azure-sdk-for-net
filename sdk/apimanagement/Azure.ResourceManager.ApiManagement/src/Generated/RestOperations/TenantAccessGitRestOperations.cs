@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateTenantAccessGitRegeneratePrimaryKeyRequest(string subscriptionId, string resourceGroupName, string serviceName, string accessName, RequestContext context)
+        internal HttpMessage CreateTenantAccessGitRegeneratePrimaryKeyRequest(Guid subscriptionId, string resourceGroupName, string serviceName, string accessName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.ApiManagement
             return message;
         }
 
-        internal HttpMessage CreateTenantAccessGitRegenerateSecondaryKeyRequest(string subscriptionId, string resourceGroupName, string serviceName, string accessName, RequestContext context)
+        internal HttpMessage CreateTenantAccessGitRegenerateSecondaryKeyRequest(Guid subscriptionId, string resourceGroupName, string serviceName, string accessName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);

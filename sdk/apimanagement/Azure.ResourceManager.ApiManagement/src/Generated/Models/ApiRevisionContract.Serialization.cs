@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (options.Format != "W" && Optional.IsDefined(PrivateUri))
             {
                 writer.WritePropertyName("privateUrl"u8);
-                writer.WriteStringValue(PrivateUri);
+                writer.WriteStringValue(PrivateUri.AbsoluteUri);
             }
             if (options.Format != "W" && Optional.IsDefined(IsOnline))
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             DateTimeOffset? createdOn = default;
             DateTimeOffset? updatedOn = default;
             string description = default;
-            string privateUri = default;
+            Uri privateUri = default;
             bool? isOnline = default;
             bool? isCurrent = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -202,7 +202,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (prop.NameEquals("privateUrl"u8))
                 {
-                    privateUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    privateUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("isOnline"u8))

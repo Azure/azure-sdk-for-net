@@ -38,12 +38,10 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Logger entity contract properties. </summary>
-        [WirePath("properties")]
         internal LoggerContractProperties Properties { get; set; }
 
         /// <summary> Logger type. </summary>
-        [WirePath("properties.loggerType")]
-        public LoggerType LoggerType
+        public LoggerType? LoggerType
         {
             get
             {
@@ -51,16 +49,18 @@ namespace Azure.ResourceManager.ApiManagement
             }
             set
             {
-                if (Properties is null)
+                if (value.HasValue)
                 {
-                    Properties = new LoggerContractProperties();
+                    if (Properties is null)
+                    {
+                        Properties = new LoggerContractProperties();
+                    }
+                    Properties.LoggerType = value.Value;
                 }
-                Properties.LoggerType = value;
             }
         }
 
         /// <summary> Logger description. </summary>
-        [WirePath("properties.description")]
         public string Description
         {
             get
@@ -81,7 +81,6 @@ namespace Azure.ResourceManager.ApiManagement
         /// The name and SendRule connection string of the event hub for azureEventHub logger.
         /// Instrumentation key for applicationInsights logger.
         /// </summary>
-        [WirePath("properties.credentials")]
         public IDictionary<string, string> Credentials
         {
             get
@@ -95,7 +94,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Whether records are buffered in the logger before publishing. Default is assumed to be true. </summary>
-        [WirePath("properties.isBuffered")]
         public bool? IsBuffered
         {
             get
@@ -108,12 +106,11 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     Properties = new LoggerContractProperties();
                 }
-                Properties.IsBuffered = value.Value;
+                Properties.IsBuffered = value;
             }
         }
 
         /// <summary> Azure Resource Id of a log target (either Azure Event Hub resource or Azure Application Insights resource). </summary>
-        [WirePath("properties.resourceId")]
         public string ResourceId
         {
             get

@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -149,6 +150,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("license"u8);
                 writer.WriteObjectValue(License, options);
             }
+            if (Optional.IsDefined(McpProperties))
+            {
+                writer.WritePropertyName("mcpProperties"u8);
+                writer.WriteObjectValue(McpProperties, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -201,11 +207,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             bool? isOnline = default;
             string apiRevisionDescription = default;
             string apiVersionDescription = default;
-            string apiVersionSetId = default;
+            ResourceIdentifier apiVersionSetId = default;
             bool? subscriptionRequired = default;
             Uri termsOfServiceUri = default;
             ApiContactInformation contact = default;
             ApiLicenseInformation license = default;
+            McpProperties mcpProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -281,7 +288,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (prop.NameEquals("apiVersionSetId"u8))
                 {
-                    apiVersionSetId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    apiVersionSetId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("subscriptionRequired"u8))
@@ -320,6 +331,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     license = ApiLicenseInformation.DeserializeApiLicenseInformation(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("mcpProperties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    mcpProperties = McpProperties.DeserializeMcpProperties(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -341,6 +361,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 termsOfServiceUri,
                 contact,
                 license,
+                mcpProperties,
                 additionalBinaryDataProperties);
         }
     }

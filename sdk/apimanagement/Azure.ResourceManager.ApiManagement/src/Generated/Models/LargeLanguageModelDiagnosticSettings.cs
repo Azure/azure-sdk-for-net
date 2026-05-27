@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -36,15 +35,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Specifies whether default diagnostic should be enabled for Large Language Models or not. </summary>
-        [WirePath("logs")]
         public LlmDiagnosticSettings? Logs { get; set; }
 
         /// <summary> Diagnostic settings for Large Language Models requests. </summary>
-        [WirePath("requests")]
         public LargeLanguageModelMessageDiagnosticSettings Requests { get; set; }
 
         /// <summary> Diagnostic settings for Large Language Models responses. </summary>
-        [WirePath("responses")]
         public LargeLanguageModelMessageDiagnosticSettings Responses { get; set; }
     }
 }

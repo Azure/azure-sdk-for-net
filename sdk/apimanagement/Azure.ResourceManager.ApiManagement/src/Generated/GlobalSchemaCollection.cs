@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(GlobalSchemaResource.ResourceType, out string globalSchemaApiVersion);
             _globalSchemaClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", GlobalSchemaResource.ResourceType.Namespace, Diagnostics);
-            _globalSchemaRestClient = new GlobalSchema(_globalSchemaClientDiagnostics, Pipeline, Endpoint, globalSchemaApiVersion ?? "2025-03-01-preview");
+            _globalSchemaRestClient = new GlobalSchema(_globalSchemaClientDiagnostics, Pipeline, Endpoint, globalSchemaApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             if (id.ResourceType != ApiManagementServiceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementServiceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementServiceResource.ResourceType), nameof(id));
             }
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _globalSchemaRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, schemaId, ApiManagementGlobalSchemaData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _globalSchemaRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, schemaId, ApiManagementGlobalSchemaData.ToRequestContent(data), ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ApiManagementArmOperation<GlobalSchemaResource> operation = new ApiManagementArmOperation<GlobalSchemaResource>(
                     new GlobalSchemaOperationSource(Client),
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _globalSchemaRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, schemaId, ApiManagementGlobalSchemaData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _globalSchemaRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, schemaId, ApiManagementGlobalSchemaData.ToRequestContent(data), ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ApiManagementArmOperation<GlobalSchemaResource> operation = new ApiManagementArmOperation<GlobalSchemaResource>(
                     new GlobalSchemaOperationSource(Client),
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _globalSchemaRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, schemaId, context);
+                HttpMessage message = _globalSchemaRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, schemaId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementGlobalSchemaData> response = Response.FromValue(ApiManagementGlobalSchemaData.FromResponse(result), result);
                 if (response.Value == null)
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _globalSchemaRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, schemaId, context);
+                HttpMessage message = _globalSchemaRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, schemaId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementGlobalSchemaData> response = Response.FromValue(ApiManagementGlobalSchemaData.FromResponse(result), result);
                 if (response.Value == null)
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -300,13 +300,14 @@ namespace Azure.ResourceManager.ApiManagement
             };
             return new AsyncPageableWrapper<ApiManagementGlobalSchemaData, GlobalSchemaResource>(new GlobalSchemaGetByServiceAsyncCollectionResultOfT(
                 _globalSchemaRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 filter,
                 top,
                 skip,
-                context), data => new GlobalSchemaResource(Client, data));
+                context,
+                "GlobalSchemaCollection.GetAll"), data => new GlobalSchemaResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +323,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -339,13 +340,14 @@ namespace Azure.ResourceManager.ApiManagement
             };
             return new PageableWrapper<ApiManagementGlobalSchemaData, GlobalSchemaResource>(new GlobalSchemaGetByServiceCollectionResultOfT(
                 _globalSchemaRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 filter,
                 top,
                 skip,
-                context), data => new GlobalSchemaResource(Client, data));
+                context,
+                "GlobalSchemaCollection.GetAll"), data => new GlobalSchemaResource(Client, data));
         }
 
         /// <summary>
@@ -361,7 +363,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -381,7 +383,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _globalSchemaRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, schemaId, context);
+                HttpMessage message = _globalSchemaRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, schemaId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiManagementGlobalSchemaData> response = default;
@@ -418,7 +420,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -438,7 +440,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _globalSchemaRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, schemaId, context);
+                HttpMessage message = _globalSchemaRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, schemaId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiManagementGlobalSchemaData> response = default;
@@ -475,7 +477,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -495,7 +497,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _globalSchemaRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, schemaId, context);
+                HttpMessage message = _globalSchemaRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, schemaId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiManagementGlobalSchemaData> response = default;
@@ -536,7 +538,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -556,7 +558,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _globalSchemaRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, schemaId, context);
+                HttpMessage message = _globalSchemaRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, schemaId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiManagementGlobalSchemaData> response = default;

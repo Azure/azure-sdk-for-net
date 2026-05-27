@@ -21,6 +21,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string GraphqlValue = "graphql";
         private const string OdataValue = "odata";
         private const string GrpcValue = "grpc";
+        /// <summary> Model Context Protocol API. </summary>
+        private const string McpValue = "mcp";
 
         /// <summary> Initializes a new instance of <see cref="ApiType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -49,6 +51,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Gets the Grpc. </summary>
         public static ApiType Grpc { get; } = new ApiType(GrpcValue);
+
+        /// <summary> Model Context Protocol API. </summary>
+        public static ApiType Mcp { get; } = new ApiType(McpValue);
 
         /// <summary> Determines if two <see cref="ApiType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

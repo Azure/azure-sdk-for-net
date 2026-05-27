@@ -47,15 +47,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Filename by which the binary data will be saved. </summary>
-        [WirePath("title")]
         public string Title { get; set; }
 
         /// <summary> Either 'link' if content is provided via an HTTP link or the MIME type of the Base64-encoded binary data provided in the 'content' property. </summary>
-        [WirePath("contentFormat")]
         public string ContentFormat { get; set; }
 
         /// <summary> An HTTP link or Base64-encoded binary data. </summary>
-        [WirePath("content")]
         public string Content { get; set; }
     }
 }

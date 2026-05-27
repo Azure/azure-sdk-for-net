@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(PortalConfigContractResource.ResourceType, out string portalConfigContractApiVersion);
             _portalConfigClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", PortalConfigContractResource.ResourceType.Namespace, Diagnostics);
-            _portalConfigRestClient = new PortalConfig(_portalConfigClientDiagnostics, Pipeline, Endpoint, portalConfigContractApiVersion ?? "2025-03-01-preview");
+            _portalConfigRestClient = new PortalConfig(_portalConfigClientDiagnostics, Pipeline, Endpoint, portalConfigContractApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             if (id.ResourceType != ApiManagementServiceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementServiceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementServiceResource.ResourceType), nameof(id));
             }
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _portalConfigRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, portalConfigId, ifMatch, PortalConfigContractData.ToRequestContent(data), context);
+                HttpMessage message = _portalConfigRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, portalConfigId, ifMatch, PortalConfigContractData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PortalConfigContractData> response = Response.FromValue(PortalConfigContractData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _portalConfigRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, portalConfigId, ifMatch, PortalConfigContractData.ToRequestContent(data), context);
+                HttpMessage message = _portalConfigRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, portalConfigId, ifMatch, PortalConfigContractData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PortalConfigContractData> response = Response.FromValue(PortalConfigContractData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _portalConfigRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, portalConfigId, context);
+                HttpMessage message = _portalConfigRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, portalConfigId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PortalConfigContractData> response = Response.FromValue(PortalConfigContractData.FromResponse(result), result);
                 if (response.Value == null)
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _portalConfigRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, portalConfigId, context);
+                HttpMessage message = _portalConfigRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, portalConfigId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PortalConfigContractData> response = Response.FromValue(PortalConfigContractData.FromResponse(result), result);
                 if (response.Value == null)
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -291,7 +291,13 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PortalConfigContractData, PortalConfigContractResource>(new PortalConfigGetByServiceAsyncCollectionResultOfT(_portalConfigRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new PortalConfigContractResource(Client, data));
+            return new AsyncPageableWrapper<PortalConfigContractData, PortalConfigContractResource>(new PortalConfigGetByServiceAsyncCollectionResultOfT(
+                _portalConfigRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "PortalConfigContractCollection.GetAll"), data => new PortalConfigContractResource(Client, data));
         }
 
         /// <summary>
@@ -307,7 +313,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -319,7 +325,13 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PortalConfigContractData, PortalConfigContractResource>(new PortalConfigGetByServiceCollectionResultOfT(_portalConfigRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new PortalConfigContractResource(Client, data));
+            return new PageableWrapper<PortalConfigContractData, PortalConfigContractResource>(new PortalConfigGetByServiceCollectionResultOfT(
+                _portalConfigRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "PortalConfigContractCollection.GetAll"), data => new PortalConfigContractResource(Client, data));
         }
 
         /// <summary>
@@ -335,7 +347,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -355,7 +367,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _portalConfigRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, portalConfigId, context);
+                HttpMessage message = _portalConfigRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, portalConfigId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PortalConfigContractData> response = default;
@@ -392,7 +404,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -412,7 +424,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _portalConfigRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, portalConfigId, context);
+                HttpMessage message = _portalConfigRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, portalConfigId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PortalConfigContractData> response = default;
@@ -449,7 +461,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -469,7 +481,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _portalConfigRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, portalConfigId, context);
+                HttpMessage message = _portalConfigRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, portalConfigId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PortalConfigContractData> response = default;
@@ -510,7 +522,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -530,7 +542,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _portalConfigRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, portalConfigId, context);
+                HttpMessage message = _portalConfigRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, portalConfigId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PortalConfigContractData> response = default;

@@ -38,11 +38,9 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gateway certificate authority details. </summary>
-        [WirePath("properties")]
         internal GatewayCertificateAuthorityContractProperties Properties { get; set; }
 
         /// <summary> Determines whether certificate authority is trusted. </summary>
-        [WirePath("properties.isTrusted")]
         public bool? IsTrusted
         {
             get
@@ -55,7 +53,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     Properties = new GatewayCertificateAuthorityContractProperties();
                 }
-                Properties.IsTrusted = value.Value;
+                Properties.IsTrusted = value;
             }
         }
     }

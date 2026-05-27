@@ -39,11 +39,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Name of the workspace. </summary>
-        [WirePath("displayName")]
         public string DisplayName { get; set; }
 
         /// <summary> Description of the workspace. </summary>
-        [WirePath("description")]
         public string Description { get; set; }
     }
 }

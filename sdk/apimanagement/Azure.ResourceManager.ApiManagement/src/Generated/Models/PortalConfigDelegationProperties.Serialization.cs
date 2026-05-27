@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(DelegationUri))
             {
                 writer.WritePropertyName("delegationUrl"u8);
-                writer.WriteStringValue(DelegationUri);
+                writer.WriteStringValue(DelegationUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ValidationKey))
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             bool? delegateRegistration = default;
             bool? delegateSubscription = default;
-            string delegationUri = default;
+            Uri delegationUri = default;
             string validationKey = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -163,7 +163,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (prop.NameEquals("delegationUrl"u8))
                 {
-                    delegationUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    delegationUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("validationKey"u8))

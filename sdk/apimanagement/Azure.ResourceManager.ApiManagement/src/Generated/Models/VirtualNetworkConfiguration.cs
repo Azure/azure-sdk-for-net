@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="subnetname"> The name of the subnet. </param>
         /// <param name="subnetResourceId"> The full resource ID of a subnet in a virtual network to deploy the API Management service in. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkConfiguration(string vnetid, string subnetname, string subnetResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualNetworkConfiguration(string vnetid, string subnetname, ResourceIdentifier subnetResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Vnetid = vnetid;
             Subnetname = subnetname;
@@ -36,15 +36,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The virtual network ID. This is typically a GUID. Expect a null GUID by default. </summary>
-        [WirePath("vnetid")]
         public string Vnetid { get; }
 
         /// <summary> The name of the subnet. </summary>
-        [WirePath("subnetname")]
         public string Subnetname { get; }
 
         /// <summary> The full resource ID of a subnet in a virtual network to deploy the API Management service in. </summary>
-        [WirePath("subnetResourceId")]
-        public string SubnetResourceId { get; set; }
+        public ResourceIdentifier SubnetResourceId { get; set; }
     }
 }

@@ -47,15 +47,12 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Properties of the API Management gateway hostname binding. </summary>
-        [WirePath("properties")]
         internal GatewayHostnameBindingBaseProperties Properties { get; set; }
 
         /// <summary> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </summary>
-        [WirePath("etag")]
         public string ETag { get; }
 
         /// <summary> The current provisioning state of the API Management gateway hostname binding. </summary>
-        [WirePath("properties.provisioningState")]
         public string ProvisioningState
         {
             get
@@ -65,7 +62,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> The default hostname of the data-plane gateway. </summary>
-        [WirePath("properties.hostname")]
         public string Hostname
         {
             get
@@ -83,7 +79,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> The link to the API Management service workspace. </summary>
-        [WirePath("properties.keyVault")]
         public GatewayHostnameBindingKeyVault KeyVault
         {
             get
@@ -101,7 +96,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> The hostnames of the data-plane gateway to which requests can be sent. </summary>
-        [WirePath("properties.certificate")]
         public GatewayHostnameBindingCertificate Certificate
         {
             get

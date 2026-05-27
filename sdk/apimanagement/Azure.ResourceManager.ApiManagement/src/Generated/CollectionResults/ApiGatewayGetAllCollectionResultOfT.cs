@@ -17,18 +17,27 @@ namespace Azure.ResourceManager.ApiManagement
     internal partial class ApiGatewayGetAllCollectionResultOfT : Pageable<ApiManagementGatewayResourceData>
     {
         private readonly ApiGateway _client;
-        private readonly string _subscriptionId;
+        private readonly Guid _subscriptionId;
+        private readonly int? _top;
+        private readonly string _skipToken;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ApiGatewayGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ApiGateway client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skipToken"> Skip token for retrieving the next page of results. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ApiGatewayGetAllCollectionResultOfT(ApiGateway client, string subscriptionId, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ApiGatewayGetAllCollectionResultOfT(ApiGateway client, Guid subscriptionId, int? top, string skipToken, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
+            _top = top;
+            _skipToken = skipToken;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ApiGatewayGetAllCollectionResultOfT as an enumerable collection. </summary>
@@ -61,8 +70,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _context) : _client.CreateGetAllRequest(_subscriptionId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableApiManagementSubscriptionResource.GetApiManagementGatewayResources");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _top, _skipToken, _context) : _client.CreateGetAllRequest(_subscriptionId, _top, _skipToken, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

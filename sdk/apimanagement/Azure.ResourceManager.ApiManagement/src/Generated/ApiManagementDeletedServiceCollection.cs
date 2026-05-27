@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ApiManagementDeletedServiceResource.ResourceType, out string apiManagementDeletedServiceApiVersion);
             _deletedServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementDeletedServiceResource.ResourceType.Namespace, Diagnostics);
-            _deletedServicesRestClient = new DeletedServices(_deletedServicesClientDiagnostics, Pipeline, Endpoint, apiManagementDeletedServiceApiVersion ?? "2025-03-01-preview");
+            _deletedServicesRestClient = new DeletedServices(_deletedServicesClientDiagnostics, Pipeline, Endpoint, apiManagementDeletedServiceApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             if (id.ResourceType != Resources.SubscriptionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, Resources.SubscriptionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, Resources.SubscriptionResource.ResourceType), nameof(id));
             }
         }
 
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedServicesRestClient.CreateGetByNameRequest(Id.SubscriptionId, location, serviceName, context);
+                HttpMessage message = _deletedServicesRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), location, serviceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementDeletedServiceData> response = Response.FromValue(ApiManagementDeletedServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedServicesRestClient.CreateGetByNameRequest(Id.SubscriptionId, location, serviceName, context);
+                HttpMessage message = _deletedServicesRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), location, serviceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementDeletedServiceData> response = Response.FromValue(ApiManagementDeletedServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedServicesRestClient.CreateGetByNameRequest(Id.SubscriptionId, location, serviceName, context);
+                HttpMessage message = _deletedServicesRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), location, serviceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiManagementDeletedServiceData> response = default;
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedServicesRestClient.CreateGetByNameRequest(Id.SubscriptionId, location, serviceName, context);
+                HttpMessage message = _deletedServicesRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), location, serviceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiManagementDeletedServiceData> response = default;
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedServicesRestClient.CreateGetByNameRequest(Id.SubscriptionId, location, serviceName, context);
+                HttpMessage message = _deletedServicesRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), location, serviceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiManagementDeletedServiceData> response = default;
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedServicesRestClient.CreateGetByNameRequest(Id.SubscriptionId, location, serviceName, context);
+                HttpMessage message = _deletedServicesRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), location, serviceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiManagementDeletedServiceData> response = default;

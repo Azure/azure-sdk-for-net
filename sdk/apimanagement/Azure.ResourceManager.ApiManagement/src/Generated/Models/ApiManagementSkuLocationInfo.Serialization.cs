@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location);
+                writer.WriteStringValue(Location.Value);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Zones))
             {
@@ -146,7 +147,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            string location = default;
+            AzureLocation? location = default;
             IReadOnlyList<string> zones = default;
             IReadOnlyList<ApiManagementSkuZoneDetails> zoneDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -154,7 +155,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("zones"u8))

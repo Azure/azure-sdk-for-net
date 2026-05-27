@@ -38,11 +38,9 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Workspace entity contract properties. </summary>
-        [WirePath("properties")]
         internal WorkspaceContractProperties Properties { get; set; }
 
         /// <summary> Name of the workspace. </summary>
-        [WirePath("properties.displayName")]
         public string DisplayName
         {
             get
@@ -60,7 +58,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Description of the workspace. </summary>
-        [WirePath("properties.description")]
         public string Description
         {
             get

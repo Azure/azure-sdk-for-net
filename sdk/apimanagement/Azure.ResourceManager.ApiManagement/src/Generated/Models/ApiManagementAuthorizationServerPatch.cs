@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.ApiManagement;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -38,11 +37,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Properties of the External OAuth authorization server update Contract. </summary>
-        [WirePath("properties")]
         internal AuthorizationServerUpdateContractProperties Properties { get; set; }
 
         /// <summary> Description of the authorization server. Can contain HTML formatting tags. </summary>
-        [WirePath("properties.description")]
         public string Description
         {
             get
@@ -60,7 +57,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> HTTP verbs supported by the authorization endpoint. GET must be always present. POST is optional. </summary>
-        [WirePath("properties.authorizationMethods")]
         public IList<AuthorizationMethod> AuthorizationMethods
         {
             get
@@ -74,7 +70,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Method of authentication supported by the token endpoint of this authorization server. Possible values are Basic and/or Body. When Body is specified, client credentials and other parameters are passed within the request body in the application/x-www-form-urlencoded format. </summary>
-        [WirePath("properties.clientAuthenticationMethod")]
         public IList<ClientAuthenticationMethod> ClientAuthenticationMethod
         {
             get
@@ -88,7 +83,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Additional parameters required by the token endpoint of this authorization server represented as an array of JSON objects with name and value string properties, i.e. {"name" : "name value", "value": "a value"}. </summary>
-        [WirePath("properties.tokenBodyParameters")]
         public IList<TokenBodyParameterContract> TokenBodyParameters
         {
             get
@@ -102,7 +96,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> OAuth token endpoint. Contains absolute URI to entity being referenced. </summary>
-        [WirePath("properties.tokenEndpoint")]
         public string TokenEndpoint
         {
             get
@@ -120,7 +113,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> If true, authorization server will include state parameter from the authorization request to its response. Client may use state parameter to raise protocol security. </summary>
-        [WirePath("properties.supportState")]
         public bool? SupportState
         {
             get
@@ -133,12 +125,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     Properties = new AuthorizationServerUpdateContractProperties();
                 }
-                Properties.SupportState = value.Value;
+                Properties.SupportState = value;
             }
         }
 
         /// <summary> Access token scope that is going to be requested by default. Can be overridden at the API level. Should be provided in the form of a string containing space-delimited values. </summary>
-        [WirePath("properties.defaultScope")]
         public string DefaultScope
         {
             get
@@ -156,7 +147,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Specifies the mechanism by which access token is passed to the API. </summary>
-        [WirePath("properties.bearerTokenSendingMethods")]
         public IList<BearerTokenSendingMethod> BearerTokenSendingMethods
         {
             get
@@ -170,7 +160,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Can be optionally specified when resource owner password grant type is supported by this authorization server. Default resource owner username. </summary>
-        [WirePath("properties.resourceOwnerUsername")]
         public string ResourceOwnerUsername
         {
             get
@@ -188,7 +177,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Can be optionally specified when resource owner password grant type is supported by this authorization server. Default resource owner password. </summary>
-        [WirePath("properties.resourceOwnerPassword")]
         public string ResourceOwnerPassword
         {
             get
@@ -206,7 +194,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> User-friendly authorization server name. </summary>
-        [WirePath("properties.displayName")]
         public string DisplayName
         {
             get
@@ -224,7 +211,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> If true, the authorization server may be used in the developer portal test console. True by default if no value is provided. </summary>
-        [WirePath("properties.useInTestConsole")]
         public bool? UseInTestConsole
         {
             get
@@ -237,12 +223,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     Properties = new AuthorizationServerUpdateContractProperties();
                 }
-                Properties.UseInTestConsole = value.Value;
+                Properties.UseInTestConsole = value;
             }
         }
 
         /// <summary> If true, the authorization server will be used in the API documentation in the developer portal. False by default if no value is provided. </summary>
-        [WirePath("properties.useInApiDocumentation")]
         public bool? UseInApiDocumentation
         {
             get
@@ -255,12 +240,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     Properties = new AuthorizationServerUpdateContractProperties();
                 }
-                Properties.UseInApiDocumentation = value.Value;
+                Properties.UseInApiDocumentation = value;
             }
         }
 
         /// <summary> Optional reference to a page where client or app registration for this authorization server is performed. Contains absolute URL to entity being referenced. </summary>
-        [WirePath("properties.clientRegistrationEndpoint")]
         public string ClientRegistrationEndpoint
         {
             get
@@ -278,7 +262,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> OAuth authorization endpoint. See http://tools.ietf.org/html/rfc6749#section-3.2. </summary>
-        [WirePath("properties.authorizationEndpoint")]
         public string AuthorizationEndpoint
         {
             get
@@ -296,7 +279,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Form of an authorization grant, which the client uses to request the access token. </summary>
-        [WirePath("properties.grantTypes")]
         public IList<GrantType> GrantTypes
         {
             get
@@ -310,7 +292,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Client or app id registered with this authorization server. </summary>
-        [WirePath("properties.clientId")]
         public string ClientId
         {
             get
@@ -328,7 +309,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Client or app secret registered with this authorization server. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </summary>
-        [WirePath("properties.clientSecret")]
         public string ClientSecret
         {
             get

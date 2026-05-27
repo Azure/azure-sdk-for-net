@@ -12,7 +12,7 @@ using Azure.ResourceManager.ApiManagement;
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> The response of the list policy operation. </summary>
-    internal partial class PolicyListResult
+    public partial class PolicyListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -37,15 +37,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Policy Contract value. </summary>
-        [WirePath("value")]
         public IList<ApiManagementPolicyData> Value { get; }
 
         /// <summary> Total record count number. </summary>
-        [WirePath("count")]
         public long? Count { get; }
 
         /// <summary> Next page link if any. </summary>
-        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

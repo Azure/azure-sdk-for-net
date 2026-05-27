@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(PolicyRestrictionContractResource.ResourceType, out string policyRestrictionContractApiVersion);
             _policyRestrictionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", PolicyRestrictionContractResource.ResourceType.Namespace, Diagnostics);
-            _policyRestrictionRestClient = new PolicyRestriction(_policyRestrictionClientDiagnostics, Pipeline, Endpoint, policyRestrictionContractApiVersion ?? "2025-03-01-preview");
+            _policyRestrictionRestClient = new PolicyRestriction(_policyRestrictionClientDiagnostics, Pipeline, Endpoint, policyRestrictionContractApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             if (id.ResourceType != ApiManagementServiceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementServiceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementServiceResource.ResourceType), nameof(id));
             }
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyRestrictionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyRestrictionId, PolicyRestrictionContractData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _policyRestrictionRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, policyRestrictionId, PolicyRestrictionContractData.ToRequestContent(data), ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PolicyRestrictionContractData> response = Response.FromValue(PolicyRestrictionContractData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyRestrictionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyRestrictionId, PolicyRestrictionContractData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _policyRestrictionRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, policyRestrictionId, PolicyRestrictionContractData.ToRequestContent(data), ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PolicyRestrictionContractData> response = Response.FromValue(PolicyRestrictionContractData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyRestrictionRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyRestrictionId, context);
+                HttpMessage message = _policyRestrictionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, policyRestrictionId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PolicyRestrictionContractData> response = Response.FromValue(PolicyRestrictionContractData.FromResponse(result), result);
                 if (response.Value == null)
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyRestrictionRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyRestrictionId, context);
+                HttpMessage message = _policyRestrictionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, policyRestrictionId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PolicyRestrictionContractData> response = Response.FromValue(PolicyRestrictionContractData.FromResponse(result), result);
                 if (response.Value == null)
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -289,7 +289,13 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PolicyRestrictionContractData, PolicyRestrictionContractResource>(new PolicyRestrictionGetByServiceAsyncCollectionResultOfT(_policyRestrictionRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new PolicyRestrictionContractResource(Client, data));
+            return new AsyncPageableWrapper<PolicyRestrictionContractData, PolicyRestrictionContractResource>(new PolicyRestrictionGetByServiceAsyncCollectionResultOfT(
+                _policyRestrictionRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "PolicyRestrictionContractCollection.GetAll"), data => new PolicyRestrictionContractResource(Client, data));
         }
 
         /// <summary>
@@ -305,7 +311,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -317,7 +323,13 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PolicyRestrictionContractData, PolicyRestrictionContractResource>(new PolicyRestrictionGetByServiceCollectionResultOfT(_policyRestrictionRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new PolicyRestrictionContractResource(Client, data));
+            return new PageableWrapper<PolicyRestrictionContractData, PolicyRestrictionContractResource>(new PolicyRestrictionGetByServiceCollectionResultOfT(
+                _policyRestrictionRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "PolicyRestrictionContractCollection.GetAll"), data => new PolicyRestrictionContractResource(Client, data));
         }
 
         /// <summary>
@@ -333,7 +345,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -353,7 +365,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyRestrictionRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyRestrictionId, context);
+                HttpMessage message = _policyRestrictionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, policyRestrictionId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PolicyRestrictionContractData> response = default;
@@ -390,7 +402,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -410,7 +422,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyRestrictionRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyRestrictionId, context);
+                HttpMessage message = _policyRestrictionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, policyRestrictionId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PolicyRestrictionContractData> response = default;
@@ -447,7 +459,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -467,7 +479,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyRestrictionRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyRestrictionId, context);
+                HttpMessage message = _policyRestrictionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, policyRestrictionId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PolicyRestrictionContractData> response = default;
@@ -508,7 +520,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -528,7 +540,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyRestrictionRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyRestrictionId, context);
+                HttpMessage message = _policyRestrictionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, policyRestrictionId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PolicyRestrictionContractData> response = default;

@@ -54,43 +54,33 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Description of the authorization server. Can contain HTML formatting tags. </summary>
-        [WirePath("description")]
         public string Description { get; set; }
 
         /// <summary> HTTP verbs supported by the authorization endpoint. GET must be always present. POST is optional. </summary>
-        [WirePath("authorizationMethods")]
         public IList<AuthorizationMethod> AuthorizationMethods { get; } = new ChangeTrackingList<AuthorizationMethod>();
 
         /// <summary> Method of authentication supported by the token endpoint of this authorization server. Possible values are Basic and/or Body. When Body is specified, client credentials and other parameters are passed within the request body in the application/x-www-form-urlencoded format. </summary>
-        [WirePath("clientAuthenticationMethod")]
         public IList<ClientAuthenticationMethod> ClientAuthenticationMethod { get; } = new ChangeTrackingList<ClientAuthenticationMethod>();
 
         /// <summary> Additional parameters required by the token endpoint of this authorization server represented as an array of JSON objects with name and value string properties, i.e. {"name" : "name value", "value": "a value"}. </summary>
-        [WirePath("tokenBodyParameters")]
         public IList<TokenBodyParameterContract> TokenBodyParameters { get; } = new ChangeTrackingList<TokenBodyParameterContract>();
 
         /// <summary> OAuth token endpoint. Contains absolute URI to entity being referenced. </summary>
-        [WirePath("tokenEndpoint")]
         public string TokenEndpoint { get; set; }
 
         /// <summary> If true, authorization server will include state parameter from the authorization request to its response. Client may use state parameter to raise protocol security. </summary>
-        [WirePath("supportState")]
         public bool? SupportState { get; set; }
 
         /// <summary> Access token scope that is going to be requested by default. Can be overridden at the API level. Should be provided in the form of a string containing space-delimited values. </summary>
-        [WirePath("defaultScope")]
         public string DefaultScope { get; set; }
 
         /// <summary> Specifies the mechanism by which access token is passed to the API. </summary>
-        [WirePath("bearerTokenSendingMethods")]
         public IList<BearerTokenSendingMethod> BearerTokenSendingMethods { get; } = new ChangeTrackingList<BearerTokenSendingMethod>();
 
         /// <summary> Can be optionally specified when resource owner password grant type is supported by this authorization server. Default resource owner username. </summary>
-        [WirePath("resourceOwnerUsername")]
         public string ResourceOwnerUsername { get; set; }
 
         /// <summary> Can be optionally specified when resource owner password grant type is supported by this authorization server. Default resource owner password. </summary>
-        [WirePath("resourceOwnerPassword")]
         public string ResourceOwnerPassword { get; set; }
     }
 }

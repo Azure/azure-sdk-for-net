@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -43,11 +42,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Schema Type. Immutable. </summary>
-        [WirePath("schemaType")]
         public ApiSchemaType SchemaType { get; set; }
 
         /// <summary> Free-form schema entity description. </summary>
-        [WirePath("description")]
         public string Description { get; set; }
 
         /// <summary>
@@ -76,7 +73,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("value")]
         public BinaryData Value { get; set; }
 
         /// <summary>
@@ -105,11 +101,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("document")]
         public BinaryData Document { get; set; }
 
         /// <summary> The provisioning state. </summary>
-        [WirePath("provisioningState")]
         public string ProvisioningState { get; }
     }
 }

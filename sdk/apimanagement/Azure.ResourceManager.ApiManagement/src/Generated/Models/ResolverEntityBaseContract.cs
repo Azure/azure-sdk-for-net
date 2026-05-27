@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -36,15 +35,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Resolver Name. </summary>
-        [WirePath("displayName")]
         public string DisplayName { get; set; }
 
         /// <summary> Path is type/field being resolved. </summary>
-        [WirePath("path")]
         public string Path { get; set; }
 
         /// <summary> Description of the resolver. May include HTML formatting tags. </summary>
-        [WirePath("description")]
         public string Description { get; set; }
     }
 }

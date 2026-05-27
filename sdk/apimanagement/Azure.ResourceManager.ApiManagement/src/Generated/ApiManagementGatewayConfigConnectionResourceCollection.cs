@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ApiManagementGatewayConfigConnectionResource.ResourceType, out string apiManagementGatewayConfigConnectionResourceApiVersion);
             _apiGatewayConfigConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementGatewayConfigConnectionResource.ResourceType.Namespace, Diagnostics);
-            _apiGatewayConfigConnectionRestClient = new ApiGatewayConfigConnection(_apiGatewayConfigConnectionClientDiagnostics, Pipeline, Endpoint, apiManagementGatewayConfigConnectionResourceApiVersion ?? "2025-03-01-preview");
+            _apiGatewayConfigConnectionRestClient = new ApiGatewayConfigConnection(_apiGatewayConfigConnectionClientDiagnostics, Pipeline, Endpoint, apiManagementGatewayConfigConnectionResourceApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             if (id.ResourceType != ApiManagementGatewayResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementGatewayResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementGatewayResource.ResourceType), nameof(id));
             }
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiGatewayConfigConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configConnectionName, ApiManagementGatewayConfigConnectionResourceData.ToRequestContent(data), context);
+                HttpMessage message = _apiGatewayConfigConnectionRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configConnectionName, ApiManagementGatewayConfigConnectionResourceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ApiManagementArmOperation<ApiManagementGatewayConfigConnectionResource> operation = new ApiManagementArmOperation<ApiManagementGatewayConfigConnectionResource>(
                     new ApiManagementGatewayConfigConnectionResourceOperationSource(Client),
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiGatewayConfigConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configConnectionName, ApiManagementGatewayConfigConnectionResourceData.ToRequestContent(data), context);
+                HttpMessage message = _apiGatewayConfigConnectionRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configConnectionName, ApiManagementGatewayConfigConnectionResourceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ApiManagementArmOperation<ApiManagementGatewayConfigConnectionResource> operation = new ApiManagementArmOperation<ApiManagementGatewayConfigConnectionResource>(
                     new ApiManagementGatewayConfigConnectionResourceOperationSource(Client),
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiGatewayConfigConnectionRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configConnectionName, context);
+                HttpMessage message = _apiGatewayConfigConnectionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configConnectionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementGatewayConfigConnectionResourceData> response = Response.FromValue(ApiManagementGatewayConfigConnectionResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiGatewayConfigConnectionRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configConnectionName, context);
+                HttpMessage message = _apiGatewayConfigConnectionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configConnectionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementGatewayConfigConnectionResourceData> response = Response.FromValue(ApiManagementGatewayConfigConnectionResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -281,19 +281,29 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skipToken"> Skip token for retrieving the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApiManagementGatewayConfigConnectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApiManagementGatewayConfigConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ApiManagementGatewayConfigConnectionResource> GetAllAsync(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiManagementGatewayConfigConnectionResourceData, ApiManagementGatewayConfigConnectionResource>(new ApiGatewayConfigConnectionGetByGatewayAsyncCollectionResultOfT(_apiGatewayConfigConnectionRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new ApiManagementGatewayConfigConnectionResource(Client, data));
+            return new AsyncPageableWrapper<ApiManagementGatewayConfigConnectionResourceData, ApiManagementGatewayConfigConnectionResource>(new ApiGatewayConfigConnectionGetByGatewayAsyncCollectionResultOfT(
+                _apiGatewayConfigConnectionRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                top,
+                skipToken,
+                context,
+                "ApiManagementGatewayConfigConnectionResourceCollection.GetAll"), data => new ApiManagementGatewayConfigConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -309,19 +319,29 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skipToken"> Skip token for retrieving the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApiManagementGatewayConfigConnectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApiManagementGatewayConfigConnectionResource> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<ApiManagementGatewayConfigConnectionResource> GetAll(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiManagementGatewayConfigConnectionResourceData, ApiManagementGatewayConfigConnectionResource>(new ApiGatewayConfigConnectionGetByGatewayCollectionResultOfT(_apiGatewayConfigConnectionRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new ApiManagementGatewayConfigConnectionResource(Client, data));
+            return new PageableWrapper<ApiManagementGatewayConfigConnectionResourceData, ApiManagementGatewayConfigConnectionResource>(new ApiGatewayConfigConnectionGetByGatewayCollectionResultOfT(
+                _apiGatewayConfigConnectionRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                top,
+                skipToken,
+                context,
+                "ApiManagementGatewayConfigConnectionResourceCollection.GetAll"), data => new ApiManagementGatewayConfigConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -337,7 +357,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -357,7 +377,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiGatewayConfigConnectionRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configConnectionName, context);
+                HttpMessage message = _apiGatewayConfigConnectionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configConnectionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiManagementGatewayConfigConnectionResourceData> response = default;
@@ -394,7 +414,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -414,7 +434,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiGatewayConfigConnectionRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configConnectionName, context);
+                HttpMessage message = _apiGatewayConfigConnectionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configConnectionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiManagementGatewayConfigConnectionResourceData> response = default;
@@ -451,7 +471,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -471,7 +491,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiGatewayConfigConnectionRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configConnectionName, context);
+                HttpMessage message = _apiGatewayConfigConnectionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configConnectionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiManagementGatewayConfigConnectionResourceData> response = default;
@@ -512,7 +532,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -532,7 +552,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiGatewayConfigConnectionRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configConnectionName, context);
+                HttpMessage message = _apiGatewayConfigConnectionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configConnectionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiManagementGatewayConfigConnectionResourceData> response = default;

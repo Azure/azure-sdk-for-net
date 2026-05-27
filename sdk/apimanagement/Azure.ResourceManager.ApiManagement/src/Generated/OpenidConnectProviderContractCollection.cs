@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(OpenidConnectProviderContractResource.ResourceType, out string openidConnectProviderContractApiVersion);
             _openIdConnectProviderClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", OpenidConnectProviderContractResource.ResourceType.Namespace, Diagnostics);
-            _openIdConnectProviderRestClient = new OpenIdConnectProvider(_openIdConnectProviderClientDiagnostics, Pipeline, Endpoint, openidConnectProviderContractApiVersion ?? "2025-03-01-preview");
+            _openIdConnectProviderRestClient = new OpenIdConnectProvider(_openIdConnectProviderClientDiagnostics, Pipeline, Endpoint, openidConnectProviderContractApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             if (id.ResourceType != ApiManagementServiceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementServiceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementServiceResource.ResourceType), nameof(id));
             }
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _openIdConnectProviderRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, opid, OpenidConnectProviderContractData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _openIdConnectProviderRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, opid, OpenidConnectProviderContractData.ToRequestContent(data), ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<OpenidConnectProviderContractData> response = Response.FromValue(OpenidConnectProviderContractData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _openIdConnectProviderRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, opid, OpenidConnectProviderContractData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _openIdConnectProviderRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, opid, OpenidConnectProviderContractData.ToRequestContent(data), ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<OpenidConnectProviderContractData> response = Response.FromValue(OpenidConnectProviderContractData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _openIdConnectProviderRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, opid, context);
+                HttpMessage message = _openIdConnectProviderRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, opid, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<OpenidConnectProviderContractData> response = Response.FromValue(OpenidConnectProviderContractData.FromResponse(result), result);
                 if (response.Value == null)
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _openIdConnectProviderRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, opid, context);
+                HttpMessage message = _openIdConnectProviderRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, opid, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<OpenidConnectProviderContractData> response = Response.FromValue(OpenidConnectProviderContractData.FromResponse(result), result);
                 if (response.Value == null)
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,13 +294,14 @@ namespace Azure.ResourceManager.ApiManagement
             };
             return new AsyncPageableWrapper<OpenidConnectProviderContractData, OpenidConnectProviderContractResource>(new OpenIdConnectProviderGetByServiceAsyncCollectionResultOfT(
                 _openIdConnectProviderRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 filter,
                 top,
                 skip,
-                context), data => new OpenidConnectProviderContractResource(Client, data));
+                context,
+                "OpenidConnectProviderContractCollection.GetAll"), data => new OpenidConnectProviderContractResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +317,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -333,13 +334,14 @@ namespace Azure.ResourceManager.ApiManagement
             };
             return new PageableWrapper<OpenidConnectProviderContractData, OpenidConnectProviderContractResource>(new OpenIdConnectProviderGetByServiceCollectionResultOfT(
                 _openIdConnectProviderRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 filter,
                 top,
                 skip,
-                context), data => new OpenidConnectProviderContractResource(Client, data));
+                context,
+                "OpenidConnectProviderContractCollection.GetAll"), data => new OpenidConnectProviderContractResource(Client, data));
         }
 
         /// <summary>
@@ -355,7 +357,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -375,7 +377,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _openIdConnectProviderRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, opid, context);
+                HttpMessage message = _openIdConnectProviderRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, opid, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<OpenidConnectProviderContractData> response = default;
@@ -412,7 +414,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -432,7 +434,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _openIdConnectProviderRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, opid, context);
+                HttpMessage message = _openIdConnectProviderRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, opid, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<OpenidConnectProviderContractData> response = default;
@@ -469,7 +471,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -489,7 +491,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _openIdConnectProviderRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, opid, context);
+                HttpMessage message = _openIdConnectProviderRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, opid, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<OpenidConnectProviderContractData> response = default;
@@ -530,7 +532,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -550,7 +552,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _openIdConnectProviderRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, opid, context);
+                HttpMessage message = _openIdConnectProviderRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, opid, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<OpenidConnectProviderContractData> response = default;

@@ -17,10 +17,11 @@ namespace Azure.ResourceManager.ApiManagement
     internal partial class IdentityProviderGetByServiceCollectionResultOfT : Pageable<ApiManagementIdentityProviderData>
     {
         private readonly IdentityProvider _client;
-        private readonly string _subscriptionId;
+        private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _serviceName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of IdentityProviderGetByServiceCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The IdentityProvider client used to send requests. </param>
@@ -28,13 +29,15 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public IdentityProviderGetByServiceCollectionResultOfT(IdentityProvider client, string subscriptionId, string resourceGroupName, string serviceName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public IdentityProviderGetByServiceCollectionResultOfT(IdentityProvider client, Guid subscriptionId, string resourceGroupName, string serviceName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _serviceName = serviceName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of IdentityProviderGetByServiceCollectionResultOfT as an enumerable collection. </summary>
@@ -68,7 +71,7 @@ namespace Azure.ResourceManager.ApiManagement
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByServiceRequest(nextLink, _subscriptionId, _resourceGroupName, _serviceName, _context) : _client.CreateGetByServiceRequest(_subscriptionId, _resourceGroupName, _serviceName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ApiManagementIdentityProviderCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

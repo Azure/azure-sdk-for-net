@@ -37,7 +37,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Tag name. </summary>
-        [WirePath("displayName")]
         public string DisplayName { get; set; }
     }
 }

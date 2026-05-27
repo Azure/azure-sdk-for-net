@@ -35,11 +35,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Descriptions of API Management policies. </summary>
-        [WirePath("value")]
         public IList<PortalSettingsContract> Value { get; }
 
         /// <summary> Total record count number. </summary>
-        [WirePath("count")]
         public long? Count { get; }
     }
 }

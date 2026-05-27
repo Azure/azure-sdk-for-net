@@ -6,6 +6,7 @@
 
 #nullable disable
 
+using System;
 using System.Linq;
 using System.Threading;
 using Azure.Core;
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual Pageable<ApiPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-            HttpMessage message = _apiPolicyRestClient.CreateGetByApiRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+            HttpMessage message = _apiPolicyRestClient.CreateGetByApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
             Response result = Pipeline.ProcessMessage(message, context);
             PolicyListResult listResult = PolicyListResult.FromResponse(result);
             var items = listResult.Value.Select(d => new ApiPolicyResource(Client, d)).ToList();
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual AsyncPageable<ApiPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-            HttpMessage message = _apiPolicyRestClient.CreateGetByApiRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+            HttpMessage message = _apiPolicyRestClient.CreateGetByApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
             Response result = Pipeline.ProcessMessage(message, context);
             PolicyListResult listResult = PolicyListResult.FromResponse(result);
             var items = listResult.Value.Select(d => new ApiPolicyResource(Client, d)).ToList();

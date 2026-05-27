@@ -38,11 +38,9 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Properties of the Policy. </summary>
-        [WirePath("properties")]
         internal PolicyContractProperties Properties { get; set; }
 
         /// <summary> Contents of the Policy as defined by the format. </summary>
-        [WirePath("properties.value")]
         public string Value
         {
             get
@@ -60,7 +58,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Format of the policyContent. </summary>
-        [WirePath("properties.format")]
         public PolicyContentFormat? Format
         {
             get
@@ -73,7 +70,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     Properties = new PolicyContractProperties();
                 }
-                Properties.Format = value.Value;
+                Properties.Format = value;
             }
         }
     }

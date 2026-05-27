@@ -34,6 +34,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string ODataValue = "odata";
         /// <summary> Imports the API having a gRPC front end. </summary>
         private const string GRPCValue = "grpc";
+        /// <summary> Imports the API having a Model Context Protocol (MCP) front end. </summary>
+        private const string MCPValue = "mcp";
 
         /// <summary> Initializes a new instance of <see cref="SoapApiType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -62,6 +64,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Imports the API having a gRPC front end. </summary>
         public static SoapApiType GRPC { get; } = new SoapApiType(GRPCValue);
+
+        /// <summary> Imports the API having a Model Context Protocol (MCP) front end. </summary>
+        public static SoapApiType MCP { get; } = new SoapApiType(MCPValue);
 
         /// <summary> Determines if two <see cref="SoapApiType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

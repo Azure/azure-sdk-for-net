@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ApiManagementWorkspaceLinksResource.ResourceType, out string apiManagementWorkspaceLinksResourceApiVersion);
             _apiManagementWorkspaceLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementWorkspaceLinksResource.ResourceType.Namespace, Diagnostics);
-            _apiManagementWorkspaceLinkRestClient = new ApiManagementWorkspaceLink(_apiManagementWorkspaceLinkClientDiagnostics, Pipeline, Endpoint, apiManagementWorkspaceLinksResourceApiVersion ?? "2025-03-01-preview");
+            _apiManagementWorkspaceLinkRestClient = new ApiManagementWorkspaceLink(_apiManagementWorkspaceLinkClientDiagnostics, Pipeline, Endpoint, apiManagementWorkspaceLinksResourceApiVersion ?? "2025-09-01-preview");
             _apiManagementWorkspaceLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementWorkspaceLinksResource.ResourceType.Namespace, Diagnostics);
-            _apiManagementWorkspaceLinksRestClient = new ApiManagementWorkspaceLinks(_apiManagementWorkspaceLinksClientDiagnostics, Pipeline, Endpoint, apiManagementWorkspaceLinksResourceApiVersion ?? "2025-03-01-preview");
+            _apiManagementWorkspaceLinksRestClient = new ApiManagementWorkspaceLinks(_apiManagementWorkspaceLinksClientDiagnostics, Pipeline, Endpoint, apiManagementWorkspaceLinksResourceApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             if (id.ResourceType != ApiManagementServiceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementServiceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementServiceResource.ResourceType), nameof(id));
             }
         }
 
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiManagementWorkspaceLinkRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceId, context);
+                HttpMessage message = _apiManagementWorkspaceLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workspaceId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementWorkspaceLinksResourceData> response = Response.FromValue(ApiManagementWorkspaceLinksResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiManagementWorkspaceLinkRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceId, context);
+                HttpMessage message = _apiManagementWorkspaceLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workspaceId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementWorkspaceLinksResourceData> response = Response.FromValue(ApiManagementWorkspaceLinksResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -169,19 +169,29 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skipToken"> Skip token for retrieving the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApiManagementWorkspaceLinksResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApiManagementWorkspaceLinksResource> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ApiManagementWorkspaceLinksResource> GetAllAsync(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiManagementWorkspaceLinksResourceData, ApiManagementWorkspaceLinksResource>(new ApiManagementWorkspaceLinksGetByServiceAsyncCollectionResultOfT(_apiManagementWorkspaceLinksRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new ApiManagementWorkspaceLinksResource(Client, data));
+            return new AsyncPageableWrapper<ApiManagementWorkspaceLinksResourceData, ApiManagementWorkspaceLinksResource>(new ApiManagementWorkspaceLinksGetByServiceAsyncCollectionResultOfT(
+                _apiManagementWorkspaceLinksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                top,
+                skipToken,
+                context,
+                "ApiManagementWorkspaceLinksResourceCollection.GetAll"), data => new ApiManagementWorkspaceLinksResource(Client, data));
         }
 
         /// <summary>
@@ -197,19 +207,29 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skipToken"> Skip token for retrieving the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApiManagementWorkspaceLinksResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApiManagementWorkspaceLinksResource> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<ApiManagementWorkspaceLinksResource> GetAll(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiManagementWorkspaceLinksResourceData, ApiManagementWorkspaceLinksResource>(new ApiManagementWorkspaceLinksGetByServiceCollectionResultOfT(_apiManagementWorkspaceLinksRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new ApiManagementWorkspaceLinksResource(Client, data));
+            return new PageableWrapper<ApiManagementWorkspaceLinksResourceData, ApiManagementWorkspaceLinksResource>(new ApiManagementWorkspaceLinksGetByServiceCollectionResultOfT(
+                _apiManagementWorkspaceLinksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                top,
+                skipToken,
+                context,
+                "ApiManagementWorkspaceLinksResourceCollection.GetAll"), data => new ApiManagementWorkspaceLinksResource(Client, data));
         }
 
         /// <summary>
@@ -225,7 +245,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -245,7 +265,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiManagementWorkspaceLinkRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceId, context);
+                HttpMessage message = _apiManagementWorkspaceLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workspaceId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiManagementWorkspaceLinksResourceData> response = default;
@@ -282,7 +302,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -302,7 +322,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiManagementWorkspaceLinkRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceId, context);
+                HttpMessage message = _apiManagementWorkspaceLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workspaceId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiManagementWorkspaceLinksResourceData> response = default;
@@ -339,7 +359,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -359,7 +379,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiManagementWorkspaceLinkRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceId, context);
+                HttpMessage message = _apiManagementWorkspaceLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workspaceId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiManagementWorkspaceLinksResourceData> response = default;
@@ -400,7 +420,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -420,7 +440,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiManagementWorkspaceLinkRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceId, context);
+                HttpMessage message = _apiManagementWorkspaceLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workspaceId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiManagementWorkspaceLinksResourceData> response = default;

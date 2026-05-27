@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -32,11 +32,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Properties of the API entity that can be updated. </summary>
-        [WirePath("properties")]
         internal ApiContractUpdateProperties Properties { get; set; }
 
         /// <summary> Description of the API. May include HTML formatting tags. </summary>
-        [WirePath("properties.description")]
         public string Description
         {
             get
@@ -54,7 +52,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Collection of authentication settings included into this API. </summary>
-        [WirePath("properties.authenticationSettings")]
         public AuthenticationSettingsContract AuthenticationSettings
         {
             get
@@ -72,7 +69,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Protocols over which API is made available. </summary>
-        [WirePath("properties.subscriptionKeyParameterNames")]
         public SubscriptionKeyParameterNamesContract SubscriptionKeyParameterNames
         {
             get
@@ -90,7 +86,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Type of API. </summary>
-        [WirePath("properties.type")]
         public ApiType? ApiType
         {
             get
@@ -103,12 +98,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     Properties = new ApiContractUpdateProperties();
                 }
-                Properties.ApiType = value.Value;
+                Properties.ApiType = value;
             }
         }
 
         /// <summary> Describes the revision of the API. If no value is provided, default revision 1 is created. </summary>
-        [WirePath("properties.apiRevision")]
         public string ApiRevision
         {
             get
@@ -126,7 +120,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Indicates the version identifier of the API if the API is versioned. </summary>
-        [WirePath("properties.apiVersion")]
         public string ApiVersion
         {
             get
@@ -144,7 +137,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Indicates if API revision is current api revision. </summary>
-        [WirePath("properties.isCurrent")]
         public bool? IsCurrent
         {
             get
@@ -157,12 +149,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     Properties = new ApiContractUpdateProperties();
                 }
-                Properties.IsCurrent = value.Value;
+                Properties.IsCurrent = value;
             }
         }
 
         /// <summary> Indicates if API revision is accessible via the gateway. </summary>
-        [WirePath("properties.isOnline")]
         public bool? IsOnline
         {
             get
@@ -172,7 +163,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Description of the API Revision. </summary>
-        [WirePath("properties.apiRevisionDescription")]
         public string ApiRevisionDescription
         {
             get
@@ -190,7 +180,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Description of the API Version. </summary>
-        [WirePath("properties.apiVersionDescription")]
         public string ApiVersionDescription
         {
             get
@@ -208,8 +197,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> A resource identifier for the related ApiVersionSet. </summary>
-        [WirePath("properties.apiVersionSetId")]
-        public string ApiVersionSetId
+        public ResourceIdentifier ApiVersionSetId
         {
             get
             {
@@ -226,7 +214,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Specifies whether an API or Product subscription is required for accessing the API. </summary>
-        [WirePath("properties.subscriptionRequired")]
         public bool? SubscriptionRequired
         {
             get
@@ -239,12 +226,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     Properties = new ApiContractUpdateProperties();
                 }
-                Properties.SubscriptionRequired = value.Value;
+                Properties.SubscriptionRequired = value;
             }
         }
 
         /// <summary> A URL to the Terms of Service for the API. MUST be in the format of a URL. </summary>
-        [WirePath("properties.termsOfServiceUrl")]
         public Uri TermsOfServiceUri
         {
             get
@@ -262,7 +248,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Contact information for the API. </summary>
-        [WirePath("properties.contact")]
         public ApiContactInformation Contact
         {
             get
@@ -280,7 +265,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> License information for the API. </summary>
-        [WirePath("properties.license")]
         public ApiLicenseInformation License
         {
             get
@@ -297,8 +281,24 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
         }
 
+        /// <summary> Properties specific to MCP API type. </summary>
+        public McpProperties McpProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.McpProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiContractUpdateProperties();
+                }
+                Properties.McpProperties = value;
+            }
+        }
+
         /// <summary> API name. </summary>
-        [WirePath("properties.displayName")]
         public string DisplayName
         {
             get
@@ -316,7 +316,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Absolute URL of the backend service implementing this API. </summary>
-        [WirePath("properties.serviceUrl")]
         public string ServiceUri
         {
             get
@@ -334,7 +333,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API. </summary>
-        [WirePath("properties.path")]
         public string Path
         {
             get
@@ -352,7 +350,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Describes on which protocols the operations in this API can be invoked. </summary>
-        [WirePath("properties.protocols")]
         public IList<ApiOperationInvokableProtocol> Protocols
         {
             get

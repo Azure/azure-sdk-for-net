@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -31,11 +30,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> When the secret was last updated in key vault. </summary>
-        [WirePath("updated")]
         public DateTimeOffset? Updated { get; }
 
         /// <summary> Last time sync and refresh of secret from key vault. </summary>
-        [WirePath("lastStatus")]
         public KeyVaultLastAccessStatusContractProperties LastStatus { get; }
     }
 }

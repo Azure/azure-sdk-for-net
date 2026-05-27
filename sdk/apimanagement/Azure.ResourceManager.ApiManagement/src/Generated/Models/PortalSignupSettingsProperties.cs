@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -34,11 +33,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Allow users to sign up on a developer portal. </summary>
-        [WirePath("enabled")]
         public bool? Enabled { get; set; }
 
         /// <summary> Terms of service contract properties. </summary>
-        [WirePath("termsOfService")]
         public TermsOfServiceProperties TermsOfService { get; set; }
     }
 }

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.ApiManagement;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -38,86 +37,77 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Properties returned Tenant Configuration Sync State check. </summary>
-        [WirePath("properties")]
         internal TenantConfigurationSyncStateContractProperties Properties { get; }
 
         /// <summary> The name of Git branch. </summary>
-        [WirePath("properties.branch")]
         public string Branch
         {
             get
             {
-                return Properties.Branch;
+                return Properties is null ? default : Properties.Branch;
             }
         }
 
         /// <summary> The latest commit Id. </summary>
-        [WirePath("properties.commitId")]
         public string CommitId
         {
             get
             {
-                return Properties.CommitId;
+                return Properties is null ? default : Properties.CommitId;
             }
         }
 
         /// <summary> value indicating if last sync was save (true) or deploy (false) operation. </summary>
-        [WirePath("properties.isExport")]
         public bool? IsExport
         {
             get
             {
-                return Properties.IsExport;
+                return Properties is null ? default : Properties.IsExport;
             }
         }
 
         /// <summary> value indicating if last synchronization was later than the configuration change. </summary>
-        [WirePath("properties.isSynced")]
         public bool? IsSynced
         {
             get
             {
-                return Properties.IsSynced;
+                return Properties is null ? default : Properties.IsSynced;
             }
         }
 
         /// <summary> value indicating whether Git configuration access is enabled. </summary>
-        [WirePath("properties.isGitEnabled")]
         public bool? IsGitEnabled
         {
             get
             {
-                return Properties.IsGitEnabled;
+                return Properties is null ? default : Properties.IsGitEnabled;
             }
         }
 
         /// <summary> The date of the latest synchronization. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
-        [WirePath("properties.syncDate")]
         public DateTimeOffset? SyncOn
         {
             get
             {
-                return Properties.SyncOn;
+                return Properties is null ? default : Properties.SyncOn;
             }
         }
 
         /// <summary> The date of the latest configuration change. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
-        [WirePath("properties.configurationChangeDate")]
         public DateTimeOffset? ConfigurationChangeOn
         {
             get
             {
-                return Properties.ConfigurationChangeOn;
+                return Properties is null ? default : Properties.ConfigurationChangeOn;
             }
         }
 
         /// <summary> Most recent tenant configuration operation identifier. </summary>
-        [WirePath("properties.lastOperationId")]
         public string LastOperationId
         {
             get
             {
-                return Properties.LastOperationId;
+                return Properties is null ? default : Properties.LastOperationId;
             }
         }
     }

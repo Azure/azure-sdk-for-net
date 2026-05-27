@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -36,15 +35,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Date and time when the issue was created. </summary>
-        [WirePath("createdDate")]
         public DateTimeOffset? CreatedOn { get; set; }
 
         /// <summary> Status of the issue. </summary>
-        [WirePath("state")]
         public State? State { get; set; }
 
         /// <summary> A resource identifier for the API the issue was created for. </summary>
-        [WirePath("apiId")]
         public string ApiId { get; set; }
     }
 }

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Deleted API Management Service details. </param>
         /// <param name="location"> API Management Service Master Location. </param>
-        internal ApiManagementDeletedServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DeletedServiceContractProperties properties, string location) : base(id, name, resourceType, systemData)
+        internal ApiManagementDeletedServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DeletedServiceContractProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -40,40 +40,35 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Deleted API Management Service details. </summary>
-        [WirePath("properties")]
         internal DeletedServiceContractProperties Properties { get; }
 
         /// <summary> API Management Service Master Location. </summary>
-        [WirePath("location")]
-        public string Location { get; }
+        public AzureLocation? Location { get; }
 
         /// <summary> Fully-qualified API Management Service Resource ID. </summary>
-        [WirePath("properties.serviceId")]
         public string ServiceId
         {
             get
             {
-                return Properties.ServiceId;
+                return Properties is null ? default : Properties.ServiceId;
             }
         }
 
         /// <summary> UTC Date and Time when the service will be automatically purged. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </summary>
-        [WirePath("properties.scheduledPurgeDate")]
         public DateTimeOffset? ScheduledPurgeOn
         {
             get
             {
-                return Properties.ScheduledPurgeOn;
+                return Properties is null ? default : Properties.ScheduledPurgeOn;
             }
         }
 
         /// <summary> UTC Timestamp when the service was soft-deleted. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </summary>
-        [WirePath("properties.deletionDate")]
         public DateTimeOffset? DeletedOn
         {
             get
             {
-                return Properties.DeletedOn;
+                return Properties is null ? default : Properties.DeletedOn;
             }
         }
     }

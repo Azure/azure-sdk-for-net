@@ -39,19 +39,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Logger type. </summary>
-        [WirePath("loggerType")]
         public LoggerType? LoggerType { get; set; }
 
         /// <summary> Logger description. </summary>
-        [WirePath("description")]
         public string Description { get; set; }
 
         /// <summary> Logger credentials. </summary>
-        [WirePath("credentials")]
         public IDictionary<string, string> Credentials { get; } = new ChangeTrackingDictionary<string, string>();
 
         /// <summary> Whether records are buffered in the logger before publishing. Default is assumed to be true. </summary>
-        [WirePath("isBuffered")]
         public bool? IsBuffered { get; set; }
     }
 }

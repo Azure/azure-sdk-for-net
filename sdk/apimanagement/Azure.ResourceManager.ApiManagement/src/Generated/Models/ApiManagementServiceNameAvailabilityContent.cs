@@ -37,7 +37,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The name to check for availability. </summary>
-        [WirePath("name")]
         public string Name { get; }
     }
 }

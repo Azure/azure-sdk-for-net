@@ -64,7 +64,6 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("properties")]
         public IDictionary<string, BinaryData> Properties { get; }
     }
 }

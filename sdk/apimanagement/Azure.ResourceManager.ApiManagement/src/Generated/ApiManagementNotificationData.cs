@@ -38,36 +38,32 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Notification entity contract properties. </summary>
-        [WirePath("properties")]
         internal NotificationContractProperties Properties { get; }
 
         /// <summary> Title of the Notification. </summary>
-        [WirePath("properties.title")]
         public string Title
         {
             get
             {
-                return Properties.Title;
+                return Properties is null ? default : Properties.Title;
             }
         }
 
         /// <summary> Description of the Notification. </summary>
-        [WirePath("properties.description")]
         public string Description
         {
             get
             {
-                return Properties.Description;
+                return Properties is null ? default : Properties.Description;
             }
         }
 
         /// <summary> Recipient Parameter values. </summary>
-        [WirePath("properties.recipients")]
         public RecipientsContractProperties Recipients
         {
             get
             {
-                return Properties.Recipients;
+                return Properties is null ? default : Properties.Recipients;
             }
         }
     }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -34,11 +33,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The name of an entity to mask (e.g. a name of a header or a query parameter). </summary>
-        [WirePath("value")]
         public string Value { get; set; }
 
         /// <summary> Data masking mode. </summary>
-        [WirePath("mode")]
         public DataMaskingMode? Mode { get; set; }
     }
 }

@@ -38,11 +38,9 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Diagnostic entity contract properties. </summary>
-        [WirePath("properties")]
         internal DiagnosticContractProperties Properties { get; set; }
 
         /// <summary> Specifies for what type of messages sampling settings should not apply. </summary>
-        [WirePath("properties.alwaysLog")]
         public AlwaysLog? AlwaysLog
         {
             get
@@ -55,12 +53,11 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     Properties = new DiagnosticContractProperties();
                 }
-                Properties.AlwaysLog = value.Value;
+                Properties.AlwaysLog = value;
             }
         }
 
         /// <summary> Resource Id of a target logger. </summary>
-        [WirePath("properties.loggerId")]
         public string LoggerId
         {
             get
@@ -78,7 +75,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Sampling settings for Diagnostic. </summary>
-        [WirePath("properties.sampling")]
         public SamplingSettings Sampling
         {
             get
@@ -96,7 +92,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Diagnostic settings for incoming/outgoing HTTP messages to the Gateway. </summary>
-        [WirePath("properties.frontend")]
         public PipelineDiagnosticSettings Frontend
         {
             get
@@ -114,7 +109,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Diagnostic settings for incoming/outgoing HTTP messages to the Backend. </summary>
-        [WirePath("properties.backend")]
         public PipelineDiagnosticSettings Backend
         {
             get
@@ -132,7 +126,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Large Language Models diagnostic settings. </summary>
-        [WirePath("properties.largeLanguageModel")]
         public LargeLanguageModelDiagnosticSettings LargeLanguageModel
         {
             get
@@ -150,7 +143,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Log the ClientIP. Default is false. </summary>
-        [WirePath("properties.logClientIp")]
         public bool? LogClientIp
         {
             get
@@ -163,12 +155,11 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     Properties = new DiagnosticContractProperties();
                 }
-                Properties.LogClientIp = value.Value;
+                Properties.LogClientIp = value;
             }
         }
 
         /// <summary> Sets correlation protocol to use for Application Insights diagnostics. </summary>
-        [WirePath("properties.httpCorrelationProtocol")]
         public HttpCorrelationProtocol? HttpCorrelationProtocol
         {
             get
@@ -181,12 +172,11 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     Properties = new DiagnosticContractProperties();
                 }
-                Properties.HttpCorrelationProtocol = value.Value;
+                Properties.HttpCorrelationProtocol = value;
             }
         }
 
         /// <summary> The verbosity level applied to traces emitted by trace policies. </summary>
-        [WirePath("properties.verbosity")]
         public TraceVerbosityLevel? Verbosity
         {
             get
@@ -199,12 +189,11 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     Properties = new DiagnosticContractProperties();
                 }
-                Properties.Verbosity = value.Value;
+                Properties.Verbosity = value;
             }
         }
 
         /// <summary> The format of the Operation Name for Application Insights telemetries. Default is Name. </summary>
-        [WirePath("properties.operationNameFormat")]
         public OperationNameFormat? OperationNameFormat
         {
             get
@@ -217,12 +206,11 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     Properties = new DiagnosticContractProperties();
                 }
-                Properties.OperationNameFormat = value.Value;
+                Properties.OperationNameFormat = value;
             }
         }
 
         /// <summary> Emit custom metrics via emit-metric policy. Applicable only to Application Insights diagnostic settings. </summary>
-        [WirePath("properties.metrics")]
         public bool? Metrics
         {
             get
@@ -235,7 +223,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     Properties = new DiagnosticContractProperties();
                 }
-                Properties.Metrics = value.Value;
+                Properties.Metrics = value;
             }
         }
     }

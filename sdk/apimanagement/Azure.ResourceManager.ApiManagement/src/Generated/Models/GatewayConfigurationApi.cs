@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -32,7 +31,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Hostname to which the agent connects to propagate configuration to the cloud. </summary>
-        [WirePath("hostname")]
         public string Hostname { get; }
     }
 }

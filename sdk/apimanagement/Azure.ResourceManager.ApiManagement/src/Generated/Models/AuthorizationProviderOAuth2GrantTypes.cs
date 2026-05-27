@@ -27,20 +27,23 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of <see cref="AuthorizationProviderOAuth2GrantTypes"/>. </summary>
         /// <param name="authorizationCode"> OAuth2 authorization code grant parameters. </param>
         /// <param name="clientCredentials"> OAuth2 client credential grant parameters. </param>
+        /// <param name="authorizationCodeWithFederatedIdentityCredentials"> OAuth2 authorization code grant with federated identity credentials parameters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AuthorizationProviderOAuth2GrantTypes(IDictionary<string, string> authorizationCode, IDictionary<string, string> clientCredentials, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AuthorizationProviderOAuth2GrantTypes(IDictionary<string, string> authorizationCode, IDictionary<string, string> clientCredentials, AuthorizationProviderOAuth2FederatedIdentityCredentialsGrantType authorizationCodeWithFederatedIdentityCredentials, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AuthorizationCode = authorizationCode;
             ClientCredentials = clientCredentials;
+            AuthorizationCodeWithFederatedIdentityCredentials = authorizationCodeWithFederatedIdentityCredentials;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> OAuth2 authorization code grant parameters. </summary>
-        [WirePath("authorizationCode")]
         public IDictionary<string, string> AuthorizationCode { get; }
 
         /// <summary> OAuth2 client credential grant parameters. </summary>
-        [WirePath("clientCredentials")]
         public IDictionary<string, string> ClientCredentials { get; }
+
+        /// <summary> OAuth2 authorization code grant with federated identity credentials parameters. </summary>
+        public AuthorizationProviderOAuth2FederatedIdentityCredentialsGrantType AuthorizationCodeWithFederatedIdentityCredentials { get; set; }
     }
 }

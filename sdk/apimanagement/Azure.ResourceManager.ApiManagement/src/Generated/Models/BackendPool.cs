@@ -37,19 +37,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The list of backend entities belonging to a pool. </summary>
-        [WirePath("services")]
         public IList<BackendPoolItem> Services { get; }
 
         /// <summary> The response to be returned when all the backends in the pool are inactive. </summary>
-        [WirePath("failureResponse")]
         internal BackendFailureResponse FailureResponse { get; set; }
 
         /// <summary> The session stickiness properties of the backend pool. </summary>
-        [WirePath("sessionAffinity")]
         internal BackendSessionAffinity SessionAffinity { get; set; }
 
         /// <summary> The status code of the response. </summary>
-        [WirePath("failureResponse.statusCode")]
         public int? FailureResponseStatusCode
         {
             get
@@ -67,7 +63,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The id that identifies the requests belonging to the same session. </summary>
-        [WirePath("sessionAffinity.sessionId")]
         public BackendSessionId SessionId
         {
             get

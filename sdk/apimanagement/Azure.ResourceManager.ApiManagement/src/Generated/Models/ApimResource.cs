@@ -39,19 +39,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Resource ID. </summary>
-        [WirePath("id")]
         public string Id { get; }
 
         /// <summary> Resource name. </summary>
-        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Resource type for API Management resource is set to Microsoft.ApiManagement. </summary>
-        [WirePath("type")]
         public string Type { get; }
 
         /// <summary> Resource tags. </summary>
-        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
     }
 }

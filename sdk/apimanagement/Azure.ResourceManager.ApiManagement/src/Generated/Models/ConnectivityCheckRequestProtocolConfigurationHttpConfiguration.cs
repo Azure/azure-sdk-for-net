@@ -38,15 +38,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The HTTP method to be used. </summary>
-        [WirePath("method")]
         public Method? Method { get; set; }
 
         /// <summary> List of HTTP status codes considered valid for the request response. </summary>
-        [WirePath("validStatusCodes")]
         public IList<long> ValidStatusCodes { get; }
 
         /// <summary> List of headers to be included in the request. </summary>
-        [WirePath("headers")]
         public IList<HTTPHeader> Headers { get; }
     }
 }

@@ -27,10 +27,6 @@ namespace Azure.ResourceManager.ApiManagement
     {
         private readonly ClientDiagnostics _apiIssueClientDiagnostics;
         private readonly ApiIssue _apiIssueRestClient;
-        private readonly ClientDiagnostics _apiIssueAttachmentClientDiagnostics;
-        private readonly ApiIssueAttachment _apiIssueAttachmentRestClient;
-        private readonly ClientDiagnostics _apiIssueCommentClientDiagnostics;
-        private readonly ApiIssueComment _apiIssueCommentRestClient;
 
         /// <summary> Initializes a new instance of ApiIssueCollection for mocking. </summary>
         protected ApiIssueCollection()
@@ -44,11 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ApiIssueResource.ResourceType, out string apiIssueApiVersion);
             _apiIssueClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiIssueResource.ResourceType.Namespace, Diagnostics);
-            _apiIssueRestClient = new ApiIssue(_apiIssueClientDiagnostics, Pipeline, Endpoint, apiIssueApiVersion ?? "2025-03-01-preview");
-            _apiIssueAttachmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiIssueResource.ResourceType.Namespace, Diagnostics);
-            _apiIssueAttachmentRestClient = new ApiIssueAttachment(_apiIssueAttachmentClientDiagnostics, Pipeline, Endpoint, apiIssueApiVersion ?? "2025-03-01-preview");
-            _apiIssueCommentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiIssueResource.ResourceType.Namespace, Diagnostics);
-            _apiIssueCommentRestClient = new ApiIssueComment(_apiIssueCommentClientDiagnostics, Pipeline, Endpoint, apiIssueApiVersion ?? "2025-03-01-preview");
+            _apiIssueRestClient = new ApiIssue(_apiIssueClientDiagnostics, Pipeline, Endpoint, apiIssueApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -58,7 +50,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             if (id.ResourceType != ApiResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiResource.ResourceType), nameof(id));
             }
         }
 
@@ -75,7 +67,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,7 +91,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiIssueRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, issueId, ApiManagementIssueData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _apiIssueRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, issueId, ApiManagementIssueData.ToRequestContent(data), ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementIssueData> response = Response.FromValue(ApiManagementIssueData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -131,7 +123,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -155,7 +147,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiIssueRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, issueId, ApiManagementIssueData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _apiIssueRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, issueId, ApiManagementIssueData.ToRequestContent(data), ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementIssueData> response = Response.FromValue(ApiManagementIssueData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -187,7 +179,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -208,7 +200,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiIssueRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, issueId, expandCommentsAttachments, context);
+                HttpMessage message = _apiIssueRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, issueId, expandCommentsAttachments, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementIssueData> response = Response.FromValue(ApiManagementIssueData.FromResponse(result), result);
                 if (response.Value == null)
@@ -237,7 +229,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -258,7 +250,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiIssueRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, issueId, expandCommentsAttachments, context);
+                HttpMessage message = _apiIssueRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, issueId, expandCommentsAttachments, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementIssueData> response = Response.FromValue(ApiManagementIssueData.FromResponse(result), result);
                 if (response.Value == null)
@@ -287,7 +279,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -305,7 +297,7 @@ namespace Azure.ResourceManager.ApiManagement
             };
             return new AsyncPageableWrapper<ApiManagementIssueData, ApiIssueResource>(new ApiIssueGetByServiceAsyncCollectionResultOfT(
                 _apiIssueRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
@@ -313,7 +305,8 @@ namespace Azure.ResourceManager.ApiManagement
                 expandCommentsAttachments,
                 top,
                 skip,
-                context), data => new ApiIssueResource(Client, data));
+                context,
+                "ApiIssueCollection.GetAll"), data => new ApiIssueResource(Client, data));
         }
 
         /// <summary>
@@ -329,7 +322,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -347,7 +340,7 @@ namespace Azure.ResourceManager.ApiManagement
             };
             return new PageableWrapper<ApiManagementIssueData, ApiIssueResource>(new ApiIssueGetByServiceCollectionResultOfT(
                 _apiIssueRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
@@ -355,7 +348,8 @@ namespace Azure.ResourceManager.ApiManagement
                 expandCommentsAttachments,
                 top,
                 skip,
-                context), data => new ApiIssueResource(Client, data));
+                context,
+                "ApiIssueCollection.GetAll"), data => new ApiIssueResource(Client, data));
         }
 
         /// <summary>
@@ -371,7 +365,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -392,7 +386,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiIssueRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, issueId, expandCommentsAttachments, context);
+                HttpMessage message = _apiIssueRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, issueId, expandCommentsAttachments, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiManagementIssueData> response = default;
@@ -429,7 +423,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -450,7 +444,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiIssueRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, issueId, expandCommentsAttachments, context);
+                HttpMessage message = _apiIssueRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, issueId, expandCommentsAttachments, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiManagementIssueData> response = default;
@@ -487,7 +481,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -508,7 +502,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiIssueRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, issueId, expandCommentsAttachments, context);
+                HttpMessage message = _apiIssueRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, issueId, expandCommentsAttachments, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiManagementIssueData> response = default;
@@ -549,7 +543,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -570,7 +564,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiIssueRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, issueId, expandCommentsAttachments, context);
+                HttpMessage message = _apiIssueRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, issueId, expandCommentsAttachments, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiManagementIssueData> response = default;

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -34,11 +33,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Policy description. </summary>
-        [WirePath("description")]
         public string Description { get; }
 
         /// <summary> Binary OR value of the Snippet scope. </summary>
-        [WirePath("scope")]
         public long? Scope { get; }
     }
 }

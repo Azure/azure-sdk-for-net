@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -20,7 +19,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of <see cref="ApiManagementServiceSkuProperties"/>. </summary>
         /// <param name="name"> Name of the Sku. </param>
         /// <param name="capacity"> Capacity of the SKU (number of deployed units of the SKU). For Consumption SKU capacity must be specified as 0. </param>
-        public ApiManagementServiceSkuProperties(SkuType name, int capacity)
+        public ApiManagementServiceSkuProperties(ApiManagementServiceSkuType name, int capacity)
         {
             Name = name;
             Capacity = capacity;
@@ -30,7 +29,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="name"> Name of the Sku. </param>
         /// <param name="capacity"> Capacity of the SKU (number of deployed units of the SKU). For Consumption SKU capacity must be specified as 0. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementServiceSkuProperties(SkuType name, int capacity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApiManagementServiceSkuProperties(ApiManagementServiceSkuType name, int capacity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Capacity = capacity;
@@ -38,11 +37,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Name of the Sku. </summary>
-        [WirePath("name")]
-        public SkuType Name { get; set; }
+        public ApiManagementServiceSkuType Name { get; set; }
 
         /// <summary> Capacity of the SKU (number of deployed units of the SKU). For Consumption SKU capacity must be specified as 0. </summary>
-        [WirePath("capacity")]
         public int Capacity { get; set; }
     }
 }

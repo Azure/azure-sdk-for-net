@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -60,55 +59,42 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The user resource identifier of the subscription owner. The value is a valid relative URL in the format of /users/{userId} where {userId} is a user identifier. </summary>
-        [WirePath("ownerId")]
         public string OwnerId { get; }
 
         /// <summary> Scope like /products/{productId} or /apis or /apis/{apiId}. </summary>
-        [WirePath("scope")]
         public string Scope { get; }
 
         /// <summary> The name of the subscription, or null if the subscription has no name. </summary>
-        [WirePath("displayName")]
         public string DisplayName { get; }
 
         /// <summary> Subscription state. Possible states are <i> active – the subscription is active, </i> suspended – the subscription is blocked, and the subscriber cannot call any APIs of the product, <i> submitted – the subscription request has been made by the developer, but has not yet been approved or rejected, </i> rejected – the subscription request has been denied by an administrator, <i> cancelled – the subscription has been cancelled by the developer or administrator, </i> expired – the subscription reached its expiration date and was deactivated. </summary>
-        [WirePath("state")]
         public SubscriptionState State { get; }
 
         /// <summary> Subscription creation date. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
-        [WirePath("createdDate")]
         public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> Subscription activation date. The setting is for audit purposes only and the subscription is not automatically activated. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
-        [WirePath("startDate")]
         public DateTimeOffset? StartOn { get; }
 
         /// <summary> Subscription expiration date. The setting is for audit purposes only and the subscription is not automatically expired. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
-        [WirePath("expirationDate")]
         public DateTimeOffset? ExpireOn { get; }
 
         /// <summary> Date when subscription was cancelled or expired. The setting is for audit purposes only and the subscription is not automatically cancelled. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
-        [WirePath("endDate")]
         public DateTimeOffset? EndOn { get; }
 
         /// <summary> Upcoming subscription expiration notification date. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
-        [WirePath("notificationDate")]
         public DateTimeOffset? NotificationOn { get; }
 
         /// <summary> Subscription primary key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </summary>
-        [WirePath("primaryKey")]
         public string PrimaryKey { get; }
 
         /// <summary> Subscription secondary key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </summary>
-        [WirePath("secondaryKey")]
         public string SecondaryKey { get; }
 
         /// <summary> Optional subscription comment added by an administrator when the state is changed to the 'rejected'. </summary>
-        [WirePath("stateComment")]
         public string StateComment { get; }
 
         /// <summary> Determines whether tracing is enabled. </summary>
-        [WirePath("allowTracing")]
         public bool? AllowTracing { get; }
     }
 }

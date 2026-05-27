@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -32,7 +31,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="isOnline"> Indicates if API revision is the current api revision. </param>
         /// <param name="isCurrent"> Indicates if API revision is accessible via the gateway. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApiRevisionContract(string apiId, string apiRevision, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string description, string privateUri, bool? isOnline, bool? isCurrent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApiRevisionContract(string apiId, string apiRevision, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string description, Uri privateUri, bool? isOnline, bool? isCurrent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ApiId = apiId;
             ApiRevision = apiRevision;
@@ -46,35 +45,27 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Identifier of the API Revision. </summary>
-        [WirePath("apiId")]
         public string ApiId { get; }
 
         /// <summary> Revision number of API. </summary>
-        [WirePath("apiRevision")]
         public string ApiRevision { get; }
 
         /// <summary> The time the API Revision was created. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </summary>
-        [WirePath("createdDateTime")]
         public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The time the API Revision were updated. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </summary>
-        [WirePath("updatedDateTime")]
         public DateTimeOffset? UpdatedOn { get; }
 
         /// <summary> Description of the API Revision. </summary>
-        [WirePath("description")]
         public string Description { get; }
 
         /// <summary> Gateway URL for accessing the non-current API Revision. </summary>
-        [WirePath("privateUrl")]
-        public string PrivateUri { get; }
+        public Uri PrivateUri { get; }
 
         /// <summary> Indicates if API revision is the current api revision. </summary>
-        [WirePath("isOnline")]
         public bool? IsOnline { get; }
 
         /// <summary> Indicates if API revision is accessible via the gateway. </summary>
-        [WirePath("isCurrent")]
         public bool? IsCurrent { get; }
     }
 }

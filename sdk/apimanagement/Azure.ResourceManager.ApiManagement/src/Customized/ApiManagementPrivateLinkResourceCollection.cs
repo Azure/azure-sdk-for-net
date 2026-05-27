@@ -6,6 +6,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual Pageable<ApiManagementPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-            HttpMessage message = _privateEndpointConnectionRestClient.CreateGetPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            HttpMessage message = _privateEndpointConnectionRestClient.CreateGetPrivateLinkResourcesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
             Response result = Pipeline.ProcessMessage(message, context);
             var items = ParsePrivateLinkResources(result);
             var page = Page<ApiManagementPrivateLinkResource>.FromValues(items, null, result);
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual AsyncPageable<ApiManagementPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-            HttpMessage message = _privateEndpointConnectionRestClient.CreateGetPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            HttpMessage message = _privateEndpointConnectionRestClient.CreateGetPrivateLinkResourcesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
             Response result = Pipeline.ProcessMessage(message, context);
             var items = ParsePrivateLinkResources(result);
             var page = Page<ApiManagementPrivateLinkResource>.FromValues(items, null, result);

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -34,11 +33,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Subscription primary key. </summary>
-        [WirePath("primaryKey")]
         public string PrimaryKey { get; }
 
         /// <summary> Subscription secondary key. </summary>
-        [WirePath("secondaryKey")]
         public string SecondaryKey { get; }
     }
 }

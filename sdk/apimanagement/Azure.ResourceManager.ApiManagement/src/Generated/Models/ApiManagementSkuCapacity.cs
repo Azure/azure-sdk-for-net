@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -38,19 +37,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The minimum capacity. </summary>
-        [WirePath("minimum")]
         public int? Minimum { get; }
 
         /// <summary> The maximum capacity that can be set. </summary>
-        [WirePath("maximum")]
         public int? Maximum { get; }
 
         /// <summary> The default capacity. </summary>
-        [WirePath("default")]
         public int? Default { get; }
 
         /// <summary> The scale type applicable to the sku. </summary>
-        [WirePath("scaleType")]
         public ApiManagementSkuCapacityScaleType? ScaleType { get; }
     }
 }

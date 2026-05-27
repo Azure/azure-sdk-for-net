@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(PolicyFragmentResource.ResourceType, out string policyFragmentApiVersion);
             _policyFragmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", PolicyFragmentResource.ResourceType.Namespace, Diagnostics);
-            _policyFragmentRestClient = new PolicyFragment(_policyFragmentClientDiagnostics, Pipeline, Endpoint, policyFragmentApiVersion ?? "2025-03-01-preview");
+            _policyFragmentRestClient = new PolicyFragment(_policyFragmentClientDiagnostics, Pipeline, Endpoint, policyFragmentApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             if (id.ResourceType != ApiManagementServiceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementServiceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementServiceResource.ResourceType), nameof(id));
             }
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyFragmentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, PolicyFragmentContractData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _policyFragmentRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, id, PolicyFragmentContractData.ToRequestContent(data), ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ApiManagementArmOperation<PolicyFragmentResource> operation = new ApiManagementArmOperation<PolicyFragmentResource>(
                     new PolicyFragmentOperationSource(Client),
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyFragmentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, PolicyFragmentContractData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _policyFragmentRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, id, PolicyFragmentContractData.ToRequestContent(data), ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ApiManagementArmOperation<PolicyFragmentResource> operation = new ApiManagementArmOperation<PolicyFragmentResource>(
                     new PolicyFragmentOperationSource(Client),
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyFragmentRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, format?.ToString(), context);
+                HttpMessage message = _policyFragmentRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, id, format?.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PolicyFragmentContractData> response = Response.FromValue(PolicyFragmentContractData.FromResponse(result), result);
                 if (response.Value == null)
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyFragmentRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, format?.ToString(), context);
+                HttpMessage message = _policyFragmentRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, id, format?.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PolicyFragmentContractData> response = Response.FromValue(PolicyFragmentContractData.FromResponse(result), result);
                 if (response.Value == null)
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -304,14 +304,15 @@ namespace Azure.ResourceManager.ApiManagement
             };
             return new AsyncPageableWrapper<PolicyFragmentContractData, PolicyFragmentResource>(new PolicyFragmentGetByServiceAsyncCollectionResultOfT(
                 _policyFragmentRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 filter,
                 @orderby,
                 top,
                 skip,
-                context), data => new PolicyFragmentResource(Client, data));
+                context,
+                "PolicyFragmentCollection.GetAll"), data => new PolicyFragmentResource(Client, data));
         }
 
         /// <summary>
@@ -327,7 +328,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -345,14 +346,15 @@ namespace Azure.ResourceManager.ApiManagement
             };
             return new PageableWrapper<PolicyFragmentContractData, PolicyFragmentResource>(new PolicyFragmentGetByServiceCollectionResultOfT(
                 _policyFragmentRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 filter,
                 @orderby,
                 top,
                 skip,
-                context), data => new PolicyFragmentResource(Client, data));
+                context,
+                "PolicyFragmentCollection.GetAll"), data => new PolicyFragmentResource(Client, data));
         }
 
         /// <summary>
@@ -368,7 +370,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -389,7 +391,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyFragmentRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, format?.ToString(), context);
+                HttpMessage message = _policyFragmentRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, id, format?.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PolicyFragmentContractData> response = default;
@@ -426,7 +428,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -447,7 +449,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyFragmentRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, format?.ToString(), context);
+                HttpMessage message = _policyFragmentRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, id, format?.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PolicyFragmentContractData> response = default;
@@ -484,7 +486,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -505,7 +507,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyFragmentRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, format?.ToString(), context);
+                HttpMessage message = _policyFragmentRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, id, format?.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PolicyFragmentContractData> response = default;
@@ -546,7 +548,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -567,7 +569,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyFragmentRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, format?.ToString(), context);
+                HttpMessage message = _policyFragmentRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, id, format?.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PolicyFragmentContractData> response = default;

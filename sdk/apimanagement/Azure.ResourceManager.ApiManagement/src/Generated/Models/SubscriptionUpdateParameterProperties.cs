@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -48,39 +47,30 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> User identifier path: /users/{userId}. </summary>
-        [WirePath("ownerId")]
         public string OwnerId { get; set; }
 
         /// <summary> Scope like /products/{productId} or /apis or /apis/{apiId}. </summary>
-        [WirePath("scope")]
         public string Scope { get; set; }
 
         /// <summary> Subscription expiration date. The setting is for audit purposes only and the subscription is not automatically expired. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
-        [WirePath("expirationDate")]
         public DateTimeOffset? ExpireOn { get; set; }
 
         /// <summary> Subscription name. </summary>
-        [WirePath("displayName")]
         public string DisplayName { get; set; }
 
         /// <summary> Primary subscription key. </summary>
-        [WirePath("primaryKey")]
         public string PrimaryKey { get; set; }
 
         /// <summary> Secondary subscription key. </summary>
-        [WirePath("secondaryKey")]
         public string SecondaryKey { get; set; }
 
         /// <summary> Subscription state. Possible states are <i> active – the subscription is active, </i> suspended – the subscription is blocked, and the subscriber cannot call any APIs of the product, <i> submitted – the subscription request has been made by the developer, but has not yet been approved or rejected, </i> rejected – the subscription request has been denied by an administrator, <i> cancelled – the subscription has been cancelled by the developer or administrator, </i> expired – the subscription reached its expiration date and was deactivated. </summary>
-        [WirePath("state")]
         public SubscriptionState? State { get; set; }
 
         /// <summary> Comments describing subscription state change by the administrator when the state is changed to the 'rejected'. </summary>
-        [WirePath("stateComment")]
         public string StateComment { get; set; }
 
         /// <summary> Determines whether tracing can be enabled. </summary>
-        [WirePath("allowTracing")]
         public bool? AllowTracing { get; set; }
     }
 }

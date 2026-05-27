@@ -35,11 +35,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Page values of Tools contract. </summary>
-        [WirePath("value")]
         public IReadOnlyList<ToolContractData> Value { get; }
 
         /// <summary> Next page link if any. </summary>
-        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

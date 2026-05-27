@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ApiManagementIdentityProviderResource.ResourceType, out string apiManagementIdentityProviderApiVersion);
             _identityProviderClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementIdentityProviderResource.ResourceType.Namespace, Diagnostics);
-            _identityProviderRestClient = new IdentityProvider(_identityProviderClientDiagnostics, Pipeline, Endpoint, apiManagementIdentityProviderApiVersion ?? "2025-03-01-preview");
+            _identityProviderRestClient = new IdentityProvider(_identityProviderClientDiagnostics, Pipeline, Endpoint, apiManagementIdentityProviderApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             if (id.ResourceType != ApiManagementServiceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementServiceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementServiceResource.ResourceType), nameof(id));
             }
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _identityProviderRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, identityProviderName.ToString(), IdentityProviderCreateContract.ToRequestContent(identityProviderCreateContract), ifMatch, context);
+                HttpMessage message = _identityProviderRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, identityProviderName.ToString(), IdentityProviderCreateContract.ToRequestContent(identityProviderCreateContract), ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementIdentityProviderData> response = Response.FromValue(ApiManagementIdentityProviderData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _identityProviderRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, identityProviderName.ToString(), IdentityProviderCreateContract.ToRequestContent(identityProviderCreateContract), ifMatch, context);
+                HttpMessage message = _identityProviderRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, identityProviderName.ToString(), IdentityProviderCreateContract.ToRequestContent(identityProviderCreateContract), ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementIdentityProviderData> response = Response.FromValue(ApiManagementIdentityProviderData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _identityProviderRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, identityProviderName.ToString(), context);
+                HttpMessage message = _identityProviderRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, identityProviderName.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementIdentityProviderData> response = Response.FromValue(ApiManagementIdentityProviderData.FromResponse(result), result);
                 if (response.Value == null)
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _identityProviderRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, identityProviderName.ToString(), context);
+                HttpMessage message = _identityProviderRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, identityProviderName.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementIdentityProviderData> response = Response.FromValue(ApiManagementIdentityProviderData.FromResponse(result), result);
                 if (response.Value == null)
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -278,7 +278,13 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiManagementIdentityProviderData, ApiManagementIdentityProviderResource>(new IdentityProviderGetByServiceAsyncCollectionResultOfT(_identityProviderRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new ApiManagementIdentityProviderResource(Client, data));
+            return new AsyncPageableWrapper<ApiManagementIdentityProviderData, ApiManagementIdentityProviderResource>(new IdentityProviderGetByServiceAsyncCollectionResultOfT(
+                _identityProviderRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ApiManagementIdentityProviderCollection.GetAll"), data => new ApiManagementIdentityProviderResource(Client, data));
         }
 
         /// <summary>
@@ -294,7 +300,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -306,7 +312,13 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiManagementIdentityProviderData, ApiManagementIdentityProviderResource>(new IdentityProviderGetByServiceCollectionResultOfT(_identityProviderRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new ApiManagementIdentityProviderResource(Client, data));
+            return new PageableWrapper<ApiManagementIdentityProviderData, ApiManagementIdentityProviderResource>(new IdentityProviderGetByServiceCollectionResultOfT(
+                _identityProviderRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ApiManagementIdentityProviderCollection.GetAll"), data => new ApiManagementIdentityProviderResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +334,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -338,7 +350,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _identityProviderRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, identityProviderName.ToString(), context);
+                HttpMessage message = _identityProviderRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, identityProviderName.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiManagementIdentityProviderData> response = default;
@@ -375,7 +387,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -391,7 +403,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _identityProviderRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, identityProviderName.ToString(), context);
+                HttpMessage message = _identityProviderRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, identityProviderName.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiManagementIdentityProviderData> response = default;
@@ -428,7 +440,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -444,7 +456,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _identityProviderRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, identityProviderName.ToString(), context);
+                HttpMessage message = _identityProviderRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, identityProviderName.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiManagementIdentityProviderData> response = default;
@@ -485,7 +497,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -501,7 +513,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _identityProviderRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, identityProviderName.ToString(), context);
+                HttpMessage message = _identityProviderRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, identityProviderName.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiManagementIdentityProviderData> response = default;

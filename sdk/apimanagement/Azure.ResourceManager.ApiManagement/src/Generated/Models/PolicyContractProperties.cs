@@ -39,11 +39,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Contents of the Policy as defined by the format. </summary>
-        [WirePath("value")]
         public string Value { get; set; }
 
         /// <summary> Format of the policyContent. </summary>
-        [WirePath("format")]
         public PolicyContentFormat? Format { get; set; }
     }
 }

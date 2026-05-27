@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of <see cref="ApiManagementSkuRestrictionInfo"/>. </summary>
         internal ApiManagementSkuRestrictionInfo()
         {
-            Locations = new ChangeTrackingList<string>();
+            Locations = new ChangeTrackingList<AzureLocation>();
             Zones = new ChangeTrackingList<string>();
         }
 
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="locations"> Locations where the SKU is restricted. </param>
         /// <param name="zones"> List of availability zones where the SKU is restricted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementSkuRestrictionInfo(IReadOnlyList<string> locations, IReadOnlyList<string> zones, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApiManagementSkuRestrictionInfo(IReadOnlyList<AzureLocation> locations, IReadOnlyList<string> zones, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Locations = locations;
             Zones = zones;
@@ -36,11 +37,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Locations where the SKU is restricted. </summary>
-        [WirePath("locations")]
-        public IReadOnlyList<string> Locations { get; }
+        public IReadOnlyList<AzureLocation> Locations { get; }
 
         /// <summary> List of availability zones where the SKU is restricted. </summary>
-        [WirePath("zones")]
         public IReadOnlyList<string> Zones { get; }
     }
 }

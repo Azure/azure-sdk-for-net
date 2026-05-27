@@ -27,8 +27,6 @@ namespace Azure.ResourceManager.ApiManagement
     {
         private readonly ClientDiagnostics _graphQLApiResolverClientDiagnostics;
         private readonly GraphQLApiResolver _graphQLApiResolverRestClient;
-        private readonly ClientDiagnostics _graphQLApiResolverPolicyClientDiagnostics;
-        private readonly GraphQLApiResolverPolicy _graphQLApiResolverPolicyRestClient;
 
         /// <summary> Initializes a new instance of ResolverContractCollection for mocking. </summary>
         protected ResolverContractCollection()
@@ -42,9 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ResolverContractResource.ResourceType, out string resolverContractApiVersion);
             _graphQLApiResolverClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResolverContractResource.ResourceType.Namespace, Diagnostics);
-            _graphQLApiResolverRestClient = new GraphQLApiResolver(_graphQLApiResolverClientDiagnostics, Pipeline, Endpoint, resolverContractApiVersion ?? "2025-03-01-preview");
-            _graphQLApiResolverPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResolverContractResource.ResourceType.Namespace, Diagnostics);
-            _graphQLApiResolverPolicyRestClient = new GraphQLApiResolverPolicy(_graphQLApiResolverPolicyClientDiagnostics, Pipeline, Endpoint, resolverContractApiVersion ?? "2025-03-01-preview");
+            _graphQLApiResolverRestClient = new GraphQLApiResolver(_graphQLApiResolverClientDiagnostics, Pipeline, Endpoint, resolverContractApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -54,7 +50,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             if (id.ResourceType != ApiResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiResource.ResourceType), nameof(id));
             }
         }
 
@@ -71,7 +67,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -95,7 +91,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _graphQLApiResolverRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, resolverId, ResolverContractData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _graphQLApiResolverRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, resolverId, ResolverContractData.ToRequestContent(data), ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResolverContractData> response = Response.FromValue(ResolverContractData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -127,7 +123,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -151,7 +147,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _graphQLApiResolverRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, resolverId, ResolverContractData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _graphQLApiResolverRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, resolverId, ResolverContractData.ToRequestContent(data), ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResolverContractData> response = Response.FromValue(ResolverContractData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -183,7 +179,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -203,7 +199,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _graphQLApiResolverRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, resolverId, context);
+                HttpMessage message = _graphQLApiResolverRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, resolverId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResolverContractData> response = Response.FromValue(ResolverContractData.FromResponse(result), result);
                 if (response.Value == null)
@@ -232,7 +228,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -252,7 +248,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _graphQLApiResolverRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, resolverId, context);
+                HttpMessage message = _graphQLApiResolverRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, resolverId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResolverContractData> response = Response.FromValue(ResolverContractData.FromResponse(result), result);
                 if (response.Value == null)
@@ -281,7 +277,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,14 +294,15 @@ namespace Azure.ResourceManager.ApiManagement
             };
             return new AsyncPageableWrapper<ResolverContractData, ResolverContractResource>(new GraphQLApiResolverGetByApiAsyncCollectionResultOfT(
                 _graphQLApiResolverRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
                 filter,
                 top,
                 skip,
-                context), data => new ResolverContractResource(Client, data));
+                context,
+                "ResolverContractCollection.GetAll"), data => new ResolverContractResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +318,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -338,14 +335,15 @@ namespace Azure.ResourceManager.ApiManagement
             };
             return new PageableWrapper<ResolverContractData, ResolverContractResource>(new GraphQLApiResolverGetByApiCollectionResultOfT(
                 _graphQLApiResolverRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
                 filter,
                 top,
                 skip,
-                context), data => new ResolverContractResource(Client, data));
+                context,
+                "ResolverContractCollection.GetAll"), data => new ResolverContractResource(Client, data));
         }
 
         /// <summary>
@@ -361,7 +359,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -381,7 +379,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _graphQLApiResolverRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, resolverId, context);
+                HttpMessage message = _graphQLApiResolverRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, resolverId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ResolverContractData> response = default;
@@ -418,7 +416,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -438,7 +436,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _graphQLApiResolverRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, resolverId, context);
+                HttpMessage message = _graphQLApiResolverRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, resolverId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ResolverContractData> response = default;
@@ -475,7 +473,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -495,7 +493,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _graphQLApiResolverRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, resolverId, context);
+                HttpMessage message = _graphQLApiResolverRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, resolverId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ResolverContractData> response = default;
@@ -536,7 +534,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -556,7 +554,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _graphQLApiResolverRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, resolverId, context);
+                HttpMessage message = _graphQLApiResolverRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, resolverId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ResolverContractData> response = default;

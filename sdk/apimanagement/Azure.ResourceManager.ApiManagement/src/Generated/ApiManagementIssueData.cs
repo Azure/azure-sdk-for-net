@@ -38,11 +38,9 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Properties of the Issue. </summary>
-        [WirePath("properties")]
         internal IssueContractProperties Properties { get; set; }
 
         /// <summary> Date and time when the issue was created. </summary>
-        [WirePath("properties.createdDate")]
         public DateTimeOffset? CreatedOn
         {
             get
@@ -55,12 +53,11 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     Properties = new IssueContractProperties();
                 }
-                Properties.CreatedOn = value.Value;
+                Properties.CreatedOn = value;
             }
         }
 
         /// <summary> Status of the issue. </summary>
-        [WirePath("properties.state")]
         public State? State
         {
             get
@@ -73,12 +70,11 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     Properties = new IssueContractProperties();
                 }
-                Properties.State = value.Value;
+                Properties.State = value;
             }
         }
 
         /// <summary> A resource identifier for the API the issue was created for. </summary>
-        [WirePath("properties.apiId")]
         public string ApiId
         {
             get
@@ -96,7 +92,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> The issue title. </summary>
-        [WirePath("properties.title")]
         public string Title
         {
             get
@@ -114,7 +109,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Text describing the issue. </summary>
-        [WirePath("properties.description")]
         public string Description
         {
             get
@@ -132,7 +126,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> A resource identifier for the user created the issue. </summary>
-        [WirePath("properties.userId")]
         public string UserId
         {
             get

@@ -37,11 +37,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Result of the List API Management WorkspaceLinks operation. </summary>
-        [WirePath("value")]
         public IList<ApiManagementWorkspaceLinksResourceData> Value { get; }
 
         /// <summary> Link to the next set of results. Not empty if Value contains incomplete list of API Management services. </summary>
-        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

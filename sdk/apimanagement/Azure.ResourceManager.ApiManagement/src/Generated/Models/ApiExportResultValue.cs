@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -32,7 +31,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Link to the Storage Blob containing the result of the export operation. The Blob Uri is only valid for 5 minutes. </summary>
-        [WirePath("link")]
         public string Link { get; }
     }
 }

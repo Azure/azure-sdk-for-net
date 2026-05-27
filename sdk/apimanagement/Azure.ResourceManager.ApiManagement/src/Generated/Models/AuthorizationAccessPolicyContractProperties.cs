@@ -37,15 +37,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The allowed Azure Active Directory Application IDs. </summary>
-        [WirePath("appIds")]
         public IList<string> AppIds { get; } = new ChangeTrackingList<string>();
 
         /// <summary> The Tenant Id. </summary>
-        [WirePath("tenantId")]
         public string TenantId { get; set; }
 
         /// <summary> The Object Id. </summary>
-        [WirePath("objectId")]
         public string ObjectId { get; set; }
     }
 }

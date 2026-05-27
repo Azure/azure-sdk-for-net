@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetByApisRequest(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string filter, int? top, int? skip, RequestContext context)
+        internal HttpMessage CreateGetByApisRequest(Guid subscriptionId, string resourceGroupName, string serviceName, string apiId, string filter, int? top, int? skip, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ApiManagement
             return message;
         }
 
-        internal HttpMessage CreateNextGetByApisRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string serviceName, string apiId, string filter, int? top, int? skip, RequestContext context)
+        internal HttpMessage CreateNextGetByApisRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string serviceName, string apiId, string filter, int? top, int? skip, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

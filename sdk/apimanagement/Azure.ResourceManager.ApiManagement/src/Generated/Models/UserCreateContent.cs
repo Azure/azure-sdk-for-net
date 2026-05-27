@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -32,11 +31,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> User entity create contract properties. </summary>
-        [WirePath("properties")]
         internal UserCreateParameterProperties Properties { get; set; }
 
         /// <summary> Account state. Specifies whether the user is active or not. Blocked users are unable to sign into the developer portal or call any APIs of subscribed products. Default state is Active. </summary>
-        [WirePath("properties.state")]
         public ApiManagementUserState? State
         {
             get
@@ -49,12 +46,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     Properties = new UserCreateParameterProperties();
                 }
-                Properties.State = value.Value;
+                Properties.State = value;
             }
         }
 
         /// <summary> Optional note about a user set by the administrator. </summary>
-        [WirePath("properties.note")]
         public string Note
         {
             get
@@ -72,7 +68,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Collection of user identities. </summary>
-        [WirePath("properties.identities")]
         public IList<UserIdentityContract> Identities
         {
             get
@@ -86,7 +81,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Email address. Must not be empty and must be unique within the service instance. </summary>
-        [WirePath("properties.email")]
         public string Email
         {
             get
@@ -96,7 +90,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> First name. </summary>
-        [WirePath("properties.firstName")]
         public string FirstName
         {
             get
@@ -106,7 +99,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Last name. </summary>
-        [WirePath("properties.lastName")]
         public string LastName
         {
             get
@@ -116,7 +108,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> User Password. If no value is provided, a default password is generated. </summary>
-        [WirePath("properties.password")]
         public string Password
         {
             get
@@ -134,7 +125,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Determines the type of application which send the create user request. Default is legacy portal. </summary>
-        [WirePath("properties.appType")]
         public AppType? AppType
         {
             get
@@ -147,12 +137,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     Properties = new UserCreateParameterProperties();
                 }
-                Properties.AppType = value.Value;
+                Properties.AppType = value;
             }
         }
 
         /// <summary> Determines the type of confirmation e-mail that will be sent to the newly created user. </summary>
-        [WirePath("properties.confirmation")]
         public Confirmation? Confirmation
         {
             get
@@ -165,7 +154,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     Properties = new UserCreateParameterProperties();
                 }
-                Properties.Confirmation = value.Value;
+                Properties.Confirmation = value;
             }
         }
     }

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -42,15 +41,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Client Id of the Application in the external Identity Provider. It is App ID for Facebook login, Client ID for Google login, App ID for Microsoft. </summary>
-        [WirePath("clientId")]
         public string ClientId { get; set; }
 
         /// <summary> Client secret of the Application in external Identity Provider, used to authenticate login request. For example, it is App Secret for Facebook login, API Key for Google login, Public Key for Microsoft. </summary>
-        [WirePath("clientSecret")]
         public string ClientSecret { get; set; }
 
         /// <summary> Certificate full resource ID used in external Identity Provider. </summary>
-        [WirePath("certificateId")]
         public ResourceIdentifier CertificateId { get; set; }
     }
 }

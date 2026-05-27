@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(NamedValueResource.ResourceType, out string namedValueApiVersion);
             _namedValueClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", NamedValueResource.ResourceType.Namespace, Diagnostics);
-            _namedValueRestClient = new NamedValue(_namedValueClientDiagnostics, Pipeline, Endpoint, namedValueApiVersion ?? "2025-03-01-preview");
+            _namedValueRestClient = new NamedValue(_namedValueClientDiagnostics, Pipeline, Endpoint, namedValueApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             if (id.ResourceType != ApiManagementServiceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementServiceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementServiceResource.ResourceType), nameof(id));
             }
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namedValueRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namedValueId, NamedValueCreateContract.ToRequestContent(namedValueCreateContract), ifMatch, context);
+                HttpMessage message = _namedValueRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, namedValueId, NamedValueCreateContract.ToRequestContent(namedValueCreateContract), ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ApiManagementArmOperation<NamedValueResource> operation = new ApiManagementArmOperation<NamedValueResource>(
                     new NamedValueOperationSource(Client),
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namedValueRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namedValueId, NamedValueCreateContract.ToRequestContent(namedValueCreateContract), ifMatch, context);
+                HttpMessage message = _namedValueRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, namedValueId, NamedValueCreateContract.ToRequestContent(namedValueCreateContract), ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ApiManagementArmOperation<NamedValueResource> operation = new ApiManagementArmOperation<NamedValueResource>(
                     new NamedValueOperationSource(Client),
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namedValueRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namedValueId, context);
+                HttpMessage message = _namedValueRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, namedValueId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementNamedValueData> response = Response.FromValue(ApiManagementNamedValueData.FromResponse(result), result);
                 if (response.Value == null)
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namedValueRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namedValueId, context);
+                HttpMessage message = _namedValueRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, namedValueId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementNamedValueData> response = Response.FromValue(ApiManagementNamedValueData.FromResponse(result), result);
                 if (response.Value == null)
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -302,14 +302,15 @@ namespace Azure.ResourceManager.ApiManagement
             };
             return new AsyncPageableWrapper<ApiManagementNamedValueData, NamedValueResource>(new NamedValueGetByServiceAsyncCollectionResultOfT(
                 _namedValueRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 filter,
                 top,
                 skip,
                 isKeyVaultRefreshFailed,
-                context), data => new NamedValueResource(Client, data));
+                context,
+                "NamedValueCollection.GetAll"), data => new NamedValueResource(Client, data));
         }
 
         /// <summary>
@@ -325,7 +326,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -343,14 +344,15 @@ namespace Azure.ResourceManager.ApiManagement
             };
             return new PageableWrapper<ApiManagementNamedValueData, NamedValueResource>(new NamedValueGetByServiceCollectionResultOfT(
                 _namedValueRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 filter,
                 top,
                 skip,
                 isKeyVaultRefreshFailed,
-                context), data => new NamedValueResource(Client, data));
+                context,
+                "NamedValueCollection.GetAll"), data => new NamedValueResource(Client, data));
         }
 
         /// <summary>
@@ -366,7 +368,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -386,7 +388,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namedValueRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namedValueId, context);
+                HttpMessage message = _namedValueRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, namedValueId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiManagementNamedValueData> response = default;
@@ -423,7 +425,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -443,7 +445,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namedValueRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namedValueId, context);
+                HttpMessage message = _namedValueRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, namedValueId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiManagementNamedValueData> response = default;
@@ -480,7 +482,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -500,7 +502,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namedValueRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namedValueId, context);
+                HttpMessage message = _namedValueRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, namedValueId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiManagementNamedValueData> response = default;
@@ -541,7 +543,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -561,7 +563,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namedValueRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namedValueId, context);
+                HttpMessage message = _namedValueRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, namedValueId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiManagementNamedValueData> response = default;

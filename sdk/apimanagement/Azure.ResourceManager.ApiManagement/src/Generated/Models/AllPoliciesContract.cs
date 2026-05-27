@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.ApiManagement;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -38,26 +37,23 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Properties of the All Policies. </summary>
-        [WirePath("properties")]
         internal AllPoliciesContractProperties Properties { get; }
 
         /// <summary> Policy Identifier. </summary>
-        [WirePath("properties.referencePolicyId")]
         public string ReferencePolicyId
         {
             get
             {
-                return Properties.ReferencePolicyId;
+                return Properties is null ? default : Properties.ReferencePolicyId;
             }
         }
 
         /// <summary> Policy Restriction Compliance State. </summary>
-        [WirePath("properties.complianceState")]
         public PolicyComplianceState? ComplianceState
         {
             get
             {
-                return Properties.ComplianceState;
+                return Properties is null ? default : Properties.ComplianceState;
             }
         }
     }

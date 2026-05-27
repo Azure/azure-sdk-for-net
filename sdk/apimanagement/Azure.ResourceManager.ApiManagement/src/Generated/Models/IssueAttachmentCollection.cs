@@ -37,15 +37,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Issue Attachment values. </summary>
-        [WirePath("value")]
         public IReadOnlyList<ApiIssueAttachmentData> Value { get; }
 
         /// <summary> Total record count number across all pages. </summary>
-        [WirePath("count")]
         public long? Count { get; }
 
         /// <summary> Next page link if any. </summary>
-        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

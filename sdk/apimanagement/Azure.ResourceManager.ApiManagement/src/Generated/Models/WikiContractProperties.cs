@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Collection wiki documents included into this wiki. </summary>
-        [WirePath("documents")]
         public IList<WikiDocumentationContract> Documents { get; } = new ChangeTrackingList<WikiDocumentationContract>();
     }
 }

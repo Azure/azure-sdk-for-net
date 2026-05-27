@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -34,11 +33,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Number of times Counter was called. </summary>
-        [WirePath("callsCount")]
         public int? CallsCount { get; set; }
 
         /// <summary> Data Transferred in KiloBytes. </summary>
-        [WirePath("kbTransferred")]
         public double? KbTransferred { get; set; }
     }
 }

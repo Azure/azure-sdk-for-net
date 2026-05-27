@@ -17,11 +17,12 @@ namespace Azure.ResourceManager.ApiManagement
     internal partial class WorkspacePolicyGetByApiCollectionResultOfT : Pageable<ApiManagementPolicyData>
     {
         private readonly WorkspacePolicy _client;
-        private readonly string _subscriptionId;
+        private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _serviceName;
         private readonly string _workspaceId;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of WorkspacePolicyGetByApiCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The WorkspacePolicy client used to send requests. </param>
@@ -30,7 +31,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="workspaceId"> Workspace identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public WorkspacePolicyGetByApiCollectionResultOfT(WorkspacePolicy client, string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public WorkspacePolicyGetByApiCollectionResultOfT(WorkspacePolicy client, Guid subscriptionId, string resourceGroupName, string serviceName, string workspaceId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -38,6 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
             _serviceName = serviceName;
             _workspaceId = workspaceId;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of WorkspacePolicyGetByApiCollectionResultOfT as an enumerable collection. </summary>
@@ -71,7 +74,7 @@ namespace Azure.ResourceManager.ApiManagement
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByApiRequest(nextLink, _subscriptionId, _resourceGroupName, _serviceName, _workspaceId, _context) : _client.CreateGetByApiRequest(_subscriptionId, _resourceGroupName, _serviceName, _workspaceId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("WorkspacePolicyCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

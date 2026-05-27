@@ -42,23 +42,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The threshold for opening the circuit. </summary>
-        [WirePath("count")]
         public long? Count { get; set; }
 
         /// <summary> The threshold for opening the circuit. </summary>
-        [WirePath("percentage")]
         public long? Percentage { get; set; }
 
         /// <summary> The interval during which the failures are counted. </summary>
-        [WirePath("interval")]
         public TimeSpan? Interval { get; set; }
 
         /// <summary> The status code ranges which are considered as failure. </summary>
-        [WirePath("statusCodeRanges")]
         public IList<FailureStatusCodeRange> StatusCodeRanges { get; }
 
         /// <summary> The error reasons which are considered as failure. </summary>
-        [WirePath("errorReasons")]
         public IList<string> ErrorReasons { get; }
     }
 }

@@ -37,15 +37,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Page values. </summary>
-        [WirePath("value")]
         public IList<AuthorizationAccessPolicyContractData> Value { get; }
 
         /// <summary> Total record count number across all pages. </summary>
-        [WirePath("count")]
         public long? Count { get; }
 
         /// <summary> Paged Authorization Access Policy list representation. </summary>
-        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

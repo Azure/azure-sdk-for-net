@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -32,7 +31,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The default hostname of the data-plane gateway to which requests can be sent. This is only applicable for API gateway with Standard SKU. </summary>
-        [WirePath("defaultHostname")]
         public string DefaultHostname { get; }
     }
 }

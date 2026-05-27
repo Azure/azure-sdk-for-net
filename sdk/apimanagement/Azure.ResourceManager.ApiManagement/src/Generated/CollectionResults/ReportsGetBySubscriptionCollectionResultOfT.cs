@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement
     internal partial class ReportsGetBySubscriptionCollectionResultOfT : Pageable<ReportRecordContract>
     {
         private readonly Reports _client;
-        private readonly string _subscriptionId;
+        private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _serviceName;
         private readonly string _filter;
@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly int? _skip;
         private readonly string _orderby;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ReportsGetBySubscriptionCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Reports client used to send requests. </param>
@@ -36,7 +37,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="orderby"> OData order by query option. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ReportsGetBySubscriptionCollectionResultOfT(Reports client, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top, int? skip, string @orderby, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ReportsGetBySubscriptionCollectionResultOfT(Reports client, Guid subscriptionId, string resourceGroupName, string serviceName, string filter, int? top, int? skip, string @orderby, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -47,6 +49,7 @@ namespace Azure.ResourceManager.ApiManagement
             _skip = skip;
             _orderby = @orderby;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ReportsGetBySubscriptionCollectionResultOfT as an enumerable collection. </summary>
@@ -80,7 +83,7 @@ namespace Azure.ResourceManager.ApiManagement
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _resourceGroupName, _serviceName, _filter, _top, _skip, _orderby, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _resourceGroupName, _serviceName, _filter, _top, _skip, _orderby, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ApiManagementServiceResource.GetBySubscription");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

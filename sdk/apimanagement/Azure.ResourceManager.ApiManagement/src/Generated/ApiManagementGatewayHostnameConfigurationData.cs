@@ -38,11 +38,9 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gateway hostname configuration details. </summary>
-        [WirePath("properties")]
         internal GatewayHostnameConfigurationContractProperties Properties { get; set; }
 
         /// <summary> Hostname value. Supports valid domain name, partial or full wildcard. </summary>
-        [WirePath("properties.hostname")]
         public string Hostname
         {
             get
@@ -60,7 +58,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Identifier of Certificate entity that will be used for TLS connection establishment. </summary>
-        [WirePath("properties.certificateId")]
         public string CertificateId
         {
             get
@@ -78,7 +75,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Determines whether gateway requests client certificate. </summary>
-        [WirePath("properties.negotiateClientCertificate")]
         public bool? NegotiateClientCertificate
         {
             get
@@ -91,7 +87,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     Properties = new GatewayHostnameConfigurationContractProperties();
                 }
-                Properties.NegotiateClientCertificate = value.Value;
+                Properties.NegotiateClientCertificate = value;
             }
         }
     }

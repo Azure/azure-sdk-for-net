@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -38,15 +37,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Title of the Notification. </summary>
-        [WirePath("title")]
         public string Title { get; }
 
         /// <summary> Description of the Notification. </summary>
-        [WirePath("description")]
         public string Description { get; }
 
         /// <summary> Recipient Parameter values. </summary>
-        [WirePath("recipients")]
         public RecipientsContractProperties Recipients { get; }
     }
 }

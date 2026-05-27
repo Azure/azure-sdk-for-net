@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -39,6 +40,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="termsOfServiceUri"> A URL to the Terms of Service for the API. MUST be in the format of a URL. </param>
         /// <param name="contact"> Contact information for the API. </param>
         /// <param name="license"> License information for the API. </param>
+        /// <param name="mcpProperties"> Properties specific to MCP API type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sourceApiId"> API identifier of the source API. </param>
         /// <param name="displayName"> API name. Must be 1 to 300 characters long. </param>
@@ -59,7 +61,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// New types can be added in the future.
         /// </param>
         /// <param name="translateRequiredQueryParametersConduct"> Strategy of translating required query parameters to template ones. By default has value 'template'. Possible values: 'template', 'query'. </param>
-        internal ApiCreateOrUpdateProperties(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, string apiVersionSetId, bool? subscriptionRequired, Uri termsOfServiceUri, ApiContactInformation contact, ApiLicenseInformation license, IDictionary<string, BinaryData> additionalBinaryDataProperties, string sourceApiId, string displayName, string serviceUri, string path, IList<ApiOperationInvokableProtocol> protocols, ApiVersionSetContractDetails apiVersionSet, string provisioningState, string value, ContentFormat? format, ApiCreateOrUpdatePropertiesWsdlSelector wsdlSelector, SoapApiType? soapApiType, TranslateRequiredQueryParametersConduct? translateRequiredQueryParametersConduct) : base(description, authenticationSettings, subscriptionKeyParameterNames, apiType, apiRevision, apiVersion, isCurrent, isOnline, apiRevisionDescription, apiVersionDescription, apiVersionSetId, subscriptionRequired, termsOfServiceUri, contact, license, additionalBinaryDataProperties, sourceApiId, displayName, serviceUri, path, protocols, apiVersionSet, provisioningState)
+        internal ApiCreateOrUpdateProperties(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? subscriptionRequired, Uri termsOfServiceUri, ApiContactInformation contact, ApiLicenseInformation license, McpProperties mcpProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties, string sourceApiId, string displayName, string serviceUri, string path, IList<ApiOperationInvokableProtocol> protocols, ApiVersionSetContractDetails apiVersionSet, string provisioningState, string value, ContentFormat? format, ApiCreateOrUpdatePropertiesWsdlSelector wsdlSelector, SoapApiType? soapApiType, TranslateRequiredQueryParametersConduct? translateRequiredQueryParametersConduct) : base(description, authenticationSettings, subscriptionKeyParameterNames, apiType, apiRevision, apiVersion, isCurrent, isOnline, apiRevisionDescription, apiVersionDescription, apiVersionSetId, subscriptionRequired, termsOfServiceUri, contact, license, mcpProperties, additionalBinaryDataProperties, sourceApiId, displayName, serviceUri, path, protocols, apiVersionSet, provisioningState)
         {
             Value = value;
             Format = format;
@@ -69,15 +71,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Content value when Importing an API. </summary>
-        [WirePath("value")]
         public string Value { get; set; }
 
         /// <summary> Format of the Content in which the API is getting imported. New formats can be added in the future. </summary>
-        [WirePath("format")]
         public ContentFormat? Format { get; set; }
 
         /// <summary> Criteria to limit import of WSDL to a subset of the document. </summary>
-        [WirePath("wsdlSelector")]
         public ApiCreateOrUpdatePropertiesWsdlSelector WsdlSelector { get; set; }
 
         /// <summary>
@@ -88,11 +87,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// * `graphql` creates GraphQL API.
         /// New types can be added in the future.
         /// </summary>
-        [WirePath("apiType")]
         public SoapApiType? SoapApiType { get; set; }
 
         /// <summary> Strategy of translating required query parameters to template ones. By default has value 'template'. Possible values: 'template', 'query'. </summary>
-        [WirePath("translateRequiredQueryParameters")]
         public TranslateRequiredQueryParametersConduct? TranslateRequiredQueryParametersConduct { get; set; }
     }
 }

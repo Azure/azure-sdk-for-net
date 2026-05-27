@@ -12,7 +12,7 @@ using Azure.ResourceManager.ApiManagement;
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Name of the Sku. </summary>
-    public readonly partial struct SkuType : IEquatable<SkuType>
+    public readonly partial struct ApiManagementServiceSkuType : IEquatable<ApiManagementServiceSkuType>
     {
         private readonly string _value;
         /// <summary> Developer SKU of Api Management. </summary>
@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> PremiumV2 SKU of Api Management. </summary>
         private const string PremiumV2Value = "PremiumV2";
 
-        /// <summary> Initializes a new instance of <see cref="SkuType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementServiceSkuType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SkuType(string value)
+        public ApiManagementServiceSkuType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -45,56 +45,56 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Developer SKU of Api Management. </summary>
-        public static SkuType Developer { get; } = new SkuType(DeveloperValue);
+        public static ApiManagementServiceSkuType Developer { get; } = new ApiManagementServiceSkuType(DeveloperValue);
 
         /// <summary> Standard SKU of Api Management. </summary>
-        public static SkuType Standard { get; } = new SkuType(StandardValue);
+        public static ApiManagementServiceSkuType Standard { get; } = new ApiManagementServiceSkuType(StandardValue);
 
         /// <summary> Premium SKU of Api Management. </summary>
-        public static SkuType Premium { get; } = new SkuType(PremiumValue);
+        public static ApiManagementServiceSkuType Premium { get; } = new ApiManagementServiceSkuType(PremiumValue);
 
         /// <summary> Basic SKU of Api Management. </summary>
-        public static SkuType Basic { get; } = new SkuType(BasicValue);
+        public static ApiManagementServiceSkuType Basic { get; } = new ApiManagementServiceSkuType(BasicValue);
 
         /// <summary> Consumption SKU of Api Management. </summary>
-        public static SkuType Consumption { get; } = new SkuType(ConsumptionValue);
+        public static ApiManagementServiceSkuType Consumption { get; } = new ApiManagementServiceSkuType(ConsumptionValue);
 
         /// <summary> Isolated SKU of Api Management. </summary>
-        public static SkuType Isolated { get; } = new SkuType(IsolatedValue);
+        public static ApiManagementServiceSkuType Isolated { get; } = new ApiManagementServiceSkuType(IsolatedValue);
 
         /// <summary> BasicV2 SKU of Api Management. </summary>
-        public static SkuType BasicV2 { get; } = new SkuType(BasicV2Value);
+        public static ApiManagementServiceSkuType BasicV2 { get; } = new ApiManagementServiceSkuType(BasicV2Value);
 
         /// <summary> StandardV2 SKU of Api Management. </summary>
-        public static SkuType StandardV2 { get; } = new SkuType(StandardV2Value);
+        public static ApiManagementServiceSkuType StandardV2 { get; } = new ApiManagementServiceSkuType(StandardV2Value);
 
         /// <summary> PremiumV2 SKU of Api Management. </summary>
-        public static SkuType PremiumV2 { get; } = new SkuType(PremiumV2Value);
+        public static ApiManagementServiceSkuType PremiumV2 { get; } = new ApiManagementServiceSkuType(PremiumV2Value);
 
-        /// <summary> Determines if two <see cref="SkuType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ApiManagementServiceSkuType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(SkuType left, SkuType right) => left.Equals(right);
+        public static bool operator ==(ApiManagementServiceSkuType left, ApiManagementServiceSkuType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="SkuType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ApiManagementServiceSkuType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(SkuType left, SkuType right) => !left.Equals(right);
+        public static bool operator !=(ApiManagementServiceSkuType left, ApiManagementServiceSkuType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="SkuType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ApiManagementServiceSkuType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SkuType(string value) => new SkuType(value);
+        public static implicit operator ApiManagementServiceSkuType(string value) => new ApiManagementServiceSkuType(value);
 
-        /// <summary> Converts a string to a <see cref="SkuType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ApiManagementServiceSkuType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SkuType?(string value) => value == null ? null : new SkuType(value);
+        public static implicit operator ApiManagementServiceSkuType?(string value) => value == null ? null : new ApiManagementServiceSkuType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is SkuType other && Equals(other);
+        public override bool Equals(object obj) => obj is ApiManagementServiceSkuType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(SkuType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ApiManagementServiceSkuType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

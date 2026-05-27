@@ -18,24 +18,33 @@ namespace Azure.ResourceManager.ApiManagement
     internal partial class ApiManagementWorkspaceLinksGetByServiceAsyncCollectionResultOfT : AsyncPageable<ApiManagementWorkspaceLinksResourceData>
     {
         private readonly ApiManagementWorkspaceLinks _client;
-        private readonly string _subscriptionId;
+        private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _serviceName;
+        private readonly int? _top;
+        private readonly string _skipToken;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ApiManagementWorkspaceLinksGetByServiceAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ApiManagementWorkspaceLinks client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skipToken"> Skip token for retrieving the next page of results. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ApiManagementWorkspaceLinksGetByServiceAsyncCollectionResultOfT(ApiManagementWorkspaceLinks client, string subscriptionId, string resourceGroupName, string serviceName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ApiManagementWorkspaceLinksGetByServiceAsyncCollectionResultOfT(ApiManagementWorkspaceLinks client, Guid subscriptionId, string resourceGroupName, string serviceName, int? top, string skipToken, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _serviceName = serviceName;
+            _top = top;
+            _skipToken = skipToken;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ApiManagementWorkspaceLinksGetByServiceAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -68,8 +77,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByServiceRequest(nextLink, _subscriptionId, _resourceGroupName, _serviceName, _context) : _client.CreateGetByServiceRequest(_subscriptionId, _resourceGroupName, _serviceName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ApiManagementWorkspaceLinksResourceCollection.GetAll");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetByServiceRequest(nextLink, _subscriptionId, _resourceGroupName, _serviceName, _top, _skipToken, _context) : _client.CreateGetByServiceRequest(_subscriptionId, _resourceGroupName, _serviceName, _top, _skipToken, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

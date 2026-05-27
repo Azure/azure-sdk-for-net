@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -34,11 +33,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Source from where the session id is extracted. </summary>
-        [WirePath("source")]
         public BackendSessionIdSource? Source { get; set; }
 
         /// <summary> Name of the variable that refers to the session id. </summary>
-        [WirePath("name")]
         public string Name { get; set; }
     }
 }

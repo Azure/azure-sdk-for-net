@@ -35,11 +35,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> AllPolicies Contract value. </summary>
-        [WirePath("value")]
         public IList<AllPoliciesContract> Value { get; }
 
         /// <summary> Next page link if any. </summary>
-        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

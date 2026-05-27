@@ -44,15 +44,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Comment text. </summary>
-        [WirePath("text")]
         public string Text { get; set; }
 
         /// <summary> Date and time when the comment was created. </summary>
-        [WirePath("createdDate")]
         public DateTimeOffset? CreatedOn { get; set; }
 
         /// <summary> A resource identifier for the user who left the comment. </summary>
-        [WirePath("userId")]
         public string UserId { get; set; }
     }
 }

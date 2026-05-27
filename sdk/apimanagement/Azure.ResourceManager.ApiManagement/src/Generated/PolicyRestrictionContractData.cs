@@ -38,11 +38,9 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Properties of the Policy Restriction. </summary>
-        [WirePath("properties")]
         internal PolicyRestrictionContractProperties Properties { get; set; }
 
         /// <summary> Path to the policy document. </summary>
-        [WirePath("properties.scope")]
         public string Scope
         {
             get
@@ -60,7 +58,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Indicates if base policy should be enforced for the policy document. </summary>
-        [WirePath("properties.requireBase")]
         public PolicyRestrictionRequireBase? RequireBase
         {
             get
@@ -73,7 +70,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     Properties = new PolicyRestrictionContractProperties();
                 }
-                Properties.RequireBase = value.Value;
+                Properties.RequireBase = value;
             }
         }
     }

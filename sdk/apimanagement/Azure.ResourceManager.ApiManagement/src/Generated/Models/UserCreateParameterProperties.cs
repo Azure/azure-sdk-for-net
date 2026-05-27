@@ -52,27 +52,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Email address. Must not be empty and must be unique within the service instance. </summary>
-        [WirePath("email")]
         public string Email { get; }
 
         /// <summary> First name. </summary>
-        [WirePath("firstName")]
         public string FirstName { get; }
 
         /// <summary> Last name. </summary>
-        [WirePath("lastName")]
         public string LastName { get; }
 
         /// <summary> User Password. If no value is provided, a default password is generated. </summary>
-        [WirePath("password")]
         public string Password { get; set; }
 
         /// <summary> Determines the type of application which send the create user request. Default is legacy portal. </summary>
-        [WirePath("appType")]
         public AppType? AppType { get; set; }
 
         /// <summary> Determines the type of confirmation e-mail that will be sent to the newly created user. </summary>
-        [WirePath("confirmation")]
         public Confirmation? Confirmation { get; set; }
     }
 }

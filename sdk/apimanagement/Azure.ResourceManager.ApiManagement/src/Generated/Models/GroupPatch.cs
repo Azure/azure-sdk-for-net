@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -32,11 +31,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Group entity update contract properties. </summary>
-        [WirePath("properties")]
         internal GroupUpdateParametersProperties Properties { get; set; }
 
         /// <summary> Group name. </summary>
-        [WirePath("properties.displayName")]
         public string DisplayName
         {
             get
@@ -54,7 +51,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Group description. </summary>
-        [WirePath("properties.description")]
         public string Description
         {
             get
@@ -72,7 +68,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Group type. </summary>
-        [WirePath("properties.type")]
         public ApiManagementGroupType? Type
         {
             get
@@ -85,12 +80,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     Properties = new GroupUpdateParametersProperties();
                 }
-                Properties.Type = value.Value;
+                Properties.Type = value;
             }
         }
 
         /// <summary> Identifier of the external groups, this property contains the id of the group from the external identity provider, e.g. for Azure Active Directory `aad://&lt;tenant&gt;.onmicrosoft.com/groups/&lt;group object id&gt;`; otherwise the value is null. </summary>
-        [WirePath("properties.externalId")]
         public string ExternalId
         {
             get

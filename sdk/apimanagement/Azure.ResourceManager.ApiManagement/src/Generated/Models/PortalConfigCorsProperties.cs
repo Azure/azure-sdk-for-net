@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Allowed origins, e.g. `https://trusted.com`. </summary>
-        [WirePath("allowedOrigins")]
         public IList<string> AllowedOrigins { get; }
     }
 }

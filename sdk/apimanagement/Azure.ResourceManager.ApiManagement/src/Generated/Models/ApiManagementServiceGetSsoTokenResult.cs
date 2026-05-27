@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -25,14 +24,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of <see cref="ApiManagementServiceGetSsoTokenResult"/>. </summary>
         /// <param name="redirectUri"> Redirect URL to the Publisher Portal containing the SSO token. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementServiceGetSsoTokenResult(string redirectUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApiManagementServiceGetSsoTokenResult(Uri redirectUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RedirectUri = redirectUri;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Redirect URL to the Publisher Portal containing the SSO token. </summary>
-        [WirePath("redirectUri")]
-        public string RedirectUri { get; }
+        public Uri RedirectUri { get; }
     }
 }

@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +21,7 @@ namespace Azure.ResourceManager.ApiManagement
     /// Each <see cref="ApiManagementPrivateLinkResource"/> in the collection will belong to the same instance of <see cref="ApiManagementServiceResource"/>.
     /// To get a <see cref="ApiManagementPrivateLinkResourceCollection"/> instance call the GetApiManagementPrivateLinkResources method from an instance of <see cref="ApiManagementServiceResource"/>.
     /// </summary>
-    public partial class ApiManagementPrivateLinkResourceCollection : ArmCollection, IEnumerable<ApiManagementPrivateLinkResource>, IAsyncEnumerable<ApiManagementPrivateLinkResource>
+    public partial class ApiManagementPrivateLinkResourceCollection : ArmCollection
     {
         private readonly ClientDiagnostics _privateEndpointConnectionClientDiagnostics;
         private readonly PrivateEndpointConnection _privateEndpointConnectionRestClient;
@@ -40,7 +38,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ApiManagementPrivateLinkResource.ResourceType, out string apiManagementPrivateLinkResourceApiVersion);
             _privateEndpointConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementPrivateLinkResource.ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionRestClient = new PrivateEndpointConnection(_privateEndpointConnectionClientDiagnostics, Pipeline, Endpoint, apiManagementPrivateLinkResourceApiVersion ?? "2025-03-01-preview");
+            _privateEndpointConnectionRestClient = new PrivateEndpointConnection(_privateEndpointConnectionClientDiagnostics, Pipeline, Endpoint, apiManagementPrivateLinkResourceApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -50,7 +48,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             if (id.ResourceType != ApiManagementServiceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementServiceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementServiceResource.ResourceType), nameof(id));
             }
         }
 
@@ -67,7 +65,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -87,7 +85,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionRestClient.CreateGetPrivateLinkResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkSubResourceName, context);
+                HttpMessage message = _privateEndpointConnectionRestClient.CreateGetPrivateLinkResourceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateLinkSubResourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementPrivateLinkResourceData> response = Response.FromValue(ApiManagementPrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -116,7 +114,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -136,7 +134,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionRestClient.CreateGetPrivateLinkResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkSubResourceName, context);
+                HttpMessage message = _privateEndpointConnectionRestClient.CreateGetPrivateLinkResourceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateLinkSubResourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementPrivateLinkResourceData> response = Response.FromValue(ApiManagementPrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -165,7 +163,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -185,7 +183,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionRestClient.CreateGetPrivateLinkResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkSubResourceName, context);
+                HttpMessage message = _privateEndpointConnectionRestClient.CreateGetPrivateLinkResourceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateLinkSubResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiManagementPrivateLinkResourceData> response = default;
@@ -222,7 +220,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -242,7 +240,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionRestClient.CreateGetPrivateLinkResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkSubResourceName, context);
+                HttpMessage message = _privateEndpointConnectionRestClient.CreateGetPrivateLinkResourceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateLinkSubResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiManagementPrivateLinkResourceData> response = default;
@@ -279,7 +277,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,7 +297,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionRestClient.CreateGetPrivateLinkResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkSubResourceName, context);
+                HttpMessage message = _privateEndpointConnectionRestClient.CreateGetPrivateLinkResourceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateLinkSubResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiManagementPrivateLinkResourceData> response = default;
@@ -340,7 +338,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -360,7 +358,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionRestClient.CreateGetPrivateLinkResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkSubResourceName, context);
+                HttpMessage message = _privateEndpointConnectionRestClient.CreateGetPrivateLinkResourceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateLinkSubResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiManagementPrivateLinkResourceData> response = default;
@@ -386,22 +384,6 @@ namespace Azure.ResourceManager.ApiManagement
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        IEnumerator<ApiManagementPrivateLinkResource> IEnumerable<ApiManagementPrivateLinkResource>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<ApiManagementPrivateLinkResource> IAsyncEnumerable<ApiManagementPrivateLinkResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

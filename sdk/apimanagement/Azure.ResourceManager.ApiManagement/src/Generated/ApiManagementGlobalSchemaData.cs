@@ -38,12 +38,10 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Properties of the Global Schema. </summary>
-        [WirePath("properties")]
         internal GlobalSchemaContractProperties Properties { get; set; }
 
         /// <summary> Schema Type. Immutable. </summary>
-        [WirePath("properties.schemaType")]
-        public ApiSchemaType SchemaType
+        public ApiSchemaType? SchemaType
         {
             get
             {
@@ -51,16 +49,18 @@ namespace Azure.ResourceManager.ApiManagement
             }
             set
             {
-                if (Properties is null)
+                if (value.HasValue)
                 {
-                    Properties = new GlobalSchemaContractProperties();
+                    if (Properties is null)
+                    {
+                        Properties = new GlobalSchemaContractProperties();
+                    }
+                    Properties.SchemaType = value.Value;
                 }
-                Properties.SchemaType = value;
             }
         }
 
         /// <summary> Free-form schema entity description. </summary>
-        [WirePath("properties.description")]
         public string Description
         {
             get
@@ -78,7 +78,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Json-encoded string for non json-based schema. </summary>
-        [WirePath("properties.value")]
         public BinaryData Value
         {
             get
@@ -96,7 +95,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Global Schema document object for json-based schema formats(e.g. json schema). </summary>
-        [WirePath("properties.document")]
         public BinaryData Document
         {
             get
@@ -114,7 +112,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> The provisioning state. </summary>
-        [WirePath("properties.provisioningState")]
         public string ProvisioningState
         {
             get

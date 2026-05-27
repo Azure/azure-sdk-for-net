@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -32,11 +31,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Email Template Update contract properties. </summary>
-        [WirePath("properties")]
         internal EmailTemplateUpdateParameterProperties Properties { get; set; }
 
         /// <summary> Subject of the Template. </summary>
-        [WirePath("properties.subject")]
         public string Subject
         {
             get
@@ -54,7 +51,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Title of the Template. </summary>
-        [WirePath("properties.title")]
         public string Title
         {
             get
@@ -72,7 +68,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Description of the Email Template. </summary>
-        [WirePath("properties.description")]
         public string Description
         {
             get
@@ -90,7 +85,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Email Template Body. This should be a valid XDocument. </summary>
-        [WirePath("properties.body")]
         public string Body
         {
             get
@@ -108,7 +102,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Email Template Parameter values. </summary>
-        [WirePath("properties.parameters")]
         public IList<EmailTemplateParametersContractProperties> Parameters
         {
             get

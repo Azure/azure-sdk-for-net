@@ -25,8 +25,6 @@ namespace Azure.ResourceManager.ApiManagement
     {
         private readonly ClientDiagnostics _apiManagementWorkspaceLinkClientDiagnostics;
         private readonly ApiManagementWorkspaceLink _apiManagementWorkspaceLinkRestClient;
-        private readonly ClientDiagnostics _apiManagementWorkspaceLinksClientDiagnostics;
-        private readonly ApiManagementWorkspaceLinks _apiManagementWorkspaceLinksRestClient;
         private readonly ApiManagementWorkspaceLinksResourceData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/workspaceLinks";
@@ -52,9 +50,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ResourceType, out string apiManagementWorkspaceLinksResourceApiVersion);
             _apiManagementWorkspaceLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _apiManagementWorkspaceLinkRestClient = new ApiManagementWorkspaceLink(_apiManagementWorkspaceLinkClientDiagnostics, Pipeline, Endpoint, apiManagementWorkspaceLinksResourceApiVersion ?? "2025-03-01-preview");
-            _apiManagementWorkspaceLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _apiManagementWorkspaceLinksRestClient = new ApiManagementWorkspaceLinks(_apiManagementWorkspaceLinksClientDiagnostics, Pipeline, Endpoint, apiManagementWorkspaceLinksResourceApiVersion ?? "2025-03-01-preview");
+            _apiManagementWorkspaceLinkRestClient = new ApiManagementWorkspaceLink(_apiManagementWorkspaceLinkClientDiagnostics, Pipeline, Endpoint, apiManagementWorkspaceLinksResourceApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -91,7 +87,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -108,7 +104,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -127,7 +123,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiManagementWorkspaceLinkRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _apiManagementWorkspaceLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementWorkspaceLinksResourceData> response = Response.FromValue(ApiManagementWorkspaceLinksResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -156,7 +152,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -175,7 +171,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiManagementWorkspaceLinkRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _apiManagementWorkspaceLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementWorkspaceLinksResourceData> response = Response.FromValue(ApiManagementWorkspaceLinksResourceData.FromResponse(result), result);
                 if (response.Value == null)

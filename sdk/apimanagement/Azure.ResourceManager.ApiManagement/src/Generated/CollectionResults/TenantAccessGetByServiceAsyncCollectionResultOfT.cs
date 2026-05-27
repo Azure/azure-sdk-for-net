@@ -18,11 +18,12 @@ namespace Azure.ResourceManager.ApiManagement
     internal partial class TenantAccessGetByServiceAsyncCollectionResultOfT : AsyncPageable<TenantAccessInfoData>
     {
         private readonly TenantAccess _client;
-        private readonly string _subscriptionId;
+        private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _serviceName;
         private readonly string _filter;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of TenantAccessGetByServiceAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The TenantAccess client used to send requests. </param>
@@ -31,7 +32,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="filter"> Not used. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public TenantAccessGetByServiceAsyncCollectionResultOfT(TenantAccess client, string subscriptionId, string resourceGroupName, string serviceName, string filter, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public TenantAccessGetByServiceAsyncCollectionResultOfT(TenantAccess client, Guid subscriptionId, string resourceGroupName, string serviceName, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -39,6 +41,7 @@ namespace Azure.ResourceManager.ApiManagement
             _serviceName = serviceName;
             _filter = filter;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of TenantAccessGetByServiceAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -72,7 +75,7 @@ namespace Azure.ResourceManager.ApiManagement
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByServiceRequest(nextLink, _subscriptionId, _resourceGroupName, _serviceName, _filter, _context) : _client.CreateGetByServiceRequest(_subscriptionId, _resourceGroupName, _serviceName, _filter, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("TenantAccessInfoCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

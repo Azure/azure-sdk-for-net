@@ -27,36 +27,6 @@ namespace Azure.ResourceManager.ApiManagement
     {
         private readonly ClientDiagnostics _workspaceClientDiagnostics;
         private readonly Workspace _workspaceRestClient;
-        private readonly ClientDiagnostics _workspaceApiClientDiagnostics;
-        private readonly WorkspaceApi _workspaceApiRestClient;
-        private readonly ClientDiagnostics _workspaceApiExportClientDiagnostics;
-        private readonly WorkspaceApiExport _workspaceApiExportRestClient;
-        private readonly ClientDiagnostics _workspaceApiVersionSetClientDiagnostics;
-        private readonly WorkspaceApiVersionSet _workspaceApiVersionSetRestClient;
-        private readonly ClientDiagnostics _workspaceBackendClientDiagnostics;
-        private readonly WorkspaceBackend _workspaceBackendRestClient;
-        private readonly ClientDiagnostics _workspaceCertificateClientDiagnostics;
-        private readonly WorkspaceCertificate _workspaceCertificateRestClient;
-        private readonly ClientDiagnostics _workspaceDiagnosticClientDiagnostics;
-        private readonly WorkspaceDiagnostic _workspaceDiagnosticRestClient;
-        private readonly ClientDiagnostics _workspaceGlobalSchemaClientDiagnostics;
-        private readonly WorkspaceGlobalSchema _workspaceGlobalSchemaRestClient;
-        private readonly ClientDiagnostics _workspaceGroupClientDiagnostics;
-        private readonly WorkspaceGroup _workspaceGroupRestClient;
-        private readonly ClientDiagnostics _workspaceLoggerClientDiagnostics;
-        private readonly WorkspaceLogger _workspaceLoggerRestClient;
-        private readonly ClientDiagnostics _workspaceNamedValueClientDiagnostics;
-        private readonly WorkspaceNamedValue _workspaceNamedValueRestClient;
-        private readonly ClientDiagnostics _workspacePolicyClientDiagnostics;
-        private readonly WorkspacePolicy _workspacePolicyRestClient;
-        private readonly ClientDiagnostics _workspacePolicyFragmentClientDiagnostics;
-        private readonly WorkspacePolicyFragment _workspacePolicyFragmentRestClient;
-        private readonly ClientDiagnostics _workspaceProductClientDiagnostics;
-        private readonly WorkspaceProduct _workspaceProductRestClient;
-        private readonly ClientDiagnostics _workspaceSubscriptionClientDiagnostics;
-        private readonly WorkspaceSubscription _workspaceSubscriptionRestClient;
-        private readonly ClientDiagnostics _workspaceTagClientDiagnostics;
-        private readonly WorkspaceTag _workspaceTagRestClient;
 
         /// <summary> Initializes a new instance of WorkspaceContractCollection for mocking. </summary>
         protected WorkspaceContractCollection()
@@ -70,37 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(WorkspaceContractResource.ResourceType, out string workspaceContractApiVersion);
             _workspaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", WorkspaceContractResource.ResourceType.Namespace, Diagnostics);
-            _workspaceRestClient = new Workspace(_workspaceClientDiagnostics, Pipeline, Endpoint, workspaceContractApiVersion ?? "2025-03-01-preview");
-            _workspaceApiClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", WorkspaceContractResource.ResourceType.Namespace, Diagnostics);
-            _workspaceApiRestClient = new WorkspaceApi(_workspaceApiClientDiagnostics, Pipeline, Endpoint, workspaceContractApiVersion ?? "2025-03-01-preview");
-            _workspaceApiExportClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", WorkspaceContractResource.ResourceType.Namespace, Diagnostics);
-            _workspaceApiExportRestClient = new WorkspaceApiExport(_workspaceApiExportClientDiagnostics, Pipeline, Endpoint, workspaceContractApiVersion ?? "2025-03-01-preview");
-            _workspaceApiVersionSetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", WorkspaceContractResource.ResourceType.Namespace, Diagnostics);
-            _workspaceApiVersionSetRestClient = new WorkspaceApiVersionSet(_workspaceApiVersionSetClientDiagnostics, Pipeline, Endpoint, workspaceContractApiVersion ?? "2025-03-01-preview");
-            _workspaceBackendClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", WorkspaceContractResource.ResourceType.Namespace, Diagnostics);
-            _workspaceBackendRestClient = new WorkspaceBackend(_workspaceBackendClientDiagnostics, Pipeline, Endpoint, workspaceContractApiVersion ?? "2025-03-01-preview");
-            _workspaceCertificateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", WorkspaceContractResource.ResourceType.Namespace, Diagnostics);
-            _workspaceCertificateRestClient = new WorkspaceCertificate(_workspaceCertificateClientDiagnostics, Pipeline, Endpoint, workspaceContractApiVersion ?? "2025-03-01-preview");
-            _workspaceDiagnosticClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", WorkspaceContractResource.ResourceType.Namespace, Diagnostics);
-            _workspaceDiagnosticRestClient = new WorkspaceDiagnostic(_workspaceDiagnosticClientDiagnostics, Pipeline, Endpoint, workspaceContractApiVersion ?? "2025-03-01-preview");
-            _workspaceGlobalSchemaClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", WorkspaceContractResource.ResourceType.Namespace, Diagnostics);
-            _workspaceGlobalSchemaRestClient = new WorkspaceGlobalSchema(_workspaceGlobalSchemaClientDiagnostics, Pipeline, Endpoint, workspaceContractApiVersion ?? "2025-03-01-preview");
-            _workspaceGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", WorkspaceContractResource.ResourceType.Namespace, Diagnostics);
-            _workspaceGroupRestClient = new WorkspaceGroup(_workspaceGroupClientDiagnostics, Pipeline, Endpoint, workspaceContractApiVersion ?? "2025-03-01-preview");
-            _workspaceLoggerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", WorkspaceContractResource.ResourceType.Namespace, Diagnostics);
-            _workspaceLoggerRestClient = new WorkspaceLogger(_workspaceLoggerClientDiagnostics, Pipeline, Endpoint, workspaceContractApiVersion ?? "2025-03-01-preview");
-            _workspaceNamedValueClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", WorkspaceContractResource.ResourceType.Namespace, Diagnostics);
-            _workspaceNamedValueRestClient = new WorkspaceNamedValue(_workspaceNamedValueClientDiagnostics, Pipeline, Endpoint, workspaceContractApiVersion ?? "2025-03-01-preview");
-            _workspacePolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", WorkspaceContractResource.ResourceType.Namespace, Diagnostics);
-            _workspacePolicyRestClient = new WorkspacePolicy(_workspacePolicyClientDiagnostics, Pipeline, Endpoint, workspaceContractApiVersion ?? "2025-03-01-preview");
-            _workspacePolicyFragmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", WorkspaceContractResource.ResourceType.Namespace, Diagnostics);
-            _workspacePolicyFragmentRestClient = new WorkspacePolicyFragment(_workspacePolicyFragmentClientDiagnostics, Pipeline, Endpoint, workspaceContractApiVersion ?? "2025-03-01-preview");
-            _workspaceProductClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", WorkspaceContractResource.ResourceType.Namespace, Diagnostics);
-            _workspaceProductRestClient = new WorkspaceProduct(_workspaceProductClientDiagnostics, Pipeline, Endpoint, workspaceContractApiVersion ?? "2025-03-01-preview");
-            _workspaceSubscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", WorkspaceContractResource.ResourceType.Namespace, Diagnostics);
-            _workspaceSubscriptionRestClient = new WorkspaceSubscription(_workspaceSubscriptionClientDiagnostics, Pipeline, Endpoint, workspaceContractApiVersion ?? "2025-03-01-preview");
-            _workspaceTagClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", WorkspaceContractResource.ResourceType.Namespace, Diagnostics);
-            _workspaceTagRestClient = new WorkspaceTag(_workspaceTagClientDiagnostics, Pipeline, Endpoint, workspaceContractApiVersion ?? "2025-03-01-preview");
+            _workspaceRestClient = new Workspace(_workspaceClientDiagnostics, Pipeline, Endpoint, workspaceContractApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -110,7 +50,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             if (id.ResourceType != ApiManagementServiceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementServiceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementServiceResource.ResourceType), nameof(id));
             }
         }
 
@@ -127,7 +67,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -151,7 +91,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceId, WorkspaceContractData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _workspaceRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workspaceId, WorkspaceContractData.ToRequestContent(data), ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WorkspaceContractData> response = Response.FromValue(WorkspaceContractData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -183,7 +123,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -207,7 +147,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceId, WorkspaceContractData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _workspaceRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workspaceId, WorkspaceContractData.ToRequestContent(data), ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WorkspaceContractData> response = Response.FromValue(WorkspaceContractData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -239,7 +179,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -259,7 +199,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceId, context);
+                HttpMessage message = _workspaceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workspaceId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WorkspaceContractData> response = Response.FromValue(WorkspaceContractData.FromResponse(result), result);
                 if (response.Value == null)
@@ -288,7 +228,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -308,7 +248,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceId, context);
+                HttpMessage message = _workspaceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workspaceId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WorkspaceContractData> response = Response.FromValue(WorkspaceContractData.FromResponse(result), result);
                 if (response.Value == null)
@@ -337,7 +277,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -354,13 +294,14 @@ namespace Azure.ResourceManager.ApiManagement
             };
             return new AsyncPageableWrapper<WorkspaceContractData, WorkspaceContractResource>(new WorkspaceGetByServiceAsyncCollectionResultOfT(
                 _workspaceRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 filter,
                 top,
                 skip,
-                context), data => new WorkspaceContractResource(Client, data));
+                context,
+                "WorkspaceContractCollection.GetAll"), data => new WorkspaceContractResource(Client, data));
         }
 
         /// <summary>
@@ -376,7 +317,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -393,13 +334,14 @@ namespace Azure.ResourceManager.ApiManagement
             };
             return new PageableWrapper<WorkspaceContractData, WorkspaceContractResource>(new WorkspaceGetByServiceCollectionResultOfT(
                 _workspaceRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 filter,
                 top,
                 skip,
-                context), data => new WorkspaceContractResource(Client, data));
+                context,
+                "WorkspaceContractCollection.GetAll"), data => new WorkspaceContractResource(Client, data));
         }
 
         /// <summary>
@@ -415,7 +357,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -435,7 +377,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceId, context);
+                HttpMessage message = _workspaceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workspaceId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<WorkspaceContractData> response = default;
@@ -472,7 +414,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -492,7 +434,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceId, context);
+                HttpMessage message = _workspaceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workspaceId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<WorkspaceContractData> response = default;
@@ -529,7 +471,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -549,7 +491,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceId, context);
+                HttpMessage message = _workspaceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workspaceId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<WorkspaceContractData> response = default;
@@ -590,7 +532,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -610,7 +552,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceId, context);
+                HttpMessage message = _workspaceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workspaceId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<WorkspaceContractData> response = default;

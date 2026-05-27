@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -32,11 +31,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Properties of the Policy Restriction. </summary>
-        [WirePath("properties")]
         internal PolicyRestrictionContractProperties Properties { get; set; }
 
         /// <summary> Path to the policy document. </summary>
-        [WirePath("properties.scope")]
         public string Scope
         {
             get
@@ -54,7 +51,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Indicates if base policy should be enforced for the policy document. </summary>
-        [WirePath("properties.requireBase")]
         public PolicyRestrictionRequireBase? RequireBase
         {
             get
@@ -67,7 +63,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     Properties = new PolicyRestrictionContractProperties();
                 }
-                Properties.RequireBase = value.Value;
+                Properties.RequireBase = value;
             }
         }
     }

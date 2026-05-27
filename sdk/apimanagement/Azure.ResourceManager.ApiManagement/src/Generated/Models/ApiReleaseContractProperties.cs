@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -38,19 +37,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Identifier of the API the release belongs to. </summary>
-        [WirePath("apiId")]
         public string ApiId { get; set; }
 
         /// <summary> The time the API was released. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </summary>
-        [WirePath("createdDateTime")]
         public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The time the API release was updated. </summary>
-        [WirePath("updatedDateTime")]
         public DateTimeOffset? UpdatedOn { get; }
 
         /// <summary> Release Notes. </summary>
-        [WirePath("notes")]
         public string Notes { get; set; }
     }
 }

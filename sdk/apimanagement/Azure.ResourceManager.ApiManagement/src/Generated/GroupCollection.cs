@@ -28,8 +28,6 @@ namespace Azure.ResourceManager.ApiManagement
     {
         private readonly ClientDiagnostics _groupClientDiagnostics;
         private readonly Group _groupRestClient;
-        private readonly ClientDiagnostics _groupUserClientDiagnostics;
-        private readonly GroupUser _groupUserRestClient;
 
         /// <summary> Initializes a new instance of GroupCollection for mocking. </summary>
         protected GroupCollection()
@@ -43,9 +41,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(GroupResource.ResourceType, out string groupApiVersion);
             _groupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", GroupResource.ResourceType.Namespace, Diagnostics);
-            _groupRestClient = new Group(_groupClientDiagnostics, Pipeline, Endpoint, groupApiVersion ?? "2025-03-01-preview");
-            _groupUserClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", GroupResource.ResourceType.Namespace, Diagnostics);
-            _groupUserRestClient = new GroupUser(_groupUserClientDiagnostics, Pipeline, Endpoint, groupApiVersion ?? "2025-03-01-preview");
+            _groupRestClient = new Group(_groupClientDiagnostics, Pipeline, Endpoint, groupApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -55,7 +51,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             if (id.ResourceType != ApiManagementServiceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementServiceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementServiceResource.ResourceType), nameof(id));
             }
         }
 
@@ -72,7 +68,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -96,7 +92,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, GroupCreateContent.ToRequestContent(content), ifMatch, context);
+                HttpMessage message = _groupRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, groupId, GroupCreateContent.ToRequestContent(content), ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementGroupData> response = Response.FromValue(ApiManagementGroupData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -128,7 +124,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -152,7 +148,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, GroupCreateContent.ToRequestContent(content), ifMatch, context);
+                HttpMessage message = _groupRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, groupId, GroupCreateContent.ToRequestContent(content), ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementGroupData> response = Response.FromValue(ApiManagementGroupData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -184,7 +180,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -204,7 +200,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, context);
+                HttpMessage message = _groupRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, groupId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementGroupData> response = Response.FromValue(ApiManagementGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -233,7 +229,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -253,7 +249,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, context);
+                HttpMessage message = _groupRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, groupId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementGroupData> response = Response.FromValue(ApiManagementGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -282,7 +278,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,13 +295,14 @@ namespace Azure.ResourceManager.ApiManagement
             };
             return new AsyncPageableWrapper<ApiManagementGroupData, GroupResource>(new GroupGetByServiceAsyncCollectionResultOfT(
                 _groupRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 filter,
                 top,
                 skip,
-                context), data => new GroupResource(Client, data));
+                context,
+                "GroupCollection.GetAll"), data => new GroupResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +318,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -338,13 +335,14 @@ namespace Azure.ResourceManager.ApiManagement
             };
             return new PageableWrapper<ApiManagementGroupData, GroupResource>(new GroupGetByServiceCollectionResultOfT(
                 _groupRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 filter,
                 top,
                 skip,
-                context), data => new GroupResource(Client, data));
+                context,
+                "GroupCollection.GetAll"), data => new GroupResource(Client, data));
         }
 
         /// <summary>
@@ -360,7 +358,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -380,7 +378,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, context);
+                HttpMessage message = _groupRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, groupId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiManagementGroupData> response = default;
@@ -417,7 +415,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -437,7 +435,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, context);
+                HttpMessage message = _groupRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, groupId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiManagementGroupData> response = default;
@@ -474,7 +472,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -494,7 +492,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, context);
+                HttpMessage message = _groupRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, groupId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiManagementGroupData> response = default;
@@ -535,7 +533,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -555,7 +553,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, context);
+                HttpMessage message = _groupRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, groupId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiManagementGroupData> response = default;

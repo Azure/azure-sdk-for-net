@@ -38,226 +38,212 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> API entity contract properties. </summary>
-        [WirePath("properties")]
         internal ApiContractProperties Properties { get; }
 
         /// <summary> Description of the API. May include HTML formatting tags. </summary>
-        [WirePath("properties.description")]
         public string Description
         {
             get
             {
-                return Properties.Description;
+                return Properties is null ? default : Properties.Description;
             }
         }
 
         /// <summary> Collection of authentication settings included into this API. </summary>
-        [WirePath("properties.authenticationSettings")]
         public AuthenticationSettingsContract AuthenticationSettings
         {
             get
             {
-                return Properties.AuthenticationSettings;
+                return Properties is null ? default : Properties.AuthenticationSettings;
             }
         }
 
         /// <summary> Protocols over which API is made available. </summary>
-        [WirePath("properties.subscriptionKeyParameterNames")]
         public SubscriptionKeyParameterNamesContract SubscriptionKeyParameterNames
         {
             get
             {
-                return Properties.SubscriptionKeyParameterNames;
+                return Properties is null ? default : Properties.SubscriptionKeyParameterNames;
             }
         }
 
         /// <summary> Type of API. </summary>
-        [WirePath("properties.type")]
         public ApiType? ApiType
         {
             get
             {
-                return Properties.ApiType;
+                return Properties is null ? default : Properties.ApiType;
             }
         }
 
         /// <summary> Describes the revision of the API. If no value is provided, default revision 1 is created. </summary>
-        [WirePath("properties.apiRevision")]
         public string ApiRevision
         {
             get
             {
-                return Properties.ApiRevision;
+                return Properties is null ? default : Properties.ApiRevision;
             }
         }
 
         /// <summary> Indicates the version identifier of the API if the API is versioned. </summary>
-        [WirePath("properties.apiVersion")]
         public string ApiVersion
         {
             get
             {
-                return Properties.ApiVersion;
+                return Properties is null ? default : Properties.ApiVersion;
             }
         }
 
         /// <summary> Indicates if API revision is current api revision. </summary>
-        [WirePath("properties.isCurrent")]
         public bool? IsCurrent
         {
             get
             {
-                return Properties.IsCurrent;
+                return Properties is null ? default : Properties.IsCurrent;
             }
         }
 
         /// <summary> Indicates if API revision is accessible via the gateway. </summary>
-        [WirePath("properties.isOnline")]
         public bool? IsOnline
         {
             get
             {
-                return Properties.IsOnline;
+                return Properties is null ? default : Properties.IsOnline;
             }
         }
 
         /// <summary> Description of the API Revision. </summary>
-        [WirePath("properties.apiRevisionDescription")]
         public string ApiRevisionDescription
         {
             get
             {
-                return Properties.ApiRevisionDescription;
+                return Properties is null ? default : Properties.ApiRevisionDescription;
             }
         }
 
         /// <summary> Description of the API Version. </summary>
-        [WirePath("properties.apiVersionDescription")]
         public string ApiVersionDescription
         {
             get
             {
-                return Properties.ApiVersionDescription;
+                return Properties is null ? default : Properties.ApiVersionDescription;
             }
         }
 
         /// <summary> A resource identifier for the related ApiVersionSet. </summary>
-        [WirePath("properties.apiVersionSetId")]
-        public string ApiVersionSetId
+        public ResourceIdentifier ApiVersionSetId
         {
             get
             {
-                return Properties.ApiVersionSetId;
+                return Properties is null ? default : Properties.ApiVersionSetId;
             }
         }
 
         /// <summary> Specifies whether an API or Product subscription is required for accessing the API. </summary>
-        [WirePath("properties.subscriptionRequired")]
         public bool? SubscriptionRequired
         {
             get
             {
-                return Properties.SubscriptionRequired;
+                return Properties is null ? default : Properties.SubscriptionRequired;
             }
         }
 
         /// <summary> A URL to the Terms of Service for the API. MUST be in the format of a URL. </summary>
-        [WirePath("properties.termsOfServiceUrl")]
         public Uri TermsOfServiceUri
         {
             get
             {
-                return Properties.TermsOfServiceUri;
+                return Properties is null ? default : Properties.TermsOfServiceUri;
             }
         }
 
         /// <summary> Contact information for the API. </summary>
-        [WirePath("properties.contact")]
         public ApiContactInformation Contact
         {
             get
             {
-                return Properties.Contact;
+                return Properties is null ? default : Properties.Contact;
             }
         }
 
         /// <summary> License information for the API. </summary>
-        [WirePath("properties.license")]
         public ApiLicenseInformation License
         {
             get
             {
-                return Properties.License;
+                return Properties is null ? default : Properties.License;
+            }
+        }
+
+        /// <summary> Properties specific to MCP API type. </summary>
+        public McpProperties McpProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.McpProperties;
             }
         }
 
         /// <summary> API identifier of the source API. </summary>
-        [WirePath("properties.sourceApiId")]
         public string SourceApiId
         {
             get
             {
-                return Properties.SourceApiId;
+                return Properties is null ? default : Properties.SourceApiId;
             }
         }
 
         /// <summary> API name. Must be 1 to 300 characters long. </summary>
-        [WirePath("properties.displayName")]
         public string DisplayName
         {
             get
             {
-                return Properties.DisplayName;
+                return Properties is null ? default : Properties.DisplayName;
             }
         }
 
         /// <summary> Absolute URL of the backend service implementing this API. Cannot be more than 2000 characters long. </summary>
-        [WirePath("properties.serviceUrl")]
         public string ServiceUri
         {
             get
             {
-                return Properties.ServiceUri;
+                return Properties is null ? default : Properties.ServiceUri;
             }
         }
 
         /// <summary> Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API. </summary>
-        [WirePath("properties.path")]
         public string Path
         {
             get
             {
-                return Properties.Path;
+                return Properties is null ? default : Properties.Path;
             }
         }
 
         /// <summary> Describes on which protocols the operations in this API can be invoked. </summary>
-        [WirePath("properties.protocols")]
         public IList<ApiOperationInvokableProtocol> Protocols
         {
             get
             {
-                return Properties.Protocols;
+                return Properties is null ? default : Properties.Protocols;
             }
         }
 
         /// <summary> Version set details. </summary>
-        [WirePath("properties.apiVersionSet")]
         public ApiVersionSetContractDetails ApiVersionSet
         {
             get
             {
-                return Properties.ApiVersionSet;
+                return Properties is null ? default : Properties.ApiVersionSet;
             }
         }
 
         /// <summary> The provisioning state. </summary>
-        [WirePath("properties.provisioningState")]
         public string ProvisioningState
         {
             get
             {
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
     }

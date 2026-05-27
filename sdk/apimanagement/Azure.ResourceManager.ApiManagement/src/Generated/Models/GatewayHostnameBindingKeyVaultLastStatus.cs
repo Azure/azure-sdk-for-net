@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -36,15 +35,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The last status of the Key Vault certificate fetch process. </summary>
-        [WirePath("code")]
         public KeyVaultFetchCode? Code { get; }
 
         /// <summary> The last time the Key Vault certificate fetch process was attempted. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
-        [WirePath("timeStampUtc")]
         public DateTimeOffset? TimeStampUtc { get; }
 
         /// <summary> The last time the Key Vault certificate fetch process was successful. Only when the fetch process has succeeded at least once and current state is failed.  The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
-        [WirePath("lastSuccessTimeStampUtc")]
         public DateTimeOffset? LastSuccessTimeStampUtc { get; }
     }
 }

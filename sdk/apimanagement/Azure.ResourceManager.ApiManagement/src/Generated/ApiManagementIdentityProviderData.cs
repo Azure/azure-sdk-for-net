@@ -38,126 +38,113 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Identity Provider contract properties. </summary>
-        [WirePath("properties")]
         internal IdentityProviderContractProperties Properties { get; }
 
         /// <summary> Identity Provider Type identifier. </summary>
-        [WirePath("properties.type")]
         public IdentityProviderType? Type
         {
             get
             {
-                return Properties.Type;
+                return Properties is null ? default : Properties.Type;
             }
         }
 
         /// <summary> The TenantId to use instead of Common when logging into Active Directory. </summary>
-        [WirePath("properties.signinTenant")]
         public string SigninTenant
         {
             get
             {
-                return Properties.SigninTenant;
+                return Properties is null ? default : Properties.SigninTenant;
             }
         }
 
         /// <summary> List of Allowed Tenants when configuring Azure Active Directory login. </summary>
-        [WirePath("properties.allowedTenants")]
         public IList<string> AllowedTenants
         {
             get
             {
-                return Properties.AllowedTenants;
+                return Properties is null ? default : Properties.AllowedTenants;
             }
         }
 
         /// <summary> OpenID Connect discovery endpoint hostname for AAD or AAD B2C. </summary>
-        [WirePath("properties.authority")]
         public string Authority
         {
             get
             {
-                return Properties.Authority;
+                return Properties is null ? default : Properties.Authority;
             }
         }
 
         /// <summary> Signup Policy Name. Only applies to AAD B2C Identity Provider. </summary>
-        [WirePath("properties.signupPolicyName")]
         public string SignupPolicyName
         {
             get
             {
-                return Properties.SignupPolicyName;
+                return Properties is null ? default : Properties.SignupPolicyName;
             }
         }
 
         /// <summary> Signin Policy Name. Only applies to AAD B2C Identity Provider. </summary>
-        [WirePath("properties.signinPolicyName")]
         public string SigninPolicyName
         {
             get
             {
-                return Properties.SigninPolicyName;
+                return Properties is null ? default : Properties.SigninPolicyName;
             }
         }
 
         /// <summary> Profile Editing Policy Name. Only applies to AAD B2C Identity Provider. </summary>
-        [WirePath("properties.profileEditingPolicyName")]
         public string ProfileEditingPolicyName
         {
             get
             {
-                return Properties.ProfileEditingPolicyName;
+                return Properties is null ? default : Properties.ProfileEditingPolicyName;
             }
         }
 
         /// <summary> Password Reset Policy Name. Only applies to AAD B2C Identity Provider. </summary>
-        [WirePath("properties.passwordResetPolicyName")]
         public string PasswordResetPolicyName
         {
             get
             {
-                return Properties.PasswordResetPolicyName;
+                return Properties is null ? default : Properties.PasswordResetPolicyName;
             }
         }
 
         /// <summary> The client library to be used in the developer portal. Only applies to AAD and AAD B2C Identity Provider. </summary>
-        [WirePath("properties.clientLibrary")]
         public string ClientLibrary
         {
             get
             {
-                return Properties.ClientLibrary;
+                return Properties is null ? default : Properties.ClientLibrary;
             }
         }
 
         /// <summary> Client Id of the Application in the external Identity Provider. It is App ID for Facebook login, Client ID for Google login, App ID for Microsoft. </summary>
-        [WirePath("properties.clientId")]
         public string ClientId
         {
             get
             {
-                return Properties.ClientId;
+                return Properties is null ? default : Properties.ClientId;
             }
         }
 
         /// <summary> Client secret of the Application in external Identity Provider, used to authenticate login request. For example, it is App Secret for Facebook login, API Key for Google login, Public Key for Microsoft. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </summary>
-        [WirePath("properties.clientSecret")]
         public string ClientSecret
         {
             get
             {
-                return Properties.ClientSecret;
+                return Properties is null ? default : Properties.ClientSecret;
             }
         }
 
         /// <summary> Certificate full resource ID used in external Identity Provider. </summary>
-        [WirePath("properties.certificateId")]
         public ResourceIdentifier CertificateId
         {
             get
             {
-                return Properties.CertificateId;
+                return Properties is null ? default : Properties.CertificateId;
             }
         }
     }

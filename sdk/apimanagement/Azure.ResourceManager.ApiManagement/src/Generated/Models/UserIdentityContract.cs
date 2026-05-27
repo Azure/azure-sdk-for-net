@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -34,11 +33,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Identity provider name. </summary>
-        [WirePath("provider")]
         public string Provider { get; set; }
 
         /// <summary> Identifier value within provider. </summary>
-        [WirePath("id")]
         public string Id { get; set; }
     }
 }

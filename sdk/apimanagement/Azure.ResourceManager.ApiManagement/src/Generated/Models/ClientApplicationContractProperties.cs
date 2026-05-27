@@ -50,27 +50,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Client application name. </summary>
-        [WirePath("displayName")]
         public string DisplayName { get; set; }
 
         /// <summary> Client application description. </summary>
-        [WirePath("description")]
         public string Description { get; set; }
 
         /// <summary> A resource identifier for the user who owns the application. </summary>
-        [WirePath("ownerId")]
         public string OwnerId { get; set; }
 
         /// <summary> Microsoft EntraID Application ID (Client ID). This is the value that is used to identify the application when it is requesting access tokens from Microsoft EntraID. This property is read-only and will be set by the system when the application is created. </summary>
-        [WirePath("entraApplicationId")]
         public string EntraApplicationId { get; }
 
         /// <summary> Tenant ID is a unique identifier (a GUID) for an organization directory in Microsoft’s cloud. It’s used to identify tenants across Microsoft services. </summary>
-        [WirePath("entraTenantId")]
         public string EntraTenantId { get; }
 
         /// <summary> Client application state. The value derives the state of an application based on the statuses of its associated ClientApplicationProductLinks. </summary>
-        [WirePath("state")]
         public ClientApplicationState? State { get; }
     }
 }

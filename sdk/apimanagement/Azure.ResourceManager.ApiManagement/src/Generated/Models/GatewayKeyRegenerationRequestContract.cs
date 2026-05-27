@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -19,7 +18,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Initializes a new instance of <see cref="GatewayKeyRegenerationRequestContract"/>. </summary>
         /// <param name="keyType"> The Key being regenerated. </param>
-        public GatewayKeyRegenerationRequestContract(KeyType keyType)
+        public GatewayKeyRegenerationRequestContract(TokenGenerationUsedKeyType keyType)
         {
             KeyType = keyType;
         }
@@ -27,14 +26,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of <see cref="GatewayKeyRegenerationRequestContract"/>. </summary>
         /// <param name="keyType"> The Key being regenerated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GatewayKeyRegenerationRequestContract(KeyType keyType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GatewayKeyRegenerationRequestContract(TokenGenerationUsedKeyType keyType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KeyType = keyType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The Key being regenerated. </summary>
-        [WirePath("keyType")]
-        public KeyType KeyType { get; }
+        public TokenGenerationUsedKeyType KeyType { get; }
     }
 }

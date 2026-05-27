@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetByNameRequest(string subscriptionId, AzureLocation location, string serviceName, RequestContext context)
+        internal HttpMessage CreateGetByNameRequest(Guid subscriptionId, AzureLocation location, string serviceName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.ApiManagement/locations/", false);
             uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/deletedservices/", false);
@@ -63,12 +63,12 @@ namespace Azure.ResourceManager.ApiManagement
             return message;
         }
 
-        internal HttpMessage CreatePurgeRequest(string subscriptionId, AzureLocation location, string serviceName, RequestContext context)
+        internal HttpMessage CreatePurgeRequest(Guid subscriptionId, AzureLocation location, string serviceName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.ApiManagement/locations/", false);
             uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/deletedservices/", false);
@@ -85,12 +85,12 @@ namespace Azure.ResourceManager.ApiManagement
             return message;
         }
 
-        internal HttpMessage CreateGetBySubscriptionRequest(string subscriptionId, RequestContext context)
+        internal HttpMessage CreateGetBySubscriptionRequest(Guid subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.ApiManagement/deletedservices", false);
             if (_apiVersion != null)
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ApiManagement
             return message;
         }
 
-        internal HttpMessage CreateNextGetBySubscriptionRequest(Uri nextPage, string subscriptionId, RequestContext context)
+        internal HttpMessage CreateNextGetBySubscriptionRequest(Uri nextPage, Guid subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

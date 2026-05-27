@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -36,15 +35,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Property level error code. </summary>
-        [WirePath("code")]
         public string Code { get; }
 
         /// <summary> Human-readable representation of property-level error. </summary>
-        [WirePath("message")]
         public string Message { get; }
 
         /// <summary> Property name. </summary>
-        [WirePath("target")]
         public string Target { get; }
     }
 }

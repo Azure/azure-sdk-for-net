@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 throw new FormatException($"The model {nameof(BackendProxyContract)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("url"u8);
-            writer.WriteStringValue(Uri);
+            writer.WriteStringValue(Uri.AbsoluteUri);
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            string uri = default;
+            Uri uri = default;
             string username = default;
             string password = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 if (prop.NameEquals("url"u8))
                 {
-                    uri = prop.Value.GetString();
+                    uri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("username"u8))

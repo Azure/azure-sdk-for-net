@@ -79,6 +79,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 throw new FormatException($"The model {nameof(PrivateEndpointConnectionProperties)} does not support writing '{format}' format.");
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(GroupIds))
+            {
+                writer.WritePropertyName("groupIds"u8);
+                writer.WriteStartArray();
+                foreach (string item in GroupIds)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
@@ -133,12 +148,34 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
+            IReadOnlyList<string> groupIds = default;
             PrivateEndpoint privateEndpoint = default;
             ApiManagementPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
             ApiManagementPrivateEndpointConnectionProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("groupIds"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    groupIds = array;
+                    continue;
+                }
                 if (prop.NameEquals("privateEndpoint"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -167,7 +204,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PrivateEndpointConnectionProperties(privateEndpoint, privateLinkServiceConnectionState, provisioningState, additionalBinaryDataProperties);
+            return new PrivateEndpointConnectionProperties(groupIds ?? new ChangeTrackingList<string>(), privateEndpoint, privateLinkServiceConnectionState, provisioningState, additionalBinaryDataProperties);
         }
     }
 }

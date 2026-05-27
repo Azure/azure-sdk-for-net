@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -137,11 +138,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             bool? isOnline = default;
             string apiRevisionDescription = default;
             string apiVersionDescription = default;
-            string apiVersionSetId = default;
+            ResourceIdentifier apiVersionSetId = default;
             bool? subscriptionRequired = default;
             Uri termsOfServiceUri = default;
             ApiContactInformation contact = default;
             ApiLicenseInformation license = default;
+            McpProperties mcpProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string displayName = default;
             string serviceUri = default;
@@ -221,7 +223,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (prop.NameEquals("apiVersionSetId"u8))
                 {
-                    apiVersionSetId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    apiVersionSetId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("subscriptionRequired"u8))
@@ -258,6 +264,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         continue;
                     }
                     license = ApiLicenseInformation.DeserializeApiLicenseInformation(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("mcpProperties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    mcpProperties = McpProperties.DeserializeMcpProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("displayName"u8))
@@ -310,6 +325,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 termsOfServiceUri,
                 contact,
                 license,
+                mcpProperties,
                 additionalBinaryDataProperties,
                 displayName,
                 serviceUri,

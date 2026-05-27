@@ -106,6 +106,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsDefined(AuthorizationCodeWithFederatedIdentityCredentials))
+            {
+                writer.WritePropertyName("authorizationCodeWithFederatedIdentityCredentials"u8);
+                writer.WriteObjectValue(AuthorizationCodeWithFederatedIdentityCredentials, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -150,6 +155,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             IDictionary<string, string> authorizationCode = default;
             IDictionary<string, string> clientCredentials = default;
+            AuthorizationProviderOAuth2FederatedIdentityCredentialsGrantType authorizationCodeWithFederatedIdentityCredentials = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -195,12 +201,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     clientCredentials = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("authorizationCodeWithFederatedIdentityCredentials"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    authorizationCodeWithFederatedIdentityCredentials = AuthorizationProviderOAuth2FederatedIdentityCredentialsGrantType.DeserializeAuthorizationProviderOAuth2FederatedIdentityCredentialsGrantType(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AuthorizationProviderOAuth2GrantTypes(authorizationCode ?? new ChangeTrackingDictionary<string, string>(), clientCredentials ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
+            return new AuthorizationProviderOAuth2GrantTypes(authorizationCode ?? new ChangeTrackingDictionary<string, string>(), clientCredentials ?? new ChangeTrackingDictionary<string, string>(), authorizationCodeWithFederatedIdentityCredentials, additionalBinaryDataProperties);
         }
     }
 }

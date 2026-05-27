@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="type"> Private Endpoint Connection Resource Type. </param>
         /// <param name="properties"> Resource properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RemotePrivateEndpointConnectionWrapper(string id, string name, string @type, PrivateEndpointConnectionWrapperProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RemotePrivateEndpointConnectionWrapper(ResourceIdentifier id, string name, string @type, PrivateEndpointConnectionWrapperProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -38,23 +38,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Private Endpoint connection resource id. </summary>
-        [WirePath("id")]
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
 
         /// <summary> Private Endpoint Connection Name. </summary>
-        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> Private Endpoint Connection Resource Type. </summary>
-        [WirePath("type")]
         public string Type { get; set; }
 
         /// <summary> Resource properties. </summary>
-        [WirePath("properties")]
         internal PrivateEndpointConnectionWrapperProperties Properties { get; set; }
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-        [WirePath("properties.privateLinkServiceConnectionState")]
         public ApiManagementPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState
         {
             get
@@ -72,7 +67,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The provisioning state of the private endpoint connection resource. </summary>
-        [WirePath("properties.provisioningState")]
         public string ProvisioningState
         {
             get
@@ -82,7 +76,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> All the Group ids. </summary>
-        [WirePath("properties.groupIds")]
         public IReadOnlyList<string> GroupIds
         {
             get
@@ -96,7 +89,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Gets the Id. </summary>
-        [WirePath("properties.privateEndpoint.id")]
         public string PrivateEndpointId
         {
             get

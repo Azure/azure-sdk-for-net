@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="zones"> List of availability zones where the SKU is supported. </param>
         /// <param name="zoneDetails"> Details of capabilities available to a SKU in specific zones. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementSkuLocationInfo(string location, IReadOnlyList<string> zones, IReadOnlyList<ApiManagementSkuZoneDetails> zoneDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApiManagementSkuLocationInfo(AzureLocation? location, IReadOnlyList<string> zones, IReadOnlyList<ApiManagementSkuZoneDetails> zoneDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Location = location;
             Zones = zones;
@@ -38,15 +39,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Location of the SKU. </summary>
-        [WirePath("location")]
-        public string Location { get; }
+        public AzureLocation? Location { get; }
 
         /// <summary> List of availability zones where the SKU is supported. </summary>
-        [WirePath("zones")]
         public IReadOnlyList<string> Zones { get; }
 
         /// <summary> Details of capabilities available to a SKU in specific zones. </summary>
-        [WirePath("zoneDetails")]
         public IReadOnlyList<ApiManagementSkuZoneDetails> ZoneDetails { get; }
     }
 }

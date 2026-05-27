@@ -12,7 +12,7 @@ using Azure.ResourceManager.ApiManagement;
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> The type of access to be used for the storage account. </summary>
-    public readonly partial struct AccessType : IEquatable<AccessType>
+    public readonly partial struct StorageAccountAccessType : IEquatable<StorageAccountAccessType>
     {
         private readonly string _value;
         /// <summary> Use access key. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Use user assigned managed identity. </summary>
         private const string UserAssignedManagedIdentityValue = "UserAssignedManagedIdentity";
 
-        /// <summary> Initializes a new instance of <see cref="AccessType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountAccessType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AccessType(string value)
+        public StorageAccountAccessType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Use access key. </summary>
-        public static AccessType AccessKey { get; } = new AccessType(AccessKeyValue);
+        public static StorageAccountAccessType AccessKey { get; } = new StorageAccountAccessType(AccessKeyValue);
 
         /// <summary> Use system assigned managed identity. </summary>
-        public static AccessType SystemAssignedManagedIdentity { get; } = new AccessType(SystemAssignedManagedIdentityValue);
+        public static StorageAccountAccessType SystemAssignedManagedIdentity { get; } = new StorageAccountAccessType(SystemAssignedManagedIdentityValue);
 
         /// <summary> Use user assigned managed identity. </summary>
-        public static AccessType UserAssignedManagedIdentity { get; } = new AccessType(UserAssignedManagedIdentityValue);
+        public static StorageAccountAccessType UserAssignedManagedIdentity { get; } = new StorageAccountAccessType(UserAssignedManagedIdentityValue);
 
-        /// <summary> Determines if two <see cref="AccessType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="StorageAccountAccessType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(AccessType left, AccessType right) => left.Equals(right);
+        public static bool operator ==(StorageAccountAccessType left, StorageAccountAccessType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AccessType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="StorageAccountAccessType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(AccessType left, AccessType right) => !left.Equals(right);
+        public static bool operator !=(StorageAccountAccessType left, StorageAccountAccessType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AccessType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="StorageAccountAccessType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AccessType(string value) => new AccessType(value);
+        public static implicit operator StorageAccountAccessType(string value) => new StorageAccountAccessType(value);
 
-        /// <summary> Converts a string to a <see cref="AccessType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="StorageAccountAccessType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AccessType?(string value) => value == null ? null : new AccessType(value);
+        public static implicit operator StorageAccountAccessType?(string value) => value == null ? null : new StorageAccountAccessType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AccessType other && Equals(other);
+        public override bool Equals(object obj) => obj is StorageAccountAccessType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(AccessType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(StorageAccountAccessType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

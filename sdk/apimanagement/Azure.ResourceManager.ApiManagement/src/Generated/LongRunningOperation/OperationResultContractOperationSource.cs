@@ -28,8 +28,7 @@ namespace Azure.ResourceManager.ApiManagement
         OperationResultContract IOperationSource<OperationResultContract>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            OperationResultContract result = OperationResultContract.DeserializeOperationResultContract(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return OperationResultContract.DeserializeOperationResultContract(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -38,8 +37,7 @@ namespace Azure.ResourceManager.ApiManagement
         async ValueTask<OperationResultContract> IOperationSource<OperationResultContract>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            OperationResultContract result = OperationResultContract.DeserializeOperationResultContract(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return OperationResultContract.DeserializeOperationResultContract(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

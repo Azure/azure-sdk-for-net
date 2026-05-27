@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -32,11 +31,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The default hostname of the data-plane gateway to which requests can be sent. </summary>
-        [WirePath("subnet")]
         internal BackendSubnetConfiguration Subnet { get; set; }
 
         /// <summary> The ARM ID of the subnet in which the backend systems are hosted. </summary>
-        [WirePath("subnet.id")]
         public string SubnetId
         {
             get

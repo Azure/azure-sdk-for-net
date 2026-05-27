@@ -15,7 +15,7 @@ using Azure.ResourceManager.ApiManagement;
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> The response of the list policy operation. </summary>
-    internal partial class PolicyListResult : IJsonModel<PolicyListResult>
+    public partial class PolicyListResult : IJsonModel<PolicyListResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

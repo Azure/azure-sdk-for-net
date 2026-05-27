@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -41,11 +40,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Runtime Url of the Backend. </summary>
-        [WirePath("url")]
         public string Uri { get; set; }
 
         /// <summary> Backend communication protocol. </summary>
-        [WirePath("protocol")]
         public BackendProtocol? Protocol { get; set; }
     }
 }

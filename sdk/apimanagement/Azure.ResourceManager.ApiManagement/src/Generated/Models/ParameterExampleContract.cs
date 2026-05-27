@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -39,11 +38,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Short description for the example. </summary>
-        [WirePath("summary")]
         public string Summary { get; set; }
 
         /// <summary> Long description for the example. </summary>
-        [WirePath("description")]
         public string Description { get; set; }
 
         /// <summary>
@@ -72,11 +69,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("value")]
         public BinaryData Value { get; set; }
 
         /// <summary> A URL that points to the literal example. </summary>
-        [WirePath("externalValue")]
         public string ExternalValue { get; set; }
     }
 }

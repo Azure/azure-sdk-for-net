@@ -20,11 +20,6 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary> A single API Management gateway resource in List or Get response. </summary>
     public partial class ApiManagementGatewayConfigConnectionResourceData : ResourceData, IJsonModel<ApiManagementGatewayConfigConnectionResourceData>
     {
-        /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayConfigConnectionResourceData"/> for deserialization. </summary>
-        internal ApiManagementGatewayConfigConnectionResourceData()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

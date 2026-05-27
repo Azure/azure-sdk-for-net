@@ -18,11 +18,12 @@ namespace Azure.ResourceManager.ApiManagement
     internal partial class ContentItemGetByServiceAsyncCollectionResultOfT : AsyncPageable<ContentItemContractData>
     {
         private readonly ContentItem _client;
-        private readonly string _subscriptionId;
+        private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _serviceName;
         private readonly string _contentTypeId;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ContentItemGetByServiceAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ContentItem client used to send requests. </param>
@@ -31,7 +32,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="contentTypeId"> Content type identifier. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ContentItemGetByServiceAsyncCollectionResultOfT(ContentItem client, string subscriptionId, string resourceGroupName, string serviceName, string contentTypeId, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ContentItemGetByServiceAsyncCollectionResultOfT(ContentItem client, Guid subscriptionId, string resourceGroupName, string serviceName, string contentTypeId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -39,6 +41,7 @@ namespace Azure.ResourceManager.ApiManagement
             _serviceName = serviceName;
             _contentTypeId = contentTypeId;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ContentItemGetByServiceAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -72,7 +75,7 @@ namespace Azure.ResourceManager.ApiManagement
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByServiceRequest(nextLink, _subscriptionId, _resourceGroupName, _serviceName, _contentTypeId, _context) : _client.CreateGetByServiceRequest(_subscriptionId, _resourceGroupName, _serviceName, _contentTypeId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ContentItemContractCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

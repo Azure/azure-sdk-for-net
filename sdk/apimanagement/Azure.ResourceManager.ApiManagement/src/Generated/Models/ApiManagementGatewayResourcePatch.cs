@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -36,19 +35,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Properties of the API Management gateway. </summary>
-        [WirePath("properties")]
         internal ApiManagementGatewayUpdateProperties Properties { get; set; }
 
         /// <summary> SKU properties of the API Management gateway. </summary>
-        [WirePath("sku")]
         public ApiManagementGatewaySkuPropertiesForPatch Sku { get; set; }
 
         /// <summary> ETag of the resource. </summary>
-        [WirePath("etag")]
         public string ETag { get; }
 
         /// <summary> The current provisioning state of the API Management gateway which can be one of the following: Created/Activating/Succeeded/Updating/Failed/Stopped/Terminating/TerminationFailed/Deleted. </summary>
-        [WirePath("properties.provisioningState")]
         public string ProvisioningState
         {
             get
@@ -58,7 +53,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The provisioning state of the API Management gateway, which is targeted by the long running operation started on the gateway. </summary>
-        [WirePath("properties.targetProvisioningState")]
         public string TargetProvisioningState
         {
             get
@@ -68,7 +62,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Creation UTC date of the API Management gateway.The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
-        [WirePath("properties.createdAtUtc")]
         public DateTimeOffset? CreatedAtUtc
         {
             get
@@ -78,7 +71,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The type of VPN in which API Management gateway needs to be configured in. </summary>
-        [WirePath("properties.virtualNetworkType")]
         public VirtualNetworkType? VirtualNetworkType
         {
             get
@@ -91,12 +83,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     Properties = new ApiManagementGatewayUpdateProperties();
                 }
-                Properties.VirtualNetworkType = value.Value;
+                Properties.VirtualNetworkType = value;
             }
         }
 
         /// <summary> The default hostname of the data-plane gateway to which requests can be sent. This is only applicable for API gateway with Standard SKU. </summary>
-        [WirePath("properties.frontend.defaultHostname")]
         public string FrontendDefaultHostname
         {
             get
@@ -106,7 +97,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The ARM ID of the subnet in which the backend systems are hosted. </summary>
-        [WirePath("properties.backend.subnet.id")]
         public string BackendSubnetId
         {
             get
@@ -124,7 +114,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Hostname to which the agent connects to propagate configuration to the cloud. </summary>
-        [WirePath("properties.configurationApi.hostname")]
         public string ConfigurationApiHostname
         {
             get

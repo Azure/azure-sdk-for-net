@@ -42,23 +42,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Collection of URL template parameters. </summary>
-        [WirePath("templateParameters")]
         public IList<ParameterContract> TemplateParameters { get; } = new ChangeTrackingList<ParameterContract>();
 
         /// <summary> Description of the operation. May include HTML formatting tags. </summary>
-        [WirePath("description")]
         public string Description { get; set; }
 
         /// <summary> An entity containing request details. </summary>
-        [WirePath("request")]
         public RequestContract Request { get; set; }
 
         /// <summary> Array of Operation responses. </summary>
-        [WirePath("responses")]
         public IList<ResponseContract> Responses { get; } = new ChangeTrackingList<ResponseContract>();
 
         /// <summary> Operation Policies. </summary>
-        [WirePath("policies")]
         public string Policies { get; set; }
     }
 }

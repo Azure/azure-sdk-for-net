@@ -38,136 +38,122 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Subscription contract properties. </summary>
-        [WirePath("properties")]
         internal SubscriptionContractProperties Properties { get; }
 
         /// <summary> The user resource identifier of the subscription owner. The value is a valid relative URL in the format of /users/{userId} where {userId} is a user identifier. </summary>
-        [WirePath("properties.ownerId")]
         public string OwnerId
         {
             get
             {
-                return Properties.OwnerId;
+                return Properties is null ? default : Properties.OwnerId;
             }
         }
 
         /// <summary> Scope like /products/{productId} or /apis or /apis/{apiId}. </summary>
-        [WirePath("properties.scope")]
         public string Scope
         {
             get
             {
-                return Properties.Scope;
+                return Properties is null ? default : Properties.Scope;
             }
         }
 
         /// <summary> The name of the subscription, or null if the subscription has no name. </summary>
-        [WirePath("properties.displayName")]
         public string DisplayName
         {
             get
             {
-                return Properties.DisplayName;
+                return Properties is null ? default : Properties.DisplayName;
             }
         }
 
         /// <summary> Subscription state. Possible states are <i> active – the subscription is active, </i> suspended – the subscription is blocked, and the subscriber cannot call any APIs of the product, <i> submitted – the subscription request has been made by the developer, but has not yet been approved or rejected, </i> rejected – the subscription request has been denied by an administrator, <i> cancelled – the subscription has been cancelled by the developer or administrator, </i> expired – the subscription reached its expiration date and was deactivated. </summary>
-        [WirePath("properties.state")]
-        public SubscriptionState State
+        public SubscriptionState? State
         {
             get
             {
-                return Properties.State;
+                return Properties is null ? default : Properties.State;
             }
         }
 
         /// <summary> Subscription creation date. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
-        [WirePath("properties.createdDate")]
         public DateTimeOffset? CreatedOn
         {
             get
             {
-                return Properties.CreatedOn;
+                return Properties is null ? default : Properties.CreatedOn;
             }
         }
 
         /// <summary> Subscription activation date. The setting is for audit purposes only and the subscription is not automatically activated. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
-        [WirePath("properties.startDate")]
         public DateTimeOffset? StartOn
         {
             get
             {
-                return Properties.StartOn;
+                return Properties is null ? default : Properties.StartOn;
             }
         }
 
         /// <summary> Subscription expiration date. The setting is for audit purposes only and the subscription is not automatically expired. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
-        [WirePath("properties.expirationDate")]
         public DateTimeOffset? ExpireOn
         {
             get
             {
-                return Properties.ExpireOn;
+                return Properties is null ? default : Properties.ExpireOn;
             }
         }
 
         /// <summary> Date when subscription was cancelled or expired. The setting is for audit purposes only and the subscription is not automatically cancelled. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
-        [WirePath("properties.endDate")]
         public DateTimeOffset? EndOn
         {
             get
             {
-                return Properties.EndOn;
+                return Properties is null ? default : Properties.EndOn;
             }
         }
 
         /// <summary> Upcoming subscription expiration notification date. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
-        [WirePath("properties.notificationDate")]
         public DateTimeOffset? NotificationOn
         {
             get
             {
-                return Properties.NotificationOn;
+                return Properties is null ? default : Properties.NotificationOn;
             }
         }
 
         /// <summary> Subscription primary key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </summary>
-        [WirePath("properties.primaryKey")]
         public string PrimaryKey
         {
             get
             {
-                return Properties.PrimaryKey;
+                return Properties is null ? default : Properties.PrimaryKey;
             }
         }
 
         /// <summary> Subscription secondary key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </summary>
-        [WirePath("properties.secondaryKey")]
         public string SecondaryKey
         {
             get
             {
-                return Properties.SecondaryKey;
+                return Properties is null ? default : Properties.SecondaryKey;
             }
         }
 
         /// <summary> Optional subscription comment added by an administrator when the state is changed to the 'rejected'. </summary>
-        [WirePath("properties.stateComment")]
         public string StateComment
         {
             get
             {
-                return Properties.StateComment;
+                return Properties is null ? default : Properties.StateComment;
             }
         }
 
         /// <summary> Determines whether tracing is enabled. </summary>
-        [WirePath("properties.allowTracing")]
         public bool? AllowTracing
         {
             get
             {
-                return Properties.AllowTracing;
+                return Properties is null ? default : Properties.AllowTracing;
             }
         }
     }

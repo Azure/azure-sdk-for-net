@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             string storageAccount = default;
             string containerName = default;
             string backupName = default;
-            AccessType? accessType = default;
+            StorageAccountAccessType? accessType = default;
             string accessKey = default;
             string clientId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    accessType = new AccessType(prop.Value.GetString());
+                    accessType = new StorageAccountAccessType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("accessKey"u8))

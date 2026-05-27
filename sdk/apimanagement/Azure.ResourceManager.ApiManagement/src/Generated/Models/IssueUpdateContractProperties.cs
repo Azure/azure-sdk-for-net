@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -35,15 +34,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The issue title. </summary>
-        [WirePath("title")]
         public string Title { get; set; }
 
         /// <summary> Text describing the issue. </summary>
-        [WirePath("description")]
         public string Description { get; set; }
 
         /// <summary> A resource identifier for the user created the issue. </summary>
-        [WirePath("userId")]
         public string UserId { get; set; }
     }
 }

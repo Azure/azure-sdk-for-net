@@ -37,11 +37,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The PrivateEndpointConnection items on this page. </summary>
-        [WirePath("value")]
         public IList<ApiManagementPrivateEndpointConnectionData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
-        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

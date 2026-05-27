@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -95,10 +96,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("userId"u8);
                 writer.WriteStringValue(UserId);
             }
-            if (Optional.IsDefined(HttpMethod))
+            if (Optional.IsDefined(Method))
             {
                 writer.WritePropertyName("method"u8);
-                writer.WriteStringValue(HttpMethod);
+                writer.WriteStringValue(Method.Value.Method);
             }
             if (Optional.IsDefined(Uri))
             {
@@ -211,7 +212,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             string operationId = default;
             string productId = default;
             string userId = default;
-            string httpMethod = default;
+            RequestMethod? @method = default;
             Uri uri = default;
             IPAddress ipAddress = default;
             string backendResponseCode = default;
@@ -250,7 +251,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (prop.NameEquals("method"u8))
                 {
-                    httpMethod = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    @method = new RequestMethod(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("url"u8))
@@ -360,7 +365,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 operationId,
                 productId,
                 userId,
-                httpMethod,
+                @method,
                 uri,
                 ipAddress,
                 backendResponseCode,

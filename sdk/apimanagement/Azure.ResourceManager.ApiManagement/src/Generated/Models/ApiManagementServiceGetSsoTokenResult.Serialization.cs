@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(RedirectUri))
             {
                 writer.WritePropertyName("redirectUri"u8);
-                writer.WriteStringValue(RedirectUri);
+                writer.WriteStringValue(RedirectUri.AbsoluteUri);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -129,13 +129,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            string redirectUri = default;
+            Uri redirectUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("redirectUri"u8))
                 {
-                    redirectUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    redirectUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")

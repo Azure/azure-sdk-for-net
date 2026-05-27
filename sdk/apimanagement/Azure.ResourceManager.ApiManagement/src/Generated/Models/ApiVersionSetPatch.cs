@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -32,11 +31,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Parameters to update or create an API Version Set Contract. </summary>
-        [WirePath("properties")]
         internal ApiVersionSetUpdateParametersProperties Properties { get; set; }
 
         /// <summary> Description of API Version Set. </summary>
-        [WirePath("properties.description")]
         public string Description
         {
             get
@@ -54,7 +51,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Name of query parameter that indicates the API Version if versioningScheme is set to `query`. </summary>
-        [WirePath("properties.versionQueryName")]
         public string VersionQueryName
         {
             get
@@ -72,7 +68,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Name of HTTP header parameter that indicates the API Version if versioningScheme is set to `header`. </summary>
-        [WirePath("properties.versionHeaderName")]
         public string VersionHeaderName
         {
             get
@@ -90,7 +85,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Name of API Version Set. </summary>
-        [WirePath("properties.displayName")]
         public string DisplayName
         {
             get
@@ -108,7 +102,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> An value that determines where the API Version identifier will be located in a HTTP request. </summary>
-        [WirePath("properties.versioningScheme")]
         public VersioningScheme? VersioningScheme
         {
             get
@@ -121,7 +114,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     Properties = new ApiVersionSetUpdateParametersProperties();
                 }
-                Properties.VersioningScheme = value.Value;
+                Properties.VersioningScheme = value;
             }
         }
     }

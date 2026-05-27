@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -28,7 +27,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="delegationUri"> A delegation endpoint URL. </param>
         /// <param name="validationKey"> A base64-encoded validation key to ensure requests originate from Azure API Management service. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PortalConfigDelegationProperties(bool? delegateRegistration, bool? delegateSubscription, string delegationUri, string validationKey, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PortalConfigDelegationProperties(bool? delegateRegistration, bool? delegateSubscription, Uri delegationUri, string validationKey, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DelegateRegistration = delegateRegistration;
             DelegateSubscription = delegateSubscription;
@@ -38,19 +37,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Enable or disable delegation for user registration. </summary>
-        [WirePath("delegateRegistration")]
         public bool? DelegateRegistration { get; set; }
 
         /// <summary> Enable or disable delegation for product subscriptions. </summary>
-        [WirePath("delegateSubscription")]
         public bool? DelegateSubscription { get; set; }
 
         /// <summary> A delegation endpoint URL. </summary>
-        [WirePath("delegationUrl")]
-        public string DelegationUri { get; set; }
+        public Uri DelegationUri { get; set; }
 
         /// <summary> A base64-encoded validation key to ensure requests originate from Azure API Management service. </summary>
-        [WirePath("validationKey")]
         public string ValidationKey { get; set; }
     }
 }

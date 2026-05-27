@@ -136,14 +136,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            KeyType keyType = default;
+            TokenGenerationUsedKeyType keyType = default;
             DateTimeOffset expiry = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("keyType"u8))
                 {
-                    keyType = prop.Value.GetString().ToKeyType();
+                    keyType = prop.Value.GetString().ToTokenGenerationUsedKeyType();
                     continue;
                 }
                 if (prop.NameEquals("expiry"u8))

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -25,14 +24,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of <see cref="ResourceSku"/>. </summary>
         /// <param name="name"> Name of the Sku. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceSku(SkuType? name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceSku(ApiManagementServiceSkuType? name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of the Sku. </summary>
-        [WirePath("name")]
-        public SkuType? Name { get; }
+        public ApiManagementServiceSkuType? Name { get; }
     }
 }

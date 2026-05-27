@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -44,19 +43,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Subject attribute of the certificate. </summary>
-        [WirePath("subject")]
         public string Subject { get; }
 
         /// <summary> Thumbprint of the certificate. </summary>
-        [WirePath("thumbprint")]
         public string Thumbprint { get; }
 
         /// <summary> Expiration date of the certificate. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
-        [WirePath("expirationDate")]
         public DateTimeOffset ExpireOn { get; }
 
         /// <summary> KeyVault location details of the certificate. </summary>
-        [WirePath("keyVault")]
         public KeyVaultContractProperties KeyVault { get; }
     }
 }

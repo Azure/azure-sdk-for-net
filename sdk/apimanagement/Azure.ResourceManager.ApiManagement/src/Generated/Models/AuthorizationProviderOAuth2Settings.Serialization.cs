@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(RedirectUri))
             {
                 writer.WritePropertyName("redirectUrl"u8);
-                writer.WriteStringValue(RedirectUri);
+                writer.WriteStringValue(RedirectUri.AbsoluteUri);
             }
             if (Optional.IsDefined(GrantTypes))
             {
@@ -88,6 +88,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 writer.WritePropertyName("keyVault"u8);
                 writer.WriteObjectValue(KeyVault, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(FederatedIdentityCredentialsProperties))
+            {
+                writer.WritePropertyName("federatedIdentityCredentialsProperties"u8);
+                writer.WriteObjectValue(FederatedIdentityCredentialsProperties, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -131,15 +136,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            string redirectUri = default;
+            Uri redirectUri = default;
             AuthorizationProviderOAuth2GrantTypes grantTypes = default;
             AuthorizationProviderKeyVaultContract keyVault = default;
+            AuthorizationProviderFederatedIdentityCredentialsProperties federatedIdentityCredentialsProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("redirectUrl"u8))
                 {
-                    redirectUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    redirectUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("grantTypes"u8))
@@ -160,12 +170,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     keyVault = AuthorizationProviderKeyVaultContract.DeserializeAuthorizationProviderKeyVaultContract(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("federatedIdentityCredentialsProperties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    federatedIdentityCredentialsProperties = AuthorizationProviderFederatedIdentityCredentialsProperties.DeserializeAuthorizationProviderFederatedIdentityCredentialsProperties(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AuthorizationProviderOAuth2Settings(redirectUri, grantTypes, keyVault, additionalBinaryDataProperties);
+            return new AuthorizationProviderOAuth2Settings(redirectUri, grantTypes, keyVault, federatedIdentityCredentialsProperties, additionalBinaryDataProperties);
         }
     }
 }

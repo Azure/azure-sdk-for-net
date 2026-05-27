@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -216,7 +217,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            string location = default;
+            AzureLocation location = default;
             ApiManagementServiceSkuProperties sku = default;
             IList<string> zones = default;
             IReadOnlyList<IPAddress> publicIPAddresses = default;
@@ -233,7 +234,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("sku"u8))

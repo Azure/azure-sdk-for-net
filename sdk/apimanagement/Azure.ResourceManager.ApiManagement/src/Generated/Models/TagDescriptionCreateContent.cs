@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -32,11 +31,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Properties supplied to Create TagDescription operation. </summary>
-        [WirePath("properties")]
         internal TagDescriptionBaseProperties Properties { get; set; }
 
         /// <summary> Description of the Tag. </summary>
-        [WirePath("properties.description")]
         public string Description
         {
             get
@@ -54,7 +51,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Absolute URL of external resources describing the tag. </summary>
-        [WirePath("properties.externalDocsUrl")]
         public string ExternalDocsUri
         {
             get
@@ -72,7 +68,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Description of the external resources describing the tag. </summary>
-        [WirePath("properties.externalDocsDescription")]
         public string ExternalDocsDescription
         {
             get

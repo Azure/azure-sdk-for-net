@@ -38,56 +38,50 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Group entity contract properties. </summary>
-        [WirePath("properties")]
         internal GroupContractProperties Properties { get; }
 
         /// <summary> Group name. </summary>
-        [WirePath("properties.displayName")]
         public string DisplayName
         {
             get
             {
-                return Properties.DisplayName;
+                return Properties is null ? default : Properties.DisplayName;
             }
         }
 
         /// <summary> Group description. Can contain HTML formatting tags. </summary>
-        [WirePath("properties.description")]
         public string Description
         {
             get
             {
-                return Properties.Description;
+                return Properties is null ? default : Properties.Description;
             }
         }
 
         /// <summary> true if the group is one of the three system groups (Administrators, Developers, or Guests); otherwise false. </summary>
-        [WirePath("properties.builtIn")]
         public bool? BuiltIn
         {
             get
             {
-                return Properties.BuiltIn;
+                return Properties is null ? default : Properties.BuiltIn;
             }
         }
 
         /// <summary> Group type. </summary>
-        [WirePath("properties.type")]
         public ApiManagementGroupType? Type
         {
             get
             {
-                return Properties.Type;
+                return Properties is null ? default : Properties.Type;
             }
         }
 
         /// <summary> For external groups, this property contains the id of the group from the external identity provider, e.g. for Azure Active Directory `aad://&lt;tenant&gt;.onmicrosoft.com/groups/&lt;group object id&gt;`; otherwise the value is null. </summary>
-        [WirePath("properties.externalId")]
         public string ExternalId
         {
             get
             {
-                return Properties.ExternalId;
+                return Properties is null ? default : Properties.ExternalId;
             }
         }
     }

@@ -38,56 +38,50 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> TagDescription entity contract properties. </summary>
-        [WirePath("properties")]
         internal TagDescriptionContractProperties Properties { get; }
 
         /// <summary> Description of the Tag. </summary>
-        [WirePath("properties.description")]
         public string Description
         {
             get
             {
-                return Properties.Description;
+                return Properties is null ? default : Properties.Description;
             }
         }
 
         /// <summary> Absolute URL of external resources describing the tag. </summary>
-        [WirePath("properties.externalDocsUrl")]
         public string ExternalDocsUri
         {
             get
             {
-                return Properties.ExternalDocsUri;
+                return Properties is null ? default : Properties.ExternalDocsUri;
             }
         }
 
         /// <summary> Description of the external resources describing the tag. </summary>
-        [WirePath("properties.externalDocsDescription")]
         public string ExternalDocsDescription
         {
             get
             {
-                return Properties.ExternalDocsDescription;
+                return Properties is null ? default : Properties.ExternalDocsDescription;
             }
         }
 
         /// <summary> Identifier of the tag in the form of /tags/{tagId}. </summary>
-        [WirePath("properties.tagId")]
         public string TagId
         {
             get
             {
-                return Properties.TagId;
+                return Properties is null ? default : Properties.TagId;
             }
         }
 
         /// <summary> Tag name. </summary>
-        [WirePath("properties.displayName")]
         public string DisplayName
         {
             get
             {
-                return Properties.DisplayName;
+                return Properties is null ? default : Properties.DisplayName;
             }
         }
     }

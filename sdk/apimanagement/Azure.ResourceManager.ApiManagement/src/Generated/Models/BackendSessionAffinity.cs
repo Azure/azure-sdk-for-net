@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -32,7 +31,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The id that identifies the requests belonging to the same session. </summary>
-        [WirePath("sessionId")]
         public BackendSessionId SessionId { get; set; }
     }
 }

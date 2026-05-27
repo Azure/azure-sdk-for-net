@@ -42,27 +42,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Properties of the API Management service. </summary>
-        [WirePath("properties")]
         internal ApiManagementServiceUpdateProperties Properties { get; set; }
 
         /// <summary> SKU properties of the API Management service. </summary>
-        [WirePath("sku")]
         public ApiManagementServiceSkuProperties Sku { get; set; }
 
         /// <summary> Managed service identity of the Api Management service. </summary>
-        [WirePath("identity")]
         public ApiManagementServiceIdentity Identity { get; set; }
 
         /// <summary> ETag of the resource. </summary>
-        [WirePath("etag")]
         public string ETag { get; }
 
         /// <summary> A list of availability zones denoting where the resource needs to come from. </summary>
-        [WirePath("zones")]
         public IList<string> Zones { get; }
 
         /// <summary> Email address from which the notification will be sent. </summary>
-        [WirePath("properties.notificationSenderEmail")]
         public string NotificationSenderEmail
         {
             get
@@ -80,7 +74,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The current provisioning state of the API Management service which can be one of the following: Created/Activating/Succeeded/Updating/Failed/Stopped/Terminating/TerminationFailed/Deleted. </summary>
-        [WirePath("properties.provisioningState")]
         public string ProvisioningState
         {
             get
@@ -90,7 +83,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The provisioning state of the API Management service, which is targeted by the long running operation started on the service. </summary>
-        [WirePath("properties.targetProvisioningState")]
         public string TargetProvisioningState
         {
             get
@@ -100,7 +92,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Creation UTC date of the API Management service.The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
-        [WirePath("properties.createdAtUtc")]
         public DateTimeOffset? CreatedAtUtc
         {
             get
@@ -110,7 +101,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Gateway URL of the API Management service. </summary>
-        [WirePath("properties.gatewayUrl")]
         public string GatewayUri
         {
             get
@@ -120,7 +110,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Gateway URL of the API Management service in the Default Region. </summary>
-        [WirePath("properties.gatewayRegionalUrl")]
         public Uri GatewayRegionalUri
         {
             get
@@ -130,7 +119,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Publisher portal endpoint Url of the API Management service. </summary>
-        [WirePath("properties.portalUrl")]
         public string PortalUri
         {
             get
@@ -140,7 +128,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Management API endpoint URL of the API Management service. </summary>
-        [WirePath("properties.managementApiUrl")]
         public string ManagementApiUri
         {
             get
@@ -150,7 +137,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> SCM endpoint URL of the API Management service. </summary>
-        [WirePath("properties.scmUrl")]
         public string ScmUri
         {
             get
@@ -160,7 +146,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> DEveloper Portal endpoint URL of the API Management service. </summary>
-        [WirePath("properties.developerPortalUrl")]
         public string DeveloperPortalUri
         {
             get
@@ -170,7 +155,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Custom hostname configuration of the API Management service. </summary>
-        [WirePath("properties.hostnameConfigurations")]
         public IList<HostnameConfiguration> HostnameConfigurations
         {
             get
@@ -184,7 +168,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Public Static Load Balanced IP addresses of the API Management service in Primary region. Available only for Basic, Standard, Premium and Isolated SKU. </summary>
-        [WirePath("properties.publicIPAddresses")]
         public IReadOnlyList<IPAddress> PublicIPAddresses
         {
             get
@@ -198,7 +181,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Private Static Load Balanced IP addresses of the API Management service in Primary region which is deployed in an Internal Virtual Network. Available only for Basic, Standard, Premium and Isolated SKU. </summary>
-        [WirePath("properties.privateIPAddresses")]
         public IReadOnlyList<IPAddress> PrivateIPAddresses
         {
             get
@@ -212,7 +194,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Public Standard SKU IP V4 based IP address to be associated with Virtual Network deployed service in the region. Supported only for Developer and Premium SKU being deployed in Virtual Network. </summary>
-        [WirePath("properties.publicIpAddressId")]
         public string PublicIpAddressId
         {
             get
@@ -230,7 +211,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Whether or not public endpoint access is allowed for this API Management service.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. If 'Disabled', private endpoints are the exclusive access method. Default value is 'Enabled'. </summary>
-        [WirePath("properties.publicNetworkAccess")]
         public PublicNetworkAccess? PublicNetworkAccess
         {
             get
@@ -243,12 +223,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     Properties = new ApiManagementServiceUpdateProperties();
                 }
-                Properties.PublicNetworkAccess = value.Value;
+                Properties.PublicNetworkAccess = value;
             }
         }
 
         /// <summary> Virtual network configuration of the API Management service. </summary>
-        [WirePath("properties.virtualNetworkConfiguration")]
         public VirtualNetworkConfiguration VirtualNetworkConfiguration
         {
             get
@@ -266,7 +245,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Additional datacenter locations of the API Management service. </summary>
-        [WirePath("properties.additionalLocations")]
         public IList<AdditionalLocation> AdditionalLocations
         {
             get
@@ -280,7 +258,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Custom properties of the API Management service.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168` will disable the cipher TLS_RSA_WITH_3DES_EDE_CBC_SHA for all TLS(1.0, 1.1 and 1.2).&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11` can be used to disable just TLS 1.1.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10` can be used to disable TLS 1.0 on an API Management service.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11` can be used to disable just TLS 1.1 for communications with backends.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10` can be used to disable TLS 1.0 for communications with backends.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2` can be used to enable HTTP2 protocol on an API Management service.&lt;/br&gt;Not specifying any of these properties on PATCH operation will reset omitted properties' values to their defaults. For all the settings except Http2 the default value is `True` if the service was created on or before April 1, 2018 and `False` otherwise. Http2 setting's default value is `False`.&lt;/br&gt;&lt;/br&gt;You can disable any of the following ciphers by using settings `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.[cipher_name]`: TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA, TLS_RSA_WITH_AES_128_GCM_SHA256, TLS_RSA_WITH_AES_256_CBC_SHA256, TLS_RSA_WITH_AES_128_CBC_SHA256, TLS_RSA_WITH_AES_256_CBC_SHA, TLS_RSA_WITH_AES_128_CBC_SHA. For example, `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TLS_RSA_WITH_AES_128_CBC_SHA256`:`false`. The default value is `true` for them.&lt;/br&gt; Note: The following ciphers can't be disabled since they are required by internal platform components: TLS_AES_256_GCM_SHA384,TLS_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256. </summary>
-        [WirePath("properties.customProperties")]
         public IDictionary<string, string> CustomProperties
         {
             get
@@ -294,7 +271,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> List of Certificates that need to be installed in the API Management service. Max supported certificates that can be installed is 10. </summary>
-        [WirePath("properties.certificates")]
         public IList<CertificateConfiguration> Certificates
         {
             get
@@ -308,7 +284,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Property only meant to be used for Consumption SKU Service. This enforces a client certificate to be presented on each request to the gateway. This also enables the ability to authenticate the certificate in the policy on the gateway. </summary>
-        [WirePath("properties.enableClientCertificate")]
         public bool? EnableClientCertificate
         {
             get
@@ -321,12 +296,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     Properties = new ApiManagementServiceUpdateProperties();
                 }
-                Properties.EnableClientCertificate = value.Value;
+                Properties.EnableClientCertificate = value;
             }
         }
 
         /// <summary> Property can be used to enable NAT Gateway for this API Management service. </summary>
-        [WirePath("properties.natGatewayState")]
         public ApiManagementNatGatewayState? NatGatewayState
         {
             get
@@ -339,12 +313,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     Properties = new ApiManagementServiceUpdateProperties();
                 }
-                Properties.NatGatewayState = value.Value;
+                Properties.NatGatewayState = value;
             }
         }
 
         /// <summary> Outbound public IPV4 address prefixes associated with NAT Gateway deployed service. Available only for Premium SKU on stv2 platform. </summary>
-        [WirePath("properties.outboundPublicIPAddresses")]
         public IReadOnlyList<string> OutboundPublicIPAddresses
         {
             get
@@ -358,7 +331,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Property only valid for an Api Management service deployed in multiple locations. This can be used to disable the gateway in master region. </summary>
-        [WirePath("properties.disableGateway")]
         public bool? DisableGateway
         {
             get
@@ -371,12 +343,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     Properties = new ApiManagementServiceUpdateProperties();
                 }
-                Properties.DisableGateway = value.Value;
+                Properties.DisableGateway = value;
             }
         }
 
         /// <summary> The type of VPN in which API Management service needs to be configured in. None (Default Value) means the API Management service is not part of any Virtual Network, External means the API Management deployment is set up inside a Virtual Network having an Internet Facing Endpoint, and Internal means that API Management deployment is setup inside a Virtual Network having an Intranet Facing Endpoint only. </summary>
-        [WirePath("properties.virtualNetworkType")]
         public VirtualNetworkType? VirtualNetworkType
         {
             get
@@ -389,12 +360,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     Properties = new ApiManagementServiceUpdateProperties();
                 }
-                Properties.VirtualNetworkType = value.Value;
+                Properties.VirtualNetworkType = value;
             }
         }
 
         /// <summary> Undelete Api Management Service if it was previously soft-deleted. If this flag is specified and set to True all other properties will be ignored. </summary>
-        [WirePath("properties.restore")]
         public bool? Restore
         {
             get
@@ -407,12 +377,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     Properties = new ApiManagementServiceUpdateProperties();
                 }
-                Properties.Restore = value.Value;
+                Properties.Restore = value;
             }
         }
 
         /// <summary> List of Private Endpoint Connections of this service. </summary>
-        [WirePath("properties.privateEndpointConnections")]
         public IList<RemotePrivateEndpointConnectionWrapper> PrivateEndpointConnections
         {
             get
@@ -426,7 +395,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Compute Platform Version running the service in this location. </summary>
-        [WirePath("properties.platformVersion")]
         public PlatformVersion? PlatformVersion
         {
             get
@@ -436,7 +404,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Status of legacy portal in the API Management service. </summary>
-        [WirePath("properties.legacyPortalStatus")]
         public LegacyPortalStatus? LegacyPortalStatus
         {
             get
@@ -449,12 +416,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     Properties = new ApiManagementServiceUpdateProperties();
                 }
-                Properties.LegacyPortalStatus = value.Value;
+                Properties.LegacyPortalStatus = value;
             }
         }
 
         /// <summary> Status of developer portal in this API Management service. </summary>
-        [WirePath("properties.developerPortalStatus")]
         public DeveloperPortalStatus? DeveloperPortalStatus
         {
             get
@@ -467,12 +433,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     Properties = new ApiManagementServiceUpdateProperties();
                 }
-                Properties.DeveloperPortalStatus = value.Value;
+                Properties.DeveloperPortalStatus = value;
             }
         }
 
         /// <summary> Release Channel of this API Management service. </summary>
-        [WirePath("properties.releaseChannel")]
         public ReleaseChannel? ReleaseChannel
         {
             get
@@ -485,12 +450,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     Properties = new ApiManagementServiceUpdateProperties();
                 }
-                Properties.ReleaseChannel = value.Value;
+                Properties.ReleaseChannel = value;
             }
         }
 
         /// <summary> Zone Redundant Requirement when creating StandardV2 and PremiumV2. If this flag is set to True, will return a APIM service with Zone redundant or fail the request if any underneath component cannot be zone redundant. </summary>
-        [WirePath("properties.zoneRedundant")]
         public bool? ZoneRedundant
         {
             get
@@ -503,12 +467,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     Properties = new ApiManagementServiceUpdateProperties();
                 }
-                Properties.ZoneRedundant = value.Value;
+                Properties.ZoneRedundant = value;
             }
         }
 
         /// <summary> Indication whether or not the legacy Configuration API (v1) should be exposed on the API Management service. Value is optional but must be 'Enabled' or 'Disabled'. If 'Disabled', legacy Configuration API (v1) will not be available for self-hosted gateways. Default value is 'Enabled'. </summary>
-        [WirePath("properties.configurationApi.legacyApi")]
         public LegacyApiState? LegacyApi
         {
             get
@@ -521,12 +484,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     Properties = new ApiManagementServiceUpdateProperties();
                 }
-                Properties.LegacyApi = value.Value;
+                Properties.LegacyApi = value;
             }
         }
 
         /// <summary> Limit control plane API calls to API Management service with version equal to or newer than this value. </summary>
-        [WirePath("properties.apiVersionConstraint.minApiVersion")]
         public string MinApiVersion
         {
             get
@@ -544,7 +506,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Publisher email. </summary>
-        [WirePath("properties.publisherEmail")]
         public string PublisherEmail
         {
             get
@@ -562,7 +523,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Publisher name. </summary>
-        [WirePath("properties.publisherName")]
         public string PublisherName
         {
             get

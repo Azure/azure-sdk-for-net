@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -34,11 +33,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Product facing EntraID application client ID. </summary>
-        [WirePath("applicationId")]
         public string ApplicationId { get; set; }
 
         /// <summary> The EntraID application audience claim. The audience claim is used to validate the token. </summary>
-        [WirePath("audience")]
         public string Audience { get; set; }
     }
 }

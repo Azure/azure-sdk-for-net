@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -34,11 +33,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> EntraID client application secret. </summary>
-        [WirePath("clientSecret")]
         public string ClientSecret { get; }
 
         /// <summary> EntraID client application secret expiration date. </summary>
-        [WirePath("expiresAt")]
         public DateTimeOffset? ExpiresOn { get; }
     }
 }

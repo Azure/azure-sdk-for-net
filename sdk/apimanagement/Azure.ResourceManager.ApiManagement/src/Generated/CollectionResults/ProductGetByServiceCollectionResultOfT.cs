@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement
     internal partial class ProductGetByServiceCollectionResultOfT : Pageable<ApiManagementProductData>
     {
         private readonly Product _client;
-        private readonly string _subscriptionId;
+        private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _serviceName;
         private readonly string _filter;
@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly bool? _expandGroups;
         private readonly string _tags;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ProductGetByServiceCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Product client used to send requests. </param>
@@ -38,7 +39,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="expandGroups"> When set to true, the response contains an array of groups that have visibility to the product. The default is false. </param>
         /// <param name="tags"> Products which are part of a specific tag. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ProductGetByServiceCollectionResultOfT(Product client, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top, int? skip, bool? expandGroups, string tags, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ProductGetByServiceCollectionResultOfT(Product client, Guid subscriptionId, string resourceGroupName, string serviceName, string filter, int? top, int? skip, bool? expandGroups, string tags, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -50,6 +52,7 @@ namespace Azure.ResourceManager.ApiManagement
             _expandGroups = expandGroups;
             _tags = tags;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ProductGetByServiceCollectionResultOfT as an enumerable collection. </summary>
@@ -83,7 +86,7 @@ namespace Azure.ResourceManager.ApiManagement
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByServiceRequest(nextLink, _subscriptionId, _resourceGroupName, _serviceName, _filter, _top, _skip, _expandGroups, _tags, _context) : _client.CreateGetByServiceRequest(_subscriptionId, _resourceGroupName, _serviceName, _filter, _top, _skip, _expandGroups, _tags, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ProductCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

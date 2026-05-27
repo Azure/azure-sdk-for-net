@@ -37,7 +37,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Full resource Id of a product. </summary>
-        [WirePath("productId")]
         public string ProductId { get; set; }
     }
 }

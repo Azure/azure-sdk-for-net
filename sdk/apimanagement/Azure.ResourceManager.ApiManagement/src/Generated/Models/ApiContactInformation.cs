@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -27,7 +26,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="uri"> The URL pointing to the contact information. MUST be in the format of a URL. </param>
         /// <param name="email"> The email address of the contact person/organization. MUST be in the format of an email address. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApiContactInformation(string name, string uri, string email, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApiContactInformation(string name, Uri uri, string email, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Uri = uri;
@@ -36,15 +35,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The identifying name of the contact person/organization. </summary>
-        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> The URL pointing to the contact information. MUST be in the format of a URL. </summary>
-        [WirePath("url")]
-        public string Uri { get; set; }
+        public Uri Uri { get; set; }
 
         /// <summary> The email address of the contact person/organization. MUST be in the format of an email address. </summary>
-        [WirePath("email")]
         public string Email { get; set; }
     }
 }

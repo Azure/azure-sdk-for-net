@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -36,13 +37,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="termsOfServiceUri"> A URL to the Terms of Service for the API. MUST be in the format of a URL. </param>
         /// <param name="contact"> Contact information for the API. </param>
         /// <param name="license"> License information for the API. </param>
+        /// <param name="mcpProperties"> Properties specific to MCP API type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="id"> API identifier in the form /apis/{apiId}. </param>
         /// <param name="name"> API name. </param>
         /// <param name="serviceUri"> Absolute URL of the backend service implementing this API. </param>
         /// <param name="path"> Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API. </param>
         /// <param name="protocols"> Describes on which protocols the operations in this API can be invoked. </param>
-        internal ApiTagResourceContractProperties(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, string apiVersionSetId, bool? subscriptionRequired, Uri termsOfServiceUri, ApiContactInformation contact, ApiLicenseInformation license, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string name, string serviceUri, string path, IList<ApiOperationInvokableProtocol> protocols) : base(description, authenticationSettings, subscriptionKeyParameterNames, apiType, apiRevision, apiVersion, isCurrent, isOnline, apiRevisionDescription, apiVersionDescription, apiVersionSetId, subscriptionRequired, termsOfServiceUri, contact, license, additionalBinaryDataProperties)
+        internal ApiTagResourceContractProperties(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? subscriptionRequired, Uri termsOfServiceUri, ApiContactInformation contact, ApiLicenseInformation license, McpProperties mcpProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string name, string serviceUri, string path, IList<ApiOperationInvokableProtocol> protocols) : base(description, authenticationSettings, subscriptionKeyParameterNames, apiType, apiRevision, apiVersion, isCurrent, isOnline, apiRevisionDescription, apiVersionDescription, apiVersionSetId, subscriptionRequired, termsOfServiceUri, contact, license, mcpProperties, additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -52,23 +54,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> API identifier in the form /apis/{apiId}. </summary>
-        [WirePath("id")]
         public string Id { get; }
 
         /// <summary> API name. </summary>
-        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Absolute URL of the backend service implementing this API. </summary>
-        [WirePath("serviceUrl")]
         public string ServiceUri { get; }
 
         /// <summary> Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API. </summary>
-        [WirePath("path")]
         public string Path { get; }
 
         /// <summary> Describes on which protocols the operations in this API can be invoked. </summary>
-        [WirePath("protocols")]
         public IList<ApiOperationInvokableProtocol> Protocols { get; }
     }
 }

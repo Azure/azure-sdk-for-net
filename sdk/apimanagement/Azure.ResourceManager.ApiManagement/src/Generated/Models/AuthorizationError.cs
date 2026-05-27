@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -34,11 +33,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Error code. </summary>
-        [WirePath("code")]
         public string Code { get; set; }
 
         /// <summary> Error message. </summary>
-        [WirePath("message")]
         public string Message { get; set; }
     }
 }

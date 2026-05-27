@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -32,7 +31,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Terms of service settings. </summary>
-        [WirePath("termsOfService")]
         public PortalConfigTermsOfServiceProperties TermsOfService { get; set; }
     }
 }

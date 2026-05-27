@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.ApiManagement;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -38,11 +37,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Identity Provider contract properties. </summary>
-        [WirePath("properties")]
         internal IdentityProviderCreateContractProperties Properties { get; set; }
 
         /// <summary> Identity Provider Type identifier. </summary>
-        [WirePath("properties.type")]
         public IdentityProviderType? Type
         {
             get
@@ -55,12 +52,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     Properties = new IdentityProviderCreateContractProperties();
                 }
-                Properties.Type = value.Value;
+                Properties.Type = value;
             }
         }
 
         /// <summary> The TenantId to use instead of Common when logging into Active Directory. </summary>
-        [WirePath("properties.signinTenant")]
         public string SigninTenant
         {
             get
@@ -78,7 +74,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> List of Allowed Tenants when configuring Azure Active Directory login. </summary>
-        [WirePath("properties.allowedTenants")]
         public IList<string> AllowedTenants
         {
             get
@@ -92,7 +87,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> OpenID Connect discovery endpoint hostname for AAD or AAD B2C. </summary>
-        [WirePath("properties.authority")]
         public string Authority
         {
             get
@@ -110,7 +104,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Signup Policy Name. Only applies to AAD B2C Identity Provider. </summary>
-        [WirePath("properties.signupPolicyName")]
         public string SignupPolicyName
         {
             get
@@ -128,7 +121,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Signin Policy Name. Only applies to AAD B2C Identity Provider. </summary>
-        [WirePath("properties.signinPolicyName")]
         public string SigninPolicyName
         {
             get
@@ -146,7 +138,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Profile Editing Policy Name. Only applies to AAD B2C Identity Provider. </summary>
-        [WirePath("properties.profileEditingPolicyName")]
         public string ProfileEditingPolicyName
         {
             get
@@ -164,7 +155,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Password Reset Policy Name. Only applies to AAD B2C Identity Provider. </summary>
-        [WirePath("properties.passwordResetPolicyName")]
         public string PasswordResetPolicyName
         {
             get
@@ -182,7 +172,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The client library to be used in the developer portal. Only applies to AAD and AAD B2C Identity Provider. </summary>
-        [WirePath("properties.clientLibrary")]
         public string ClientLibrary
         {
             get
@@ -200,7 +189,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Client Id of the Application in the external Identity Provider. It is App ID for Facebook login, Client ID for Google login, App ID for Microsoft. </summary>
-        [WirePath("properties.clientId")]
         public string ClientId
         {
             get
@@ -210,7 +198,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Client secret of the Application in external Identity Provider, used to authenticate login request. For example, it is App Secret for Facebook login, API Key for Google login, Public Key for Microsoft. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </summary>
-        [WirePath("properties.clientSecret")]
         public string ClientSecret
         {
             get
@@ -220,7 +207,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Certificate full resource ID used in external Identity Provider. </summary>
-        [WirePath("properties.certificateId")]
         public ResourceIdentifier CertificateId
         {
             get

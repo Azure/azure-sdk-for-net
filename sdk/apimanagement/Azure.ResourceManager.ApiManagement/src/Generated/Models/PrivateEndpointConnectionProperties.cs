@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -21,41 +22,43 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         internal PrivateEndpointConnectionProperties(ApiManagementPrivateLinkServiceConnectionState privateLinkServiceConnectionState)
         {
+            GroupIds = new ChangeTrackingList<string>();
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
         }
 
         /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionProperties"/>. </summary>
+        /// <param name="groupIds"> The group ids for the private endpoint resource. </param>
         /// <param name="privateEndpoint"> The private endpoint resource. </param>
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateEndpointConnectionProperties(PrivateEndpoint privateEndpoint, ApiManagementPrivateLinkServiceConnectionState privateLinkServiceConnectionState, ApiManagementPrivateEndpointConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateEndpointConnectionProperties(IReadOnlyList<string> groupIds, PrivateEndpoint privateEndpoint, ApiManagementPrivateLinkServiceConnectionState privateLinkServiceConnectionState, ApiManagementPrivateEndpointConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            GroupIds = groupIds;
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> The group ids for the private endpoint resource. </summary>
+        public IReadOnlyList<string> GroupIds { get; } = new ChangeTrackingList<string>();
+
         /// <summary> The private endpoint resource. </summary>
-        [WirePath("privateEndpoint")]
         internal PrivateEndpoint PrivateEndpoint { get; }
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-        [WirePath("privateLinkServiceConnectionState")]
         public ApiManagementPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; }
 
         /// <summary> The provisioning state of the private endpoint connection resource. </summary>
-        [WirePath("provisioningState")]
         public ApiManagementPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
 
         /// <summary> The resource identifier of the private endpoint. </summary>
-        [WirePath("privateEndpoint.id")]
-        public string PrivateEndpointId
+        public ResourceIdentifier PrivateEndpointId
         {
             get
             {
-                return PrivateEndpoint.Id;
+                return PrivateEndpoint is null ? default : PrivateEndpoint.Id;
             }
         }
     }

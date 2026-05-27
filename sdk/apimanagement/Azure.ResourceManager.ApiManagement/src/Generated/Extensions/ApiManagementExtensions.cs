@@ -2046,72 +2046,80 @@ namespace Azure.ResourceManager.ApiManagement
         /// List all API Management gateways within a subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementGatewayResourcesAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementGatewayResourcesAsync(int?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="Resources.SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skipToken"> Skip token for retrieving the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ApiManagementGatewayResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ApiManagementGatewayResource> GetApiManagementGatewayResourcesAsync(this Resources.SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ApiManagementGatewayResource> GetApiManagementGatewayResourcesAsync(this Resources.SubscriptionResource subscriptionResource, int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementGatewayResourcesAsync(cancellationToken);
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementGatewayResourcesAsync(top, skipToken, cancellationToken);
         }
 
         /// <summary>
         /// List all API Management gateways within a subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementGatewayResources(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementGatewayResources(int?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="Resources.SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skipToken"> Skip token for retrieving the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ApiManagementGatewayResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ApiManagementGatewayResource> GetApiManagementGatewayResources(this Resources.SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<ApiManagementGatewayResource> GetApiManagementGatewayResources(this Resources.SubscriptionResource subscriptionResource, int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementGatewayResources(cancellationToken);
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementGatewayResources(top, skipToken, cancellationToken);
         }
 
         /// <summary>
         /// Lists all API Management services within an Azure subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementServiceResourcesAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementServiceResourcesAsync(int?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="Resources.SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skipToken"> Skip token for retrieving the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ApiManagementServiceResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ApiManagementServiceResource> GetApiManagementServiceResourcesAsync(this Resources.SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ApiManagementServiceResource> GetApiManagementServiceResourcesAsync(this Resources.SubscriptionResource subscriptionResource, int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementServiceResourcesAsync(cancellationToken);
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementServiceResourcesAsync(top, skipToken, cancellationToken);
         }
 
         /// <summary>
         /// Lists all API Management services within an Azure subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementServiceResources(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementServiceResources(int?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="Resources.SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skipToken"> Skip token for retrieving the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ApiManagementServiceResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ApiManagementServiceResource> GetApiManagementServiceResources(this Resources.SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<ApiManagementServiceResource> GetApiManagementServiceResources(this Resources.SubscriptionResource subscriptionResource, int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementServiceResources(cancellationToken);
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementServiceResources(top, skipToken, cancellationToken);
         }
 
         /// <summary>

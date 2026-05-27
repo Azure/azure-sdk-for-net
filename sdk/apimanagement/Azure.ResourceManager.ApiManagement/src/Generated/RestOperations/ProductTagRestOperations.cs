@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetByProductRequest(string subscriptionId, string resourceGroupName, string serviceName, string productId, string tagId, RequestContext context)
+        internal HttpMessage CreateGetByProductRequest(Guid subscriptionId, string resourceGroupName, string serviceName, string productId, string tagId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.ApiManagement
             return message;
         }
 
-        internal HttpMessage CreateGetEntityStateByProductRequest(string subscriptionId, string resourceGroupName, string serviceName, string productId, string tagId, RequestContext context)
+        internal HttpMessage CreateGetEntityStateByProductRequest(Guid subscriptionId, string resourceGroupName, string serviceName, string productId, string tagId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
@@ -92,12 +92,12 @@ namespace Azure.ResourceManager.ApiManagement
             return message;
         }
 
-        internal HttpMessage CreateAssignToProductRequest(string subscriptionId, string resourceGroupName, string serviceName, string productId, string tagId, RequestContext context)
+        internal HttpMessage CreateAssignToProductRequest(Guid subscriptionId, string resourceGroupName, string serviceName, string productId, string tagId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
@@ -118,12 +118,12 @@ namespace Azure.ResourceManager.ApiManagement
             return message;
         }
 
-        internal HttpMessage CreateDetachFromProductRequest(string subscriptionId, string resourceGroupName, string serviceName, string productId, string tagId, RequestContext context)
+        internal HttpMessage CreateDetachFromProductRequest(Guid subscriptionId, string resourceGroupName, string serviceName, string productId, string tagId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
@@ -143,12 +143,12 @@ namespace Azure.ResourceManager.ApiManagement
             return message;
         }
 
-        internal HttpMessage CreateGetByProductRequest(string subscriptionId, string resourceGroupName, string serviceName, string productId, string filter, int? top, int? skip, RequestContext context)
+        internal HttpMessage CreateGetByProductRequest(Guid subscriptionId, string resourceGroupName, string serviceName, string productId, string filter, int? top, int? skip, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ApiManagement
             return message;
         }
 
-        internal HttpMessage CreateNextGetByProductRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string serviceName, string productId, string filter, int? top, int? skip, RequestContext context)
+        internal HttpMessage CreateNextGetByProductRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string serviceName, string productId, string filter, int? top, int? skip, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

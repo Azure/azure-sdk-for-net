@@ -38,36 +38,41 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Resource properties. </summary>
-        [WirePath("properties")]
         internal PrivateEndpointConnectionProperties Properties { get; }
 
+        /// <summary> The group ids for the private endpoint resource. </summary>
+        public IReadOnlyList<string> GroupIds
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GroupIds;
+            }
+        }
+
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-        [WirePath("properties.privateLinkServiceConnectionState")]
         public ApiManagementPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState
         {
             get
             {
-                return Properties.PrivateLinkServiceConnectionState;
+                return Properties is null ? default : Properties.PrivateLinkServiceConnectionState;
             }
         }
 
         /// <summary> The provisioning state of the private endpoint connection resource. </summary>
-        [WirePath("properties.provisioningState")]
         public ApiManagementPrivateEndpointConnectionProvisioningState? ProvisioningState
         {
             get
             {
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 
         /// <summary> The resource identifier of the private endpoint. </summary>
-        [WirePath("properties.privateEndpoint.id")]
-        public string PrivateEndpointId
+        public ResourceIdentifier PrivateEndpointId
         {
             get
             {
-                return Properties.PrivateEndpointId;
+                return Properties is null ? default : Properties.PrivateEndpointId;
             }
         }
     }

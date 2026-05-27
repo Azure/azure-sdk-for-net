@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -34,11 +33,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Sampling type. </summary>
-        [WirePath("samplingType")]
         public SamplingType? SamplingType { get; set; }
 
         /// <summary> Rate of sampling for fixed-rate sampling. </summary>
-        [WirePath("percentage")]
         public double? Percentage { get; set; }
     }
 }

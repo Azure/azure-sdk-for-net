@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -32,7 +31,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Duration in ISO8601 format after which reconnect will be initiated. Minimum duration of the Reconnect is PT2M. </summary>
-        [WirePath("after")]
         public TimeSpan? After { get; set; }
     }
 }
