@@ -6,15 +6,16 @@
 # the tracking issue and is intended to be removed once upstream lands the fix.
 #
 # Scope: STRICTLY surgical text rewrites of `src\Generated\` content. The script
-#   - is the LAST-RESORT fallback (see mpg-rules.md §11.0 / §11.0.1 / §11.6);
+#   - is the LAST-RESORT fallback used only when neither client.tsp decorators
+#     nor `Custom\` partials can express the fix at the required scope;
 #   - must NEVER be wired into the package's *.csproj (e.g., MSBuild <Exec>);
 #   - must NEVER do public-API edits (no `api\*.cs` rewrites, no ApiCompat
 #     silencing). Those belong in client.tsp decorators or `Custom\` partials.
 #
-# Location: per mpg-rules.md §11.6, package-specific post-gen scripts live
-# under each package's `eng\` folder (sibling of `src\`), so each service owns
-# its own set of bug-workarounds independently. Repo-shared logic is forbidden
-# — copy the blocks you actually need into the per-package script.
+# Location: package-specific post-gen scripts live under each package's `eng\`
+# folder (sibling of `src\`), so each service owns its own set of bug-workarounds
+# independently. Repo-shared logic is forbidden — copy the blocks you actually
+# need into the per-package script.
 #
 # Invocation (typical):
 #   pwsh sdk\datafactory\Azure.ResourceManager.DataFactory\eng\post-gen-fixups.ps1
@@ -317,9 +318,11 @@ Write-Host "[post-gen-fixups] §11.7 (Unknown* rename): rewrote $unknownFixedFil
 #     MPG generator's CodeGenSuppress handling has not been observed to apply
 #     to auto-property emission, so risking the final regen budget on an
 #     unproven pattern was not acceptable.
-#   * The `[WirePath(...)]` suppression mechanism documented in §5.25 of
-#     D:\Documents\mpg-api-diff\SKILL.md likewise has zero precedent in this
-#     codebase (frontdoor-only).
+#   * The `[WirePath(...)]` property-suppression mechanism (declaring a Custom
+#     auto-property with `[WirePath("wireName")]` to make the generator skip
+#     its own emission) likewise has zero precedent anywhere in this codebase
+#     for MPG packages (the only working example we found is in `frontdoor`,
+#     a data-plane-flavored package).
 #   * Adding `set;` to a generated auto-property cannot be done from a partial
 #     class — the auto-property declaration is already in the generated partial
 #     and C# disallows two declarations of the same member across partials.
