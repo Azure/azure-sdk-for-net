@@ -41,5 +41,7 @@ namespace Azure.Storage.Internal.Avro
         public const string Type = "type";
         public const string Symbols = "symbols";
         public const string Values = "values";
+
+        public const int MaxFieldSize = 16 * 1024 * 1024;
     }
 }

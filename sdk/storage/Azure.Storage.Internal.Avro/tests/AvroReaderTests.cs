@@ -92,5 +92,31 @@ namespace Azure.Storage.Internal.Avro.Tests
                 BlockOffset = blockOffset;
             }
         }
+
+        [Test]
+        public void ReadFixedBytesAsync_NegativeLength_ThrowsInvalidDataException()
+        {
+            using MemoryStream stream = new MemoryStream(new byte[10]);
+            Assert.ThrowsAsync<InvalidDataException>(
+                async () => await AvroParser.ReadFixedBytesAsync(stream, -1, async: true, default));
+        }
+
+        [Test]
+        public void ReadFixedBytesAsync_ExceedsMaxFieldSize_ThrowsInvalidDataException()
+        {
+            using MemoryStream stream = new MemoryStream(new byte[10]);
+            int oversized = AvroConstants.MaxFieldSize + 1;
+            Assert.ThrowsAsync<InvalidDataException>(
+                async () => await AvroParser.ReadFixedBytesAsync(stream, oversized, async: true, default));
+        }
+
+        [Test]
+        public async Task ReadFixedBytesAsync_ValidLength_ReturnsBytes()
+        {
+            byte[] expected = new byte[] { 1, 2, 3, 4, 5 };
+            using MemoryStream stream = new MemoryStream(expected);
+            byte[] result = await AvroParser.ReadFixedBytesAsync(stream, 5, async: true, default);
+            Assert.AreEqual(expected, result);
+        }
     }
 }

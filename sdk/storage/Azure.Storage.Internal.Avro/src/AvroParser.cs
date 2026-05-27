@@ -30,6 +30,10 @@ namespace Azure.Storage.Internal.Avro
             bool async,
             CancellationToken cancellationToken)
         {
+            if (length < 0 || length > AvroConstants.MaxFieldSize)
+            {
+                throw Errors.InvalidAvroFieldSize(length, AvroConstants.MaxFieldSize);
+            }
             byte[] data = new byte[length];
             int start = 0;
             while (length > 0)
