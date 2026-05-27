@@ -33,6 +33,7 @@ namespace Azure.AI.Extensions.OpenAI.Tests
         public string PLAYWRIGHT_CONNECTION_NAME => GetRecordedOptionalVariable(nameof(PLAYWRIGHT_CONNECTION_NAME));
         public string SHAREPOINT_CONNECTION_NAME => GetRecordedOptionalVariable(nameof(SHAREPOINT_CONNECTION_NAME));
         public string FABRIC_CONNECTION_NAME => GetRecordedOptionalVariable(nameof(FABRIC_CONNECTION_NAME));
+        public string FABRIC_IQ_PROJECT_CONNECTION_NAME => GetRecordedOptionalVariable(nameof(FABRIC_IQ_PROJECT_CONNECTION_NAME));
         public string A2A_CONNECTION_NAME => GetRecordedOptionalVariable(nameof(A2A_CONNECTION_NAME));
         public string A2A_BASE_URI => GetRecordedOptionalVariable(nameof(A2A_BASE_URI));
         public string PUBLISHED_ENDPOINT => GetRecordedOptionalVariable(nameof(PUBLISHED_ENDPOINT));
@@ -40,6 +41,7 @@ namespace Azure.AI.Extensions.OpenAI.Tests
         public string AGENT_DOCKER_IMAGE => GetRecordedOptionalVariable(nameof(AGENT_DOCKER_IMAGE));
         public string STORAGE_QUEUE_URI => GetRecordedVariable(nameof(STORAGE_QUEUE_URI));
         public string FOUNDRY_AGENT_CONTAINER_IMAGE => GetRecordedVariable(nameof(FOUNDRY_AGENT_CONTAINER_IMAGE));
+        public string WORKIQ_CONNECTION_NAME => GetRecordedVariable(nameof(WORKIQ_CONNECTION_NAME));
         public string WrappedGetRecordedVariable(string key, bool isSecret = true)
         {
             try

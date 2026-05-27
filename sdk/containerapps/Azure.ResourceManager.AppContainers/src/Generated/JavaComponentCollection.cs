@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppContainers
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.AppContainers
     /// </summary>
     public partial class JavaComponentCollection : ArmCollection, IEnumerable<JavaComponentResource>, IAsyncEnumerable<JavaComponentResource>
     {
-        private readonly ClientDiagnostics _javaComponentClientDiagnostics;
-        private readonly JavaComponentsRestOperations _javaComponentRestClient;
+        private readonly ClientDiagnostics _javaComponentsClientDiagnostics;
+        private readonly JavaComponents _javaComponentsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="JavaComponentCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of JavaComponentCollection for mocking. </summary>
         protected JavaComponentCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="JavaComponentCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="JavaComponentCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal JavaComponentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _javaComponentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", JavaComponentResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(JavaComponentResource.ResourceType, out string javaComponentApiVersion);
-            _javaComponentRestClient = new JavaComponentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, javaComponentApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _javaComponentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", JavaComponentResource.ResourceType.Namespace, Diagnostics);
+            _javaComponentsRestClient = new JavaComponents(_javaComponentsClientDiagnostics, Pipeline, Endpoint, javaComponentApiVersion ?? "2025-10-02-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ContainerAppManagedEnvironmentResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ContainerAppManagedEnvironmentResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ContainerAppManagedEnvironmentResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates or updates a Java Component in a Managed Environment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/javaComponents/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/javaComponents/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JavaComponents_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> JavaComponents_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="JavaComponentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="name"> Name of the Java Component. </param>
         /// <param name="data"> Configuration details of the Java Component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<JavaComponentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, JavaComponentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _javaComponentClientDiagnostics.CreateScope("JavaComponentCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _javaComponentsClientDiagnostics.CreateScope("JavaComponentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _javaComponentRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppContainersArmOperation<JavaComponentResource>(new JavaComponentOperationSource(Client), _javaComponentClientDiagnostics, Pipeline, _javaComponentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _javaComponentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, JavaComponentData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                AppContainersArmOperation<JavaComponentResource> operation = new AppContainersArmOperation<JavaComponentResource>(
+                    new JavaComponentOperationSource(Client),
+                    _javaComponentsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.AppContainers
         /// Creates or updates a Java Component in a Managed Environment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/javaComponents/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/javaComponents/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JavaComponents_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> JavaComponents_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="JavaComponentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="name"> Name of the Java Component. </param>
         /// <param name="data"> Configuration details of the Java Component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<JavaComponentResource> CreateOrUpdate(WaitUntil waitUntil, string name, JavaComponentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _javaComponentClientDiagnostics.CreateScope("JavaComponentCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _javaComponentsClientDiagnostics.CreateScope("JavaComponentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _javaComponentRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken);
-                var operation = new AppContainersArmOperation<JavaComponentResource>(new JavaComponentOperationSource(Client), _javaComponentClientDiagnostics, Pipeline, _javaComponentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _javaComponentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, JavaComponentData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                AppContainersArmOperation<JavaComponentResource> operation = new AppContainersArmOperation<JavaComponentResource>(
+                    new JavaComponentOperationSource(Client),
+                    _javaComponentsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.AppContainers
         /// Get a Java Component.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/javaComponents/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/javaComponents/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JavaComponents_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> JavaComponents_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="JavaComponentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Name of the Java Component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<JavaComponentResource>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _javaComponentClientDiagnostics.CreateScope("JavaComponentCollection.Get");
+            using DiagnosticScope scope = _javaComponentsClientDiagnostics.CreateScope("JavaComponentCollection.Get");
             scope.Start();
             try
             {
-                var response = await _javaComponentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _javaComponentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<JavaComponentData> response = Response.FromValue(JavaComponentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new JavaComponentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.AppContainers
         /// Get a Java Component.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/javaComponents/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/javaComponents/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JavaComponents_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> JavaComponents_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="JavaComponentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Name of the Java Component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<JavaComponentResource> Get(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _javaComponentClientDiagnostics.CreateScope("JavaComponentCollection.Get");
+            using DiagnosticScope scope = _javaComponentsClientDiagnostics.CreateScope("JavaComponentCollection.Get");
             scope.Start();
             try
             {
-                var response = _javaComponentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _javaComponentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<JavaComponentData> response = Response.FromValue(JavaComponentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new JavaComponentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,50 +272,50 @@ namespace Azure.ResourceManager.AppContainers
         /// Get the Java Components for a managed environment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/javaComponents</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/javaComponents. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JavaComponents_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> JavaComponents_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="JavaComponentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="JavaComponentResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="JavaComponentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<JavaComponentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _javaComponentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _javaComponentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new JavaComponentResource(Client, JavaComponentData.DeserializeJavaComponentData(e)), _javaComponentClientDiagnostics, Pipeline, "JavaComponentCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<JavaComponentData, JavaComponentResource>(new JavaComponentsGetAllAsyncCollectionResultOfT(
+                _javaComponentsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "JavaComponentCollection.GetAll"), data => new JavaComponentResource(Client, data));
         }
 
         /// <summary>
         /// Get the Java Components for a managed environment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/javaComponents</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/javaComponents. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JavaComponents_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> JavaComponents_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="JavaComponentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,45 +323,67 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="JavaComponentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<JavaComponentResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _javaComponentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _javaComponentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new JavaComponentResource(Client, JavaComponentData.DeserializeJavaComponentData(e)), _javaComponentClientDiagnostics, Pipeline, "JavaComponentCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<JavaComponentData, JavaComponentResource>(new JavaComponentsGetAllCollectionResultOfT(
+                _javaComponentsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "JavaComponentCollection.GetAll"), data => new JavaComponentResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/javaComponents/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/javaComponents/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JavaComponents_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> JavaComponents_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="JavaComponentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Name of the Java Component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _javaComponentClientDiagnostics.CreateScope("JavaComponentCollection.Exists");
+            using DiagnosticScope scope = _javaComponentsClientDiagnostics.CreateScope("JavaComponentCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _javaComponentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _javaComponentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<JavaComponentData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(JavaComponentData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((JavaComponentData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -346,36 +397,50 @@ namespace Azure.ResourceManager.AppContainers
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/javaComponents/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/javaComponents/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JavaComponents_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> JavaComponents_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="JavaComponentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Name of the Java Component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _javaComponentClientDiagnostics.CreateScope("JavaComponentCollection.Exists");
+            using DiagnosticScope scope = _javaComponentsClientDiagnostics.CreateScope("JavaComponentCollection.Exists");
             scope.Start();
             try
             {
-                var response = _javaComponentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _javaComponentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<JavaComponentData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(JavaComponentData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((JavaComponentData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,38 +454,54 @@ namespace Azure.ResourceManager.AppContainers
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/javaComponents/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/javaComponents/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JavaComponents_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> JavaComponents_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="JavaComponentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Name of the Java Component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<JavaComponentResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _javaComponentClientDiagnostics.CreateScope("JavaComponentCollection.GetIfExists");
+            using DiagnosticScope scope = _javaComponentsClientDiagnostics.CreateScope("JavaComponentCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _javaComponentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _javaComponentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<JavaComponentData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(JavaComponentData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((JavaComponentData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<JavaComponentResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new JavaComponentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -434,38 +515,54 @@ namespace Azure.ResourceManager.AppContainers
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/javaComponents/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/javaComponents/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JavaComponents_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> JavaComponents_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="JavaComponentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Name of the Java Component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<JavaComponentResource> GetIfExists(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _javaComponentClientDiagnostics.CreateScope("JavaComponentCollection.GetIfExists");
+            using DiagnosticScope scope = _javaComponentsClientDiagnostics.CreateScope("JavaComponentCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _javaComponentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _javaComponentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<JavaComponentData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(JavaComponentData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((JavaComponentData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<JavaComponentResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new JavaComponentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +582,7 @@ namespace Azure.ResourceManager.AppContainers
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<JavaComponentResource> IAsyncEnumerable<JavaComponentResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

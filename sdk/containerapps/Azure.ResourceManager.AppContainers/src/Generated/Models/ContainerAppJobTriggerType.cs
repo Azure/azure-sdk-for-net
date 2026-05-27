@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.AppContainers.Models
     public readonly partial struct ContainerAppJobTriggerType : IEquatable<ContainerAppJobTriggerType>
     {
         private readonly string _value;
+        /// <summary> Schedule. </summary>
+        private const string ScheduleValue = "Schedule";
+        /// <summary> Event. </summary>
+        private const string EventValue = "Event";
+        /// <summary> Manual. </summary>
+        private const string ManualValue = "Manual";
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppJobTriggerType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerAppJobTriggerType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ScheduleValue = "Schedule";
-        private const string EventValue = "Event";
-        private const string ManualValue = "Manual";
+            _value = value;
+        }
 
         /// <summary> Schedule. </summary>
         public static ContainerAppJobTriggerType Schedule { get; } = new ContainerAppJobTriggerType(ScheduleValue);
+
         /// <summary> Event. </summary>
         public static ContainerAppJobTriggerType Event { get; } = new ContainerAppJobTriggerType(EventValue);
+
         /// <summary> Manual. </summary>
         public static ContainerAppJobTriggerType Manual { get; } = new ContainerAppJobTriggerType(ManualValue);
+
         /// <summary> Determines if two <see cref="ContainerAppJobTriggerType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerAppJobTriggerType left, ContainerAppJobTriggerType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerAppJobTriggerType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerAppJobTriggerType left, ContainerAppJobTriggerType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerAppJobTriggerType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerAppJobTriggerType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerAppJobTriggerType(string value) => new ContainerAppJobTriggerType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContainerAppJobTriggerType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerAppJobTriggerType?(string value) => value == null ? null : new ContainerAppJobTriggerType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerAppJobTriggerType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerAppJobTriggerType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

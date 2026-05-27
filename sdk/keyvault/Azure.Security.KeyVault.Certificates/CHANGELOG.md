@@ -1,14 +1,10 @@
 # Release History
 
-## 4.9.0-beta.2 (Unreleased)
+## 4.9.0 (2026-05-26)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Includes all changes from 4.9.0-beta.1.
 
 ## 4.9.0-beta.1 (2026-04-01)
 

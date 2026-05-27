@@ -51,10 +51,12 @@ public class AgentsTestBase : ProjectsClientTestBase
         A2ASpecialConnection,
         BrowserAutomation,
         MicrosoftFabric,
+        FabricIQ,
         Sharepoint,
         ConnectedAgent,
         DeepResearch,
         AzureFunctionTool,
+        WorkIQTool,
     }
 
     public Dictionary<ToolType, string> ToolPrompts = new()
@@ -86,6 +88,7 @@ public class AgentsTestBase : ProjectsClientTestBase
                 "At the top of the resulting page you will see a default chart of Microsoft stock price.\n" +
                 "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it."},
         {ToolType.MicrosoftFabric, "Tell me about the weather in Texas."},
+        {ToolType.FabricIQ, "Tell me weather history in London, Ohio."},
         {ToolType.Sharepoint, "What is Contoso whistleblower policy?"},
         {ToolType.CodeInterpreter,  "Can you give me the documented codes for 'banana' and 'orange'?"},
         {ToolType.CodeInterpreterGen, "Please create PDF file showing the rendering of Mandelbrot set"},
@@ -95,6 +98,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.A2A, "What can the secondary agent do?"},
         {ToolType.A2ASpecialConnection, "What can the secondary agent do?"},
         {ToolType.AzureFunctionTool, "What is the most prevalent element in the universe? What would foo say?"},
+        {ToolType.WorkIQTool, "What meetings do I have scheduled today?"},
     };
 
     public Dictionary<ToolType, string> ToolInstructions = new()
@@ -120,6 +124,7 @@ public class AgentsTestBase : ProjectsClientTestBase
             "You can answer questions, provide information, and assist with various tasks\n" +
             "related to web browsing using the Browser Automation tool available to you." },
         {ToolType.MicrosoftFabric, "You are helpful agent."},
+        {ToolType.FabricIQ, "Use the available Fabric IQ tools to answer questions and perform tasks."},
         {ToolType.Sharepoint, "You are helpful agent."},
         {ToolType.CodeInterpreter, "You are helpful agent."},
         {ToolType.CodeInterpreterGen, "You are a personal math tutor. When asked a math question, generate the appropriate PDF, save it and return its file ID." },
@@ -128,6 +133,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.MCPToolbox, "You are a helpful assistant." },
         {ToolType.A2A, "You are a helpful assistant."},
         {ToolType.A2ASpecialConnection, "You are a helpful assistant."},
+        {ToolType.WorkIQTool, "You are a helpful assistant that can access Microsoft 365 data through WorkIQ. Use the WorkIQ tool to search and retrieve information from emails, calendar events, Teams messages, and other Microsoft 365 content to assist users with their questions." },
     };
 
     public Dictionary<ToolType, string> ExpectedOutput = new()
@@ -140,7 +146,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.Memory, "plagiarus"},
         {ToolType.AzureAISearch, "60"},
         {ToolType.BingGroundingCustom, "40.+gold.+44 silver.+42.+bronze"},
-        {ToolType.AzureFunction, "Bar"}
+        {ToolType.AzureFunction, "Bar"},
     };
 
     public Dictionary<ToolType, string> ExpectedAnnotationTitle = new()
@@ -193,8 +199,10 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.BrowserAutomation, "browser_automation_preview_call"},
         {ToolType.Sharepoint, "sharepoint_grounding_preview_call"},
         {ToolType.MicrosoftFabric, "fabric_dataagent_preview_call_output"},
+        {ToolType.FabricIQ, "mcp_call"},
         {ToolType.A2A, "a2a_preview_call_output"},
         {ToolType.A2ASpecialConnection, "a2a_preview_call_output"},
+        {ToolType.WorkIQTool, "a2a_preview_call_output"}
     };
     #endregion
 
@@ -384,6 +392,14 @@ public class AgentsTestBase : ProjectsClientTestBase
         return new(fabricToolOption);
     }
 
+    private FabricIQPreviewTool GetFabricIQAgentTool()
+    {
+        FabricIQPreviewTool fabricIQTool = new(projectConnectionId: TestEnvironment.FABRIC_IQ_CONNECTION_ID)
+        {
+            RequireApproval = BinaryData.FromObjectAsJson("never"),
+        };
+        return fabricIQTool;
+    }
     private A2APreviewTool GetA2ATool(bool useRemoteA2AConnection)
     {
         A2APreviewTool a2aTool = new()
@@ -579,10 +595,12 @@ public class AgentsTestBase : ProjectsClientTestBase
                 new BrowserAutomationToolConnectionParameters(TestEnvironment.PLAYWRIGHT_CONNECTION_ID)
             )),
             ToolType.MicrosoftFabric => GetMicrosoftFabricAgentTool(),
+            ToolType.FabricIQ => GetFabricIQAgentTool(),
             ToolType.A2A => GetA2ATool(false),
             ToolType.A2ASpecialConnection => GetA2ATool(true),
             ToolType.AzureFunction => GetFunctionTool(),
             ToolType.MCPToolbox => await GetToolBoxAsync(projectClient),
+            ToolType.WorkIQTool => new WorkIQPreviewTool(TestEnvironment.WORKIQ_CONNECTION_ID),
             _ => throw new InvalidOperationException($"Unknown tool type {toolType}")
         };
         string instructions;
@@ -666,7 +684,11 @@ public class AgentsTestBase : ProjectsClientTestBase
         List<string> hostedAgents = await projectClient.AgentAdministrationClient.GetAgentsAsync().Select((x) => x.Name).Where((x) => x.StartsWith(HOSTED_AGENT)).ToListAsync();
         foreach (string hostedAgent in hostedAgents)
         {
-            projectClient.AgentAdministrationClient.DeleteAgent(hostedAgent);
+            try
+            {
+                projectClient.AgentAdministrationClient.DeleteAgent(hostedAgent);
+            }
+            catch { }
         }
         await RemoveToolBoxMayBe(projectClient);
     }

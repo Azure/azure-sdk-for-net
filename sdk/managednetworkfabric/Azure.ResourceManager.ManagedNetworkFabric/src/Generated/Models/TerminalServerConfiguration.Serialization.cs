@@ -35,30 +35,34 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (options.Format != "W" && Optional.IsDefined(NetworkDeviceId))
-            {
-                writer.WritePropertyName("networkDeviceId"u8);
-                writer.WriteStringValue(NetworkDeviceId);
-            }
-            if (Optional.IsDefined(PrimaryIPv4Prefix))
-            {
-                writer.WritePropertyName("primaryIpv4Prefix"u8);
-                writer.WriteStringValue(PrimaryIPv4Prefix);
-            }
+            writer.WritePropertyName("primaryIpv4Prefix"u8);
+            writer.WriteStringValue(PrimaryIPv4Prefix);
             if (Optional.IsDefined(PrimaryIPv6Prefix))
             {
                 writer.WritePropertyName("primaryIpv6Prefix"u8);
                 writer.WriteStringValue(PrimaryIPv6Prefix);
             }
-            if (Optional.IsDefined(SecondaryIPv4Prefix))
-            {
-                writer.WritePropertyName("secondaryIpv4Prefix"u8);
-                writer.WriteStringValue(SecondaryIPv4Prefix);
-            }
+            writer.WritePropertyName("secondaryIpv4Prefix"u8);
+            writer.WriteStringValue(SecondaryIPv4Prefix);
             if (Optional.IsDefined(SecondaryIPv6Prefix))
             {
                 writer.WritePropertyName("secondaryIpv6Prefix"u8);
                 writer.WriteStringValue(SecondaryIPv6Prefix);
+            }
+            if (options.Format != "W" && Optional.IsDefined(NetworkDeviceId))
+            {
+                writer.WritePropertyName("networkDeviceId"u8);
+                writer.WriteStringValue(NetworkDeviceId);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(SecretRotationStatus))
+            {
+                writer.WritePropertyName("secretRotationStatus"u8);
+                writer.WriteStartArray();
+                foreach (var item in SecretRotationStatus)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
         }
 
@@ -82,11 +86,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            ResourceIdentifier networkDeviceId = default;
             string primaryIPv4Prefix = default;
             string primaryIPv6Prefix = default;
             string secondaryIPv4Prefix = default;
             string secondaryIPv6Prefix = default;
+            ResourceIdentifier networkDeviceId = default;
+            IReadOnlyList<NetworkFabricSecretRotationStatus> secretRotationStatus = default;
             string username = default;
             string password = default;
             string serialNumber = default;
@@ -94,15 +99,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("networkDeviceId"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    networkDeviceId = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("primaryIpv4Prefix"u8))
                 {
                     primaryIPv4Prefix = property.Value.GetString();
@@ -121,6 +117,29 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 if (property.NameEquals("secondaryIpv6Prefix"u8))
                 {
                     secondaryIPv6Prefix = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("networkDeviceId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    networkDeviceId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("secretRotationStatus"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<NetworkFabricSecretRotationStatus> array = new List<NetworkFabricSecretRotationStatus>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(NetworkFabricSecretRotationStatus.DeserializeNetworkFabricSecretRotationStatus(item, options));
+                    }
+                    secretRotationStatus = array;
                     continue;
                 }
                 if (property.NameEquals("username"u8))
@@ -149,11 +168,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 password,
                 serialNumber,
                 serializedAdditionalRawData,
-                networkDeviceId,
                 primaryIPv4Prefix,
                 primaryIPv6Prefix,
                 secondaryIPv4Prefix,
-                secondaryIPv6Prefix);
+                secondaryIPv6Prefix,
+                networkDeviceId,
+                secretRotationStatus ?? new ChangeTrackingList<NetworkFabricSecretRotationStatus>());
         }
 
         BinaryData IPersistableModel<TerminalServerConfiguration>.Write(ModelReaderWriterOptions options)

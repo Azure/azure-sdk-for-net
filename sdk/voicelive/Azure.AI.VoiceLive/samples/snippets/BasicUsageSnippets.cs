@@ -25,7 +25,7 @@ namespace Azure.AI.VoiceLive.Samples.Snippets
             DefaultAzureCredential credential = new DefaultAzureCredential();
             VoiceLiveClient client = new VoiceLiveClient(endpoint, credential);
 
-            var model = "gpt-4o-mini-realtime-preview"; // Specify the model to use
+            var model = "gpt-realtime"; // Specify the model to use
             // Start a new session
             VoiceLiveSession session = await client.StartSessionAsync(model).ConfigureAwait(false);
 
@@ -79,7 +79,7 @@ namespace Azure.AI.VoiceLive.Samples.Snippets
             DefaultAzureCredential credential = new DefaultAzureCredential();
             VoiceLiveClient client = new VoiceLiveClient(endpoint, credential);
 
-            var model = "gpt-4o-realtime-preview"; // Specify the model to use
+            var model = "gpt-realtime"; // Specify the model to use
 
             VoiceLiveSession session = await client.StartSessionAsync(model).ConfigureAwait(false);
 
@@ -115,7 +115,7 @@ namespace Azure.AI.VoiceLive.Samples.Snippets
             DefaultAzureCredential credential = new DefaultAzureCredential();
 
             VoiceLiveClient client = new VoiceLiveClient(endpoint, credential);
-            var model = "gpt-4o-mini-realtime-preview"; // Specify the model to use
+            var model = "gpt-realtime"; // Specify the model to use
 
             VoiceLiveSession session = await client.StartSessionAsync(model).ConfigureAwait(false);
 
@@ -173,7 +173,7 @@ namespace Azure.AI.VoiceLive.Samples.Snippets
                         string location = parameters != null ? parameters["location"] : string.Empty;
 
                         // Call your external weather service here and get the result
-                        string weatherInfo = $"The current weather in {location} is sunny with a temperature of 75°F.";
+                        string weatherInfo = $"The current weather in {location} is sunny with a temperature of 75ï¿½F.";
 
                         // Send the function response back to the session
                         await session.AddItemAsync(new FunctionCallOutputItem(functionCall.CallId, weatherInfo)).ConfigureAwait(false);
@@ -191,7 +191,7 @@ namespace Azure.AI.VoiceLive.Samples.Snippets
             Uri endpoint = new Uri("https://your-resource.cognitiveservices.azure.com");
             DefaultAzureCredential credential = new DefaultAzureCredential();
             VoiceLiveClient client = new VoiceLiveClient(endpoint, credential);
-            var model = "gpt-4o-mini-realtime-preview"; // Specify the model to use
+            var model = "gpt-realtime"; // Specify the model to use
             VoiceLiveSession session = await client.StartSessionAsync(model).ConfigureAwait(false);
 
             VoiceLiveSessionOptions sessionOptions = new()
