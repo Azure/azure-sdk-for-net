@@ -618,25 +618,25 @@ public class AgentsTests : AgentsTestBase
                 definition: new MemoryStoreDefaultDefinition(TestEnvironment.MEMORY_STORE_CHAT_MODEL_DEPLOYMENT_NAME, TestEnvironment.MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME)
             );
         }
-        List<MemoryStore> records = await projectClient.MemoryStores.GetMemoryStoresAsync(limit: PAGE_SIZE, order: "asc").ToListAsync();
+        List<MemoryStore> records = await projectClient.MemoryStores.GetMemoryStoresAsync(limit: PAGE_SIZE, order: "asc").Where(x=>x.Name.StartsWith(MEMORY_STORE_NAME)).ToListAsync();
         Assert.That(records.Count, Is.EqualTo(PAGE_SIZE + 1));
         // Go forward.
-        List<MemoryStore> forward = await projectClient.MemoryStores.GetMemoryStoresAsync(order: "asc", after: records[0].Id, limit: PAGE_SIZE).ToListAsync();
+        List<MemoryStore> forward = await projectClient.MemoryStores.GetMemoryStoresAsync(order: "asc", after: records[0].Id, limit: PAGE_SIZE).Where(x => x.Name.StartsWith(MEMORY_STORE_NAME)).ToListAsync();
         Assert.That(forward.Count, Is.EqualTo(records.Count - 1));
         Assert.That(forward[0].Id, Is.EqualTo(records[1].Id));
         Assert.That(forward[forward.Count - 1].Id, Is.EqualTo(records[records.Count - 1].Id));
         //// Two limits:
-        forward = await projectClient.MemoryStores.GetMemoryStoresAsync(order: "asc", after: records[0].Id, before: records[3].Id, limit: PAGE_SIZE).ToListAsync();
+        forward = await projectClient.MemoryStores.GetMemoryStoresAsync(order: "asc", after: records[0].Id, before: records[3].Id, limit: PAGE_SIZE).Where(x => x.Name.StartsWith(MEMORY_STORE_NAME)).ToListAsync();
         Assert.That(forward.Count, Is.EqualTo(2));
         Assert.That(forward[0].Id, Is.EqualTo(records[1].Id));
         Assert.That(forward[1].Id, Is.EqualTo(records[2].Id));
         // Go backwards.
-        List<MemoryStore> backwards = await projectClient.MemoryStores.GetMemoryStoresAsync(order: "desc", before: records[0].Id, limit: PAGE_SIZE).ToListAsync();
+        List<MemoryStore> backwards = await projectClient.MemoryStores.GetMemoryStoresAsync(order: "desc", before: records[0].Id, limit: PAGE_SIZE).Where(x => x.Name.StartsWith(MEMORY_STORE_NAME)).ToListAsync();
         Assert.That(backwards.Count, Is.EqualTo(records.Count - 1));
         Assert.That(backwards[0].Id, Is.EqualTo(records[records.Count - 1].Id));
         Assert.That(backwards[backwards.Count - 1].Id, Is.EqualTo(records[1].Id));
         // Two limits.
-        backwards = await projectClient.MemoryStores.GetMemoryStoresAsync(order: "desc", after: records[records.Count - 1].Id, before: records[records.Count - 4].Id, limit: PAGE_SIZE).ToListAsync();
+        backwards = await projectClient.MemoryStores.GetMemoryStoresAsync(order: "desc", after: records[records.Count - 1].Id, before: records[records.Count - 4].Id, limit: PAGE_SIZE).Where(x => x.Name.StartsWith(MEMORY_STORE_NAME)).ToListAsync();
         Assert.That(backwards.Count, Is.EqualTo(2));
         Assert.That(backwards[0].Id, Is.EqualTo(records[records.Count - 2].Id));
         Assert.That(backwards[1].Id, Is.EqualTo(records[records.Count - 3].Id));
@@ -672,8 +672,8 @@ public class AgentsTests : AgentsTestBase
         Assert.That(item.Content, Is.EqualTo(newContent));
         Assert.That(item.Scope, Is.EqualTo(MEMORY_STORE_SCOPE));
         // Delete
-        DeleteMemoryStoreResponse delResult = await projectClient.MemoryStores.DeleteMemoryStoreAsync(name: store.Name);
-        Assert.That(delResult.IsDeleted, Is.True);
+        DeleteMemoryResponse delResult = await projectClient.MemoryStores.DeleteMemoryAsync(name: store.Name, memoryId: customerData.MemoryId);
+        Assert.That(delResult.Deleted, Is.True);
         Assert.That(
             (await projectClient.MemoryStores.GetMemoriesAsync(name: store.Name, scope: MEMORY_STORE_SCOPE).ToEnumerableAsync())
                 .Select(x => x.MemoryId)

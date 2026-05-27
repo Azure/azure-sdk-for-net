@@ -83,7 +83,7 @@ public class Sample_MemoryStoreItems : SamplesBase
         Console.WriteLine($"Memory Item with ID {response.MemoryId} was{(response.Deleted ? " " : " not ")}removed.");
         #endregion
         #region Snippet:Sample_DeleteMemoryStore_UpdateStoreItems_Async
-        await projectClient.MemoryStores.DeleteMemoryStoreAsync(memoryStore.Id);
+        await projectClient.MemoryStores.DeleteMemoryStoreAsync(memoryStore.Name);
         #endregion
     }
 
@@ -153,7 +153,7 @@ public class Sample_MemoryStoreItems : SamplesBase
         Console.WriteLine($"Memory Item with ID {response.MemoryId} was{(response.Deleted ? " " : " not ")}removed.");
         #endregion
         #region Snippet:Sample_DeleteMemoryStore_UpdateStoreItems_Sync
-        projectClient.MemoryStores.DeleteMemoryStore(memoryStore.Id);
+        projectClient.MemoryStores.DeleteMemoryStore(memoryStore.Name);
         #endregion
     }
 
