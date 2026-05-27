@@ -8,53 +8,21 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.AI.Language.Conversations;
 
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Multiple multi-turn conversations analyzed. </summary>
     public partial class ConversationalAIAnalysis
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConversationalAIAnalysis"/>. </summary>
         /// <param name="id"> The ID of the conversation. </param>
         /// <param name="intents"> The intent classification results for this conversation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="intents"/> is null. </exception>
         internal ConversationalAIAnalysis(string id, IEnumerable<ConversationalAIIntent> intents)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(intents, nameof(intents));
-
             Id = id;
             Intents = intents.ToList();
             Entities = new ChangeTrackingList<ConversationalAIEntity>();
@@ -64,25 +32,22 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="id"> The ID of the conversation. </param>
         /// <param name="intents"> The intent classification results for this conversation. </param>
         /// <param name="entities"> Global entities that are matched but not associated with any specific intent. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationalAIAnalysis(string id, IReadOnlyList<ConversationalAIIntent> intents, IReadOnlyList<ConversationalAIEntity> entities, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ConversationalAIAnalysis(string id, IList<ConversationalAIIntent> intents, IList<ConversationalAIEntity> entities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Intents = intents;
             Entities = entities;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ConversationalAIAnalysis"/> for deserialization. </summary>
-        internal ConversationalAIAnalysis()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The ID of the conversation. </summary>
         public string Id { get; }
+
         /// <summary> The intent classification results for this conversation. </summary>
-        public IReadOnlyList<ConversationalAIIntent> Intents { get; }
+        public IList<ConversationalAIIntent> Intents { get; }
+
         /// <summary> Global entities that are matched but not associated with any specific intent. </summary>
-        public IReadOnlyList<ConversationalAIEntity> Entities { get; }
+        public IList<ConversationalAIEntity> Entities { get; }
     }
 }

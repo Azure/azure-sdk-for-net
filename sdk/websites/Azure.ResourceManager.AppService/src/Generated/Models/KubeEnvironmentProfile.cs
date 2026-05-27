@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Specification for a Kubernetes Environment to use for this resource. </summary>
+    /// <summary>
+    /// Specification for a Kubernetes Environment to use for this resource.
+    /// Serialized Name: KubeEnvironmentProfile
+    /// </summary>
     public partial class KubeEnvironmentProfile
     {
         /// <summary>
@@ -52,9 +55,18 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="KubeEnvironmentProfile"/>. </summary>
-        /// <param name="id"> Resource ID of the Kubernetes Environment. </param>
-        /// <param name="name"> Name of the Kubernetes Environment. </param>
-        /// <param name="resourceType"> Resource type of the Kubernetes Environment. </param>
+        /// <param name="id">
+        /// Resource ID of the Kubernetes Environment.
+        /// Serialized Name: KubeEnvironmentProfile.id
+        /// </param>
+        /// <param name="name">
+        /// Name of the Kubernetes Environment.
+        /// Serialized Name: KubeEnvironmentProfile.name
+        /// </param>
+        /// <param name="resourceType">
+        /// Resource type of the Kubernetes Environment.
+        /// Serialized Name: KubeEnvironmentProfile.type
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal KubeEnvironmentProfile(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -64,13 +76,22 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resource ID of the Kubernetes Environment. </summary>
+        /// <summary>
+        /// Resource ID of the Kubernetes Environment.
+        /// Serialized Name: KubeEnvironmentProfile.id
+        /// </summary>
         [WirePath("id")]
         public ResourceIdentifier Id { get; set; }
-        /// <summary> Name of the Kubernetes Environment. </summary>
+        /// <summary>
+        /// Name of the Kubernetes Environment.
+        /// Serialized Name: KubeEnvironmentProfile.name
+        /// </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary> Resource type of the Kubernetes Environment. </summary>
+        /// <summary>
+        /// Resource type of the Kubernetes Environment.
+        /// Serialized Name: KubeEnvironmentProfile.type
+        /// </summary>
         [WirePath("type")]
         public ResourceType? ResourceType { get; }
     }

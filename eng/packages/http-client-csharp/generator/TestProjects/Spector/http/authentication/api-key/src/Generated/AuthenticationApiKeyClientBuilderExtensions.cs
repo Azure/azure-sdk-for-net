@@ -15,6 +15,9 @@ namespace Microsoft.Extensions.Azure
 {
     public static partial class AuthenticationApiKeyClientBuilderExtensions
     {
+        public static IAzureClientBuilder<ApiKeyClient, ApiKeyClientOptions> AddApiKeyClient<TBuilder>(this TBuilder builder, AzureKeyCredential credential)
+            where TBuilder : IAzureClientFactoryBuilder => throw null;
+
         public static IAzureClientBuilder<ApiKeyClient, ApiKeyClientOptions> AddApiKeyClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 

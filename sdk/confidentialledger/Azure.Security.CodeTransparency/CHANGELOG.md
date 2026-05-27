@@ -1,5 +1,34 @@
 # Release History
 
+## 1.0.0-beta.9 (Unreleased)
+
+### Features Added
+
+- Added `CodeTransparencyClientSettings` to support creating a `CodeTransparencyClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
+
+### Bugs Fixed
+
+- Improved redirect performance for write operations by caching the latest primary node URL from redirect responses and reusing it for subsequent non-GET requests. The cache is lazily populated and refreshed whenever the service redirects to a different primary node.
+
+## 1.0.0-beta.8 (2026-03-02)
+
+### Bugs Fixed
+
+- Fixes thread unsafe code in `VerifyTransparentStatement`. The code reused sha256 instances across multiple threads, which caused exceptions to be thrown when multiple threads were verifying statements at the same time. The fix was to create new sha256 instances for each verification operation instead of reusing them.
+
+## 1.0.0-beta.7 (2026-02-17)
+
+### Features Added
+
+- Added `CodeTransparencyRedirectPolicy` to automatically follow HTTP 307/308 redirects while preserving the Authorization header. Previously, redirects between Confidential Ledger nodes could return HTTP 307/308 responses that were not automatically followed by the default pipeline, causing these requests to fail unless clients implemented redirect handling themselves.
+
+## 1.0.0-beta.6 (2025-12-17)
+
+### Features Added
+
+- A new option to pass transparent statement verification key sets mapped to domain names for offline verification using `CodeTransparencyVerificationOptions.OfflineKeys`
+- A new option to restrict the use of a network resolution of the ledger keys when using `OfflineKeys` with `CodeTransparencyVerificationOptions.OfflineKeysBehavior`
+
 ## 1.0.0-beta.5 (2025-10-20)
 
 ### Features Added

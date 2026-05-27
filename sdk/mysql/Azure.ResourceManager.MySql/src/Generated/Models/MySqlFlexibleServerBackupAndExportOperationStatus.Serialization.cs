@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     internal static partial class MySqlFlexibleServerBackupAndExportOperationStatusExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this MySqlFlexibleServerBackupAndExportOperationStatus value) => value switch
         {
             MySqlFlexibleServerBackupAndExportOperationStatus.Pending => "Pending",
@@ -22,14 +23,33 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MySqlFlexibleServerBackupAndExportOperationStatus value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static MySqlFlexibleServerBackupAndExportOperationStatus ToMySqlFlexibleServerBackupAndExportOperationStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Pending")) return MySqlFlexibleServerBackupAndExportOperationStatus.Pending;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "InProgress")) return MySqlFlexibleServerBackupAndExportOperationStatus.InProgress;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Succeeded")) return MySqlFlexibleServerBackupAndExportOperationStatus.Succeeded;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed")) return MySqlFlexibleServerBackupAndExportOperationStatus.Failed;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CancelInProgress")) return MySqlFlexibleServerBackupAndExportOperationStatus.CancelInProgress;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Canceled")) return MySqlFlexibleServerBackupAndExportOperationStatus.Canceled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Pending"))
+            {
+                return MySqlFlexibleServerBackupAndExportOperationStatus.Pending;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "InProgress"))
+            {
+                return MySqlFlexibleServerBackupAndExportOperationStatus.InProgress;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Succeeded"))
+            {
+                return MySqlFlexibleServerBackupAndExportOperationStatus.Succeeded;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed"))
+            {
+                return MySqlFlexibleServerBackupAndExportOperationStatus.Failed;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CancelInProgress"))
+            {
+                return MySqlFlexibleServerBackupAndExportOperationStatus.CancelInProgress;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Canceled"))
+            {
+                return MySqlFlexibleServerBackupAndExportOperationStatus.Canceled;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MySqlFlexibleServerBackupAndExportOperationStatus value.");
         }
     }

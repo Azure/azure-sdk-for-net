@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.PrivateDns
             TryGetApiVersion(ResourceType, out string aaaaRecordInfoRecordSetsApiVersion);
             _aaaaRecordInfoRecordSetsRestClient = new PrivateDnsAaaaRecordRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, aaaaRecordInfoRecordSetsApiVersion);
 #if DEBUG
-			ValidateResourceId(Id);
+            ValidateResourceId(Id);
 #endif
         }
 

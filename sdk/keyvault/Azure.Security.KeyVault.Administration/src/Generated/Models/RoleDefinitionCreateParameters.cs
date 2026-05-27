@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Security.KeyVault.Administration;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
@@ -18,11 +17,8 @@ namespace Azure.Security.KeyVault.Administration.Models
 
         /// <summary> Initializes a new instance of <see cref="RoleDefinitionCreateParameters"/>. </summary>
         /// <param name="properties"> Role definition properties. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public RoleDefinitionCreateParameters(RoleDefinitionProperties properties)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
-
             Properties = properties;
         }
 

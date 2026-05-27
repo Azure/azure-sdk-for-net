@@ -30,9 +30,12 @@ public static partial class AzureFileExtensions
     [Experimental("AOAI001")]
     public static AzureOpenAIFileStatus ToAzureOpenAIFileStatus(this FileStatus fileStatus)
     {
-        if (fileStatus == FileStatus.Uploaded) return AzureOpenAIFileStatus.Uploaded;
-        if (fileStatus == FileStatus.Processed) return AzureOpenAIFileStatus.Processed;
-        if (fileStatus == FileStatus.Error) return AzureOpenAIFileStatus.Error;
+        if (fileStatus == FileStatus.Uploaded)
+            return AzureOpenAIFileStatus.Uploaded;
+        if (fileStatus == FileStatus.Processed)
+            return AzureOpenAIFileStatus.Processed;
+        if (fileStatus == FileStatus.Error)
+            return AzureOpenAIFileStatus.Error;
 
         List<AzureOpenAIFileStatus> otherEncodedStatuses =
             [

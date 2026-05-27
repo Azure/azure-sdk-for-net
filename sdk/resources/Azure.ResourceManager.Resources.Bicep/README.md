@@ -1,6 +1,8 @@
 # Microsoft Azure Bicep management client library for .NET
 
-**[Describe the service briefly first.]**
+Microsoft Azure Resource Manager is the deployment and management service for Azure. It provides a management layer that enables you to create, update, and delete resources in your Azure account.
+
+This library provides Bicep deployment capabilities for Microsoft Azure.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 

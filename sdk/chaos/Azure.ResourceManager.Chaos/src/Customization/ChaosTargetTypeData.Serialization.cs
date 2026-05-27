@@ -4,8 +4,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using Azure.Core;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Chaos

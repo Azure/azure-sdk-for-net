@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ConfidentialLedger;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
     /// <summary> Additional Confidential Ledger properties. </summary>
     public partial class ConfidentialLedgerProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConfidentialLedgerProperties"/>. </summary>
         public ConfidentialLedgerProperties()
@@ -71,8 +43,9 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <param name="workerThreads"> Number of additional threads processing incoming client requests in the enclave (modify with care!). </param>
         /// <param name="enclavePlatform"> Enclave platform of the Confidential Ledger. </param>
         /// <param name="applicationType"> Application type of the Confidential Ledger. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConfidentialLedgerProperties(string ledgerName, Uri ledgerUri, Uri identityServiceUri, string ledgerInternalNamespace, ConfidentialLedgerRunningState? runningState, ConfidentialLedgerType? ledgerType, ConfidentialLedgerProvisioningState? provisioningState, ConfidentialLedgerSku? ledgerSku, IList<AadBasedSecurityPrincipal> aadBasedSecurityPrincipals, IList<CertBasedSecurityPrincipal> certBasedSecurityPrincipals, string hostLevel, int? maxBodySizeInMb, string subjectName, int? nodeCount, string writeLBAddressPrefix, int? workerThreads, ConfidentialLedgerEnclavePlatform? enclavePlatform, ConfidentialLedgerApplicationType? applicationType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="scittConfiguration"> The SCITT Configuration that needs to be set for the Confidential Ledger. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ConfidentialLedgerProperties(string ledgerName, Uri ledgerUri, Uri identityServiceUri, string ledgerInternalNamespace, ConfidentialLedgerRunningState? runningState, ConfidentialLedgerType? ledgerType, ConfidentialLedgerProvisioningState? provisioningState, ConfidentialLedgerSku? ledgerSku, IList<AadBasedSecurityPrincipal> aadBasedSecurityPrincipals, IList<CertBasedSecurityPrincipal> certBasedSecurityPrincipals, string hostLevel, int? maxBodySizeInMb, string subjectName, int? nodeCount, string writeLBAddressPrefix, int? workerThreads, ConfidentialLedgerEnclavePlatform? enclavePlatform, ConfidentialLedgerApplicationType? applicationType, string scittConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LedgerName = ledgerName;
             LedgerUri = ledgerUri;
@@ -92,44 +65,65 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             WorkerThreads = workerThreads;
             EnclavePlatform = enclavePlatform;
             ApplicationType = applicationType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            ScittConfiguration = scittConfiguration;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Unique name for the Confidential Ledger. </summary>
         public string LedgerName { get; }
+
         /// <summary> Endpoint for calling Ledger Service. </summary>
         public Uri LedgerUri { get; }
+
         /// <summary> Endpoint for accessing network identity. </summary>
         public Uri IdentityServiceUri { get; }
+
         /// <summary> Internal namespace for the Ledger. </summary>
         public string LedgerInternalNamespace { get; }
+
         /// <summary> Object representing RunningState for Ledger. </summary>
         public ConfidentialLedgerRunningState? RunningState { get; set; }
+
         /// <summary> Type of Confidential Ledger. </summary>
         public ConfidentialLedgerType? LedgerType { get; set; }
+
         /// <summary> Provisioning state of Ledger Resource. </summary>
         public ConfidentialLedgerProvisioningState? ProvisioningState { get; }
+
         /// <summary> SKU associated with the ledger. </summary>
         public ConfidentialLedgerSku? LedgerSku { get; set; }
+
         /// <summary> Array of all AAD based Security Principals. </summary>
         public IList<AadBasedSecurityPrincipal> AadBasedSecurityPrincipals { get; }
+
         /// <summary> Array of all cert based Security Principals. </summary>
         public IList<CertBasedSecurityPrincipal> CertBasedSecurityPrincipals { get; }
+
         /// <summary> CCF Property for the logging level for the untrusted host: Trace, Debug, Info, Fail, Fatal. </summary>
         public string HostLevel { get; set; }
+
         /// <summary> CCF Property for the maximum size of the http request body: 1MB, 5MB, 10MB. </summary>
         public int? MaxBodySizeInMb { get; set; }
+
         /// <summary> CCF Property for the subject name to include in the node certificate. Default: CN=CCF Node. </summary>
         public string SubjectName { get; set; }
+
         /// <summary> Number of CCF nodes in the ACC Ledger. </summary>
         public int? NodeCount { get; set; }
+
         /// <summary> Prefix for the write load balancer. Example: write. </summary>
         public string WriteLBAddressPrefix { get; set; }
+
         /// <summary> Number of additional threads processing incoming client requests in the enclave (modify with care!). </summary>
         public int? WorkerThreads { get; set; }
+
         /// <summary> Enclave platform of the Confidential Ledger. </summary>
-        public ConfidentialLedgerEnclavePlatform? EnclavePlatform { get; set; }
+        public ConfidentialLedgerEnclavePlatform? EnclavePlatform { get; }
+
         /// <summary> Application type of the Confidential Ledger. </summary>
         public ConfidentialLedgerApplicationType? ApplicationType { get; set; }
+
+        /// <summary> The SCITT Configuration that needs to be set for the Confidential Ledger. </summary>
+        public string ScittConfiguration { get; set; }
     }
 }

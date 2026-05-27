@@ -223,7 +223,6 @@ namespace Azure.ResourceManager.PolicyInsights
         public Azure.ResourceManager.PolicyInsights.Models.RemediationDeploymentSummary DeploymentStatus { get { throw null; } }
         public float? FailureThresholdPercentage { get { throw null; } set { } }
         public Azure.ResourceManager.PolicyInsights.Models.RemediationFilters Filter { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Collections.Generic.IList<Azure.Core.AzureLocation> FilterLocations { get { throw null; } }
         public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
         public int? ParallelDeployments { get { throw null; } set { } }
@@ -419,7 +418,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 {
     public static partial class ArmPolicyInsightsModelFactory
     {
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.PolicyInsights.Models.CheckPolicyRestrictionsContent CheckPolicyRestrictionsContent(Azure.ResourceManager.PolicyInsights.Models.CheckRestrictionsResourceDetails resourceDetails, System.Collections.Generic.IEnumerable<Azure.ResourceManager.PolicyInsights.Models.PendingField> pendingFields) { throw null; }
         public static Azure.ResourceManager.PolicyInsights.Models.CheckPolicyRestrictionsContent CheckPolicyRestrictionsContent(Azure.ResourceManager.PolicyInsights.Models.CheckRestrictionsResourceDetails resourceDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.PolicyInsights.Models.PendingField> pendingFields = null, bool? includeAuditEffect = default(bool?)) { throw null; }
         public static Azure.ResourceManager.PolicyInsights.Models.CheckPolicyRestrictionsResult CheckPolicyRestrictionsResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.PolicyInsights.Models.FieldRestrictions> fieldRestrictions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.PolicyInsights.Models.PolicyEvaluationResult> policyEvaluations = null) { throw null; }
@@ -432,7 +430,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public static Azure.ResourceManager.PolicyInsights.Models.ComponentPolicyState ComponentPolicyState(string odataId = null, string odataContext = null, System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), string componentId = null, string componentType = null, string componentName = null, string resourceId = null, string policyAssignmentId = null, string policyDefinitionId = null, string subscriptionId = null, string resourceType = null, string resourceLocation = null, string resourceGroup = null, string policyAssignmentName = null, string policyAssignmentOwner = null, string policyAssignmentParameters = null, string policyAssignmentScope = null, string policyDefinitionName = null, string policyDefinitionAction = null, string policyDefinitionCategory = null, string policySetDefinitionId = null, string policySetDefinitionName = null, string policySetDefinitionOwner = null, string policySetDefinitionCategory = null, string policySetDefinitionParameters = null, string policyDefinitionReferenceId = null, string complianceState = null, Azure.ResourceManager.PolicyInsights.Models.ComponentPolicyEvaluationDetails policyEvaluationDetails = null, System.Collections.Generic.IEnumerable<string> policyDefinitionGroupNames = null, string policyDefinitionVersion = null, string policySetDefinitionVersion = null, string policyAssignmentVersion = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> additionalProperties = null) { throw null; }
         public static Azure.ResourceManager.PolicyInsights.Models.ComponentStateDetails ComponentStateDetails(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), string complianceState = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> additionalProperties = null) { throw null; }
         public static Azure.ResourceManager.PolicyInsights.Models.ExpressionEvaluationDetails ExpressionEvaluationDetails(string result = null, string expression = null, string expressionKind = null, string path = null, System.BinaryData expressionValue = null, System.BinaryData targetValue = null, string @operator = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.PolicyInsights.Models.FieldRestriction FieldRestriction(Azure.ResourceManager.PolicyInsights.Models.FieldRestrictionResult? result, string defaultValue, System.Collections.Generic.IEnumerable<string> values, Azure.ResourceManager.PolicyInsights.Models.PolicyReference policy) { throw null; }
         public static Azure.ResourceManager.PolicyInsights.Models.FieldRestriction FieldRestriction(Azure.ResourceManager.PolicyInsights.Models.FieldRestrictionResult? result = default(Azure.ResourceManager.PolicyInsights.Models.FieldRestrictionResult?), string defaultValue = null, System.Collections.Generic.IEnumerable<string> values = null, Azure.ResourceManager.PolicyInsights.Models.PolicyReference policy = null, string policyEffect = null, string reason = null) { throw null; }
         public static Azure.ResourceManager.PolicyInsights.Models.FieldRestrictions FieldRestrictions(string field = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.PolicyInsights.Models.FieldRestriction> restrictions = null) { throw null; }
@@ -444,14 +441,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public static Azure.ResourceManager.PolicyInsights.Models.PolicyDetails PolicyDetails(Azure.Core.ResourceIdentifier policyDefinitionId = null, Azure.Core.ResourceIdentifier policyAssignmentId = null, string policyAssignmentDisplayName = null, string policyAssignmentScope = null, Azure.Core.ResourceIdentifier policySetDefinitionId = null, string policyDefinitionReferenceId = null) { throw null; }
         public static Azure.ResourceManager.PolicyInsights.Models.PolicyEvaluationDetails PolicyEvaluationDetails(System.Collections.Generic.IEnumerable<Azure.ResourceManager.PolicyInsights.Models.ExpressionEvaluationDetails> evaluatedExpressions = null, Azure.ResourceManager.PolicyInsights.Models.IfNotExistsEvaluationDetails ifNotExistsDetails = null) { throw null; }
         public static Azure.ResourceManager.PolicyInsights.Models.PolicyEvaluationResult PolicyEvaluationResult(Azure.ResourceManager.PolicyInsights.Models.PolicyReference policyInfo = null, string evaluationResult = null, Azure.ResourceManager.PolicyInsights.Models.CheckRestrictionEvaluationDetails checkRestrictionEvaluationDetails = null, string policyEffect = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.PolicyInsights.Models.PolicyEvaluationResult PolicyEvaluationResult(Azure.ResourceManager.PolicyInsights.Models.PolicyReference policyInfo = null, string evaluationResult = null, Azure.ResourceManager.PolicyInsights.Models.PolicyEvaluationDetails evaluationDetails = null) { throw null; }
         public static Azure.ResourceManager.PolicyInsights.Models.PolicyEvent PolicyEvent(string odataId = null, string odataContext = null, System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), Azure.Core.ResourceIdentifier resourceId = null, Azure.Core.ResourceIdentifier policyAssignmentId = null, Azure.Core.ResourceIdentifier policyDefinitionId = null, string effectiveParameters = null, bool? isCompliant = default(bool?), string subscriptionId = null, string resourceTypeString = null, Azure.Core.AzureLocation? resourceLocation = default(Azure.Core.AzureLocation?), string resourceGroup = null, string resourceTags = null, string policyAssignmentName = null, string policyAssignmentOwner = null, string policyAssignmentParameters = null, string policyAssignmentScope = null, string policyDefinitionName = null, string policyDefinitionAction = null, string policyDefinitionCategory = null, Azure.Core.ResourceIdentifier policySetDefinitionId = null, string policySetDefinitionName = null, string policySetDefinitionOwner = null, string policySetDefinitionCategory = null, string policySetDefinitionParameters = null, string managementGroupIds = null, string policyDefinitionReferenceId = null, string complianceState = null, System.Guid? tenantId = default(System.Guid?), string principalOid = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.PolicyInsights.Models.ComponentEventDetails> components = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> additionalProperties = null) { throw null; }
         public static Azure.ResourceManager.PolicyInsights.Models.PolicyGroupSummary PolicyGroupSummary(string policyGroupName = null, Azure.ResourceManager.PolicyInsights.Models.PolicySummaryResults results = null) { throw null; }
         public static Azure.ResourceManager.PolicyInsights.PolicyMetadataData PolicyMetadataData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string metadataId = null, string category = null, string title = null, string owner = null, System.Uri additionalContentUri = null, System.BinaryData metadata = null, string description = null, string requirements = null) { throw null; }
         public static Azure.ResourceManager.PolicyInsights.Models.PolicyReference PolicyReference(Azure.Core.ResourceIdentifier policyDefinitionId = null, Azure.Core.ResourceIdentifier policySetDefinitionId = null, string policyDefinitionReferenceId = null, Azure.Core.ResourceIdentifier policyAssignmentId = null) { throw null; }
         public static Azure.ResourceManager.PolicyInsights.PolicyRemediationData PolicyRemediationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier policyAssignmentId = null, string policyDefinitionReferenceId = null, Azure.ResourceManager.PolicyInsights.Models.ResourceDiscoveryMode? resourceDiscoveryMode = default(Azure.ResourceManager.PolicyInsights.Models.ResourceDiscoveryMode?), string provisioningState = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?), Azure.ResourceManager.PolicyInsights.Models.RemediationFilters filter = null, Azure.ResourceManager.PolicyInsights.Models.RemediationDeploymentSummary deploymentStatus = null, string statusMessage = null, string correlationId = null, int? resourceCount = default(int?), int? parallelDeployments = default(int?), float? failureThresholdPercentage = default(float?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.PolicyInsights.PolicyRemediationData PolicyRemediationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier policyAssignmentId = null, string policyDefinitionReferenceId = null, Azure.ResourceManager.PolicyInsights.Models.ResourceDiscoveryMode? resourceDiscoveryMode = default(Azure.ResourceManager.PolicyInsights.Models.ResourceDiscoveryMode?), string provisioningState = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> filterLocations = null, Azure.ResourceManager.PolicyInsights.Models.RemediationDeploymentSummary deploymentStatus = null, string statusMessage = null, string correlationId = null, int? resourceCount = default(int?), int? parallelDeployments = default(int?), float? failureThresholdPercentage = default(float?)) { throw null; }
         public static Azure.ResourceManager.PolicyInsights.Models.PolicyState PolicyState(string odataId = null, string odataContext = null, System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), Azure.Core.ResourceIdentifier resourceId = null, Azure.Core.ResourceIdentifier policyAssignmentId = null, Azure.Core.ResourceIdentifier policyDefinitionId = null, string effectiveParameters = null, bool? isCompliant = default(bool?), string subscriptionId = null, string resourceTypeString = null, Azure.Core.AzureLocation? resourceLocation = default(Azure.Core.AzureLocation?), string resourceGroup = null, string resourceTags = null, string policyAssignmentName = null, string policyAssignmentOwner = null, string policyAssignmentParameters = null, string policyAssignmentScope = null, string policyDefinitionName = null, string policyDefinitionAction = null, string policyDefinitionCategory = null, Azure.Core.ResourceIdentifier policySetDefinitionId = null, string policySetDefinitionName = null, string policySetDefinitionOwner = null, string policySetDefinitionCategory = null, string policySetDefinitionParameters = null, string managementGroupIds = null, string policyDefinitionReferenceId = null, string complianceState = null, Azure.ResourceManager.PolicyInsights.Models.PolicyEvaluationDetails policyEvaluationDetails = null, System.Collections.Generic.IEnumerable<string> policyDefinitionGroupNames = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.PolicyInsights.Models.ComponentStateDetails> components = null, string policyDefinitionVersion = null, string policySetDefinitionVersion = null, string policyAssignmentVersion = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> additionalProperties = null) { throw null; }
         public static Azure.ResourceManager.PolicyInsights.Models.PolicySummary PolicySummary(string odataId = null, string odataContext = null, Azure.ResourceManager.PolicyInsights.Models.PolicySummaryResults results = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.PolicyInsights.Models.PolicyAssignmentSummary> policyAssignments = null) { throw null; }
@@ -657,9 +652,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public ComponentPolicyStatesResource(string value) { throw null; }
         public static Azure.ResourceManager.PolicyInsights.Models.ComponentPolicyStatesResource Latest { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PolicyInsights.Models.ComponentPolicyStatesResource other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PolicyInsights.Models.ComponentPolicyStatesResource left, Azure.ResourceManager.PolicyInsights.Models.ComponentPolicyStatesResource right) { throw null; }
         public static implicit operator Azure.ResourceManager.PolicyInsights.Models.ComponentPolicyStatesResource (string value) { throw null; }
@@ -723,9 +716,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public static Azure.ResourceManager.PolicyInsights.Models.FieldRestrictionResult Removed { get { throw null; } }
         public static Azure.ResourceManager.PolicyInsights.Models.FieldRestrictionResult Required { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PolicyInsights.Models.FieldRestrictionResult other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PolicyInsights.Models.FieldRestrictionResult left, Azure.ResourceManager.PolicyInsights.Models.FieldRestrictionResult right) { throw null; }
         public static implicit operator Azure.ResourceManager.PolicyInsights.Models.FieldRestrictionResult (string value) { throw null; }
@@ -793,9 +784,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public static Azure.ResourceManager.PolicyInsights.Models.PolicyComplianceState NonCompliant { get { throw null; } }
         public static Azure.ResourceManager.PolicyInsights.Models.PolicyComplianceState Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PolicyInsights.Models.PolicyComplianceState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PolicyInsights.Models.PolicyComplianceState left, Azure.ResourceManager.PolicyInsights.Models.PolicyComplianceState right) { throw null; }
         public static implicit operator Azure.ResourceManager.PolicyInsights.Models.PolicyComplianceState (string value) { throw null; }
@@ -849,7 +838,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     {
         internal PolicyEvaluationResult() { }
         public Azure.ResourceManager.PolicyInsights.Models.CheckRestrictionEvaluationDetails CheckRestrictionEvaluationDetails { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.PolicyInsights.Models.PolicyEvaluationDetails EvaluationDetails { get { throw null; } }
         public string EvaluationResult { get { throw null; } }
         public string PolicyEffect { get { throw null; } }
@@ -911,9 +899,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public PolicyEventType(string value) { throw null; }
         public static Azure.ResourceManager.PolicyInsights.Models.PolicyEventType Default { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PolicyInsights.Models.PolicyEventType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PolicyInsights.Models.PolicyEventType left, Azure.ResourceManager.PolicyInsights.Models.PolicyEventType right) { throw null; }
         public static implicit operator Azure.ResourceManager.PolicyInsights.Models.PolicyEventType (string value) { throw null; }
@@ -1012,9 +998,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public PolicyStateSummaryType(string value) { throw null; }
         public static Azure.ResourceManager.PolicyInsights.Models.PolicyStateSummaryType Latest { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PolicyInsights.Models.PolicyStateSummaryType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PolicyInsights.Models.PolicyStateSummaryType left, Azure.ResourceManager.PolicyInsights.Models.PolicyStateSummaryType right) { throw null; }
         public static implicit operator Azure.ResourceManager.PolicyInsights.Models.PolicyStateSummaryType (string value) { throw null; }
@@ -1030,9 +1014,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public static Azure.ResourceManager.PolicyInsights.Models.PolicyStateType Default { get { throw null; } }
         public static Azure.ResourceManager.PolicyInsights.Models.PolicyStateType Latest { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PolicyInsights.Models.PolicyStateType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PolicyInsights.Models.PolicyStateType left, Azure.ResourceManager.PolicyInsights.Models.PolicyStateType right) { throw null; }
         public static implicit operator Azure.ResourceManager.PolicyInsights.Models.PolicyStateType (string value) { throw null; }
@@ -1092,9 +1074,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public PolicyTrackedResourceType(string value) { throw null; }
         public static Azure.ResourceManager.PolicyInsights.Models.PolicyTrackedResourceType Default { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PolicyInsights.Models.PolicyTrackedResourceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PolicyInsights.Models.PolicyTrackedResourceType left, Azure.ResourceManager.PolicyInsights.Models.PolicyTrackedResourceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.PolicyInsights.Models.PolicyTrackedResourceType (string value) { throw null; }
@@ -1152,9 +1132,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public static Azure.ResourceManager.PolicyInsights.Models.ResourceDiscoveryMode ExistingNonCompliant { get { throw null; } }
         public static Azure.ResourceManager.PolicyInsights.Models.ResourceDiscoveryMode ReEvaluateCompliance { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PolicyInsights.Models.ResourceDiscoveryMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PolicyInsights.Models.ResourceDiscoveryMode left, Azure.ResourceManager.PolicyInsights.Models.ResourceDiscoveryMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.PolicyInsights.Models.ResourceDiscoveryMode (string value) { throw null; }

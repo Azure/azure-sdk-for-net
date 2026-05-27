@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RecoveryServices
 {
-    internal class RecoveryServicesVaultOperationSource : IOperationSource<RecoveryServicesVaultResource>
+    /// <summary></summary>
+    internal partial class RecoveryServicesVaultOperationSource : IOperationSource<RecoveryServicesVaultResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal RecoveryServicesVaultOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         RecoveryServicesVaultResource IOperationSource<RecoveryServicesVaultResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<RecoveryServicesVaultData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRecoveryServicesContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            RecoveryServicesVaultData data = RecoveryServicesVaultData.DeserializeRecoveryServicesVaultData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new RecoveryServicesVaultResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<RecoveryServicesVaultResource> IOperationSource<RecoveryServicesVaultResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<RecoveryServicesVaultData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRecoveryServicesContext.Default);
-            return await Task.FromResult(new RecoveryServicesVaultResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            RecoveryServicesVaultData data = RecoveryServicesVaultData.DeserializeRecoveryServicesVaultData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new RecoveryServicesVaultResource(_client, data);
         }
     }
 }

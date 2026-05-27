@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 {
     internal static partial class DevCenterSkuTierExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this DevCenterSkuTier value) => value switch
         {
             DevCenterSkuTier.Free => "Free",
@@ -20,12 +21,25 @@ namespace Azure.ResourceManager.DevCenter.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DevCenterSkuTier value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static DevCenterSkuTier ToDevCenterSkuTier(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Free")) return DevCenterSkuTier.Free;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Basic")) return DevCenterSkuTier.Basic;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard")) return DevCenterSkuTier.Standard;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Premium")) return DevCenterSkuTier.Premium;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Free"))
+            {
+                return DevCenterSkuTier.Free;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Basic"))
+            {
+                return DevCenterSkuTier.Basic;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard"))
+            {
+                return DevCenterSkuTier.Standard;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Premium"))
+            {
+                return DevCenterSkuTier.Premium;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DevCenterSkuTier value.");
         }
     }

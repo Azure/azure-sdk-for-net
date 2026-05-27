@@ -24,6 +24,7 @@
     <Compile Include="$(AzureCoreSharedSources)Base64Url.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)LightweightPkcs8Decoder.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)PemReader.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)UnsupportedOSPlatformAttribute.cs" LinkBase="Shared" />
   </ItemGroup>
 
 </Project>

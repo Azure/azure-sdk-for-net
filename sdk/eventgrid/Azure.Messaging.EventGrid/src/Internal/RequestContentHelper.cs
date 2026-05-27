@@ -37,7 +37,7 @@ namespace Azure.Messaging.EventGrid
                 else
                 {
 #if NET6_0_OR_GREATER
-				content.JsonWriter.WriteRawValue(item);
+                    content.JsonWriter.WriteRawValue(item);
 #else
                     using (JsonDocument document = JsonDocument.Parse(item, ModelSerializationExtensions.JsonDocumentOptions))
                     {
@@ -94,7 +94,7 @@ namespace Azure.Messaging.EventGrid
                 else
                 {
 #if NET6_0_OR_GREATER
-				content.JsonWriter.WriteRawValue(item.Value);
+                    content.JsonWriter.WriteRawValue(item.Value);
 #else
                     using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
@@ -119,7 +119,7 @@ namespace Azure.Messaging.EventGrid
         {
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
 #if NET6_0_OR_GREATER
-				content.JsonWriter.WriteRawValue(value);
+            content.JsonWriter.WriteRawValue(value);
 #else
             using (JsonDocument document = JsonDocument.Parse(value, ModelSerializationExtensions.JsonDocumentOptions))
             {

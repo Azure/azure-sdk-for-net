@@ -1,0 +1,351 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable disable
+
+using System;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Identity;
+using Azure.ResourceManager.DevTestLabs.Models;
+using Azure.ResourceManager.Resources.Models;
+using NUnit.Framework;
+
+namespace Azure.ResourceManager.DevTestLabs.Samples
+{
+    public partial class Sample_DevTestLabResource
+    {
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_LabsGet()
+        {
+            // Generated from example definition: 2018-09-15/Labs_Get.json
+            // this example is just showing the usage of "Labs_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this DevTestLabResource created on azure
+            // for more information of creating DevTestLabResource, please refer to the document of DevTestLabResource
+            string subscriptionId = "{subscriptionId}";
+            string resourceGroupName = "resourceGroupName";
+            string name = "{labName}";
+            ResourceIdentifier devTestLabResourceId = DevTestLabResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
+            DevTestLabResource devTestLab = client.GetDevTestLabResource(devTestLabResourceId);
+
+            // invoke the operation
+            DevTestLabResource result = await devTestLab.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            DevTestLabData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_LabsDelete()
+        {
+            // Generated from example definition: 2018-09-15/Labs_Delete.json
+            // this example is just showing the usage of "Labs_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this DevTestLabResource created on azure
+            // for more information of creating DevTestLabResource, please refer to the document of DevTestLabResource
+            string subscriptionId = "{subscriptionId}";
+            string resourceGroupName = "resourceGroupName";
+            string name = "{labName}";
+            ResourceIdentifier devTestLabResourceId = DevTestLabResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
+            DevTestLabResource devTestLab = client.GetDevTestLabResource(devTestLabResourceId);
+
+            // invoke the operation
+            await devTestLab.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_LabsUpdate()
+        {
+            // Generated from example definition: 2018-09-15/Labs_Update.json
+            // this example is just showing the usage of "Labs_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this DevTestLabResource created on azure
+            // for more information of creating DevTestLabResource, please refer to the document of DevTestLabResource
+            string subscriptionId = "{subscriptionId}";
+            string resourceGroupName = "resourceGroupName";
+            string name = "{labName}";
+            ResourceIdentifier devTestLabResourceId = DevTestLabResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
+            DevTestLabResource devTestLab = client.GetDevTestLabResource(devTestLabResourceId);
+
+            // invoke the operation
+            DevTestLabPatch patch = new DevTestLabPatch();
+            DevTestLabResource result = await devTestLab.UpdateAsync(patch);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            DevTestLabData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task ClaimAnyVm_LabsClaimAnyVm()
+        {
+            // Generated from example definition: 2018-09-15/Labs_ClaimAnyVm.json
+            // this example is just showing the usage of "Labs_ClaimAnyVm" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this DevTestLabResource created on azure
+            // for more information of creating DevTestLabResource, please refer to the document of DevTestLabResource
+            string subscriptionId = "{subscriptionId}";
+            string resourceGroupName = "resourceGroupName";
+            string name = "{labName}";
+            ResourceIdentifier devTestLabResourceId = DevTestLabResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
+            DevTestLabResource devTestLab = client.GetDevTestLabResource(devTestLabResourceId);
+
+            // invoke the operation
+            await devTestLab.ClaimAnyVmAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateEnvironment_LabsCreateEnvironment()
+        {
+            // Generated from example definition: 2018-09-15/Labs_CreateEnvironment.json
+            // this example is just showing the usage of "Labs_CreateEnvironment" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this DevTestLabResource created on azure
+            // for more information of creating DevTestLabResource, please refer to the document of DevTestLabResource
+            string subscriptionId = "{subscriptionId}";
+            string resourceGroupName = "resourceGroupName";
+            string name = "{labName}";
+            ResourceIdentifier devTestLabResourceId = DevTestLabResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
+            DevTestLabResource devTestLab = client.GetDevTestLabResource(devTestLabResourceId);
+
+            // invoke the operation
+            DevTestLabVmCreationContent content = new DevTestLabVmCreationContent
+            {
+                Name = "{vmName}",
+                Location = "{location}",
+                Tags =
+{
+["tagName1"] = "tagValue1"
+},
+            };
+            await devTestLab.CreateEnvironmentAsync(WaitUntil.Completed, content);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task ExportResourceUsage_LabsExportResourceUsage()
+        {
+            // Generated from example definition: 2018-09-15/Labs_ExportResourceUsage.json
+            // this example is just showing the usage of "Labs_ExportResourceUsage" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this DevTestLabResource created on azure
+            // for more information of creating DevTestLabResource, please refer to the document of DevTestLabResource
+            string subscriptionId = "{subscriptionId}";
+            string resourceGroupName = "resourceGroupName";
+            string name = "{labName}";
+            ResourceIdentifier devTestLabResourceId = DevTestLabResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
+            DevTestLabResource devTestLab = client.GetDevTestLabResource(devTestLabResourceId);
+
+            // invoke the operation
+            DevTestLabExportResourceUsageContent content = new DevTestLabExportResourceUsageContent
+            {
+                BlobStorageAbsoluteSasUri = new Uri("https://invalid.blob.core.windows.net/export.blob?sv=2015-07-08&sig={sas}&sp=rcw"),
+                UsageStartOn = DateTimeOffset.Parse("2020-12-01T00:00:00Z"),
+            };
+            await devTestLab.ExportResourceUsageAsync(WaitUntil.Completed, content);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GenerateUploadUri_LabsGenerateUploadUri()
+        {
+            // Generated from example definition: 2018-09-15/Labs_GenerateUploadUri.json
+            // this example is just showing the usage of "Labs_GenerateUploadUri" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this DevTestLabResource created on azure
+            // for more information of creating DevTestLabResource, please refer to the document of DevTestLabResource
+            string subscriptionId = "{subscriptionId}";
+            string resourceGroupName = "resourceGroupName";
+            string name = "{labName}";
+            ResourceIdentifier devTestLabResourceId = DevTestLabResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
+            DevTestLabResource devTestLab = client.GetDevTestLabResource(devTestLabResourceId);
+
+            // invoke the operation
+            DevTestLabGenerateUploadUriContent content = new DevTestLabGenerateUploadUriContent
+            {
+                BlobName = "{blob-name}",
+            };
+            DevTestLabGenerateUploadUriResult result = await devTestLab.GenerateUploadUriAsync(content);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task ImportVm_LabsImportVirtualMachine()
+        {
+            // Generated from example definition: 2018-09-15/Labs_ImportVirtualMachine.json
+            // this example is just showing the usage of "Labs_ImportVm" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this DevTestLabResource created on azure
+            // for more information of creating DevTestLabResource, please refer to the document of DevTestLabResource
+            string subscriptionId = "{subscriptionId}";
+            string resourceGroupName = "resourceGroupName";
+            string name = "{labName}";
+            ResourceIdentifier devTestLabResourceId = DevTestLabResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
+            DevTestLabResource devTestLab = client.GetDevTestLabResource(devTestLabResourceId);
+
+            // invoke the operation
+            DevTestLabImportVmContent content = new DevTestLabImportVmContent
+            {
+                SourceVmResourceId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{otherResourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}"),
+                DestinationVmName = "{vmName}",
+            };
+            await devTestLab.ImportVmAsync(WaitUntil.Completed, content);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetVhds_LabsListVhds()
+        {
+            // Generated from example definition: 2018-09-15/Labs_ListVhds.json
+            // this example is just showing the usage of "Labs_ListVhds" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this DevTestLabResource created on azure
+            // for more information of creating DevTestLabResource, please refer to the document of DevTestLabResource
+            string subscriptionId = "{subscriptionId}";
+            string resourceGroupName = "resourceGroupName";
+            string name = "{labName}";
+            ResourceIdentifier devTestLabResourceId = DevTestLabResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
+            DevTestLabResource devTestLab = client.GetDevTestLabResource(devTestLabResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (DevTestLabVhd item in devTestLab.GetDevTestLabVhdsAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetGalleryImages_GalleryImagesList()
+        {
+            // Generated from example definition: 2018-09-15/GalleryImages_List.json
+            // this example is just showing the usage of "GalleryImage_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this DevTestLabResource created on azure
+            // for more information of creating DevTestLabResource, please refer to the document of DevTestLabResource
+            string subscriptionId = "{subscriptionId}";
+            string resourceGroupName = "resourceGroupName";
+            string labName = "{labName}";
+            ResourceIdentifier devTestLabResourceId = DevTestLabResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labName);
+            DevTestLabResource devTestLab = client.GetDevTestLabResource(devTestLabResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (DevTestLabGalleryImage item in devTestLab.GetGalleryImagesAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task EvaluatePolicies_PolicySetsEvaluatePolicies()
+        {
+            // Generated from example definition: 2018-09-15/PolicySets_EvaluatePolicies.json
+            // this example is just showing the usage of "PolicySets_EvaluatePolicies" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this DevTestLabResource created on azure
+            // for more information of creating DevTestLabResource, please refer to the document of DevTestLabResource
+            string subscriptionId = "{subscriptionId}";
+            string resourceGroupName = "resourceGroupName";
+            string labName = "{labName}";
+            ResourceIdentifier devTestLabResourceId = DevTestLabResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labName);
+            DevTestLabResource devTestLab = client.GetDevTestLabResource(devTestLabResourceId);
+
+            // invoke the operation
+            string name = "{policySetName}";
+            DevTestLabEvaluatePoliciesContent content = new DevTestLabEvaluatePoliciesContent
+            {
+                Policies = {new DevTestLabEvaluatePolicy
+{
+FactName = "LabVmCount",
+ValueOffset = "1",
+}},
+            };
+            DevTestLabEvaluatePoliciesResult result = await devTestLab.EvaluatePoliciesAsync(name, content);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+    }
+}

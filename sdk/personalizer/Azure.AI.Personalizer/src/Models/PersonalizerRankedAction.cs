@@ -7,5 +7,5 @@ namespace Azure.AI.Personalizer
 {
     /// <summary> A ranked action with its resulting probability. </summary>
     [CodeGenModel("RankedAction")]
-    public partial class PersonalizerRankedAction {}
+    public partial class PersonalizerRankedAction { }
 }

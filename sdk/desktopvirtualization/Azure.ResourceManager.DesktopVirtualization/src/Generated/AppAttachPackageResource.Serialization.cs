@@ -8,22 +8,33 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    public partial class AppAttachPackageResource : IJsonModel<AppAttachPackageData>
+    /// <summary></summary>
+    public partial class AppAttachPackageResource : ArmResource, IJsonModel<AppAttachPackageData>
     {
-        private static AppAttachPackageData s_dataDeserializationInstance;
-        private static AppAttachPackageData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<AppAttachPackageData> s_dataDeserializationInstance;
 
+        private static IJsonModel<AppAttachPackageData> DataDeserializationInstance => s_dataDeserializationInstance ??= new AppAttachPackageData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AppAttachPackageData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AppAttachPackageData>)Data).Write(writer, options);
 
-        AppAttachPackageData IJsonModel<AppAttachPackageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppAttachPackageData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AppAttachPackageData IJsonModel<AppAttachPackageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AppAttachPackageData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AppAttachPackageData>(Data, options, AzureResourceManagerDesktopVirtualizationContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         AppAttachPackageData IPersistableModel<AppAttachPackageData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppAttachPackageData>(data, options, AzureResourceManagerDesktopVirtualizationContext.Default);
 
-        string IPersistableModel<AppAttachPackageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppAttachPackageData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AppAttachPackageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Security.KeyVault.Administration;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
@@ -19,12 +18,8 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <summary> Initializes a new instance of <see cref="SelectiveKeyRestoreOperationParameters"/>. </summary>
         /// <param name="sasTokenParameters"> A user-provided SAS token to an Azure blob storage container. </param>
         /// <param name="folder"> The Folder name of the blob where the previous successful full backup was stored. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sasTokenParameters"/> or <paramref name="folder"/> is null. </exception>
         public SelectiveKeyRestoreOperationParameters(SASTokenParameter sasTokenParameters, string folder)
         {
-            Argument.AssertNotNull(sasTokenParameters, nameof(sasTokenParameters));
-            Argument.AssertNotNull(folder, nameof(folder));
-
             SasTokenParameters = sasTokenParameters;
             Folder = folder;
         }

@@ -12,6 +12,11 @@
       "crossLanguageDefinitionId": "Authentication.OAuth2.InvalidAuth",
       "usage": "Json,Exception",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "InvalidAuth"
+        }
+      },
       "properties": [
         {
           "$id": "2",
@@ -69,7 +74,8 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false
+                "isErrorResponse": false,
+                "serializationOptions": {}
               }
             ],
             "httpMethod": "GET",
@@ -79,7 +85,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Authentication.OAuth2.valid",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Authentication.OAuth2"
           },
           "parameters": [],
           "response": {},
@@ -108,7 +115,8 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false
+                "isErrorResponse": false,
+                "serializationOptions": {}
               }
             ],
             "httpMethod": "GET",
@@ -118,7 +126,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Authentication.OAuth2.invalid",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Authentication.OAuth2"
           },
           "parameters": [],
           "response": {},
@@ -160,9 +169,11 @@
           "crossLanguageDefinitionId": "Authentication.OAuth2.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Authentication.OAuth2",
-      "apiVersions": []
+      "apiVersions": [],
+      "isMultiServiceClient": false
     }
   ],
   "auth": {

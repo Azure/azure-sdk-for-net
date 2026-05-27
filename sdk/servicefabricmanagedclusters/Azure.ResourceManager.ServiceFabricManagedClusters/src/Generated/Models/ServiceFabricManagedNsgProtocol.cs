@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     public readonly partial struct ServiceFabricManagedNsgProtocol : IEquatable<ServiceFabricManagedNsgProtocol>
     {
         private readonly string _value;
+        /// <summary> Protocol applies to HTTP. </summary>
+        private const string HttpValue = "http";
+        /// <summary> Protocol applies to HTTPS. </summary>
+        private const string HttpsValue = "https";
+        /// <summary> Protocol applies to TCP. </summary>
+        private const string TcpValue = "tcp";
+        /// <summary> Protocol applies to UDP. </summary>
+        private const string UdpValue = "udp";
+        /// <summary> Protocol applies to ICMP. </summary>
+        private const string IcmpValue = "icmp";
+        /// <summary> Protocol applies to AH. </summary>
+        private const string AHValue = "ah";
+        /// <summary> Protocol applies to ESP. </summary>
+        private const string EspValue = "esp";
 
         /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedNsgProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ServiceFabricManagedNsgProtocol(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string HttpValue = "http";
-        private const string HttpsValue = "https";
-        private const string TcpValue = "tcp";
-        private const string UdpValue = "udp";
-        private const string IcmpValue = "icmp";
-        private const string AHValue = "ah";
-        private const string EspValue = "esp";
+            _value = value;
+        }
 
         /// <summary> Protocol applies to HTTP. </summary>
         public static ServiceFabricManagedNsgProtocol Http { get; } = new ServiceFabricManagedNsgProtocol(HttpValue);
+
         /// <summary> Protocol applies to HTTPS. </summary>
         public static ServiceFabricManagedNsgProtocol Https { get; } = new ServiceFabricManagedNsgProtocol(HttpsValue);
+
         /// <summary> Protocol applies to TCP. </summary>
         public static ServiceFabricManagedNsgProtocol Tcp { get; } = new ServiceFabricManagedNsgProtocol(TcpValue);
+
         /// <summary> Protocol applies to UDP. </summary>
         public static ServiceFabricManagedNsgProtocol Udp { get; } = new ServiceFabricManagedNsgProtocol(UdpValue);
+
         /// <summary> Protocol applies to ICMP. </summary>
         public static ServiceFabricManagedNsgProtocol Icmp { get; } = new ServiceFabricManagedNsgProtocol(IcmpValue);
+
         /// <summary> Protocol applies to AH. </summary>
         public static ServiceFabricManagedNsgProtocol AH { get; } = new ServiceFabricManagedNsgProtocol(AHValue);
+
         /// <summary> Protocol applies to ESP. </summary>
         public static ServiceFabricManagedNsgProtocol Esp { get; } = new ServiceFabricManagedNsgProtocol(EspValue);
+
         /// <summary> Determines if two <see cref="ServiceFabricManagedNsgProtocol"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServiceFabricManagedNsgProtocol left, ServiceFabricManagedNsgProtocol right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ServiceFabricManagedNsgProtocol"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServiceFabricManagedNsgProtocol left, ServiceFabricManagedNsgProtocol right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceFabricManagedNsgProtocol"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ServiceFabricManagedNsgProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ServiceFabricManagedNsgProtocol(string value) => new ServiceFabricManagedNsgProtocol(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ServiceFabricManagedNsgProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ServiceFabricManagedNsgProtocol?(string value) => value == null ? null : new ServiceFabricManagedNsgProtocol(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServiceFabricManagedNsgProtocol other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ServiceFabricManagedNsgProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -9,7 +9,7 @@ namespace Azure.AI.Personalizer.Tests
 {
     public class ConfigurationsTests : PersonalizerTestBase
     {
-        public ConfigurationsTests(bool isAsync): base(isAsync)
+        public ConfigurationsTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -69,7 +69,7 @@ namespace Azure.AI.Personalizer.Tests
             await Delay(30000);
             PersonalizerPolicy policy = await client.GetPersonalizerPolicyAsync();
             // Only checking the first 190 chars because the epsilon has a float rounding addition when applied
-            Assert.AreEqual(newPolicy.Arguments, policy.Arguments.Substring(0,190));
+            Assert.AreEqual(newPolicy.Arguments, policy.Arguments.Substring(0, 190));
         }
 
         private async Task ResetPolicy(PersonalizerAdministrationClient client)

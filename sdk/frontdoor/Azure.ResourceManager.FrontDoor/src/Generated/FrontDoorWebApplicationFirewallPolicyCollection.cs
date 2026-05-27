@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.FrontDoor
@@ -25,51 +26,49 @@ namespace Azure.ResourceManager.FrontDoor
     /// </summary>
     public partial class FrontDoorWebApplicationFirewallPolicyCollection : ArmCollection, IEnumerable<FrontDoorWebApplicationFirewallPolicyResource>, IAsyncEnumerable<FrontDoorWebApplicationFirewallPolicyResource>
     {
-        private readonly ClientDiagnostics _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics;
-        private readonly PoliciesRestOperations _frontDoorWebApplicationFirewallPolicyPoliciesRestClient;
+        private readonly ClientDiagnostics _policiesClientDiagnostics;
+        private readonly Policies _policiesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="FrontDoorWebApplicationFirewallPolicyCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of FrontDoorWebApplicationFirewallPolicyCollection for mocking. </summary>
         protected FrontDoorWebApplicationFirewallPolicyCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="FrontDoorWebApplicationFirewallPolicyCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorWebApplicationFirewallPolicyCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal FrontDoorWebApplicationFirewallPolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.FrontDoor", FrontDoorWebApplicationFirewallPolicyResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(FrontDoorWebApplicationFirewallPolicyResource.ResourceType, out string frontDoorWebApplicationFirewallPolicyPoliciesApiVersion);
-            _frontDoorWebApplicationFirewallPolicyPoliciesRestClient = new PoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorWebApplicationFirewallPolicyPoliciesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(FrontDoorWebApplicationFirewallPolicyResource.ResourceType, out string frontDoorWebApplicationFirewallPolicyApiVersion);
+            _policiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.FrontDoor", FrontDoorWebApplicationFirewallPolicyResource.ResourceType.Namespace, Diagnostics);
+            _policiesRestClient = new Policies(_policiesClientDiagnostics, Pipeline, Endpoint, frontDoorWebApplicationFirewallPolicyApiVersion ?? "2025-11-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Create or update policy with specified rule set name within a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies/{policyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies/{policyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Policies_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> WebApplicationFirewallPolicies_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FrontDoorWebApplicationFirewallPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,34 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="policyName"> The name of the Web Application Firewall Policy. </param>
         /// <param name="data"> Policy to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<FrontDoorWebApplicationFirewallPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string policyName, FrontDoorWebApplicationFirewallPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("FrontDoorWebApplicationFirewallPolicyCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _policiesClientDiagnostics.CreateScope("FrontDoorWebApplicationFirewallPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, policyName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new FrontDoorArmOperation<FrontDoorWebApplicationFirewallPolicyResource>(new FrontDoorWebApplicationFirewallPolicyOperationSource(Client), _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics, Pipeline, _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, policyName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _policiesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, policyName, FrontDoorWebApplicationFirewallPolicyData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                FrontDoorArmOperation<FrontDoorWebApplicationFirewallPolicyResource> operation = new FrontDoorArmOperation<FrontDoorWebApplicationFirewallPolicyResource>(
+                    new FrontDoorWebApplicationFirewallPolicyOperationSource(Client),
+                    _policiesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +117,16 @@ namespace Azure.ResourceManager.FrontDoor
         /// Create or update policy with specified rule set name within a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies/{policyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies/{policyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Policies_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> WebApplicationFirewallPolicies_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FrontDoorWebApplicationFirewallPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +134,34 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="policyName"> The name of the Web Application Firewall Policy. </param>
         /// <param name="data"> Policy to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<FrontDoorWebApplicationFirewallPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string policyName, FrontDoorWebApplicationFirewallPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("FrontDoorWebApplicationFirewallPolicyCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _policiesClientDiagnostics.CreateScope("FrontDoorWebApplicationFirewallPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, policyName, data, cancellationToken);
-                var operation = new FrontDoorArmOperation<FrontDoorWebApplicationFirewallPolicyResource>(new FrontDoorWebApplicationFirewallPolicyOperationSource(Client), _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics, Pipeline, _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, policyName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _policiesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, policyName, FrontDoorWebApplicationFirewallPolicyData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                FrontDoorArmOperation<FrontDoorWebApplicationFirewallPolicyResource> operation = new FrontDoorArmOperation<FrontDoorWebApplicationFirewallPolicyResource>(
+                    new FrontDoorWebApplicationFirewallPolicyOperationSource(Client),
+                    _policiesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +175,42 @@ namespace Azure.ResourceManager.FrontDoor
         /// Retrieve protection policy with specified name within a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies/{policyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies/{policyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Policies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WebApplicationFirewallPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FrontDoorWebApplicationFirewallPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyName"> The name of the Web Application Firewall Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<FrontDoorWebApplicationFirewallPolicyResource>> GetAsync(string policyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
 
-            using var scope = _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("FrontDoorWebApplicationFirewallPolicyCollection.Get");
+            using DiagnosticScope scope = _policiesClientDiagnostics.CreateScope("FrontDoorWebApplicationFirewallPolicyCollection.Get");
             scope.Start();
             try
             {
-                var response = await _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, policyName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _policiesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, policyName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<FrontDoorWebApplicationFirewallPolicyData> response = Response.FromValue(FrontDoorWebApplicationFirewallPolicyData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new FrontDoorWebApplicationFirewallPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +224,42 @@ namespace Azure.ResourceManager.FrontDoor
         /// Retrieve protection policy with specified name within a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies/{policyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies/{policyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Policies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WebApplicationFirewallPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FrontDoorWebApplicationFirewallPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyName"> The name of the Web Application Firewall Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<FrontDoorWebApplicationFirewallPolicyResource> Get(string policyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
 
-            using var scope = _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("FrontDoorWebApplicationFirewallPolicyCollection.Get");
+            using DiagnosticScope scope = _policiesClientDiagnostics.CreateScope("FrontDoorWebApplicationFirewallPolicyCollection.Get");
             scope.Start();
             try
             {
-                var response = _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, policyName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _policiesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, policyName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<FrontDoorWebApplicationFirewallPolicyData> response = Response.FromValue(FrontDoorWebApplicationFirewallPolicyData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new FrontDoorWebApplicationFirewallPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,50 +273,44 @@ namespace Azure.ResourceManager.FrontDoor
         /// Lists all of the protection policies within a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoorWebApplicationFirewallPolicies</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Policies_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> WebApplicationFirewallPolicies_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FrontDoorWebApplicationFirewallPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FrontDoorWebApplicationFirewallPolicyResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="FrontDoorWebApplicationFirewallPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FrontDoorWebApplicationFirewallPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorWebApplicationFirewallPolicyResource(Client, FrontDoorWebApplicationFirewallPolicyData.DeserializeFrontDoorWebApplicationFirewallPolicyData(e)), _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics, Pipeline, "FrontDoorWebApplicationFirewallPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<FrontDoorWebApplicationFirewallPolicyData, FrontDoorWebApplicationFirewallPolicyResource>(new PoliciesGetAllAsyncCollectionResultOfT(_policiesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "FrontDoorWebApplicationFirewallPolicyCollection.GetAll"), data => new FrontDoorWebApplicationFirewallPolicyResource(Client, data));
         }
 
         /// <summary>
         /// Lists all of the protection policies within a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoorWebApplicationFirewallPolicies</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Policies_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> WebApplicationFirewallPolicies_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FrontDoorWebApplicationFirewallPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,45 +318,61 @@ namespace Azure.ResourceManager.FrontDoor
         /// <returns> A collection of <see cref="FrontDoorWebApplicationFirewallPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FrontDoorWebApplicationFirewallPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorWebApplicationFirewallPolicyResource(Client, FrontDoorWebApplicationFirewallPolicyData.DeserializeFrontDoorWebApplicationFirewallPolicyData(e)), _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics, Pipeline, "FrontDoorWebApplicationFirewallPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<FrontDoorWebApplicationFirewallPolicyData, FrontDoorWebApplicationFirewallPolicyResource>(new PoliciesGetAllCollectionResultOfT(_policiesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "FrontDoorWebApplicationFirewallPolicyCollection.GetAll"), data => new FrontDoorWebApplicationFirewallPolicyResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies/{policyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies/{policyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Policies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WebApplicationFirewallPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FrontDoorWebApplicationFirewallPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyName"> The name of the Web Application Firewall Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string policyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
 
-            using var scope = _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("FrontDoorWebApplicationFirewallPolicyCollection.Exists");
+            using DiagnosticScope scope = _policiesClientDiagnostics.CreateScope("FrontDoorWebApplicationFirewallPolicyCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, policyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _policiesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, policyName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<FrontDoorWebApplicationFirewallPolicyData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(FrontDoorWebApplicationFirewallPolicyData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((FrontDoorWebApplicationFirewallPolicyData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -347,36 +386,50 @@ namespace Azure.ResourceManager.FrontDoor
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies/{policyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies/{policyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Policies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WebApplicationFirewallPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FrontDoorWebApplicationFirewallPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyName"> The name of the Web Application Firewall Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string policyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
 
-            using var scope = _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("FrontDoorWebApplicationFirewallPolicyCollection.Exists");
+            using DiagnosticScope scope = _policiesClientDiagnostics.CreateScope("FrontDoorWebApplicationFirewallPolicyCollection.Exists");
             scope.Start();
             try
             {
-                var response = _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, policyName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _policiesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, policyName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<FrontDoorWebApplicationFirewallPolicyData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(FrontDoorWebApplicationFirewallPolicyData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((FrontDoorWebApplicationFirewallPolicyData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -390,38 +443,54 @@ namespace Azure.ResourceManager.FrontDoor
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies/{policyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies/{policyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Policies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WebApplicationFirewallPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FrontDoorWebApplicationFirewallPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyName"> The name of the Web Application Firewall Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<FrontDoorWebApplicationFirewallPolicyResource>> GetIfExistsAsync(string policyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
 
-            using var scope = _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("FrontDoorWebApplicationFirewallPolicyCollection.GetIfExists");
+            using DiagnosticScope scope = _policiesClientDiagnostics.CreateScope("FrontDoorWebApplicationFirewallPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, policyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _policiesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, policyName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<FrontDoorWebApplicationFirewallPolicyData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(FrontDoorWebApplicationFirewallPolicyData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((FrontDoorWebApplicationFirewallPolicyData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<FrontDoorWebApplicationFirewallPolicyResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new FrontDoorWebApplicationFirewallPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -435,38 +504,54 @@ namespace Azure.ResourceManager.FrontDoor
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies/{policyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies/{policyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Policies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WebApplicationFirewallPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FrontDoorWebApplicationFirewallPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyName"> The name of the Web Application Firewall Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<FrontDoorWebApplicationFirewallPolicyResource> GetIfExists(string policyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
 
-            using var scope = _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("FrontDoorWebApplicationFirewallPolicyCollection.GetIfExists");
+            using DiagnosticScope scope = _policiesClientDiagnostics.CreateScope("FrontDoorWebApplicationFirewallPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, policyName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _policiesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, policyName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<FrontDoorWebApplicationFirewallPolicyData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(FrontDoorWebApplicationFirewallPolicyData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((FrontDoorWebApplicationFirewallPolicyData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<FrontDoorWebApplicationFirewallPolicyResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new FrontDoorWebApplicationFirewallPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +571,7 @@ namespace Azure.ResourceManager.FrontDoor
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<FrontDoorWebApplicationFirewallPolicyResource> IAsyncEnumerable<FrontDoorWebApplicationFirewallPolicyResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

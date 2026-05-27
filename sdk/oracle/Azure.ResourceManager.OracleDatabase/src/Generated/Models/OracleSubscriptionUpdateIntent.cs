@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct OracleSubscriptionUpdateIntent : IEquatable<OracleSubscriptionUpdateIntent>
     {
         private readonly string _value;
+        /// <summary> Retain intent. </summary>
+        private const string RetainValue = "Retain";
+        /// <summary> Reset intent. </summary>
+        private const string ResetValue = "Reset";
 
         /// <summary> Initializes a new instance of <see cref="OracleSubscriptionUpdateIntent"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OracleSubscriptionUpdateIntent(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string RetainValue = "Retain";
-        private const string ResetValue = "Reset";
+            _value = value;
+        }
 
         /// <summary> Retain intent. </summary>
         public static OracleSubscriptionUpdateIntent Retain { get; } = new OracleSubscriptionUpdateIntent(RetainValue);
+
         /// <summary> Reset intent. </summary>
         public static OracleSubscriptionUpdateIntent Reset { get; } = new OracleSubscriptionUpdateIntent(ResetValue);
+
         /// <summary> Determines if two <see cref="OracleSubscriptionUpdateIntent"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OracleSubscriptionUpdateIntent left, OracleSubscriptionUpdateIntent right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OracleSubscriptionUpdateIntent"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OracleSubscriptionUpdateIntent left, OracleSubscriptionUpdateIntent right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OracleSubscriptionUpdateIntent"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OracleSubscriptionUpdateIntent"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OracleSubscriptionUpdateIntent(string value) => new OracleSubscriptionUpdateIntent(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OracleSubscriptionUpdateIntent"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OracleSubscriptionUpdateIntent?(string value) => value == null ? null : new OracleSubscriptionUpdateIntent(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OracleSubscriptionUpdateIntent other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OracleSubscriptionUpdateIntent other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Hci.Vm
 {
-    internal class HciVmLogicalNetworkOperationSource : IOperationSource<HciVmLogicalNetworkResource>
+    /// <summary></summary>
+    internal partial class HciVmLogicalNetworkOperationSource : IOperationSource<HciVmLogicalNetworkResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal HciVmLogicalNetworkOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         HciVmLogicalNetworkResource IOperationSource<HciVmLogicalNetworkResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HciVmLogicalNetworkData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHciVmContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            HciVmLogicalNetworkData data = HciVmLogicalNetworkData.DeserializeHciVmLogicalNetworkData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new HciVmLogicalNetworkResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<HciVmLogicalNetworkResource> IOperationSource<HciVmLogicalNetworkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HciVmLogicalNetworkData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHciVmContext.Default);
-            return await Task.FromResult(new HciVmLogicalNetworkResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            HciVmLogicalNetworkData data = HciVmLogicalNetworkData.DeserializeHciVmLogicalNetworkData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new HciVmLogicalNetworkResource(_client, data);
         }
     }
 }

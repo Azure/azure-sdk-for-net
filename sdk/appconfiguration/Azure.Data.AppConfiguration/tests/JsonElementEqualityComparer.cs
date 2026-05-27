@@ -59,35 +59,35 @@ namespace Azure.Data.AppConfiguration.Tests
                     return first.EnumerateArray().SequenceEqual(second.EnumerateArray(), this);
 
                 case JsonValueKind.Object:
-                {
-                    // Surprisingly, JsonDocument fully supports duplicate property names.  It's perfectly happy to parse
-                    // {"Value":"a", "Value" : "b"} and will store both key/value pairs inside the document.
-                    // A close reading of https://www.rfc-editor.org/rfc/rfc8259#section-4 seems to indicate that
-                    // such objects are allowed but not recommended, and when they arise, interpretation of
-                    // identically-named properties is order-dependent.
-                    //
-                    // Stably sorting by name then comparing values seems the way to go.
-                    var firstProperties = first.EnumerateObject().OrderBy(p => p.Name, StringComparer.Ordinal).ToList();
-                    var secondProperties = second.EnumerateObject().OrderBy(p => p.Name, StringComparer.Ordinal).ToList();
-
-                    if (firstProperties.Count != firstProperties.Count)
                     {
-                        return false;
-                    }
+                        // Surprisingly, JsonDocument fully supports duplicate property names.  It's perfectly happy to parse
+                        // {"Value":"a", "Value" : "b"} and will store both key/value pairs inside the document.
+                        // A close reading of https://www.rfc-editor.org/rfc/rfc8259#section-4 seems to indicate that
+                        // such objects are allowed but not recommended, and when they arise, interpretation of
+                        // identically-named properties is order-dependent.
+                        //
+                        // Stably sorting by name then comparing values seems the way to go.
+                        var firstProperties = first.EnumerateObject().OrderBy(p => p.Name, StringComparer.Ordinal).ToList();
+                        var secondProperties = second.EnumerateObject().OrderBy(p => p.Name, StringComparer.Ordinal).ToList();
 
-                    for (var index = 0; index < firstProperties.Count; ++index)
-                    {
-                        var firstProperty = firstProperties[index];
-                        var secondProperty = secondProperties[index];
-
-                        if (firstProperty.Name != secondProperty.Name || (!Equals(firstProperty.Value, secondProperty.Value)))
+                        if (firstProperties.Count != firstProperties.Count)
                         {
                             return false;
                         }
-                    }
 
-                    return true;
-                }
+                        for (var index = 0; index < firstProperties.Count; ++index)
+                        {
+                            var firstProperty = firstProperties[index];
+                            var secondProperty = secondProperties[index];
+
+                            if (firstProperty.Name != secondProperty.Name || (!Equals(firstProperty.Value, secondProperty.Value)))
+                            {
+                                return false;
+                            }
+                        }
+
+                        return true;
+                    }
 
                 default:
                     throw new JsonException($"Unknown JsonValueKind {first.ValueKind}.");
@@ -122,7 +122,7 @@ namespace Azure.Data.AppConfiguration.Tests
                     {
                         foreach (var item in obj.EnumerateArray())
                         {
-                            builder.Add(ComputeHashCode(item, depth+1));
+                            builder.Add(ComputeHashCode(item, depth + 1));
                         }
                     }
                     else

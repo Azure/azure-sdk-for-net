@@ -10,14 +10,60 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class ContainerGroupIPAddress : IUtf8JsonSerializable, IJsonModel<ContainerGroupIPAddress>
+    /// <summary> IP address for the container group. </summary>
+    public partial class ContainerGroupIPAddress : IJsonModel<ContainerGroupIPAddress>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerGroupIPAddress>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupIPAddress"/> for deserialization. </summary>
+        internal ContainerGroupIPAddress()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ContainerGroupIPAddress PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerGroupIPAddress>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeContainerGroupIPAddress(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerGroupIPAddress)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerGroupIPAddress>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerInstanceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerGroupIPAddress)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ContainerGroupIPAddress>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerGroupIPAddress IPersistableModel<ContainerGroupIPAddress>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ContainerGroupIPAddress>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ContainerGroupIPAddress>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,15 +75,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerGroupIPAddress>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerGroupIPAddress>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerGroupIPAddress)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("ports"u8);
             writer.WriteStartArray();
-            foreach (var item in Ports)
+            foreach (ContainerGroupPort item in Ports)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -64,15 +109,15 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -81,124 +126,96 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
         }
 
-        ContainerGroupIPAddress IJsonModel<ContainerGroupIPAddress>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerGroupIPAddress IJsonModel<ContainerGroupIPAddress>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ContainerGroupIPAddress JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerGroupIPAddress>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerGroupIPAddress>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerGroupIPAddress)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeContainerGroupIPAddress(document.RootElement, options);
         }
 
-        internal static ContainerGroupIPAddress DeserializeContainerGroupIPAddress(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ContainerGroupIPAddress DeserializeContainerGroupIPAddress(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IList<ContainerGroupPort> ports = default;
-            ContainerGroupIPAddressType type = default;
+            ContainerGroupIPAddressType addressType = default;
             IPAddress ip = default;
             string dnsNameLabel = default;
             DnsNameLabelReusePolicy? autoGeneratedDomainNameLabelScope = default;
             string fqdn = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("ports"u8))
+                if (prop.NameEquals("ports"u8))
                 {
                     List<ContainerGroupPort> array = new List<ContainerGroupPort>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ContainerGroupPort.DeserializeContainerGroupPort(item, options));
                     }
                     ports = array;
                     continue;
                 }
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    type = new ContainerGroupIPAddressType(property.Value.GetString());
+                    addressType = new ContainerGroupIPAddressType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ip"u8))
+                if (prop.NameEquals("ip"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    ip = IPAddress.Parse(property.Value.GetString());
+                    ip = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dnsNameLabel"u8))
+                if (prop.NameEquals("dnsNameLabel"u8))
                 {
-                    dnsNameLabel = property.Value.GetString();
+                    dnsNameLabel = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("autoGeneratedDomainNameLabelScope"u8))
+                if (prop.NameEquals("autoGeneratedDomainNameLabelScope"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    autoGeneratedDomainNameLabelScope = new DnsNameLabelReusePolicy(property.Value.GetString());
+                    autoGeneratedDomainNameLabelScope = new DnsNameLabelReusePolicy(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("fqdn"u8))
+                if (prop.NameEquals("fqdn"u8))
                 {
-                    fqdn = property.Value.GetString();
+                    fqdn = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerGroupIPAddress(
                 ports,
-                type,
+                addressType,
                 ip,
                 dnsNameLabel,
                 autoGeneratedDomainNameLabelScope,
                 fqdn,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<ContainerGroupIPAddress>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerGroupIPAddress>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerInstanceContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ContainerGroupIPAddress)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ContainerGroupIPAddress IPersistableModel<ContainerGroupIPAddress>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerGroupIPAddress>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeContainerGroupIPAddress(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ContainerGroupIPAddress)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ContainerGroupIPAddress>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     public readonly partial struct SourceDataStoreType : IEquatable<SourceDataStoreType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="SourceDataStoreType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SourceDataStoreType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string ArchiveStoreValue = "ArchiveStore";
         private const string SnapshotStoreValue = "SnapshotStore";
         private const string OperationalStoreValue = "OperationalStore";
         private const string VaultStoreValue = "VaultStore";
 
-        /// <summary> ArchiveStore. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceDataStoreType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public SourceDataStoreType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the ArchiveStore. </summary>
         public static SourceDataStoreType ArchiveStore { get; } = new SourceDataStoreType(ArchiveStoreValue);
-        /// <summary> SnapshotStore. </summary>
+
+        /// <summary> Gets the SnapshotStore. </summary>
         public static SourceDataStoreType SnapshotStore { get; } = new SourceDataStoreType(SnapshotStoreValue);
-        /// <summary> OperationalStore. </summary>
+
+        /// <summary> Gets the OperationalStore. </summary>
         public static SourceDataStoreType OperationalStore { get; } = new SourceDataStoreType(OperationalStoreValue);
-        /// <summary> VaultStore. </summary>
+
+        /// <summary> Gets the VaultStore. </summary>
         public static SourceDataStoreType VaultStore { get; } = new SourceDataStoreType(VaultStoreValue);
+
         /// <summary> Determines if two <see cref="SourceDataStoreType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SourceDataStoreType left, SourceDataStoreType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SourceDataStoreType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SourceDataStoreType left, SourceDataStoreType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SourceDataStoreType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SourceDataStoreType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SourceDataStoreType(string value) => new SourceDataStoreType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SourceDataStoreType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SourceDataStoreType?(string value) => value == null ? null : new SourceDataStoreType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SourceDataStoreType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SourceDataStoreType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

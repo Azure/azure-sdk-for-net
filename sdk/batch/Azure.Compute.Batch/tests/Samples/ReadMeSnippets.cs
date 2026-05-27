@@ -189,7 +189,7 @@ namespace Azure.Compute.Batch.Tests.Samples
             #endregion
         }
 
-         public void GetTaskFile()
+        public void GetTaskFile()
         {
             #region Snippet:Batch_Readme_GetTaskFile
             BatchClient batchClient = new BatchClient(

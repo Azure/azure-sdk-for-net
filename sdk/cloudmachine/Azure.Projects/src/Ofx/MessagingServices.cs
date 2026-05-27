@@ -20,7 +20,8 @@ public readonly struct MessagingServices
     private readonly ServiceBusSender _sender;
     private readonly ServiceBusProcessor _processor;
 
-    internal MessagingServices(ProjectClient project) {
+    internal MessagingServices(ProjectClient project)
+    {
         ServiceBusClient sb = project.GetServiceBusClient(project.ProjectId);
         _sender = project.GetServiceBusSender(project.ProjectId, "cm_servicebus_topic_private");
         _processor = project.GetServiceBusProcessor(project.ProjectId, "cm_servicebus_subscription_private");

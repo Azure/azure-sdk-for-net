@@ -7,43 +7,16 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
+using Azure.ResourceManager.ApiCenter;
 
 namespace Azure.ResourceManager.ApiCenter.Models
 {
     /// <summary> API properties. </summary>
     public partial class ApiCenterApiProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiCenterApiProperties"/>. </summary>
         /// <param name="title"> API title. </param>
@@ -70,8 +43,8 @@ namespace Azure.ResourceManager.ApiCenter.Models
         /// <param name="contacts"> The set of contacts. </param>
         /// <param name="license"> The license information for the API. </param>
         /// <param name="customProperties"> The custom metadata defined for API catalog entities. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiCenterApiProperties(string title, ApiKind kind, string description, string summary, ApiLifecycleStage? lifecycleStage, TermsOfService termsOfService, IList<ApiExternalDocumentation> externalDocumentation, IList<ApiContactInformation> contacts, ApiLicenseInformation license, BinaryData customProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ApiCenterApiProperties(string title, ApiKind kind, string description, string summary, ApiLifecycleStage? lifecycleStage, TermsOfService termsOfService, IList<ApiExternalDocumentation> externalDocumentation, IList<ApiContactInformation> contacts, ApiLicenseInformation license, BinaryData customProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Title = title;
             Kind = kind;
@@ -83,69 +56,75 @@ namespace Azure.ResourceManager.ApiCenter.Models
             Contacts = contacts;
             License = license;
             CustomProperties = customProperties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ApiCenterApiProperties"/> for deserialization. </summary>
-        internal ApiCenterApiProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> API title. </summary>
         public string Title { get; set; }
+
         /// <summary> Kind of API. For example, REST or GraphQL. </summary>
         public ApiKind Kind { get; set; }
+
         /// <summary> Description of the API. </summary>
         public string Description { get; set; }
+
         /// <summary> Short description of the API. </summary>
         public string Summary { get; set; }
+
         /// <summary> Current lifecycle stage of the API. </summary>
         public ApiLifecycleStage? LifecycleStage { get; }
+
         /// <summary> Terms of service for the API. </summary>
         internal TermsOfService TermsOfService { get; set; }
-        /// <summary> URL pointing to the terms of service. </summary>
-        public Uri TermsOfServiceUri
-        {
-            get => TermsOfService is null ? default : TermsOfService.Uri;
-            set => TermsOfService = new TermsOfService(value);
-        }
 
         /// <summary> The set of external documentation. </summary>
         public IList<ApiExternalDocumentation> ExternalDocumentation { get; }
+
         /// <summary> The set of contacts. </summary>
         public IList<ApiContactInformation> Contacts { get; }
+
         /// <summary> The license information for the API. </summary>
         public ApiLicenseInformation License { get; set; }
+
         /// <summary>
         /// The custom metadata defined for API catalog entities.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
+        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// </list>
         /// </para>
         /// </summary>
         public BinaryData CustomProperties { get; set; }
+
+        /// <summary> URL pointing to the terms of service. </summary>
+        public Uri TermsOfServiceUri
+        {
+            get
+            {
+                return TermsOfService is null ? default : TermsOfService.Uri;
+            }
+            set
+            {
+                TermsOfService = new TermsOfService(value);
+            }
+        }
     }
 }

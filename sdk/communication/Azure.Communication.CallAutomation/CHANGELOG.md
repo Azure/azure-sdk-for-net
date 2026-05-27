@@ -24,14 +24,12 @@
 - Added Incomingcall event to support incoming call notification for Teams multipersona users
 - Added StartRecordingFailed event to indicate when the start recording API is unable to initiate the recording.
 - DTMF broadcast functionality is now supported in the Create Call, Answer Call, and Create Group Call APIs.
-- Added marker audio for streaming data.
-- **NEW: AcsWebSocketAuthenticator** - Added new WebSocket authentication system that gives customers full control over WebSocket configuration while Azure Communication Services handles authentication:
-  - `AcsWebSocketAuthenticator` class for WebSocket authentication management
-  - Support for HMAC and Azure AD token authentication methods
-  - Integration with existing CallAutomationClient authentication
-  - Extensible design for custom authentication scenarios
-  - Works for media streaming, transcription, and any WebSocket scenario
-  - Compatible with all supported .NET versions (.NET Standard 2.0, .NET 8/9/10, Framework 4.6.2+)
+- Added support to mark audio during streaming and receive mark data when the marked audio is played in the call.
+- Added support for reverse WebSocket connections, with Contoso acting as the WebSocket client connecting to the ACS WebSocket server.
+  - Added streamUrl in `CallConnectionProperties.MediaSubscription` to indicate the actual websocket URL used for media streaming during create/answer/connect call.
+  - Enhanced Media Streaming configuration to allow empty or null stream URLs.`TransportUrl` in `MediaStreamingOptions` can now be null or empty.
+- Added support for Post-Dial Tones in outbound call scenarios
+  - `PostDialTones` property now available in `CreateCallOptions` and `CreateGroupCallOptions`
 
 ### Breaking Changes
 - **BREAKING: Removed WebSocketConnectionHelper** - The `WebSocketConnectionHelper` class has been removed in favor of the new `AcsWebSocketAuthenticator` design:

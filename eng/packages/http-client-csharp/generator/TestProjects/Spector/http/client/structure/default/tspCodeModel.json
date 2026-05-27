@@ -96,7 +96,7 @@
       "kind": "client",
       "name": "ServiceClient",
       "namespace": "Client.Structure.Service",
-      "doc": "Test that we can use @client and @operationGroup decorators to customize client side code structure, such as:\n1. have everything as default.\n2. to rename client or operation group\n3. one client can have more than one operations groups\n4. split one interface into two clients\n5. have two clients with operations come from different interfaces\n6. have two clients with a hierarchy relation.",
+      "doc": "Test that we can use @client decorators to customize client side code structure, such as:\n1. have everything as default.\n2. to rename client or operation group\n3. one client can have more than one operations groups\n4. split one interface into two clients\n5. have two clients with operations come from different interfaces\n6. have two clients with a hierarchy relation.",
       "methods": [
         {
           "$id": "9",
@@ -116,7 +116,8 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false
+                "isErrorResponse": false,
+                "serializationOptions": {}
               }
             ],
             "httpMethod": "POST",
@@ -126,7 +127,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Structure.Service.one",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Structure.Service"
           },
           "parameters": [],
           "response": {},
@@ -153,7 +155,8 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false
+                "isErrorResponse": false,
+                "serializationOptions": {}
               }
             ],
             "httpMethod": "POST",
@@ -163,7 +166,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Structure.Service.two",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Structure.Service"
           },
           "parameters": [],
           "response": {},
@@ -214,6 +218,7 @@
           "crossLanguageDefinitionId": "Client.Structure.Service.client"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Client.Structure.Service",
       "apiVersions": [],
@@ -244,7 +249,7 @@
               "serverUrlTemplate": "{endpoint}/client/structure/{client}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Structure.Service.endpoint"
+              "crossLanguageDefinitionId": "Client.Structure.Service.Baz.endpoint"
             },
             {
               "$id": "19",
@@ -262,9 +267,10 @@
               "serverUrlTemplate": "{endpoint}/client/structure/{client}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Structure.Service.client"
+              "crossLanguageDefinitionId": "Client.Structure.Service.Baz.client"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Client.Structure.Service.Baz",
           "apiVersions": [],
@@ -296,7 +302,8 @@
                           204
                         ],
                         "headers": [],
-                        "isErrorResponse": false
+                        "isErrorResponse": false,
+                        "serializationOptions": {}
                       }
                     ],
                     "httpMethod": "POST",
@@ -306,7 +313,8 @@
                     "generateProtocolMethod": true,
                     "generateConvenienceMethod": true,
                     "crossLanguageDefinitionId": "Client.Structure.Service.Baz.Foo.seven",
-                    "decorators": []
+                    "decorators": [],
+                    "namespace": "Client.Structure.Service.Baz"
                   },
                   "parameters": [],
                   "response": {},
@@ -336,7 +344,7 @@
                   "serverUrlTemplate": "{endpoint}/client/structure/{client}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Client.Structure.Service.endpoint"
+                  "crossLanguageDefinitionId": "Client.Structure.Service.Baz.Foo.endpoint"
                 },
                 {
                   "$id": "25",
@@ -354,17 +362,20 @@
                   "serverUrlTemplate": "{endpoint}/client/structure/{client}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Client.Structure.Service.client"
+                  "crossLanguageDefinitionId": "Client.Structure.Service.Baz.Foo.client"
                 }
               ],
+              "initializedBy": 0,
               "decorators": [],
               "crossLanguageDefinitionId": "Client.Structure.Service.Baz.Foo",
               "apiVersions": [],
               "parent": {
                 "$ref": "16"
-              }
+              },
+              "isMultiServiceClient": false
             }
-          ]
+          ],
+          "isMultiServiceClient": false
         },
         {
           "$id": "26",
@@ -390,7 +401,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "POST",
@@ -400,7 +412,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Client.Structure.Service.Qux.eight",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Client.Structure.Service.Qux"
               },
               "parameters": [],
               "response": {},
@@ -430,7 +443,7 @@
               "serverUrlTemplate": "{endpoint}/client/structure/{client}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Structure.Service.endpoint"
+              "crossLanguageDefinitionId": "Client.Structure.Service.Qux.endpoint"
             },
             {
               "$id": "31",
@@ -448,9 +461,10 @@
               "serverUrlTemplate": "{endpoint}/client/structure/{client}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Structure.Service.client"
+              "crossLanguageDefinitionId": "Client.Structure.Service.Qux.client"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Client.Structure.Service.Qux",
           "apiVersions": [],
@@ -482,7 +496,8 @@
                           204
                         ],
                         "headers": [],
-                        "isErrorResponse": false
+                        "isErrorResponse": false,
+                        "serializationOptions": {}
                       }
                     ],
                     "httpMethod": "POST",
@@ -492,7 +507,8 @@
                     "generateProtocolMethod": true,
                     "generateConvenienceMethod": true,
                     "crossLanguageDefinitionId": "Client.Structure.Service.Qux.Bar.nine",
-                    "decorators": []
+                    "decorators": [],
+                    "namespace": "Client.Structure.Service.Qux"
                   },
                   "parameters": [],
                   "response": {},
@@ -522,7 +538,7 @@
                   "serverUrlTemplate": "{endpoint}/client/structure/{client}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Client.Structure.Service.endpoint"
+                  "crossLanguageDefinitionId": "Client.Structure.Service.Qux.Bar.endpoint"
                 },
                 {
                   "$id": "37",
@@ -540,17 +556,20 @@
                   "serverUrlTemplate": "{endpoint}/client/structure/{client}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Client.Structure.Service.client"
+                  "crossLanguageDefinitionId": "Client.Structure.Service.Qux.Bar.client"
                 }
               ],
+              "initializedBy": 0,
               "decorators": [],
               "crossLanguageDefinitionId": "Client.Structure.Service.Qux.Bar",
               "apiVersions": [],
               "parent": {
                 "$ref": "26"
-              }
+              },
+              "isMultiServiceClient": false
             }
-          ]
+          ],
+          "isMultiServiceClient": false
         },
         {
           "$id": "38",
@@ -576,7 +595,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "POST",
@@ -586,7 +606,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Client.Structure.Service.Foo.three",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Client.Structure.Service"
               },
               "parameters": [],
               "response": {},
@@ -613,7 +634,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "POST",
@@ -623,7 +645,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Client.Structure.Service.Foo.four",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Client.Structure.Service"
               },
               "parameters": [],
               "response": {},
@@ -653,7 +676,7 @@
               "serverUrlTemplate": "{endpoint}/client/structure/{client}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Structure.Service.endpoint"
+              "crossLanguageDefinitionId": "Client.Structure.Service.Foo.endpoint"
             },
             {
               "$id": "45",
@@ -671,15 +694,17 @@
               "serverUrlTemplate": "{endpoint}/client/structure/{client}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Structure.Service.client"
+              "crossLanguageDefinitionId": "Client.Structure.Service.Foo.client"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Client.Structure.Service.Foo",
           "apiVersions": [],
           "parent": {
             "$ref": "8"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "46",
@@ -705,7 +730,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "POST",
@@ -715,7 +741,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Client.Structure.Service.Bar.five",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Client.Structure.Service"
               },
               "parameters": [],
               "response": {},
@@ -742,7 +769,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "POST",
@@ -752,7 +780,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Client.Structure.Service.Bar.six",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Client.Structure.Service"
               },
               "parameters": [],
               "response": {},
@@ -782,7 +811,7 @@
               "serverUrlTemplate": "{endpoint}/client/structure/{client}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Structure.Service.endpoint"
+              "crossLanguageDefinitionId": "Client.Structure.Service.Bar.endpoint"
             },
             {
               "$id": "53",
@@ -800,17 +829,20 @@
               "serverUrlTemplate": "{endpoint}/client/structure/{client}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Structure.Service.client"
+              "crossLanguageDefinitionId": "Client.Structure.Service.Bar.client"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Client.Structure.Service.Bar",
           "apiVersions": [],
           "parent": {
             "$ref": "8"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

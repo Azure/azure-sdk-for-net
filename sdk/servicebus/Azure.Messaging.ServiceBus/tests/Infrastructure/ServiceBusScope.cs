@@ -53,7 +53,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
             caller = (caller.Length < 16) ? caller : caller.Substring(0, 15);
 
-            var queueName = $"{ Guid.NewGuid().ToString("D").Substring(0, 13) }-{ caller }";
+            var queueName = $"{Guid.NewGuid().ToString("D").Substring(0, 13)}-{caller}";
 
             var queueOptions = new CreateQueueOptions(queueName)
             {
@@ -96,7 +96,7 @@ namespace Azure.Messaging.ServiceBus.Tests
             caller = (caller.Length < 16) ? caller : caller.Substring(0, 15);
             topicSubscriptions ??= new[] { "default-subscription" };
 
-            var topicName = $"{ Guid.NewGuid().ToString("D").Substring(0, 13) }-{ caller }";
+            var topicName = $"{Guid.NewGuid().ToString("D").Substring(0, 13)}-{caller}";
 
             var topicOptions = new CreateTopicOptions(topicName)
             {

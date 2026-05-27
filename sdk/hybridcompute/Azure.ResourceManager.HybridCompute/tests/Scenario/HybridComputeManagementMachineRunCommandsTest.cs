@@ -61,7 +61,8 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
-        public async Task CanDeleteMachineRunCommand(){
+        public async Task CanDeleteMachineRunCommand()
+        {
             await deleteRunCommand();
         }
     }

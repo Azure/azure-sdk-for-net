@@ -49,7 +49,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var eventHubName = "fake";
             var consumerGroup = "$Default";
 
-            var storageAccountEndpoint = $"https://{ StorageTestEnvironment.Instance.StorageAccountName }.blob.{ StorageTestEnvironment.Instance.StorageEndpointSuffix}";
+            var storageAccountEndpoint = $"https://{StorageTestEnvironment.Instance.StorageAccountName}.blob.{StorageTestEnvironment.Instance.StorageEndpointSuffix}";
             var blobContainerName = "fake";
 #endif
 
@@ -128,7 +128,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var eventHubName = "fake";
             var consumerGroup = "$Default";
 
-            var storageAccountEndpoint = $"https://{ StorageTestEnvironment.Instance.StorageAccountName }.blob.{ StorageTestEnvironment.Instance.StorageEndpointSuffix}";
+            var storageAccountEndpoint = $"https://{StorageTestEnvironment.Instance.StorageAccountName}.blob.{StorageTestEnvironment.Instance.StorageEndpointSuffix}";
             var blobContainerName = "fake";
 #endif
 
@@ -215,7 +215,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var eventHubName = eventHubScope.EventHubName;
             var consumerGroup = "$Default";
 
-            var storageAccountEndpoint = $"https://{ StorageTestEnvironment.Instance.StorageAccountName }.blob.{ StorageTestEnvironment.Instance.StorageEndpointSuffix}";
+            var storageAccountEndpoint = $"https://{StorageTestEnvironment.Instance.StorageAccountName}.blob.{StorageTestEnvironment.Instance.StorageEndpointSuffix}";
             var blobContainerName = storageScope.ContainerName;
 #endif
 
@@ -339,7 +339,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var eventHubName = "fake";
             var consumerGroup = "$Default";
 
-            var storageAccountEndpoint = $"https://{ StorageTestEnvironment.Instance.StorageAccountName }.blob.{ StorageTestEnvironment.Instance.StorageEndpointSuffix}";
+            var storageAccountEndpoint = $"https://{StorageTestEnvironment.Instance.StorageAccountName}.blob.{StorageTestEnvironment.Instance.StorageEndpointSuffix}";
             var blobContainerName = "fake";
 #endif
 
@@ -369,9 +369,9 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                     }
 
                     Debug.WriteLine("Error in the EventProcessorClient");
-                    Debug.WriteLine($"\tOperation: { args.Operation ?? "Unknown" }");
-                    Debug.WriteLine($"\tPartition: { args.PartitionId ?? "None" }");
-                    Debug.WriteLine($"\tException: { args.Exception }");
+                    Debug.WriteLine($"\tOperation: {args.Operation ?? "Unknown"}");
+                    Debug.WriteLine($"\tPartition: {args.PartitionId ?? "None"}");
+                    Debug.WriteLine($"\tException: {args.Exception}");
                     Debug.WriteLine("");
                 }
                 catch
@@ -429,7 +429,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var eventHubName = eventHubScope.EventHubName;
             var consumerGroup = "$Default";
 
-            var storageAccountEndpoint = $"https://{ StorageTestEnvironment.Instance.StorageAccountName }.blob.{ StorageTestEnvironment.Instance.StorageEndpointSuffix}";
+            var storageAccountEndpoint = $"https://{StorageTestEnvironment.Instance.StorageAccountName}.blob.{StorageTestEnvironment.Instance.StorageEndpointSuffix}";
             var blobContainerName = storageScope.ContainerName;
 #endif
 
@@ -483,9 +483,9 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                     // Always log the exception.
 
                     Debug.WriteLine("Error in the EventProcessorClient");
-                    Debug.WriteLine($"\tOperation: { args.Operation ?? "Unknown" }");
-                    Debug.WriteLine($"\tPartition: { args.PartitionId ?? "None" }");
-                    Debug.WriteLine($"\tException: { args.Exception }");
+                    Debug.WriteLine($"\tOperation: {args.Operation ?? "Unknown"}");
+                    Debug.WriteLine($"\tPartition: {args.PartitionId ?? "None"}");
+                    Debug.WriteLine($"\tException: {args.Exception}");
                     Debug.WriteLine("");
 
                     // If cancellation was requested, assume that
@@ -571,7 +571,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var eventHubName = "fake";
             var consumerGroup = "$Default";
 
-            var storageAccountEndpoint = $"https://{ StorageTestEnvironment.Instance.StorageAccountName }.blob.{ StorageTestEnvironment.Instance.StorageEndpointSuffix}";
+            var storageAccountEndpoint = $"https://{StorageTestEnvironment.Instance.StorageAccountName}.blob.{StorageTestEnvironment.Instance.StorageEndpointSuffix}";
             var blobContainerName = "fake";
 #endif
 
@@ -600,7 +600,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                         return Task.CompletedTask;
                     }
 
-                    Debug.WriteLine($"Initialize partition: { args.PartitionId }");
+                    Debug.WriteLine($"Initialize partition: {args.PartitionId}");
 
                     // If no checkpoint was found, start processing
                     // events enqueued now or in the future.
@@ -660,7 +660,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var eventHubName = "fake";
             var consumerGroup = "$Default";
 
-            var storageAccountEndpoint = $"https://{ StorageTestEnvironment.Instance.StorageAccountName }.blob.{ StorageTestEnvironment.Instance.StorageEndpointSuffix}";
+            var storageAccountEndpoint = $"https://{StorageTestEnvironment.Instance.StorageAccountName}.blob.{StorageTestEnvironment.Instance.StorageEndpointSuffix}";
             var blobContainerName = "fake";
 #endif
 
@@ -700,8 +700,8 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                         _ => args.Reason.ToString()
                     };
 
-                    Debug.WriteLine($"Closing partition: { args.PartitionId }");
-                    Debug.WriteLine($"\tReason: { description }");
+                    Debug.WriteLine($"Closing partition: {args.PartitionId}");
+                    Debug.WriteLine($"\tReason: {description}");
                 }
                 catch
                 {

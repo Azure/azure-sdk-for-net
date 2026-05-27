@@ -20,7 +20,7 @@ namespace PlaywrightService.SampleTests; // Remember to change this as per your 
 public class PlaywrightServiceNUnitSetup : PlaywrightServiceBrowserNUnit
 {
     public PlaywrightServiceNUnitSetup() : base(
-        credential: new ManagedIdentityCredential(),
+        credential: new ManagedIdentityCredential(ManagedIdentityId.SystemAssigned),
         options: new PlaywrightServiceBrowserClientOptions()
         {
             OS = OSPlatform.Linux,

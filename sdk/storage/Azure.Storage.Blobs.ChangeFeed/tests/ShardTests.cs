@@ -3,13 +3,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.TestFramework;
+using Azure.Storage.Blobs.Models;
 using Moq;
 using NUnit.Framework;
-using System.Threading.Tasks;
-using Azure.Storage.Blobs.Models;
-using Azure.Core;
-using System.Threading;
-using Azure.Core.TestFramework;
 
 namespace Azure.Storage.Blobs.ChangeFeed.Tests
 {

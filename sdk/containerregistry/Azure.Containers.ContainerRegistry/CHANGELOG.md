@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.0 (2026-01-09)
+
+### Features Added
+
+- Added four public authentication methods for the ContainerRegistryClient: GetAcrAccessTokenAsync, GetAcrAccessToken, ExchangeAadAccessTokenAsync, and ExchangeAadAccessToken. These methods make it easier for users to programmatically obtain and exchange authentication tokens when interacting with Azure Container Registry. ([#51701](https://github.com/Azure/azure-sdk-for-net/pull/51701))
 
 ## 1.2.0 (2025-02-11)
 

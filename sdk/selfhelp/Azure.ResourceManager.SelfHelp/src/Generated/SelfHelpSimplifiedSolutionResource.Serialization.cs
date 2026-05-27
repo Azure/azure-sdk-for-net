@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.SelfHelp
 {
+    /// <summary></summary>
     public partial class SelfHelpSimplifiedSolutionResource : IJsonModel<SelfHelpSimplifiedSolutionData>
     {
-        private static SelfHelpSimplifiedSolutionData s_dataDeserializationInstance;
-        private static SelfHelpSimplifiedSolutionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SelfHelpSimplifiedSolutionData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SelfHelpSimplifiedSolutionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SelfHelpSimplifiedSolutionData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SelfHelpSimplifiedSolutionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SelfHelpSimplifiedSolutionData>)Data).Write(writer, options);
 
-        SelfHelpSimplifiedSolutionData IJsonModel<SelfHelpSimplifiedSolutionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SelfHelpSimplifiedSolutionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SelfHelpSimplifiedSolutionData IJsonModel<SelfHelpSimplifiedSolutionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SelfHelpSimplifiedSolutionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SelfHelpSimplifiedSolutionData>(Data, options, AzureResourceManagerSelfHelpContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SelfHelpSimplifiedSolutionData IPersistableModel<SelfHelpSimplifiedSolutionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SelfHelpSimplifiedSolutionData>(data, options, AzureResourceManagerSelfHelpContext.Default);
 
-        string IPersistableModel<SelfHelpSimplifiedSolutionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SelfHelpSimplifiedSolutionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SelfHelpSimplifiedSolutionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

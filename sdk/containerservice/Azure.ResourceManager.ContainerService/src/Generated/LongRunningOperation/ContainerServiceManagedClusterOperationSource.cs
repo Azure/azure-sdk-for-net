@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    internal class ContainerServiceManagedClusterOperationSource : IOperationSource<ContainerServiceManagedClusterResource>
+    /// <summary></summary>
+    internal partial class ContainerServiceManagedClusterOperationSource : IOperationSource<ContainerServiceManagedClusterResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ContainerServiceManagedClusterOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ContainerServiceManagedClusterResource IOperationSource<ContainerServiceManagedClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ContainerServiceManagedClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerServiceContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ContainerServiceManagedClusterData data = ContainerServiceManagedClusterData.DeserializeContainerServiceManagedClusterData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ContainerServiceManagedClusterResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ContainerServiceManagedClusterResource> IOperationSource<ContainerServiceManagedClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ContainerServiceManagedClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerServiceContext.Default);
-            return await Task.FromResult(new ContainerServiceManagedClusterResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ContainerServiceManagedClusterData data = ContainerServiceManagedClusterData.DeserializeContainerServiceManagedClusterData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ContainerServiceManagedClusterResource(_client, data);
         }
     }
 }

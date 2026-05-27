@@ -6,31 +6,50 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ArmDisasterRecoveryListResult))]
+    [ModelReaderWriterBuildable(typeof(ArmDisasterRecoveryProperties))]
+    [ModelReaderWriterBuildable(typeof(ConfidentialCompute))]
     [ModelReaderWriterBuildable(typeof(FailoverProperties))]
+    [ModelReaderWriterBuildable(typeof(FailoverPropertiesProperties))]
+    [ModelReaderWriterBuildable(typeof(GeoDataReplicationProperties))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MessageCountDetails))]
     [ModelReaderWriterBuildable(typeof(MigrationConfigListResult))]
+    [ModelReaderWriterBuildable(typeof(MigrationConfigPropertiesProperties))]
     [ModelReaderWriterBuildable(typeof(MigrationConfigurationData))]
     [ModelReaderWriterBuildable(typeof(MigrationConfigurationResource))]
-    [ModelReaderWriterBuildable(typeof(NetworkRuleSetListResult))]
+    [ModelReaderWriterBuildable(typeof(NetworkRuleSetProperties))]
+    [ModelReaderWriterBuildable(typeof(NetworkSecurityPerimeterConfigurationList))]
+    [ModelReaderWriterBuildable(typeof(NetworkSecurityPerimeterConfigurationProperties))]
+    [ModelReaderWriterBuildable(typeof(NspAccessRulePropertiesSubscriptionsItem))]
+    [ModelReaderWriterBuildable(typeof(PlatformCapabilities))]
+    [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
+    [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(PrivateLinkResourcesListResult))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RuleListResult))]
+    [ModelReaderWriterBuildable(typeof(Ruleproperties))]
     [ModelReaderWriterBuildable(typeof(SBAuthorizationRuleListResult))]
+    [ModelReaderWriterBuildable(typeof(SBAuthorizationRuleProperties))]
     [ModelReaderWriterBuildable(typeof(SBNamespaceListResult))]
+    [ModelReaderWriterBuildable(typeof(SBNamespaceProperties))]
+    [ModelReaderWriterBuildable(typeof(SBNamespaceUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(SBQueueListResult))]
+    [ModelReaderWriterBuildable(typeof(SBQueueProperties))]
     [ModelReaderWriterBuildable(typeof(SBSubscriptionListResult))]
+    [ModelReaderWriterBuildable(typeof(SBSubscriptionProperties))]
     [ModelReaderWriterBuildable(typeof(SBTopicListResult))]
+    [ModelReaderWriterBuildable(typeof(SBTopicProperties))]
     [ModelReaderWriterBuildable(typeof(ServiceBusAccessKeys))]
     [ModelReaderWriterBuildable(typeof(ServiceBusAuthorizationRuleData))]
     [ModelReaderWriterBuildable(typeof(ServiceBusClientAffineProperties))]
@@ -39,22 +58,35 @@ namespace Azure.ResourceManager.ServiceBus
     [ModelReaderWriterBuildable(typeof(ServiceBusDisasterRecoveryData))]
     [ModelReaderWriterBuildable(typeof(ServiceBusDisasterRecoveryResource))]
     [ModelReaderWriterBuildable(typeof(ServiceBusEncryption))]
+    [ModelReaderWriterBuildable(typeof(ServiceBusFailOverDetail))]
     [ModelReaderWriterBuildable(typeof(ServiceBusFilterAction))]
     [ModelReaderWriterBuildable(typeof(ServiceBusKeyVaultProperties))]
     [ModelReaderWriterBuildable(typeof(ServiceBusNameAvailabilityContent))]
     [ModelReaderWriterBuildable(typeof(ServiceBusNameAvailabilityResult))]
     [ModelReaderWriterBuildable(typeof(ServiceBusNamespaceAuthorizationRuleResource))]
     [ModelReaderWriterBuildable(typeof(ServiceBusNamespaceData))]
+    [ModelReaderWriterBuildable(typeof(ServiceBusNamespaceFailOver))]
     [ModelReaderWriterBuildable(typeof(ServiceBusNamespacePatch))]
+    [ModelReaderWriterBuildable(typeof(ServiceBusNamespaceReplicaLocation))]
     [ModelReaderWriterBuildable(typeof(ServiceBusNamespaceResource))]
     [ModelReaderWriterBuildable(typeof(ServiceBusNetworkRuleSetData))]
     [ModelReaderWriterBuildable(typeof(ServiceBusNetworkRuleSetIPRules))]
     [ModelReaderWriterBuildable(typeof(ServiceBusNetworkRuleSetResource))]
     [ModelReaderWriterBuildable(typeof(ServiceBusNetworkRuleSetVirtualNetworkRules))]
+    [ModelReaderWriterBuildable(typeof(ServiceBusNetworkSecurityPerimeter))]
+    [ModelReaderWriterBuildable(typeof(ServiceBusNetworkSecurityPerimeterConfigurationData))]
+    [ModelReaderWriterBuildable(typeof(ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile))]
+    [ModelReaderWriterBuildable(typeof(ServiceBusNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation))]
+    [ModelReaderWriterBuildable(typeof(ServiceBusNetworkSecurityPerimeterConfigurationResource))]
+    [ModelReaderWriterBuildable(typeof(ServiceBusNspAccessRule))]
+    [ModelReaderWriterBuildable(typeof(ServiceBusNspAccessRuleProperties))]
+    [ModelReaderWriterBuildable(typeof(ServiceBusNspConfigurationProvisioningIssue))]
+    [ModelReaderWriterBuildable(typeof(ServiceBusNspConfigurationProvisioningIssueProperties))]
     [ModelReaderWriterBuildable(typeof(ServiceBusPrivateEndpointConnectionData))]
     [ModelReaderWriterBuildable(typeof(ServiceBusPrivateEndpointConnectionListResult))]
     [ModelReaderWriterBuildable(typeof(ServiceBusPrivateEndpointConnectionResource))]
     [ModelReaderWriterBuildable(typeof(ServiceBusPrivateLinkResource))]
+    [ModelReaderWriterBuildable(typeof(ServiceBusPrivateLinkResourceProperties))]
     [ModelReaderWriterBuildable(typeof(ServiceBusPrivateLinkServiceConnectionState))]
     [ModelReaderWriterBuildable(typeof(ServiceBusQueueAuthorizationRuleResource))]
     [ModelReaderWriterBuildable(typeof(ServiceBusQueueData))]
@@ -69,10 +101,10 @@ namespace Azure.ResourceManager.ServiceBus
     [ModelReaderWriterBuildable(typeof(ServiceBusTopicAuthorizationRuleResource))]
     [ModelReaderWriterBuildable(typeof(ServiceBusTopicData))]
     [ModelReaderWriterBuildable(typeof(ServiceBusTopicResource))]
+    [ModelReaderWriterBuildable(typeof(Subnet))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentityProperties))]
-    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerServiceBusContext : ModelReaderWriterContext
     {
     }

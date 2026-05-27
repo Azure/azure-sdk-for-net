@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.WorkloadsSapVirtualInstance;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
     public readonly partial struct SapVirtualInstanceStatus : IEquatable<SapVirtualInstanceStatus>
     {
         private readonly string _value;
+        /// <summary> SAP system is getting started. </summary>
+        private const string StartingValue = "Starting";
+        /// <summary> SAP system is running. </summary>
+        private const string RunningValue = "Running";
+        /// <summary> SAP system is being stopped. </summary>
+        private const string StoppingValue = "Stopping";
+        /// <summary> SAP system is offline. </summary>
+        private const string OfflineValue = "Offline";
+        /// <summary> SAP system is partially running. </summary>
+        private const string PartiallyRunningValue = "PartiallyRunning";
+        /// <summary> SAP system status is unavailable. </summary>
+        private const string UnavailableValue = "Unavailable";
+        /// <summary> Soft shutdown of SAP system is initiated. </summary>
+        private const string SoftShutdownValue = "SoftShutdown";
 
         /// <summary> Initializes a new instance of <see cref="SapVirtualInstanceStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SapVirtualInstanceStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StartingValue = "Starting";
-        private const string RunningValue = "Running";
-        private const string StoppingValue = "Stopping";
-        private const string OfflineValue = "Offline";
-        private const string PartiallyRunningValue = "PartiallyRunning";
-        private const string UnavailableValue = "Unavailable";
-        private const string SoftShutdownValue = "SoftShutdown";
+            _value = value;
+        }
 
         /// <summary> SAP system is getting started. </summary>
         public static SapVirtualInstanceStatus Starting { get; } = new SapVirtualInstanceStatus(StartingValue);
+
         /// <summary> SAP system is running. </summary>
         public static SapVirtualInstanceStatus Running { get; } = new SapVirtualInstanceStatus(RunningValue);
+
         /// <summary> SAP system is being stopped. </summary>
         public static SapVirtualInstanceStatus Stopping { get; } = new SapVirtualInstanceStatus(StoppingValue);
+
         /// <summary> SAP system is offline. </summary>
         public static SapVirtualInstanceStatus Offline { get; } = new SapVirtualInstanceStatus(OfflineValue);
+
         /// <summary> SAP system is partially running. </summary>
         public static SapVirtualInstanceStatus PartiallyRunning { get; } = new SapVirtualInstanceStatus(PartiallyRunningValue);
+
         /// <summary> SAP system status is unavailable. </summary>
         public static SapVirtualInstanceStatus Unavailable { get; } = new SapVirtualInstanceStatus(UnavailableValue);
+
         /// <summary> Soft shutdown of SAP system is initiated. </summary>
         public static SapVirtualInstanceStatus SoftShutdown { get; } = new SapVirtualInstanceStatus(SoftShutdownValue);
+
         /// <summary> Determines if two <see cref="SapVirtualInstanceStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SapVirtualInstanceStatus left, SapVirtualInstanceStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SapVirtualInstanceStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SapVirtualInstanceStatus left, SapVirtualInstanceStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SapVirtualInstanceStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SapVirtualInstanceStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SapVirtualInstanceStatus(string value) => new SapVirtualInstanceStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SapVirtualInstanceStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SapVirtualInstanceStatus?(string value) => value == null ? null : new SapVirtualInstanceStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SapVirtualInstanceStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SapVirtualInstanceStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -12,7 +12,7 @@ namespace Azure.Data.AppConfiguration.Samples
     /// <summary>
     /// Samples that are used in the associated README.md file.
     /// </summary>
-    public partial class Snippets: SamplesBase<AppConfigurationTestEnvironment>
+    public partial class Snippets : SamplesBase<AppConfigurationTestEnvironment>
     {
         [Test]
         public void CreateClient()

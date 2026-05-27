@@ -2,19 +2,19 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.Sas;
-using NUnit.Framework;
 using Azure.Core;
 using Azure.Identity;
-using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs;
-using System.Collections.Generic;
+using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.DataMovement.Blobs;
 using Azure.Storage.DataMovement.Files.Shares;
 using Azure.Storage.Files.Shares;
+using Azure.Storage.Sas;
+using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Samples
 {

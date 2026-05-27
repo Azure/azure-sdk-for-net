@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> The properties of a provisioned network. </summary>
     public partial class AvsProvisionedNetworkProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AvsProvisionedNetworkProperties"/>. </summary>
         internal AvsProvisionedNetworkProperties()
@@ -54,19 +25,21 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="addressPrefix"> The address prefixes of the provisioned network in CIDR notation. </param>
         /// <param name="networkType"> The type of network provisioned. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AvsProvisionedNetworkProperties(AvsProvisionedNetworkProvisioningState? provisioningState, string addressPrefix, AvsProvisionedNetworkType? networkType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AvsProvisionedNetworkProperties(AvsProvisionedNetworkProvisioningState? provisioningState, string addressPrefix, AvsProvisionedNetworkType? networkType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             AddressPrefix = addressPrefix;
             NetworkType = networkType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The provisioning state of the resource. </summary>
         public AvsProvisionedNetworkProvisioningState? ProvisioningState { get; }
+
         /// <summary> The address prefixes of the provisioned network in CIDR notation. </summary>
         public string AddressPrefix { get; }
+
         /// <summary> The type of network provisioned. </summary>
         public AvsProvisionedNetworkType? NetworkType { get; }
     }

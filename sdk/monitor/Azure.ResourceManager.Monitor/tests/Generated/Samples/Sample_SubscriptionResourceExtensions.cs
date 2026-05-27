@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Monitor.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetMetricAlerts_ListMetricAlertRules()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/listMetricAlert.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-03-01-preview/examples/listMetricAlert.json
             // this example is just showing the usage of "MetricAlerts_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

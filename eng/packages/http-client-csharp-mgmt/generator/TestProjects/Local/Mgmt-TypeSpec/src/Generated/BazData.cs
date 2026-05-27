@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
-    /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
+    /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
     public partial class BazData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

@@ -3,14 +3,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Text;
-using Azure.Core.Pipeline;
-using Azure.Core;
-using Azure.ResourceManager.Resources;
-using System.Threading.Tasks;
 using System.Threading;
-using System.ComponentModel;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Chaos
 {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Chaos
         }
 
         private readonly ClientDiagnostics _chaosTargetTypeTargetTypesClientDiagnostics;
-        private readonly TargetTypesRestOperations _chaosTargetTypeTargetTypesRestClient;
+        private readonly TargetTypes _chaosTargetTypeTargetTypesRestClient;
         private readonly ChaosTargetTypeData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Chaos
         {
             _chaosTargetTypeTargetTypesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Chaos", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string chaosTargetTypeTargetTypesApiVersion);
-            _chaosTargetTypeTargetTypesRestClient = new TargetTypesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, chaosTargetTypeTargetTypesApiVersion);
+            _chaosTargetTypeTargetTypesRestClient = new TargetTypes(_chaosTargetTypeTargetTypesClientDiagnostics, Pipeline, Endpoint, chaosTargetTypeTargetTypesApiVersion);
 #if DEBUG
             ValidateResourceId(Id);
 #endif
@@ -180,23 +180,9 @@ namespace Azure.ResourceManager.Chaos
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ChaosTargetTypeResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual Task<Response<ChaosTargetTypeResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _chaosTargetTypeTargetTypesClientDiagnostics.CreateScope("ChaosTargetTypeResource.Get");
-            scope.Start();
-            try
-            {
-                var response = await _chaosTargetTypeTargetTypesRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                var targetTypeResponse = CustomizationHelper.GetTargetTypeData(response.Value);
-                return Response.FromValue(new ChaosTargetTypeResource(Client, targetTypeResponse), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException();
         }
 
         /// <summary>
@@ -223,21 +209,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ChaosTargetTypeResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _chaosTargetTypeTargetTypesClientDiagnostics.CreateScope("ChaosTargetTypeResource.Get");
-            scope.Start();
-            try
-            {
-                var response = _chaosTargetTypeTargetTypesRestClient.Get(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                var targetTypeResponse = CustomizationHelper.GetTargetTypeData(response.Value);
-                return Response.FromValue(new ChaosTargetTypeResource(Client, targetTypeResponse), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException();
         }
     }
 }

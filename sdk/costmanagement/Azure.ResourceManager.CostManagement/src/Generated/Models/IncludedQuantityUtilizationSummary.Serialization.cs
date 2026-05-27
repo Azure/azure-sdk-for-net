@@ -11,14 +11,56 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CostManagement;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class IncludedQuantityUtilizationSummary : IUtf8JsonSerializable, IJsonModel<IncludedQuantityUtilizationSummary>
+    /// <summary> Included Quantity utilization summary resource. </summary>
+    public partial class IncludedQuantityUtilizationSummary : BenefitUtilizationSummary, IJsonModel<IncludedQuantityUtilizationSummary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IncludedQuantityUtilizationSummary>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IncludedQuantityUtilizationSummary>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeIncludedQuantityUtilizationSummary(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IncludedQuantityUtilizationSummary)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IncludedQuantityUtilizationSummary>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCostManagementContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(IncludedQuantityUtilizationSummary)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<IncludedQuantityUtilizationSummary>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IncludedQuantityUtilizationSummary IPersistableModel<IncludedQuantityUtilizationSummary>.Create(BinaryData data, ModelReaderWriterOptions options) => (IncludedQuantityUtilizationSummary)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<IncludedQuantityUtilizationSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IncludedQuantityUtilizationSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,216 +72,112 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IncludedQuantityUtilizationSummary>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IncludedQuantityUtilizationSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IncludedQuantityUtilizationSummary)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ArmSkuName))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("armSkuName"u8);
-                writer.WriteStringValue(ArmSkuName);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(BenefitId))
-            {
-                writer.WritePropertyName("benefitId"u8);
-                writer.WriteStringValue(BenefitId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(BenefitOrderId))
-            {
-                writer.WritePropertyName("benefitOrderId"u8);
-                writer.WriteStringValue(BenefitOrderId);
-            }
-            if (Optional.IsDefined(BenefitType))
-            {
-                writer.WritePropertyName("benefitType"u8);
-                writer.WriteStringValue(BenefitType.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(UsageOn))
-            {
-                writer.WritePropertyName("usageDate"u8);
-                writer.WriteStringValue(UsageOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(UtilizationPercentage))
-            {
-                writer.WritePropertyName("utilizationPercentage"u8);
-                writer.WriteNumberValue(UtilizationPercentage.Value);
-            }
-            writer.WriteEndObject();
         }
 
-        IncludedQuantityUtilizationSummary IJsonModel<IncludedQuantityUtilizationSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IncludedQuantityUtilizationSummary IJsonModel<IncludedQuantityUtilizationSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (IncludedQuantityUtilizationSummary)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IncludedQuantityUtilizationSummary>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IncludedQuantityUtilizationSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IncludedQuantityUtilizationSummary)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeIncludedQuantityUtilizationSummary(document.RootElement, options);
         }
 
-        internal static IncludedQuantityUtilizationSummary DeserializeIncludedQuantityUtilizationSummary(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static IncludedQuantityUtilizationSummary DeserializeIncludedQuantityUtilizationSummary(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            BillingAccountBenefitKind kind = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            string armSkuName = default;
-            string benefitId = default;
-            string benefitOrderId = default;
-            BillingAccountBenefitKind? benefitType = default;
-            DateTimeOffset? usageDate = default;
-            decimal? utilizationPercentage = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            BillingAccountBenefitKind kind = default;
+            IncludedQuantityUtilizationSummaryProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    kind = new BillingAccountBenefitKind(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("id"u8))
-                {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerCostManagementContext.Default);
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("armSkuName"u8))
-                        {
-                            armSkuName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("benefitId"u8))
-                        {
-                            benefitId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("benefitOrderId"u8))
-                        {
-                            benefitOrderId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("benefitType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            benefitType = new BillingAccountBenefitKind(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("usageDate"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            usageDate = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("utilizationPercentage"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            utilizationPercentage = property0.Value.GetDecimal();
-                            continue;
-                        }
+                        continue;
                     }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerCostManagementContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("kind"u8))
+                {
+                    kind = new BillingAccountBenefitKind(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = IncludedQuantityUtilizationSummaryProperties.DeserializeIncludedQuantityUtilizationSummaryProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new IncludedQuantityUtilizationSummary(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
+                additionalBinaryDataProperties,
                 kind,
-                serializedAdditionalRawData,
-                armSkuName,
-                benefitId,
-                benefitOrderId,
-                benefitType,
-                usageDate,
-                utilizationPercentage);
+                properties);
         }
-
-        BinaryData IPersistableModel<IncludedQuantityUtilizationSummary>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IncludedQuantityUtilizationSummary>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCostManagementContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(IncludedQuantityUtilizationSummary)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        IncludedQuantityUtilizationSummary IPersistableModel<IncludedQuantityUtilizationSummary>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IncludedQuantityUtilizationSummary>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeIncludedQuantityUtilizationSummary(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(IncludedQuantityUtilizationSummary)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<IncludedQuantityUtilizationSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

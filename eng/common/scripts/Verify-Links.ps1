@@ -54,6 +54,11 @@
   .PARAMETER requestTimeoutSec
   The number of seconds before we timeout when sending an individual web request. Default is 15 seconds.
 
+  .PARAMETER allowRelativeLinksFile
+  Path to a file containing file path patterns (supporting wildcards) for which relative links are permitted even when
+  checkLinkGuidance is true. Relative links in matching files are still verified for correctness. One pattern per line;
+  lines beginning with '#' are treated as comments.
+
   .EXAMPLE
   PS> .\Verify-Links.ps1 C:\README.md
 
@@ -80,7 +85,8 @@ param (
   [string] $localGithubClonedRoot = "",
   [string] $localBuildRepoName = "",
   [string] $localBuildRepoPath = "",
-  [string] $requestTimeoutSec = 15
+  [string] $requestTimeoutSec = 15,
+  [string] $allowRelativeLinksFile = (Join-Path $PSScriptRoot "allow-relative-links.txt")
 )
 
 Set-StrictMode -Version 3.0
@@ -120,6 +126,9 @@ function ProcessLink([System.Uri]$linkUri) {
     # See comment in function below for details.
     return ProcessCratesIoLink $linkUri $matches['path']
   }
+  elseif ($linkUri -match '^https?://(www\.)?npmjs\.com/package/.+') {
+    return ProcessNpmLink $linkUri
+  }
   else {
     return ProcessStandardLink $linkUri
   }
@@ -155,6 +164,31 @@ function ProcessCratesIoLink([System.Uri]$linkUri, $path) {
   Invoke-WebRequest -Uri $apiUri -Method GET -UserAgent $userAgent -TimeoutSec $requestTimeoutSec | Out-Null
   
   return $true
+}
+
+function ProcessNpmLink([System.Uri]$linkUri) {
+  # npmjs.com started using Cloudflare which returns 403 and we need to instead check the registry api for existence checks
+  # https://github.com/orgs/community/discussions/174098#discussioncomment-14461226
+  
+  # Handle versioned URLs: https://www.npmjs.com/package/@azure/ai-agents/v/1.1.0 -> https://registry.npmjs.org/@azure/ai-agents/1.1.0
+  # Handle non-versioned URLs: https://www.npmjs.com/package/@azure/ai-agents -> https://registry.npmjs.org/@azure/ai-agents
+  # The regex captures the package name (which may contain a slash for scoped packages) and optionally the version.
+  # Query parameters and URL fragments are excluded from the transformation.
+  $urlString = $linkUri.ToString()
+  if ($urlString -match '^https?://(?:www\.)?npmjs\.com/package/([^?#]+)/v/([^?#]+)') {
+    # Versioned URL: remove the /v/ segment but keep the version
+    $apiUrl = "https://registry.npmjs.org/$($matches[1])/$($matches[2])"
+  }
+  elseif ($urlString -match '^https?://(?:www\.)?npmjs\.com/package/([^?#]+)') {
+    # Non-versioned URL: just replace the domain
+    $apiUrl = "https://registry.npmjs.org/$($matches[1])"
+  }
+  else {
+    # Fallback: use the original URL if it doesn't match expected patterns
+    $apiUrl = $urlString
+  }
+
+  return ProcessStandardLink ([System.Uri]$apiUrl)
 }
 
 function ProcessStandardLink([System.Uri]$linkUri) {
@@ -219,8 +253,9 @@ function ResolveUri ([System.Uri]$referralUri, [string]$link)
 
   $linkUri = [System.Uri]$link;
   # Our link guidelines do not allow relative links so only resolve them when we are not
-  # validating links against our link guidelines (i.e. !$checkLinkGuideance)
-  if ($checkLinkGuidance -and !$linkUri.IsAbsoluteUri) {
+  # validating links against our link guidelines (i.e. !$checkLinkGuidance) or when
+  # relative links are explicitly allowed for the current page.
+  if ($checkLinkGuidance -and !$allowRelativeLinksForCurrentPage -and !$linkUri.IsAbsoluteUri) {
     return $linkUri
   }
 
@@ -400,7 +435,7 @@ function CheckLink ([System.Uri]$linkUri, $allowRetry=$true)
       $linkValid = $false
     }
     # Check if the url is relative links, suppress the archor link validation.
-    if (!$linkUri.IsAbsoluteUri -and !$link.StartsWith("#")) {
+    if (!$allowRelativeLinksForCurrentPage -and !$linkUri.IsAbsoluteUri -and !$link.StartsWith("#")) {
       LogWarning "DO NOT use relative link $linkUri. Please use absolute link instead. Check here for more information: https://aka.ms/azsdk/guideline/links"
       $linkValid = $false
     }
@@ -484,12 +519,41 @@ if ($PSVersionTable.PSVersion.Major -lt 6)
 }
 $ignoreLinks = @();
 if (Test-Path $ignoreLinksFile) {
-  $ignoreLinks = (Get-Content $ignoreLinksFile).Where({ $_.Trim() -ne "" -and !$_.StartsWith("#") })
+  $ignoreLinks = (Get-Content $ignoreLinksFile).Where({ $_.Trim() -ne "" -and !$_.Trim().StartsWith("#") })
+}
+
+$allowRelativeLinkRegexes = @()
+if ($allowRelativeLinksFile -and (Test-Path $allowRelativeLinksFile)) {
+  $allowRelativeLinkRegexes = (Get-Content $allowRelativeLinksFile).Where({ $_.Trim() -ne "" -and !$_.Trim().StartsWith("#") }) | ForEach-Object {
+    $normalizedPattern = $_.Trim().Replace('\', '/')
+    # Convert glob pattern to regex: ** matches anything including separators, * matches within a segment
+    $regexStr = "^.*" + [regex]::Escape($normalizedPattern).Replace("\*\*", ".*").Replace("\*", "[^/]*") + ".*$"
+    @{
+      Pattern = $normalizedPattern
+      Regex   = [System.Text.RegularExpressions.Regex]::new($regexStr, [System.Text.RegularExpressions.RegexOptions]::IgnoreCase)
+    }
+  }
+  Write-Verbose "Loaded $($allowRelativeLinkRegexes.Count) allow-relative-links pattern(s) from '$allowRelativeLinksFile'."
+}
+
+function Test-PageUriMatchesRelativeLinkPattern([System.Uri]$pageUri) {
+  if ($allowRelativeLinkRegexes.Count -eq 0) { return $false }
+  $pathToCheck = if ($pageUri.IsFile) { $pageUri.LocalPath } else { $pageUri.ToString() }
+  # Normalize separators for consistent matching
+  $pathToCheck = $pathToCheck.Replace('\', '/')
+  foreach ($entry in $allowRelativeLinkRegexes) {
+    if ($entry.Regex.IsMatch($pathToCheck)) {
+      Write-Verbose "Page '$pathToCheck' matches allow-relative-links pattern '$($entry.Pattern)'."
+      return $true
+    }
+  }
+  return $false
 }
 
 # Use default hashtable constructor instead of @{} because we need them to be case sensitive
 $checkedPages = New-Object Hashtable
 $checkedLinks = New-Object Hashtable
+$allowRelativeLinksForCurrentPage = $false
 
 if ($inputCacheFile)
 {
@@ -507,7 +571,7 @@ if ($inputCacheFile)
   elseif (Test-Path $inputCacheFile) {
     $cacheContent = Get-Content $inputCacheFile -Raw
   }
-  $goodLinks = $cacheContent.Split("`n").Where({ $_.Trim() -ne "" -and !$_.StartsWith("#") })
+  $goodLinks = $cacheContent.Split("`n").Where({ $_.Trim() -ne "" -and !$_.Trim().StartsWith("#") })
 
   foreach ($goodLink in $goodLinks) {
     $goodLink = $goodLink.Trim()
@@ -538,6 +602,11 @@ while ($pageUrisToCheck.Count -ne 0)
     if ($checkedPages.ContainsKey($pageUri)) { continue }
     $checkedPages[$pageUri] = $true;
 
+    # Allow relative links for pages matching patterns in the allow-relative-links configuration file.
+    # The links themselves are still checked for correctness, only the relative-link restriction is lifted.
+    # Other link guidance (e.g. http vs https, uppercase anchors, locale) continues to apply.
+    if ($checkLinkGuidance -and (Test-PageUriMatchesRelativeLinkPattern $pageUri)) { $allowRelativeLinksForCurrentPage = $true }
+
     [string[]] $linkUris = GetLinks $pageUri
     Write-Host "Checking $($linkUris.Count) links found on page $pageUri";
     $badLinksPerPage = @();
@@ -561,6 +630,8 @@ while ($pageUrisToCheck.Count -ne 0)
   } catch {
     Write-Host "Exception encountered while processing pageUri $pageUri : $($_.Exception)"
     throw
+  } finally {
+    $allowRelativeLinksForCurrentPage = $false
   }
 }
 

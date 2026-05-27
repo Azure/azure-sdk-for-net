@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.IotHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-30</description>
+        /// <description>2025-08-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.IotHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-30</description>
+        /// <description>2025-08-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.IotHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-30</description>
+        /// <description>2025-08-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.IotHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-30</description>
+        /// <description>2025-08-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.IotHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-30</description>
+        /// <description>2025-08-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.IotHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-30</description>
+        /// <description>2025-08-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.IotHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-30</description>
+        /// <description>2025-08-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.IotHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-30</description>
+        /// <description>2025-08-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.IotHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-30</description>
+        /// <description>2025-08-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.IotHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-30</description>
+        /// <description>2025-08-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

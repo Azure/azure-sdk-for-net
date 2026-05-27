@@ -10,16 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
-    /// <summary> Unknown version of AkriConnectorTemplateManagedConfigurationSettings. </summary>
     internal partial class UnknownAkriConnectorTemplateManagedConfigurationSettings : AkriConnectorTemplateManagedConfigurationSettings
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAkriConnectorTemplateManagedConfigurationSettings"/>. </summary>
         /// <param name="managedConfigurationType"> The type of the managed configuration. </param>
-        /// <param name="allocation">
-        /// Allocation settings for the managed configuration.
-        /// Please note <see cref="AkriConnectorTemplateAllocation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AkriConnectorTemplateBucketizedAllocation"/>.
-        /// </param>
+        /// <param name="allocation"> Allocation settings for the managed configuration. </param>
         /// <param name="persistentVolumeClaims"> The persistent volume claims for the managed configuration. </param>
         /// <param name="additionalConfiguration"> Additional configuration for the image of the managed configuration. </param>
         /// <param name="persistentVolumeClaimTemplates">
@@ -28,14 +23,8 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// </param>
         /// <param name="secrets"> Connector secrets that will be mounted onto all connector instances. </param>
         /// <param name="trustSettings"> Trust list for the connector. This is used to specify the certificates that all connector instances should trust. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownAkriConnectorTemplateManagedConfigurationSettings(AkriConnectorTemplateManagedConfigurationType managedConfigurationType, AkriConnectorTemplateAllocation allocation, IList<AkriConnectorTemplatePersistentVolumeClaim> persistentVolumeClaims, IDictionary<string, string> additionalConfiguration, IList<IDictionary<string, BinaryData>> persistentVolumeClaimTemplates, IList<AkriConnectorsSecret> secrets, AkriConnectorTemplateTrustList trustSettings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(managedConfigurationType, allocation, persistentVolumeClaims, additionalConfiguration, persistentVolumeClaimTemplates, secrets, trustSettings, serializedAdditionalRawData)
-        {
-            ManagedConfigurationType = managedConfigurationType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownAkriConnectorTemplateManagedConfigurationSettings"/> for deserialization. </summary>
-        internal UnknownAkriConnectorTemplateManagedConfigurationSettings()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownAkriConnectorTemplateManagedConfigurationSettings(AkriConnectorTemplateManagedConfigurationType managedConfigurationType, AkriConnectorTemplateAllocation allocation, IList<AkriConnectorTemplatePersistentVolumeClaim> persistentVolumeClaims, IDictionary<string, string> additionalConfiguration, IList<IDictionary<string, BinaryData>> persistentVolumeClaimTemplates, IList<AkriConnectorsSecret> secrets, AkriConnectorTemplateTrustList trustSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(managedConfigurationType != default ? managedConfigurationType : "unknown", allocation, persistentVolumeClaims, additionalConfiguration, persistentVolumeClaimTemplates, secrets, trustSettings, additionalBinaryDataProperties)
         {
         }
     }

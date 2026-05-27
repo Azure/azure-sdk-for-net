@@ -1,0 +1,51 @@
+{
+  "type": "object",
+  "properties": {
+    "AzureClients": {
+      "type": "object",
+      "properties": {
+        "KeyVaultAccessControlClient": {
+          "type": "object",
+          "description": "Configuration for KeyVaultAccessControlClient.",
+          "properties": {
+            "VaultBaseUrl": {
+              "type": "string",
+              "format": "uri",
+              "description": "Gets or sets the VaultBaseUrl."
+            },
+            "Credential": {
+              "$ref": "#/definitions/credential"
+            },
+            "Options": {
+              "$ref": "#/definitions/keyVaultAdministrationClientOptions"
+            }
+          }
+        }
+      },
+      "additionalProperties": {
+        "type": "object",
+        "description": "Configuration for a named client instance."
+      }
+    }
+  },
+  "definitions": {
+    "keyVaultAdministrationClientOptions": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/azureOptions"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "Version": {
+              "type": "string"
+            },
+            "DisableChallengeResourceVerification": {
+              "type": "boolean"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

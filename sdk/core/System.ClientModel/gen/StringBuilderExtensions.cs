@@ -26,29 +26,6 @@ internal static class StringBuilderExtensions
         builder.Append(value);
     }
 
-    public static void RemoveLastLine(this StringBuilder builder)
-    {
-        if (builder.Length == 0)
-            return;
-
-        int length = builder.Length;
-
-        int lastNewlineIndex = builder.ToString().LastIndexOf('\n');
-
-        if (lastNewlineIndex == -1)
-        {
-            return;
-        }
-
-        // Handle Windows "\r\n" case
-        if (lastNewlineIndex > 0 && builder[lastNewlineIndex - 1] == '\r')
-        {
-            lastNewlineIndex--;
-        }
-
-        builder.Length = lastNewlineIndex;
-    }
-
     public static void AppendVariableList(this StringBuilder builder, int rank, string elementName)
     {
         for (int i = 0; i < rank; i++)

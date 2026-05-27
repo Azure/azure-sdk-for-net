@@ -22,7 +22,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Clients.Tests
                     new KeyValuePair<string, string>(actualKeyName, "value")
                 });
             var configuration = builder.Build();
-            Assert.AreEqual(configuration.GetWebJobsConnectionStringSection("Key").Value, "value");
+            Assert.That("value", Is.EqualTo(configuration.GetWebJobsConnectionStringSection("Key").Value));
         }
 
         [TestCase("Key")]
@@ -38,8 +38,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Clients.Tests
                 });
             var configuration = builder.Build();
 
-            Assert.AreEqual(configuration.GetWebJobsConnectionStringSection("Key")["Value1"], "value1");
-            Assert.AreEqual(configuration.GetWebJobsConnectionStringSection("Key")["Value2"], "value2");
+            Assert.That("value1", Is.EqualTo(configuration.GetWebJobsConnectionStringSection("Key")["Value1"]));
+            Assert.That("value2", Is.EqualTo(configuration.GetWebJobsConnectionStringSection("Key")["Value2"]));
         }
     }
 }

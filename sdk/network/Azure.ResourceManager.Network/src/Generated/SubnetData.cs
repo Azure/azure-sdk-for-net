@@ -64,7 +64,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="sharingScope"> Set this property to Tenant to allow sharing subnet with other subscriptions in your AAD tenant. This property can only be set if defaultOutboundAccess is set to false, both properties can only be set if subnet is empty. </param>
         /// <param name="defaultOutboundAccess"> Set this property to false to disable default outbound connectivity for all VMs in the subnet. </param>
         /// <param name="ipamPoolPrefixAllocations"> A list of IPAM Pools for allocating IP address prefixes. </param>
-        internal SubnetData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, string addressPrefix, IList<string> addressPrefixes, NetworkSecurityGroupData networkSecurityGroup, RouteTableData routeTable, WritableSubResource natGateway, IList<ServiceEndpointProperties> serviceEndpoints, IList<ServiceEndpointPolicyData> serviceEndpointPolicies, IReadOnlyList<PrivateEndpointData> privateEndpoints, IReadOnlyList<NetworkIPConfiguration> ipConfigurations, IReadOnlyList<NetworkIPConfigurationProfile> ipConfigurationProfiles, IList<WritableSubResource> ipAllocations, IReadOnlyList<ResourceNavigationLink> resourceNavigationLinks, IReadOnlyList<ServiceAssociationLink> serviceAssociationLinks, IList<ServiceDelegation> delegations, string purpose, NetworkProvisioningState? provisioningState, VirtualNetworkPrivateEndpointNetworkPolicy? privateEndpointNetworkPolicy, VirtualNetworkPrivateLinkServiceNetworkPolicy? privateLinkServiceNetworkPolicy, IList<ApplicationGatewayIPConfiguration> applicationGatewayIPConfigurations, SharingScope? sharingScope, bool? defaultOutboundAccess, IList<IpamPoolPrefixAllocation> ipamPoolPrefixAllocations) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="serviceGateway"> Reference to an existing service gateway. </param>
+        internal SubnetData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, string addressPrefix, IList<string> addressPrefixes, NetworkSecurityGroupData networkSecurityGroup, RouteTableData routeTable, WritableSubResource natGateway, IList<ServiceEndpointProperties> serviceEndpoints, IList<ServiceEndpointPolicyData> serviceEndpointPolicies, IReadOnlyList<PrivateEndpointData> privateEndpoints, IReadOnlyList<NetworkIPConfiguration> ipConfigurations, IReadOnlyList<NetworkIPConfigurationProfile> ipConfigurationProfiles, IList<WritableSubResource> ipAllocations, IReadOnlyList<ResourceNavigationLink> resourceNavigationLinks, IReadOnlyList<ServiceAssociationLink> serviceAssociationLinks, IList<ServiceDelegation> delegations, string purpose, NetworkProvisioningState? provisioningState, VirtualNetworkPrivateEndpointNetworkPolicy? privateEndpointNetworkPolicy, VirtualNetworkPrivateLinkServiceNetworkPolicy? privateLinkServiceNetworkPolicy, IList<ApplicationGatewayIPConfiguration> applicationGatewayIPConfigurations, SharingScope? sharingScope, bool? defaultOutboundAccess, IList<IpamPoolPrefixAllocation> ipamPoolPrefixAllocations, WritableSubResource serviceGateway) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             AddressPrefix = addressPrefix;
@@ -89,6 +90,7 @@ namespace Azure.ResourceManager.Network
             SharingScope = sharingScope;
             DefaultOutboundAccess = defaultOutboundAccess;
             IpamPoolPrefixAllocations = ipamPoolPrefixAllocations;
+            ServiceGateway = serviceGateway;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
@@ -172,5 +174,19 @@ namespace Azure.ResourceManager.Network
         /// <summary> A list of IPAM Pools for allocating IP address prefixes. </summary>
         [WirePath("properties.ipamPoolPrefixAllocations")]
         public IList<IpamPoolPrefixAllocation> IpamPoolPrefixAllocations { get; }
+        /// <summary> Reference to an existing service gateway. </summary>
+        internal WritableSubResource ServiceGateway { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.serviceGateway.id")]
+        public ResourceIdentifier ServiceGatewayId
+        {
+            get => ServiceGateway is null ? default : ServiceGateway.Id;
+            set
+            {
+                if (ServiceGateway is null)
+                    ServiceGateway = new WritableSubResource();
+                ServiceGateway.Id = value;
+            }
+        }
     }
 }

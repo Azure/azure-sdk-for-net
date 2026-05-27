@@ -7,54 +7,43 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.AppContainers.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppContainers
 {
     /// <summary>
-    /// A Class representing a ContainerAppManagedEnvironment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerAppManagedEnvironmentResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetContainerAppManagedEnvironmentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetContainerAppManagedEnvironment method.
+    /// A class representing a ContainerAppManagedEnvironment along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerAppManagedEnvironmentResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetContainerAppManagedEnvironments method.
     /// </summary>
     public partial class ContainerAppManagedEnvironmentResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ContainerAppManagedEnvironmentResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="environmentName"> The environmentName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string environmentName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics;
-        private readonly ManagedEnvironmentsRestOperations _containerAppManagedEnvironmentManagedEnvironmentsRestClient;
+        private readonly ClientDiagnostics _containerAppManagedEnvironmentsClientDiagnostics;
+        private readonly ContainerAppManagedEnvironments _containerAppManagedEnvironmentsRestClient;
         private readonly ClientDiagnostics _namespacesClientDiagnostics;
-        private readonly NamespacesRestOperations _namespacesRestClient;
+        private readonly Namespaces _namespacesRestClient;
         private readonly ClientDiagnostics _managedEnvironmentPrivateLinkResourcesClientDiagnostics;
-        private readonly ManagedEnvironmentPrivateLinkResourcesRestOperations _managedEnvironmentPrivateLinkResourcesRestClient;
+        private readonly ManagedEnvironmentPrivateLinkResources _managedEnvironmentPrivateLinkResourcesRestClient;
         private readonly ClientDiagnostics _managedEnvironmentUsagesClientDiagnostics;
-        private readonly ManagedEnvironmentUsagesRestOperations _managedEnvironmentUsagesRestClient;
+        private readonly ManagedEnvironmentUsages _managedEnvironmentUsagesRestClient;
         private readonly ContainerAppManagedEnvironmentData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.App/managedEnvironments";
 
-        /// <summary> Initializes a new instance of the <see cref="ContainerAppManagedEnvironmentResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ContainerAppManagedEnvironmentResource for mocking. </summary>
         protected ContainerAppManagedEnvironmentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ContainerAppManagedEnvironmentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppManagedEnvironmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ContainerAppManagedEnvironmentResource(ArmClient client, ContainerAppManagedEnvironmentData data) : this(client, data.Id)
@@ -63,705 +52,98 @@ namespace Azure.ResourceManager.AppContainers
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ContainerAppManagedEnvironmentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppManagedEnvironmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ContainerAppManagedEnvironmentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string containerAppManagedEnvironmentManagedEnvironmentsApiVersion);
-            _containerAppManagedEnvironmentManagedEnvironmentsRestClient = new ManagedEnvironmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppManagedEnvironmentManagedEnvironmentsApiVersion);
-            _namespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _namespacesRestClient = new NamespacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _managedEnvironmentPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _managedEnvironmentPrivateLinkResourcesRestClient = new ManagedEnvironmentPrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _managedEnvironmentUsagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _managedEnvironmentUsagesRestClient = new ManagedEnvironmentUsagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string containerAppManagedEnvironmentApiVersion);
+            _containerAppManagedEnvironmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
+            _containerAppManagedEnvironmentsRestClient = new ContainerAppManagedEnvironments(_containerAppManagedEnvironmentsClientDiagnostics, Pipeline, Endpoint, containerAppManagedEnvironmentApiVersion ?? "2025-10-02-preview");
+            _namespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
+            _namespacesRestClient = new Namespaces(_namespacesClientDiagnostics, Pipeline, Endpoint, containerAppManagedEnvironmentApiVersion ?? "2025-10-02-preview");
+            _managedEnvironmentPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
+            _managedEnvironmentPrivateLinkResourcesRestClient = new ManagedEnvironmentPrivateLinkResources(_managedEnvironmentPrivateLinkResourcesClientDiagnostics, Pipeline, Endpoint, containerAppManagedEnvironmentApiVersion ?? "2025-10-02-preview");
+            _managedEnvironmentUsagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
+            _managedEnvironmentUsagesRestClient = new ManagedEnvironmentUsages(_managedEnvironmentUsagesClientDiagnostics, Pipeline, Endpoint, containerAppManagedEnvironmentApiVersion ?? "2025-10-02-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual ContainerAppManagedEnvironmentData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="environmentName"> The environmentName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string environmentName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of ContainerAppManagedEnvironmentCertificateResources in the ContainerAppManagedEnvironment. </summary>
-        /// <returns> An object representing collection of ContainerAppManagedEnvironmentCertificateResources and their operations over a ContainerAppManagedEnvironmentCertificateResource. </returns>
-        public virtual ContainerAppManagedEnvironmentCertificateCollection GetContainerAppManagedEnvironmentCertificates()
-        {
-            return GetCachedClient(client => new ContainerAppManagedEnvironmentCertificateCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get the specified Certificate.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/certificates/{certificateName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Certificates_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppManagedEnvironmentCertificateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="certificateName"> Name of the Certificate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ContainerAppManagedEnvironmentCertificateResource>> GetContainerAppManagedEnvironmentCertificateAsync(string certificateName, CancellationToken cancellationToken = default)
-        {
-            return await GetContainerAppManagedEnvironmentCertificates().GetAsync(certificateName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the specified Certificate.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/certificates/{certificateName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Certificates_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppManagedEnvironmentCertificateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="certificateName"> Name of the Certificate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ContainerAppManagedEnvironmentCertificateResource> GetContainerAppManagedEnvironmentCertificate(string certificateName, CancellationToken cancellationToken = default)
-        {
-            return GetContainerAppManagedEnvironmentCertificates().Get(certificateName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ContainerAppManagedEnvironmentDaprComponentResources in the ContainerAppManagedEnvironment. </summary>
-        /// <returns> An object representing collection of ContainerAppManagedEnvironmentDaprComponentResources and their operations over a ContainerAppManagedEnvironmentDaprComponentResource. </returns>
-        public virtual ContainerAppManagedEnvironmentDaprComponentCollection GetContainerAppManagedEnvironmentDaprComponents()
-        {
-            return GetCachedClient(client => new ContainerAppManagedEnvironmentDaprComponentCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a dapr component.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents/{componentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DaprComponents_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppManagedEnvironmentDaprComponentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="componentName"> Name of the Dapr Component. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ContainerAppManagedEnvironmentDaprComponentResource>> GetContainerAppManagedEnvironmentDaprComponentAsync(string componentName, CancellationToken cancellationToken = default)
-        {
-            return await GetContainerAppManagedEnvironmentDaprComponents().GetAsync(componentName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a dapr component.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents/{componentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DaprComponents_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppManagedEnvironmentDaprComponentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="componentName"> Name of the Dapr Component. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ContainerAppManagedEnvironmentDaprComponentResource> GetContainerAppManagedEnvironmentDaprComponent(string componentName, CancellationToken cancellationToken = default)
-        {
-            return GetContainerAppManagedEnvironmentDaprComponents().Get(componentName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ContainerAppManagedEnvironmentDetectorResources in the ContainerAppManagedEnvironment. </summary>
-        /// <returns> An object representing collection of ContainerAppManagedEnvironmentDetectorResources and their operations over a ContainerAppManagedEnvironmentDetectorResource. </returns>
-        public virtual ContainerAppManagedEnvironmentDetectorCollection GetContainerAppManagedEnvironmentDetectors()
-        {
-            return GetCachedClient(client => new ContainerAppManagedEnvironmentDetectorCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get the diagnostics data for a Managed Environment used to host container apps.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/detectors/{detectorName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedEnvironmentDiagnostics_GetDetector</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppManagedEnvironmentDetectorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="detectorName"> Name of the Managed Environment detector. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ContainerAppManagedEnvironmentDetectorResource>> GetContainerAppManagedEnvironmentDetectorAsync(string detectorName, CancellationToken cancellationToken = default)
-        {
-            return await GetContainerAppManagedEnvironmentDetectors().GetAsync(detectorName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the diagnostics data for a Managed Environment used to host container apps.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/detectors/{detectorName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedEnvironmentDiagnostics_GetDetector</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppManagedEnvironmentDetectorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="detectorName"> Name of the Managed Environment detector. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ContainerAppManagedEnvironmentDetectorResource> GetContainerAppManagedEnvironmentDetector(string detectorName, CancellationToken cancellationToken = default)
-        {
-            return GetContainerAppManagedEnvironmentDetectors().Get(detectorName, cancellationToken);
-        }
-
-        /// <summary> Gets an object representing a ContainerAppManagedEnvironmentDetectorResourcePropertyResource along with the instance operations that can be performed on it in the ContainerAppManagedEnvironment. </summary>
-        /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyResource"/> object. </returns>
-        public virtual ContainerAppManagedEnvironmentDetectorResourcePropertyResource GetContainerAppManagedEnvironmentDetectorResourceProperty()
-        {
-            return new ContainerAppManagedEnvironmentDetectorResourcePropertyResource(Client, Id.AppendChildResource("detectorProperties", "rootApi"));
-        }
-
-        /// <summary> Gets a collection of JavaComponentResources in the ContainerAppManagedEnvironment. </summary>
-        /// <returns> An object representing collection of JavaComponentResources and their operations over a JavaComponentResource. </returns>
-        public virtual JavaComponentCollection GetJavaComponents()
-        {
-            return GetCachedClient(client => new JavaComponentCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a Java Component.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/javaComponents/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JavaComponents_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="JavaComponentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> Name of the Java Component. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<JavaComponentResource>> GetJavaComponentAsync(string name, CancellationToken cancellationToken = default)
-        {
-            return await GetJavaComponents().GetAsync(name, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a Java Component.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/javaComponents/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JavaComponents_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="JavaComponentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> Name of the Java Component. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<JavaComponentResource> GetJavaComponent(string name, CancellationToken cancellationToken = default)
-        {
-            return GetJavaComponents().Get(name, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ContainerAppManagedCertificateResources in the ContainerAppManagedEnvironment. </summary>
-        /// <returns> An object representing collection of ContainerAppManagedCertificateResources and their operations over a ContainerAppManagedCertificateResource. </returns>
-        public virtual ContainerAppManagedCertificateCollection GetContainerAppManagedCertificates()
-        {
-            return GetCachedClient(client => new ContainerAppManagedCertificateCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get the specified Managed Certificate.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/managedCertificates/{managedCertificateName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedCertificates_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppManagedCertificateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="managedCertificateName"> Name of the Managed Certificate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managedCertificateName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managedCertificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ContainerAppManagedCertificateResource>> GetContainerAppManagedCertificateAsync(string managedCertificateName, CancellationToken cancellationToken = default)
-        {
-            return await GetContainerAppManagedCertificates().GetAsync(managedCertificateName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the specified Managed Certificate.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/managedCertificates/{managedCertificateName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedCertificates_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppManagedCertificateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="managedCertificateName"> Name of the Managed Certificate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managedCertificateName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managedCertificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ContainerAppManagedCertificateResource> GetContainerAppManagedCertificate(string managedCertificateName, CancellationToken cancellationToken = default)
-        {
-            return GetContainerAppManagedCertificates().Get(managedCertificateName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ContainerAppPrivateEndpointConnectionResources in the ContainerAppManagedEnvironment. </summary>
-        /// <returns> An object representing collection of ContainerAppPrivateEndpointConnectionResources and their operations over a ContainerAppPrivateEndpointConnectionResource. </returns>
-        public virtual ContainerAppPrivateEndpointConnectionCollection GetContainerAppPrivateEndpointConnections()
-        {
-            return GetCachedClient(client => new ContainerAppPrivateEndpointConnectionCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a private endpoint connection for a given managed environment.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedEnvironmentPrivateEndpointConnections_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppPrivateEndpointConnectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ContainerAppPrivateEndpointConnectionResource>> GetContainerAppPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
-        {
-            return await GetContainerAppPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a private endpoint connection for a given managed environment.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedEnvironmentPrivateEndpointConnections_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppPrivateEndpointConnectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ContainerAppPrivateEndpointConnectionResource> GetContainerAppPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
-        {
-            return GetContainerAppPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ContainerAppHttpRouteConfigResources in the ContainerAppManagedEnvironment. </summary>
-        /// <returns> An object representing collection of ContainerAppHttpRouteConfigResources and their operations over a ContainerAppHttpRouteConfigResource. </returns>
-        public virtual ContainerAppHttpRouteConfigCollection GetContainerAppHttpRouteConfigs()
-        {
-            return GetCachedClient(client => new ContainerAppHttpRouteConfigCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get the specified Http Route Config.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/httpRouteConfigs/{httpRouteName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HttpRouteConfig_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppHttpRouteConfigResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="httpRouteName"> Name of the Http Route Config Resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="httpRouteName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="httpRouteName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ContainerAppHttpRouteConfigResource>> GetContainerAppHttpRouteConfigAsync(string httpRouteName, CancellationToken cancellationToken = default)
-        {
-            return await GetContainerAppHttpRouteConfigs().GetAsync(httpRouteName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the specified Http Route Config.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/httpRouteConfigs/{httpRouteName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HttpRouteConfig_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppHttpRouteConfigResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="httpRouteName"> Name of the Http Route Config Resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="httpRouteName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="httpRouteName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ContainerAppHttpRouteConfigResource> GetContainerAppHttpRouteConfig(string httpRouteName, CancellationToken cancellationToken = default)
-        {
-            return GetContainerAppHttpRouteConfigs().Get(httpRouteName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ContainerAppMaintenanceConfigurationResources in the ContainerAppManagedEnvironment. </summary>
-        /// <returns> An object representing collection of ContainerAppMaintenanceConfigurationResources and their operations over a ContainerAppMaintenanceConfigurationResource. </returns>
-        public virtual ContainerAppMaintenanceConfigurationCollection GetContainerAppMaintenanceConfigurations()
-        {
-            return GetCachedClient(client => new ContainerAppMaintenanceConfigurationCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the maintenance configuration of a ManagedEnvironment .
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/maintenanceConfigurations/{configName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MaintenanceConfigurations_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppMaintenanceConfigurationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="configName"> The name of the maintenance configuration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ContainerAppMaintenanceConfigurationResource>> GetContainerAppMaintenanceConfigurationAsync(string configName, CancellationToken cancellationToken = default)
-        {
-            return await GetContainerAppMaintenanceConfigurations().GetAsync(configName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the maintenance configuration of a ManagedEnvironment .
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/maintenanceConfigurations/{configName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MaintenanceConfigurations_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppMaintenanceConfigurationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="configName"> The name of the maintenance configuration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ContainerAppMaintenanceConfigurationResource> GetContainerAppMaintenanceConfiguration(string configName, CancellationToken cancellationToken = default)
-        {
-            return GetContainerAppMaintenanceConfigurations().Get(configName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ContainerAppManagedEnvironmentStorageResources in the ContainerAppManagedEnvironment. </summary>
-        /// <returns> An object representing collection of ContainerAppManagedEnvironmentStorageResources and their operations over a ContainerAppManagedEnvironmentStorageResource. </returns>
-        public virtual ContainerAppManagedEnvironmentStorageCollection GetContainerAppManagedEnvironmentStorages()
-        {
-            return GetCachedClient(client => new ContainerAppManagedEnvironmentStorageCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get storage for a managedEnvironment.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/storages/{storageName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedEnvironmentsStorages_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppManagedEnvironmentStorageResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="storageName"> Name of the storage. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="storageName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ContainerAppManagedEnvironmentStorageResource>> GetContainerAppManagedEnvironmentStorageAsync(string storageName, CancellationToken cancellationToken = default)
-        {
-            return await GetContainerAppManagedEnvironmentStorages().GetAsync(storageName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get storage for a managedEnvironment.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/storages/{storageName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedEnvironmentsStorages_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppManagedEnvironmentStorageResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="storageName"> Name of the storage. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="storageName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ContainerAppManagedEnvironmentStorageResource> GetContainerAppManagedEnvironmentStorage(string storageName, CancellationToken cancellationToken = default)
-        {
-            return GetContainerAppManagedEnvironmentStorages().Get(storageName, cancellationToken);
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Get the properties of a Managed Environment used to host container apps.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedEnvironments_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedEnvironments_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppManagedEnvironmentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerAppManagedEnvironmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ContainerAppManagedEnvironmentResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentResource.Get");
+            using DiagnosticScope scope = _containerAppManagedEnvironmentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentResource.Get");
             scope.Start();
             try
             {
-                var response = await _containerAppManagedEnvironmentManagedEnvironmentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _containerAppManagedEnvironmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ContainerAppManagedEnvironmentData> response = Response.FromValue(ContainerAppManagedEnvironmentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ContainerAppManagedEnvironmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -775,118 +157,42 @@ namespace Azure.ResourceManager.AppContainers
         /// Get the properties of a Managed Environment used to host container apps.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedEnvironments_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedEnvironments_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppManagedEnvironmentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerAppManagedEnvironmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ContainerAppManagedEnvironmentResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentResource.Get");
+            using DiagnosticScope scope = _containerAppManagedEnvironmentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentResource.Get");
             scope.Start();
             try
             {
-                var response = _containerAppManagedEnvironmentManagedEnvironmentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _containerAppManagedEnvironmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ContainerAppManagedEnvironmentData> response = Response.FromValue(ContainerAppManagedEnvironmentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ContainerAppManagedEnvironmentResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete a Managed Environment if it does not have any container apps.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedEnvironments_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppManagedEnvironmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _containerAppManagedEnvironmentManagedEnvironmentsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AppContainersArmOperation(_containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics, Pipeline, _containerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete a Managed Environment if it does not have any container apps.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedEnvironments_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppManagedEnvironmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = _containerAppManagedEnvironmentManagedEnvironmentsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new AppContainersArmOperation(_containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics, Pipeline, _containerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {
@@ -899,20 +205,20 @@ namespace Azure.ResourceManager.AppContainers
         /// Patches a Managed Environment using JSON Merge Patch
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedEnvironments_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedEnvironments_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppManagedEnvironmentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerAppManagedEnvironmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -924,14 +230,27 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentResource.Update");
+            using DiagnosticScope scope = _containerAppManagedEnvironmentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentResource.Update");
             scope.Start();
             try
             {
-                var response = await _containerAppManagedEnvironmentManagedEnvironmentsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppContainersArmOperation<ContainerAppManagedEnvironmentResource>(new ContainerAppManagedEnvironmentOperationSource(Client), _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics, Pipeline, _containerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _containerAppManagedEnvironmentsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerAppManagedEnvironmentData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                AppContainersArmOperation<ContainerAppManagedEnvironmentResource> operation = new AppContainersArmOperation<ContainerAppManagedEnvironmentResource>(
+                    new ContainerAppManagedEnvironmentOperationSource(Client),
+                    _containerAppManagedEnvironmentsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -945,20 +264,20 @@ namespace Azure.ResourceManager.AppContainers
         /// Patches a Managed Environment using JSON Merge Patch
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedEnvironments_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedEnvironments_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppManagedEnvironmentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerAppManagedEnvironmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -970,14 +289,125 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentResource.Update");
+            using DiagnosticScope scope = _containerAppManagedEnvironmentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentResource.Update");
             scope.Start();
             try
             {
-                var response = _containerAppManagedEnvironmentManagedEnvironmentsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
-                var operation = new AppContainersArmOperation<ContainerAppManagedEnvironmentResource>(new ContainerAppManagedEnvironmentOperationSource(Client), _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics, Pipeline, _containerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _containerAppManagedEnvironmentsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerAppManagedEnvironmentData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                AppContainersArmOperation<ContainerAppManagedEnvironmentResource> operation = new AppContainersArmOperation<ContainerAppManagedEnvironmentResource>(
+                    new ContainerAppManagedEnvironmentOperationSource(Client),
+                    _containerAppManagedEnvironmentsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a Managed Environment if it does not have any container apps.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedEnvironments_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerAppManagedEnvironmentResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _containerAppManagedEnvironmentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _containerAppManagedEnvironmentsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                AppContainersArmOperation operation = new AppContainersArmOperation(_containerAppManagedEnvironmentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a Managed Environment if it does not have any container apps.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedEnvironments_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerAppManagedEnvironmentResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _containerAppManagedEnvironmentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _containerAppManagedEnvironmentsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                AppContainersArmOperation operation = new AppContainersArmOperation(_containerAppManagedEnvironmentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -991,152 +421,20 @@ namespace Azure.ResourceManager.AppContainers
         /// Checks if resource name is available.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/getAuthtoken</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/checkNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedEnvironments_GetAuthToken</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedEnvironments_CheckNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppManagedEnvironmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ContainerAppEnvironmentAuthToken>> GetAuthTokenAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentResource.GetAuthToken");
-            scope.Start();
-            try
-            {
-                var response = await _containerAppManagedEnvironmentManagedEnvironmentsRestClient.GetAuthTokenAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Checks if resource name is available.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/getAuthtoken</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedEnvironments_GetAuthToken</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppManagedEnvironmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ContainerAppEnvironmentAuthToken> GetAuthToken(CancellationToken cancellationToken = default)
-        {
-            using var scope = _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentResource.GetAuthToken");
-            scope.Start();
-            try
-            {
-                var response = _containerAppManagedEnvironmentManagedEnvironmentsRestClient.GetAuthToken(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get all workload Profile States for a Managed Environment.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/workloadProfileStates</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedEnvironments_ListWorkloadProfileStates</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppManagedEnvironmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerAppWorkloadProfileState"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ContainerAppWorkloadProfileState> GetWorkloadProfileStatesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateListWorkloadProfileStatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateListWorkloadProfileStatesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ContainerAppWorkloadProfileState.DeserializeContainerAppWorkloadProfileState(e), _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics, Pipeline, "ContainerAppManagedEnvironmentResource.GetWorkloadProfileStates", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Get all workload Profile States for a Managed Environment.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/workloadProfileStates</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedEnvironments_ListWorkloadProfileStates</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppManagedEnvironmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerAppWorkloadProfileState"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ContainerAppWorkloadProfileState> GetWorkloadProfileStates(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateListWorkloadProfileStatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateListWorkloadProfileStatesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ContainerAppWorkloadProfileState.DeserializeContainerAppWorkloadProfileState(e), _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics, Pipeline, "ContainerAppManagedEnvironmentResource.GetWorkloadProfileStates", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Checks if resource name is available.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Namespaces_CheckNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerAppManagedEnvironmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1147,11 +445,21 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _namespacesClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentResource.CheckContainerAppNameAvailability");
+            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentResource.CheckContainerAppNameAvailability");
             scope.Start();
             try
             {
-                var response = await _namespacesRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _namespacesRestClient.CreateCheckContainerAppNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerAppNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ContainerAppNameAvailabilityResult> response = Response.FromValue(ContainerAppNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -1165,16 +473,20 @@ namespace Azure.ResourceManager.AppContainers
         /// Checks if resource name is available.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/checkNameAvailability</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/checkNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Namespaces_CheckNameAvailability</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedEnvironments_CheckNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerAppManagedEnvironmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1185,11 +497,117 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _namespacesClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentResource.CheckContainerAppNameAvailability");
+            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentResource.CheckContainerAppNameAvailability");
             scope.Start();
             try
             {
-                var response = _namespacesRestClient.CheckNameAvailability(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _namespacesRestClient.CreateCheckContainerAppNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerAppNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ContainerAppNameAvailabilityResult> response = Response.FromValue(ContainerAppNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks if resource name is available.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/getAuthtoken. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedEnvironments_GetAuthToken. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerAppManagedEnvironmentResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ContainerAppEnvironmentAuthToken>> GetAuthTokenAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _containerAppManagedEnvironmentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentResource.GetAuthToken");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _containerAppManagedEnvironmentsRestClient.CreateGetAuthTokenRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ContainerAppEnvironmentAuthToken> response = Response.FromValue(ContainerAppEnvironmentAuthToken.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks if resource name is available.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/getAuthtoken. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedEnvironments_GetAuthToken. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerAppManagedEnvironmentResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ContainerAppEnvironmentAuthToken> GetAuthToken(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _containerAppManagedEnvironmentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentResource.GetAuthToken");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _containerAppManagedEnvironmentsRestClient.CreateGetAuthTokenRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ContainerAppEnvironmentAuthToken> response = Response.FromValue(ContainerAppEnvironmentAuthToken.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -1203,42 +621,58 @@ namespace Azure.ResourceManager.AppContainers
         /// List private link resources for a given managed environment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/privateLinkResources</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/privateLinkResources. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedEnvironmentPrivateLinkResources_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedEnvironments_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerAppManagedEnvironmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerAppPrivateLink"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ContainerAppPrivateLink"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerAppPrivateLink> GetManagedEnvironmentPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedEnvironmentPrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedEnvironmentPrivateLinkResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ContainerAppPrivateLink.DeserializeContainerAppPrivateLink(e), _managedEnvironmentPrivateLinkResourcesClientDiagnostics, Pipeline, "ContainerAppManagedEnvironmentResource.GetManagedEnvironmentPrivateLinkResources", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ManagedEnvironmentPrivateLinkResourcesGetManagedEnvironmentPrivateLinkResourcesAsyncCollectionResultOfT(
+                _managedEnvironmentPrivateLinkResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ContainerAppManagedEnvironmentResource.GetManagedEnvironmentPrivateLinkResources");
         }
 
         /// <summary>
         /// List private link resources for a given managed environment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/privateLinkResources</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/privateLinkResources. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedEnvironmentPrivateLinkResources_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedEnvironments_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerAppManagedEnvironmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1246,51 +680,151 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="ContainerAppPrivateLink"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerAppPrivateLink> GetManagedEnvironmentPrivateLinkResources(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedEnvironmentPrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedEnvironmentPrivateLinkResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ContainerAppPrivateLink.DeserializeContainerAppPrivateLink(e), _managedEnvironmentPrivateLinkResourcesClientDiagnostics, Pipeline, "ContainerAppManagedEnvironmentResource.GetManagedEnvironmentPrivateLinkResources", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ManagedEnvironmentPrivateLinkResourcesGetManagedEnvironmentPrivateLinkResourcesCollectionResultOfT(
+                _managedEnvironmentPrivateLinkResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ContainerAppManagedEnvironmentResource.GetManagedEnvironmentPrivateLinkResources");
         }
 
         /// <summary>
-        /// Gets the current usage information as well as the limits for environment.
+        /// Get all workload Profile States for a Managed Environment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/usages</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/workloadProfileStates. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedEnvironmentUsages_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedEnvironments_ListWorkloadProfileStates. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerAppManagedEnvironmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerAppUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ContainerAppUsage> GetManagedEnvironmentUsagesAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerAppWorkloadProfileState"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ContainerAppWorkloadProfileState> GetWorkloadProfileStatesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedEnvironmentUsagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedEnvironmentUsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ContainerAppUsage.DeserializeContainerAppUsage(e), _managedEnvironmentUsagesClientDiagnostics, Pipeline, "ContainerAppManagedEnvironmentResource.GetManagedEnvironmentUsages", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ContainerAppManagedEnvironmentsGetWorkloadProfileStatesAsyncCollectionResultOfT(
+                _containerAppManagedEnvironmentsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ContainerAppManagedEnvironmentResource.GetWorkloadProfileStates");
+        }
+
+        /// <summary>
+        /// Get all workload Profile States for a Managed Environment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/workloadProfileStates. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedEnvironments_ListWorkloadProfileStates. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerAppManagedEnvironmentResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ContainerAppWorkloadProfileState"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ContainerAppWorkloadProfileState> GetWorkloadProfileStates(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ContainerAppManagedEnvironmentsGetWorkloadProfileStatesCollectionResultOfT(
+                _containerAppManagedEnvironmentsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ContainerAppManagedEnvironmentResource.GetWorkloadProfileStates");
         }
 
         /// <summary>
         /// Gets the current usage information as well as the limits for environment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/usages</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/usages. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedEnvironmentUsages_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedEnvironmentUsagesOperationGroup_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerAppManagedEnvironmentResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ContainerAppUsage"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ContainerAppUsage> GetManagedEnvironmentUsagesAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ManagedEnvironmentUsagesGetManagedEnvironmentUsagesAsyncCollectionResultOfT(
+                _managedEnvironmentUsagesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ContainerAppManagedEnvironmentResource.GetManagedEnvironmentUsages");
+        }
+
+        /// <summary>
+        /// Gets the current usage information as well as the limits for environment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/usages. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedEnvironmentUsagesOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContainerAppManagedEnvironmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1298,32 +832,20 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="ContainerAppUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerAppUsage> GetManagedEnvironmentUsages(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedEnvironmentUsagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedEnvironmentUsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ContainerAppUsage.DeserializeContainerAppUsage(e), _managedEnvironmentUsagesClientDiagnostics, Pipeline, "ContainerAppManagedEnvironmentResource.GetManagedEnvironmentUsages", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ManagedEnvironmentUsagesGetManagedEnvironmentUsagesCollectionResultOfT(
+                _managedEnvironmentUsagesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ContainerAppManagedEnvironmentResource.GetManagedEnvironmentUsages");
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedEnvironments_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppManagedEnvironmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1333,28 +855,34 @@ namespace Azure.ResourceManager.AppContainers
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentResource.AddTag");
+            using DiagnosticScope scope = _containerAppManagedEnvironmentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _containerAppManagedEnvironmentManagedEnvironmentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ContainerAppManagedEnvironmentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _containerAppManagedEnvironmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<ContainerAppManagedEnvironmentData> response = Response.FromValue(ContainerAppManagedEnvironmentData.FromResponse(result), result);
+                    return Response.FromValue(new ContainerAppManagedEnvironmentResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ContainerAppManagedEnvironmentData(current.Location);
-                    foreach (var tag in current.Tags)
+                    ContainerAppManagedEnvironmentData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ContainerAppManagedEnvironmentData patch = new ContainerAppManagedEnvironmentData(current.Location);
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<ContainerAppManagedEnvironmentResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1365,27 +893,7 @@ namespace Azure.ResourceManager.AppContainers
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedEnvironments_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppManagedEnvironmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1395,28 +903,34 @@ namespace Azure.ResourceManager.AppContainers
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentResource.AddTag");
+            using DiagnosticScope scope = _containerAppManagedEnvironmentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _containerAppManagedEnvironmentManagedEnvironmentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new ContainerAppManagedEnvironmentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _containerAppManagedEnvironmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<ContainerAppManagedEnvironmentData> response = Response.FromValue(ContainerAppManagedEnvironmentData.FromResponse(result), result);
+                    return Response.FromValue(new ContainerAppManagedEnvironmentResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ContainerAppManagedEnvironmentData(current.Location);
-                    foreach (var tag in current.Tags)
+                    ContainerAppManagedEnvironmentData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ContainerAppManagedEnvironmentData patch = new ContainerAppManagedEnvironmentData(current.Location);
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<ContainerAppManagedEnvironmentResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1427,53 +941,39 @@ namespace Azure.ResourceManager.AppContainers
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedEnvironments_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppManagedEnvironmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<ContainerAppManagedEnvironmentResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentResource.SetTags");
+            using DiagnosticScope scope = _containerAppManagedEnvironmentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _containerAppManagedEnvironmentManagedEnvironmentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ContainerAppManagedEnvironmentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _containerAppManagedEnvironmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<ContainerAppManagedEnvironmentData> response = Response.FromValue(ContainerAppManagedEnvironmentData.FromResponse(result), result);
+                    return Response.FromValue(new ContainerAppManagedEnvironmentResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ContainerAppManagedEnvironmentData(current.Location);
+                    ContainerAppManagedEnvironmentData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ContainerAppManagedEnvironmentData patch = new ContainerAppManagedEnvironmentData(current.Location);
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<ContainerAppManagedEnvironmentResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1484,53 +984,39 @@ namespace Azure.ResourceManager.AppContainers
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedEnvironments_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppManagedEnvironmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<ContainerAppManagedEnvironmentResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentResource.SetTags");
+            using DiagnosticScope scope = _containerAppManagedEnvironmentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _containerAppManagedEnvironmentManagedEnvironmentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new ContainerAppManagedEnvironmentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _containerAppManagedEnvironmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<ContainerAppManagedEnvironmentData> response = Response.FromValue(ContainerAppManagedEnvironmentData.FromResponse(result), result);
+                    return Response.FromValue(new ContainerAppManagedEnvironmentResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ContainerAppManagedEnvironmentData(current.Location);
+                    ContainerAppManagedEnvironmentData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ContainerAppManagedEnvironmentData patch = new ContainerAppManagedEnvironmentData(current.Location);
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<ContainerAppManagedEnvironmentResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1541,27 +1027,7 @@ namespace Azure.ResourceManager.AppContainers
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedEnvironments_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppManagedEnvironmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -1569,28 +1035,34 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentResource.RemoveTag");
+            using DiagnosticScope scope = _containerAppManagedEnvironmentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _containerAppManagedEnvironmentManagedEnvironmentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ContainerAppManagedEnvironmentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _containerAppManagedEnvironmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<ContainerAppManagedEnvironmentData> response = Response.FromValue(ContainerAppManagedEnvironmentData.FromResponse(result), result);
+                    return Response.FromValue(new ContainerAppManagedEnvironmentResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ContainerAppManagedEnvironmentData(current.Location);
-                    foreach (var tag in current.Tags)
+                    ContainerAppManagedEnvironmentData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ContainerAppManagedEnvironmentData patch = new ContainerAppManagedEnvironmentData(current.Location);
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<ContainerAppManagedEnvironmentResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1601,27 +1073,7 @@ namespace Azure.ResourceManager.AppContainers
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedEnvironments_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppManagedEnvironmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -1629,28 +1081,34 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentResource.RemoveTag");
+            using DiagnosticScope scope = _containerAppManagedEnvironmentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _containerAppManagedEnvironmentManagedEnvironmentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new ContainerAppManagedEnvironmentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _containerAppManagedEnvironmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<ContainerAppManagedEnvironmentData> response = Response.FromValue(ContainerAppManagedEnvironmentData.FromResponse(result), result);
+                    return Response.FromValue(new ContainerAppManagedEnvironmentResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ContainerAppManagedEnvironmentData(current.Location);
-                    foreach (var tag in current.Tags)
+                    ContainerAppManagedEnvironmentData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ContainerAppManagedEnvironmentData patch = new ContainerAppManagedEnvironmentData(current.Location);
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<ContainerAppManagedEnvironmentResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1659,6 +1117,376 @@ namespace Azure.ResourceManager.AppContainers
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of DotNetComponents in the <see cref="ContainerAppManagedEnvironmentResource"/>. </summary>
+        /// <returns> An object representing collection of DotNetComponents and their operations over a DotNetComponentResource. </returns>
+        public virtual DotNetComponentCollection GetDotNetComponents()
+        {
+            return GetCachedClient(client => new DotNetComponentCollection(client, Id));
+        }
+
+        /// <summary> Get a .NET Component. </summary>
+        /// <param name="name"> Name of the .NET Component. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DotNetComponentResource>> GetDotNetComponentAsync(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetDotNetComponents().GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a .NET Component. </summary>
+        /// <param name="name"> Name of the .NET Component. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DotNetComponentResource> GetDotNetComponent(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetDotNetComponents().Get(name, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of JavaComponents in the <see cref="ContainerAppManagedEnvironmentResource"/>. </summary>
+        /// <returns> An object representing collection of JavaComponents and their operations over a JavaComponentResource. </returns>
+        public virtual JavaComponentCollection GetJavaComponents()
+        {
+            return GetCachedClient(client => new JavaComponentCollection(client, Id));
+        }
+
+        /// <summary> Get a Java Component. </summary>
+        /// <param name="name"> Name of the Java Component. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<JavaComponentResource>> GetJavaComponentAsync(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetJavaComponents().GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a Java Component. </summary>
+        /// <param name="name"> Name of the Java Component. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<JavaComponentResource> GetJavaComponent(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetJavaComponents().Get(name, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ContainerAppManagedEnvironmentCertificates in the <see cref="ContainerAppManagedEnvironmentResource"/>. </summary>
+        /// <returns> An object representing collection of ContainerAppManagedEnvironmentCertificates and their operations over a ContainerAppManagedEnvironmentCertificateResource. </returns>
+        public virtual ContainerAppManagedEnvironmentCertificateCollection GetContainerAppManagedEnvironmentCertificates()
+        {
+            return GetCachedClient(client => new ContainerAppManagedEnvironmentCertificateCollection(client, Id));
+        }
+
+        /// <summary> Get the specified Certificate. </summary>
+        /// <param name="certificateName"> Name of the Certificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ContainerAppManagedEnvironmentCertificateResource>> GetContainerAppManagedEnvironmentCertificateAsync(string certificateName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+
+            return await GetContainerAppManagedEnvironmentCertificates().GetAsync(certificateName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get the specified Certificate. </summary>
+        /// <param name="certificateName"> Name of the Certificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ContainerAppManagedEnvironmentCertificateResource> GetContainerAppManagedEnvironmentCertificate(string certificateName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+
+            return GetContainerAppManagedEnvironmentCertificates().Get(certificateName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ContainerAppManagedEnvironmentDaprComponents in the <see cref="ContainerAppManagedEnvironmentResource"/>. </summary>
+        /// <returns> An object representing collection of ContainerAppManagedEnvironmentDaprComponents and their operations over a ContainerAppManagedEnvironmentDaprComponentResource. </returns>
+        public virtual ContainerAppManagedEnvironmentDaprComponentCollection GetContainerAppManagedEnvironmentDaprComponents()
+        {
+            return GetCachedClient(client => new ContainerAppManagedEnvironmentDaprComponentCollection(client, Id));
+        }
+
+        /// <summary> Get a dapr component. </summary>
+        /// <param name="componentName"> Name of the Dapr Component. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ContainerAppManagedEnvironmentDaprComponentResource>> GetContainerAppManagedEnvironmentDaprComponentAsync(string componentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
+
+            return await GetContainerAppManagedEnvironmentDaprComponents().GetAsync(componentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a dapr component. </summary>
+        /// <param name="componentName"> Name of the Dapr Component. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ContainerAppManagedEnvironmentDaprComponentResource> GetContainerAppManagedEnvironmentDaprComponent(string componentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
+
+            return GetContainerAppManagedEnvironmentDaprComponents().Get(componentName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ContainerAppManagedCertificates in the <see cref="ContainerAppManagedEnvironmentResource"/>. </summary>
+        /// <returns> An object representing collection of ContainerAppManagedCertificates and their operations over a ContainerAppManagedCertificateResource. </returns>
+        public virtual ContainerAppManagedCertificateCollection GetContainerAppManagedCertificates()
+        {
+            return GetCachedClient(client => new ContainerAppManagedCertificateCollection(client, Id));
+        }
+
+        /// <summary> Get the specified Managed Certificate. </summary>
+        /// <param name="managedCertificateName"> Name of the Managed Certificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managedCertificateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managedCertificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ContainerAppManagedCertificateResource>> GetContainerAppManagedCertificateAsync(string managedCertificateName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(managedCertificateName, nameof(managedCertificateName));
+
+            return await GetContainerAppManagedCertificates().GetAsync(managedCertificateName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get the specified Managed Certificate. </summary>
+        /// <param name="managedCertificateName"> Name of the Managed Certificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managedCertificateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managedCertificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ContainerAppManagedCertificateResource> GetContainerAppManagedCertificate(string managedCertificateName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(managedCertificateName, nameof(managedCertificateName));
+
+            return GetContainerAppManagedCertificates().Get(managedCertificateName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DaprSubscriptions in the <see cref="ContainerAppManagedEnvironmentResource"/>. </summary>
+        /// <returns> An object representing collection of DaprSubscriptions and their operations over a DaprSubscriptionResource. </returns>
+        public virtual DaprSubscriptionCollection GetDaprSubscriptions()
+        {
+            return GetCachedClient(client => new DaprSubscriptionCollection(client, Id));
+        }
+
+        /// <summary> Get a dapr subscription. </summary>
+        /// <param name="name"> Name of the Dapr Subscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DaprSubscriptionResource>> GetDaprSubscriptionAsync(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetDaprSubscriptions().GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a dapr subscription. </summary>
+        /// <param name="name"> Name of the Dapr Subscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DaprSubscriptionResource> GetDaprSubscription(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetDaprSubscriptions().Get(name, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ContainerAppMaintenanceConfigurations in the <see cref="ContainerAppManagedEnvironmentResource"/>. </summary>
+        /// <returns> An object representing collection of ContainerAppMaintenanceConfigurations and their operations over a ContainerAppMaintenanceConfigurationResource. </returns>
+        public virtual ContainerAppMaintenanceConfigurationCollection GetContainerAppMaintenanceConfigurations()
+        {
+            return GetCachedClient(client => new ContainerAppMaintenanceConfigurationCollection(client, Id));
+        }
+
+        /// <summary> Gets the maintenance configuration of a ManagedEnvironment . </summary>
+        /// <param name="configName"> Name of the Maintenance Configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ContainerAppMaintenanceConfigurationResource>> GetContainerAppMaintenanceConfigurationAsync(string configName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configName, nameof(configName));
+
+            return await GetContainerAppMaintenanceConfigurations().GetAsync(configName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets the maintenance configuration of a ManagedEnvironment . </summary>
+        /// <param name="configName"> Name of the Maintenance Configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ContainerAppMaintenanceConfigurationResource> GetContainerAppMaintenanceConfiguration(string configName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configName, nameof(configName));
+
+            return GetContainerAppMaintenanceConfigurations().Get(configName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ContainerAppManagedEnvironmentStorages in the <see cref="ContainerAppManagedEnvironmentResource"/>. </summary>
+        /// <returns> An object representing collection of ContainerAppManagedEnvironmentStorages and their operations over a ContainerAppManagedEnvironmentStorageResource. </returns>
+        public virtual ContainerAppManagedEnvironmentStorageCollection GetContainerAppManagedEnvironmentStorages()
+        {
+            return GetCachedClient(client => new ContainerAppManagedEnvironmentStorageCollection(client, Id));
+        }
+
+        /// <summary> Get storage for a managedEnvironment. </summary>
+        /// <param name="storageName"> Name of the storage. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ContainerAppManagedEnvironmentStorageResource>> GetContainerAppManagedEnvironmentStorageAsync(string storageName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(storageName, nameof(storageName));
+
+            return await GetContainerAppManagedEnvironmentStorages().GetAsync(storageName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get storage for a managedEnvironment. </summary>
+        /// <param name="storageName"> Name of the storage. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ContainerAppManagedEnvironmentStorageResource> GetContainerAppManagedEnvironmentStorage(string storageName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(storageName, nameof(storageName));
+
+            return GetContainerAppManagedEnvironmentStorages().Get(storageName, cancellationToken);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyResource"/> along with the instance operations that can be performed on it in the <see cref="ContainerAppManagedEnvironmentResource"/>. </summary>
+        /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyResource"/> object. </returns>
+        public virtual ContainerAppManagedEnvironmentDetectorResourcePropertyResource GetContainerAppManagedEnvironmentDetectorResourceProperty()
+        {
+            return new ContainerAppManagedEnvironmentDetectorResourcePropertyResource(Client, Id.AppendChildResource("detectorProperties", "rootApi"));
+        }
+
+        /// <summary> Gets a collection of ContainerAppPrivateEndpointConnections in the <see cref="ContainerAppManagedEnvironmentResource"/>. </summary>
+        /// <returns> An object representing collection of ContainerAppPrivateEndpointConnections and their operations over a ContainerAppPrivateEndpointConnectionResource. </returns>
+        public virtual ContainerAppPrivateEndpointConnectionCollection GetContainerAppPrivateEndpointConnections()
+        {
+            return GetCachedClient(client => new ContainerAppPrivateEndpointConnectionCollection(client, Id));
+        }
+
+        /// <summary> Get a private endpoint connection for a given managed environment. </summary>
+        /// <param name="privateEndpointConnectionName"> Name of the Private Endpoint Connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ContainerAppPrivateEndpointConnectionResource>> GetContainerAppPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
+            return await GetContainerAppPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a private endpoint connection for a given managed environment. </summary>
+        /// <param name="privateEndpointConnectionName"> Name of the Private Endpoint Connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ContainerAppPrivateEndpointConnectionResource> GetContainerAppPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
+            return GetContainerAppPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ContainerAppHttpRouteConfigs in the <see cref="ContainerAppManagedEnvironmentResource"/>. </summary>
+        /// <returns> An object representing collection of ContainerAppHttpRouteConfigs and their operations over a ContainerAppHttpRouteConfigResource. </returns>
+        public virtual ContainerAppHttpRouteConfigCollection GetContainerAppHttpRouteConfigs()
+        {
+            return GetCachedClient(client => new ContainerAppHttpRouteConfigCollection(client, Id));
+        }
+
+        /// <summary> Get the specified Managed Http Route Config. </summary>
+        /// <param name="httpRouteName"> Name of the Http Route Config. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="httpRouteName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="httpRouteName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ContainerAppHttpRouteConfigResource>> GetContainerAppHttpRouteConfigAsync(string httpRouteName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(httpRouteName, nameof(httpRouteName));
+
+            return await GetContainerAppHttpRouteConfigs().GetAsync(httpRouteName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get the specified Managed Http Route Config. </summary>
+        /// <param name="httpRouteName"> Name of the Http Route Config. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="httpRouteName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="httpRouteName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ContainerAppHttpRouteConfigResource> GetContainerAppHttpRouteConfig(string httpRouteName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(httpRouteName, nameof(httpRouteName));
+
+            return GetContainerAppHttpRouteConfigs().Get(httpRouteName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ContainerAppManagedEnvironmentDetectors in the <see cref="ContainerAppManagedEnvironmentResource"/>. </summary>
+        /// <returns> An object representing collection of ContainerAppManagedEnvironmentDetectors and their operations over a ContainerAppManagedEnvironmentDetectorResource. </returns>
+        public virtual ContainerAppManagedEnvironmentDetectorCollection GetContainerAppManagedEnvironmentDetectors()
+        {
+            return GetCachedClient(client => new ContainerAppManagedEnvironmentDetectorCollection(client, Id));
+        }
+
+        /// <summary> Get the diagnostics data for a Managed Environment used to host container apps. </summary>
+        /// <param name="detectorName"> Name of the detector. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ContainerAppManagedEnvironmentDetectorResource>> GetContainerAppManagedEnvironmentDetectorAsync(string detectorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
+
+            return await GetContainerAppManagedEnvironmentDetectors().GetAsync(detectorName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get the diagnostics data for a Managed Environment used to host container apps. </summary>
+        /// <param name="detectorName"> Name of the detector. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ContainerAppManagedEnvironmentDetectorResource> GetContainerAppManagedEnvironmentDetector(string detectorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
+
+            return GetContainerAppManagedEnvironmentDetectors().Get(detectorName, cancellationToken);
         }
     }
 }

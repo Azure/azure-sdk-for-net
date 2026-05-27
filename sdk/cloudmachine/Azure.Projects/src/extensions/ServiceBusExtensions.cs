@@ -19,7 +19,7 @@ public static class ServiceBusExtensions
     /// <param name="provider"></param>
     /// <param name="namespaceName"></param>
     /// <returns></returns>
-    public static  ServiceBusClient GetServiceBusClient(this ClientConnectionProvider provider, string namespaceName = default)
+    public static ServiceBusClient GetServiceBusClient(this ClientConnectionProvider provider, string namespaceName = default)
     {
         ServiceBusClientKey serviceBusClientKey = new(namespaceName);
         ServiceBusClient client = provider.Subclients.GetClient(serviceBusClientKey, () => CreateClient(provider, namespaceName));

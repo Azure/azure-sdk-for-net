@@ -21,13 +21,8 @@ namespace Azure.ResourceManager.Sphere.Models
 
         /// <summary> Initializes a new instance of <see cref="CountDevicesResult"/>. </summary>
         /// <param name="value"> Number of children resources in parent resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CountDevicesResult(int value, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(value, serializedAdditionalRawData)
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CountDevicesResult"/> for deserialization. </summary>
-        internal CountDevicesResult()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CountDevicesResult(int value, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(value, additionalBinaryDataProperties)
         {
         }
     }

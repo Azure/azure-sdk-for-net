@@ -1,0 +1,31 @@
+{
+  "displayNames": {
+    "/p:UseProjectReferenceToAzureClients=false": "PackageRef",
+    "/p:UseProjectReferenceToAzureClients=true": "ProjectRef"
+  },
+  "matrix": {
+    "Agent": {
+      "Ubuntu-24.04_NET10.0": {
+        "OSVmImage": "env:LINUXVMIMAGE",
+        "Pool": "env:LINUXPOOL", 
+        "TestTargetFramework": "net10.0"
+      },
+      "Windows2022_NET10.0": {
+        "OSVmImage": "env:WINDOWSVMIMAGE",
+        "Pool": "env:WINDOWSPOOL",
+        "TestTargetFramework": "net10.0"
+      },
+      "MacOS_NET10.0": {
+        "OSVmImage": "env:MACVMIMAGE",
+        "Pool": "env:MACPOOL",
+        "TestTargetFramework": "net10.0"
+      }
+    },
+    "AdditionalTestArguments": [
+      "/p:UseProjectReferenceToAzureClients=false"
+    ],
+    "BuildConfiguration": [
+      "Debug"
+    ]
+  }
+}

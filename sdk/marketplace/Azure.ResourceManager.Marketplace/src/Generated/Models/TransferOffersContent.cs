@@ -13,63 +13,67 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> Transfer offers properties. </summary>
     public partial class TransferOffersContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TransferOffersContent"/>. </summary>
         public TransferOffersContent()
         {
-            TargetCollections = new ChangeTrackingList<string>();
-            OfferIdsList = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TransferOffersContent"/>. </summary>
-        /// <param name="targetCollections"> Target collections ids. </param>
-        /// <param name="operation"> Operation to perform (For example: Copy or Move). </param>
-        /// <param name="offerIdsList"> Offers ids list to transfer from source collection to target collection(s). </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TransferOffersContent(IList<string> targetCollections, string operation, IList<string> offerIdsList, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> transfer offers properties details. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TransferOffersContent(TransferOffersDetails properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            TargetCollections = targetCollections;
-            Operation = operation;
-            OfferIdsList = offerIdsList;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> transfer offers properties details. </summary>
+        internal TransferOffersDetails Properties { get; set; }
+
         /// <summary> Target collections ids. </summary>
-        public IList<string> TargetCollections { get; }
+        public IList<string> TargetCollections
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new TransferOffersDetails();
+                }
+                return Properties.TargetCollections;
+            }
+        }
+
         /// <summary> Operation to perform (For example: Copy or Move). </summary>
-        public string Operation { get; set; }
+        public string Operation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Operation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TransferOffersDetails();
+                }
+                Properties.Operation = value;
+            }
+        }
+
         /// <summary> Offers ids list to transfer from source collection to target collection(s). </summary>
-        public IList<string> OfferIdsList { get; }
+        public IList<string> OfferIdsList
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new TransferOffersDetails();
+                }
+                return Properties.OfferIdsList;
+            }
+        }
     }
 }

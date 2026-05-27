@@ -48,7 +48,7 @@ namespace Azure.Provisioning.Tests.Expressions
                 );
 
             static void AssertExpression(string expected, LiteralExpression expression)
-                => Assert.AreEqual(expected, expression.ToString());
+                => Assert.That(expression.ToString(), Is.EqualTo(expected));
         }
     }
 }

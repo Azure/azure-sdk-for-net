@@ -131,9 +131,7 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
         public static Azure.ResourceManager.PineconeVectorDB.Models.PineconeVectorDBMarketplaceSubscriptionStatus Suspended { get { throw null; } }
         public static Azure.ResourceManager.PineconeVectorDB.Models.PineconeVectorDBMarketplaceSubscriptionStatus Unsubscribed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PineconeVectorDB.Models.PineconeVectorDBMarketplaceSubscriptionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PineconeVectorDB.Models.PineconeVectorDBMarketplaceSubscriptionStatus left, Azure.ResourceManager.PineconeVectorDB.Models.PineconeVectorDBMarketplaceSubscriptionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.PineconeVectorDB.Models.PineconeVectorDBMarketplaceSubscriptionStatus (string value) { throw null; }
@@ -203,9 +201,7 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
         public static Azure.ResourceManager.PineconeVectorDB.Models.PineconeVectorDBProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.PineconeVectorDB.Models.PineconeVectorDBProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PineconeVectorDB.Models.PineconeVectorDBProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PineconeVectorDB.Models.PineconeVectorDBProvisioningState left, Azure.ResourceManager.PineconeVectorDB.Models.PineconeVectorDBProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.PineconeVectorDB.Models.PineconeVectorDBProvisioningState (string value) { throw null; }
@@ -241,9 +237,7 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
         public static Azure.ResourceManager.PineconeVectorDB.Models.PineconeVectorDBSingleSignOnState Enable { get { throw null; } }
         public static Azure.ResourceManager.PineconeVectorDB.Models.PineconeVectorDBSingleSignOnState Initial { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PineconeVectorDB.Models.PineconeVectorDBSingleSignOnState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PineconeVectorDB.Models.PineconeVectorDBSingleSignOnState left, Azure.ResourceManager.PineconeVectorDB.Models.PineconeVectorDBSingleSignOnState right) { throw null; }
         public static implicit operator Azure.ResourceManager.PineconeVectorDB.Models.PineconeVectorDBSingleSignOnState (string value) { throw null; }
@@ -260,9 +254,7 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
         public static Azure.ResourceManager.PineconeVectorDB.Models.PineconeVectorDBSingleSignOnType OpenId { get { throw null; } }
         public static Azure.ResourceManager.PineconeVectorDB.Models.PineconeVectorDBSingleSignOnType Saml { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PineconeVectorDB.Models.PineconeVectorDBSingleSignOnType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PineconeVectorDB.Models.PineconeVectorDBSingleSignOnType left, Azure.ResourceManager.PineconeVectorDB.Models.PineconeVectorDBSingleSignOnType right) { throw null; }
         public static implicit operator Azure.ResourceManager.PineconeVectorDB.Models.PineconeVectorDBSingleSignOnType (string value) { throw null; }

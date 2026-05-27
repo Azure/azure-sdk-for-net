@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.AI.Language.Conversations;
 
 namespace Azure.AI.Language.Conversations.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.AI.Language.Conversations.Models
     public readonly partial struct DateTimeSubKind : IEquatable<DateTimeSubKind>
     {
         private readonly string _value;
+        /// <summary> Time subkind. </summary>
+        private const string TimeValue = "Time";
+        /// <summary> Date subkind. </summary>
+        private const string DateValue = "Date";
+        /// <summary> DateTime subkind. </summary>
+        private const string DateTimeValue = "DateTime";
+        /// <summary> Duration subkind. </summary>
+        private const string DurationValue = "Duration";
+        /// <summary> Set subkind. </summary>
+        private const string SetValue = "Set";
 
         /// <summary> Initializes a new instance of <see cref="DateTimeSubKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DateTimeSubKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TimeValue = "Time";
-        private const string DateValue = "Date";
-        private const string DateTimeValue = "DateTime";
-        private const string DurationValue = "Duration";
-        private const string SetValue = "Set";
+            _value = value;
+        }
 
         /// <summary> Time subkind. </summary>
         public static DateTimeSubKind Time { get; } = new DateTimeSubKind(TimeValue);
+
         /// <summary> Date subkind. </summary>
         public static DateTimeSubKind Date { get; } = new DateTimeSubKind(DateValue);
+
         /// <summary> DateTime subkind. </summary>
         public static DateTimeSubKind DateTime { get; } = new DateTimeSubKind(DateTimeValue);
+
         /// <summary> Duration subkind. </summary>
         public static DateTimeSubKind Duration { get; } = new DateTimeSubKind(DurationValue);
+
         /// <summary> Set subkind. </summary>
         public static DateTimeSubKind Set { get; } = new DateTimeSubKind(SetValue);
+
         /// <summary> Determines if two <see cref="DateTimeSubKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DateTimeSubKind left, DateTimeSubKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DateTimeSubKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DateTimeSubKind left, DateTimeSubKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DateTimeSubKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DateTimeSubKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DateTimeSubKind(string value) => new DateTimeSubKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DateTimeSubKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DateTimeSubKind?(string value) => value == null ? null : new DateTimeSubKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DateTimeSubKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DateTimeSubKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

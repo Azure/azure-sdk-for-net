@@ -13,37 +13,8 @@ namespace Azure.AI.Language.Conversations.Models
     /// <summary> This customizes how the service calls LUIS Generally Available projects. </summary>
     public partial class LuisCallingConfig
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LuisCallingConfig"/>. </summary>
         public LuisCallingConfig()
@@ -57,8 +28,8 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="timezoneOffset"> The timezone offset for the location of the request. </param>
         /// <param name="spellCheck"> Enable spell checking. </param>
         /// <param name="bingSpellCheckSubscriptionKey"> The subscription key to use when enabling Bing spell check. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LuisCallingConfig(bool? verbose, bool? log, bool? showAllIntents, int? timezoneOffset, bool? spellCheck, string bingSpellCheckSubscriptionKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LuisCallingConfig(bool? verbose, bool? log, bool? showAllIntents, int? timezoneOffset, bool? spellCheck, string bingSpellCheckSubscriptionKey, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Verbose = verbose;
             Log = log;
@@ -66,19 +37,24 @@ namespace Azure.AI.Language.Conversations.Models
             TimezoneOffset = timezoneOffset;
             SpellCheck = spellCheck;
             BingSpellCheckSubscriptionKey = bingSpellCheckSubscriptionKey;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Enable verbose response. </summary>
         public bool? Verbose { get; set; }
+
         /// <summary> Save log to add in training utterances later. </summary>
         public bool? Log { get; set; }
+
         /// <summary> Set true to show all intents. </summary>
         public bool? ShowAllIntents { get; set; }
+
         /// <summary> The timezone offset for the location of the request. </summary>
         public int? TimezoneOffset { get; set; }
+
         /// <summary> Enable spell checking. </summary>
         public bool? SpellCheck { get; set; }
+
         /// <summary> The subscription key to use when enabling Bing spell check. </summary>
         public string BingSpellCheckSubscriptionKey { get; set; }
     }

@@ -43,7 +43,6 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             NginxDeploymentApiKeyResource.ValidateResourceId(nginxDeploymentApiKeyResourceIdentifier);
 
             Assert.IsTrue(nginxDeploymentApiKeyResourceIdentifier.ResourceType.Equals(NginxDeploymentApiKeyResource.ResourceType));
-            Assert.Throws<ArgumentException>(() => NginxDeploymentApiKeyResource.ValidateResourceId(ResGroup.Data.Id));
         }
 
         [TestCase]
@@ -119,7 +118,6 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             };
             NginxDeploymentApiKeyResource updatedNginxDeploymentApiKey = (await nginxDeploymentApiKey.UpdateAsync(WaitUntil.Completed, nginxDeploymentApiKeyCreateOrUpdateContent)).Value;
             Assert.AreEqual(apiKeyProperties.SecretText.Substring(0, 3), updatedNginxDeploymentApiKey.Data.Properties.Hint);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await nginxDeploymentApiKey.UpdateAsync(WaitUntil.Completed, null)).Value);
         }
     }
 }

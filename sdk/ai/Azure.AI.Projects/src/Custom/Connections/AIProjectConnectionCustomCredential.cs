@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 
 namespace Azure.AI.Projects
 {
+    [CodeGenType("AIProjectConnectionCustomCredential")]
     public partial class AIProjectConnectionCustomCredential
     {
         [CodeGenMember("AdditionalProperties")]

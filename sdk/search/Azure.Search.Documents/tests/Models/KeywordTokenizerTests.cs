@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Primitives;
 using System.IO;
 using System.Text.Json;
-using Azure.Core;
 using Azure.Search.Documents.Indexes.Models;
 using NUnit.Framework;
 
@@ -15,7 +15,8 @@ namespace Azure.Search.Documents.Tests.Models
         public void CreatesKeywordTokenizerV2()
         {
             KeywordTokenizer sut = new KeywordTokenizer("test");
-            Assert.AreEqual(@"#Microsoft.Azure.Search.KeywordTokenizerV2", sut.ODataType);
+            // ODataType is now internal, verify the tokenizer was created
+            Assert.AreEqual("test", sut.Name);
         }
 
         [TestCase(@"#Microsoft.Azure.Search.KeywordTokenizer")]
@@ -30,10 +31,10 @@ namespace Azure.Search.Documents.Tests.Models
 }}";
 
             JsonDocument jsonDoc = JsonDocument.Parse(jsonContent);
-            KeywordTokenizer sut = LexicalTokenizer.DeserializeLexicalTokenizer(jsonDoc.RootElement) as KeywordTokenizer;
+            KeywordTokenizer sut = LexicalTokenizer.DeserializeLexicalTokenizer(jsonDoc.RootElement, ModelReaderWriterOptions.Json) as KeywordTokenizer;
 
             Assert.NotNull(sut);
-            Assert.AreEqual(odataType, sut.ODataType);
+            // ODataType is now internal
             Assert.AreEqual("test", sut.Name);
             Assert.AreEqual(1, sut.BufferSize);
             Assert.AreEqual(1, sut.MaxTokenLength);
@@ -41,7 +42,7 @@ namespace Azure.Search.Documents.Tests.Models
             using MemoryStream stream = new MemoryStream();
             using (Utf8JsonWriter writer = new Utf8JsonWriter(stream))
             {
-                ((IUtf8JsonSerializable)sut).Write(writer);
+                ((IJsonModel<KeywordTokenizer>)sut).Write(writer, ModelReaderWriterOptions.Json);
             }
 
             stream.Position = 0;

@@ -7,17 +7,10 @@ using System.Diagnostics;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.Serialization;
-
-#pragma warning disable SA1402 // File may only contain a single type
 
 namespace Azure.Search.Documents.Models
 {
-    // Hide the untyped IndexBatch
-    [CodeGenModel("IndexBatch")]
-    internal partial class IndexBatch { }
-
     /// <summary>
     /// Contains a batch of document write actions to send to a search index
     /// via <see cref="SearchClient.IndexDocuments"/>.
@@ -57,7 +50,7 @@ namespace Azure.Search.Documents.Models
             }
         }
 
-        #pragma warning disable CS1572 // Not all parameters will be used depending on feature flags
+#pragma warning disable CS1572 // Not all parameters will be used depending on feature flags
         /// <summary>
         /// Serialize the document batch.
         /// </summary>
@@ -79,7 +72,7 @@ namespace Azure.Search.Documents.Models
             JsonSerializerOptions options,
             bool async,
             CancellationToken cancellationToken)
-        #pragma warning restore CS1572
+#pragma warning restore CS1572
         {
             Debug.Assert(writer != null);
             writer.WriteStartObject();
