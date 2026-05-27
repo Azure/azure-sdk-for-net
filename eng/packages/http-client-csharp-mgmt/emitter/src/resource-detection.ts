@@ -29,7 +29,8 @@ import {
   extractNameConstraintOverrides,
   extractResourceNameOverride,
   detectDynamicTypeSegments,
-  resolveFixedEnumNameSegments
+  resolveFixedEnumNameSegments,
+  isVariableSegment
 } from "./resource-metadata.js";
 import {
   SdkHttpOperation,
@@ -44,6 +45,7 @@ import {
   builtInResourceOperationName,
   customAzureResource,
   extensionResourceOperationName,
+  isResourceCollectionAction,
   legacyExtensionResourceOperationName,
   legacyResourceOperationName
 } from "./sdk-context-options.js";
@@ -522,13 +524,26 @@ function assignRemainingOperations(
       });
     } else if (actionTarget) {
       const scope = buildScopeInfoFromPath(operationPath);
-      actionTarget.metadata.methods.push({
+      const isCollectionAction = isResourceCollectionAction(sdkMethod);
+      const target = isCollectionAction
+        ? findCollectionActionTargetResource(
+            resources,
+            operationPath,
+            actionTarget
+          ) ?? actionTarget
+        : actionTarget;
+      target.metadata.methods.push({
         methodId,
-        kind: ResourceOperationKind.Action,
+        kind: isCollectionAction
+          ? ResourceOperationKind.CollectionAction
+          : ResourceOperationKind.Action,
         operationPath,
         scope: {
           ...scope,
-          scopeIdPattern: actionTarget.metadata.resourceIdPattern
+          scopeIdPattern:
+            target !== actionTarget
+              ? getCollectionContextPath(target)
+              : actionTarget.metadata.resourceIdPattern
         }
       });
     } else {
@@ -544,6 +559,44 @@ function assignRemainingOperations(
   for (const resource of resources) {
     sortResourceMethods(resource.metadata.methods);
   }
+}
+
+function findCollectionActionTargetResource(
+  resources: ValidArmResourceSchema[],
+  operationPath: RequestPath,
+  actionTarget: ValidArmResourceSchema
+): ValidArmResourceSchema | undefined {
+  return findLongestPrefixMatch(operationPath, resources, (resource) => {
+    if (
+      resource === actionTarget ||
+      !getCollectionContextPath(resource).equals(
+        actionTarget.metadata.resourceIdPattern
+      )
+    ) {
+      return undefined;
+    }
+
+    return getResourceCollectionPath(resource.metadata.resourceIdPattern);
+  });
+}
+
+function getResourceCollectionPath(
+  resourcePath: RequestPath
+): RequestPath | undefined {
+  const lastSegment = resourcePath.segments.at(-1);
+  if (!lastSegment || !isVariableSegment(lastSegment)) {
+    return undefined;
+  }
+
+  return RequestPath.fromSegments(resourcePath.segments.slice(0, -1));
+}
+
+function getCollectionContextPath(
+  resource: ValidArmResourceSchema
+): RequestPath {
+  return (
+    resource.metadata.parentResourceId ?? resource.metadata.scope.scopeIdPattern
+  );
 }
 
 function findListTargetResource(
