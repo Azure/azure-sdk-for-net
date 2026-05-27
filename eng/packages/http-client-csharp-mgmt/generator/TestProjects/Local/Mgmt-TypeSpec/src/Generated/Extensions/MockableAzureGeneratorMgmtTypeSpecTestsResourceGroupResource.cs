@@ -979,6 +979,71 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return GetTrafficProfiles().Get(profileName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of CustomBaseTypeResources in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of CustomBaseTypeResources and their operations over a CustomBaseTypeResource. </returns>
+        public virtual CustomBaseTypeResourceCollection GetCustomBaseTypeResources()
+        {
+            return GetCachedClient(client => new CustomBaseTypeResourceCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a CustomBaseTypeResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/customBaseTypeResources/{customBaseTypeResourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CustomBaseTypeResources_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="customBaseTypeResourceName"> The name of the CustomBaseTypeResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="customBaseTypeResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="customBaseTypeResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CustomBaseTypeResource>> GetCustomBaseTypeResourceAsync(string customBaseTypeResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(customBaseTypeResourceName, nameof(customBaseTypeResourceName));
+
+            return await GetCustomBaseTypeResources().GetAsync(customBaseTypeResourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a CustomBaseTypeResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/customBaseTypeResources/{customBaseTypeResourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CustomBaseTypeResources_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="customBaseTypeResourceName"> The name of the CustomBaseTypeResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="customBaseTypeResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="customBaseTypeResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CustomBaseTypeResource> GetCustomBaseTypeResource(string customBaseTypeResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(customBaseTypeResourceName, nameof(customBaseTypeResourceName));
+
+            return GetCustomBaseTypeResources().Get(customBaseTypeResourceName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of TestCertificates in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of TestCertificates and their operations over a TestCertificateResource. </returns>
         public virtual TestCertificateCollection GetTestCertificates()
