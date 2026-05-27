@@ -22,15 +22,8 @@ public sealed class MultiPartFormContent : BinaryContent
     private const string MediaTypeApplicationJson = "application/json";
     private const string MediaTypeTextPlain = "text/plain";
     private const string MediaTypeApplicationOctetStream = "application/octet-stream";
-    private const int BoundaryLength = 70;
-    private const int BoundaryAlphabetMask = 0x3F; // 64-char alphabet → 6-bit mask, unbiased.
 
     private static readonly ModelReaderWriterOptions _modelWriteWireOptions = new ModelReaderWriterOptions("W");
-    private static readonly char[] _boundaryValues = "0123456789=ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz".ToCharArray();
-#if !NET6_0_OR_GREATER
-    private static readonly Random _random = new Random();
-    private static readonly object _randomLock = new object();
-#endif
 
     private readonly MultipartFormDataContent _multipartContent;
     private readonly string _boundary;
@@ -39,99 +32,18 @@ public sealed class MultiPartFormContent : BinaryContent
 
     /// <summary>
     /// Initializes a new instance of <see cref="MultiPartFormContent"/> with a
-    /// randomly generated boundary.
+    /// randomly generated boundary that conforms to
+    /// <see href="https://www.rfc-editor.org/rfc/rfc2046#section-5.1.1">RFC 2046, Section 5.1.1</see>.
     /// </summary>
     public MultiPartFormContent() : this(CreateBoundary()) { }
 
-    /// <summary>
-    /// Initializes a new instance of <see cref="MultiPartFormContent"/> with the
-    /// specified boundary.
-    /// </summary>
-    /// <param name="boundary">The boundary string used to separate parts in the
-    /// <c>multipart/form-data</c> payload. Must conform to the <c>boundary</c>
-    /// rule defined by <see href="https://www.rfc-editor.org/rfc/rfc2046#section-5.1.1">RFC 2046, Section 5.1.1</see>:
-    /// 1-70 characters in length, composed only of the characters
-    /// <c>A-Z</c>, <c>a-z</c>, <c>0-9</c>, <c>'</c>, <c>(</c>, <c>)</c>,
-    /// <c>+</c>, <c>_</c>, <c>,</c>, <c>-</c>, <c>.</c>, <c>/</c>, <c>:</c>,
-    /// <c>=</c>, <c>?</c>, or space, and must not end with a space.</param>
-    /// <exception cref="ArgumentNullException"><paramref name="boundary"/> is <see langword="null"/>.</exception>
-    /// <exception cref="ArgumentException"><paramref name="boundary"/> is empty,
-    /// longer than 70 characters, contains characters disallowed by RFC 2046,
-    /// or ends with a space.</exception>
-    public MultiPartFormContent(string boundary)
+    internal MultiPartFormContent(string boundary)
     {
         Argument.AssertNotNullOrEmpty(boundary, nameof(boundary));
-        ValidateBoundary(boundary, nameof(boundary));
 
         _boundary = boundary;
         _multipartContent = new MultipartFormDataContent(boundary);
         MediaType = _multipartContent.Headers.ContentType?.ToString();
-    }
-
-    // RFC 2046, Section 5.1.1:
-    //   boundary      := 0*69<bchars> bcharsnospace
-    //   bchars        := bcharsnospace / " "
-    //   bcharsnospace := DIGIT / ALPHA / "'" / "(" / ")" / "+" / "_"
-    //                  / "," / "-" / "." / "/" / ":" / "=" / "?"
-    private static void ValidateBoundary(string boundary, string paramName)
-    {
-        if (boundary.Length > BoundaryLength)
-        {
-            throw new ArgumentException(
-                $"Boundary must be 1-{BoundaryLength} characters long (RFC 2046, Section 5.1.1). Actual length: {boundary.Length}.",
-                paramName);
-        }
-
-        for (int i = 0; i < boundary.Length; i++)
-        {
-            char c = boundary[i];
-            if (!IsBoundaryChar(c))
-            {
-                throw new ArgumentException(
-                    $"Boundary contains invalid character '{c}' (0x{(int)c:X4}) at index {i}. Allowed characters are defined by RFC 2046, Section 5.1.1.",
-                    paramName);
-            }
-        }
-
-        if (boundary[boundary.Length - 1] == ' ')
-        {
-            throw new ArgumentException(
-                "Boundary must not end with a space (RFC 2046, Section 5.1.1).",
-                paramName);
-        }
-    }
-
-    private static bool IsBoundaryChar(char c)
-    {
-        // bcharsnospace: DIGIT / ALPHA / "'" / "(" / ")" / "+" / "_"
-        //              / "," / "-" / "." / "/" / ":" / "=" / "?"
-        // bchars adds SPACE.
-        if ((c >= '0' && c <= '9') ||
-            (c >= 'A' && c <= 'Z') ||
-            (c >= 'a' && c <= 'z'))
-        {
-            return true;
-        }
-
-        switch (c)
-        {
-            case '\'':
-            case '(':
-            case ')':
-            case '+':
-            case '_':
-            case ',':
-            case '-':
-            case '.':
-            case '/':
-            case ':':
-            case '=':
-            case '?':
-            case ' ':
-                return true;
-            default:
-                return false;
-        }
     }
 
     /// <summary>
@@ -681,26 +593,11 @@ public sealed class MultiPartFormContent : BinaryContent
         return count;
     }
 
-    private static string CreateBoundary()
-    {
-#if NET6_0_OR_GREATER
-        Span<char> chars = stackalloc char[BoundaryLength];
-        Span<byte> random = stackalloc byte[BoundaryLength];
-        Random.Shared.NextBytes(random);
-#else
-        char[] chars = new char[BoundaryLength];
-        byte[] random = new byte[BoundaryLength];
-        lock (_randomLock)
-        {
-            _random.NextBytes(random);
-        }
-#endif
-        for (int i = 0; i < BoundaryLength; i++)
-        {
-            chars[i] = _boundaryValues[random[i] & BoundaryAlphabetMask];
-        }
-        return new string(chars);
-    }
+    // Per RFC 2046 §5.1.1, the boundary must be 1-70 chars composed of `bcharsnospace`/SPACE
+    // (DIGIT / ALPHA / "'" / "(" / ")" / "+" / "_" / "," / "-" / "." / "/" / ":" / "=" / "?").
+    // GUID's canonical "D" form ("xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx") is 36 chars of hex
+    // digits and '-' only, all of which are valid bcharsnospace, so it always satisfies the rule.
+    private static string CreateBoundary() => Guid.NewGuid().ToString();
 
     private static MemoryStream CreateJsonStream(object value)
     {

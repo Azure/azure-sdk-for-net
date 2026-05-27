@@ -101,7 +101,6 @@ namespace System.ClientModel
     public sealed partial class MultiPartFormContent : System.ClientModel.BinaryContent
     {
         public MultiPartFormContent() { }
-        public MultiPartFormContent(string boundary) { }
         public void Add(string name, System.BinaryData content) { }
         public void Add(string name, bool content, string? mediaType = "text/plain") { }
         public void Add(string name, byte content, string? mediaType = "text/plain") { }

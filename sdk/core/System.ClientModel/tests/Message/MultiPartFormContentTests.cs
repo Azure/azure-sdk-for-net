@@ -23,9 +23,6 @@ namespace System.ClientModel.Tests.Message;
 
 internal class MultiPartFormContentTests : SyncAsyncTestBase
 {
-    private const string BoundaryAlphabet = "0123456789=ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz";
-    private const int BoundaryLength = 70;
-
     private string _testDirectory = null!;
 
     public MultiPartFormContentTests(bool isAsync) : base(isAsync)
@@ -54,7 +51,8 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
         using MultiPartFormContent content = new();
 
         string boundary = GetBoundary(content);
-        Assert.AreEqual(BoundaryLength, boundary.Length);
+        Assert.IsTrue(Guid.TryParseExact(boundary, "D", out _),
+            $"Expected default boundary to be a GUID in 'D' format, but got '{boundary}'.");
         StringAssert.StartsWith("multipart/form-data", content.MediaType);
     }
 
@@ -70,17 +68,26 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
     }
 
     [Test]
-    public void Ctor_Default_BoundaryUsesDocumentedAlphabet()
+    public void Ctor_Default_BoundaryUsesRfc2046Chars()
     {
+        // Per RFC 2046 §5.1.1, the boundary must be composed of bchars
+        // (DIGIT / ALPHA / "'" / "(" / ")" / "+" / "_" / "," / "-" / "." / "/" / ":" / "=" / "?" / SPACE)
+        // and must not end with SPACE. A GUID in "D" format consists only of
+        // hex digits and '-', and never ends with a space, so it always complies.
+        const string Rfc2046BoundaryChars = "0123456789ABCDEFabcdefghijklmnopqrstuvwxyzGHIJKLMNOPQRSTUVWXYZ'()+_,-./:=? ";
         for (int i = 0; i < 16; i++)
         {
             using MultiPartFormContent content = new();
             string boundary = GetBoundary(content);
+            Assert.IsTrue(boundary.Length >= 1 && boundary.Length <= 70,
+                $"Boundary length {boundary.Length} outside RFC 2046 1-70 char range.");
+            Assert.AreNotEqual(' ', boundary[boundary.Length - 1],
+                "Boundary must not end with SPACE per RFC 2046.");
             foreach (char c in boundary)
             {
                 Assert.IsTrue(
-                    BoundaryAlphabet.IndexOf(c) >= 0,
-                    $"Boundary character '{c}' not in documented alphabet.");
+                    Rfc2046BoundaryChars.IndexOf(c) >= 0,
+                    $"Boundary character '{c}' not in RFC 2046 bchars alphabet.");
             }
         }
     }
@@ -118,13 +125,8 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
         HashSet<string> unique = new();
         foreach (string boundary in boundaries)
         {
-            Assert.AreEqual(BoundaryLength, boundary.Length);
-            foreach (char c in boundary)
-            {
-                Assert.IsTrue(
-                    BoundaryAlphabet.IndexOf(c) >= 0,
-                    $"Boundary character '{c}' not in documented alphabet.");
-            }
+            Assert.IsTrue(Guid.TryParseExact(boundary, "D", out _),
+                $"Expected default boundary to be a GUID in 'D' format, but got '{boundary}'.");
             Assert.IsTrue(unique.Add(boundary), $"Duplicate boundary generated under concurrency: {boundary}");
         }
     }
@@ -145,75 +147,6 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
 
         StringAssert.StartsWith("multipart/form-data", content.MediaType);
         StringAssert.Contains("abc", content.MediaType);
-    }
-
-    [Test]
-    public void Ctor_Boundary_Throws_WhenNull()
-    {
-        Assert.Throws<ArgumentNullException>(() => new MultiPartFormContent(null!));
-    }
-
-    [Test]
-    public void Ctor_Boundary_Throws_WhenEmpty()
-    {
-        Assert.Throws<ArgumentException>(() => new MultiPartFormContent(string.Empty));
-    }
-
-    [Test]
-    public void Ctor_Boundary_Throws_WhenTooLong()
-    {
-        string boundary = new string('a', BoundaryLength + 1);
-        ArgumentException ex = Assert.Throws<ArgumentException>(() => new MultiPartFormContent(boundary))!;
-        Assert.AreEqual("boundary", ex.ParamName);
-    }
-
-    [Test]
-    public void Ctor_Boundary_Succeeds_AtMaxLength()
-    {
-        string boundary = new string('a', BoundaryLength);
-        using MultiPartFormContent content = new(boundary);
-        Assert.AreEqual(boundary, GetBoundary(content));
-    }
-
-    [TestCase("bad@char")]
-    [TestCase("bad!char")]
-    [TestCase("bad#char")]
-    [TestCase("bad%char")]
-    [TestCase("bad;char")]
-    [TestCase("bad<char")]
-    [TestCase("bad>char")]
-    [TestCase("bad[char")]
-    [TestCase("bad]char")]
-    [TestCase("bad{char")]
-    [TestCase("bad}char")]
-    [TestCase("bad\"char")]
-    [TestCase("bad\\char")]
-    [TestCase("bad\tchar")]
-    [TestCase("bad\nchar")]
-    [TestCase("bad\u00e9char")]
-    public void Ctor_Boundary_Throws_WhenContainsInvalidChar(string boundary)
-    {
-        ArgumentException ex = Assert.Throws<ArgumentException>(() => new MultiPartFormContent(boundary))!;
-        Assert.AreEqual("boundary", ex.ParamName);
-    }
-
-    [Test]
-    public void Ctor_Boundary_Throws_WhenEndsWithSpace()
-    {
-        ArgumentException ex = Assert.Throws<ArgumentException>(() => new MultiPartFormContent("my-boundary "))!;
-        Assert.AreEqual("boundary", ex.ParamName);
-    }
-
-    [TestCase("abc")]
-    [TestCase("ABC")]
-    [TestCase("0123456789")]
-    [TestCase("'()+_,-./:=?")]
-    [TestCase("space in middle")]
-    [TestCase("a")]
-    public void Ctor_Boundary_Succeeds_WithRfc2046Chars(string boundary)
-    {
-        using MultiPartFormContent content = new(boundary);
-        Assert.AreEqual(boundary, GetBoundary(content));
     }
 
     [Test]
@@ -1409,7 +1342,8 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
         }
         else
         {
-            Assert.AreEqual(BoundaryLength, boundary.Length);
+            Assert.IsTrue(Guid.TryParseExact(boundary, "D", out _),
+                $"Expected default boundary to be a GUID in 'D' format, but got '{boundary}'.");
         }
 
         content.Add("filePart", file);
