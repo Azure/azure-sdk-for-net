@@ -139,6 +139,15 @@ namespace Azure.Generator.Management
             // let the base implementation create regular ModelProviders.
             // This preserves the full custom resource hierarchy without replacing intermediate
             // models with system types (e.g., TrafficResource → TrafficProxyResource → TrafficEndpointData).
+            // For the leaf resource data model itself, use ResourceDataModelProvider so that
+            // BuildName returns the "Data"-suffixed name from the very first Type access. Otherwise
+            // a user's resource-client customization partial matching the original input model name
+            // would pollute CustomCodeView.BaseType (captured into the immutable CSharpType._baseType),
+            // and a later visitor-driven rename could not undo it.
+            if (ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(model))
+            {
+                return new ResourceDataModelProvider(model);
+            }
             return base.CreateModelCore(model);
         }
 
