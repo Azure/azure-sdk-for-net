@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.ApiManagement
     {
         private readonly ClientDiagnostics _graphQLApiResolverClientDiagnostics;
         private readonly GraphQLApiResolver _graphQLApiResolverRestClient;
+        private readonly ClientDiagnostics _graphQLApiResolverPolicyClientDiagnostics;
+        private readonly GraphQLApiResolverPolicy _graphQLApiResolverPolicyRestClient;
         private readonly ResolverContractData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/apis/resolvers";
@@ -52,6 +54,8 @@ namespace Azure.ResourceManager.ApiManagement
             TryGetApiVersion(ResourceType, out string resolverContractApiVersion);
             _graphQLApiResolverClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
             _graphQLApiResolverRestClient = new GraphQLApiResolver(_graphQLApiResolverClientDiagnostics, Pipeline, Endpoint, resolverContractApiVersion ?? "2025-09-01-preview");
+            _graphQLApiResolverPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            _graphQLApiResolverPolicyRestClient = new GraphQLApiResolverPolicy(_graphQLApiResolverPolicyClientDiagnostics, Pipeline, Endpoint, resolverContractApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -403,6 +407,94 @@ namespace Azure.ResourceManager.ApiManagement
                     operation.WaitForCompletionResponse(cancellationToken);
                 }
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the entity state (Etag) version of the GraphQL API resolver policy specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/resolvers/{resolverId}/policies/{policyId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GraphQLApiResolverPolicy_GetEntityTag. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ResolverContractResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="policyId"> The identifier of the Policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> GetEntityTagAsync(PolicyIdName policyId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _graphQLApiResolverPolicyClientDiagnostics.CreateScope("ResolverContractResource.GetEntityTag");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _graphQLApiResolverPolicyRestClient.CreateGetEntityTagRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, policyId.ToString(), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the entity state (Etag) version of the GraphQL API resolver policy specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/resolvers/{resolverId}/policies/{policyId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GraphQLApiResolverPolicy_GetEntityTag. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ResolverContractResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="policyId"> The identifier of the Policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response GetEntityTag(PolicyIdName policyId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _graphQLApiResolverPolicyClientDiagnostics.CreateScope("ResolverContractResource.GetEntityTag");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _graphQLApiResolverPolicyRestClient.CreateGetEntityTagRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, policyId.ToString(), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
             }
             catch (Exception e)
             {

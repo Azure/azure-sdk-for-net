@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ServiceWorkspacePolicyCollection : ArmCollection, IEnumerable<ServiceWorkspacePolicyResource>, IAsyncEnumerable<ServiceWorkspacePolicyResource>
     {
-        private readonly ClientDiagnostics _serviceWorkspacePolicyClientDiagnostics;
-        private readonly ServiceWorkspacePolicy _serviceWorkspacePolicyRestClient;
+        private readonly ClientDiagnostics _workspacePolicyClientDiagnostics;
+        private readonly WorkspacePolicy _workspacePolicyRestClient;
 
         /// <summary> Initializes a new instance of ServiceWorkspacePolicyCollection for mocking. </summary>
         protected ServiceWorkspacePolicyCollection()
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.ApiManagement
         internal ServiceWorkspacePolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ServiceWorkspacePolicyResource.ResourceType, out string serviceWorkspacePolicyApiVersion);
-            _serviceWorkspacePolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceWorkspacePolicyResource.ResourceType.Namespace, Diagnostics);
-            _serviceWorkspacePolicyRestClient = new ServiceWorkspacePolicy(_serviceWorkspacePolicyClientDiagnostics, Pipeline, Endpoint, serviceWorkspacePolicyApiVersion ?? "2025-09-01-preview");
+            _workspacePolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceWorkspacePolicyResource.ResourceType.Namespace, Diagnostics);
+            _workspacePolicyRestClient = new WorkspacePolicy(_workspacePolicyClientDiagnostics, Pipeline, Endpoint, serviceWorkspacePolicyApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _serviceWorkspacePolicyClientDiagnostics.CreateScope("ServiceWorkspacePolicyCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _workspacePolicyClientDiagnostics.CreateScope("ServiceWorkspacePolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspacePolicyRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyId.ToString(), ApiManagementPolicyData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _workspacePolicyRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyId.ToString(), ApiManagementPolicyData.ToRequestContent(data), ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementPolicyData> response = Response.FromValue(ApiManagementPolicyData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _serviceWorkspacePolicyClientDiagnostics.CreateScope("ServiceWorkspacePolicyCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _workspacePolicyClientDiagnostics.CreateScope("ServiceWorkspacePolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspacePolicyRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyId.ToString(), ApiManagementPolicyData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _workspacePolicyRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyId.ToString(), ApiManagementPolicyData.ToRequestContent(data), ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementPolicyData> response = Response.FromValue(ApiManagementPolicyData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ServiceWorkspacePolicyResource>> GetAsync(PolicyIdName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _serviceWorkspacePolicyClientDiagnostics.CreateScope("ServiceWorkspacePolicyCollection.Get");
+            using DiagnosticScope scope = _workspacePolicyClientDiagnostics.CreateScope("ServiceWorkspacePolicyCollection.Get");
             scope.Start();
             try
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspacePolicyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyId.ToString(), format?.ToString(), context);
+                HttpMessage message = _workspacePolicyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyId.ToString(), format?.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementPolicyData> response = Response.FromValue(ApiManagementPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ServiceWorkspacePolicyResource> Get(PolicyIdName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _serviceWorkspacePolicyClientDiagnostics.CreateScope("ServiceWorkspacePolicyCollection.Get");
+            using DiagnosticScope scope = _workspacePolicyClientDiagnostics.CreateScope("ServiceWorkspacePolicyCollection.Get");
             scope.Start();
             try
             {
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspacePolicyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyId.ToString(), format?.ToString(), context);
+                HttpMessage message = _workspacePolicyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyId.ToString(), format?.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementPolicyData> response = Response.FromValue(ApiManagementPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -280,8 +280,8 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiManagementPolicyData, ServiceWorkspacePolicyResource>(new ServiceWorkspacePolicyGetByApiAsyncCollectionResultOfT(
-                _serviceWorkspacePolicyRestClient,
+            return new AsyncPageableWrapper<ApiManagementPolicyData, ServiceWorkspacePolicyResource>(new WorkspacePolicyGetByApiAsyncCollectionResultOfT(
+                _workspacePolicyRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
@@ -315,8 +315,8 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiManagementPolicyData, ServiceWorkspacePolicyResource>(new ServiceWorkspacePolicyGetByApiCollectionResultOfT(
-                _serviceWorkspacePolicyRestClient,
+            return new PageableWrapper<ApiManagementPolicyData, ServiceWorkspacePolicyResource>(new WorkspacePolicyGetByApiCollectionResultOfT(
+                _workspacePolicyRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<bool>> ExistsAsync(PolicyIdName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _serviceWorkspacePolicyClientDiagnostics.CreateScope("ServiceWorkspacePolicyCollection.Exists");
+            using DiagnosticScope scope = _workspacePolicyClientDiagnostics.CreateScope("ServiceWorkspacePolicyCollection.Exists");
             scope.Start();
             try
             {
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspacePolicyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyId.ToString(), format?.ToString(), context);
+                HttpMessage message = _workspacePolicyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyId.ToString(), format?.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiManagementPolicyData> response = default;
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(PolicyIdName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _serviceWorkspacePolicyClientDiagnostics.CreateScope("ServiceWorkspacePolicyCollection.Exists");
+            using DiagnosticScope scope = _workspacePolicyClientDiagnostics.CreateScope("ServiceWorkspacePolicyCollection.Exists");
             scope.Start();
             try
             {
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspacePolicyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyId.ToString(), format?.ToString(), context);
+                HttpMessage message = _workspacePolicyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyId.ToString(), format?.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiManagementPolicyData> response = default;
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<NullableResponse<ServiceWorkspacePolicyResource>> GetIfExistsAsync(PolicyIdName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _serviceWorkspacePolicyClientDiagnostics.CreateScope("ServiceWorkspacePolicyCollection.GetIfExists");
+            using DiagnosticScope scope = _workspacePolicyClientDiagnostics.CreateScope("ServiceWorkspacePolicyCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspacePolicyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyId.ToString(), format?.ToString(), context);
+                HttpMessage message = _workspacePolicyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyId.ToString(), format?.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiManagementPolicyData> response = default;
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual NullableResponse<ServiceWorkspacePolicyResource> GetIfExists(PolicyIdName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _serviceWorkspacePolicyClientDiagnostics.CreateScope("ServiceWorkspacePolicyCollection.GetIfExists");
+            using DiagnosticScope scope = _workspacePolicyClientDiagnostics.CreateScope("ServiceWorkspacePolicyCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspacePolicyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyId.ToString(), format?.ToString(), context);
+                HttpMessage message = _workspacePolicyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyId.ToString(), format?.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiManagementPolicyData> response = default;

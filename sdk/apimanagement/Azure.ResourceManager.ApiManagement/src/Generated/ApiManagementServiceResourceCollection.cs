@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.ApiManagement
     {
         private readonly ClientDiagnostics _apiManagementServiceClientDiagnostics;
         private readonly ApiManagementService _apiManagementServiceRestClient;
+        private readonly ClientDiagnostics _privateEndpointConnectionClientDiagnostics;
+        private readonly PrivateEndpointConnection _privateEndpointConnectionRestClient;
 
         /// <summary> Initializes a new instance of ApiManagementServiceResourceCollection for mocking. </summary>
         protected ApiManagementServiceResourceCollection()
@@ -42,6 +44,8 @@ namespace Azure.ResourceManager.ApiManagement
             TryGetApiVersion(ApiManagementServiceResource.ResourceType, out string apiManagementServiceResourceApiVersion);
             _apiManagementServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementServiceResource.ResourceType.Namespace, Diagnostics);
             _apiManagementServiceRestClient = new ApiManagementService(_apiManagementServiceClientDiagnostics, Pipeline, Endpoint, apiManagementServiceResourceApiVersion ?? "2025-09-01-preview");
+            _privateEndpointConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementServiceResource.ResourceType.Namespace, Diagnostics);
+            _privateEndpointConnectionRestClient = new PrivateEndpointConnection(_privateEndpointConnectionClientDiagnostics, Pipeline, Endpoint, apiManagementServiceResourceApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

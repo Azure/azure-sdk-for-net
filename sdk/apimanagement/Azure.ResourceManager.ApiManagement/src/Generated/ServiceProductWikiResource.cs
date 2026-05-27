@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing a ServiceProductWiki along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceProductWikiResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ProductResource"/> using the GetServiceProductWiki method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiManagementProductResource"/> using the GetServiceProductWiki method.
     /// </summary>
     public partial class ServiceProductWikiResource : ArmResource
     {
-        private readonly ClientDiagnostics _serviceProductWikiClientDiagnostics;
-        private readonly ServiceProductWiki _serviceProductWikiRestClient;
+        private readonly ClientDiagnostics _productWikiClientDiagnostics;
+        private readonly ProductWiki _productWikiRestClient;
         private readonly WikiContractData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/products/wikis";
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.ApiManagement
         internal ServiceProductWikiResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string serviceProductWikiApiVersion);
-            _serviceProductWikiClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _serviceProductWikiRestClient = new ServiceProductWiki(_serviceProductWikiClientDiagnostics, Pipeline, Endpoint, serviceProductWikiApiVersion ?? "2025-09-01-preview");
+            _productWikiClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            _productWikiRestClient = new ProductWiki(_productWikiClientDiagnostics, Pipeline, Endpoint, serviceProductWikiApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _serviceProductWikiClientDiagnostics.CreateScope("ServiceProductWikiResource.CreateOrUpdate");
+            using DiagnosticScope scope = _productWikiClientDiagnostics.CreateScope("ServiceProductWikiResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceProductWikiRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, WikiContractData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _productWikiRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, WikiContractData.ToRequestContent(data), ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WikiContractData> response = Response.FromValue(WikiContractData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _serviceProductWikiClientDiagnostics.CreateScope("ServiceProductWikiResource.CreateOrUpdate");
+            using DiagnosticScope scope = _productWikiClientDiagnostics.CreateScope("ServiceProductWikiResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceProductWikiRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, WikiContractData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _productWikiRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, WikiContractData.ToRequestContent(data), ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WikiContractData> response = Response.FromValue(WikiContractData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ServiceProductWikiResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _serviceProductWikiClientDiagnostics.CreateScope("ServiceProductWikiResource.Get");
+            using DiagnosticScope scope = _productWikiClientDiagnostics.CreateScope("ServiceProductWikiResource.Get");
             scope.Start();
             try
             {
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceProductWikiRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                HttpMessage message = _productWikiRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WikiContractData> response = Response.FromValue(WikiContractData.FromResponse(result), result);
                 if (response.Value == null)
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ServiceProductWikiResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _serviceProductWikiClientDiagnostics.CreateScope("ServiceProductWikiResource.Get");
+            using DiagnosticScope scope = _productWikiClientDiagnostics.CreateScope("ServiceProductWikiResource.Get");
             scope.Start();
             try
             {
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceProductWikiRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                HttpMessage message = _productWikiRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WikiContractData> response = Response.FromValue(WikiContractData.FromResponse(result), result);
                 if (response.Value == null)
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(wikiUpdateContract, nameof(wikiUpdateContract));
 
-            using DiagnosticScope scope = _serviceProductWikiClientDiagnostics.CreateScope("ServiceProductWikiResource.Update");
+            using DiagnosticScope scope = _productWikiClientDiagnostics.CreateScope("ServiceProductWikiResource.Update");
             scope.Start();
             try
             {
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceProductWikiRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, ifMatch, WikiUpdateContract.ToRequestContent(wikiUpdateContract), context);
+                HttpMessage message = _productWikiRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, ifMatch, WikiUpdateContract.ToRequestContent(wikiUpdateContract), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WikiContractData> response = Response.FromValue(WikiContractData.FromResponse(result), result);
                 if (response.Value == null)
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(wikiUpdateContract, nameof(wikiUpdateContract));
 
-            using DiagnosticScope scope = _serviceProductWikiClientDiagnostics.CreateScope("ServiceProductWikiResource.Update");
+            using DiagnosticScope scope = _productWikiClientDiagnostics.CreateScope("ServiceProductWikiResource.Update");
             scope.Start();
             try
             {
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceProductWikiRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, ifMatch, WikiUpdateContract.ToRequestContent(wikiUpdateContract), context);
+                HttpMessage message = _productWikiRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, ifMatch, WikiUpdateContract.ToRequestContent(wikiUpdateContract), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WikiContractData> response = Response.FromValue(WikiContractData.FromResponse(result), result);
                 if (response.Value == null)
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
 
-            using DiagnosticScope scope = _serviceProductWikiClientDiagnostics.CreateScope("ServiceProductWikiResource.Delete");
+            using DiagnosticScope scope = _productWikiClientDiagnostics.CreateScope("ServiceProductWikiResource.Delete");
             scope.Start();
             try
             {
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceProductWikiRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, ifMatch, context);
+                HttpMessage message = _productWikiRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
 
-            using DiagnosticScope scope = _serviceProductWikiClientDiagnostics.CreateScope("ServiceProductWikiResource.Delete");
+            using DiagnosticScope scope = _productWikiClientDiagnostics.CreateScope("ServiceProductWikiResource.Delete");
             scope.Start();
             try
             {
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceProductWikiRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, ifMatch, context);
+                HttpMessage message = _productWikiRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());

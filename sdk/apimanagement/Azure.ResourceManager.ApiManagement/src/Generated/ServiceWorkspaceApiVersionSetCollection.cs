@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ServiceWorkspaceApiVersionSetCollection : ArmCollection, IEnumerable<ServiceWorkspaceApiVersionSetResource>, IAsyncEnumerable<ServiceWorkspaceApiVersionSetResource>
     {
-        private readonly ClientDiagnostics _serviceWorkspaceApiVersionSetClientDiagnostics;
-        private readonly ServiceWorkspaceApiVersionSet _serviceWorkspaceApiVersionSetRestClient;
+        private readonly ClientDiagnostics _workspaceApiVersionSetClientDiagnostics;
+        private readonly WorkspaceApiVersionSet _workspaceApiVersionSetRestClient;
 
         /// <summary> Initializes a new instance of ServiceWorkspaceApiVersionSetCollection for mocking. </summary>
         protected ServiceWorkspaceApiVersionSetCollection()
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.ApiManagement
         internal ServiceWorkspaceApiVersionSetCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ServiceWorkspaceApiVersionSetResource.ResourceType, out string serviceWorkspaceApiVersionSetApiVersion);
-            _serviceWorkspaceApiVersionSetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceWorkspaceApiVersionSetResource.ResourceType.Namespace, Diagnostics);
-            _serviceWorkspaceApiVersionSetRestClient = new ServiceWorkspaceApiVersionSet(_serviceWorkspaceApiVersionSetClientDiagnostics, Pipeline, Endpoint, serviceWorkspaceApiVersionSetApiVersion ?? "2025-09-01-preview");
+            _workspaceApiVersionSetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceWorkspaceApiVersionSetResource.ResourceType.Namespace, Diagnostics);
+            _workspaceApiVersionSetRestClient = new WorkspaceApiVersionSet(_workspaceApiVersionSetClientDiagnostics, Pipeline, Endpoint, serviceWorkspaceApiVersionSetApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(versionSetId, nameof(versionSetId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _serviceWorkspaceApiVersionSetClientDiagnostics.CreateScope("ServiceWorkspaceApiVersionSetCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _workspaceApiVersionSetClientDiagnostics.CreateScope("ServiceWorkspaceApiVersionSetCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceApiVersionSetRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, versionSetId, ApiVersionSetData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _workspaceApiVersionSetRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, versionSetId, ApiVersionSetData.ToRequestContent(data), ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiVersionSetData> response = Response.FromValue(ApiVersionSetData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(versionSetId, nameof(versionSetId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _serviceWorkspaceApiVersionSetClientDiagnostics.CreateScope("ServiceWorkspaceApiVersionSetCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _workspaceApiVersionSetClientDiagnostics.CreateScope("ServiceWorkspaceApiVersionSetCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceApiVersionSetRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, versionSetId, ApiVersionSetData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _workspaceApiVersionSetRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, versionSetId, ApiVersionSetData.ToRequestContent(data), ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiVersionSetData> response = Response.FromValue(ApiVersionSetData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(versionSetId, nameof(versionSetId));
 
-            using DiagnosticScope scope = _serviceWorkspaceApiVersionSetClientDiagnostics.CreateScope("ServiceWorkspaceApiVersionSetCollection.Get");
+            using DiagnosticScope scope = _workspaceApiVersionSetClientDiagnostics.CreateScope("ServiceWorkspaceApiVersionSetCollection.Get");
             scope.Start();
             try
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceApiVersionSetRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, versionSetId, context);
+                HttpMessage message = _workspaceApiVersionSetRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, versionSetId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiVersionSetData> response = Response.FromValue(ApiVersionSetData.FromResponse(result), result);
                 if (response.Value == null)
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(versionSetId, nameof(versionSetId));
 
-            using DiagnosticScope scope = _serviceWorkspaceApiVersionSetClientDiagnostics.CreateScope("ServiceWorkspaceApiVersionSetCollection.Get");
+            using DiagnosticScope scope = _workspaceApiVersionSetClientDiagnostics.CreateScope("ServiceWorkspaceApiVersionSetCollection.Get");
             scope.Start();
             try
             {
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceApiVersionSetRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, versionSetId, context);
+                HttpMessage message = _workspaceApiVersionSetRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, versionSetId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiVersionSetData> response = Response.FromValue(ApiVersionSetData.FromResponse(result), result);
                 if (response.Value == null)
@@ -292,8 +292,8 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiVersionSetData, ServiceWorkspaceApiVersionSetResource>(new ServiceWorkspaceApiVersionSetGetByServiceAsyncCollectionResultOfT(
-                _serviceWorkspaceApiVersionSetRestClient,
+            return new AsyncPageableWrapper<ApiVersionSetData, ServiceWorkspaceApiVersionSetResource>(new WorkspaceApiVersionSetGetByServiceAsyncCollectionResultOfT(
+                _workspaceApiVersionSetRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
@@ -333,8 +333,8 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiVersionSetData, ServiceWorkspaceApiVersionSetResource>(new ServiceWorkspaceApiVersionSetGetByServiceCollectionResultOfT(
-                _serviceWorkspaceApiVersionSetRestClient,
+            return new PageableWrapper<ApiVersionSetData, ServiceWorkspaceApiVersionSetResource>(new WorkspaceApiVersionSetGetByServiceCollectionResultOfT(
+                _workspaceApiVersionSetRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(versionSetId, nameof(versionSetId));
 
-            using DiagnosticScope scope = _serviceWorkspaceApiVersionSetClientDiagnostics.CreateScope("ServiceWorkspaceApiVersionSetCollection.Exists");
+            using DiagnosticScope scope = _workspaceApiVersionSetClientDiagnostics.CreateScope("ServiceWorkspaceApiVersionSetCollection.Exists");
             scope.Start();
             try
             {
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceApiVersionSetRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, versionSetId, context);
+                HttpMessage message = _workspaceApiVersionSetRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, versionSetId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiVersionSetData> response = default;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(versionSetId, nameof(versionSetId));
 
-            using DiagnosticScope scope = _serviceWorkspaceApiVersionSetClientDiagnostics.CreateScope("ServiceWorkspaceApiVersionSetCollection.Exists");
+            using DiagnosticScope scope = _workspaceApiVersionSetClientDiagnostics.CreateScope("ServiceWorkspaceApiVersionSetCollection.Exists");
             scope.Start();
             try
             {
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceApiVersionSetRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, versionSetId, context);
+                HttpMessage message = _workspaceApiVersionSetRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, versionSetId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiVersionSetData> response = default;
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(versionSetId, nameof(versionSetId));
 
-            using DiagnosticScope scope = _serviceWorkspaceApiVersionSetClientDiagnostics.CreateScope("ServiceWorkspaceApiVersionSetCollection.GetIfExists");
+            using DiagnosticScope scope = _workspaceApiVersionSetClientDiagnostics.CreateScope("ServiceWorkspaceApiVersionSetCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceApiVersionSetRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, versionSetId, context);
+                HttpMessage message = _workspaceApiVersionSetRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, versionSetId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiVersionSetData> response = default;
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(versionSetId, nameof(versionSetId));
 
-            using DiagnosticScope scope = _serviceWorkspaceApiVersionSetClientDiagnostics.CreateScope("ServiceWorkspaceApiVersionSetCollection.GetIfExists");
+            using DiagnosticScope scope = _workspaceApiVersionSetClientDiagnostics.CreateScope("ServiceWorkspaceApiVersionSetCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceApiVersionSetRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, versionSetId, context);
+                HttpMessage message = _workspaceApiVersionSetRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, versionSetId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiVersionSetData> response = default;

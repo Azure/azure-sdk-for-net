@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ServiceWorkspaceTagProductLinkCollection : ArmCollection, IEnumerable<ServiceWorkspaceTagProductLinkResource>, IAsyncEnumerable<ServiceWorkspaceTagProductLinkResource>
     {
-        private readonly ClientDiagnostics _serviceWorkspaceTagProductLinkClientDiagnostics;
-        private readonly ServiceWorkspaceTagProductLink _serviceWorkspaceTagProductLinkRestClient;
+        private readonly ClientDiagnostics _workspaceTagProductLinkClientDiagnostics;
+        private readonly WorkspaceTagProductLink _workspaceTagProductLinkRestClient;
 
         /// <summary> Initializes a new instance of ServiceWorkspaceTagProductLinkCollection for mocking. </summary>
         protected ServiceWorkspaceTagProductLinkCollection()
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.ApiManagement
         internal ServiceWorkspaceTagProductLinkCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ServiceWorkspaceTagProductLinkResource.ResourceType, out string serviceWorkspaceTagProductLinkApiVersion);
-            _serviceWorkspaceTagProductLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceWorkspaceTagProductLinkResource.ResourceType.Namespace, Diagnostics);
-            _serviceWorkspaceTagProductLinkRestClient = new ServiceWorkspaceTagProductLink(_serviceWorkspaceTagProductLinkClientDiagnostics, Pipeline, Endpoint, serviceWorkspaceTagProductLinkApiVersion ?? "2025-09-01-preview");
+            _workspaceTagProductLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceWorkspaceTagProductLinkResource.ResourceType.Namespace, Diagnostics);
+            _workspaceTagProductLinkRestClient = new WorkspaceTagProductLink(_workspaceTagProductLinkClientDiagnostics, Pipeline, Endpoint, serviceWorkspaceTagProductLinkApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(productLinkId, nameof(productLinkId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _serviceWorkspaceTagProductLinkClientDiagnostics.CreateScope("ServiceWorkspaceTagProductLinkCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _workspaceTagProductLinkClientDiagnostics.CreateScope("ServiceWorkspaceTagProductLinkCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceTagProductLinkRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, productLinkId, TagProductLinkContractData.ToRequestContent(data), context);
+                HttpMessage message = _workspaceTagProductLinkRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, productLinkId, TagProductLinkContractData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TagProductLinkContractData> response = Response.FromValue(TagProductLinkContractData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(productLinkId, nameof(productLinkId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _serviceWorkspaceTagProductLinkClientDiagnostics.CreateScope("ServiceWorkspaceTagProductLinkCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _workspaceTagProductLinkClientDiagnostics.CreateScope("ServiceWorkspaceTagProductLinkCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceTagProductLinkRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, productLinkId, TagProductLinkContractData.ToRequestContent(data), context);
+                HttpMessage message = _workspaceTagProductLinkRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, productLinkId, TagProductLinkContractData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TagProductLinkContractData> response = Response.FromValue(TagProductLinkContractData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(productLinkId, nameof(productLinkId));
 
-            using DiagnosticScope scope = _serviceWorkspaceTagProductLinkClientDiagnostics.CreateScope("ServiceWorkspaceTagProductLinkCollection.Get");
+            using DiagnosticScope scope = _workspaceTagProductLinkClientDiagnostics.CreateScope("ServiceWorkspaceTagProductLinkCollection.Get");
             scope.Start();
             try
             {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceTagProductLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, productLinkId, context);
+                HttpMessage message = _workspaceTagProductLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, productLinkId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TagProductLinkContractData> response = Response.FromValue(TagProductLinkContractData.FromResponse(result), result);
                 if (response.Value == null)
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(productLinkId, nameof(productLinkId));
 
-            using DiagnosticScope scope = _serviceWorkspaceTagProductLinkClientDiagnostics.CreateScope("ServiceWorkspaceTagProductLinkCollection.Get");
+            using DiagnosticScope scope = _workspaceTagProductLinkClientDiagnostics.CreateScope("ServiceWorkspaceTagProductLinkCollection.Get");
             scope.Start();
             try
             {
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceTagProductLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, productLinkId, context);
+                HttpMessage message = _workspaceTagProductLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, productLinkId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TagProductLinkContractData> response = Response.FromValue(TagProductLinkContractData.FromResponse(result), result);
                 if (response.Value == null)
@@ -290,8 +290,8 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TagProductLinkContractData, ServiceWorkspaceTagProductLinkResource>(new ServiceWorkspaceTagProductLinkGetByProductAsyncCollectionResultOfT(
-                _serviceWorkspaceTagProductLinkRestClient,
+            return new AsyncPageableWrapper<TagProductLinkContractData, ServiceWorkspaceTagProductLinkResource>(new WorkspaceTagProductLinkGetByProductAsyncCollectionResultOfT(
+                _workspaceTagProductLinkRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Parent.Name,
@@ -332,8 +332,8 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TagProductLinkContractData, ServiceWorkspaceTagProductLinkResource>(new ServiceWorkspaceTagProductLinkGetByProductCollectionResultOfT(
-                _serviceWorkspaceTagProductLinkRestClient,
+            return new PageableWrapper<TagProductLinkContractData, ServiceWorkspaceTagProductLinkResource>(new WorkspaceTagProductLinkGetByProductCollectionResultOfT(
+                _workspaceTagProductLinkRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Parent.Name,
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(productLinkId, nameof(productLinkId));
 
-            using DiagnosticScope scope = _serviceWorkspaceTagProductLinkClientDiagnostics.CreateScope("ServiceWorkspaceTagProductLinkCollection.Exists");
+            using DiagnosticScope scope = _workspaceTagProductLinkClientDiagnostics.CreateScope("ServiceWorkspaceTagProductLinkCollection.Exists");
             scope.Start();
             try
             {
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceTagProductLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, productLinkId, context);
+                HttpMessage message = _workspaceTagProductLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, productLinkId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<TagProductLinkContractData> response = default;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(productLinkId, nameof(productLinkId));
 
-            using DiagnosticScope scope = _serviceWorkspaceTagProductLinkClientDiagnostics.CreateScope("ServiceWorkspaceTagProductLinkCollection.Exists");
+            using DiagnosticScope scope = _workspaceTagProductLinkClientDiagnostics.CreateScope("ServiceWorkspaceTagProductLinkCollection.Exists");
             scope.Start();
             try
             {
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceTagProductLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, productLinkId, context);
+                HttpMessage message = _workspaceTagProductLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, productLinkId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<TagProductLinkContractData> response = default;
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(productLinkId, nameof(productLinkId));
 
-            using DiagnosticScope scope = _serviceWorkspaceTagProductLinkClientDiagnostics.CreateScope("ServiceWorkspaceTagProductLinkCollection.GetIfExists");
+            using DiagnosticScope scope = _workspaceTagProductLinkClientDiagnostics.CreateScope("ServiceWorkspaceTagProductLinkCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceTagProductLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, productLinkId, context);
+                HttpMessage message = _workspaceTagProductLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, productLinkId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<TagProductLinkContractData> response = default;
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(productLinkId, nameof(productLinkId));
 
-            using DiagnosticScope scope = _serviceWorkspaceTagProductLinkClientDiagnostics.CreateScope("ServiceWorkspaceTagProductLinkCollection.GetIfExists");
+            using DiagnosticScope scope = _workspaceTagProductLinkClientDiagnostics.CreateScope("ServiceWorkspaceTagProductLinkCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceTagProductLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, productLinkId, context);
+                HttpMessage message = _workspaceTagProductLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, productLinkId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<TagProductLinkContractData> response = default;

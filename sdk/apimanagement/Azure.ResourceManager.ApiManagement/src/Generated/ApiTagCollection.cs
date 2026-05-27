@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ApiTagCollection : ArmCollection, IEnumerable<ApiTagResource>, IAsyncEnumerable<ApiTagResource>
     {
-        private readonly ClientDiagnostics _apiTagClientDiagnostics;
-        private readonly ApiTag _apiTagRestClient;
+        private readonly ClientDiagnostics _tagClientDiagnostics;
+        private readonly Tag _tagRestClient;
 
         /// <summary> Initializes a new instance of ApiTagCollection for mocking. </summary>
         protected ApiTagCollection()
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.ApiManagement
         internal ApiTagCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ApiTagResource.ResourceType, out string apiTagApiVersion);
-            _apiTagClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiTagResource.ResourceType.Namespace, Diagnostics);
-            _apiTagRestClient = new ApiTag(_apiTagClientDiagnostics, Pipeline, Endpoint, apiTagApiVersion ?? "2025-09-01-preview");
+            _tagClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiTagResource.ResourceType.Namespace, Diagnostics);
+            _tagRestClient = new Tag(_tagClientDiagnostics, Pipeline, Endpoint, apiTagApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
 
-            using DiagnosticScope scope = _apiTagClientDiagnostics.CreateScope("ApiTagCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _tagClientDiagnostics.CreateScope("ApiTagCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiTagRestClient.CreateAssignToApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagId, context);
+                HttpMessage message = _tagRestClient.CreateAssignToApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TagContractData> response = Response.FromValue(TagContractData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
 
-            using DiagnosticScope scope = _apiTagClientDiagnostics.CreateScope("ApiTagCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _tagClientDiagnostics.CreateScope("ApiTagCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiTagRestClient.CreateAssignToApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagId, context);
+                HttpMessage message = _tagRestClient.CreateAssignToApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TagContractData> response = Response.FromValue(TagContractData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
 
-            using DiagnosticScope scope = _apiTagClientDiagnostics.CreateScope("ApiTagCollection.Get");
+            using DiagnosticScope scope = _tagClientDiagnostics.CreateScope("ApiTagCollection.Get");
             scope.Start();
             try
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiTagRestClient.CreateGetByApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagId, context);
+                HttpMessage message = _tagRestClient.CreateGetByApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TagContractData> response = Response.FromValue(TagContractData.FromResponse(result), result);
                 if (response.Value == null)
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
 
-            using DiagnosticScope scope = _apiTagClientDiagnostics.CreateScope("ApiTagCollection.Get");
+            using DiagnosticScope scope = _tagClientDiagnostics.CreateScope("ApiTagCollection.Get");
             scope.Start();
             try
             {
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiTagRestClient.CreateGetByApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagId, context);
+                HttpMessage message = _tagRestClient.CreateGetByApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TagContractData> response = Response.FromValue(TagContractData.FromResponse(result), result);
                 if (response.Value == null)
@@ -286,8 +286,8 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TagContractData, ApiTagResource>(new ApiTagGetByApiAsyncCollectionResultOfT(
-                _apiTagRestClient,
+            return new AsyncPageableWrapper<TagContractData, ApiTagResource>(new TagGetByApiAsyncCollectionResultOfT(
+                _tagRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
@@ -327,8 +327,8 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TagContractData, ApiTagResource>(new ApiTagGetByApiCollectionResultOfT(
-                _apiTagRestClient,
+            return new PageableWrapper<TagContractData, ApiTagResource>(new TagGetByApiCollectionResultOfT(
+                _tagRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
 
-            using DiagnosticScope scope = _apiTagClientDiagnostics.CreateScope("ApiTagCollection.Exists");
+            using DiagnosticScope scope = _tagClientDiagnostics.CreateScope("ApiTagCollection.Exists");
             scope.Start();
             try
             {
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiTagRestClient.CreateGetByApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagId, context);
+                HttpMessage message = _tagRestClient.CreateGetByApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<TagContractData> response = default;
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
 
-            using DiagnosticScope scope = _apiTagClientDiagnostics.CreateScope("ApiTagCollection.Exists");
+            using DiagnosticScope scope = _tagClientDiagnostics.CreateScope("ApiTagCollection.Exists");
             scope.Start();
             try
             {
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiTagRestClient.CreateGetByApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagId, context);
+                HttpMessage message = _tagRestClient.CreateGetByApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<TagContractData> response = default;
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
 
-            using DiagnosticScope scope = _apiTagClientDiagnostics.CreateScope("ApiTagCollection.GetIfExists");
+            using DiagnosticScope scope = _tagClientDiagnostics.CreateScope("ApiTagCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiTagRestClient.CreateGetByApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagId, context);
+                HttpMessage message = _tagRestClient.CreateGetByApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<TagContractData> response = default;
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
 
-            using DiagnosticScope scope = _apiTagClientDiagnostics.CreateScope("ApiTagCollection.GetIfExists");
+            using DiagnosticScope scope = _tagClientDiagnostics.CreateScope("ApiTagCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiTagRestClient.CreateGetByApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagId, context);
+                HttpMessage message = _tagRestClient.CreateGetByApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<TagContractData> response = default;

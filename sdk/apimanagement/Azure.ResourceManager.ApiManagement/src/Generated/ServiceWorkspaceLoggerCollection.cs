@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ServiceWorkspaceLoggerCollection : ArmCollection, IEnumerable<ServiceWorkspaceLoggerResource>, IAsyncEnumerable<ServiceWorkspaceLoggerResource>
     {
-        private readonly ClientDiagnostics _serviceWorkspaceLoggerClientDiagnostics;
-        private readonly ServiceWorkspaceLogger _serviceWorkspaceLoggerRestClient;
+        private readonly ClientDiagnostics _workspaceLoggerClientDiagnostics;
+        private readonly WorkspaceLogger _workspaceLoggerRestClient;
 
         /// <summary> Initializes a new instance of ServiceWorkspaceLoggerCollection for mocking. </summary>
         protected ServiceWorkspaceLoggerCollection()
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.ApiManagement
         internal ServiceWorkspaceLoggerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ServiceWorkspaceLoggerResource.ResourceType, out string serviceWorkspaceLoggerApiVersion);
-            _serviceWorkspaceLoggerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceWorkspaceLoggerResource.ResourceType.Namespace, Diagnostics);
-            _serviceWorkspaceLoggerRestClient = new ServiceWorkspaceLogger(_serviceWorkspaceLoggerClientDiagnostics, Pipeline, Endpoint, serviceWorkspaceLoggerApiVersion ?? "2025-09-01-preview");
+            _workspaceLoggerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceWorkspaceLoggerResource.ResourceType.Namespace, Diagnostics);
+            _workspaceLoggerRestClient = new WorkspaceLogger(_workspaceLoggerClientDiagnostics, Pipeline, Endpoint, serviceWorkspaceLoggerApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(loggerId, nameof(loggerId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _serviceWorkspaceLoggerClientDiagnostics.CreateScope("ServiceWorkspaceLoggerCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _workspaceLoggerClientDiagnostics.CreateScope("ServiceWorkspaceLoggerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceLoggerRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, loggerId, ApiManagementLoggerData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _workspaceLoggerRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, loggerId, ApiManagementLoggerData.ToRequestContent(data), ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementLoggerData> response = Response.FromValue(ApiManagementLoggerData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(loggerId, nameof(loggerId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _serviceWorkspaceLoggerClientDiagnostics.CreateScope("ServiceWorkspaceLoggerCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _workspaceLoggerClientDiagnostics.CreateScope("ServiceWorkspaceLoggerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceLoggerRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, loggerId, ApiManagementLoggerData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _workspaceLoggerRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, loggerId, ApiManagementLoggerData.ToRequestContent(data), ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementLoggerData> response = Response.FromValue(ApiManagementLoggerData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(loggerId, nameof(loggerId));
 
-            using DiagnosticScope scope = _serviceWorkspaceLoggerClientDiagnostics.CreateScope("ServiceWorkspaceLoggerCollection.Get");
+            using DiagnosticScope scope = _workspaceLoggerClientDiagnostics.CreateScope("ServiceWorkspaceLoggerCollection.Get");
             scope.Start();
             try
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceLoggerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, loggerId, context);
+                HttpMessage message = _workspaceLoggerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, loggerId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementLoggerData> response = Response.FromValue(ApiManagementLoggerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(loggerId, nameof(loggerId));
 
-            using DiagnosticScope scope = _serviceWorkspaceLoggerClientDiagnostics.CreateScope("ServiceWorkspaceLoggerCollection.Get");
+            using DiagnosticScope scope = _workspaceLoggerClientDiagnostics.CreateScope("ServiceWorkspaceLoggerCollection.Get");
             scope.Start();
             try
             {
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceLoggerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, loggerId, context);
+                HttpMessage message = _workspaceLoggerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, loggerId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementLoggerData> response = Response.FromValue(ApiManagementLoggerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -292,8 +292,8 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiManagementLoggerData, ServiceWorkspaceLoggerResource>(new ServiceWorkspaceLoggerGetByWorkspaceAsyncCollectionResultOfT(
-                _serviceWorkspaceLoggerRestClient,
+            return new AsyncPageableWrapper<ApiManagementLoggerData, ServiceWorkspaceLoggerResource>(new WorkspaceLoggerGetByWorkspaceAsyncCollectionResultOfT(
+                _workspaceLoggerRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
@@ -333,8 +333,8 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiManagementLoggerData, ServiceWorkspaceLoggerResource>(new ServiceWorkspaceLoggerGetByWorkspaceCollectionResultOfT(
-                _serviceWorkspaceLoggerRestClient,
+            return new PageableWrapper<ApiManagementLoggerData, ServiceWorkspaceLoggerResource>(new WorkspaceLoggerGetByWorkspaceCollectionResultOfT(
+                _workspaceLoggerRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(loggerId, nameof(loggerId));
 
-            using DiagnosticScope scope = _serviceWorkspaceLoggerClientDiagnostics.CreateScope("ServiceWorkspaceLoggerCollection.Exists");
+            using DiagnosticScope scope = _workspaceLoggerClientDiagnostics.CreateScope("ServiceWorkspaceLoggerCollection.Exists");
             scope.Start();
             try
             {
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceLoggerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, loggerId, context);
+                HttpMessage message = _workspaceLoggerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, loggerId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiManagementLoggerData> response = default;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(loggerId, nameof(loggerId));
 
-            using DiagnosticScope scope = _serviceWorkspaceLoggerClientDiagnostics.CreateScope("ServiceWorkspaceLoggerCollection.Exists");
+            using DiagnosticScope scope = _workspaceLoggerClientDiagnostics.CreateScope("ServiceWorkspaceLoggerCollection.Exists");
             scope.Start();
             try
             {
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceLoggerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, loggerId, context);
+                HttpMessage message = _workspaceLoggerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, loggerId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiManagementLoggerData> response = default;
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(loggerId, nameof(loggerId));
 
-            using DiagnosticScope scope = _serviceWorkspaceLoggerClientDiagnostics.CreateScope("ServiceWorkspaceLoggerCollection.GetIfExists");
+            using DiagnosticScope scope = _workspaceLoggerClientDiagnostics.CreateScope("ServiceWorkspaceLoggerCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceLoggerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, loggerId, context);
+                HttpMessage message = _workspaceLoggerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, loggerId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiManagementLoggerData> response = default;
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(loggerId, nameof(loggerId));
 
-            using DiagnosticScope scope = _serviceWorkspaceLoggerClientDiagnostics.CreateScope("ServiceWorkspaceLoggerCollection.GetIfExists");
+            using DiagnosticScope scope = _workspaceLoggerClientDiagnostics.CreateScope("ServiceWorkspaceLoggerCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceLoggerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, loggerId, context);
+                HttpMessage message = _workspaceLoggerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, loggerId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiManagementLoggerData> response = default;

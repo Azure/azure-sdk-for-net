@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ServiceWorkspaceTagCollection : ArmCollection, IEnumerable<ServiceWorkspaceTagResource>, IAsyncEnumerable<ServiceWorkspaceTagResource>
     {
-        private readonly ClientDiagnostics _serviceWorkspaceTagClientDiagnostics;
-        private readonly ServiceWorkspaceTag _serviceWorkspaceTagRestClient;
+        private readonly ClientDiagnostics _workspaceTagClientDiagnostics;
+        private readonly WorkspaceTag _workspaceTagRestClient;
 
         /// <summary> Initializes a new instance of ServiceWorkspaceTagCollection for mocking. </summary>
         protected ServiceWorkspaceTagCollection()
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.ApiManagement
         internal ServiceWorkspaceTagCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ServiceWorkspaceTagResource.ResourceType, out string serviceWorkspaceTagApiVersion);
-            _serviceWorkspaceTagClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceWorkspaceTagResource.ResourceType.Namespace, Diagnostics);
-            _serviceWorkspaceTagRestClient = new ServiceWorkspaceTag(_serviceWorkspaceTagClientDiagnostics, Pipeline, Endpoint, serviceWorkspaceTagApiVersion ?? "2025-09-01-preview");
+            _workspaceTagClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceWorkspaceTagResource.ResourceType.Namespace, Diagnostics);
+            _workspaceTagRestClient = new WorkspaceTag(_workspaceTagClientDiagnostics, Pipeline, Endpoint, serviceWorkspaceTagApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _serviceWorkspaceTagClientDiagnostics.CreateScope("ServiceWorkspaceTagCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _workspaceTagClientDiagnostics.CreateScope("ServiceWorkspaceTagCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceTagRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagId, TagCreateUpdateContent.ToRequestContent(content), ifMatch, context);
+                HttpMessage message = _workspaceTagRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagId, TagCreateUpdateContent.ToRequestContent(content), ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TagContractData> response = Response.FromValue(TagContractData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _serviceWorkspaceTagClientDiagnostics.CreateScope("ServiceWorkspaceTagCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _workspaceTagClientDiagnostics.CreateScope("ServiceWorkspaceTagCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceTagRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagId, TagCreateUpdateContent.ToRequestContent(content), ifMatch, context);
+                HttpMessage message = _workspaceTagRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagId, TagCreateUpdateContent.ToRequestContent(content), ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TagContractData> response = Response.FromValue(TagContractData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
 
-            using DiagnosticScope scope = _serviceWorkspaceTagClientDiagnostics.CreateScope("ServiceWorkspaceTagCollection.Get");
+            using DiagnosticScope scope = _workspaceTagClientDiagnostics.CreateScope("ServiceWorkspaceTagCollection.Get");
             scope.Start();
             try
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceTagRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagId, context);
+                HttpMessage message = _workspaceTagRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TagContractData> response = Response.FromValue(TagContractData.FromResponse(result), result);
                 if (response.Value == null)
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
 
-            using DiagnosticScope scope = _serviceWorkspaceTagClientDiagnostics.CreateScope("ServiceWorkspaceTagCollection.Get");
+            using DiagnosticScope scope = _workspaceTagClientDiagnostics.CreateScope("ServiceWorkspaceTagCollection.Get");
             scope.Start();
             try
             {
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceTagRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagId, context);
+                HttpMessage message = _workspaceTagRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TagContractData> response = Response.FromValue(TagContractData.FromResponse(result), result);
                 if (response.Value == null)
@@ -294,8 +294,8 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TagContractData, ServiceWorkspaceTagResource>(new ServiceWorkspaceTagGetByServiceAsyncCollectionResultOfT(
-                _serviceWorkspaceTagRestClient,
+            return new AsyncPageableWrapper<TagContractData, ServiceWorkspaceTagResource>(new WorkspaceTagGetByServiceAsyncCollectionResultOfT(
+                _workspaceTagRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
@@ -337,8 +337,8 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TagContractData, ServiceWorkspaceTagResource>(new ServiceWorkspaceTagGetByServiceCollectionResultOfT(
-                _serviceWorkspaceTagRestClient,
+            return new PageableWrapper<TagContractData, ServiceWorkspaceTagResource>(new WorkspaceTagGetByServiceCollectionResultOfT(
+                _workspaceTagRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
 
-            using DiagnosticScope scope = _serviceWorkspaceTagClientDiagnostics.CreateScope("ServiceWorkspaceTagCollection.Exists");
+            using DiagnosticScope scope = _workspaceTagClientDiagnostics.CreateScope("ServiceWorkspaceTagCollection.Exists");
             scope.Start();
             try
             {
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceTagRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagId, context);
+                HttpMessage message = _workspaceTagRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<TagContractData> response = default;
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
 
-            using DiagnosticScope scope = _serviceWorkspaceTagClientDiagnostics.CreateScope("ServiceWorkspaceTagCollection.Exists");
+            using DiagnosticScope scope = _workspaceTagClientDiagnostics.CreateScope("ServiceWorkspaceTagCollection.Exists");
             scope.Start();
             try
             {
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceTagRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagId, context);
+                HttpMessage message = _workspaceTagRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<TagContractData> response = default;
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
 
-            using DiagnosticScope scope = _serviceWorkspaceTagClientDiagnostics.CreateScope("ServiceWorkspaceTagCollection.GetIfExists");
+            using DiagnosticScope scope = _workspaceTagClientDiagnostics.CreateScope("ServiceWorkspaceTagCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceTagRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagId, context);
+                HttpMessage message = _workspaceTagRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<TagContractData> response = default;
@@ -551,7 +551,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
 
-            using DiagnosticScope scope = _serviceWorkspaceTagClientDiagnostics.CreateScope("ServiceWorkspaceTagCollection.GetIfExists");
+            using DiagnosticScope scope = _workspaceTagClientDiagnostics.CreateScope("ServiceWorkspaceTagCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceTagRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagId, context);
+                HttpMessage message = _workspaceTagRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<TagContractData> response = default;

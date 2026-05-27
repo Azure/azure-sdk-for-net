@@ -24,8 +24,10 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ServiceWorkspaceApiOperationResource : ArmResource
     {
-        private readonly ClientDiagnostics _serviceWorkspaceApiOperationClientDiagnostics;
-        private readonly ServiceWorkspaceApiOperation _serviceWorkspaceApiOperationRestClient;
+        private readonly ClientDiagnostics _workspaceApiOperationClientDiagnostics;
+        private readonly WorkspaceApiOperation _workspaceApiOperationRestClient;
+        private readonly ClientDiagnostics _workspaceApiOperationPolicyClientDiagnostics;
+        private readonly WorkspaceApiOperationPolicy _workspaceApiOperationPolicyRestClient;
         private readonly ApiOperationData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/workspaces/apis/operations";
@@ -50,8 +52,10 @@ namespace Azure.ResourceManager.ApiManagement
         internal ServiceWorkspaceApiOperationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string serviceWorkspaceApiOperationApiVersion);
-            _serviceWorkspaceApiOperationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _serviceWorkspaceApiOperationRestClient = new ServiceWorkspaceApiOperation(_serviceWorkspaceApiOperationClientDiagnostics, Pipeline, Endpoint, serviceWorkspaceApiOperationApiVersion ?? "2025-09-01-preview");
+            _workspaceApiOperationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            _workspaceApiOperationRestClient = new WorkspaceApiOperation(_workspaceApiOperationClientDiagnostics, Pipeline, Endpoint, serviceWorkspaceApiOperationApiVersion ?? "2025-09-01-preview");
+            _workspaceApiOperationPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            _workspaceApiOperationPolicyRestClient = new WorkspaceApiOperationPolicy(_workspaceApiOperationPolicyClientDiagnostics, Pipeline, Endpoint, serviceWorkspaceApiOperationApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -118,7 +122,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ServiceWorkspaceApiOperationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _serviceWorkspaceApiOperationClientDiagnostics.CreateScope("ServiceWorkspaceApiOperationResource.Get");
+            using DiagnosticScope scope = _workspaceApiOperationClientDiagnostics.CreateScope("ServiceWorkspaceApiOperationResource.Get");
             scope.Start();
             try
             {
@@ -126,7 +130,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceApiOperationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _workspaceApiOperationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiOperationData> response = Response.FromValue(ApiOperationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -166,7 +170,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ServiceWorkspaceApiOperationResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _serviceWorkspaceApiOperationClientDiagnostics.CreateScope("ServiceWorkspaceApiOperationResource.Get");
+            using DiagnosticScope scope = _workspaceApiOperationClientDiagnostics.CreateScope("ServiceWorkspaceApiOperationResource.Get");
             scope.Start();
             try
             {
@@ -174,7 +178,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceApiOperationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _workspaceApiOperationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiOperationData> response = Response.FromValue(ApiOperationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -221,7 +225,7 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(operationUpdateContract, nameof(operationUpdateContract));
 
-            using DiagnosticScope scope = _serviceWorkspaceApiOperationClientDiagnostics.CreateScope("ServiceWorkspaceApiOperationResource.Update");
+            using DiagnosticScope scope = _workspaceApiOperationClientDiagnostics.CreateScope("ServiceWorkspaceApiOperationResource.Update");
             scope.Start();
             try
             {
@@ -229,7 +233,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceApiOperationRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, OperationUpdateContract.ToRequestContent(operationUpdateContract), context);
+                HttpMessage message = _workspaceApiOperationRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, OperationUpdateContract.ToRequestContent(operationUpdateContract), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiOperationData> response = Response.FromValue(ApiOperationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -276,7 +280,7 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(operationUpdateContract, nameof(operationUpdateContract));
 
-            using DiagnosticScope scope = _serviceWorkspaceApiOperationClientDiagnostics.CreateScope("ServiceWorkspaceApiOperationResource.Update");
+            using DiagnosticScope scope = _workspaceApiOperationClientDiagnostics.CreateScope("ServiceWorkspaceApiOperationResource.Update");
             scope.Start();
             try
             {
@@ -284,7 +288,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceApiOperationRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, OperationUpdateContract.ToRequestContent(operationUpdateContract), context);
+                HttpMessage message = _workspaceApiOperationRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, OperationUpdateContract.ToRequestContent(operationUpdateContract), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiOperationData> response = Response.FromValue(ApiOperationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -330,7 +334,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
 
-            using DiagnosticScope scope = _serviceWorkspaceApiOperationClientDiagnostics.CreateScope("ServiceWorkspaceApiOperationResource.Delete");
+            using DiagnosticScope scope = _workspaceApiOperationClientDiagnostics.CreateScope("ServiceWorkspaceApiOperationResource.Delete");
             scope.Start();
             try
             {
@@ -338,7 +342,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceApiOperationRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, context);
+                HttpMessage message = _workspaceApiOperationRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -386,7 +390,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
 
-            using DiagnosticScope scope = _serviceWorkspaceApiOperationClientDiagnostics.CreateScope("ServiceWorkspaceApiOperationResource.Delete");
+            using DiagnosticScope scope = _workspaceApiOperationClientDiagnostics.CreateScope("ServiceWorkspaceApiOperationResource.Delete");
             scope.Start();
             try
             {
@@ -394,7 +398,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceApiOperationRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, context);
+                HttpMessage message = _workspaceApiOperationRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -404,6 +408,94 @@ namespace Azure.ResourceManager.ApiManagement
                     operation.WaitForCompletionResponse(cancellationToken);
                 }
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the entity state (Etag) version of the API operation policy specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apis/{apiId}/operations/{operationId}/policies/{policyId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceApiOperationPolicy_GetEntityTag. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceWorkspaceApiOperationResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="policyId"> The identifier of the Policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> GetEntityTagAsync(PolicyIdName policyId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _workspaceApiOperationPolicyClientDiagnostics.CreateScope("ServiceWorkspaceApiOperationResource.GetEntityTag");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceApiOperationPolicyRestClient.CreateGetEntityTagRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, policyId.ToString(), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the entity state (Etag) version of the API operation policy specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apis/{apiId}/operations/{operationId}/policies/{policyId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceApiOperationPolicy_GetEntityTag. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceWorkspaceApiOperationResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="policyId"> The identifier of the Policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response GetEntityTag(PolicyIdName policyId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _workspaceApiOperationPolicyClientDiagnostics.CreateScope("ServiceWorkspaceApiOperationResource.GetEntityTag");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceApiOperationPolicyRestClient.CreateGetEntityTagRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, policyId.ToString(), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
             }
             catch (Exception e)
             {

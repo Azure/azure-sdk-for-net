@@ -15,7 +15,7 @@ using Azure.ResourceManager.ApiManagement.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    internal partial class OpenIdConnectProviderGetByServiceAsyncCollectionResultOfT : AsyncPageable<OpenidConnectProviderContractData>
+    internal partial class OpenIdConnectProviderGetByServiceAsyncCollectionResultOfT : AsyncPageable<ApiManagementOpenIdConnectProviderData>
     {
         private readonly OpenIdConnectProvider _client;
         private readonly Guid _subscriptionId;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of OpenIdConnectProviderGetByServiceAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<OpenidConnectProviderContractData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<ApiManagementOpenIdConnectProviderData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ApiManagement
                     yield break;
                 }
                 OpenIdConnectProviderCollection result = OpenIdConnectProviderCollection.FromResponse(response);
-                yield return Page<OpenidConnectProviderContractData>.FromValues((IReadOnlyList<OpenidConnectProviderContractData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<ApiManagementOpenIdConnectProviderData>.FromValues((IReadOnlyList<ApiManagementOpenIdConnectProviderData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {

@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ServiceWorkspaceApiDiagnosticCollection : ArmCollection, IEnumerable<ServiceWorkspaceApiDiagnosticResource>, IAsyncEnumerable<ServiceWorkspaceApiDiagnosticResource>
     {
-        private readonly ClientDiagnostics _serviceWorkspaceApiDiagnosticClientDiagnostics;
-        private readonly ServiceWorkspaceApiDiagnostic _serviceWorkspaceApiDiagnosticRestClient;
+        private readonly ClientDiagnostics _workspaceApiDiagnosticClientDiagnostics;
+        private readonly WorkspaceApiDiagnostic _workspaceApiDiagnosticRestClient;
 
         /// <summary> Initializes a new instance of ServiceWorkspaceApiDiagnosticCollection for mocking. </summary>
         protected ServiceWorkspaceApiDiagnosticCollection()
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.ApiManagement
         internal ServiceWorkspaceApiDiagnosticCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ServiceWorkspaceApiDiagnosticResource.ResourceType, out string serviceWorkspaceApiDiagnosticApiVersion);
-            _serviceWorkspaceApiDiagnosticClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceWorkspaceApiDiagnosticResource.ResourceType.Namespace, Diagnostics);
-            _serviceWorkspaceApiDiagnosticRestClient = new ServiceWorkspaceApiDiagnostic(_serviceWorkspaceApiDiagnosticClientDiagnostics, Pipeline, Endpoint, serviceWorkspaceApiDiagnosticApiVersion ?? "2025-09-01-preview");
+            _workspaceApiDiagnosticClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceWorkspaceApiDiagnosticResource.ResourceType.Namespace, Diagnostics);
+            _workspaceApiDiagnosticRestClient = new WorkspaceApiDiagnostic(_workspaceApiDiagnosticClientDiagnostics, Pipeline, Endpoint, serviceWorkspaceApiDiagnosticApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(diagnosticId, nameof(diagnosticId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _serviceWorkspaceApiDiagnosticClientDiagnostics.CreateScope("ServiceWorkspaceApiDiagnosticCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _workspaceApiDiagnosticClientDiagnostics.CreateScope("ServiceWorkspaceApiDiagnosticCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceApiDiagnosticRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, diagnosticId, ApiManagementDiagnosticData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _workspaceApiDiagnosticRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, diagnosticId, ApiManagementDiagnosticData.ToRequestContent(data), ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementDiagnosticData> response = Response.FromValue(ApiManagementDiagnosticData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(diagnosticId, nameof(diagnosticId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _serviceWorkspaceApiDiagnosticClientDiagnostics.CreateScope("ServiceWorkspaceApiDiagnosticCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _workspaceApiDiagnosticClientDiagnostics.CreateScope("ServiceWorkspaceApiDiagnosticCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceApiDiagnosticRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, diagnosticId, ApiManagementDiagnosticData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _workspaceApiDiagnosticRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, diagnosticId, ApiManagementDiagnosticData.ToRequestContent(data), ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementDiagnosticData> response = Response.FromValue(ApiManagementDiagnosticData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(diagnosticId, nameof(diagnosticId));
 
-            using DiagnosticScope scope = _serviceWorkspaceApiDiagnosticClientDiagnostics.CreateScope("ServiceWorkspaceApiDiagnosticCollection.Get");
+            using DiagnosticScope scope = _workspaceApiDiagnosticClientDiagnostics.CreateScope("ServiceWorkspaceApiDiagnosticCollection.Get");
             scope.Start();
             try
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceApiDiagnosticRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, diagnosticId, context);
+                HttpMessage message = _workspaceApiDiagnosticRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, diagnosticId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementDiagnosticData> response = Response.FromValue(ApiManagementDiagnosticData.FromResponse(result), result);
                 if (response.Value == null)
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(diagnosticId, nameof(diagnosticId));
 
-            using DiagnosticScope scope = _serviceWorkspaceApiDiagnosticClientDiagnostics.CreateScope("ServiceWorkspaceApiDiagnosticCollection.Get");
+            using DiagnosticScope scope = _workspaceApiDiagnosticClientDiagnostics.CreateScope("ServiceWorkspaceApiDiagnosticCollection.Get");
             scope.Start();
             try
             {
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceApiDiagnosticRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, diagnosticId, context);
+                HttpMessage message = _workspaceApiDiagnosticRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, diagnosticId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementDiagnosticData> response = Response.FromValue(ApiManagementDiagnosticData.FromResponse(result), result);
                 if (response.Value == null)
@@ -292,8 +292,8 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiManagementDiagnosticData, ServiceWorkspaceApiDiagnosticResource>(new ServiceWorkspaceApiDiagnosticGetByWorkspaceAsyncCollectionResultOfT(
-                _serviceWorkspaceApiDiagnosticRestClient,
+            return new AsyncPageableWrapper<ApiManagementDiagnosticData, ServiceWorkspaceApiDiagnosticResource>(new WorkspaceApiDiagnosticGetByWorkspaceAsyncCollectionResultOfT(
+                _workspaceApiDiagnosticRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Parent.Name,
@@ -334,8 +334,8 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiManagementDiagnosticData, ServiceWorkspaceApiDiagnosticResource>(new ServiceWorkspaceApiDiagnosticGetByWorkspaceCollectionResultOfT(
-                _serviceWorkspaceApiDiagnosticRestClient,
+            return new PageableWrapper<ApiManagementDiagnosticData, ServiceWorkspaceApiDiagnosticResource>(new WorkspaceApiDiagnosticGetByWorkspaceCollectionResultOfT(
+                _workspaceApiDiagnosticRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Parent.Name,
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(diagnosticId, nameof(diagnosticId));
 
-            using DiagnosticScope scope = _serviceWorkspaceApiDiagnosticClientDiagnostics.CreateScope("ServiceWorkspaceApiDiagnosticCollection.Exists");
+            using DiagnosticScope scope = _workspaceApiDiagnosticClientDiagnostics.CreateScope("ServiceWorkspaceApiDiagnosticCollection.Exists");
             scope.Start();
             try
             {
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceApiDiagnosticRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, diagnosticId, context);
+                HttpMessage message = _workspaceApiDiagnosticRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, diagnosticId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiManagementDiagnosticData> response = default;
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(diagnosticId, nameof(diagnosticId));
 
-            using DiagnosticScope scope = _serviceWorkspaceApiDiagnosticClientDiagnostics.CreateScope("ServiceWorkspaceApiDiagnosticCollection.Exists");
+            using DiagnosticScope scope = _workspaceApiDiagnosticClientDiagnostics.CreateScope("ServiceWorkspaceApiDiagnosticCollection.Exists");
             scope.Start();
             try
             {
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceApiDiagnosticRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, diagnosticId, context);
+                HttpMessage message = _workspaceApiDiagnosticRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, diagnosticId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiManagementDiagnosticData> response = default;
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(diagnosticId, nameof(diagnosticId));
 
-            using DiagnosticScope scope = _serviceWorkspaceApiDiagnosticClientDiagnostics.CreateScope("ServiceWorkspaceApiDiagnosticCollection.GetIfExists");
+            using DiagnosticScope scope = _workspaceApiDiagnosticClientDiagnostics.CreateScope("ServiceWorkspaceApiDiagnosticCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceApiDiagnosticRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, diagnosticId, context);
+                HttpMessage message = _workspaceApiDiagnosticRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, diagnosticId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiManagementDiagnosticData> response = default;
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(diagnosticId, nameof(diagnosticId));
 
-            using DiagnosticScope scope = _serviceWorkspaceApiDiagnosticClientDiagnostics.CreateScope("ServiceWorkspaceApiDiagnosticCollection.GetIfExists");
+            using DiagnosticScope scope = _workspaceApiDiagnosticClientDiagnostics.CreateScope("ServiceWorkspaceApiDiagnosticCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceApiDiagnosticRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, diagnosticId, context);
+                HttpMessage message = _workspaceApiDiagnosticRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, diagnosticId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiManagementDiagnosticData> response = default;

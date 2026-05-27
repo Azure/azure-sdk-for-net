@@ -20,7 +20,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ApiManagement.Mocking
 {
-    /// <summary> A class to add extension methods to <see cref="Resources.SubscriptionResource"/>. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableApiManagementSubscriptionResource : ArmResource
     {
         private ClientDiagnostics _apiManagementServiceClientDiagnostics;
@@ -72,11 +72,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
 
         private OperationsResults OperationsResultsRestClient => _operationsResultsRestClient ??= new OperationsResults(OperationsResultsClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
 
-        /// <summary> Gets a collection of ApiManagementDeletedServices in the <see cref="Resources.SubscriptionResource"/>. </summary>
-        /// <returns> An object representing collection of ApiManagementDeletedServices and their operations over a ApiManagementDeletedServiceResource. </returns>
-        public virtual ApiManagementDeletedServiceCollection GetApiManagementDeletedServices()
+        /// <summary> Gets a collection of DeletedServiceContracts in the <see cref="SubscriptionResource"/>. </summary>
+        /// <returns> An object representing collection of DeletedServiceContracts and their operations over a DeletedServiceContractResource. </returns>
+        public virtual DeletedServiceContractCollection GetDeletedServiceContracts()
         {
-            return GetCachedClient(client => new ApiManagementDeletedServiceCollection(client, Id));
+            return GetCachedClient(client => new DeletedServiceContractCollection(client, Id));
         }
 
         /// <summary>
@@ -102,11 +102,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ApiManagementDeletedServiceResource>> GetApiManagementDeletedServiceAsync(AzureLocation location, string serviceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeletedServiceContractResource>> GetDeletedServiceContractAsync(AzureLocation location, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
-            return await GetApiManagementDeletedServices().GetAsync(location, serviceName, cancellationToken).ConfigureAwait(false);
+            return await GetDeletedServiceContracts().GetAsync(location, serviceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -132,11 +132,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ApiManagementDeletedServiceResource> GetApiManagementDeletedService(AzureLocation location, string serviceName, CancellationToken cancellationToken = default)
+        public virtual Response<DeletedServiceContractResource> GetDeletedServiceContract(AzureLocation location, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
-            return GetApiManagementDeletedServices().Get(location, serviceName, cancellationToken);
+            return GetDeletedServiceContracts().Get(location, serviceName, cancellationToken);
         }
 
         /// <summary>
@@ -281,6 +281,62 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
                 skipToken,
                 context,
                 "MockableApiManagementSubscriptionResource.GetApiManagementGatewayResources"), data => new ApiManagementGatewayResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists all soft-deleted services available for undelete for the given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/deletedservices. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DeletedServicesOperationGroup_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DeletedServiceContractResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DeletedServiceContractResource> GetBySubscriptionAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ApiManagementDeletedServiceData, DeletedServiceContractResource>(new DeletedServicesGetBySubscriptionAsyncCollectionResultOfT(DeletedServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableApiManagementSubscriptionResource.GetBySubscription"), data => new DeletedServiceContractResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists all soft-deleted services available for undelete for the given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/deletedservices. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DeletedServicesOperationGroup_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DeletedServiceContractResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DeletedServiceContractResource> GetBySubscription(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ApiManagementDeletedServiceData, DeletedServiceContractResource>(new DeletedServicesGetBySubscriptionCollectionResultOfT(DeletedServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableApiManagementSubscriptionResource.GetBySubscription"), data => new DeletedServiceContractResource(Client, data));
         }
 
         /// <summary>
@@ -465,62 +521,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Lists all soft-deleted services available for undelete for the given subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/deletedservices. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DeletedServicesOperationGroup_ListBySubscription. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiManagementDeletedServiceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApiManagementDeletedServiceResource> GetBySubscriptionAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<ApiManagementDeletedServiceData, ApiManagementDeletedServiceResource>(new DeletedServicesGetBySubscriptionAsyncCollectionResultOfT(DeletedServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableApiManagementSubscriptionResource.GetBySubscription"), data => new ApiManagementDeletedServiceResource(Client, data));
-        }
-
-        /// <summary>
-        /// Lists all soft-deleted services available for undelete for the given subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/deletedservices. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DeletedServicesOperationGroup_ListBySubscription. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiManagementDeletedServiceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApiManagementDeletedServiceResource> GetBySubscription(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<ApiManagementDeletedServiceData, ApiManagementDeletedServiceResource>(new DeletedServicesGetBySubscriptionCollectionResultOfT(DeletedServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableApiManagementSubscriptionResource.GetBySubscription"), data => new ApiManagementDeletedServiceResource(Client, data));
         }
 
         /// <summary>

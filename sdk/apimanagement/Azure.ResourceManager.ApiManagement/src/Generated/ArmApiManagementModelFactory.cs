@@ -3461,10 +3461,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="clientSecret"> Client Secret of developer console which is the client application. </param>
         /// <param name="useInTestConsole"> If true, the Open ID Connect provider may be used in the developer portal test console. True by default if no value is provided. </param>
         /// <param name="useInApiDocumentation"> If true, the Open ID Connect provider will be used in the API documentation in the developer portal. False by default if no value is provided. </param>
-        /// <returns> A new <see cref="ApiManagement.OpenidConnectProviderContractData"/> instance for mocking. </returns>
-        public static OpenidConnectProviderContractData OpenidConnectProviderContractData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, string description = default, string metadataEndpoint = default, string clientId = default, string clientSecret = default, bool? useInTestConsole = default, bool? useInApiDocumentation = default)
+        /// <returns> A new <see cref="ApiManagement.ApiManagementOpenIdConnectProviderData"/> instance for mocking. </returns>
+        public static ApiManagementOpenIdConnectProviderData ApiManagementOpenIdConnectProviderData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, string description = default, string metadataEndpoint = default, string clientId = default, string clientSecret = default, bool? useInTestConsole = default, bool? useInApiDocumentation = default)
         {
-            return new OpenidConnectProviderContractData(
+            return new ApiManagementOpenIdConnectProviderData(
                 id,
                 name,
                 resourceType,
@@ -5137,6 +5137,23 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     clientId,
                     clientSecret,
                     default));
+        }
+
+        /// <summary> Initializes a new instance of ApiManagementOpenIdConnectProviderData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="displayName"> User-friendly OpenID Connect Provider name. </param>
+        /// <param name="description"> User-friendly description of OpenID Connect Provider. </param>
+        /// <param name="metadataEndpoint"> Metadata endpoint URI. </param>
+        /// <param name="clientId"> Client ID of developer console which is the client application. </param>
+        /// <param name="clientSecret"> Client Secret of developer console which is the client application. </param>
+        /// <returns> A new <see cref="ApiManagement.ApiManagementOpenIdConnectProviderData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ApiManagementOpenIdConnectProviderData ApiManagementOpenIdConnectProviderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string description, string metadataEndpoint, string clientId, string clientSecret)
+        {
+            return ApiManagementOpenIdConnectProviderData(id: id, name: name, resourceType: resourceType, systemData: systemData, displayName: displayName, description: description, metadataEndpoint: metadataEndpoint, clientId: clientId, clientSecret: clientSecret, useInTestConsole: default, useInApiDocumentation: default);
         }
     }
 }

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApiManagement
     {
         private readonly ClientDiagnostics _openIdConnectProviderClientDiagnostics;
         private readonly OpenIdConnectProvider _openIdConnectProviderRestClient;
-        private readonly OpenidConnectProviderContractData _data;
+        private readonly ApiManagementOpenIdConnectProviderData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/openidConnectProviders";
 
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Initializes a new instance of <see cref="OpenidConnectProviderContractResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal OpenidConnectProviderContractResource(ArmClient client, OpenidConnectProviderContractData data) : this(client, data.Id)
+        internal OpenidConnectProviderContractResource(ArmClient client, ApiManagementOpenIdConnectProviderData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual OpenidConnectProviderContractData Data
+        public virtual ApiManagementOpenIdConnectProviderData Data
         {
             get
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ApiManagement
                 };
                 HttpMessage message = _openIdConnectProviderRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<OpenidConnectProviderContractData> response = Response.FromValue(OpenidConnectProviderContractData.FromResponse(result), result);
+                Response<ApiManagementOpenIdConnectProviderData> response = Response.FromValue(ApiManagementOpenIdConnectProviderData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ApiManagement
                 };
                 HttpMessage message = _openIdConnectProviderRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<OpenidConnectProviderContractData> response = Response.FromValue(OpenidConnectProviderContractData.FromResponse(result), result);
+                Response<ApiManagementOpenIdConnectProviderData> response = Response.FromValue(ApiManagementOpenIdConnectProviderData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<OpenidConnectProviderContractResource>> UpdateAsync(string ifMatch, OpenidConnectProviderContractPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OpenidConnectProviderContractResource>> UpdateAsync(string ifMatch, ApiManagementOpenIdConnectProviderPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(patch, nameof(patch));
@@ -227,9 +227,9 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _openIdConnectProviderRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, OpenidConnectProviderContractPatch.ToRequestContent(patch), context);
+                HttpMessage message = _openIdConnectProviderRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, ApiManagementOpenIdConnectProviderPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<OpenidConnectProviderContractData> response = Response.FromValue(OpenidConnectProviderContractData.FromResponse(result), result);
+                Response<ApiManagementOpenIdConnectProviderData> response = Response.FromValue(ApiManagementOpenIdConnectProviderData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<OpenidConnectProviderContractResource> Update(string ifMatch, OpenidConnectProviderContractPatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<OpenidConnectProviderContractResource> Update(string ifMatch, ApiManagementOpenIdConnectProviderPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(patch, nameof(patch));
@@ -282,9 +282,9 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _openIdConnectProviderRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, OpenidConnectProviderContractPatch.ToRequestContent(patch), context);
+                HttpMessage message = _openIdConnectProviderRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, ApiManagementOpenIdConnectProviderPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<OpenidConnectProviderContractData> response = Response.FromValue(OpenidConnectProviderContractData.FromResponse(result), result);
+                Response<ApiManagementOpenIdConnectProviderData> response = Response.FromValue(ApiManagementOpenIdConnectProviderData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

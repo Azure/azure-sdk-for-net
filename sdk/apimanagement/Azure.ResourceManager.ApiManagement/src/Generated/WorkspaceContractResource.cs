@@ -26,8 +26,36 @@ namespace Azure.ResourceManager.ApiManagement
     {
         private readonly ClientDiagnostics _workspaceClientDiagnostics;
         private readonly Workspace _workspaceRestClient;
+        private readonly ClientDiagnostics _workspaceApiClientDiagnostics;
+        private readonly WorkspaceApi _workspaceApiRestClient;
         private readonly ClientDiagnostics _workspaceApiExportClientDiagnostics;
         private readonly WorkspaceApiExport _workspaceApiExportRestClient;
+        private readonly ClientDiagnostics _workspaceApiVersionSetClientDiagnostics;
+        private readonly WorkspaceApiVersionSet _workspaceApiVersionSetRestClient;
+        private readonly ClientDiagnostics _workspaceBackendClientDiagnostics;
+        private readonly WorkspaceBackend _workspaceBackendRestClient;
+        private readonly ClientDiagnostics _workspaceCertificateClientDiagnostics;
+        private readonly WorkspaceCertificate _workspaceCertificateRestClient;
+        private readonly ClientDiagnostics _workspaceDiagnosticClientDiagnostics;
+        private readonly WorkspaceDiagnostic _workspaceDiagnosticRestClient;
+        private readonly ClientDiagnostics _workspaceGlobalSchemaClientDiagnostics;
+        private readonly WorkspaceGlobalSchema _workspaceGlobalSchemaRestClient;
+        private readonly ClientDiagnostics _workspaceGroupClientDiagnostics;
+        private readonly WorkspaceGroup _workspaceGroupRestClient;
+        private readonly ClientDiagnostics _workspaceLoggerClientDiagnostics;
+        private readonly WorkspaceLogger _workspaceLoggerRestClient;
+        private readonly ClientDiagnostics _workspaceNamedValueClientDiagnostics;
+        private readonly WorkspaceNamedValue _workspaceNamedValueRestClient;
+        private readonly ClientDiagnostics _workspacePolicyClientDiagnostics;
+        private readonly WorkspacePolicy _workspacePolicyRestClient;
+        private readonly ClientDiagnostics _workspacePolicyFragmentClientDiagnostics;
+        private readonly WorkspacePolicyFragment _workspacePolicyFragmentRestClient;
+        private readonly ClientDiagnostics _workspaceProductClientDiagnostics;
+        private readonly WorkspaceProduct _workspaceProductRestClient;
+        private readonly ClientDiagnostics _workspaceSubscriptionClientDiagnostics;
+        private readonly WorkspaceSubscription _workspaceSubscriptionRestClient;
+        private readonly ClientDiagnostics _workspaceTagClientDiagnostics;
+        private readonly WorkspaceTag _workspaceTagRestClient;
         private readonly WorkspaceContractData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/workspaces";
@@ -54,8 +82,36 @@ namespace Azure.ResourceManager.ApiManagement
             TryGetApiVersion(ResourceType, out string workspaceContractApiVersion);
             _workspaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
             _workspaceRestClient = new Workspace(_workspaceClientDiagnostics, Pipeline, Endpoint, workspaceContractApiVersion ?? "2025-09-01-preview");
+            _workspaceApiClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            _workspaceApiRestClient = new WorkspaceApi(_workspaceApiClientDiagnostics, Pipeline, Endpoint, workspaceContractApiVersion ?? "2025-09-01-preview");
             _workspaceApiExportClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
             _workspaceApiExportRestClient = new WorkspaceApiExport(_workspaceApiExportClientDiagnostics, Pipeline, Endpoint, workspaceContractApiVersion ?? "2025-09-01-preview");
+            _workspaceApiVersionSetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            _workspaceApiVersionSetRestClient = new WorkspaceApiVersionSet(_workspaceApiVersionSetClientDiagnostics, Pipeline, Endpoint, workspaceContractApiVersion ?? "2025-09-01-preview");
+            _workspaceBackendClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            _workspaceBackendRestClient = new WorkspaceBackend(_workspaceBackendClientDiagnostics, Pipeline, Endpoint, workspaceContractApiVersion ?? "2025-09-01-preview");
+            _workspaceCertificateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            _workspaceCertificateRestClient = new WorkspaceCertificate(_workspaceCertificateClientDiagnostics, Pipeline, Endpoint, workspaceContractApiVersion ?? "2025-09-01-preview");
+            _workspaceDiagnosticClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            _workspaceDiagnosticRestClient = new WorkspaceDiagnostic(_workspaceDiagnosticClientDiagnostics, Pipeline, Endpoint, workspaceContractApiVersion ?? "2025-09-01-preview");
+            _workspaceGlobalSchemaClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            _workspaceGlobalSchemaRestClient = new WorkspaceGlobalSchema(_workspaceGlobalSchemaClientDiagnostics, Pipeline, Endpoint, workspaceContractApiVersion ?? "2025-09-01-preview");
+            _workspaceGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            _workspaceGroupRestClient = new WorkspaceGroup(_workspaceGroupClientDiagnostics, Pipeline, Endpoint, workspaceContractApiVersion ?? "2025-09-01-preview");
+            _workspaceLoggerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            _workspaceLoggerRestClient = new WorkspaceLogger(_workspaceLoggerClientDiagnostics, Pipeline, Endpoint, workspaceContractApiVersion ?? "2025-09-01-preview");
+            _workspaceNamedValueClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            _workspaceNamedValueRestClient = new WorkspaceNamedValue(_workspaceNamedValueClientDiagnostics, Pipeline, Endpoint, workspaceContractApiVersion ?? "2025-09-01-preview");
+            _workspacePolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            _workspacePolicyRestClient = new WorkspacePolicy(_workspacePolicyClientDiagnostics, Pipeline, Endpoint, workspaceContractApiVersion ?? "2025-09-01-preview");
+            _workspacePolicyFragmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            _workspacePolicyFragmentRestClient = new WorkspacePolicyFragment(_workspacePolicyFragmentClientDiagnostics, Pipeline, Endpoint, workspaceContractApiVersion ?? "2025-09-01-preview");
+            _workspaceProductClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            _workspaceProductRestClient = new WorkspaceProduct(_workspaceProductClientDiagnostics, Pipeline, Endpoint, workspaceContractApiVersion ?? "2025-09-01-preview");
+            _workspaceSubscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            _workspaceSubscriptionRestClient = new WorkspaceSubscription(_workspaceSubscriptionClientDiagnostics, Pipeline, Endpoint, workspaceContractApiVersion ?? "2025-09-01-preview");
+            _workspaceTagClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            _workspaceTagRestClient = new WorkspaceTag(_workspaceTagClientDiagnostics, Pipeline, Endpoint, workspaceContractApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -415,6 +471,102 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
+        /// Gets the entity state (Etag) version of the API specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apis/{apiId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceApi_GetEntityTag. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WorkspaceContractResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="apiId"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> WorkspaceApiGetEntityTagAsync(string apiId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
+
+            using DiagnosticScope scope = _workspaceApiClientDiagnostics.CreateScope("WorkspaceContractResource.WorkspaceApiGetEntityTag");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceApiRestClient.CreateWorkspaceApiGetEntityTagRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiId, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the entity state (Etag) version of the API specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apis/{apiId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceApi_GetEntityTag. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WorkspaceContractResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="apiId"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response WorkspaceApiGetEntityTag(string apiId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
+
+            using DiagnosticScope scope = _workspaceApiClientDiagnostics.CreateScope("WorkspaceContractResource.WorkspaceApiGetEntityTag");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceApiRestClient.CreateWorkspaceApiGetEntityTagRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiId, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Gets the details of the API specified by its identifier in the format specified to the Storage Blob with SAS Key valid for 5 minutes.
         /// <list type="bullet">
         /// <item>
@@ -524,6 +676,1246 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
+        /// <summary>
+        /// Gets the entity state (Etag) version of the Api Version Set specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apiVersionSets/{versionSetId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceApiVersionSet_GetEntityTag. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WorkspaceContractResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="versionSetId"> Api Version Set identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="versionSetId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="versionSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> WorkspaceApiVersionSetGetEntityTagAsync(string versionSetId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(versionSetId, nameof(versionSetId));
+
+            using DiagnosticScope scope = _workspaceApiVersionSetClientDiagnostics.CreateScope("WorkspaceContractResource.WorkspaceApiVersionSetGetEntityTag");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceApiVersionSetRestClient.CreateWorkspaceApiVersionSetGetEntityTagRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, versionSetId, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the entity state (Etag) version of the Api Version Set specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apiVersionSets/{versionSetId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceApiVersionSet_GetEntityTag. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WorkspaceContractResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="versionSetId"> Api Version Set identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="versionSetId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="versionSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response WorkspaceApiVersionSetGetEntityTag(string versionSetId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(versionSetId, nameof(versionSetId));
+
+            using DiagnosticScope scope = _workspaceApiVersionSetClientDiagnostics.CreateScope("WorkspaceContractResource.WorkspaceApiVersionSetGetEntityTag");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceApiVersionSetRestClient.CreateWorkspaceApiVersionSetGetEntityTagRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, versionSetId, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the entity state (Etag) version of the backend specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/backends/{backendId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceBackend_GetEntityTag. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WorkspaceContractResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="backendId"> Identifier of the Backend entity. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="backendId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backendId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> WorkspaceBackendGetEntityTagAsync(string backendId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(backendId, nameof(backendId));
+
+            using DiagnosticScope scope = _workspaceBackendClientDiagnostics.CreateScope("WorkspaceContractResource.WorkspaceBackendGetEntityTag");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceBackendRestClient.CreateWorkspaceBackendGetEntityTagRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, backendId, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the entity state (Etag) version of the backend specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/backends/{backendId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceBackend_GetEntityTag. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WorkspaceContractResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="backendId"> Identifier of the Backend entity. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="backendId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backendId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response WorkspaceBackendGetEntityTag(string backendId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(backendId, nameof(backendId));
+
+            using DiagnosticScope scope = _workspaceBackendClientDiagnostics.CreateScope("WorkspaceContractResource.WorkspaceBackendGetEntityTag");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceBackendRestClient.CreateWorkspaceBackendGetEntityTagRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, backendId, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the entity state (Etag) version of the certificate specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/certificates/{certificateId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceCertificate_GetEntityTag. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WorkspaceContractResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="certificateId"> Identifier of the certificate entity. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="certificateId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> WorkspaceCertificateGetEntityTagAsync(string certificateId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(certificateId, nameof(certificateId));
+
+            using DiagnosticScope scope = _workspaceCertificateClientDiagnostics.CreateScope("WorkspaceContractResource.WorkspaceCertificateGetEntityTag");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceCertificateRestClient.CreateWorkspaceCertificateGetEntityTagRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, certificateId, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the entity state (Etag) version of the certificate specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/certificates/{certificateId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceCertificate_GetEntityTag. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WorkspaceContractResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="certificateId"> Identifier of the certificate entity. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="certificateId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response WorkspaceCertificateGetEntityTag(string certificateId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(certificateId, nameof(certificateId));
+
+            using DiagnosticScope scope = _workspaceCertificateClientDiagnostics.CreateScope("WorkspaceContractResource.WorkspaceCertificateGetEntityTag");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceCertificateRestClient.CreateWorkspaceCertificateGetEntityTagRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, certificateId, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the entity state (Etag) version of the Diagnostic specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/diagnostics/{diagnosticId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceDiagnostic_GetEntityTag. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WorkspaceContractResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="diagnosticId"> Diagnostic identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> WorkspaceDiagnosticGetEntityTagAsync(string diagnosticId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(diagnosticId, nameof(diagnosticId));
+
+            using DiagnosticScope scope = _workspaceDiagnosticClientDiagnostics.CreateScope("WorkspaceContractResource.WorkspaceDiagnosticGetEntityTag");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceDiagnosticRestClient.CreateWorkspaceDiagnosticGetEntityTagRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, diagnosticId, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the entity state (Etag) version of the Diagnostic specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/diagnostics/{diagnosticId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceDiagnostic_GetEntityTag. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WorkspaceContractResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="diagnosticId"> Diagnostic identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response WorkspaceDiagnosticGetEntityTag(string diagnosticId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(diagnosticId, nameof(diagnosticId));
+
+            using DiagnosticScope scope = _workspaceDiagnosticClientDiagnostics.CreateScope("WorkspaceContractResource.WorkspaceDiagnosticGetEntityTag");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceDiagnosticRestClient.CreateWorkspaceDiagnosticGetEntityTagRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, diagnosticId, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the entity state (Etag) version of the Schema specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/schemas/{schemaId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceGlobalSchema_GetEntityTag. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WorkspaceContractResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="schemaId"> Schema id identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="schemaId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="schemaId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> WorkspaceGlobalSchemaGetEntityTagAsync(string schemaId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(schemaId, nameof(schemaId));
+
+            using DiagnosticScope scope = _workspaceGlobalSchemaClientDiagnostics.CreateScope("WorkspaceContractResource.WorkspaceGlobalSchemaGetEntityTag");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceGlobalSchemaRestClient.CreateWorkspaceGlobalSchemaGetEntityTagRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaId, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the entity state (Etag) version of the Schema specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/schemas/{schemaId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceGlobalSchema_GetEntityTag. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WorkspaceContractResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="schemaId"> Schema id identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="schemaId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="schemaId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response WorkspaceGlobalSchemaGetEntityTag(string schemaId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(schemaId, nameof(schemaId));
+
+            using DiagnosticScope scope = _workspaceGlobalSchemaClientDiagnostics.CreateScope("WorkspaceContractResource.WorkspaceGlobalSchemaGetEntityTag");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceGlobalSchemaRestClient.CreateWorkspaceGlobalSchemaGetEntityTagRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaId, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the entity state (Etag) version of the group specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/groups/{groupId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceGroup_GetEntityTag. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WorkspaceContractResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="groupId"> Group identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> WorkspaceGroupGetEntityTagAsync(string groupId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+
+            using DiagnosticScope scope = _workspaceGroupClientDiagnostics.CreateScope("WorkspaceContractResource.WorkspaceGroupGetEntityTag");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceGroupRestClient.CreateWorkspaceGroupGetEntityTagRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, groupId, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the entity state (Etag) version of the group specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/groups/{groupId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceGroup_GetEntityTag. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WorkspaceContractResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="groupId"> Group identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response WorkspaceGroupGetEntityTag(string groupId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+
+            using DiagnosticScope scope = _workspaceGroupClientDiagnostics.CreateScope("WorkspaceContractResource.WorkspaceGroupGetEntityTag");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceGroupRestClient.CreateWorkspaceGroupGetEntityTagRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, groupId, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the entity state (Etag) version of the logger specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/loggers/{loggerId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceLogger_GetEntityTag. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WorkspaceContractResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="loggerId"> Logger identifier. Must be unique in the API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="loggerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="loggerId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> WorkspaceLoggerGetEntityTagAsync(string loggerId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(loggerId, nameof(loggerId));
+
+            using DiagnosticScope scope = _workspaceLoggerClientDiagnostics.CreateScope("WorkspaceContractResource.WorkspaceLoggerGetEntityTag");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceLoggerRestClient.CreateWorkspaceLoggerGetEntityTagRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, loggerId, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the entity state (Etag) version of the logger specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/loggers/{loggerId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceLogger_GetEntityTag. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WorkspaceContractResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="loggerId"> Logger identifier. Must be unique in the API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="loggerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="loggerId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response WorkspaceLoggerGetEntityTag(string loggerId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(loggerId, nameof(loggerId));
+
+            using DiagnosticScope scope = _workspaceLoggerClientDiagnostics.CreateScope("WorkspaceContractResource.WorkspaceLoggerGetEntityTag");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceLoggerRestClient.CreateWorkspaceLoggerGetEntityTagRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, loggerId, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the entity state (Etag) version of the named value specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/namedValues/{namedValueId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceNamedValue_GetEntityTag. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WorkspaceContractResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="namedValueId"> Identifier of the NamedValue. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="namedValueId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="namedValueId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> WorkspaceNamedValueGetEntityTagAsync(string namedValueId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(namedValueId, nameof(namedValueId));
+
+            using DiagnosticScope scope = _workspaceNamedValueClientDiagnostics.CreateScope("WorkspaceContractResource.WorkspaceNamedValueGetEntityTag");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceNamedValueRestClient.CreateWorkspaceNamedValueGetEntityTagRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, namedValueId, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the entity state (Etag) version of the named value specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/namedValues/{namedValueId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceNamedValue_GetEntityTag. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WorkspaceContractResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="namedValueId"> Identifier of the NamedValue. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="namedValueId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="namedValueId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response WorkspaceNamedValueGetEntityTag(string namedValueId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(namedValueId, nameof(namedValueId));
+
+            using DiagnosticScope scope = _workspaceNamedValueClientDiagnostics.CreateScope("WorkspaceContractResource.WorkspaceNamedValueGetEntityTag");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceNamedValueRestClient.CreateWorkspaceNamedValueGetEntityTagRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, namedValueId, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the entity state (Etag) version of the workspace policy specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/policies/{policyId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspacePolicy_GetEntityTag. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WorkspaceContractResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="policyId"> The identifier of the Policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> GetEntityTagAsync(PolicyIdName policyId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _workspacePolicyClientDiagnostics.CreateScope("WorkspaceContractResource.GetEntityTag");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspacePolicyRestClient.CreateGetEntityTagRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyId.ToString(), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the entity state (Etag) version of the workspace policy specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/policies/{policyId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspacePolicy_GetEntityTag. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WorkspaceContractResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="policyId"> The identifier of the Policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response GetEntityTag(PolicyIdName policyId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _workspacePolicyClientDiagnostics.CreateScope("WorkspaceContractResource.GetEntityTag");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspacePolicyRestClient.CreateGetEntityTagRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyId.ToString(), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the entity state (Etag) version of a policy fragment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/policyFragments/{id}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspacePolicyFragment_GetEntityTag. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WorkspaceContractResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"> A resource identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> WorkspacePolicyFragmentGetEntityTagAsync(string id, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+
+            using DiagnosticScope scope = _workspacePolicyFragmentClientDiagnostics.CreateScope("WorkspaceContractResource.WorkspacePolicyFragmentGetEntityTag");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspacePolicyFragmentRestClient.CreateWorkspacePolicyFragmentGetEntityTagRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, id, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the entity state (Etag) version of a policy fragment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/policyFragments/{id}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspacePolicyFragment_GetEntityTag. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WorkspaceContractResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"> A resource identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response WorkspacePolicyFragmentGetEntityTag(string id, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+
+            using DiagnosticScope scope = _workspacePolicyFragmentClientDiagnostics.CreateScope("WorkspaceContractResource.WorkspacePolicyFragmentGetEntityTag");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspacePolicyFragmentRestClient.CreateWorkspacePolicyFragmentGetEntityTagRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, id, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the entity state (Etag) version of the product specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/products/{productId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceProduct_GetEntityTag. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WorkspaceContractResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="productId"> Product identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="productId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="productId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> WorkspaceProductGetEntityTagAsync(string productId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(productId, nameof(productId));
+
+            using DiagnosticScope scope = _workspaceProductClientDiagnostics.CreateScope("WorkspaceContractResource.WorkspaceProductGetEntityTag");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceProductRestClient.CreateWorkspaceProductGetEntityTagRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, productId, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the entity state (Etag) version of the product specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/products/{productId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceProduct_GetEntityTag. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WorkspaceContractResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="productId"> Product identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="productId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="productId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response WorkspaceProductGetEntityTag(string productId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(productId, nameof(productId));
+
+            using DiagnosticScope scope = _workspaceProductClientDiagnostics.CreateScope("WorkspaceContractResource.WorkspaceProductGetEntityTag");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceProductRestClient.CreateWorkspaceProductGetEntityTagRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, productId, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the entity state (Etag) version of the apimanagement subscription specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/subscriptions/{sid}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceSubscription_GetEntityTag. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WorkspaceContractResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sid"> Subscription entity Identifier. The entity represents the association between a user and a product in API Management. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sid"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> WorkspaceSubscriptionGetEntityTagAsync(string sid, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sid, nameof(sid));
+
+            using DiagnosticScope scope = _workspaceSubscriptionClientDiagnostics.CreateScope("WorkspaceContractResource.WorkspaceSubscriptionGetEntityTag");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceSubscriptionRestClient.CreateWorkspaceSubscriptionGetEntityTagRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, sid, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the entity state (Etag) version of the apimanagement subscription specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/subscriptions/{sid}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceSubscription_GetEntityTag. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WorkspaceContractResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sid"> Subscription entity Identifier. The entity represents the association between a user and a product in API Management. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sid"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response WorkspaceSubscriptionGetEntityTag(string sid, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sid, nameof(sid));
+
+            using DiagnosticScope scope = _workspaceSubscriptionClientDiagnostics.CreateScope("WorkspaceContractResource.WorkspaceSubscriptionGetEntityTag");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceSubscriptionRestClient.CreateWorkspaceSubscriptionGetEntityTagRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, sid, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the entity state version of the tag specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/tags/{tagId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceTag_GetEntityState. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WorkspaceContractResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tagId"> Tag identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> GetEntityStateAsync(string tagId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
+
+            using DiagnosticScope scope = _workspaceTagClientDiagnostics.CreateScope("WorkspaceContractResource.GetEntityState");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceTagRestClient.CreateGetEntityStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagId, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the entity state version of the tag specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/tags/{tagId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceTag_GetEntityState. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WorkspaceContractResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tagId"> Tag identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response GetEntityState(string tagId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
+
+            using DiagnosticScope scope = _workspaceTagClientDiagnostics.CreateScope("WorkspaceContractResource.GetEntityState");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceTagRestClient.CreateGetEntityStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagId, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Gets a collection of ServiceWorkspaceApis in the <see cref="WorkspaceContractResource"/>. </summary>
         /// <returns> An object representing collection of ServiceWorkspaceApis and their operations over a ServiceWorkspaceApiResource. </returns>
         public virtual ServiceWorkspaceApiCollection GetServiceWorkspaceApis()
@@ -615,6 +2007,39 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
 
             return GetServiceWorkspaceTags().Get(tagId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ServiceWorkspaceProducts in the <see cref="WorkspaceContractResource"/>. </summary>
+        /// <returns> An object representing collection of ServiceWorkspaceProducts and their operations over a ServiceWorkspaceProductResource. </returns>
+        public virtual ServiceWorkspaceProductCollection GetServiceWorkspaceProducts()
+        {
+            return GetCachedClient(client => new ServiceWorkspaceProductCollection(client, Id));
+        }
+
+        /// <summary> Gets the details of the product specified by its identifier. </summary>
+        /// <param name="productId"> Product identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="productId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="productId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ServiceWorkspaceProductResource>> GetServiceWorkspaceProductAsync(string productId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(productId, nameof(productId));
+
+            return await GetServiceWorkspaceProducts().GetAsync(productId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets the details of the product specified by its identifier. </summary>
+        /// <param name="productId"> Product identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="productId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="productId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ServiceWorkspaceProductResource> GetServiceWorkspaceProduct(string productId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(productId, nameof(productId));
+
+            return GetServiceWorkspaceProducts().Get(productId, cancellationToken);
         }
 
         /// <summary> Gets a collection of ServiceWorkspaceDiagnostics in the <see cref="WorkspaceContractResource"/>. </summary>
@@ -908,37 +2333,37 @@ namespace Azure.ResourceManager.ApiManagement
             return GetServiceWorkspacePolicyFragments().Get(id, format, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServiceWorkspaceProducts in the <see cref="WorkspaceContractResource"/>. </summary>
-        /// <returns> An object representing collection of ServiceWorkspaceProducts and their operations over a ServiceWorkspaceProductResource. </returns>
-        public virtual ServiceWorkspaceProductCollection GetServiceWorkspaceProducts()
+        /// <summary> Gets a collection of ServiceWorkspaceSubscriptions in the <see cref="WorkspaceContractResource"/>. </summary>
+        /// <returns> An object representing collection of ServiceWorkspaceSubscriptions and their operations over a ServiceWorkspaceSubscriptionResource. </returns>
+        public virtual ServiceWorkspaceSubscriptionCollection GetServiceWorkspaceSubscriptions()
         {
-            return GetCachedClient(client => new ServiceWorkspaceProductCollection(client, Id));
+            return GetCachedClient(client => new ServiceWorkspaceSubscriptionCollection(client, Id));
         }
 
-        /// <summary> Gets the details of the product specified by its identifier. </summary>
-        /// <param name="productId"> Product identifier. Must be unique in the current API Management service instance. </param>
+        /// <summary> Gets the specified Subscription entity. </summary>
+        /// <param name="sid"> Subscription entity Identifier. The entity represents the association between a user and a product in API Management. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="productId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="productId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sid"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ServiceWorkspaceProductResource>> GetServiceWorkspaceProductAsync(string productId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceWorkspaceSubscriptionResource>> GetServiceWorkspaceSubscriptionAsync(string sid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(productId, nameof(productId));
+            Argument.AssertNotNullOrEmpty(sid, nameof(sid));
 
-            return await GetServiceWorkspaceProducts().GetAsync(productId, cancellationToken).ConfigureAwait(false);
+            return await GetServiceWorkspaceSubscriptions().GetAsync(sid, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets the details of the product specified by its identifier. </summary>
-        /// <param name="productId"> Product identifier. Must be unique in the current API Management service instance. </param>
+        /// <summary> Gets the specified Subscription entity. </summary>
+        /// <param name="sid"> Subscription entity Identifier. The entity represents the association between a user and a product in API Management. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="productId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="productId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sid"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ServiceWorkspaceProductResource> GetServiceWorkspaceProduct(string productId, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceWorkspaceSubscriptionResource> GetServiceWorkspaceSubscription(string sid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(productId, nameof(productId));
+            Argument.AssertNotNullOrEmpty(sid, nameof(sid));
 
-            return GetServiceWorkspaceProducts().Get(productId, cancellationToken);
+            return GetServiceWorkspaceSubscriptions().Get(sid, cancellationToken);
         }
 
         /// <summary> Gets a collection of ServiceWorkspaceSchemas in the <see cref="WorkspaceContractResource"/>. </summary>
@@ -972,39 +2397,6 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(schemaId, nameof(schemaId));
 
             return GetServiceWorkspaceSchemas().Get(schemaId, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ServiceWorkspaceSubscriptions in the <see cref="WorkspaceContractResource"/>. </summary>
-        /// <returns> An object representing collection of ServiceWorkspaceSubscriptions and their operations over a ServiceWorkspaceSubscriptionResource. </returns>
-        public virtual ServiceWorkspaceSubscriptionCollection GetServiceWorkspaceSubscriptions()
-        {
-            return GetCachedClient(client => new ServiceWorkspaceSubscriptionCollection(client, Id));
-        }
-
-        /// <summary> Gets the specified Subscription entity. </summary>
-        /// <param name="sid"> Subscription entity Identifier. The entity represents the association between a user and a product in API Management. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sid"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ServiceWorkspaceSubscriptionResource>> GetServiceWorkspaceSubscriptionAsync(string sid, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(sid, nameof(sid));
-
-            return await GetServiceWorkspaceSubscriptions().GetAsync(sid, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets the specified Subscription entity. </summary>
-        /// <param name="sid"> Subscription entity Identifier. The entity represents the association between a user and a product in API Management. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sid"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ServiceWorkspaceSubscriptionResource> GetServiceWorkspaceSubscription(string sid, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(sid, nameof(sid));
-
-            return GetServiceWorkspaceSubscriptions().Get(sid, cancellationToken);
         }
     }
 }

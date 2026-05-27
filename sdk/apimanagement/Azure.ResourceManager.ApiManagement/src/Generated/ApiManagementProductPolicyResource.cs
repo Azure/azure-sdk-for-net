@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing a ApiManagementProductPolicy along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ApiManagementProductPolicyResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ProductResource"/> using the GetApiManagementProductPolicies method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiManagementProductResource"/> using the GetApiManagementProductPolicies method.
     /// </summary>
     public partial class ApiManagementProductPolicyResource : ArmResource
     {

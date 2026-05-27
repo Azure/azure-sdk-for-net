@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ApiTagResource : ArmResource
     {
-        private readonly ClientDiagnostics _apiTagClientDiagnostics;
-        private readonly ApiTag _apiTagRestClient;
+        private readonly ClientDiagnostics _tagClientDiagnostics;
+        private readonly Tag _tagRestClient;
         private readonly TagContractData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/apis/tags";
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.ApiManagement
         internal ApiTagResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string apiTagApiVersion);
-            _apiTagClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _apiTagRestClient = new ApiTag(_apiTagClientDiagnostics, Pipeline, Endpoint, apiTagApiVersion ?? "2025-09-01-preview");
+            _tagClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            _tagRestClient = new Tag(_tagClientDiagnostics, Pipeline, Endpoint, apiTagApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ApiTagResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _apiTagClientDiagnostics.CreateScope("ApiTagResource.Get");
+            using DiagnosticScope scope = _tagClientDiagnostics.CreateScope("ApiTagResource.Get");
             scope.Start();
             try
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiTagRestClient.CreateGetByApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _tagRestClient.CreateGetByApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TagContractData> response = Response.FromValue(TagContractData.FromResponse(result), result);
                 if (response.Value == null)
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ApiTagResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _apiTagClientDiagnostics.CreateScope("ApiTagResource.Get");
+            using DiagnosticScope scope = _tagClientDiagnostics.CreateScope("ApiTagResource.Get");
             scope.Start();
             try
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiTagRestClient.CreateGetByApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _tagRestClient.CreateGetByApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TagContractData> response = Response.FromValue(TagContractData.FromResponse(result), result);
                 if (response.Value == null)
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _apiTagClientDiagnostics.CreateScope("ApiTagResource.Delete");
+            using DiagnosticScope scope = _tagClientDiagnostics.CreateScope("ApiTagResource.Delete");
             scope.Start();
             try
             {
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiTagRestClient.CreateDetachFromApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _tagRestClient.CreateDetachFromApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _apiTagClientDiagnostics.CreateScope("ApiTagResource.Delete");
+            using DiagnosticScope scope = _tagClientDiagnostics.CreateScope("ApiTagResource.Delete");
             scope.Start();
             try
             {
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiTagRestClient.CreateDetachFromApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _tagRestClient.CreateDetachFromApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<ApiTagResource>> UpdateAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _apiTagClientDiagnostics.CreateScope("ApiTagResource.Update");
+            using DiagnosticScope scope = _tagClientDiagnostics.CreateScope("ApiTagResource.Update");
             scope.Start();
             try
             {
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiTagRestClient.CreateAssignToApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _tagRestClient.CreateAssignToApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TagContractData> response = Response.FromValue(TagContractData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<ApiTagResource> Update(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _apiTagClientDiagnostics.CreateScope("ApiTagResource.Update");
+            using DiagnosticScope scope = _tagClientDiagnostics.CreateScope("ApiTagResource.Update");
             scope.Start();
             try
             {
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiTagRestClient.CreateAssignToApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _tagRestClient.CreateAssignToApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TagContractData> response = Response.FromValue(TagContractData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

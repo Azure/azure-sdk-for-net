@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing a ApiManagementUserSubscription along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ApiManagementUserSubscriptionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiManagementUserResource"/> using the GetApiManagementUserSubscriptions method.
+    /// Otherwise you can get one from its parent resource <see cref="UserContractResource"/> using the GetApiManagementUserSubscriptions method.
     /// </summary>
     public partial class ApiManagementUserSubscriptionResource : ArmResource
     {
-        private readonly ClientDiagnostics _apiManagementUserSubscriptionClientDiagnostics;
-        private readonly ApiManagementUserSubscription _apiManagementUserSubscriptionRestClient;
+        private readonly ClientDiagnostics _userSubscriptionClientDiagnostics;
+        private readonly UserSubscription _userSubscriptionRestClient;
         private readonly ApiManagementSubscriptionData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/users/subscriptions";
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.ApiManagement
         internal ApiManagementUserSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string apiManagementUserSubscriptionApiVersion);
-            _apiManagementUserSubscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _apiManagementUserSubscriptionRestClient = new ApiManagementUserSubscription(_apiManagementUserSubscriptionClientDiagnostics, Pipeline, Endpoint, apiManagementUserSubscriptionApiVersion ?? "2025-09-01-preview");
+            _userSubscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            _userSubscriptionRestClient = new UserSubscription(_userSubscriptionClientDiagnostics, Pipeline, Endpoint, apiManagementUserSubscriptionApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ApiManagementUserSubscriptionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _apiManagementUserSubscriptionClientDiagnostics.CreateScope("ApiManagementUserSubscriptionResource.Get");
+            using DiagnosticScope scope = _userSubscriptionClientDiagnostics.CreateScope("ApiManagementUserSubscriptionResource.Get");
             scope.Start();
             try
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiManagementUserSubscriptionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _userSubscriptionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementSubscriptionData> response = Response.FromValue(ApiManagementSubscriptionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ApiManagementUserSubscriptionResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _apiManagementUserSubscriptionClientDiagnostics.CreateScope("ApiManagementUserSubscriptionResource.Get");
+            using DiagnosticScope scope = _userSubscriptionClientDiagnostics.CreateScope("ApiManagementUserSubscriptionResource.Get");
             scope.Start();
             try
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiManagementUserSubscriptionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _userSubscriptionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementSubscriptionData> response = Response.FromValue(ApiManagementSubscriptionData.FromResponse(result), result);
                 if (response.Value == null)

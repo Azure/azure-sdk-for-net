@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,7 +24,7 @@ namespace Azure.ResourceManager.ApiManagement
     /// Each <see cref="ApiPolicyResource"/> in the collection will belong to the same instance of <see cref="ApiResource"/>.
     /// To get a <see cref="ApiPolicyCollection"/> instance call the GetApiPolicies method from an instance of <see cref="ApiResource"/>.
     /// </summary>
-    public partial class ApiPolicyCollection : ArmCollection
+    public partial class ApiPolicyCollection : ArmCollection, IEnumerable<ApiPolicyResource>, IAsyncEnumerable<ApiPolicyResource>
     {
         private readonly ClientDiagnostics _apiPolicyClientDiagnostics;
         private readonly ApiPolicy _apiPolicyRestClient;
@@ -475,6 +477,22 @@ namespace Azure.ResourceManager.ApiManagement
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<ApiPolicyResource> IEnumerable<ApiPolicyResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<ApiPolicyResource> IAsyncEnumerable<ApiPolicyResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

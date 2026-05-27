@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly ApiOperation _apiOperationRestClient;
         private readonly ClientDiagnostics _apiOperationPolicyClientDiagnostics;
         private readonly ApiOperationPolicy _apiOperationPolicyRestClient;
+        private readonly ClientDiagnostics _operationTagClientDiagnostics;
+        private readonly OperationTag _operationTagRestClient;
         private readonly ApiOperationData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/apis/operations";
@@ -56,6 +58,8 @@ namespace Azure.ResourceManager.ApiManagement
             _apiOperationRestClient = new ApiOperation(_apiOperationClientDiagnostics, Pipeline, Endpoint, apiOperationApiVersion ?? "2025-09-01-preview");
             _apiOperationPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
             _apiOperationPolicyRestClient = new ApiOperationPolicy(_apiOperationPolicyClientDiagnostics, Pipeline, Endpoint, apiOperationApiVersion ?? "2025-09-01-preview");
+            _operationTagClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            _operationTagRestClient = new OperationTag(_operationTagClientDiagnostics, Pipeline, Endpoint, apiOperationApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -416,15 +420,15 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Get the list of policy configuration at the API Operation level.
+        /// Gets the entity state (Etag) version of the API operation policy specified by its identifier.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/operations/{operationId}/policies. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/operations/{operationId}/policies/{policyId}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PolicyContracts_ListByOperation. </description>
+        /// <description> PolicyContracts_GetEntityTag. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -436,10 +440,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="policyId"> The identifier of the Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PolicyListResult>> GetByOperationAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> GetEntityTagAsync(PolicyIdName policyId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _apiOperationPolicyClientDiagnostics.CreateScope("ApiOperationResource.GetByOperation");
+            using DiagnosticScope scope = _apiOperationPolicyClientDiagnostics.CreateScope("ApiOperationResource.GetEntityTag");
             scope.Start();
             try
             {
@@ -447,13 +452,8 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiOperationPolicyRestClient.CreateGetByOperationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PolicyListResult> response = Response.FromValue(PolicyListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                HttpMessage message = _apiOperationPolicyRestClient.CreateGetEntityTagRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, policyId.ToString(), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -464,15 +464,15 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Get the list of policy configuration at the API Operation level.
+        /// Gets the entity state (Etag) version of the API operation policy specified by its identifier.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/operations/{operationId}/policies. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/operations/{operationId}/policies/{policyId}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PolicyContracts_ListByOperation. </description>
+        /// <description> PolicyContracts_GetEntityTag. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -484,10 +484,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="policyId"> The identifier of the Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PolicyListResult> GetByOperation(CancellationToken cancellationToken = default)
+        public virtual Response GetEntityTag(PolicyIdName policyId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _apiOperationPolicyClientDiagnostics.CreateScope("ApiOperationResource.GetByOperation");
+            using DiagnosticScope scope = _apiOperationPolicyClientDiagnostics.CreateScope("ApiOperationResource.GetEntityTag");
             scope.Start();
             try
             {
@@ -495,13 +496,8 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiOperationPolicyRestClient.CreateGetByOperationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<PolicyListResult> response = Response.FromValue(PolicyListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                HttpMessage message = _apiOperationPolicyRestClient.CreateGetEntityTagRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, policyId.ToString(), context);
+                Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
             catch (Exception e)
@@ -511,11 +507,134 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        /// <summary> Gets a collection of OperationTags in the <see cref="ApiOperationResource"/>. </summary>
-        /// <returns> An object representing collection of OperationTags and their operations over a OperationTagResource. </returns>
-        public virtual OperationTagCollection GetOperationTags()
+        /// <summary>
+        /// Gets the entity state version of the tag specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/operations/{operationId}/tags/{tagId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TagContracts_GetEntityStateByOperation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiOperationResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tagId"> Tag identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> GetEntityStateByOperationAsync(string tagId, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(client => new OperationTagCollection(client, Id));
+            Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
+
+            using DiagnosticScope scope = _operationTagClientDiagnostics.CreateScope("ApiOperationResource.GetEntityStateByOperation");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _operationTagRestClient.CreateGetEntityStateByOperationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, tagId, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the entity state version of the tag specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/operations/{operationId}/tags/{tagId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TagContracts_GetEntityStateByOperation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiOperationResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tagId"> Tag identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response GetEntityStateByOperation(string tagId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
+
+            using DiagnosticScope scope = _operationTagClientDiagnostics.CreateScope("ApiOperationResource.GetEntityStateByOperation");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _operationTagRestClient.CreateGetEntityStateByOperationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, tagId, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a collection of OperationsPolicies in the <see cref="ApiOperationResource"/>. </summary>
+        /// <returns> An object representing collection of OperationsPolicies and their operations over a OperationsPoliciesResource. </returns>
+        public virtual OperationsPoliciesCollection GetAllOperationsPolicies()
+        {
+            return GetCachedClient(client => new OperationsPoliciesCollection(client, Id));
+        }
+
+        /// <summary> Get the policy configuration at the API Operation level. </summary>
+        /// <param name="policyId"> The identifier of the Policy. </param>
+        /// <param name="format"> Policy Export Format. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<OperationsPoliciesResource>> GetOperationsPoliciesAsync(PolicyIdName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
+        {
+            return await GetAllOperationsPolicies().GetAsync(policyId, format, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get the policy configuration at the API Operation level. </summary>
+        /// <param name="policyId"> The identifier of the Policy. </param>
+        /// <param name="format"> Policy Export Format. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<OperationsPoliciesResource> GetOperationsPolicies(PolicyIdName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
+        {
+            return GetAllOperationsPolicies().Get(policyId, format, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ApiOperationTags in the <see cref="ApiOperationResource"/>. </summary>
+        /// <returns> An object representing collection of ApiOperationTags and their operations over a ApiOperationTagResource. </returns>
+        public virtual ApiOperationTagCollection GetApiOperationTags()
+        {
+            return GetCachedClient(client => new ApiOperationTagCollection(client, Id));
         }
 
         /// <summary> Get tag associated with the Operation. </summary>
@@ -524,11 +643,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="tagId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<OperationTagResource>> GetOperationTagAsync(string tagId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiOperationTagResource>> GetApiOperationTagAsync(string tagId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
 
-            return await GetOperationTags().GetAsync(tagId, cancellationToken).ConfigureAwait(false);
+            return await GetApiOperationTags().GetAsync(tagId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get tag associated with the Operation. </summary>
@@ -537,38 +656,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="tagId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<OperationTagResource> GetOperationTag(string tagId, CancellationToken cancellationToken = default)
+        public virtual Response<ApiOperationTagResource> GetApiOperationTag(string tagId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
 
-            return GetOperationTags().Get(tagId, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ApiOperationPolicies in the <see cref="ApiOperationResource"/>. </summary>
-        /// <returns> An object representing collection of ApiOperationPolicies and their operations over a ApiOperationPolicyResource. </returns>
-        public virtual ApiOperationPolicyCollection GetApiOperationPolicies()
-        {
-            return GetCachedClient(client => new ApiOperationPolicyCollection(client, Id));
-        }
-
-        /// <summary> Get the policy configuration at the API Operation level. </summary>
-        /// <param name="policyId"> The identifier of the Policy. </param>
-        /// <param name="format"> Policy Export Format. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ApiOperationPolicyResource>> GetApiOperationPolicyAsync(PolicyIdName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
-        {
-            return await GetApiOperationPolicies().GetAsync(policyId, format, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get the policy configuration at the API Operation level. </summary>
-        /// <param name="policyId"> The identifier of the Policy. </param>
-        /// <param name="format"> Policy Export Format. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<ApiOperationPolicyResource> GetApiOperationPolicy(PolicyIdName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
-        {
-            return GetApiOperationPolicies().Get(policyId, format, cancellationToken);
+            return GetApiOperationTags().Get(tagId, cancellationToken);
         }
     }
 }

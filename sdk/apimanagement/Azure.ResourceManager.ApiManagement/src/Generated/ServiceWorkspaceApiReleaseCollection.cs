@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ServiceWorkspaceApiReleaseCollection : ArmCollection, IEnumerable<ServiceWorkspaceApiReleaseResource>, IAsyncEnumerable<ServiceWorkspaceApiReleaseResource>
     {
-        private readonly ClientDiagnostics _serviceWorkspaceApiReleaseClientDiagnostics;
-        private readonly ServiceWorkspaceApiRelease _serviceWorkspaceApiReleaseRestClient;
+        private readonly ClientDiagnostics _workspaceApiReleaseClientDiagnostics;
+        private readonly WorkspaceApiRelease _workspaceApiReleaseRestClient;
 
         /// <summary> Initializes a new instance of ServiceWorkspaceApiReleaseCollection for mocking. </summary>
         protected ServiceWorkspaceApiReleaseCollection()
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.ApiManagement
         internal ServiceWorkspaceApiReleaseCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ServiceWorkspaceApiReleaseResource.ResourceType, out string serviceWorkspaceApiReleaseApiVersion);
-            _serviceWorkspaceApiReleaseClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceWorkspaceApiReleaseResource.ResourceType.Namespace, Diagnostics);
-            _serviceWorkspaceApiReleaseRestClient = new ServiceWorkspaceApiRelease(_serviceWorkspaceApiReleaseClientDiagnostics, Pipeline, Endpoint, serviceWorkspaceApiReleaseApiVersion ?? "2025-09-01-preview");
+            _workspaceApiReleaseClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceWorkspaceApiReleaseResource.ResourceType.Namespace, Diagnostics);
+            _workspaceApiReleaseRestClient = new WorkspaceApiRelease(_workspaceApiReleaseClientDiagnostics, Pipeline, Endpoint, serviceWorkspaceApiReleaseApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(releaseId, nameof(releaseId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _serviceWorkspaceApiReleaseClientDiagnostics.CreateScope("ServiceWorkspaceApiReleaseCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _workspaceApiReleaseClientDiagnostics.CreateScope("ServiceWorkspaceApiReleaseCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceApiReleaseRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, releaseId, ApiReleaseData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _workspaceApiReleaseRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, releaseId, ApiReleaseData.ToRequestContent(data), ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiReleaseData> response = Response.FromValue(ApiReleaseData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(releaseId, nameof(releaseId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _serviceWorkspaceApiReleaseClientDiagnostics.CreateScope("ServiceWorkspaceApiReleaseCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _workspaceApiReleaseClientDiagnostics.CreateScope("ServiceWorkspaceApiReleaseCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceApiReleaseRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, releaseId, ApiReleaseData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _workspaceApiReleaseRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, releaseId, ApiReleaseData.ToRequestContent(data), ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiReleaseData> response = Response.FromValue(ApiReleaseData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(releaseId, nameof(releaseId));
 
-            using DiagnosticScope scope = _serviceWorkspaceApiReleaseClientDiagnostics.CreateScope("ServiceWorkspaceApiReleaseCollection.Get");
+            using DiagnosticScope scope = _workspaceApiReleaseClientDiagnostics.CreateScope("ServiceWorkspaceApiReleaseCollection.Get");
             scope.Start();
             try
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceApiReleaseRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, releaseId, context);
+                HttpMessage message = _workspaceApiReleaseRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, releaseId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiReleaseData> response = Response.FromValue(ApiReleaseData.FromResponse(result), result);
                 if (response.Value == null)
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(releaseId, nameof(releaseId));
 
-            using DiagnosticScope scope = _serviceWorkspaceApiReleaseClientDiagnostics.CreateScope("ServiceWorkspaceApiReleaseCollection.Get");
+            using DiagnosticScope scope = _workspaceApiReleaseClientDiagnostics.CreateScope("ServiceWorkspaceApiReleaseCollection.Get");
             scope.Start();
             try
             {
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceApiReleaseRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, releaseId, context);
+                HttpMessage message = _workspaceApiReleaseRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, releaseId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiReleaseData> response = Response.FromValue(ApiReleaseData.FromResponse(result), result);
                 if (response.Value == null)
@@ -292,8 +292,8 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiReleaseData, ServiceWorkspaceApiReleaseResource>(new ServiceWorkspaceApiReleaseGetByServiceAsyncCollectionResultOfT(
-                _serviceWorkspaceApiReleaseRestClient,
+            return new AsyncPageableWrapper<ApiReleaseData, ServiceWorkspaceApiReleaseResource>(new WorkspaceApiReleaseGetByServiceAsyncCollectionResultOfT(
+                _workspaceApiReleaseRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Parent.Name,
@@ -334,8 +334,8 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiReleaseData, ServiceWorkspaceApiReleaseResource>(new ServiceWorkspaceApiReleaseGetByServiceCollectionResultOfT(
-                _serviceWorkspaceApiReleaseRestClient,
+            return new PageableWrapper<ApiReleaseData, ServiceWorkspaceApiReleaseResource>(new WorkspaceApiReleaseGetByServiceCollectionResultOfT(
+                _workspaceApiReleaseRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Parent.Name,
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(releaseId, nameof(releaseId));
 
-            using DiagnosticScope scope = _serviceWorkspaceApiReleaseClientDiagnostics.CreateScope("ServiceWorkspaceApiReleaseCollection.Exists");
+            using DiagnosticScope scope = _workspaceApiReleaseClientDiagnostics.CreateScope("ServiceWorkspaceApiReleaseCollection.Exists");
             scope.Start();
             try
             {
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceApiReleaseRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, releaseId, context);
+                HttpMessage message = _workspaceApiReleaseRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, releaseId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiReleaseData> response = default;
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(releaseId, nameof(releaseId));
 
-            using DiagnosticScope scope = _serviceWorkspaceApiReleaseClientDiagnostics.CreateScope("ServiceWorkspaceApiReleaseCollection.Exists");
+            using DiagnosticScope scope = _workspaceApiReleaseClientDiagnostics.CreateScope("ServiceWorkspaceApiReleaseCollection.Exists");
             scope.Start();
             try
             {
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceApiReleaseRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, releaseId, context);
+                HttpMessage message = _workspaceApiReleaseRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, releaseId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiReleaseData> response = default;
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(releaseId, nameof(releaseId));
 
-            using DiagnosticScope scope = _serviceWorkspaceApiReleaseClientDiagnostics.CreateScope("ServiceWorkspaceApiReleaseCollection.GetIfExists");
+            using DiagnosticScope scope = _workspaceApiReleaseClientDiagnostics.CreateScope("ServiceWorkspaceApiReleaseCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceApiReleaseRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, releaseId, context);
+                HttpMessage message = _workspaceApiReleaseRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, releaseId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiReleaseData> response = default;
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(releaseId, nameof(releaseId));
 
-            using DiagnosticScope scope = _serviceWorkspaceApiReleaseClientDiagnostics.CreateScope("ServiceWorkspaceApiReleaseCollection.GetIfExists");
+            using DiagnosticScope scope = _workspaceApiReleaseClientDiagnostics.CreateScope("ServiceWorkspaceApiReleaseCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceApiReleaseRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, releaseId, context);
+                HttpMessage message = _workspaceApiReleaseRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, releaseId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiReleaseData> response = default;

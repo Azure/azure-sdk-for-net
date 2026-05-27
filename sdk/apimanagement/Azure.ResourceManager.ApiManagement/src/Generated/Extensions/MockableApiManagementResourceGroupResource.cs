@@ -160,5 +160,200 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
 
             return GetApiManagementGatewayResources().Get(gatewayName, cancellationToken);
         }
+
+        /// <summary> Gets a collection of PortalSigninSettings in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of PortalSigninSettings and their operations over a PortalSigninSettingsResource. </returns>
+        public virtual PortalSigninSettingsCollection GetAllPortalSigninSettings()
+        {
+            return GetCachedClient(client => new PortalSigninSettingsCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get Sign In Settings for the Portal
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalsettings/signin. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SignInSettings_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<PortalSigninSettingsResource>> GetPortalSigninSettingsAsync(string serviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            return await GetAllPortalSigninSettings().GetAsync(serviceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get Sign In Settings for the Portal
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalsettings/signin. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SignInSettings_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PortalSigninSettingsResource> GetPortalSigninSettings(string serviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            return GetAllPortalSigninSettings().Get(serviceName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of PortalSignupSettings in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of PortalSignupSettings and their operations over a PortalSignupSettingsResource. </returns>
+        public virtual PortalSignupSettingsCollection GetAllPortalSignupSettings()
+        {
+            return GetCachedClient(client => new PortalSignupSettingsCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get Sign Up Settings for the Portal
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalsettings/signup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SignUpSettings_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<PortalSignupSettingsResource>> GetPortalSignupSettingsAsync(string serviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            return await GetAllPortalSignupSettings().GetAsync(serviceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get Sign Up Settings for the Portal
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalsettings/signup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SignUpSettings_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PortalSignupSettingsResource> GetPortalSignupSettings(string serviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            return GetAllPortalSignupSettings().Get(serviceName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of PortalDelegationSettings in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of PortalDelegationSettings and their operations over a PortalDelegationSettingsResource. </returns>
+        public virtual PortalDelegationSettingsCollection GetAllPortalDelegationSettings()
+        {
+            return GetCachedClient(client => new PortalDelegationSettingsCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get Delegation Settings for the Portal.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalsettings/delegation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DelegationSettings_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<PortalDelegationSettingsResource>> GetPortalDelegationSettingsAsync(string serviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            return await GetAllPortalDelegationSettings().GetAsync(serviceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get Delegation Settings for the Portal.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalsettings/delegation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DelegationSettings_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PortalDelegationSettingsResource> GetPortalDelegationSettings(string serviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            return GetAllPortalDelegationSettings().Get(serviceName, cancellationToken);
+        }
     }
 }

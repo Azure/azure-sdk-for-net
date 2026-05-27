@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ServiceWorkspaceCertificateResource : ArmResource
     {
-        private readonly ClientDiagnostics _serviceWorkspaceCertificateClientDiagnostics;
-        private readonly ServiceWorkspaceCertificate _serviceWorkspaceCertificateRestClient;
+        private readonly ClientDiagnostics _workspaceCertificateClientDiagnostics;
+        private readonly WorkspaceCertificate _workspaceCertificateRestClient;
         private readonly ApiManagementCertificateData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/workspaces/certificates";
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.ApiManagement
         internal ServiceWorkspaceCertificateResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string serviceWorkspaceCertificateApiVersion);
-            _serviceWorkspaceCertificateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _serviceWorkspaceCertificateRestClient = new ServiceWorkspaceCertificate(_serviceWorkspaceCertificateClientDiagnostics, Pipeline, Endpoint, serviceWorkspaceCertificateApiVersion ?? "2025-09-01-preview");
+            _workspaceCertificateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            _workspaceCertificateRestClient = new WorkspaceCertificate(_workspaceCertificateClientDiagnostics, Pipeline, Endpoint, serviceWorkspaceCertificateApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ServiceWorkspaceCertificateResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _serviceWorkspaceCertificateClientDiagnostics.CreateScope("ServiceWorkspaceCertificateResource.Get");
+            using DiagnosticScope scope = _workspaceCertificateClientDiagnostics.CreateScope("ServiceWorkspaceCertificateResource.Get");
             scope.Start();
             try
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceCertificateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _workspaceCertificateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementCertificateData> response = Response.FromValue(ApiManagementCertificateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ServiceWorkspaceCertificateResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _serviceWorkspaceCertificateClientDiagnostics.CreateScope("ServiceWorkspaceCertificateResource.Get");
+            using DiagnosticScope scope = _workspaceCertificateClientDiagnostics.CreateScope("ServiceWorkspaceCertificateResource.Get");
             scope.Start();
             try
             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceCertificateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _workspaceCertificateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementCertificateData> response = Response.FromValue(ApiManagementCertificateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
 
-            using DiagnosticScope scope = _serviceWorkspaceCertificateClientDiagnostics.CreateScope("ServiceWorkspaceCertificateResource.Delete");
+            using DiagnosticScope scope = _workspaceCertificateClientDiagnostics.CreateScope("ServiceWorkspaceCertificateResource.Delete");
             scope.Start();
             try
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceCertificateRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, context);
+                HttpMessage message = _workspaceCertificateRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
 
-            using DiagnosticScope scope = _serviceWorkspaceCertificateClientDiagnostics.CreateScope("ServiceWorkspaceCertificateResource.Delete");
+            using DiagnosticScope scope = _workspaceCertificateClientDiagnostics.CreateScope("ServiceWorkspaceCertificateResource.Delete");
             scope.Start();
             try
             {
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceCertificateRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, context);
+                HttpMessage message = _workspaceCertificateRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ServiceWorkspaceCertificateResource>> RefreshSecretAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _serviceWorkspaceCertificateClientDiagnostics.CreateScope("ServiceWorkspaceCertificateResource.RefreshSecret");
+            using DiagnosticScope scope = _workspaceCertificateClientDiagnostics.CreateScope("ServiceWorkspaceCertificateResource.RefreshSecret");
             scope.Start();
             try
             {
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceCertificateRestClient.CreateRefreshSecretRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _workspaceCertificateRestClient.CreateRefreshSecretRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementCertificateData> response = Response.FromValue(ApiManagementCertificateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ServiceWorkspaceCertificateResource> RefreshSecret(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _serviceWorkspaceCertificateClientDiagnostics.CreateScope("ServiceWorkspaceCertificateResource.RefreshSecret");
+            using DiagnosticScope scope = _workspaceCertificateClientDiagnostics.CreateScope("ServiceWorkspaceCertificateResource.RefreshSecret");
             scope.Start();
             try
             {
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceCertificateRestClient.CreateRefreshSecretRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _workspaceCertificateRestClient.CreateRefreshSecretRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementCertificateData> response = Response.FromValue(ApiManagementCertificateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _serviceWorkspaceCertificateClientDiagnostics.CreateScope("ServiceWorkspaceCertificateResource.Update");
+            using DiagnosticScope scope = _workspaceCertificateClientDiagnostics.CreateScope("ServiceWorkspaceCertificateResource.Update");
             scope.Start();
             try
             {
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceCertificateRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, CertificateCreateOrUpdateContent.ToRequestContent(content), ifMatch, context);
+                HttpMessage message = _workspaceCertificateRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, CertificateCreateOrUpdateContent.ToRequestContent(content), ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementCertificateData> response = Response.FromValue(ApiManagementCertificateData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _serviceWorkspaceCertificateClientDiagnostics.CreateScope("ServiceWorkspaceCertificateResource.Update");
+            using DiagnosticScope scope = _workspaceCertificateClientDiagnostics.CreateScope("ServiceWorkspaceCertificateResource.Update");
             scope.Start();
             try
             {
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceCertificateRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, CertificateCreateOrUpdateContent.ToRequestContent(content), ifMatch, context);
+                HttpMessage message = _workspaceCertificateRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, CertificateCreateOrUpdateContent.ToRequestContent(content), ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementCertificateData> response = Response.FromValue(ApiManagementCertificateData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

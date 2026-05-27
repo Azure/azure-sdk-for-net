@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ServiceWorkspaceNotificationCollection : ArmCollection, IEnumerable<ServiceWorkspaceNotificationResource>, IAsyncEnumerable<ServiceWorkspaceNotificationResource>
     {
-        private readonly ClientDiagnostics _serviceWorkspaceNotificationClientDiagnostics;
-        private readonly ServiceWorkspaceNotification _serviceWorkspaceNotificationRestClient;
+        private readonly ClientDiagnostics _workspaceNotificationClientDiagnostics;
+        private readonly WorkspaceNotification _workspaceNotificationRestClient;
 
         /// <summary> Initializes a new instance of ServiceWorkspaceNotificationCollection for mocking. </summary>
         protected ServiceWorkspaceNotificationCollection()
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.ApiManagement
         internal ServiceWorkspaceNotificationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ServiceWorkspaceNotificationResource.ResourceType, out string serviceWorkspaceNotificationApiVersion);
-            _serviceWorkspaceNotificationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceWorkspaceNotificationResource.ResourceType.Namespace, Diagnostics);
-            _serviceWorkspaceNotificationRestClient = new ServiceWorkspaceNotification(_serviceWorkspaceNotificationClientDiagnostics, Pipeline, Endpoint, serviceWorkspaceNotificationApiVersion ?? "2025-09-01-preview");
+            _workspaceNotificationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceWorkspaceNotificationResource.ResourceType.Namespace, Diagnostics);
+            _workspaceNotificationRestClient = new WorkspaceNotification(_workspaceNotificationClientDiagnostics, Pipeline, Endpoint, serviceWorkspaceNotificationApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<ServiceWorkspaceNotificationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, NotificationName notificationName, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _serviceWorkspaceNotificationClientDiagnostics.CreateScope("ServiceWorkspaceNotificationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _workspaceNotificationClientDiagnostics.CreateScope("ServiceWorkspaceNotificationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceNotificationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, notificationName.ToString(), ifMatch, context);
+                HttpMessage message = _workspaceNotificationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, notificationName.ToString(), ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementNotificationData> response = Response.FromValue(ApiManagementNotificationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<ServiceWorkspaceNotificationResource> CreateOrUpdate(WaitUntil waitUntil, NotificationName notificationName, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _serviceWorkspaceNotificationClientDiagnostics.CreateScope("ServiceWorkspaceNotificationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _workspaceNotificationClientDiagnostics.CreateScope("ServiceWorkspaceNotificationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceNotificationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, notificationName.ToString(), ifMatch, context);
+                HttpMessage message = _workspaceNotificationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, notificationName.ToString(), ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementNotificationData> response = Response.FromValue(ApiManagementNotificationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ServiceWorkspaceNotificationResource>> GetAsync(NotificationName notificationName, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _serviceWorkspaceNotificationClientDiagnostics.CreateScope("ServiceWorkspaceNotificationCollection.Get");
+            using DiagnosticScope scope = _workspaceNotificationClientDiagnostics.CreateScope("ServiceWorkspaceNotificationCollection.Get");
             scope.Start();
             try
             {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceNotificationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, notificationName.ToString(), context);
+                HttpMessage message = _workspaceNotificationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, notificationName.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementNotificationData> response = Response.FromValue(ApiManagementNotificationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ServiceWorkspaceNotificationResource> Get(NotificationName notificationName, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _serviceWorkspaceNotificationClientDiagnostics.CreateScope("ServiceWorkspaceNotificationCollection.Get");
+            using DiagnosticScope scope = _workspaceNotificationClientDiagnostics.CreateScope("ServiceWorkspaceNotificationCollection.Get");
             scope.Start();
             try
             {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceNotificationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, notificationName.ToString(), context);
+                HttpMessage message = _workspaceNotificationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, notificationName.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementNotificationData> response = Response.FromValue(ApiManagementNotificationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -272,8 +272,8 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiManagementNotificationData, ServiceWorkspaceNotificationResource>(new ServiceWorkspaceNotificationGetByServiceAsyncCollectionResultOfT(
-                _serviceWorkspaceNotificationRestClient,
+            return new AsyncPageableWrapper<ApiManagementNotificationData, ServiceWorkspaceNotificationResource>(new WorkspaceNotificationGetByServiceAsyncCollectionResultOfT(
+                _workspaceNotificationRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
@@ -311,8 +311,8 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiManagementNotificationData, ServiceWorkspaceNotificationResource>(new ServiceWorkspaceNotificationGetByServiceCollectionResultOfT(
-                _serviceWorkspaceNotificationRestClient,
+            return new PageableWrapper<ApiManagementNotificationData, ServiceWorkspaceNotificationResource>(new WorkspaceNotificationGetByServiceCollectionResultOfT(
+                _workspaceNotificationRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<bool>> ExistsAsync(NotificationName notificationName, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _serviceWorkspaceNotificationClientDiagnostics.CreateScope("ServiceWorkspaceNotificationCollection.Exists");
+            using DiagnosticScope scope = _workspaceNotificationClientDiagnostics.CreateScope("ServiceWorkspaceNotificationCollection.Exists");
             scope.Start();
             try
             {
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceNotificationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, notificationName.ToString(), context);
+                HttpMessage message = _workspaceNotificationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, notificationName.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiManagementNotificationData> response = default;
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(NotificationName notificationName, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _serviceWorkspaceNotificationClientDiagnostics.CreateScope("ServiceWorkspaceNotificationCollection.Exists");
+            using DiagnosticScope scope = _workspaceNotificationClientDiagnostics.CreateScope("ServiceWorkspaceNotificationCollection.Exists");
             scope.Start();
             try
             {
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceNotificationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, notificationName.ToString(), context);
+                HttpMessage message = _workspaceNotificationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, notificationName.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiManagementNotificationData> response = default;
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<NullableResponse<ServiceWorkspaceNotificationResource>> GetIfExistsAsync(NotificationName notificationName, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _serviceWorkspaceNotificationClientDiagnostics.CreateScope("ServiceWorkspaceNotificationCollection.GetIfExists");
+            using DiagnosticScope scope = _workspaceNotificationClientDiagnostics.CreateScope("ServiceWorkspaceNotificationCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceNotificationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, notificationName.ToString(), context);
+                HttpMessage message = _workspaceNotificationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, notificationName.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiManagementNotificationData> response = default;
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual NullableResponse<ServiceWorkspaceNotificationResource> GetIfExists(NotificationName notificationName, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _serviceWorkspaceNotificationClientDiagnostics.CreateScope("ServiceWorkspaceNotificationCollection.GetIfExists");
+            using DiagnosticScope scope = _workspaceNotificationClientDiagnostics.CreateScope("ServiceWorkspaceNotificationCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceNotificationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, notificationName.ToString(), context);
+                HttpMessage message = _workspaceNotificationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, notificationName.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiManagementNotificationData> response = default;

@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.ApiManagement
     {
         private readonly ClientDiagnostics _contentTypeClientDiagnostics;
         private readonly ContentType _contentTypeRestClient;
+        private readonly ClientDiagnostics _contentItemClientDiagnostics;
+        private readonly ContentItem _contentItemRestClient;
         private readonly ContentTypeContractData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/contentTypes";
@@ -51,6 +53,8 @@ namespace Azure.ResourceManager.ApiManagement
             TryGetApiVersion(ResourceType, out string contentTypeContractApiVersion);
             _contentTypeClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
             _contentTypeRestClient = new ContentType(_contentTypeClientDiagnostics, Pipeline, Endpoint, contentTypeContractApiVersion ?? "2025-09-01-preview");
+            _contentItemClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            _contentItemRestClient = new ContentItem(_contentItemClientDiagnostics, Pipeline, Endpoint, contentTypeContractApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -291,6 +295,102 @@ namespace Azure.ResourceManager.ApiManagement
                     operation.WaitForCompletionResponse(cancellationToken);
                 }
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns the entity state (ETag) version of the developer portal's content item specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}/contentItems/{contentItemId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ContentItemContracts_GetEntityTag. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContentTypeContractResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="contentItemId"> Content item identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="contentItemId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="contentItemId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> GetEntityTagAsync(string contentItemId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));
+
+            using DiagnosticScope scope = _contentItemClientDiagnostics.CreateScope("ContentTypeContractResource.GetEntityTag");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _contentItemRestClient.CreateGetEntityTagRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, contentItemId, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns the entity state (ETag) version of the developer portal's content item specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}/contentItems/{contentItemId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ContentItemContracts_GetEntityTag. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ContentTypeContractResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="contentItemId"> Content item identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="contentItemId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="contentItemId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response GetEntityTag(string contentItemId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));
+
+            using DiagnosticScope scope = _contentItemClientDiagnostics.CreateScope("ContentTypeContractResource.GetEntityTag");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _contentItemRestClient.CreateGetEntityTagRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, contentItemId, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
             }
             catch (Exception e)
             {

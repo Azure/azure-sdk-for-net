@@ -410,11 +410,11 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        /// <summary> Gets a collection of TagApiLinks in the <see cref="ApiManagementTagResource"/>. </summary>
-        /// <returns> An object representing collection of TagApiLinks and their operations over a TagApiLinkResource. </returns>
-        public virtual TagApiLinkCollection GetTagApiLinks()
+        /// <summary> Gets a collection of ServiceTagApiLinks in the <see cref="ApiManagementTagResource"/>. </summary>
+        /// <returns> An object representing collection of ServiceTagApiLinks and their operations over a ServiceTagApiLinkResource. </returns>
+        public virtual ServiceTagApiLinkCollection GetServiceTagApiLinks()
         {
-            return GetCachedClient(client => new TagApiLinkCollection(client, Id));
+            return GetCachedClient(client => new ServiceTagApiLinkCollection(client, Id));
         }
 
         /// <summary> Gets the API link for the tag. </summary>
@@ -423,11 +423,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="apiLinkId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="apiLinkId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<TagApiLinkResource>> GetTagApiLinkAsync(string apiLinkId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceTagApiLinkResource>> GetServiceTagApiLinkAsync(string apiLinkId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiLinkId, nameof(apiLinkId));
 
-            return await GetTagApiLinks().GetAsync(apiLinkId, cancellationToken).ConfigureAwait(false);
+            return await GetServiceTagApiLinks().GetAsync(apiLinkId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets the API link for the tag. </summary>
@@ -436,31 +436,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="apiLinkId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="apiLinkId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<TagApiLinkResource> GetTagApiLink(string apiLinkId, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceTagApiLinkResource> GetServiceTagApiLink(string apiLinkId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiLinkId, nameof(apiLinkId));
 
-            return GetTagApiLinks().Get(apiLinkId, cancellationToken);
+            return GetServiceTagApiLinks().Get(apiLinkId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of TagOperationLinks in the <see cref="ApiManagementTagResource"/>. </summary>
-        /// <returns> An object representing collection of TagOperationLinks and their operations over a TagOperationLinkResource. </returns>
-        public virtual TagOperationLinkCollection GetTagOperationLinks()
+        /// <summary> Gets a collection of ServiceTagOperationLinks in the <see cref="ApiManagementTagResource"/>. </summary>
+        /// <returns> An object representing collection of ServiceTagOperationLinks and their operations over a ServiceTagOperationLinkResource. </returns>
+        public virtual ServiceTagOperationLinkCollection GetServiceTagOperationLinks()
         {
-            return GetCachedClient(client => new TagOperationLinkCollection(client, Id));
-        }
-
-        /// <summary> Gets the operation link for the tag. </summary>
-        /// <param name="operationLinkId"> Tag-operation link identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationLinkId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationLinkId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<TagOperationLinkResource>> GetTagOperationLinkAsync(string operationLinkId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationLinkId, nameof(operationLinkId));
-
-            return await GetTagOperationLinks().GetAsync(operationLinkId, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new ServiceTagOperationLinkCollection(client, Id));
         }
 
         /// <summary> Gets the operation link for the tag. </summary>
@@ -469,18 +456,31 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="operationLinkId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationLinkId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<TagOperationLinkResource> GetTagOperationLink(string operationLinkId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceTagOperationLinkResource>> GetServiceTagOperationLinkAsync(string operationLinkId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationLinkId, nameof(operationLinkId));
 
-            return GetTagOperationLinks().Get(operationLinkId, cancellationToken);
+            return await GetServiceTagOperationLinks().GetAsync(operationLinkId, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of TagProductLinks in the <see cref="ApiManagementTagResource"/>. </summary>
-        /// <returns> An object representing collection of TagProductLinks and their operations over a TagProductLinkResource. </returns>
-        public virtual TagProductLinkCollection GetTagProductLinks()
+        /// <summary> Gets the operation link for the tag. </summary>
+        /// <param name="operationLinkId"> Tag-operation link identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationLinkId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationLinkId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ServiceTagOperationLinkResource> GetServiceTagOperationLink(string operationLinkId, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(client => new TagProductLinkCollection(client, Id));
+            Argument.AssertNotNullOrEmpty(operationLinkId, nameof(operationLinkId));
+
+            return GetServiceTagOperationLinks().Get(operationLinkId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ServiceTagProductLinks in the <see cref="ApiManagementTagResource"/>. </summary>
+        /// <returns> An object representing collection of ServiceTagProductLinks and their operations over a ServiceTagProductLinkResource. </returns>
+        public virtual ServiceTagProductLinkCollection GetServiceTagProductLinks()
+        {
+            return GetCachedClient(client => new ServiceTagProductLinkCollection(client, Id));
         }
 
         /// <summary> Gets the product link for the tag. </summary>
@@ -489,11 +489,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="productLinkId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="productLinkId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<TagProductLinkResource>> GetTagProductLinkAsync(string productLinkId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceTagProductLinkResource>> GetServiceTagProductLinkAsync(string productLinkId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(productLinkId, nameof(productLinkId));
 
-            return await GetTagProductLinks().GetAsync(productLinkId, cancellationToken).ConfigureAwait(false);
+            return await GetServiceTagProductLinks().GetAsync(productLinkId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets the product link for the tag. </summary>
@@ -502,11 +502,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="productLinkId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="productLinkId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<TagProductLinkResource> GetTagProductLink(string productLinkId, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceTagProductLinkResource> GetServiceTagProductLink(string productLinkId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(productLinkId, nameof(productLinkId));
 
-            return GetTagProductLinks().Get(productLinkId, cancellationToken);
+            return GetServiceTagProductLinks().Get(productLinkId, cancellationToken);
         }
     }
 }

@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ServiceWorkspaceTagApiLinkCollection : ArmCollection, IEnumerable<ServiceWorkspaceTagApiLinkResource>, IAsyncEnumerable<ServiceWorkspaceTagApiLinkResource>
     {
-        private readonly ClientDiagnostics _serviceWorkspaceTagApiLinkClientDiagnostics;
-        private readonly ServiceWorkspaceTagApiLink _serviceWorkspaceTagApiLinkRestClient;
+        private readonly ClientDiagnostics _workspaceTagApiLinkClientDiagnostics;
+        private readonly WorkspaceTagApiLink _workspaceTagApiLinkRestClient;
 
         /// <summary> Initializes a new instance of ServiceWorkspaceTagApiLinkCollection for mocking. </summary>
         protected ServiceWorkspaceTagApiLinkCollection()
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.ApiManagement
         internal ServiceWorkspaceTagApiLinkCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ServiceWorkspaceTagApiLinkResource.ResourceType, out string serviceWorkspaceTagApiLinkApiVersion);
-            _serviceWorkspaceTagApiLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceWorkspaceTagApiLinkResource.ResourceType.Namespace, Diagnostics);
-            _serviceWorkspaceTagApiLinkRestClient = new ServiceWorkspaceTagApiLink(_serviceWorkspaceTagApiLinkClientDiagnostics, Pipeline, Endpoint, serviceWorkspaceTagApiLinkApiVersion ?? "2025-09-01-preview");
+            _workspaceTagApiLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceWorkspaceTagApiLinkResource.ResourceType.Namespace, Diagnostics);
+            _workspaceTagApiLinkRestClient = new WorkspaceTagApiLink(_workspaceTagApiLinkClientDiagnostics, Pipeline, Endpoint, serviceWorkspaceTagApiLinkApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(apiLinkId, nameof(apiLinkId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _serviceWorkspaceTagApiLinkClientDiagnostics.CreateScope("ServiceWorkspaceTagApiLinkCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _workspaceTagApiLinkClientDiagnostics.CreateScope("ServiceWorkspaceTagApiLinkCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceTagApiLinkRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, apiLinkId, TagApiLinkContractData.ToRequestContent(data), context);
+                HttpMessage message = _workspaceTagApiLinkRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, apiLinkId, TagApiLinkContractData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TagApiLinkContractData> response = Response.FromValue(TagApiLinkContractData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(apiLinkId, nameof(apiLinkId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _serviceWorkspaceTagApiLinkClientDiagnostics.CreateScope("ServiceWorkspaceTagApiLinkCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _workspaceTagApiLinkClientDiagnostics.CreateScope("ServiceWorkspaceTagApiLinkCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceTagApiLinkRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, apiLinkId, TagApiLinkContractData.ToRequestContent(data), context);
+                HttpMessage message = _workspaceTagApiLinkRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, apiLinkId, TagApiLinkContractData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TagApiLinkContractData> response = Response.FromValue(TagApiLinkContractData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(apiLinkId, nameof(apiLinkId));
 
-            using DiagnosticScope scope = _serviceWorkspaceTagApiLinkClientDiagnostics.CreateScope("ServiceWorkspaceTagApiLinkCollection.Get");
+            using DiagnosticScope scope = _workspaceTagApiLinkClientDiagnostics.CreateScope("ServiceWorkspaceTagApiLinkCollection.Get");
             scope.Start();
             try
             {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceTagApiLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, apiLinkId, context);
+                HttpMessage message = _workspaceTagApiLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, apiLinkId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TagApiLinkContractData> response = Response.FromValue(TagApiLinkContractData.FromResponse(result), result);
                 if (response.Value == null)
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(apiLinkId, nameof(apiLinkId));
 
-            using DiagnosticScope scope = _serviceWorkspaceTagApiLinkClientDiagnostics.CreateScope("ServiceWorkspaceTagApiLinkCollection.Get");
+            using DiagnosticScope scope = _workspaceTagApiLinkClientDiagnostics.CreateScope("ServiceWorkspaceTagApiLinkCollection.Get");
             scope.Start();
             try
             {
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceTagApiLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, apiLinkId, context);
+                HttpMessage message = _workspaceTagApiLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, apiLinkId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TagApiLinkContractData> response = Response.FromValue(TagApiLinkContractData.FromResponse(result), result);
                 if (response.Value == null)
@@ -290,8 +290,8 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TagApiLinkContractData, ServiceWorkspaceTagApiLinkResource>(new ServiceWorkspaceTagApiLinkGetByProductAsyncCollectionResultOfT(
-                _serviceWorkspaceTagApiLinkRestClient,
+            return new AsyncPageableWrapper<TagApiLinkContractData, ServiceWorkspaceTagApiLinkResource>(new WorkspaceTagApiLinkGetByProductAsyncCollectionResultOfT(
+                _workspaceTagApiLinkRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Parent.Name,
@@ -332,8 +332,8 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TagApiLinkContractData, ServiceWorkspaceTagApiLinkResource>(new ServiceWorkspaceTagApiLinkGetByProductCollectionResultOfT(
-                _serviceWorkspaceTagApiLinkRestClient,
+            return new PageableWrapper<TagApiLinkContractData, ServiceWorkspaceTagApiLinkResource>(new WorkspaceTagApiLinkGetByProductCollectionResultOfT(
+                _workspaceTagApiLinkRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Parent.Name,
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(apiLinkId, nameof(apiLinkId));
 
-            using DiagnosticScope scope = _serviceWorkspaceTagApiLinkClientDiagnostics.CreateScope("ServiceWorkspaceTagApiLinkCollection.Exists");
+            using DiagnosticScope scope = _workspaceTagApiLinkClientDiagnostics.CreateScope("ServiceWorkspaceTagApiLinkCollection.Exists");
             scope.Start();
             try
             {
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceTagApiLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, apiLinkId, context);
+                HttpMessage message = _workspaceTagApiLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, apiLinkId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<TagApiLinkContractData> response = default;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(apiLinkId, nameof(apiLinkId));
 
-            using DiagnosticScope scope = _serviceWorkspaceTagApiLinkClientDiagnostics.CreateScope("ServiceWorkspaceTagApiLinkCollection.Exists");
+            using DiagnosticScope scope = _workspaceTagApiLinkClientDiagnostics.CreateScope("ServiceWorkspaceTagApiLinkCollection.Exists");
             scope.Start();
             try
             {
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceTagApiLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, apiLinkId, context);
+                HttpMessage message = _workspaceTagApiLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, apiLinkId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<TagApiLinkContractData> response = default;
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(apiLinkId, nameof(apiLinkId));
 
-            using DiagnosticScope scope = _serviceWorkspaceTagApiLinkClientDiagnostics.CreateScope("ServiceWorkspaceTagApiLinkCollection.GetIfExists");
+            using DiagnosticScope scope = _workspaceTagApiLinkClientDiagnostics.CreateScope("ServiceWorkspaceTagApiLinkCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceTagApiLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, apiLinkId, context);
+                HttpMessage message = _workspaceTagApiLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, apiLinkId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<TagApiLinkContractData> response = default;
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(apiLinkId, nameof(apiLinkId));
 
-            using DiagnosticScope scope = _serviceWorkspaceTagApiLinkClientDiagnostics.CreateScope("ServiceWorkspaceTagApiLinkCollection.GetIfExists");
+            using DiagnosticScope scope = _workspaceTagApiLinkClientDiagnostics.CreateScope("ServiceWorkspaceTagApiLinkCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceTagApiLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, apiLinkId, context);
+                HttpMessage message = _workspaceTagApiLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, apiLinkId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<TagApiLinkContractData> response = default;

@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (OpenidConnectProviderContractData item in Value)
+                foreach (ApiManagementOpenIdConnectProviderData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            IList<OpenidConnectProviderContractData> value = default;
+            IList<ApiManagementOpenIdConnectProviderData> value = default;
             long? count = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -156,10 +156,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    List<OpenidConnectProviderContractData> array = new List<OpenidConnectProviderContractData>();
+                    List<ApiManagementOpenIdConnectProviderData> array = new List<ApiManagementOpenIdConnectProviderData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(OpenidConnectProviderContractData.DeserializeOpenidConnectProviderContractData(item, options));
+                        array.Add(ApiManagementOpenIdConnectProviderData.DeserializeApiManagementOpenIdConnectProviderData(item, options));
                     }
                     value = array;
                     continue;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OpenIdConnectProviderCollection(value ?? new ChangeTrackingList<OpenidConnectProviderContractData>(), count, nextLink, additionalBinaryDataProperties);
+            return new OpenIdConnectProviderCollection(value ?? new ChangeTrackingList<ApiManagementOpenIdConnectProviderData>(), count, nextLink, additionalBinaryDataProperties);
         }
     }
 }

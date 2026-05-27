@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ServiceWorkspaceSchemaCollection : ArmCollection, IEnumerable<ServiceWorkspaceSchemaResource>, IAsyncEnumerable<ServiceWorkspaceSchemaResource>
     {
-        private readonly ClientDiagnostics _serviceWorkspaceSchemaClientDiagnostics;
-        private readonly ServiceWorkspaceSchema _serviceWorkspaceSchemaRestClient;
+        private readonly ClientDiagnostics _workspaceGlobalSchemaClientDiagnostics;
+        private readonly WorkspaceGlobalSchema _workspaceGlobalSchemaRestClient;
 
         /// <summary> Initializes a new instance of ServiceWorkspaceSchemaCollection for mocking. </summary>
         protected ServiceWorkspaceSchemaCollection()
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.ApiManagement
         internal ServiceWorkspaceSchemaCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ServiceWorkspaceSchemaResource.ResourceType, out string serviceWorkspaceSchemaApiVersion);
-            _serviceWorkspaceSchemaClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceWorkspaceSchemaResource.ResourceType.Namespace, Diagnostics);
-            _serviceWorkspaceSchemaRestClient = new ServiceWorkspaceSchema(_serviceWorkspaceSchemaClientDiagnostics, Pipeline, Endpoint, serviceWorkspaceSchemaApiVersion ?? "2025-09-01-preview");
+            _workspaceGlobalSchemaClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceWorkspaceSchemaResource.ResourceType.Namespace, Diagnostics);
+            _workspaceGlobalSchemaRestClient = new WorkspaceGlobalSchema(_workspaceGlobalSchemaClientDiagnostics, Pipeline, Endpoint, serviceWorkspaceSchemaApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(schemaId, nameof(schemaId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _serviceWorkspaceSchemaClientDiagnostics.CreateScope("ServiceWorkspaceSchemaCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _workspaceGlobalSchemaClientDiagnostics.CreateScope("ServiceWorkspaceSchemaCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceSchemaRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaId, ApiManagementGlobalSchemaData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _workspaceGlobalSchemaRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaId, ApiManagementGlobalSchemaData.ToRequestContent(data), ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ApiManagementArmOperation<ServiceWorkspaceSchemaResource> operation = new ApiManagementArmOperation<ServiceWorkspaceSchemaResource>(
                     new ServiceWorkspaceSchemaOperationSource(Client),
-                    _serviceWorkspaceSchemaClientDiagnostics,
+                    _workspaceGlobalSchemaClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(schemaId, nameof(schemaId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _serviceWorkspaceSchemaClientDiagnostics.CreateScope("ServiceWorkspaceSchemaCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _workspaceGlobalSchemaClientDiagnostics.CreateScope("ServiceWorkspaceSchemaCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -150,11 +150,11 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceSchemaRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaId, ApiManagementGlobalSchemaData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _workspaceGlobalSchemaRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaId, ApiManagementGlobalSchemaData.ToRequestContent(data), ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ApiManagementArmOperation<ServiceWorkspaceSchemaResource> operation = new ApiManagementArmOperation<ServiceWorkspaceSchemaResource>(
                     new ServiceWorkspaceSchemaOperationSource(Client),
-                    _serviceWorkspaceSchemaClientDiagnostics,
+                    _workspaceGlobalSchemaClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(schemaId, nameof(schemaId));
 
-            using DiagnosticScope scope = _serviceWorkspaceSchemaClientDiagnostics.CreateScope("ServiceWorkspaceSchemaCollection.Get");
+            using DiagnosticScope scope = _workspaceGlobalSchemaClientDiagnostics.CreateScope("ServiceWorkspaceSchemaCollection.Get");
             scope.Start();
             try
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceSchemaRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaId, context);
+                HttpMessage message = _workspaceGlobalSchemaRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementGlobalSchemaData> response = Response.FromValue(ApiManagementGlobalSchemaData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(schemaId, nameof(schemaId));
 
-            using DiagnosticScope scope = _serviceWorkspaceSchemaClientDiagnostics.CreateScope("ServiceWorkspaceSchemaCollection.Get");
+            using DiagnosticScope scope = _workspaceGlobalSchemaClientDiagnostics.CreateScope("ServiceWorkspaceSchemaCollection.Get");
             scope.Start();
             try
             {
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceSchemaRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaId, context);
+                HttpMessage message = _workspaceGlobalSchemaRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementGlobalSchemaData> response = Response.FromValue(ApiManagementGlobalSchemaData.FromResponse(result), result);
                 if (response.Value == null)
@@ -298,8 +298,8 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiManagementGlobalSchemaData, ServiceWorkspaceSchemaResource>(new ServiceWorkspaceSchemaGetByServiceAsyncCollectionResultOfT(
-                _serviceWorkspaceSchemaRestClient,
+            return new AsyncPageableWrapper<ApiManagementGlobalSchemaData, ServiceWorkspaceSchemaResource>(new WorkspaceGlobalSchemaGetByServiceAsyncCollectionResultOfT(
+                _workspaceGlobalSchemaRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
@@ -339,8 +339,8 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiManagementGlobalSchemaData, ServiceWorkspaceSchemaResource>(new ServiceWorkspaceSchemaGetByServiceCollectionResultOfT(
-                _serviceWorkspaceSchemaRestClient,
+            return new PageableWrapper<ApiManagementGlobalSchemaData, ServiceWorkspaceSchemaResource>(new WorkspaceGlobalSchemaGetByServiceCollectionResultOfT(
+                _workspaceGlobalSchemaRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(schemaId, nameof(schemaId));
 
-            using DiagnosticScope scope = _serviceWorkspaceSchemaClientDiagnostics.CreateScope("ServiceWorkspaceSchemaCollection.Exists");
+            using DiagnosticScope scope = _workspaceGlobalSchemaClientDiagnostics.CreateScope("ServiceWorkspaceSchemaCollection.Exists");
             scope.Start();
             try
             {
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceSchemaRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaId, context);
+                HttpMessage message = _workspaceGlobalSchemaRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiManagementGlobalSchemaData> response = default;
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(schemaId, nameof(schemaId));
 
-            using DiagnosticScope scope = _serviceWorkspaceSchemaClientDiagnostics.CreateScope("ServiceWorkspaceSchemaCollection.Exists");
+            using DiagnosticScope scope = _workspaceGlobalSchemaClientDiagnostics.CreateScope("ServiceWorkspaceSchemaCollection.Exists");
             scope.Start();
             try
             {
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceSchemaRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaId, context);
+                HttpMessage message = _workspaceGlobalSchemaRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiManagementGlobalSchemaData> response = default;
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(schemaId, nameof(schemaId));
 
-            using DiagnosticScope scope = _serviceWorkspaceSchemaClientDiagnostics.CreateScope("ServiceWorkspaceSchemaCollection.GetIfExists");
+            using DiagnosticScope scope = _workspaceGlobalSchemaClientDiagnostics.CreateScope("ServiceWorkspaceSchemaCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceSchemaRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaId, context);
+                HttpMessage message = _workspaceGlobalSchemaRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiManagementGlobalSchemaData> response = default;
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(schemaId, nameof(schemaId));
 
-            using DiagnosticScope scope = _serviceWorkspaceSchemaClientDiagnostics.CreateScope("ServiceWorkspaceSchemaCollection.GetIfExists");
+            using DiagnosticScope scope = _workspaceGlobalSchemaClientDiagnostics.CreateScope("ServiceWorkspaceSchemaCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceWorkspaceSchemaRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaId, context);
+                HttpMessage message = _workspaceGlobalSchemaRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiManagementGlobalSchemaData> response = default;
