@@ -390,44 +390,6 @@ namespace Azure.Generator.Management.Tests.Common
             return (client, [responseModel]);
         }
 
-        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithSubscriptionSingletonResourceBodylessPut()
-        {
-            const string TestClientName = "TestClient";
-            const string ResourceModelName = "ResponseType";
-            var responseModel = InputFactory.Model(ResourceModelName,
-                        usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
-                        properties:
-                        [
-                            InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
-                            InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
-                            InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
-                        ],
-                        decorators: []);
-            var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: responseModel);
-            var uuidType = new InputPrimitiveType(InputPrimitiveTypeKind.String, "uuid", "Azure.Core.uuid");
-            var subsIdOpParameter = InputFactory.PathParameter("subscriptionId", uuidType, isRequired: true);
-            var subscriptionIdParameter = InputFactory.MethodParameter("subscriptionId", uuidType, location: InputRequestLocation.Path);
-            var singletonPath = "/subscriptions/{subscriptionId}/providers/Microsoft.Tests/userMetrics/default";
-            var getOperation = InputFactory.Operation(name: "get", responses: [responseType], parameters: [subsIdOpParameter], path: singletonPath);
-            var createOperation = InputFactory.Operation(name: "createOrUpdate", responses: [responseType], parameters: [subsIdOpParameter], path: singletonPath, httpMethod: "PUT");
-            var getMethod = InputFactory.BasicServiceMethod("get", getOperation, parameters: [subscriptionIdParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
-            var createMethod = InputFactory.BasicServiceMethod("createOrUpdate", createOperation, parameters: [subscriptionIdParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
-
-            var resourceIdPattern = new RequestPathPattern(singletonPath);
-            var armProviderDecorator = BuildArmProviderSchema(responseModel, [
-                new ResourceMethod(ResourceOperationKind.Read, getMethod, new RequestPathPattern(getMethod.Operation.Path), new ArmScopeInfo(ResourceScope.Subscription, resourceIdPattern, null), null!),
-                new ResourceMethod(ResourceOperationKind.Create, createMethod, new RequestPathPattern(createMethod.Operation.Path), new ArmScopeInfo(ResourceScope.Subscription, resourceIdPattern, null), null!)
-            ], resourceIdPattern, "Microsoft.Tests/userMetrics", "default", ResourceScope.Subscription, "ResponseType");
-
-            var client = InputFactory.Client(
-                TestClientName,
-                methods: [getMethod, createMethod],
-                decorators: [armProviderDecorator],
-                crossLanguageDefinitionId: $"Test.{TestClientName}");
-
-            return (client, [responseModel]);
-        }
-
         /// <summary>
         /// Creates a client with a resource where the PATCH operation has a body parameter whose model
         /// does NOT include a tags property. Tag methods should NOT be generated because the PATCH body
