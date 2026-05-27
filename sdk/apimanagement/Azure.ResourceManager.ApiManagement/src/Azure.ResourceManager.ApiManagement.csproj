@@ -10,15 +10,4 @@
     <!-- Suppress AOT warnings in generated code until the generator is updated -->
     <NoWarn>$(NoWarn);IL2026;IL3050</NoWarn>
   </PropertyGroup>
-
-  <!--
-    Post-generation fixups: the MPG generator emits invalid serialization for
-    RequestReportRecordContract.method (treats it as Azure.Core.RequestMethod
-    and emits non-existent WriteObjectValue<RequestMethod?> / DeserializeRequestMethod
-    calls). This script patches those call sites after every regen so the build
-    succeeds both locally and in CI's `dotnet msbuild eng/service.proj /t:GenerateCode`.
-  -->
-  <Target Name="ApplyApiManagementPostGenFixups" AfterTargets="GenerateCode">
-    <Exec Command="pwsh -NoProfile -ExecutionPolicy Bypass -File &quot;$(MSBuildThisFileDirectory)..\eng\post-gen-fixups.ps1&quot; -PackageRoot &quot;$(MSBuildThisFileDirectory)..&quot;" />
-  </Target>
 </Project>
