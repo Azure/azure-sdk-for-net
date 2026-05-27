@@ -14,7 +14,7 @@ In this example we will build the docker image for hosted Agent based of the sim
 
 ## Run the sample
 `Azure.AI.Projects` can be used only to create an `ProjectsAgentVersion` object, however hosted object represents the running container, which exposes the OpenAI-compatible API.
-1. Create a folder, containing agent code and dependencies. In our example, it is `Assets/AgentsCode` folder. **If you are using folder from the example, please go to step 4.**
+1. Create a folder, containing agent code and dependencies. In our example, it should be located `Assets/AgentsCode` folder next to the sample itself (this folder is not provided).
 2. Copy the contents of a [sample](https://github.com/Azure/azure-sdk-for-python/blob/main/sdk/agentserver/azure-ai-agentserver-responses/samples/sample_01_getting_started.py) to the file main.py in the `Assets` folder.
 3. Create the `requirements.txt` in `Assets` folder with the next contents.
 
@@ -24,10 +24,10 @@ azure-ai-agentserver-invocations
 azure-ai-agentserver-responses
 ```
 
-4. Change directory to `AgentsCode` folder and install all the required python dependencies.
+4. Change directory to `AgentsCode` folder and install all the required python dependencies. **This step is ONLY required if `CodeDependencyResolution.Bundled` dependency resolution is being used.**
 
 ```bash
-pip install -r requirements.txt --target packages --platform manylinux2014_x86_64 --python-version 3.11 --implementation cp --only-binary=:all:
+pip install -r requirements.txt --target packages --platform manylinux2014_x86_64 --python-version 3.14 --implementation cp --only-binary=:all:
 ```
 
 # Run the sample.
@@ -62,7 +62,7 @@ Asynchronous sample:
 ```C# Snippet:Sample_WaitForDeployment_CodeAgent_Async
 ```
 
-5. Create the response client to communicate with an Agent and get the response.
+5. Create the response client to communicate with an Agent and get the response. If hosted agent is not functioning properly, the `session_not_ready` error is raised. In this case we will extract session ID, get the session logs and print the error.
 
 Synchronous sample:
 ```C# Snippet:Sample_GetResponseFromAgent_CodeAgent_Sync

@@ -2,8 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.IO;
+using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects;
@@ -30,15 +34,15 @@ public class Sample_CodeAgent : ProjectsOpenAITestBase
     private static CreateAgentVersionFromCodeMetadata GetAgentMetadata()
     {
         HostedAgentDefinition agentDefinition = new(
-            versions: [new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "1.0.0")],
             cpu: "0.5",
             memory: "1Gi"
         )
         {
+            ProtocolVersions = { new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "1.0.0") },
             CodeConfiguration = new(
-                runtime: "python_3_11",
+                runtime: "python_3_14",
                 entryPoint: ["python", "main.py"],
-                dependencyResolution: CodeDependencyResolution.Bundled
+                dependencyResolution: CodeDependencyResolution.RemoteBuild
             ),
         };
         CreateAgentVersionFromCodeMetadata metadata = new(agentDefinition);
@@ -58,17 +62,14 @@ public class Sample_CodeAgent : ProjectsOpenAITestBase
 #else
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
 #endif
-        AIProjectClientOptions options = new();
-        options.AddPolicy(GetDumpPolicy(), System.ClientModel.Primitives.PipelinePosition.PerCall);
-        AIProjectClient projectClient = new(endpoint: new(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+        AIProjectClient projectClient = new(endpoint: new(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         #endregion
 
         #region Snippet:Sample_CreateAgent_CodeAgent_Async
         ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionFromCodeAsync(
             agentName: "myCodeAgent",
             filePath: GetDirectory(Path.Combine(["Assets", "AgentsCode"])),
-            metadata: GetAgentMetadata(),
-            contentType: "multipart/form-data"
+            metadata: GetAgentMetadata()
         );
         #endregion
         #region Snippet:Sample_WaitForDeployment_CodeAgent_Async
@@ -83,12 +84,80 @@ public class Sample_CodeAgent : ProjectsOpenAITestBase
         }
         #endregion
         #region Snippet:Sample_GetResponseFromAgent_CodeAgent_Async
-        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
-        ResponseResult response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");
-        Console.WriteLine(response.GetOutputText());
+        try
+        {
+            ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
+            ResponseResult response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");
+
+            Console.WriteLine(response.GetOutputText());
+        }
+        catch (ClientResultException e)
+        {
+            MatchCollection session = Regex.Matches(e.Message, "'[^']+'");
+            if (e.Status == 424 && e.Message.IndexOf("session_not_ready", StringComparison.OrdinalIgnoreCase) !=-1 && session.Count > 0)
+            {
+                SessionLogEvent logEvent = await projectClient.AgentAdministrationClient.GetSessionLogStreamAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version, sessionId: session[0].Value.Trim('\''));
+                Console.WriteLine(logEvent.Data);
+                throw;
+            }
+        }
         #endregion
         #region Snippet:DeleteCodeAgent_CodeAgent_Async
-        await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentVersion.Name);
+        await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentVersion.Name, force: true);
+        #endregion
+    }
+
+    [Test]
+    [SyncOnly]
+    public void CodeAgentCreateSync()
+    {
+        IgnoreSampleMayBe();
+#if SNIPPET
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+#else
+        var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+#endif
+        AIProjectClient projectClient = new(endpoint: new(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+
+        #region Snippet:Sample_CreateAgent_CodeAgent_Sync
+        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersionFromCode(
+            agentName: "myCodeAgent",
+            filePath: GetDirectory(Path.Combine(["Assets", "AgentsCode"])),
+            metadata: GetAgentMetadata()
+        );
+        #endregion
+        #region Snippet:Sample_WaitForDeployment_CodeAgent_Sync
+        while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Failed)
+        {
+            Thread.Sleep(500);
+            agentVersion = projectClient.AgentAdministrationClient.GetAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        }
+        if (agentVersion.Status != AgentVersionStatus.Active)
+        {
+            throw new InvalidOperationException($"The Agent deployment failed, status: {agentVersion.Status}");
+        }
+        #endregion
+        #region Snippet:Sample_GetResponseFromAgent_CodeAgent_Sync
+        try
+        {
+            ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
+            ResponseResult response = responseClient.CreateResponse("Hello, tell me a joke.");
+
+            Console.WriteLine(response.GetOutputText());
+        }
+        catch (ClientResultException e)
+        {
+            MatchCollection session = Regex.Matches(e.Message, "'[^']+'");
+            if (e.Status == 424 && e.Message.IndexOf("session_not_ready", StringComparison.OrdinalIgnoreCase) != -1 && session.Count > 0)
+            {
+                SessionLogEvent logEvent = projectClient.AgentAdministrationClient.GetSessionLogStream(agentName: agentVersion.Name, agentVersion: agentVersion.Version, sessionId: session[0].Value.Trim('\''));
+                Console.WriteLine(logEvent.Data);
+                throw;
+            }
+        }
+        #endregion
+        #region Snippet:DeleteCodeAgent_CodeAgent_Async
+        projectClient.AgentAdministrationClient.DeleteAgent(agentVersion.Name, force: true);
         #endregion
     }
 
