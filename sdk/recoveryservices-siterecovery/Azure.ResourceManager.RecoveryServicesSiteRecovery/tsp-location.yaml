@@ -1,4 +1,4 @@
 directory: specification/recoveryservicessiterecovery/resource-manager/Microsoft.RecoveryServices/SiteRecovery
-commit: c2106b6307c231af1d6844383ac9d10760602584
+commit: da31b7d5613439c80cc8cf10c06b37f180127440
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
