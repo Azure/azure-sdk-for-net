@@ -75,30 +75,27 @@ namespace Azure.Security.KeyVault.Tests
         public string Sku => GetOptionalVariable("SKU") ?? "premium";
 
         /// <summary>
-        /// Gets a value indicating whether EKM is enabled.
+        /// A value indicating whether EKM is enabled.
         /// </summary>
-        public bool IsEkmEnabled => string.Equals(GetOptionalVariable("AZURE_KEYVAULT_EKM_ENABLED"), "true", StringComparison.OrdinalIgnoreCase);
+        public bool IsEkmEnabled =>
+            !string.IsNullOrEmpty(GetOptionalVariable("EKM_PROXY_HOST")) &&
+            !string.IsNullOrEmpty(GetOptionalVariable("EKM_SERVER_CA_CERTIFICATE"));
 
         /// <summary>
         /// EKM proxy FQDN. Recorded so playback works without the real proxy.
         /// </summary>
-        public string EkmHost => GetRecordedOptionalVariable("AZURE_KEYVAULT_EKM_HOST", options => options.IsSecret("ekm.contoso.com"));
+        public string EkmHost => GetRecordedOptionalVariable("EKM_PROXY_HOST", options => options.IsSecret("ekm.contoso.com"));
 
         /// <summary>
-        /// Optional EKM proxy path prefix.
+        /// EKM proxy path prefix. Defaults to "/api/v1" if not specified.
         /// </summary>
-        public string EkmPathPrefix => GetRecordedOptionalVariable("AZURE_KEYVAULT_EKM_PATH_PREFIX");
-
-        /// <summary>
-        /// Subject common name of the EKM proxy server certificate.
-        /// </summary>
-        public string EkmServerSubjectCommonName => GetRecordedOptionalVariable("AZURE_KEYVAULT_EKM_SERVER_SUBJECT_CN");
+        public string EkmPathPrefix => GetRecordedOptionalVariable("EKM_PROXY_PATH_PREFIX") ?? "/api/v1";
 
         /// <summary>
         /// Base64-encoded DER bytes of the EKM server CA certificate.
         /// Not recorded — only read during Record/Live on the developer's machine.
         /// </summary>
-        public string EkmServerCaCertBase64 => GetOptionalVariable("AZURE_KEYVAULT_EKM_SERVER_CA_CERT");
+        public string EkmServerCaCertBase64 => GetOptionalVariable("EKM_SERVER_CA_CERTIFICATE");
 
         /// <summary>
         /// Gets the value of the "AZURE_KEYVAULT_ATTESTATION_URL" variable.

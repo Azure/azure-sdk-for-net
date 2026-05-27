@@ -81,14 +81,13 @@ namespace Azure.Security.KeyVault.Administration.Tests
         private KeyVaultEkmConnection BuildConnection()
         {
             string host = TestEnvironment.EkmHost
-                ?? throw new IgnoreException("AZURE_KEYVAULT_EKM_HOST is not defined.");
+                ?? throw new IgnoreException("EKM_PROXY_HOST  is not defined.");
 
             byte[] ca = ReadCaCertificate();
 
             return new KeyVaultEkmConnection(host, new[] { ca })
             {
-                PathPrefix = TestEnvironment.EkmPathPrefix,
-                ServerSubjectCommonName = TestEnvironment.EkmServerSubjectCommonName,
+                PathPrefix = TestEnvironment.EkmPathPrefix
             };
         }
 
@@ -101,7 +100,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             }
 
             string base64 = TestEnvironment.EkmServerCaCertBase64
-                ?? throw new IgnoreException("AZURE_KEYVAULT_EKM_SERVER_CA_CERT is not defined.");
+                ?? throw new IgnoreException("EKM_SERVER_CA_CERTIFICATE is not defined.");
 
             return Convert.FromBase64String(base64);
         }

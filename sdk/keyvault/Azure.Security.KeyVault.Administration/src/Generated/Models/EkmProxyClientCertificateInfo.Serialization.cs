@@ -10,9 +10,8 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Azure.Security.KeyVault.Administration;
 
-namespace Azure.Security.KeyVault.Administration.Models
+namespace Azure.Security.KeyVault.Administration
 {
     /// <summary> EKM proxy client certificate information. </summary>
     public partial class EkmProxyClientCertificateInfo : IJsonModel<EkmProxyClientCertificateInfo>

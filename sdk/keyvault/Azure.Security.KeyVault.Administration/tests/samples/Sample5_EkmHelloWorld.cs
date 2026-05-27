@@ -39,7 +39,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
         public async Task EkmHelloWorldAsync()
         {
             string ekmHost = TestEnvironment.EkmHost
-                ?? throw new IgnoreException("AZURE_KEYVAULT_EKM_HOST is not defined.");
+                ?? throw new IgnoreException("EKM_PROXY_HOST is not defined.");
 
             #region Snippet:EkmCreateConnectionAsync
 #if SNIPPET
@@ -56,8 +56,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             byte[] serverCaCertificate = ReadCaCertificate();
             KeyVaultEkmConnection connection = new KeyVaultEkmConnection(ekmHost, new[] { serverCaCertificate })
             {
-                PathPrefix = TestEnvironment.EkmPathPrefix,
-                ServerSubjectCommonName = TestEnvironment.EkmServerSubjectCommonName,
+                PathPrefix = TestEnvironment.EkmPathPrefix
             };
 #endif
 
@@ -110,7 +109,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
         public void EkmHelloWorldSync()
         {
             string ekmHost = TestEnvironment.EkmHost
-                ?? throw new IgnoreException("AZURE_KEYVAULT_EKM_HOST is not defined.");
+                ?? throw new IgnoreException("EKM_PROXY_HOST is not defined.");
 
             #region Snippet:EkmCreateConnectionSync
 #if SNIPPET
@@ -128,7 +127,6 @@ namespace Azure.Security.KeyVault.Administration.Tests
             KeyVaultEkmConnection connection = new KeyVaultEkmConnection(ekmHost, new[] { serverCaCertificate })
             {
                 PathPrefix = TestEnvironment.EkmPathPrefix,
-                ServerSubjectCommonName = TestEnvironment.EkmServerSubjectCommonName,
             };
 #endif
 
@@ -194,7 +192,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             }
 
             string base64 = TestEnvironment.EkmServerCaCertBase64
-                ?? throw new IgnoreException("AZURE_KEYVAULT_EKM_SERVER_CA_CERT is not defined.");
+                ?? throw new IgnoreException("EKM_SERVER_CA_CERTIFICATE is not defined.");
 
             return Convert.FromBase64String(base64);
         }

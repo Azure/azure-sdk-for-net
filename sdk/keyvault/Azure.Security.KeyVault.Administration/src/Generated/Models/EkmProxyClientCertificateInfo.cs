@@ -7,9 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Security.KeyVault.Administration;
 
-namespace Azure.Security.KeyVault.Administration.Models
+namespace Azure.Security.KeyVault.Administration
 {
     /// <summary> EKM proxy client certificate information. </summary>
     public partial class EkmProxyClientCertificateInfo
