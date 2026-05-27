@@ -1,6 +1,6 @@
 ---
 name: search-documents-typespec-validation
-description: 'TypeSpec validation skill for Azure.Search.Documents SDK. Performs a COMPLETE validation of ALL operations, ALL models, ALL enums, and ALL properties against the TypeSpec definition at any pinned commit. Works for any API version. Generates a full gap report: missing features, extra features, naming mismatches, and recommended fix location. WHEN: "validate Azure.Search.Documents SDK against TypeSpec", "detect Azure.Search.Documents typespec feature gaps", "what is missing from the Azure.Search.Documents SDK", "compare Azure.Search.Documents SDK to spec", "audit Azure.Search.Documents coverage".'
+description: 'TypeSpec validation skill for Azure.Search.Documents SDK. Performs a COMPLETE validation of ALL operations, ALL models, ALL enums, and ALL properties against the TypeSpec definition at any pinned commit. Works for any API version. Generates a full gap report: missing features, extra features, naming mismatches, and recommended fix location. WHEN: "validate Azure.Search.Documents SDK against TypeSpec", "detect Azure.Search.Documents typespec feature gaps", "what is missing from the Azure.Search.Documents SDK", "compare Azure.Search.Documents SDK to spec", "full spec coverage audit for Azure.Search.Documents". Do NOT use for version-to-version diff or regression detection — use search-documents-version-diff instead.'
 ---
 
 # Azure.Search.Documents — TypeSpec Validation Skill
@@ -12,6 +12,14 @@ description: 'TypeSpec validation skill for Azure.Search.Documents SDK. Performs
 | TypeSpec repo | `Azure/azure-rest-api-specs` |
 | TypeSpec path | `specification/search/data-plane/Search` |
 | Pin file | `tsp-location.yaml` (contains commit SHA) |
+
+**Related skills:**
+- [search-documents](../search-documents/SKILL.md) — E2E workflow skill for full release cycles, spec updates, code changes, and customizations
+- [search-documents-version-diff](../search-documents-version-diff/SKILL.md) — diff public API surface between two versions to catch regressions
+
+For TypeSpec decorator details and C# customization patterns referenced in this validation, see:
+- [customization.md](../search-documents/references/customization.md) — `@@clientName`, `@@access`, `[CodeGenMember]`, compound property wiring
+- [architecture.md](../search-documents/references/architecture.md) — source layout, SearchOptions architecture, service version management
 
 ---
 
@@ -315,33 +323,20 @@ The Search service TypeSpec is large (400+ models, 50+ operations, 100+ enums/un
 
 ### Automated Verification Commands
 
-Use these PowerShell commands to perform exhaustive checks efficiently:
+Use the `Validate-GeneratedModels.ps1` script to perform exhaustive cross-reference checks:
 
 ```powershell
-# Count and verify all generated models against API listing
-$apiContent = Get-Content "api/Azure.Search.Documents.netstandard2.0.cs" -Raw
-$genDir = "src/Generated/Models"
-$publicMissing = @(); $publicFound = 0; $internalCount = 0
-Get-ChildItem $genDir -Filter "*.cs" | Where-Object { $_.Name -notmatch '\.Serialization\.cs$' } | ForEach-Object {
-    $fc = Get-Content $_.FullName -Raw
-    $m = [regex]::Match($fc, '(public|internal)\s+(readonly\s+)?(partial\s+)?(static\s+)?(abstract\s+)?(class|struct|enum|interface)\s+(\w+)')
-    if ($m.Success) {
-        if ($m.Groups[1].Value -eq 'internal') { $internalCount++ }
-        else { $tn = $m.Groups[7].Value; if ($apiContent -match "\b$tn\b") { $publicFound++ } else { $publicMissing += $tn } }
-    }
-}
-Write-Host "Public found: $publicFound | Internal: $internalCount | Public MISSING: $($publicMissing.Count)"
-if ($publicMissing) { $publicMissing | ForEach-Object { Write-Host "  MISSING: $_" } }
+# Full validation — cross-references all generated models against API listing
+./.github/skills/search-documents-typespec-validation/scripts/Validate-GeneratedModels.ps1 -Format summary
 
-# Verify specific types from TypeSpec exist in API (batch check)
-$typesToCheck = @("TypeA","TypeB","TypeC")  # Replace with actual TypeSpec model names (after clientName renames)
-$typesToCheck | ForEach-Object { if ($apiContent -notmatch "\b$_\b") { Write-Host "NOT IN SDK: $_" } }
+# Batch-check specific TypeSpec model names (after @@clientName renames) against the SDK
+./.github/skills/search-documents-typespec-validation/scripts/Validate-GeneratedModels.ps1 -TypeNames @("SearchIndex","SearchField","SearchIndexer")
 
-# Verify all skills/analyzers/tokenizers/token-filters present
-Get-ChildItem $genDir -Filter "*Skill.cs" -Name | Where-Object { $_ -notmatch 'Serialization' }
-Get-ChildItem $genDir -Filter "*Tokenizer.cs" -Name | Where-Object { $_ -notmatch 'Serialization' }
-Get-ChildItem $genDir -Filter "*TokenFilter.cs" -Name | Where-Object { $_ -notmatch 'Serialization' }
+# JSON output for agent consumption
+./.github/skills/search-documents-typespec-validation/scripts/Validate-GeneratedModels.ps1
 ```
+
+The script lives at [scripts/Validate-GeneratedModels.ps1](scripts/Validate-GeneratedModels.ps1). It resolves paths relative to the package root automatically.
 
 ---
 

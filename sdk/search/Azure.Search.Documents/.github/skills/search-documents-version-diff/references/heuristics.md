@@ -40,7 +40,7 @@ A previously published preview `SearchClientOptions.ServiceVersion.VYYYY_MM_DD_P
 
 **Signal**: missing member is on `Azure.Search.Documents.SearchClientOptions+ServiceVersion`.
 
-**Fix**: restore the enum value (keep stale preview enum values until the next preview ships, or until the value's API version is GA'd and removed from `Versions` in the spec). Update all five sync locations: enum member, `LatestVersion`, `TryGetServiceVersion`, `ToVersionString`, `ToServiceVersion` (see [search-documents](../../search-documents/SKILL.md) pitfall #4).
+**Fix**: restore the enum value (keep stale preview enum values until the next preview ships, or until the value's API version is GA'd and removed from `Versions` in the spec). Update all six sync locations: enum member, `LatestVersion`, `TryGetServiceVersion`, `Validate`, `ToVersionString`, `ToServiceVersion` (see [search-documents](../../search-documents/SKILL.md) pitfall #4).
 
 ## P6 — Convenience method downgraded to protocol-only
 

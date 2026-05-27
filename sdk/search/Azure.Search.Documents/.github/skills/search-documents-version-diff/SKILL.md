@@ -1,6 +1,6 @@
 ---
 name: search-documents-version-diff
-description: Diff the current Azure.Search.Documents public API surface against a previous published version and detect preview-to-preview regressions where the SDK customization layer was not bubbled up after a TypeSpec change. Use whenever the user asks to compare Azure.Search.Documents betas, verify no Azure.Search.Documents preview features dropped, audit a regen for Azure.Search.Documents, sanity-check a release branch for Azure.Search.Documents, or investigate a missing Azure.Search.Documents preview feature — even if they don't say the word "diff". Specifically catches dropped wrappers (QueryAnswer/QueryCaption/QueryRewrites style), lost SearchOptions aggregator redirectors, `@@access("internal")` flips, deleted-instead-of-gated `#if AZURE_SEARCH_PREVIEW` blocks, dropped `ServiceVersion` enum values, and convenience-to-protocol downgrades.
+description: Diff the current Azure.Search.Documents public API surface against a previous published version and detect preview-to-preview regressions where the SDK customization layer was not bubbled up after a TypeSpec change. Use whenever the user asks to compare Azure.Search.Documents betas, verify no Azure.Search.Documents preview features dropped, regression audit between Azure.Search.Documents versions, sanity-check a release branch for Azure.Search.Documents, or investigate a missing Azure.Search.Documents preview feature — even if they don't say the word "diff". Specifically catches dropped wrappers (QueryAnswer/QueryCaption/QueryRewrites style), lost SearchOptions aggregator redirectors, `@@access("internal")` flips, deleted-instead-of-gated `#if AZURE_SEARCH_PREVIEW` blocks, dropped `ServiceVersion` enum values, and convenience-to-protocol downgrades.
 ---
 
 # Azure.Search.Documents — Version Diff
@@ -70,7 +70,7 @@ For every entry in `removedMembers`, `removedTypes`, and `changedTypes`, pick a 
 
 ```pwsh
 $sha = ((Get-Content tsp-location.yaml | Select-String '^commit:').Line -replace '^commit:\s*','').Trim()
-curl -s "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/$sha/specification/search/Search.Service/client.tsp"
+Invoke-RestMethod "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/$sha/specification/search/Search.Service/client.tsp"
 ```
 
 Also search `src/Generated/Models/` locally — many "removed" public symbols still exist there as `internal` (pattern P3) or as `*Raw` siblings (pattern P1). If the heuristic decision aid can't place an item, leave it as P7 — do not guess.
