@@ -58,9 +58,9 @@ public class Sample_CodeAgent : ProjectsOpenAITestBase
 #else
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
 #endif
-        Uri uriEndpoint = new(projectEndpoint);
-        DefaultAzureCredential credential = new();
-        AIProjectClient projectClient = new(endpoint: uriEndpoint, tokenProvider: credential);
+        AIProjectClientOptions options = new();
+        options.AddPolicy(GetDumpPolicy(), System.ClientModel.Primitives.PipelinePosition.PerCall);
+        AIProjectClient projectClient = new(endpoint: new(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
         #endregion
 
         #region Snippet:Sample_CreateAgent_CodeAgent_Async
@@ -68,7 +68,7 @@ public class Sample_CodeAgent : ProjectsOpenAITestBase
             agentName: "myCodeAgent",
             filePath: GetDirectory(Path.Combine(["Assets", "AgentsCode"])),
             metadata: GetAgentMetadata(),
-            contentType: "application/json"
+            contentType: "multipart/form-data"
         );
         #endregion
         #region Snippet:Sample_WaitForDeployment_CodeAgent_Async

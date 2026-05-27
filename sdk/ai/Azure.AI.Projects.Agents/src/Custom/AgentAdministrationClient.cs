@@ -10,6 +10,7 @@ using System.ComponentModel;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects.Agents;
@@ -822,6 +823,8 @@ public partial class AgentAdministrationClient
         return ClientResult.FromValue((SessionLogEvent)result, result.GetRawResponse());
     }
 
+#pragma warning disable IL2026
+#pragma warning disable IL3050
     /// <summary>
     /// CreateAgentVersionFromCode
     /// </summary>
@@ -875,9 +878,21 @@ public partial class AgentAdministrationClient
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
         Argument.AssertNotNullOrEmpty(filePath, nameof(filePath));
 
-        BinaryData data = FileHelper.CreateAndReadZipFileFromDirectory(filePath);
-        string codeZipSha256 = FileHelper.GetSha256Sum(data);
-        CreateAgentFromCodeOptions content = new(metadata, data);
+        BinaryData dataZip = FileHelper.CreateAndReadZipFileFromDirectory(filePath);
+        //BinaryData data = BinaryData.FromObjectAsJson(
+        //    new object[]
+        //    {
+        //        $"{Path.GetFileName(filePath)}.zip",
+        //        dataZip,
+        //        "application/zip"
+        //    }
+        //);
+        string codeZipSha256 = FileHelper.GetSha256Sum(dataZip);
+        //CreateAgentFromCodeOptions content = new(metadata, data);
+        MultiPartFormDataBinaryContent content = new();
+        BinaryData metadataPart = ModelReaderWriter.Write(metadata, ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default);
+        content.Add(metadataPart.ToString(), name: "metadata", contentType: "application/json");
+        content.Add(dataZip, "code", $"{Path.GetFileName(filePath)}.zip", "application/zip");
         ClientResult result = await CreateAgentVersionFromCodeAsync(
             agentName: agentName,
             codeZipSha256: codeZipSha256,
