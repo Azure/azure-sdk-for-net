@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public readonly partial struct PolicyContentFormat : IEquatable<PolicyContentFormat>
     {
         private readonly string _value;
+        /// <summary> The contents are inline and Content type is an XML document. </summary>
+        private const string XmlValue = "xml";
+        /// <summary> The policy XML document is hosted on a HTTP endpoint accessible from the API Management service. </summary>
+        private const string XmlLinkValue = "xml-link";
+        /// <summary> The contents are inline and Content type is a non XML encoded policy document. </summary>
+        private const string RawxmlValue = "rawxml";
+        /// <summary> The policy document is not XML encoded and is hosted on a HTTP endpoint accessible from the API Management service. </summary>
+        private const string RawxmlLinkValue = "rawxml-link";
 
         /// <summary> Initializes a new instance of <see cref="PolicyContentFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PolicyContentFormat(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string XmlValue = "xml";
-        private const string XmlLinkValue = "xml-link";
-        private const string RawXmlValue = "rawxml";
-        private const string RawXmlLinkValue = "rawxml-link";
+            _value = value;
+        }
 
         /// <summary> The contents are inline and Content type is an XML document. </summary>
         public static PolicyContentFormat Xml { get; } = new PolicyContentFormat(XmlValue);
+
         /// <summary> The policy XML document is hosted on a HTTP endpoint accessible from the API Management service. </summary>
         public static PolicyContentFormat XmlLink { get; } = new PolicyContentFormat(XmlLinkValue);
+
         /// <summary> The contents are inline and Content type is a non XML encoded policy document. </summary>
-        public static PolicyContentFormat RawXml { get; } = new PolicyContentFormat(RawXmlValue);
+        public static PolicyContentFormat Rawxml { get; } = new PolicyContentFormat(RawxmlValue);
+
         /// <summary> The policy document is not XML encoded and is hosted on a HTTP endpoint accessible from the API Management service. </summary>
-        public static PolicyContentFormat RawXmlLink { get; } = new PolicyContentFormat(RawXmlLinkValue);
+        public static PolicyContentFormat RawxmlLink { get; } = new PolicyContentFormat(RawxmlLinkValue);
+
         /// <summary> Determines if two <see cref="PolicyContentFormat"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PolicyContentFormat left, PolicyContentFormat right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PolicyContentFormat"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PolicyContentFormat left, PolicyContentFormat right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PolicyContentFormat"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PolicyContentFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PolicyContentFormat(string value) => new PolicyContentFormat(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PolicyContentFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PolicyContentFormat?(string value) => value == null ? null : new PolicyContentFormat(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PolicyContentFormat other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PolicyContentFormat other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

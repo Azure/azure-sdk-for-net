@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Linq;
@@ -23,27 +23,26 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
         private ApiManagementServiceResource ApiServiceResource { get; set; }
 
-        private ApiManagementServiceCollection ApiServiceCollection { get; set; }
+        private ApiManagementServiceResourceCollection ApiServiceCollection { get; set; }
 
         private async Task SetCollectionsAsync()
         {
             ResourceGroup = await CreateResourceGroupAsync();
-            ApiServiceCollection = ResourceGroup.GetApiManagementServices();
+            ApiServiceCollection = ResourceGroup.GetApiManagementServiceResources();
         }
 
         private async Task CreateApiServiceAsync()
         {
             await SetCollectionsAsync();
             var apiName = Recording.GenerateAssetName("sdktestapimv2-");
-            var data = new ApiManagementServiceData(AzureLocation.WestUS2, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.StandardV2, 1), "Sample@Sample.com", "sample")
+            var data = new ApiManagementServiceResourceData(AzureLocation.WestUS2, "Sample@Sample.com", "sample", new ApiManagementServiceSkuProperties(SkuType.StandardV2, 1))
             {
-                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
+                Identity = new ApiManagementServiceIdentity(ApimIdentityType.SystemAssigned)
             };
             ApiServiceResource = (await ApiServiceCollection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data)).Value;
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task CRUD()
         {
             await CreateApiServiceAsync();
@@ -78,13 +77,13 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             {
                 Subject = "Updated Subject"
             };
-            var updatePublisherEmailTemplate = (await publisherEmailTemplateResponse.UpdateAsync(ETag.All, content)).Value;
+            var updatePublisherEmailTemplate = (await publisherEmailTemplateResponse.UpdateAsync(ETag.All.ToString(), content)).Value;
             var updatePublisherEmailTemplateResponse = (await updatePublisherEmailTemplate.GetAsync()).Value;
             Assert.NotNull(updatePublisherEmailTemplateResponse);
             Assert.AreEqual("Updated Subject", updatePublisherEmailTemplateResponse.Data.Subject);
 
             // reset the template to default
-            await updatePublisherEmailTemplateResponse.DeleteAsync(WaitUntil.Completed, ETag.All);
+            await updatePublisherEmailTemplateResponse.DeleteAsync(WaitUntil.Completed, ETag.All.ToString());
             publisherEmailTemplate = (await collection.GetAsync(publisherEmailTemplate.Data.Name)).Value;
             Assert.NotNull(publisherEmailTemplate);
             Assert.IsTrue(publisherEmailTemplate.Data.IsDefault);

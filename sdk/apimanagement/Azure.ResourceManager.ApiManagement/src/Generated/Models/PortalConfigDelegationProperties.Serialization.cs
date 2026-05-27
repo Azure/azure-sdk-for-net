@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class PortalConfigDelegationProperties : IUtf8JsonSerializable, IJsonModel<PortalConfigDelegationProperties>
+    /// <summary> The PortalConfigDelegationProperties. </summary>
+    public partial class PortalConfigDelegationProperties : IJsonModel<PortalConfigDelegationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PortalConfigDelegationProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PortalConfigDelegationProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PortalConfigDelegationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializePortalConfigDelegationProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PortalConfigDelegationProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PortalConfigDelegationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(PortalConfigDelegationProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PortalConfigDelegationProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PortalConfigDelegationProperties IPersistableModel<PortalConfigDelegationProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PortalConfigDelegationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PortalConfigDelegationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +69,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PortalConfigDelegationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PortalConfigDelegationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PortalConfigDelegationProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(DelegateRegistration))
             {
                 writer.WritePropertyName("delegateRegistration"u8);
@@ -48,22 +87,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(DelegationUri))
             {
                 writer.WritePropertyName("delegationUrl"u8);
-                writer.WriteStringValue(DelegationUri.AbsoluteUri);
+                writer.WriteStringValue(DelegationUri);
             }
             if (Optional.IsDefined(ValidationKey))
             {
                 writer.WritePropertyName("validationKey"u8);
                 writer.WriteStringValue(ValidationKey);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -72,191 +111,72 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
         }
 
-        PortalConfigDelegationProperties IJsonModel<PortalConfigDelegationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PortalConfigDelegationProperties IJsonModel<PortalConfigDelegationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PortalConfigDelegationProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PortalConfigDelegationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PortalConfigDelegationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PortalConfigDelegationProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePortalConfigDelegationProperties(document.RootElement, options);
         }
 
-        internal static PortalConfigDelegationProperties DeserializePortalConfigDelegationProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static PortalConfigDelegationProperties DeserializePortalConfigDelegationProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             bool? delegateRegistration = default;
             bool? delegateSubscription = default;
-            Uri delegationUri = default;
+            string delegationUri = default;
             string validationKey = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("delegateRegistration"u8))
+                if (prop.NameEquals("delegateRegistration"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    delegateRegistration = property.Value.GetBoolean();
+                    delegateRegistration = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("delegateSubscription"u8))
+                if (prop.NameEquals("delegateSubscription"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    delegateSubscription = property.Value.GetBoolean();
+                    delegateSubscription = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("delegationUrl"u8))
+                if (prop.NameEquals("delegationUrl"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    delegationUri = new Uri(property.Value.GetString());
+                    delegationUri = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("validationKey"u8))
+                if (prop.NameEquals("validationKey"u8))
                 {
-                    validationKey = property.Value.GetString();
+                    validationKey = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new PortalConfigDelegationProperties(delegateRegistration, delegateSubscription, delegationUri, validationKey, serializedAdditionalRawData);
+            return new PortalConfigDelegationProperties(delegateRegistration, delegateSubscription, delegationUri, validationKey, additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DelegateRegistration), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  delegateRegistration: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DelegateRegistration))
-                {
-                    builder.Append("  delegateRegistration: ");
-                    var boolValue = DelegateRegistration.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DelegateSubscription), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  delegateSubscription: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DelegateSubscription))
-                {
-                    builder.Append("  delegateSubscription: ");
-                    var boolValue = DelegateSubscription.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DelegationUri), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  delegationUrl: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DelegationUri))
-                {
-                    builder.Append("  delegationUrl: ");
-                    builder.AppendLine($"'{DelegationUri.AbsoluteUri}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ValidationKey), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  validationKey: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ValidationKey))
-                {
-                    builder.Append("  validationKey: ");
-                    if (ValidationKey.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ValidationKey}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ValidationKey}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<PortalConfigDelegationProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PortalConfigDelegationProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(PortalConfigDelegationProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        PortalConfigDelegationProperties IPersistableModel<PortalConfigDelegationProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PortalConfigDelegationProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializePortalConfigDelegationProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PortalConfigDelegationProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<PortalConfigDelegationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

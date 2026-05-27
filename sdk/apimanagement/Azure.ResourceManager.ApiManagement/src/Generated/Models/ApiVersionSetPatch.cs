@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Parameters to update or create an API Version Set Contract. </summary>
     public partial class ApiVersionSetPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiVersionSetPatch"/>. </summary>
         public ApiVersionSetPatch()
@@ -51,36 +23,106 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiVersionSetPatch"/>. </summary>
-        /// <param name="description"> Description of API Version Set. </param>
-        /// <param name="versionQueryName"> Name of query parameter that indicates the API Version if versioningScheme is set to `query`. </param>
-        /// <param name="versionHeaderName"> Name of HTTP header parameter that indicates the API Version if versioningScheme is set to `header`. </param>
-        /// <param name="displayName"> Name of API Version Set. </param>
-        /// <param name="versioningScheme"> An value that determines where the API Version identifier will be located in a HTTP request. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiVersionSetPatch(string description, string versionQueryName, string versionHeaderName, string displayName, VersioningScheme? versioningScheme, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Parameters to update or create an API Version Set Contract. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ApiVersionSetPatch(ApiVersionSetUpdateParametersProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Description = description;
-            VersionQueryName = versionQueryName;
-            VersionHeaderName = versionHeaderName;
-            DisplayName = displayName;
-            VersioningScheme = versioningScheme;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Parameters to update or create an API Version Set Contract. </summary>
+        [WirePath("properties")]
+        internal ApiVersionSetUpdateParametersProperties Properties { get; set; }
 
         /// <summary> Description of API Version Set. </summary>
         [WirePath("properties.description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiVersionSetUpdateParametersProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> Name of query parameter that indicates the API Version if versioningScheme is set to `query`. </summary>
         [WirePath("properties.versionQueryName")]
-        public string VersionQueryName { get; set; }
+        public string VersionQueryName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VersionQueryName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiVersionSetUpdateParametersProperties();
+                }
+                Properties.VersionQueryName = value;
+            }
+        }
+
         /// <summary> Name of HTTP header parameter that indicates the API Version if versioningScheme is set to `header`. </summary>
         [WirePath("properties.versionHeaderName")]
-        public string VersionHeaderName { get; set; }
+        public string VersionHeaderName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VersionHeaderName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiVersionSetUpdateParametersProperties();
+                }
+                Properties.VersionHeaderName = value;
+            }
+        }
+
         /// <summary> Name of API Version Set. </summary>
         [WirePath("properties.displayName")]
-        public string DisplayName { get; set; }
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiVersionSetUpdateParametersProperties();
+                }
+                Properties.DisplayName = value;
+            }
+        }
+
         /// <summary> An value that determines where the API Version identifier will be located in a HTTP request. </summary>
         [WirePath("properties.versioningScheme")]
-        public VersioningScheme? VersioningScheme { get; set; }
+        public VersioningScheme? VersioningScheme
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VersioningScheme;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiVersionSetUpdateParametersProperties();
+                }
+                Properties.VersioningScheme = value.Value;
+            }
+        }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -14,77 +15,122 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public readonly partial struct ContentFormat : IEquatable<ContentFormat>
     {
         private readonly string _value;
+        /// <summary> The contents are inline and Content type is a WADL document. </summary>
+        private const string WadlXmlValue = "wadl-xml";
+        /// <summary> The WADL document is hosted on a publicly accessible internet address. </summary>
+        private const string WadlLinkJsonValue = "wadl-link-json";
+        /// <summary> The contents are inline and Content Type is a OpenAPI 2.0 JSON Document. </summary>
+        private const string SwaggerJsonValue = "swagger-json";
+        /// <summary> The OpenAPI 2.0 JSON document is hosted on a publicly accessible internet address. </summary>
+        private const string SwaggerLinkJsonValue = "swagger-link-json";
+        /// <summary> The contents are inline and the document is a WSDL/Soap document. </summary>
+        private const string WsdlValue = "wsdl";
+        /// <summary> The WSDL document is hosted on a publicly accessible internet address. </summary>
+        private const string WsdlLinkValue = "wsdl-link";
+        /// <summary> The contents are inline and Content Type is a OpenAPI 3.0 YAML Document. </summary>
+        private const string OpenapiValue = "openapi";
+        /// <summary> The contents are inline and Content Type is a OpenAPI 3.0 JSON Document. </summary>
+        private const string OpenapiJsonValue = "openapi+json";
+        /// <summary> The OpenAPI 3.0 YAML document is hosted on a publicly accessible internet address. </summary>
+        private const string OpenapiLinkValue = "openapi-link";
+        /// <summary> The OpenAPI 3.0 JSON document is hosted on a publicly accessible internet address. </summary>
+        private const string OpenapiJsonLinkValue = "openapi+json-link";
+        /// <summary> The GraphQL API endpoint hosted on a publicly accessible internet address. </summary>
+        private const string GraphqlLinkValue = "graphql-link";
+        /// <summary> The contents are inline and Content Type is a OData XML Document. </summary>
+        private const string OdataValue = "odata";
+        /// <summary> The OData metadata document hosted on a publicly accessible internet address. </summary>
+        private const string OdataLinkValue = "odata-link";
+        /// <summary> The contents are inline and Content Type is a gRPC protobuf file. </summary>
+        private const string GrpcValue = "grpc";
+        /// <summary> The gRPC protobuf file is hosted on a publicly accessible internet address. </summary>
+        private const string GrpcLinkValue = "grpc-link";
 
         /// <summary> Initializes a new instance of <see cref="ContentFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContentFormat(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string WadlXmlValue = "wadl-xml";
-        private const string WadlLinkJsonValue = "wadl-link-json";
-        private const string SwaggerJsonValue = "swagger-json";
-        private const string SwaggerLinkJsonValue = "swagger-link-json";
-        private const string WsdlValue = "wsdl";
-        private const string WsdlLinkValue = "wsdl-link";
-        private const string OpenApiValue = "openapi";
-        private const string OpenApiJsonValue = "openapi+json";
-        private const string OpenApiLinkValue = "openapi-link";
-        private const string OpenApiJsonLinkValue = "openapi+json-link";
-        private const string GraphQLLinkValue = "graphql-link";
-        private const string OdataValue = "odata";
-        private const string OdataLinkValue = "odata-link";
-        private const string GrpcValue = "grpc";
-        private const string GrpcLinkValue = "grpc-link";
+            _value = value;
+        }
 
         /// <summary> The contents are inline and Content type is a WADL document. </summary>
         public static ContentFormat WadlXml { get; } = new ContentFormat(WadlXmlValue);
+
         /// <summary> The WADL document is hosted on a publicly accessible internet address. </summary>
         public static ContentFormat WadlLinkJson { get; } = new ContentFormat(WadlLinkJsonValue);
+
         /// <summary> The contents are inline and Content Type is a OpenAPI 2.0 JSON Document. </summary>
         public static ContentFormat SwaggerJson { get; } = new ContentFormat(SwaggerJsonValue);
+
         /// <summary> The OpenAPI 2.0 JSON document is hosted on a publicly accessible internet address. </summary>
         public static ContentFormat SwaggerLinkJson { get; } = new ContentFormat(SwaggerLinkJsonValue);
+
         /// <summary> The contents are inline and the document is a WSDL/Soap document. </summary>
         public static ContentFormat Wsdl { get; } = new ContentFormat(WsdlValue);
+
         /// <summary> The WSDL document is hosted on a publicly accessible internet address. </summary>
         public static ContentFormat WsdlLink { get; } = new ContentFormat(WsdlLinkValue);
+
         /// <summary> The contents are inline and Content Type is a OpenAPI 3.0 YAML Document. </summary>
-        public static ContentFormat OpenApi { get; } = new ContentFormat(OpenApiValue);
+        public static ContentFormat Openapi { get; } = new ContentFormat(OpenapiValue);
+
         /// <summary> The contents are inline and Content Type is a OpenAPI 3.0 JSON Document. </summary>
-        public static ContentFormat OpenApiJson { get; } = new ContentFormat(OpenApiJsonValue);
+        public static ContentFormat OpenapiJson { get; } = new ContentFormat(OpenapiJsonValue);
+
         /// <summary> The OpenAPI 3.0 YAML document is hosted on a publicly accessible internet address. </summary>
-        public static ContentFormat OpenApiLink { get; } = new ContentFormat(OpenApiLinkValue);
+        public static ContentFormat OpenapiLink { get; } = new ContentFormat(OpenapiLinkValue);
+
         /// <summary> The OpenAPI 3.0 JSON document is hosted on a publicly accessible internet address. </summary>
-        public static ContentFormat OpenApiJsonLink { get; } = new ContentFormat(OpenApiJsonLinkValue);
+        public static ContentFormat OpenapiJsonLink { get; } = new ContentFormat(OpenapiJsonLinkValue);
+
         /// <summary> The GraphQL API endpoint hosted on a publicly accessible internet address. </summary>
-        public static ContentFormat GraphQLLink { get; } = new ContentFormat(GraphQLLinkValue);
+        public static ContentFormat GraphqlLink { get; } = new ContentFormat(GraphqlLinkValue);
+
         /// <summary> The contents are inline and Content Type is a OData XML Document. </summary>
         public static ContentFormat Odata { get; } = new ContentFormat(OdataValue);
+
         /// <summary> The OData metadata document hosted on a publicly accessible internet address. </summary>
         public static ContentFormat OdataLink { get; } = new ContentFormat(OdataLinkValue);
+
         /// <summary> The contents are inline and Content Type is a gRPC protobuf file. </summary>
         public static ContentFormat Grpc { get; } = new ContentFormat(GrpcValue);
+
         /// <summary> The gRPC protobuf file is hosted on a publicly accessible internet address. </summary>
         public static ContentFormat GrpcLink { get; } = new ContentFormat(GrpcLinkValue);
+
         /// <summary> Determines if two <see cref="ContentFormat"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContentFormat left, ContentFormat right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContentFormat"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContentFormat left, ContentFormat right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContentFormat"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContentFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContentFormat(string value) => new ContentFormat(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContentFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContentFormat?(string value) => value == null ? null : new ContentFormat(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContentFormat other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContentFormat other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

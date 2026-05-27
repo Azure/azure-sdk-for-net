@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -71,48 +71,47 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
         private ApiManagementServiceResource ApiServiceResource { get; set; }
 
-        private ApiManagementServiceCollection ApiServiceCollection { get; set; }
+        private ApiManagementServiceResourceCollection ApiServiceCollection { get; set; }
 
         private async Task SetCollectionsAsync()
         {
             ResourceGroup = await CreateResourceGroupAsync();
-            ApiServiceCollection = ResourceGroup.GetApiManagementServices();
+            ApiServiceCollection = ResourceGroup.GetApiManagementServiceResources();
         }
 
         private async Task CreateApiServiceAsync()
         {
             await SetCollectionsAsync();
             var apiName = Recording.GenerateAssetName("sdktestapimv2-");
-            var data = new ApiManagementServiceData(AzureLocation.WestUS2, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Standard, 1), "Sample@Sample.com", "sample")
+            var data = new ApiManagementServiceResourceData(AzureLocation.WestUS2, "Sample@Sample.com", "sample", new ApiManagementServiceSkuProperties(SkuType.Standard, 1))
             {
-                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
+                Identity = new ApiManagementServiceIdentity(ApimIdentityType.SystemAssigned)
             };
             ApiServiceResource = (await ApiServiceCollection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data)).Value;
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task CRUD()
         {
             await CreateApiServiceAsync();
-            var collection = ApiServiceResource.GetApiManagementPolicies();
+            var collection = ApiServiceResource.GetPolicies();
 
             // test tenant policy
             var globalPolicy = (await collection.GetAsync("policy")).Value;
 
             // set policy
             var policyDoc = XDocument.Parse(globalPolicy.Data.Value);
-            PolicyContractData policyContract = null;
+            ApiManagementPolicyData policyContract = null;
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                policyContract = new PolicyContractData()
+                policyContract = new ApiManagementPolicyData()
                 {
                     Value = policyDoc.ToString()
                 };
             }
             else
             {
-                policyContract = new PolicyContractData()
+                policyContract = new ApiManagementPolicyData()
                 {
                     Value = policyDoc.ToString().Replace("\n", "\r\n")
                 };
@@ -128,7 +127,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.NotNull(getPolicyResponse.Data.Value);
 
             // remove policy
-            await getPolicyResponse.DeleteAsync(WaitUntil.Completed, ETag.All);
+            await getPolicyResponse.DeleteAsync(WaitUntil.Completed, ETag.All.ToString());
 
             // get policy to check it was removed
             var resultFalse = (await collection.ExistsAsync("policy")).Value;
@@ -150,17 +149,17 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             // set policy
             policyDoc = XDocument.Parse(ApiValid);
-            PolicyContractData data = null;
+            ApiManagementPolicyData data = null;
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                data = new PolicyContractData()
+                data = new ApiManagementPolicyData()
                 {
                     Value = policyDoc.ToString()
                 };
             }
             else
             {
-                data = new PolicyContractData()
+                data = new ApiManagementPolicyData()
                 {
                     Value = policyDoc.ToString().Replace("\n", "\r\n")
                 };
@@ -181,14 +180,14 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.NotNull(getApiPolicy.Data.Value);
 
             // get policy in a blob link
-            var getApiPolicyRawXml = (await apiPolicyCollection.GetAsync("policy", PolicyExportFormat.RawXml)).Value;
+            var getApiPolicyRawXml = (await apiPolicyCollection.GetAsync("policy", PolicyExportFormat.Xml)).Value;
 
             Assert.NotNull(getApiPolicyRawXml);
-            Assert.AreEqual(PolicyContentFormat.RawXml, getApiPolicyRawXml.Data.Format);
+            Assert.AreEqual(PolicyContentFormat.Xml, getApiPolicyRawXml.Data.Format);
             Assert.NotNull(getApiPolicyRawXml.Data.Value);
 
             // remove policy
-            await getApiPolicy.DeleteAsync(WaitUntil.Completed, ETag.All);
+            await getApiPolicy.DeleteAsync(WaitUntil.Completed, ETag.All.ToString());
             resultFalse = (await apiPolicyCollection.ExistsAsync("policy")).Value;
             Assert.IsFalse(resultFalse);
 
@@ -205,14 +204,14 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             policyDoc = XDocument.Parse(OperationValid);
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                data = new PolicyContractData()
+                data = new ApiManagementPolicyData()
                 {
                     Value = policyDoc.ToString()
                 };
             }
             else
             {
-                data = new PolicyContractData()
+                data = new ApiManagementPolicyData()
                 {
                     Value = policyDoc.ToString().Replace("\n", "\r\n")
                 };
@@ -234,7 +233,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.NotNull(getOperationPolicy.Data.Value);
 
             // remove policy
-            await getOperationPolicy.DeleteAsync(WaitUntil.Completed, ETag.All);
+            await getOperationPolicy.DeleteAsync(WaitUntil.Completed, ETag.All.ToString());
 
             resultFalse = (await operationPolicyCollection.ExistsAsync("policy")).Value;
             Assert.IsFalse(resultFalse);
@@ -242,10 +241,10 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             // test product policy
 
             // get 'Unlimited' product
-            var productCollection = ApiServiceResource.GetApiManagementProducts();
+            var productCollection = ApiServiceResource.GetProducts();
             var productList = await productCollection.GetAllAsync().ToEnumerableAsync();
             var product = productList.FirstOrDefault(item => item.Data.Name.Equals("unlimited"));
-            var productPolicyCollection = product.GetApiManagementProductPolicies();
+            var productPolicyCollection = product.GetProductPolicies();
 
             // get product policy
             var listResult3 = await productPolicyCollection.GetAllAsync().ToEnumerableAsync();
@@ -255,14 +254,14 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             policyDoc = XDocument.Parse(ProductValid);
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                data = new PolicyContractData()
+                data = new ApiManagementPolicyData()
                 {
                     Value = policyDoc.ToString()
                 };
             }
             else
             {
-                data = new PolicyContractData()
+                data = new ApiManagementPolicyData()
                 {
                     Value = policyDoc.ToString().Replace("\n", "\r\n")
                 };
@@ -290,7 +289,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.NotNull(getProductPolicyXml.Data.Value);
 
             // remove policy
-            await getProductPolicy.DeleteAsync(WaitUntil.Completed, ETag.All);
+            await getProductPolicy.DeleteAsync(WaitUntil.Completed, ETag.All.ToString());
 
             resultFalse = (await productPolicyCollection.ExistsAsync("policy")).Value;
             Assert.IsFalse(resultFalse);

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public readonly partial struct OperationNameFormat : IEquatable<OperationNameFormat>
     {
         private readonly string _value;
+        /// <summary> API_NAME;rev=API_REVISION - OPERATION_NAME. </summary>
+        private const string NameValue = "Name";
+        /// <summary> HTTP_VERB URL. </summary>
+        private const string UrlValue = "Url";
 
         /// <summary> Initializes a new instance of <see cref="OperationNameFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OperationNameFormat(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NameValue = "Name";
-        private const string UriValue = "Url";
+            _value = value;
+        }
 
         /// <summary> API_NAME;rev=API_REVISION - OPERATION_NAME. </summary>
         public static OperationNameFormat Name { get; } = new OperationNameFormat(NameValue);
+
         /// <summary> HTTP_VERB URL. </summary>
-        public static OperationNameFormat Uri { get; } = new OperationNameFormat(UriValue);
+        public static OperationNameFormat Url { get; } = new OperationNameFormat(UrlValue);
+
         /// <summary> Determines if two <see cref="OperationNameFormat"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OperationNameFormat left, OperationNameFormat right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OperationNameFormat"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OperationNameFormat left, OperationNameFormat right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OperationNameFormat"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OperationNameFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OperationNameFormat(string value) => new OperationNameFormat(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OperationNameFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OperationNameFormat?(string value) => value == null ? null : new OperationNameFormat(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OperationNameFormat other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OperationNameFormat other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

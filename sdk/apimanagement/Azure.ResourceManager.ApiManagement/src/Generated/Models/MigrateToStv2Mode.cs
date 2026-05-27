@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public readonly partial struct MigrateToStv2Mode : IEquatable<MigrateToStv2Mode>
     {
         private readonly string _value;
+        /// <summary> Migrate API Management service to stv2 from stv1, by reserving the IP Address of the service. This will have a downtime of upto 15 minutes, while the IP address is getting migrate to new infrastructure. </summary>
+        private const string PreserveIpValue = "PreserveIp";
+        /// <summary> Migrate API Management service to stv2 from stv1. This will have no downtime as the service configuration will be migrated to new infrastructure, but the IP address will changed. </summary>
+        private const string NewIPValue = "NewIP";
 
         /// <summary> Initializes a new instance of <see cref="MigrateToStv2Mode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MigrateToStv2Mode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string PreserveIPValue = "PreserveIp";
-        private const string NewIPValue = "NewIP";
-
         /// <summary> Migrate API Management service to stv2 from stv1, by reserving the IP Address of the service. This will have a downtime of upto 15 minutes, while the IP address is getting migrate to new infrastructure. </summary>
-        public static MigrateToStv2Mode PreserveIP { get; } = new MigrateToStv2Mode(PreserveIPValue);
+        public static MigrateToStv2Mode PreserveIp { get; } = new MigrateToStv2Mode(PreserveIpValue);
+
         /// <summary> Migrate API Management service to stv2 from stv1. This will have no downtime as the service configuration will be migrated to new infrastructure, but the IP address will changed. </summary>
         public static MigrateToStv2Mode NewIP { get; } = new MigrateToStv2Mode(NewIPValue);
+
         /// <summary> Determines if two <see cref="MigrateToStv2Mode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MigrateToStv2Mode left, MigrateToStv2Mode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MigrateToStv2Mode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MigrateToStv2Mode left, MigrateToStv2Mode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MigrateToStv2Mode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MigrateToStv2Mode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MigrateToStv2Mode(string value) => new MigrateToStv2Mode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MigrateToStv2Mode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MigrateToStv2Mode?(string value) => value == null ? null : new MigrateToStv2Mode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MigrateToStv2Mode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MigrateToStv2Mode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

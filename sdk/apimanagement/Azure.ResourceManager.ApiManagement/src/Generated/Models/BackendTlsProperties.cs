@@ -7,65 +7,52 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Properties controlling TLS Certificate Validation. </summary>
     public partial class BackendTlsProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BackendTlsProperties"/>. </summary>
         public BackendTlsProperties()
         {
+            ServerCertificateThumbprints = new ChangeTrackingList<string>();
+            ServerX509Names = new ChangeTrackingList<X509CertificateName>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BackendTlsProperties"/>. </summary>
-        /// <param name="shouldValidateCertificateChain"> Flag indicating whether SSL certificate chain validation should be done when using self-signed certificates for this backend host. </param>
-        /// <param name="shouldValidateCertificateName"> Flag indicating whether SSL certificate name validation should be done when using self-signed certificates for this backend host. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BackendTlsProperties(bool? shouldValidateCertificateChain, bool? shouldValidateCertificateName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="validateCertificateChain"> Flag indicating whether SSL certificate chain validation should be done when using self-signed certificates for this backend host. </param>
+        /// <param name="validateCertificateName"> Flag indicating whether SSL certificate name validation should be done when using self-signed certificates for this backend host. </param>
+        /// <param name="serverCertificateThumbprints"> Thumbprints of certificates used by the backend host for TLS communication. </param>
+        /// <param name="serverX509Names"> Server X509 Certificate Names of the Backend Host. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BackendTlsProperties(bool? validateCertificateChain, bool? validateCertificateName, IList<string> serverCertificateThumbprints, IList<X509CertificateName> serverX509Names, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ShouldValidateCertificateChain = shouldValidateCertificateChain;
-            ShouldValidateCertificateName = shouldValidateCertificateName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            ValidateCertificateChain = validateCertificateChain;
+            ValidateCertificateName = validateCertificateName;
+            ServerCertificateThumbprints = serverCertificateThumbprints;
+            ServerX509Names = serverX509Names;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Flag indicating whether SSL certificate chain validation should be done when using self-signed certificates for this backend host. </summary>
         [WirePath("validateCertificateChain")]
-        public bool? ShouldValidateCertificateChain { get; set; }
+        public bool? ValidateCertificateChain { get; set; }
+
         /// <summary> Flag indicating whether SSL certificate name validation should be done when using self-signed certificates for this backend host. </summary>
         [WirePath("validateCertificateName")]
-        public bool? ShouldValidateCertificateName { get; set; }
+        public bool? ValidateCertificateName { get; set; }
+
+        /// <summary> Thumbprints of certificates used by the backend host for TLS communication. </summary>
+        [WirePath("serverCertificateThumbprints")]
+        public IList<string> ServerCertificateThumbprints { get; }
+
+        /// <summary> Server X509 Certificate Names of the Backend Host. </summary>
+        [WirePath("serverX509Names")]
+        public IList<X509CertificateName> ServerX509Names { get; }
     }
 }

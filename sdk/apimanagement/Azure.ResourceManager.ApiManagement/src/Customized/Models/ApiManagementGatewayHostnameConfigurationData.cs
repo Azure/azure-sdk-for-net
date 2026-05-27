@@ -3,8 +3,8 @@
 
 #nullable disable
 
-using Azure.Core;
 using Azure.ResourceManager.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.ApiManagement
 {

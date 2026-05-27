@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
         private VirtualNetworkCollection VNetCollection { get; set; }
 
-        private async Task<ApiGatewayCollection> GetGatewayResourceCollectionsAsync()
+        private async Task<ApiManagementGatewayResourceCollection> GetGatewayResourceCollectionsAsync()
         {
             var resourceGroup = await CreateResourceGroupAsync();
             VNetCollection = resourceGroup.GetVirtualNetworks();
-            return resourceGroup.GetApiGateways();
+            return resourceGroup.GetApiManagementGatewayResources();
         }
 
         [Test]
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         {
             var collection = await GetGatewayResourceCollectionsAsync();
             var gatewaName = Recording.GenerateAssetName("gateway-");
-            var data = new ApiGatewayData(AzureLocation.WestUS2, new ApiManagementGatewaySkuProperties(ApiGatewaySkuType.WorkspaceGatewayPremium));
+            var data = new ApiManagementGatewayResourceData(AzureLocation.WestUS2, new ApiManagementGatewaySkuProperties(ApiGatewaySkuType.WorkspaceGatewayPremium));
             var apiManagementService = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, gatewaName, data)).Value;
             Assert.AreEqual(apiManagementService.Data.Name, gatewaName);
         }
@@ -41,20 +41,20 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         [Ignore("Sku limite")]
         public async Task Get()
         {
-            ApiGatewayCollection collection;
+            ApiManagementGatewayResourceCollection collection;
             var apiName = "";
             if (Mode != RecordedTestMode.Playback)
             {
                 collection = await GetGatewayResourceCollectionsAsync();
                 apiName = Recording.GenerateAssetName("gateway-");
-                var data = new ApiGatewayData(AzureLocation.WestUS2, new ApiManagementGatewaySkuProperties(ApiGatewaySkuType.WorkspaceGatewayPremium));
+                var data = new ApiManagementGatewayResourceData(AzureLocation.WestUS2, new ApiManagementGatewaySkuProperties(ApiGatewaySkuType.WorkspaceGatewayPremium));
                 await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data);
             }
             else
             {
                 apiName = "sdktestapi";
                 var resourceGroup = await DefaultSubscription.GetResourceGroups().GetAsync("sdktestrg");
-                collection = resourceGroup.Value.GetApiGateways();
+                collection = resourceGroup.Value.GetApiManagementGatewayResources();
             }
             var gatewayResource = (await collection.GetAsync(apiName)).Value;
             Assert.NotNull(gatewayResource.Data.Name);
@@ -64,18 +64,18 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         [Ignore("Sku limite")]
         public async Task GetAll()
         {
-            ApiGatewayCollection collection;
+            ApiManagementGatewayResourceCollection collection;
             if (Mode != RecordedTestMode.Playback)
             {
                 collection = await GetGatewayResourceCollectionsAsync();
                 var apiName = Recording.GenerateAssetName("gateway-");
-                var data = new ApiGatewayData(AzureLocation.WestUS2, new ApiManagementGatewaySkuProperties(ApiGatewaySkuType.WorkspaceGatewayPremium));
+                var data = new ApiManagementGatewayResourceData(AzureLocation.WestUS2, new ApiManagementGatewaySkuProperties(ApiGatewaySkuType.WorkspaceGatewayPremium));
                 await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data);
             }
             else
             {
                 var resourceGroup = await DefaultSubscription.GetResourceGroups().GetAsync("sdktestrg");
-                collection = resourceGroup.Value.GetApiGateways();
+                collection = resourceGroup.Value.GetApiManagementGatewayResources();
             }
             var apiManagementServices = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.GreaterOrEqual(apiManagementServices.Count, 1);
@@ -85,20 +85,20 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         [Ignore("Sku limite")]
         public async Task Exists()
         {
-            ApiGatewayCollection collection;
+            ApiManagementGatewayResourceCollection collection;
             var apiName = "";
             if (Mode != RecordedTestMode.Playback)
             {
                 collection = await GetGatewayResourceCollectionsAsync();
                 apiName = Recording.GenerateAssetName("gateway-");
-                var data = new ApiGatewayData(AzureLocation.WestUS2, new ApiManagementGatewaySkuProperties(ApiGatewaySkuType.WorkspaceGatewayPremium));
+                var data = new ApiManagementGatewayResourceData(AzureLocation.WestUS2, new ApiManagementGatewaySkuProperties(ApiGatewaySkuType.WorkspaceGatewayPremium));
                 await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data);
             }
             else
             {
                 apiName = "sdktestapi";
                 var resourceGroup = await DefaultSubscription.GetResourceGroups().GetAsync("sdktestrg");
-                collection = resourceGroup.Value.GetApiGateways();
+                collection = resourceGroup.Value.GetApiManagementGatewayResources();
             }
             var apiManagementServiceTrue = await collection.ExistsAsync(apiName);
             var apiManagementServiceFalse = await collection.ExistsAsync("foo");

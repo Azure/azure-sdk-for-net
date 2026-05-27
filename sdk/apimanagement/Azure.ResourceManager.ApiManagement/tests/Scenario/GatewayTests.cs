@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Linq;
@@ -23,31 +23,30 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
         private ApiManagementServiceResource ApiServiceResource { get; set; }
 
-        private ApiManagementServiceCollection ApiServiceCollection { get; set; }
+        private ApiManagementServiceResourceCollection ApiServiceCollection { get; set; }
 
         private async Task SetCollectionsAsync()
         {
             ResourceGroup = await CreateResourceGroupAsync();
-            ApiServiceCollection = ResourceGroup.GetApiManagementServices();
+            ApiServiceCollection = ResourceGroup.GetApiManagementServiceResources();
         }
 
         private async Task CreateApiServiceAsync()
         {
             await SetCollectionsAsync();
             var apiName = Recording.GenerateAssetName("sdktestapimv2-");
-            var data = new ApiManagementServiceData(AzureLocation.WestUS2, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Developer, 1), "Sample@Sample.com", "sample")
+            var data = new ApiManagementServiceResourceData(AzureLocation.WestUS2, "Sample@Sample.com", "sample", new ApiManagementServiceSkuProperties(SkuType.Developer, 1))
             {
-                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
+                Identity = new ApiManagementServiceIdentity(ApimIdentityType.SystemAssigned)
             };
             ApiServiceResource = (await ApiServiceCollection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data)).Value;
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task CRUD()
         {
             await CreateApiServiceAsync();
-            var collection = ApiServiceResource.GetApiManagementGateways();
+            var collection = ApiServiceResource.GetApiGateways();
 
             // list gateways: there should be none
             var gatewayListResponse = await collection.GetAllAsync().ToEnumerableAsync();
@@ -66,7 +65,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             string certificateId = Recording.GenerateAssetName("certificateId");
             string hostnameConfigId = Recording.GenerateAssetName("hostnameConfigId");
 
-            var gatewayContract = new ApiManagementGatewayData()
+            var gatewayContract = new ApiGatewayData()
             {
                 LocationData = new ResourceLocationDataContract("Microsoft")
                 {
@@ -100,24 +99,24 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             var associationContract = new AssociationContract()
             {
-                ProvisioningState = AssociationEntityProvisioningState.Created
+                ProvisioningState = AssociationContractPropertiesProvisioningState.Created
             };
 
             // assign gateway to api
-            var assignResponse = (await getResponse.CreateOrUpdateGatewayApiAsync(echoApi.Data.Name, associationContract)).Value;
+            var assignResponse = (await getResponse.CreateOrUpdateAsync(echoApi.Data.Name, associationContract)).Value;
 
             Assert.NotNull(assignResponse);
-            Assert.AreEqual(echoApi.Data.Name, assignResponse.Name);
+            Assert.AreEqual(echoApi.Data.Name, assignResponse.Data.Name);
 
             // list gateway apis
-            var apiGatewaysResponse = await getResponse.GetGatewayApisByServiceAsync().ToEnumerableAsync();
+            var apiGatewaysResponse = await getResponse.GetByServiceAsync().ToEnumerableAsync();
 
             Assert.NotNull(apiGatewaysResponse);
             Assert.AreEqual(apiGatewaysResponse.Count, 1);
-            Assert.AreEqual(echoApi.Data.Name, apiGatewaysResponse.FirstOrDefault().Name);
+            Assert.AreEqual(echoApi.Data.Name, apiGatewaysResponse.FirstOrDefault().Data.Name);
 
             // remove the gateway
-            await getResponse.DeleteAsync(WaitUntil.Completed, ETag.All);
+            await getResponse.DeleteAsync(WaitUntil.Completed, ETag.All.ToString());
             var resultFalse = (await collection.ExistsAsync(gatewayId)).Value;
             Assert.IsFalse(resultFalse);
         }

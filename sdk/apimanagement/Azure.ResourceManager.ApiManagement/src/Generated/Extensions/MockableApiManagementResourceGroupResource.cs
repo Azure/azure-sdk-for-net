@@ -8,56 +8,50 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.ApiManagement;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ApiManagement.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableApiManagementResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableApiManagementResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableApiManagementResourceGroupResource for mocking. </summary>
         protected MockableApiManagementResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableApiManagementResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableApiManagementResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableApiManagementResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
+        /// <summary> Gets a collection of ApiManagementGatewayResources in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ApiManagementGatewayResources and their operations over a ApiManagementGatewayResource. </returns>
+        public virtual ApiManagementGatewayResourceCollection GetApiManagementGatewayResources()
         {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of ApiGatewayResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ApiGatewayResources and their operations over a ApiGatewayResource. </returns>
-        public virtual ApiGatewayCollection GetApiGateways()
-        {
-            return GetCachedClient(client => new ApiGatewayCollection(client, Id));
+            return GetCachedClient(client => new ApiManagementGatewayResourceCollection(client, Id));
         }
 
         /// <summary>
         /// Gets an API Management gateway resource description.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/gateways/{gatewayName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/gateways/{gatewayName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiGateway_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApiManagementGatewayResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiGatewayResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -66,29 +60,27 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ApiGatewayResource>> GetApiGatewayAsync(string gatewayName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementGatewayResource>> GetApiManagementGatewayResourceAsync(string gatewayName, CancellationToken cancellationToken = default)
         {
-            return await GetApiGateways().GetAsync(gatewayName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
+
+            return await GetApiManagementGatewayResources().GetAsync(gatewayName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets an API Management gateway resource description.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/gateways/{gatewayName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/gateways/{gatewayName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiGateway_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApiManagementGatewayResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiGatewayResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -97,36 +89,34 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ApiGatewayResource> GetApiGateway(string gatewayName, CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementGatewayResource> GetApiManagementGatewayResource(string gatewayName, CancellationToken cancellationToken = default)
         {
-            return GetApiGateways().Get(gatewayName, cancellationToken);
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
+
+            return GetApiManagementGatewayResources().Get(gatewayName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ApiManagementServiceResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of ApiManagementServiceResources in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of ApiManagementServiceResources and their operations over a ApiManagementServiceResource. </returns>
-        public virtual ApiManagementServiceCollection GetApiManagementServices()
+        public virtual ApiManagementServiceResourceCollection GetApiManagementServiceResources()
         {
-            return GetCachedClient(client => new ApiManagementServiceCollection(client, Id));
+            return GetCachedClient(client => new ApiManagementServiceResourceCollection(client, Id));
         }
 
         /// <summary>
         /// Gets an API Management service resource description.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiManagementService_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApiManagementServiceResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -135,29 +125,27 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ApiManagementServiceResource>> GetApiManagementServiceAsync(string serviceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementServiceResource>> GetApiManagementServiceResourceAsync(string serviceName, CancellationToken cancellationToken = default)
         {
-            return await GetApiManagementServices().GetAsync(serviceName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            return await GetApiManagementServiceResources().GetAsync(serviceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets an API Management service resource description.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiManagementService_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApiManagementServiceResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -166,9 +154,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ApiManagementServiceResource> GetApiManagementService(string serviceName, CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementServiceResource> GetApiManagementServiceResource(string serviceName, CancellationToken cancellationToken = default)
         {
-            return GetApiManagementServices().Get(serviceName, cancellationToken);
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            return GetApiManagementServiceResources().Get(serviceName, cancellationToken);
         }
     }
 }

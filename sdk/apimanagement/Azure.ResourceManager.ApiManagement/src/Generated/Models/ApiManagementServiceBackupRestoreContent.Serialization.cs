@@ -10,13 +10,70 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ApiManagementServiceBackupRestoreContent : IUtf8JsonSerializable, IJsonModel<ApiManagementServiceBackupRestoreContent>
+    /// <summary> Parameters supplied to the Backup/Restore of an API Management service operation. </summary>
+    public partial class ApiManagementServiceBackupRestoreContent : IJsonModel<ApiManagementServiceBackupRestoreContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementServiceBackupRestoreContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ApiManagementServiceBackupRestoreContent"/> for deserialization. </summary>
+        internal ApiManagementServiceBackupRestoreContent()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ApiManagementServiceBackupRestoreContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementServiceBackupRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeApiManagementServiceBackupRestoreContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApiManagementServiceBackupRestoreContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementServiceBackupRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ApiManagementServiceBackupRestoreContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ApiManagementServiceBackupRestoreContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApiManagementServiceBackupRestoreContent IPersistableModel<ApiManagementServiceBackupRestoreContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ApiManagementServiceBackupRestoreContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="apiManagementServiceBackupRestoreContent"> The <see cref="ApiManagementServiceBackupRestoreContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ApiManagementServiceBackupRestoreContent apiManagementServiceBackupRestoreContent)
+        {
+            if (apiManagementServiceBackupRestoreContent == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(apiManagementServiceBackupRestoreContent, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ApiManagementServiceBackupRestoreContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +85,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementServiceBackupRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementServiceBackupRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ApiManagementServiceBackupRestoreContent)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("storageAccount"u8);
             writer.WriteStringValue(StorageAccount);
             writer.WritePropertyName("containerName"u8);
@@ -55,15 +111,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -72,22 +128,27 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
         }
 
-        ApiManagementServiceBackupRestoreContent IJsonModel<ApiManagementServiceBackupRestoreContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApiManagementServiceBackupRestoreContent IJsonModel<ApiManagementServiceBackupRestoreContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ApiManagementServiceBackupRestoreContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementServiceBackupRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementServiceBackupRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ApiManagementServiceBackupRestoreContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeApiManagementServiceBackupRestoreContent(document.RootElement, options);
         }
 
-        internal static ApiManagementServiceBackupRestoreContent DeserializeApiManagementServiceBackupRestoreContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ApiManagementServiceBackupRestoreContent DeserializeApiManagementServiceBackupRestoreContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -95,53 +156,51 @@ namespace Azure.ResourceManager.ApiManagement.Models
             string storageAccount = default;
             string containerName = default;
             string backupName = default;
-            StorageAccountAccessType? accessType = default;
+            AccessType? accessType = default;
             string accessKey = default;
             string clientId = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("storageAccount"u8))
+                if (prop.NameEquals("storageAccount"u8))
                 {
-                    storageAccount = property.Value.GetString();
+                    storageAccount = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("containerName"u8))
+                if (prop.NameEquals("containerName"u8))
                 {
-                    containerName = property.Value.GetString();
+                    containerName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("backupName"u8))
+                if (prop.NameEquals("backupName"u8))
                 {
-                    backupName = property.Value.GetString();
+                    backupName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("accessType"u8))
+                if (prop.NameEquals("accessType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    accessType = new StorageAccountAccessType(property.Value.GetString());
+                    accessType = new AccessType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("accessKey"u8))
+                if (prop.NameEquals("accessKey"u8))
                 {
-                    accessKey = property.Value.GetString();
+                    accessKey = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clientId"u8))
+                if (prop.NameEquals("clientId"u8))
                 {
-                    clientId = property.Value.GetString();
+                    clientId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ApiManagementServiceBackupRestoreContent(
                 storageAccount,
                 containerName,
@@ -149,38 +208,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 accessType,
                 accessKey,
                 clientId,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<ApiManagementServiceBackupRestoreContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementServiceBackupRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ApiManagementServiceBackupRestoreContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ApiManagementServiceBackupRestoreContent IPersistableModel<ApiManagementServiceBackupRestoreContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementServiceBackupRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeApiManagementServiceBackupRestoreContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ApiManagementServiceBackupRestoreContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ApiManagementServiceBackupRestoreContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

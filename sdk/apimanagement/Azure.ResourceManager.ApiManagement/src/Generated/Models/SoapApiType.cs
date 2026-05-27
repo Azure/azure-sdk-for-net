@@ -7,64 +7,92 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary>
     /// Type of API to create.
-    ///  * `http` creates a REST API
-    ///  * `soap` creates a SOAP pass-through API
-    ///  * `websocket` creates websocket API
-    ///  * `graphql` creates GraphQL API.
-    ///  New types can be added in the future.
+    /// * `http` creates a REST API
+    /// * `soap` creates a SOAP pass-through API
+    /// * `websocket` creates websocket API
+    /// * `graphql` creates GraphQL API.
+    /// New types can be added in the future.
     /// </summary>
     public readonly partial struct SoapApiType : IEquatable<SoapApiType>
     {
         private readonly string _value;
+        /// <summary> Imports a SOAP API having a RESTful front end. </summary>
+        private const string SoapToRestValue = "http";
+        /// <summary> Imports the SOAP API having a SOAP front end. </summary>
+        private const string SoapPassThroughValue = "soap";
+        /// <summary> Imports the API having a Websocket front end. </summary>
+        private const string WebSocketValue = "websocket";
+        /// <summary> Imports the API having a GraphQL front end. </summary>
+        private const string GraphQLValue = "graphql";
+        /// <summary> Imports the API having a OData front end. </summary>
+        private const string ODataValue = "odata";
+        /// <summary> Imports the API having a gRPC front end. </summary>
+        private const string GRPCValue = "grpc";
 
         /// <summary> Initializes a new instance of <see cref="SoapApiType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SoapApiType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SoapToRestValue = "http";
-        private const string SoapPassThroughValue = "soap";
-        private const string WebSocketValue = "websocket";
-        private const string GraphQLValue = "graphql";
-        private const string ODataValue = "odata";
-        private const string GrpcValue = "grpc";
+            _value = value;
+        }
 
         /// <summary> Imports a SOAP API having a RESTful front end. </summary>
         public static SoapApiType SoapToRest { get; } = new SoapApiType(SoapToRestValue);
+
         /// <summary> Imports the SOAP API having a SOAP front end. </summary>
         public static SoapApiType SoapPassThrough { get; } = new SoapApiType(SoapPassThroughValue);
+
         /// <summary> Imports the API having a Websocket front end. </summary>
         public static SoapApiType WebSocket { get; } = new SoapApiType(WebSocketValue);
+
         /// <summary> Imports the API having a GraphQL front end. </summary>
         public static SoapApiType GraphQL { get; } = new SoapApiType(GraphQLValue);
+
         /// <summary> Imports the API having a OData front end. </summary>
         public static SoapApiType OData { get; } = new SoapApiType(ODataValue);
+
         /// <summary> Imports the API having a gRPC front end. </summary>
-        public static SoapApiType Grpc { get; } = new SoapApiType(GrpcValue);
+        public static SoapApiType GRPC { get; } = new SoapApiType(GRPCValue);
+
         /// <summary> Determines if two <see cref="SoapApiType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SoapApiType left, SoapApiType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SoapApiType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SoapApiType left, SoapApiType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SoapApiType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SoapApiType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SoapApiType(string value) => new SoapApiType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SoapApiType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SoapApiType?(string value) => value == null ? null : new SoapApiType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SoapApiType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SoapApiType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

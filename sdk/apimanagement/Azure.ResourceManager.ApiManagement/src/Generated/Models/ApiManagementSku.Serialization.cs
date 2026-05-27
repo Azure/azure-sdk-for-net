@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ApiManagementSku : IUtf8JsonSerializable, IJsonModel<ApiManagementSku>
+    /// <summary> Describes an available ApiManagement SKU. </summary>
+    public partial class ApiManagementSku : IJsonModel<ApiManagementSku>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementSku>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ApiManagementSku PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementSku>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeApiManagementSku(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApiManagementSku)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementSku>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ApiManagementSku)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ApiManagementSku>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApiManagementSku IPersistableModel<ApiManagementSku>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ApiManagementSku>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ApiManagementSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +69,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementSku>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ApiManagementSku)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
@@ -75,8 +113,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
-                foreach (var item in Locations)
+                foreach (string item in Locations)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -85,7 +128,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 writer.WritePropertyName("locationInfo"u8);
                 writer.WriteStartArray();
-                foreach (var item in LocationInfo)
+                foreach (ApiManagementSkuLocationInfo item in LocationInfo)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -95,8 +138,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 writer.WritePropertyName("apiVersions"u8);
                 writer.WriteStartArray();
-                foreach (var item in ApiVersions)
+                foreach (string item in ApiVersions)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -105,7 +153,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 writer.WritePropertyName("costs"u8);
                 writer.WriteStartArray();
-                foreach (var item in Costs)
+                foreach (ApiManagementSkuCosts item in Costs)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -115,7 +163,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();
-                foreach (var item in Capabilities)
+                foreach (ApiManagementSkuCapabilities item in Capabilities)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -125,21 +173,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 writer.WritePropertyName("restrictions"u8);
                 writer.WriteStartArray();
-                foreach (var item in Restrictions)
+                foreach (ApiManagementSkuRestrictions item in Restrictions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -148,22 +196,27 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
         }
 
-        ApiManagementSku IJsonModel<ApiManagementSku>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApiManagementSku IJsonModel<ApiManagementSku>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ApiManagementSku JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementSku>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ApiManagementSku)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeApiManagementSku(document.RootElement, options);
         }
 
-        internal static ApiManagementSku DeserializeApiManagementSku(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ApiManagementSku DeserializeApiManagementSku(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -175,133 +228,146 @@ namespace Azure.ResourceManager.ApiManagement.Models
             string family = default;
             string kind = default;
             ApiManagementSkuCapacity capacity = default;
-            IReadOnlyList<AzureLocation> locations = default;
+            IReadOnlyList<string> locations = default;
             IReadOnlyList<ApiManagementSkuLocationInfo> locationInfo = default;
             IReadOnlyList<string> apiVersions = default;
             IReadOnlyList<ApiManagementSkuCosts> costs = default;
             IReadOnlyList<ApiManagementSkuCapabilities> capabilities = default;
             IReadOnlyList<ApiManagementSkuRestrictions> restrictions = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceType"u8))
+                if (prop.NameEquals("resourceType"u8))
                 {
-                    resourceType = property.Value.GetString();
+                    resourceType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    name = property.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tier"u8))
+                if (prop.NameEquals("tier"u8))
                 {
-                    tier = property.Value.GetString();
+                    tier = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("size"u8))
+                if (prop.NameEquals("size"u8))
                 {
-                    size = property.Value.GetString();
+                    size = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("family"u8))
+                if (prop.NameEquals("family"u8))
                 {
-                    family = property.Value.GetString();
+                    family = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("kind"u8))
+                if (prop.NameEquals("kind"u8))
                 {
-                    kind = property.Value.GetString();
+                    kind = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("capacity"u8))
+                if (prop.NameEquals("capacity"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    capacity = ApiManagementSkuCapacity.DeserializeApiManagementSkuCapacity(property.Value, options);
+                    capacity = ApiManagementSkuCapacity.DeserializeApiManagementSkuCapacity(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("locations"u8))
+                if (prop.NameEquals("locations"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<AzureLocation> array = new List<AzureLocation>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new AzureLocation(item.GetString()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     locations = array;
                     continue;
                 }
-                if (property.NameEquals("locationInfo"u8))
+                if (prop.NameEquals("locationInfo"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ApiManagementSkuLocationInfo> array = new List<ApiManagementSkuLocationInfo>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ApiManagementSkuLocationInfo.DeserializeApiManagementSkuLocationInfo(item, options));
                     }
                     locationInfo = array;
                     continue;
                 }
-                if (property.NameEquals("apiVersions"u8))
+                if (prop.NameEquals("apiVersions"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     apiVersions = array;
                     continue;
                 }
-                if (property.NameEquals("costs"u8))
+                if (prop.NameEquals("costs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ApiManagementSkuCosts> array = new List<ApiManagementSkuCosts>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ApiManagementSkuCosts.DeserializeApiManagementSkuCosts(item, options));
                     }
                     costs = array;
                     continue;
                 }
-                if (property.NameEquals("capabilities"u8))
+                if (prop.NameEquals("capabilities"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ApiManagementSkuCapabilities> array = new List<ApiManagementSkuCapabilities>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ApiManagementSkuCapabilities.DeserializeApiManagementSkuCapabilities(item, options));
                     }
                     capabilities = array;
                     continue;
                 }
-                if (property.NameEquals("restrictions"u8))
+                if (prop.NameEquals("restrictions"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ApiManagementSkuRestrictions> array = new List<ApiManagementSkuRestrictions>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ApiManagementSkuRestrictions.DeserializeApiManagementSkuRestrictions(item, options));
                     }
@@ -310,10 +376,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ApiManagementSku(
                 resourceType,
                 name,
@@ -322,365 +387,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 family,
                 kind,
                 capacity,
-                locations ?? new ChangeTrackingList<AzureLocation>(),
+                locations ?? new ChangeTrackingList<string>(),
                 locationInfo ?? new ChangeTrackingList<ApiManagementSkuLocationInfo>(),
                 apiVersions ?? new ChangeTrackingList<string>(),
                 costs ?? new ChangeTrackingList<ApiManagementSkuCosts>(),
                 capabilities ?? new ChangeTrackingList<ApiManagementSkuCapabilities>(),
                 restrictions ?? new ChangeTrackingList<ApiManagementSkuRestrictions>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  resourceType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ResourceType))
-                {
-                    builder.Append("  resourceType: ");
-                    if (ResourceType.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ResourceType}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ResourceType}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tier), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  tier: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Tier))
-                {
-                    builder.Append("  tier: ");
-                    if (Tier.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Tier}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Tier}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Size), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  size: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Size))
-                {
-                    builder.Append("  size: ");
-                    if (Size.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Size}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Size}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Family), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  family: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Family))
-                {
-                    builder.Append("  family: ");
-                    if (Family.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Family}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Family}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  kind: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Kind))
-                {
-                    builder.Append("  kind: ");
-                    if (Kind.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Kind}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Kind}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Capacity), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  capacity: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Capacity))
-                {
-                    builder.Append("  capacity: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Capacity, options, 2, false, "  capacity: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Locations), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  locations: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Locations))
-                {
-                    if (Locations.Any())
-                    {
-                        builder.Append("  locations: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Locations)
-                        {
-                            builder.AppendLine($"    '{item.ToString()}'");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LocationInfo), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  locationInfo: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(LocationInfo))
-                {
-                    if (LocationInfo.Any())
-                    {
-                        builder.Append("  locationInfo: ");
-                        builder.AppendLine("[");
-                        foreach (var item in LocationInfo)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  locationInfo: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiVersions), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  apiVersions: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(ApiVersions))
-                {
-                    if (ApiVersions.Any())
-                    {
-                        builder.Append("  apiVersions: ");
-                        builder.AppendLine("[");
-                        foreach (var item in ApiVersions)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Costs), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  costs: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Costs))
-                {
-                    if (Costs.Any())
-                    {
-                        builder.Append("  costs: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Costs)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  costs: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Capabilities), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  capabilities: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Capabilities))
-                {
-                    if (Capabilities.Any())
-                    {
-                        builder.Append("  capabilities: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Capabilities)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  capabilities: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Restrictions), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  restrictions: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Restrictions))
-                {
-                    if (Restrictions.Any())
-                    {
-                        builder.Append("  restrictions: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Restrictions)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  restrictions: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ApiManagementSku>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementSku>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(ApiManagementSku)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ApiManagementSku IPersistableModel<ApiManagementSku>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementSku>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeApiManagementSku(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ApiManagementSku)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ApiManagementSku>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

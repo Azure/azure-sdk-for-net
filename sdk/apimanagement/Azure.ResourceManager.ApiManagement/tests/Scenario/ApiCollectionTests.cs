@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -22,29 +22,28 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
         private ResourceGroupResource ResourceGroup { get; set; }
 
-        private ApiManagementServiceCollection ApiServiceCollection { get; set; }
+        private ApiManagementServiceResourceCollection ApiServiceCollection { get; set; }
 
         private ApiManagementServiceResource ApiServiceResource { get; set; }
 
         private async Task SetCollectionsAsync()
         {
             ResourceGroup = await CreateResourceGroupAsync();
-            ApiServiceCollection = ResourceGroup.GetApiManagementServices();
+            ApiServiceCollection = ResourceGroup.GetApiManagementServiceResources();
         }
 
         private async Task CreateApiService()
         {
             await SetCollectionsAsync();
             var apiName = Recording.GenerateAssetName("sdktestapimv2-");
-            var data = new ApiManagementServiceData(AzureLocation.WestUS2, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Standard, 1), "Sample@Sample.com", "sample")
+            var data = new ApiManagementServiceResourceData(AzureLocation.WestUS2, "Sample@Sample.com", "sample", new ApiManagementServiceSkuProperties(SkuType.Standard, 1))
             {
-                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
+                Identity = new ApiManagementServiceIdentity(ApimIdentityType.SystemAssigned)
             };
             ApiServiceResource = (await ApiServiceCollection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data)).Value;
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task CreateOrUpdate_GetAll_Get_Exists_Delete()
         {
             await CreateApiService();
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                     Query = "query3037"
                 },
                 DisplayName = "apiname1463",
-                ServiceLink = "http://newechoapi.cloudapp.net/api",
+                ServiceUri = "http://newechoapi.cloudapp.net/api",
                 Path = "newapiPath",
                 Protocols = { ApiOperationInvokableProtocol.Https, ApiOperationInvokableProtocol.Http }
             };
@@ -75,12 +74,11 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             {
                 var newitem = (await item.GetAsync()).Value;
                 Assert.NotNull(newitem.Data.DisplayName);
-                await newitem.DeleteAsync(WaitUntil.Completed, ETag.All);
+                await newitem.DeleteAsync(WaitUntil.Completed, ETag.All.ToString());
             }
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task GetApiRevisionsByServiceTest()
         {
             await CreateApiService();
@@ -95,18 +93,17 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                     Query = "query3037"
                 },
                 DisplayName = "apiname1463",
-                ServiceLink = "http://newechoapi.cloudapp.net/api",
+                ServiceUri = "http://newechoapi.cloudapp.net/api",
                 Path = "newapiPath",
                 Protocols = { ApiOperationInvokableProtocol.Https, ApiOperationInvokableProtocol.Http }
             };
             var api = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data)).Value;
 
-            var apiRevisionContracts = await api.GetApiRevisionsByServiceAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(apiRevisionContracts.FirstOrDefault().PrivateUriString);
+            var apiRevisionContracts = await api.GetByServiceAsync().ToEnumerableAsync();
+            Assert.IsNotEmpty(apiRevisionContracts.FirstOrDefault().PrivateUri);
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task ListApiByApiMgmtService()
         {
             await CreateApiService();

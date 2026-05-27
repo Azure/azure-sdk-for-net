@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -28,27 +28,26 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
         private ApiManagementServiceResource ApiServiceResource { get; set; }
 
-        private ApiManagementServiceCollection ApiServiceCollection { get; set; }
+        private ApiManagementServiceResourceCollection ApiServiceCollection { get; set; }
 
         private async Task SetCollectionsAsync()
         {
             ResourceGroup = await CreateResourceGroupAsync(AzureLocation.EastUS);
-            ApiServiceCollection = ResourceGroup.GetApiManagementServices();
+            ApiServiceCollection = ResourceGroup.GetApiManagementServiceResources();
         }
 
         private async Task CreateApiServiceAsync()
         {
             await SetCollectionsAsync();
             var apiName = Recording.GenerateAssetName("testapi-");
-            var data = new ApiManagementServiceData(AzureLocation.EastUS, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Developer, 1), "Sample@Sample.com", "sample")
+            var data = new ApiManagementServiceResourceData(AzureLocation.EastUS, "Sample@Sample.com", "sample", new ApiManagementServiceSkuProperties(SkuType.Developer, 1))
             {
-                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
+                Identity = new ApiManagementServiceIdentity(ApimIdentityType.SystemAssigned)
             };
             ApiServiceResource = (await ApiServiceCollection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data)).Value;
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task CRUD()
         {
             await CreateApiServiceAsync();
@@ -80,7 +79,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             const string attachmentPath = "./Resources/apiissueattachment.JPG";
 
             // add a recipient to the notification
-            var issueContract = new IssueContractData()
+            var issueContract = new ApiManagementIssueData()
             {
                 Title = Recording.GenerateAssetName("title"),
                 Description = Recording.GenerateAssetName("description"),
@@ -92,7 +91,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             Assert.NotNull(apiIssueContract);
             Assert.AreEqual(echoApi.Id, apiIssueContract.Data.ApiId);
-            Assert.AreEqual(IssueState.Proposed, apiIssueContract.Data.State);
+            Assert.AreEqual(State.Proposed, apiIssueContract.Data.State);
             Assert.AreEqual(issueContract.Title, apiIssueContract.Data.Title);
             // get the issue
             var issueData = (await issueCollection.GetAsync(newissueId)).Value;
@@ -104,13 +103,13 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var updateTitle = Recording.GenerateAssetName("updatedTitle");
             var updateDescription = Recording.GenerateAssetName("updateddescription");
 
-            var issueUpdateContract = new ApiIssuePatch()
+            var issueUpdateContract = new ApiManagementIssuePatch()
             {
                 Description = updateDescription,
                 Title = updateTitle
             };
 
-            await issueData.UpdateAsync(ETag.All, issueUpdateContract);
+            await issueData.UpdateAsync(ETag.All.ToString(), issueUpdateContract);
 
             // get the issue
             issueData = await issueData.GetAsync();
@@ -141,7 +140,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.NotNull(addedComment.Data.CreatedOn);
 
             // delete the commment
-            await addedComment.DeleteAsync(WaitUntil.Completed, ETag.All);
+            await addedComment.DeleteAsync(WaitUntil.Completed, ETag.All.ToString());
             var resultFalse = (await commentCollection.ExistsAsync(newcommentId)).Value;
             Assert.IsFalse(resultFalse);
 
@@ -180,12 +179,12 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.NotNull(issueAttachment.Data.Content);
 
             // delete the attachment
-            await issueAttachment.DeleteAsync(WaitUntil.Completed, ETag.All);
+            await issueAttachment.DeleteAsync(WaitUntil.Completed, ETag.All.ToString());
             resultFalse = (await attachmentsCollection.ExistsAsync(newattachmentId)).Value;
             Assert.IsFalse(resultFalse);
 
             // delete the issue
-            await issueData.DeleteAsync(WaitUntil.Completed, ETag.All);
+            await issueData.DeleteAsync(WaitUntil.Completed, ETag.All.ToString());
             resultFalse = (await issueCollection.ExistsAsync(newissueId)).Value;
             Assert.IsFalse(resultFalse);
         }

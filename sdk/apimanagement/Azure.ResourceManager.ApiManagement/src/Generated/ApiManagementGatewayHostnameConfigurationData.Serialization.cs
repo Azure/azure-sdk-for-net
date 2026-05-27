@@ -10,15 +10,75 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ApiManagementGatewayHostnameConfigurationData : IUtf8JsonSerializable, IJsonModel<ApiManagementGatewayHostnameConfigurationData>
+    /// <summary> Gateway hostname configuration details. </summary>
+    public partial class ApiManagementGatewayHostnameConfigurationData : ResourceData, IJsonModel<ApiManagementGatewayHostnameConfigurationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementGatewayHostnameConfigurationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementGatewayHostnameConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeApiManagementGatewayHostnameConfigurationData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApiManagementGatewayHostnameConfigurationData)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementGatewayHostnameConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ApiManagementGatewayHostnameConfigurationData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ApiManagementGatewayHostnameConfigurationData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApiManagementGatewayHostnameConfigurationData IPersistableModel<ApiManagementGatewayHostnameConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ApiManagementGatewayHostnameConfigurationData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ApiManagementGatewayHostnameConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="apiManagementGatewayHostnameConfigurationData"> The <see cref="ApiManagementGatewayHostnameConfigurationData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ApiManagementGatewayHostnameConfigurationData apiManagementGatewayHostnameConfigurationData)
+        {
+            if (apiManagementGatewayHostnameConfigurationData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(apiManagementGatewayHostnameConfigurationData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ApiManagementGatewayHostnameConfigurationData"/> from. </param>
+        internal static ApiManagementGatewayHostnameConfigurationData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeApiManagementGatewayHostnameConfigurationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ApiManagementGatewayHostnameConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,396 +90,105 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementGatewayHostnameConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementGatewayHostnameConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ApiManagementGatewayHostnameConfigurationData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Hostname))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("hostname"u8);
-                writer.WriteStringValue(Hostname);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(CertificateId))
-            {
-                writer.WritePropertyName("certificateId"u8);
-                writer.WriteStringValue(CertificateId);
-            }
-            if (Optional.IsDefined(IsClientCertificateRequired))
-            {
-                writer.WritePropertyName("negotiateClientCertificate"u8);
-                writer.WriteBooleanValue(IsClientCertificateRequired.Value);
-            }
-            if (Optional.IsDefined(IsTls1_0Enabled))
-            {
-                writer.WritePropertyName("tls10Enabled"u8);
-                writer.WriteBooleanValue(IsTls1_0Enabled.Value);
-            }
-            if (Optional.IsDefined(IsTls1_1Enabled))
-            {
-                writer.WritePropertyName("tls11Enabled"u8);
-                writer.WriteBooleanValue(IsTls1_1Enabled.Value);
-            }
-            if (Optional.IsDefined(IsHttp2_0Enabled))
-            {
-                writer.WritePropertyName("http2Enabled"u8);
-                writer.WriteBooleanValue(IsHttp2_0Enabled.Value);
-            }
-            writer.WriteEndObject();
         }
 
-        ApiManagementGatewayHostnameConfigurationData IJsonModel<ApiManagementGatewayHostnameConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApiManagementGatewayHostnameConfigurationData IJsonModel<ApiManagementGatewayHostnameConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ApiManagementGatewayHostnameConfigurationData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementGatewayHostnameConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementGatewayHostnameConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ApiManagementGatewayHostnameConfigurationData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeApiManagementGatewayHostnameConfigurationData(document.RootElement, options);
         }
 
-        internal static ApiManagementGatewayHostnameConfigurationData DeserializeApiManagementGatewayHostnameConfigurationData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ApiManagementGatewayHostnameConfigurationData DeserializeApiManagementGatewayHostnameConfigurationData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            string hostname = default;
-            string certificateId = default;
-            bool? negotiateClientCertificate = default;
-            bool? tls10Enabled = default;
-            bool? tls11Enabled = default;
-            bool? http2Enabled = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            GatewayHostnameConfigurationContractProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerApiManagementContext.Default);
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("hostname"u8))
-                        {
-                            hostname = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("certificateId"u8))
-                        {
-                            certificateId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("negotiateClientCertificate"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            negotiateClientCertificate = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("tls10Enabled"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            tls10Enabled = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("tls11Enabled"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            tls11Enabled = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("http2Enabled"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            http2Enabled = property0.Value.GetBoolean();
-                            continue;
-                        }
+                        continue;
                     }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerApiManagementContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = GatewayHostnameConfigurationContractProperties.DeserializeGatewayHostnameConfigurationContractProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ApiManagementGatewayHostnameConfigurationData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
-                hostname,
-                certificateId,
-                negotiateClientCertificate,
-                tls10Enabled,
-                tls11Enabled,
-                http2Enabled,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties,
+                properties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  systemData: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SystemData))
-                {
-                    builder.Append("  systemData: ");
-                    builder.AppendLine($"'{SystemData.ToString()}'");
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Hostname), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    hostname: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Hostname))
-                {
-                    builder.Append("    hostname: ");
-                    if (Hostname.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Hostname}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Hostname}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CertificateId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    certificateId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CertificateId))
-                {
-                    builder.Append("    certificateId: ");
-                    if (CertificateId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CertificateId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CertificateId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsClientCertificateRequired), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    negotiateClientCertificate: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsClientCertificateRequired))
-                {
-                    builder.Append("    negotiateClientCertificate: ");
-                    var boolValue = IsClientCertificateRequired.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsTls1_0Enabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    tls10Enabled: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsTls1_0Enabled))
-                {
-                    builder.Append("    tls10Enabled: ");
-                    var boolValue = IsTls1_0Enabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsTls1_1Enabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    tls11Enabled: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsTls1_1Enabled))
-                {
-                    builder.Append("    tls11Enabled: ");
-                    var boolValue = IsTls1_1Enabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsHttp2_0Enabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    http2Enabled: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsHttp2_0Enabled))
-                {
-                    builder.Append("    http2Enabled: ");
-                    var boolValue = IsHttp2_0Enabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ApiManagementGatewayHostnameConfigurationData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementGatewayHostnameConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(ApiManagementGatewayHostnameConfigurationData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ApiManagementGatewayHostnameConfigurationData IPersistableModel<ApiManagementGatewayHostnameConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementGatewayHostnameConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeApiManagementGatewayHostnameConfigurationData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ApiManagementGatewayHostnameConfigurationData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ApiManagementGatewayHostnameConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

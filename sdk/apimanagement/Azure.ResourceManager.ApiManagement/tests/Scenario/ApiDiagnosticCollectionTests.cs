@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
         private VirtualNetworkCollection VNetCollection { get; set; }
 
-        private ApiManagementServiceCollection ApiServiceCollection { get; set; }
+        private ApiManagementServiceResourceCollection ApiServiceCollection { get; set; }
 
         private ApiManagementServiceResource ApiServiceResource { get; set; }
 
@@ -37,16 +37,16 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         {
             ResourceGroup = await CreateResourceGroupAsync(AzureLocation.EastUS);
             VNetCollection = ResourceGroup.GetVirtualNetworks();
-            ApiServiceCollection = ResourceGroup.GetApiManagementServices();
+            ApiServiceCollection = ResourceGroup.GetApiManagementServiceResources();
         }
 
         private async Task CreateApiAsync()
         {
             await SetCollectionsAsync();
             var apiName = Recording.GenerateAssetName("testapi-");
-            var data = new ApiManagementServiceData(AzureLocation.EastUS, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Developer, 1), "Sample@Sample.com", "sample")
+            var data = new ApiManagementServiceResourceData(AzureLocation.EastUS, "Sample@Sample.com", "sample", new ApiManagementServiceSkuProperties(SkuType.Developer, 1))
             {
-                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
+                Identity = new ApiManagementServiceIdentity(ApimIdentityType.SystemAssigned)
             };
             ApiServiceResource = (await ApiServiceCollection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data)).Value;
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                     Query = "query3037"
                 },
                 DisplayName = "apiname1463",
-                ServiceLink = "http://newechoapi.cloudapp.net/api",
+                ServiceUri = "http://newechoapi.cloudapp.net/api",
                 Path = "newapiPath",
                 Protocols = { ApiOperationInvokableProtocol.Https, ApiOperationInvokableProtocol.Http }
             };
@@ -69,12 +69,11 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task CreateOrUpdate_GetAll_Get_Exists_Delete()
         {
             await CreateApiAsync();
             var collection = Resources.GetApiDiagnostics();
-            var logColle = ApiServiceResource.GetApiManagementLoggers();
+            var logColle = ApiServiceResource.GetLoggers();
             var logData = new ApiManagementLoggerData()
             {
                 LoggerType = LoggerType.ApplicationInsights,
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                 Credentials = { { "instrumentationKey", "4fc0bf44-3517-4ef3-b615-4a5b09362400" } }
             };
             var logResource = await logColle.CreateOrUpdateAsync(WaitUntil.Completed, "azuremonitor", logData);
-            var data = new DiagnosticContractData()
+            var data = new ApiManagementDiagnosticData()
             {
                 AlwaysLog = AlwaysLog.AllErrors,
                 LoggerId = "/loggers/azuremonitor",
@@ -132,7 +131,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var resultNew = await result.GetAsync();
             Assert.NotNull(resultNew.Value.Data);
 
-            await resultNew.Value.DeleteAsync(WaitUntil.Completed, ETag.All);
+            await resultNew.Value.DeleteAsync(WaitUntil.Completed, ETag.All.ToString());
             resultFalse = (await collection.ExistsAsync("applicationinsights")).Value;
             Assert.IsFalse(resultFalse);
         }

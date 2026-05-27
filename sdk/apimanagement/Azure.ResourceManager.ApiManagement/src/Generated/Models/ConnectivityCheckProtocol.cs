@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public readonly partial struct ConnectivityCheckProtocol : IEquatable<ConnectivityCheckProtocol>
     {
         private readonly string _value;
+        private const string TCPValue = "TCP";
+        private const string HTTPValue = "HTTP";
+        private const string HTTPSValue = "HTTPS";
 
         /// <summary> Initializes a new instance of <see cref="ConnectivityCheckProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConnectivityCheckProtocol(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string TcpValue = "TCP";
-        private const string HttpValue = "HTTP";
-        private const string HttpsValue = "HTTPS";
+        /// <summary> Gets the TCP. </summary>
+        public static ConnectivityCheckProtocol TCP { get; } = new ConnectivityCheckProtocol(TCPValue);
 
-        /// <summary> TCP. </summary>
-        public static ConnectivityCheckProtocol Tcp { get; } = new ConnectivityCheckProtocol(TcpValue);
-        /// <summary> HTTP. </summary>
-        public static ConnectivityCheckProtocol Http { get; } = new ConnectivityCheckProtocol(HttpValue);
-        /// <summary> HTTPS. </summary>
-        public static ConnectivityCheckProtocol Https { get; } = new ConnectivityCheckProtocol(HttpsValue);
+        /// <summary> Gets the HTTP. </summary>
+        public static ConnectivityCheckProtocol HTTP { get; } = new ConnectivityCheckProtocol(HTTPValue);
+
+        /// <summary> Gets the HTTPS. </summary>
+        public static ConnectivityCheckProtocol HTTPS { get; } = new ConnectivityCheckProtocol(HTTPSValue);
+
         /// <summary> Determines if two <see cref="ConnectivityCheckProtocol"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConnectivityCheckProtocol left, ConnectivityCheckProtocol right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ConnectivityCheckProtocol"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConnectivityCheckProtocol left, ConnectivityCheckProtocol right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ConnectivityCheckProtocol"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ConnectivityCheckProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ConnectivityCheckProtocol(string value) => new ConnectivityCheckProtocol(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ConnectivityCheckProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ConnectivityCheckProtocol?(string value) => value == null ? null : new ConnectivityCheckProtocol(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConnectivityCheckProtocol other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ConnectivityCheckProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

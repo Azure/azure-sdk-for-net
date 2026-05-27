@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ApiManagementSkuRestrictions : IUtf8JsonSerializable, IJsonModel<ApiManagementSkuRestrictions>
+    /// <summary> Describes scaling information of a SKU. </summary>
+    public partial class ApiManagementSkuRestrictions : IJsonModel<ApiManagementSkuRestrictions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementSkuRestrictions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ApiManagementSkuRestrictions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementSkuRestrictions>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeApiManagementSkuRestrictions(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApiManagementSkuRestrictions)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementSkuRestrictions>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ApiManagementSkuRestrictions)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ApiManagementSkuRestrictions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApiManagementSkuRestrictions IPersistableModel<ApiManagementSkuRestrictions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ApiManagementSkuRestrictions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ApiManagementSkuRestrictions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,23 +69,27 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementSkuRestrictions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementSkuRestrictions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ApiManagementSkuRestrictions)} does not support writing '{format}' format.");
             }
-
-            if (options.Format != "W" && Optional.IsDefined(RestrictionsType))
+            if (options.Format != "W" && Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(RestrictionsType.Value.ToSerialString());
+                writer.WriteStringValue(Type.Value.ToSerialString());
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Values))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
-                foreach (var item in Values)
+                foreach (string item in Values)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -61,15 +104,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("reasonCode"u8);
                 writer.WriteStringValue(ReasonCode.Value.ToSerialString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -78,211 +121,92 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
         }
 
-        ApiManagementSkuRestrictions IJsonModel<ApiManagementSkuRestrictions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApiManagementSkuRestrictions IJsonModel<ApiManagementSkuRestrictions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ApiManagementSkuRestrictions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementSkuRestrictions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementSkuRestrictions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ApiManagementSkuRestrictions)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeApiManagementSkuRestrictions(document.RootElement, options);
         }
 
-        internal static ApiManagementSkuRestrictions DeserializeApiManagementSkuRestrictions(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ApiManagementSkuRestrictions DeserializeApiManagementSkuRestrictions(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ApiManagementSkuRestrictionsType? type = default;
+            ApiManagementSkuRestrictionsType? @type = default;
             IReadOnlyList<string> values = default;
             ApiManagementSkuRestrictionInfo restrictionInfo = default;
             ApiManagementSkuRestrictionsReasonCode? reasonCode = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    type = property.Value.GetString().ToApiManagementSkuRestrictionsType();
+                    @type = prop.Value.GetString().ToApiManagementSkuRestrictionsType();
                     continue;
                 }
-                if (property.NameEquals("values"u8))
+                if (prop.NameEquals("values"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     values = array;
                     continue;
                 }
-                if (property.NameEquals("restrictionInfo"u8))
+                if (prop.NameEquals("restrictionInfo"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    restrictionInfo = ApiManagementSkuRestrictionInfo.DeserializeApiManagementSkuRestrictionInfo(property.Value, options);
+                    restrictionInfo = ApiManagementSkuRestrictionInfo.DeserializeApiManagementSkuRestrictionInfo(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("reasonCode"u8))
+                if (prop.NameEquals("reasonCode"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    reasonCode = property.Value.GetString().ToApiManagementSkuRestrictionsReasonCode();
+                    reasonCode = prop.Value.GetString().ToApiManagementSkuRestrictionsReasonCode();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ApiManagementSkuRestrictions(type, values ?? new ChangeTrackingList<string>(), restrictionInfo, reasonCode, serializedAdditionalRawData);
+            return new ApiManagementSkuRestrictions(@type, values ?? new ChangeTrackingList<string>(), restrictionInfo, reasonCode, additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RestrictionsType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  type: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RestrictionsType))
-                {
-                    builder.Append("  type: ");
-                    builder.AppendLine($"'{RestrictionsType.Value.ToSerialString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Values), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  values: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Values))
-                {
-                    if (Values.Any())
-                    {
-                        builder.Append("  values: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Values)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RestrictionInfo), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  restrictionInfo: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RestrictionInfo))
-                {
-                    builder.Append("  restrictionInfo: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, RestrictionInfo, options, 2, false, "  restrictionInfo: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReasonCode), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  reasonCode: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ReasonCode))
-                {
-                    builder.Append("  reasonCode: ");
-                    builder.AppendLine($"'{ReasonCode.Value.ToSerialString()}'");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ApiManagementSkuRestrictions>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementSkuRestrictions>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(ApiManagementSkuRestrictions)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ApiManagementSkuRestrictions IPersistableModel<ApiManagementSkuRestrictions>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementSkuRestrictions>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeApiManagementSkuRestrictions(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ApiManagementSkuRestrictions)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ApiManagementSkuRestrictions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.ApiManagement.Models;
 
 namespace Azure.ResourceManager.ApiManagement
@@ -21,69 +22,75 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing a collection of <see cref="ApiManagementTenantSettingResource"/> and their operations.
     /// Each <see cref="ApiManagementTenantSettingResource"/> in the collection will belong to the same instance of <see cref="ApiManagementServiceResource"/>.
-    /// To get an <see cref="ApiManagementTenantSettingCollection"/> instance call the GetApiManagementTenantSettings method from an instance of <see cref="ApiManagementServiceResource"/>.
+    /// To get a <see cref="ApiManagementTenantSettingCollection"/> instance call the GetApiManagementTenantSettings method from an instance of <see cref="ApiManagementServiceResource"/>.
     /// </summary>
     public partial class ApiManagementTenantSettingCollection : ArmCollection, IEnumerable<ApiManagementTenantSettingResource>, IAsyncEnumerable<ApiManagementTenantSettingResource>
     {
-        private readonly ClientDiagnostics _apiManagementTenantSettingTenantSettingsClientDiagnostics;
-        private readonly TenantSettingsRestOperations _apiManagementTenantSettingTenantSettingsRestClient;
+        private readonly ClientDiagnostics _tenantSettingsClientDiagnostics;
+        private readonly TenantSettings _tenantSettingsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ApiManagementTenantSettingCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ApiManagementTenantSettingCollection for mocking. </summary>
         protected ApiManagementTenantSettingCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ApiManagementTenantSettingCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementTenantSettingCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ApiManagementTenantSettingCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _apiManagementTenantSettingTenantSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementTenantSettingResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ApiManagementTenantSettingResource.ResourceType, out string apiManagementTenantSettingTenantSettingsApiVersion);
-            _apiManagementTenantSettingTenantSettingsRestClient = new TenantSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementTenantSettingTenantSettingsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ApiManagementTenantSettingResource.ResourceType, out string apiManagementTenantSettingApiVersion);
+            _tenantSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementTenantSettingResource.ResourceType.Namespace, Diagnostics);
+            _tenantSettingsRestClient = new TenantSettings(_tenantSettingsClientDiagnostics, Pipeline, Endpoint, apiManagementTenantSettingApiVersion ?? "2025-03-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ApiManagementServiceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementServiceResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementServiceResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get tenant settings.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/settings/{settingsType}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/settings/{settingsType}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TenantSettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> TenantSettingsContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementTenantSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="settingsType"> The identifier of the settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ApiManagementTenantSettingResource>> GetAsync(SettingsType settingsType, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementTenantSettingResource>> GetAsync(SettingsTypeName settingsType, CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementTenantSettingTenantSettingsClientDiagnostics.CreateScope("ApiManagementTenantSettingCollection.Get");
+            using DiagnosticScope scope = _tenantSettingsClientDiagnostics.CreateScope("ApiManagementTenantSettingCollection.Get");
             scope.Start();
             try
             {
-                var response = await _apiManagementTenantSettingTenantSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settingsType, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tenantSettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settingsType.ToString(), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ApiManagementTenantSettingData> response = Response.FromValue(ApiManagementTenantSettingData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApiManagementTenantSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -97,34 +104,38 @@ namespace Azure.ResourceManager.ApiManagement
         /// Get tenant settings.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/settings/{settingsType}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/settings/{settingsType}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TenantSettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> TenantSettingsContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementTenantSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="settingsType"> The identifier of the settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ApiManagementTenantSettingResource> Get(SettingsType settingsType, CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementTenantSettingResource> Get(SettingsTypeName settingsType, CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementTenantSettingTenantSettingsClientDiagnostics.CreateScope("ApiManagementTenantSettingCollection.Get");
+            using DiagnosticScope scope = _tenantSettingsClientDiagnostics.CreateScope("ApiManagementTenantSettingCollection.Get");
             scope.Start();
             try
             {
-                var response = _apiManagementTenantSettingTenantSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settingsType, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tenantSettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settingsType.ToString(), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ApiManagementTenantSettingData> response = Response.FromValue(ApiManagementTenantSettingData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApiManagementTenantSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -138,94 +149,116 @@ namespace Azure.ResourceManager.ApiManagement
         /// Public settings.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/settings</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/settings. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TenantSettings_ListByService</description>
+        /// <term> Operation Id. </term>
+        /// <description> TenantSettingsContracts_ListByService. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementTenantSettingResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> Not used. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiManagementTenantSettingResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApiManagementTenantSettingResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementTenantSettingTenantSettingsRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementTenantSettingTenantSettingsRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementTenantSettingResource(Client, ApiManagementTenantSettingData.DeserializeApiManagementTenantSettingData(e)), _apiManagementTenantSettingTenantSettingsClientDiagnostics, Pipeline, "ApiManagementTenantSettingCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Public settings.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/settings</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TenantSettings_ListByService</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementTenantSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Not used. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApiManagementTenantSettingResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApiManagementTenantSettingResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ApiManagementTenantSettingResource> GetAllAsync(string filter = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementTenantSettingTenantSettingsRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementTenantSettingTenantSettingsRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementTenantSettingResource(Client, ApiManagementTenantSettingData.DeserializeApiManagementTenantSettingData(e)), _apiManagementTenantSettingTenantSettingsClientDiagnostics, Pipeline, "ApiManagementTenantSettingCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ApiManagementTenantSettingData, ApiManagementTenantSettingResource>(new TenantSettingsGetByServiceAsyncCollectionResultOfT(
+                _tenantSettingsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                filter,
+                context), data => new ApiManagementTenantSettingResource(Client, data));
+        }
+
+        /// <summary>
+        /// Public settings.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/settings. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TenantSettingsContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> Not used. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ApiManagementTenantSettingResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiManagementTenantSettingResource> GetAll(string filter = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ApiManagementTenantSettingData, ApiManagementTenantSettingResource>(new TenantSettingsGetByServiceCollectionResultOfT(
+                _tenantSettingsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                filter,
+                context), data => new ApiManagementTenantSettingResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/settings/{settingsType}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/settings/{settingsType}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TenantSettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> TenantSettingsContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementTenantSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="settingsType"> The identifier of the settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> ExistsAsync(SettingsType settingsType, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(SettingsTypeName settingsType, CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementTenantSettingTenantSettingsClientDiagnostics.CreateScope("ApiManagementTenantSettingCollection.Exists");
+            using DiagnosticScope scope = _tenantSettingsClientDiagnostics.CreateScope("ApiManagementTenantSettingCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _apiManagementTenantSettingTenantSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settingsType, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tenantSettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settingsType.ToString(), context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ApiManagementTenantSettingData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApiManagementTenantSettingData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApiManagementTenantSettingData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -239,32 +272,46 @@ namespace Azure.ResourceManager.ApiManagement
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/settings/{settingsType}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/settings/{settingsType}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TenantSettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> TenantSettingsContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementTenantSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="settingsType"> The identifier of the settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> Exists(SettingsType settingsType, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(SettingsTypeName settingsType, CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementTenantSettingTenantSettingsClientDiagnostics.CreateScope("ApiManagementTenantSettingCollection.Exists");
+            using DiagnosticScope scope = _tenantSettingsClientDiagnostics.CreateScope("ApiManagementTenantSettingCollection.Exists");
             scope.Start();
             try
             {
-                var response = _apiManagementTenantSettingTenantSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settingsType, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tenantSettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settingsType.ToString(), context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ApiManagementTenantSettingData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApiManagementTenantSettingData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApiManagementTenantSettingData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -278,34 +325,50 @@ namespace Azure.ResourceManager.ApiManagement
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/settings/{settingsType}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/settings/{settingsType}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TenantSettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> TenantSettingsContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementTenantSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="settingsType"> The identifier of the settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<NullableResponse<ApiManagementTenantSettingResource>> GetIfExistsAsync(SettingsType settingsType, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<ApiManagementTenantSettingResource>> GetIfExistsAsync(SettingsTypeName settingsType, CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementTenantSettingTenantSettingsClientDiagnostics.CreateScope("ApiManagementTenantSettingCollection.GetIfExists");
+            using DiagnosticScope scope = _tenantSettingsClientDiagnostics.CreateScope("ApiManagementTenantSettingCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _apiManagementTenantSettingTenantSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settingsType, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tenantSettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settingsType.ToString(), context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ApiManagementTenantSettingData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApiManagementTenantSettingData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApiManagementTenantSettingData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ApiManagementTenantSettingResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApiManagementTenantSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -319,34 +382,50 @@ namespace Azure.ResourceManager.ApiManagement
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/settings/{settingsType}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/settings/{settingsType}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TenantSettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> TenantSettingsContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementTenantSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="settingsType"> The identifier of the settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NullableResponse<ApiManagementTenantSettingResource> GetIfExists(SettingsType settingsType, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<ApiManagementTenantSettingResource> GetIfExists(SettingsTypeName settingsType, CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementTenantSettingTenantSettingsClientDiagnostics.CreateScope("ApiManagementTenantSettingCollection.GetIfExists");
+            using DiagnosticScope scope = _tenantSettingsClientDiagnostics.CreateScope("ApiManagementTenantSettingCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _apiManagementTenantSettingTenantSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settingsType, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tenantSettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settingsType.ToString(), context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ApiManagementTenantSettingData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApiManagementTenantSettingData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApiManagementTenantSettingData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ApiManagementTenantSettingResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApiManagementTenantSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -366,6 +445,7 @@ namespace Azure.ResourceManager.ApiManagement
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ApiManagementTenantSettingResource> IAsyncEnumerable<ApiManagementTenantSettingResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

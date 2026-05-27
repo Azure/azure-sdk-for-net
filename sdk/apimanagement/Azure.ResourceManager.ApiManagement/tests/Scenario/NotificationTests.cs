@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -26,31 +26,30 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
         private ApiManagementServiceResource ApiServiceResource { get; set; }
 
-        private ApiManagementServiceCollection ApiServiceCollection { get; set; }
+        private ApiManagementServiceResourceCollection ApiServiceCollection { get; set; }
 
         private async Task SetCollectionsAsync()
         {
             ResourceGroup = await CreateResourceGroupAsync();
-            ApiServiceCollection = ResourceGroup.GetApiManagementServices();
+            ApiServiceCollection = ResourceGroup.GetApiManagementServiceResources();
         }
 
         private async Task CreateApiServiceAsync()
         {
             await SetCollectionsAsync();
             var apiName = Recording.GenerateAssetName("sdktestapimv2-");
-            var data = new ApiManagementServiceData(AzureLocation.WestUS2, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.StandardV2, 1), "Sample@Sample.com", "sample")
+            var data = new ApiManagementServiceResourceData(AzureLocation.WestUS2, "Sample@Sample.com", "sample", new ApiManagementServiceSkuProperties(SkuType.StandardV2, 1))
             {
-                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
+                Identity = new ApiManagementServiceIdentity(ApimIdentityType.SystemAssigned)
             };
             ApiServiceResource = (await ApiServiceCollection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data)).Value;
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task CRUD()
         {
             await CreateApiServiceAsync();
-            var collection = ApiServiceResource.GetApiManagementNotifications();
+            var collection = ApiServiceResource.GetNotifications();
 
             var notifications = await collection.GetAllAsync().ToEnumerableAsync();
 
@@ -67,7 +66,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             // add a recipient to the notification
             string userEmail = "contoso@microsoft.com";
-            var recipientEmailContract = (await firstNotification.CreateOrUpdateNotificationRecipientEmailAsync(userEmail)).Value;
+            var recipientEmailContract = (await firstNotification.NotificationRecipientEmailCreateOrUpdateAsync(userEmail)).Value;
 
             Assert.NotNull(recipientEmailContract);
             Assert.AreEqual(userEmail, recipientEmailContract.Email);
@@ -80,11 +79,11 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.AreEqual(notificationContract.Data.Recipients.Emails.Count, 1);
 
             // delete the recipient email
-            await notificationContract.DeleteNotificationRecipientEmailAsync(userEmail);
+            await notificationContract.NotificationRecipientEmailDeleteAsync(userEmail);
 
             // check the recipient exists
-            var resultFalse = (await firstNotification.CheckNotificationRecipientEmailEntityExistsAsync(userEmail)).Value;
-            Assert.IsFalse(resultFalse);
+            var checkEmailResult = await firstNotification.NotificationRecipientEmailCheckEntityExistsAsync(userEmail);
+            Assert.NotNull(checkEmailResult);
 
             var userCollection = ApiServiceResource.GetApiManagementUsers();
             var listUsersResponse = await userCollection.GetAllAsync().ToEnumerableAsync();
@@ -93,7 +92,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.AreEqual(listUsersResponse.Count, 1);
 
             // add a recipient to the notification
-            var recipientUserContract = (await firstNotification.CreateOrUpdateNotificationRecipientUserAsync(listUsersResponse.FirstOrDefault().Data.Name)).Value;
+            var recipientUserContract = (await firstNotification.NotificationRecipientUserCreateOrUpdateAsync(listUsersResponse.FirstOrDefault().Data.Name)).Value;
 
             Assert.NotNull(recipientUserContract);
             Assert.AreEqual(listUsersResponse.First().Id, recipientUserContract.UserId);
@@ -105,11 +104,11 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.AreEqual(notificationContract.Data.Recipients.Users.Count, 1);
 
             // delete the recipient user
-            await notificationContract.DeleteNotificationRecipientUserAsync(listUsersResponse.FirstOrDefault().Data.Name);
+            await notificationContract.NotificationRecipientUserDeleteAsync(listUsersResponse.FirstOrDefault().Data.Name);
 
             // check the recipient exists
-            resultFalse = (await firstNotification.CheckNotificationRecipientUserEntityExistsAsync(listUsersResponse.FirstOrDefault().Data.Name)).Value;
-            Assert.IsFalse(resultFalse);
+            var checkUserResult = await firstNotification.NotificationRecipientUserCheckEntityExistsAsync(listUsersResponse.FirstOrDefault().Data.Name);
+            Assert.NotNull(checkUserResult);
         }
     }
 }

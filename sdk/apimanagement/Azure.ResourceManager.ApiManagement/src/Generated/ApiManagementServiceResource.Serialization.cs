@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ApiManagementServiceResource : IJsonModel<ApiManagementServiceData>
+    /// <summary></summary>
+    public partial class ApiManagementServiceResource : IJsonModel<ApiManagementServiceResourceData>
     {
-        private static ApiManagementServiceData s_dataDeserializationInstance;
-        private static ApiManagementServiceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ApiManagementServiceResourceData> s_dataDeserializationInstance;
 
-        void IJsonModel<ApiManagementServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementServiceData>)Data).Write(writer, options);
+        private static IJsonModel<ApiManagementServiceResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ApiManagementServiceResourceData();
 
-        ApiManagementServiceData IJsonModel<ApiManagementServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementServiceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<ApiManagementServiceResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementServiceResourceData>)Data).Write(writer, options);
 
-        BinaryData IPersistableModel<ApiManagementServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiManagementServiceData>(Data, options, AzureResourceManagerApiManagementContext.Default);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApiManagementServiceResourceData IJsonModel<ApiManagementServiceResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
-        ApiManagementServiceData IPersistableModel<ApiManagementServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementServiceData>(data, options, AzureResourceManagerApiManagementContext.Default);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ApiManagementServiceResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiManagementServiceResourceData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
-        string IPersistableModel<ApiManagementServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiManagementServiceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApiManagementServiceResourceData IPersistableModel<ApiManagementServiceResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementServiceResourceData>(data, options, AzureResourceManagerApiManagementContext.Default);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ApiManagementServiceResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

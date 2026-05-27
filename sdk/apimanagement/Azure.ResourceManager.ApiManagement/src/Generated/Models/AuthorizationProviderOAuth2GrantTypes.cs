@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Authorization Provider oauth2 grant types settings. </summary>
     public partial class AuthorizationProviderOAuth2GrantTypes
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AuthorizationProviderOAuth2GrantTypes"/>. </summary>
         public AuthorizationProviderOAuth2GrantTypes()
@@ -55,17 +27,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of <see cref="AuthorizationProviderOAuth2GrantTypes"/>. </summary>
         /// <param name="authorizationCode"> OAuth2 authorization code grant parameters. </param>
         /// <param name="clientCredentials"> OAuth2 client credential grant parameters. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AuthorizationProviderOAuth2GrantTypes(IDictionary<string, string> authorizationCode, IDictionary<string, string> clientCredentials, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AuthorizationProviderOAuth2GrantTypes(IDictionary<string, string> authorizationCode, IDictionary<string, string> clientCredentials, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AuthorizationCode = authorizationCode;
             ClientCredentials = clientCredentials;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> OAuth2 authorization code grant parameters. </summary>
         [WirePath("authorizationCode")]
         public IDictionary<string, string> AuthorizationCode { get; }
+
         /// <summary> OAuth2 client credential grant parameters. </summary>
         [WirePath("clientCredentials")]
         public IDictionary<string, string> ClientCredentials { get; }

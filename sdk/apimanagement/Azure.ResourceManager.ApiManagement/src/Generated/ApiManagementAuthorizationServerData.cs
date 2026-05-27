@@ -13,154 +13,336 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary>
-    /// A class representing the ApiManagementAuthorizationServer data model.
-    /// External OAuth authorization server settings.
-    /// </summary>
+    /// <summary> External OAuth authorization server settings. </summary>
     public partial class ApiManagementAuthorizationServerData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementAuthorizationServerData"/>. </summary>
         public ApiManagementAuthorizationServerData()
         {
-            AuthorizationMethods = new ChangeTrackingList<AuthorizationMethod>();
-            ClientAuthenticationMethods = new ChangeTrackingList<ClientAuthenticationMethod>();
-            TokenBodyParameters = new ChangeTrackingList<TokenBodyParameterContract>();
-            BearerTokenSendingMethods = new ChangeTrackingList<BearerTokenSendingMethod>();
-            GrantTypes = new ChangeTrackingList<GrantType>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementAuthorizationServerData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="description"> Description of the authorization server. Can contain HTML formatting tags. </param>
-        /// <param name="authorizationMethods"> HTTP verbs supported by the authorization endpoint. GET must be always present. POST is optional. </param>
-        /// <param name="clientAuthenticationMethods"> Method of authentication supported by the token endpoint of this authorization server. Possible values are Basic and/or Body. When Body is specified, client credentials and other parameters are passed within the request body in the application/x-www-form-urlencoded format. </param>
-        /// <param name="tokenBodyParameters"> Additional parameters required by the token endpoint of this authorization server represented as an array of JSON objects with name and value string properties, i.e. {"name" : "name value", "value": "a value"}. </param>
-        /// <param name="tokenEndpoint"> OAuth token endpoint. Contains absolute URI to entity being referenced. </param>
-        /// <param name="doesSupportState"> If true, authorization server will include state parameter from the authorization request to its response. Client may use state parameter to raise protocol security. </param>
-        /// <param name="defaultScope"> Access token scope that is going to be requested by default. Can be overridden at the API level. Should be provided in the form of a string containing space-delimited values. </param>
-        /// <param name="bearerTokenSendingMethods"> Specifies the mechanism by which access token is passed to the API. </param>
-        /// <param name="resourceOwnerUsername"> Can be optionally specified when resource owner password grant type is supported by this authorization server. Default resource owner username. </param>
-        /// <param name="resourceOwnerPassword"> Can be optionally specified when resource owner password grant type is supported by this authorization server. Default resource owner password. </param>
-        /// <param name="displayName"> User-friendly authorization server name. </param>
-        /// <param name="useInTestConsole"> If true, the authorization server may be used in the developer portal test console. True by default if no value is provided. </param>
-        /// <param name="useInApiDocumentation"> If true, the authorization server will be used in the API documentation in the developer portal. False by default if no value is provided. </param>
-        /// <param name="clientRegistrationEndpoint"> Optional reference to a page where client or app registration for this authorization server is performed. Contains absolute URL to entity being referenced. </param>
-        /// <param name="authorizationEndpoint"> OAuth authorization endpoint. See http://tools.ietf.org/html/rfc6749#section-3.2. </param>
-        /// <param name="grantTypes"> Form of an authorization grant, which the client uses to request the access token. </param>
-        /// <param name="clientId"> Client or app id registered with this authorization server. </param>
-        /// <param name="clientSecret"> Client or app secret registered with this authorization server. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementAuthorizationServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, IList<AuthorizationMethod> authorizationMethods, IList<ClientAuthenticationMethod> clientAuthenticationMethods, IList<TokenBodyParameterContract> tokenBodyParameters, string tokenEndpoint, bool? doesSupportState, string defaultScope, IList<BearerTokenSendingMethod> bearerTokenSendingMethods, string resourceOwnerUsername, string resourceOwnerPassword, string displayName, bool? useInTestConsole, bool? useInApiDocumentation, string clientRegistrationEndpoint, string authorizationEndpoint, IList<GrantType> grantTypes, string clientId, string clientSecret, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the External OAuth authorization server Contract. </param>
+        internal ApiManagementAuthorizationServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AuthorizationServerContractProperties properties) : base(id, name, resourceType, systemData)
         {
-            Description = description;
-            AuthorizationMethods = authorizationMethods;
-            ClientAuthenticationMethods = clientAuthenticationMethods;
-            TokenBodyParameters = tokenBodyParameters;
-            TokenEndpoint = tokenEndpoint;
-            DoesSupportState = doesSupportState;
-            DefaultScope = defaultScope;
-            BearerTokenSendingMethods = bearerTokenSendingMethods;
-            ResourceOwnerUsername = resourceOwnerUsername;
-            ResourceOwnerPassword = resourceOwnerPassword;
-            DisplayName = displayName;
-            UseInTestConsole = useInTestConsole;
-            UseInApiDocumentation = useInApiDocumentation;
-            ClientRegistrationEndpoint = clientRegistrationEndpoint;
-            AuthorizationEndpoint = authorizationEndpoint;
-            GrantTypes = grantTypes;
-            ClientId = clientId;
-            ClientSecret = clientSecret;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
+
+        /// <summary> Properties of the External OAuth authorization server Contract. </summary>
+        [WirePath("properties")]
+        internal AuthorizationServerContractProperties Properties { get; set; }
 
         /// <summary> Description of the authorization server. Can contain HTML formatting tags. </summary>
         [WirePath("properties.description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AuthorizationServerContractProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> HTTP verbs supported by the authorization endpoint. GET must be always present. POST is optional. </summary>
         [WirePath("properties.authorizationMethods")]
-        public IList<AuthorizationMethod> AuthorizationMethods { get; }
+        public IList<AuthorizationMethod> AuthorizationMethods
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AuthorizationServerContractProperties();
+                }
+                return Properties.AuthorizationMethods;
+            }
+        }
+
         /// <summary> Method of authentication supported by the token endpoint of this authorization server. Possible values are Basic and/or Body. When Body is specified, client credentials and other parameters are passed within the request body in the application/x-www-form-urlencoded format. </summary>
         [WirePath("properties.clientAuthenticationMethod")]
-        public IList<ClientAuthenticationMethod> ClientAuthenticationMethods { get; }
+        public IList<ClientAuthenticationMethod> ClientAuthenticationMethod
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AuthorizationServerContractProperties();
+                }
+                return Properties.ClientAuthenticationMethod;
+            }
+        }
+
         /// <summary> Additional parameters required by the token endpoint of this authorization server represented as an array of JSON objects with name and value string properties, i.e. {"name" : "name value", "value": "a value"}. </summary>
         [WirePath("properties.tokenBodyParameters")]
-        public IList<TokenBodyParameterContract> TokenBodyParameters { get; }
+        public IList<TokenBodyParameterContract> TokenBodyParameters
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AuthorizationServerContractProperties();
+                }
+                return Properties.TokenBodyParameters;
+            }
+        }
+
         /// <summary> OAuth token endpoint. Contains absolute URI to entity being referenced. </summary>
         [WirePath("properties.tokenEndpoint")]
-        public string TokenEndpoint { get; set; }
+        public string TokenEndpoint
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TokenEndpoint;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AuthorizationServerContractProperties();
+                }
+                Properties.TokenEndpoint = value;
+            }
+        }
+
         /// <summary> If true, authorization server will include state parameter from the authorization request to its response. Client may use state parameter to raise protocol security. </summary>
         [WirePath("properties.supportState")]
-        public bool? DoesSupportState { get; set; }
+        public bool? SupportState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SupportState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AuthorizationServerContractProperties();
+                }
+                Properties.SupportState = value.Value;
+            }
+        }
+
         /// <summary> Access token scope that is going to be requested by default. Can be overridden at the API level. Should be provided in the form of a string containing space-delimited values. </summary>
         [WirePath("properties.defaultScope")]
-        public string DefaultScope { get; set; }
+        public string DefaultScope
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DefaultScope;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AuthorizationServerContractProperties();
+                }
+                Properties.DefaultScope = value;
+            }
+        }
+
         /// <summary> Specifies the mechanism by which access token is passed to the API. </summary>
         [WirePath("properties.bearerTokenSendingMethods")]
-        public IList<BearerTokenSendingMethod> BearerTokenSendingMethods { get; }
+        public IList<BearerTokenSendingMethod> BearerTokenSendingMethods
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AuthorizationServerContractProperties();
+                }
+                return Properties.BearerTokenSendingMethods;
+            }
+        }
+
         /// <summary> Can be optionally specified when resource owner password grant type is supported by this authorization server. Default resource owner username. </summary>
         [WirePath("properties.resourceOwnerUsername")]
-        public string ResourceOwnerUsername { get; set; }
+        public string ResourceOwnerUsername
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceOwnerUsername;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AuthorizationServerContractProperties();
+                }
+                Properties.ResourceOwnerUsername = value;
+            }
+        }
+
         /// <summary> Can be optionally specified when resource owner password grant type is supported by this authorization server. Default resource owner password. </summary>
         [WirePath("properties.resourceOwnerPassword")]
-        public string ResourceOwnerPassword { get; set; }
+        public string ResourceOwnerPassword
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceOwnerPassword;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AuthorizationServerContractProperties();
+                }
+                Properties.ResourceOwnerPassword = value;
+            }
+        }
+
         /// <summary> User-friendly authorization server name. </summary>
         [WirePath("properties.displayName")]
-        public string DisplayName { get; set; }
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AuthorizationServerContractProperties();
+                }
+                Properties.DisplayName = value;
+            }
+        }
+
         /// <summary> If true, the authorization server may be used in the developer portal test console. True by default if no value is provided. </summary>
         [WirePath("properties.useInTestConsole")]
-        public bool? UseInTestConsole { get; set; }
+        public bool? UseInTestConsole
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UseInTestConsole;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AuthorizationServerContractProperties();
+                }
+                Properties.UseInTestConsole = value.Value;
+            }
+        }
+
         /// <summary> If true, the authorization server will be used in the API documentation in the developer portal. False by default if no value is provided. </summary>
         [WirePath("properties.useInApiDocumentation")]
-        public bool? UseInApiDocumentation { get; set; }
+        public bool? UseInApiDocumentation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UseInApiDocumentation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AuthorizationServerContractProperties();
+                }
+                Properties.UseInApiDocumentation = value.Value;
+            }
+        }
+
         /// <summary> Optional reference to a page where client or app registration for this authorization server is performed. Contains absolute URL to entity being referenced. </summary>
         [WirePath("properties.clientRegistrationEndpoint")]
-        public string ClientRegistrationEndpoint { get; set; }
+        public string ClientRegistrationEndpoint
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClientRegistrationEndpoint;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AuthorizationServerContractProperties();
+                }
+                Properties.ClientRegistrationEndpoint = value;
+            }
+        }
+
         /// <summary> OAuth authorization endpoint. See http://tools.ietf.org/html/rfc6749#section-3.2. </summary>
         [WirePath("properties.authorizationEndpoint")]
-        public string AuthorizationEndpoint { get; set; }
+        public string AuthorizationEndpoint
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AuthorizationEndpoint;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AuthorizationServerContractProperties();
+                }
+                Properties.AuthorizationEndpoint = value;
+            }
+        }
+
         /// <summary> Form of an authorization grant, which the client uses to request the access token. </summary>
         [WirePath("properties.grantTypes")]
-        public IList<GrantType> GrantTypes { get; }
+        public IList<GrantType> GrantTypes
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AuthorizationServerContractProperties();
+                }
+                return Properties.GrantTypes;
+            }
+        }
+
         /// <summary> Client or app id registered with this authorization server. </summary>
         [WirePath("properties.clientId")]
-        public string ClientId { get; set; }
+        public string ClientId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClientId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AuthorizationServerContractProperties();
+                }
+                Properties.ClientId = value;
+            }
+        }
+
         /// <summary> Client or app secret registered with this authorization server. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </summary>
         [WirePath("properties.clientSecret")]
-        public string ClientSecret { get; set; }
+        public string ClientSecret
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClientSecret;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AuthorizationServerContractProperties();
+                }
+                Properties.ClientSecret = value;
+            }
+        }
     }
 }

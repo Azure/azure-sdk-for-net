@@ -9,16 +9,56 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class RequestReportRecordContract : IUtf8JsonSerializable, IJsonModel<RequestReportRecordContract>
+    /// <summary> Request Report data. </summary>
+    public partial class RequestReportRecordContract : IJsonModel<RequestReportRecordContract>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RequestReportRecordContract>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RequestReportRecordContract PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RequestReportRecordContract>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeRequestReportRecordContract(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RequestReportRecordContract)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RequestReportRecordContract>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RequestReportRecordContract)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RequestReportRecordContract>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RequestReportRecordContract IPersistableModel<RequestReportRecordContract>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RequestReportRecordContract>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RequestReportRecordContract>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +70,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RequestReportRecordContract>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RequestReportRecordContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RequestReportRecordContract)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(ApiId))
             {
                 writer.WritePropertyName("apiId"u8);
@@ -56,25 +95,25 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("userId"u8);
                 writer.WriteStringValue(UserId);
             }
-            if (Optional.IsDefined(Method))
+            if (Optional.IsDefined(HttpMethod))
             {
                 writer.WritePropertyName("method"u8);
-                writer.WriteStringValue(Method.Value.ToString());
+                writer.WriteStringValue(HttpMethod);
             }
             if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Optional.IsDefined(IPAddress))
+            if (Optional.IsDefined(IpAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
-                writer.WriteStringValue(IPAddress.ToString());
+                writer.WriteStringValue(IpAddress.ToString());
             }
             if (Optional.IsDefined(BackendResponseCode))
             {
                 writer.WritePropertyName("backendResponseCode"u8);
-                SerializeBackendResponseCodeValue(writer, options);
+                writer.WriteStringValue(BackendResponseCode);
             }
             if (Optional.IsDefined(ResponseCode))
             {
@@ -111,10 +150,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("apiRegion"u8);
                 writer.WriteStringValue(ApiRegion);
             }
-            if (Optional.IsDefined(SubscriptionResourceId))
+            if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
-                writer.WriteStringValue(SubscriptionResourceId);
+                writer.WriteStringValue(SubscriptionId);
             }
             if (Optional.IsDefined(RequestId))
             {
@@ -126,15 +165,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("requestSize"u8);
                 writer.WriteNumberValue(RequestSize.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -143,22 +182,27 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
         }
 
-        RequestReportRecordContract IJsonModel<RequestReportRecordContract>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RequestReportRecordContract IJsonModel<RequestReportRecordContract>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RequestReportRecordContract JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RequestReportRecordContract>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RequestReportRecordContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RequestReportRecordContract)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeRequestReportRecordContract(document.RootElement, options);
         }
 
-        internal static RequestReportRecordContract DeserializeRequestReportRecordContract(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static RequestReportRecordContract DeserializeRequestReportRecordContract(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -167,7 +211,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             string operationId = default;
             string productId = default;
             string userId = default;
-            RequestMethod? method = default;
+            string httpMethod = default;
             Uri uri = default;
             IPAddress ipAddress = default;
             string backendResponseCode = default;
@@ -178,155 +222,145 @@ namespace Azure.ResourceManager.ApiManagement.Models
             double? apiTime = default;
             double? serviceTime = default;
             string apiRegion = default;
-            ResourceIdentifier subscriptionId = default;
+            string subscriptionId = default;
             string requestId = default;
             int? requestSize = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("apiId"u8))
+                if (prop.NameEquals("apiId"u8))
                 {
-                    apiId = property.Value.GetString();
+                    apiId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("operationId"u8))
+                if (prop.NameEquals("operationId"u8))
                 {
-                    operationId = property.Value.GetString();
+                    operationId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("productId"u8))
+                if (prop.NameEquals("productId"u8))
                 {
-                    productId = property.Value.GetString();
+                    productId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("userId"u8))
+                if (prop.NameEquals("userId"u8))
                 {
-                    userId = property.Value.GetString();
+                    userId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("method"u8))
+                if (prop.NameEquals("method"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    httpMethod = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("url"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    method = new RequestMethod(property.Value.GetString());
+                    uri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
-                if (property.NameEquals("url"u8))
+                if (prop.NameEquals("ipAddress"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    uri = new Uri(property.Value.GetString());
+                    ipAddress = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ipAddress"u8))
+                if (prop.NameEquals("backendResponseCode"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    backendResponseCode = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("responseCode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    ipAddress = IPAddress.Parse(property.Value.GetString());
+                    responseCode = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("backendResponseCode"u8))
+                if (prop.NameEquals("responseSize"u8))
                 {
-                    DeserializeBackendResponseCodeValue(property, ref backendResponseCode);
-                    continue;
-                }
-                if (property.NameEquals("responseCode"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    responseCode = property.Value.GetInt32();
+                    responseSize = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("responseSize"u8))
+                if (prop.NameEquals("timestamp"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    responseSize = property.Value.GetInt32();
+                    timestamp = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("timestamp"u8))
+                if (prop.NameEquals("cache"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    cache = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("apiTime"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    timestamp = property.Value.GetDateTimeOffset("O");
+                    apiTime = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("cache"u8))
+                if (prop.NameEquals("serviceTime"u8))
                 {
-                    cache = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("apiTime"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    apiTime = property.Value.GetDouble();
+                    serviceTime = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("serviceTime"u8))
+                if (prop.NameEquals("apiRegion"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    apiRegion = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("subscriptionId"u8))
+                {
+                    subscriptionId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("requestId"u8))
+                {
+                    requestId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("requestSize"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    serviceTime = property.Value.GetDouble();
-                    continue;
-                }
-                if (property.NameEquals("apiRegion"u8))
-                {
-                    apiRegion = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("subscriptionId"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    subscriptionId = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("requestId"u8))
-                {
-                    requestId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("requestSize"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    requestSize = property.Value.GetInt32();
+                    requestSize = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new RequestReportRecordContract(
                 apiId,
                 operationId,
                 productId,
                 userId,
-                method,
+                httpMethod,
                 uri,
                 ipAddress,
                 backendResponseCode,
@@ -340,390 +374,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 subscriptionId,
                 requestId,
                 requestSize,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  apiId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ApiId))
-                {
-                    builder.Append("  apiId: ");
-                    if (ApiId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ApiId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ApiId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OperationId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  operationId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(OperationId))
-                {
-                    builder.Append("  operationId: ");
-                    if (OperationId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{OperationId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{OperationId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProductId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  productId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProductId))
-                {
-                    builder.Append("  productId: ");
-                    if (ProductId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ProductId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ProductId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  userId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(UserId))
-                {
-                    builder.Append("  userId: ");
-                    if (UserId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{UserId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{UserId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Method), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  method: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Method))
-                {
-                    builder.Append("  method: ");
-                    builder.AppendLine($"'{Method.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Uri), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  url: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Uri))
-                {
-                    builder.Append("  url: ");
-                    builder.AppendLine($"'{Uri.AbsoluteUri}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPAddress), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  ipAddress: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IPAddress))
-                {
-                    builder.Append("  ipAddress: ");
-                    builder.AppendLine($"'{IPAddress.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackendResponseCode), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  backendResponseCode: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(BackendResponseCode))
-                {
-                    builder.Append("  backendResponseCode: ");
-                    if (BackendResponseCode.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{BackendResponseCode}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{BackendResponseCode}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResponseCode), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  responseCode: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ResponseCode))
-                {
-                    builder.Append("  responseCode: ");
-                    builder.AppendLine($"{ResponseCode.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResponseSize), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  responseSize: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ResponseSize))
-                {
-                    builder.Append("  responseSize: ");
-                    builder.AppendLine($"{ResponseSize.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Timestamp), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  timestamp: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Timestamp))
-                {
-                    builder.Append("  timestamp: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(Timestamp.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Cache), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  cache: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Cache))
-                {
-                    builder.Append("  cache: ");
-                    if (Cache.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Cache}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Cache}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiTime), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  apiTime: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ApiTime))
-                {
-                    builder.Append("  apiTime: ");
-                    builder.AppendLine($"'{ApiTime.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceTime), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  serviceTime: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ServiceTime))
-                {
-                    builder.Append("  serviceTime: ");
-                    builder.AppendLine($"'{ServiceTime.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiRegion), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  apiRegion: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ApiRegion))
-                {
-                    builder.Append("  apiRegion: ");
-                    if (ApiRegion.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ApiRegion}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ApiRegion}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SubscriptionResourceId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  subscriptionId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SubscriptionResourceId))
-                {
-                    builder.Append("  subscriptionId: ");
-                    builder.AppendLine($"'{SubscriptionResourceId.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  requestId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RequestId))
-                {
-                    builder.Append("  requestId: ");
-                    if (RequestId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{RequestId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{RequestId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestSize), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  requestSize: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RequestSize))
-                {
-                    builder.Append("  requestSize: ");
-                    builder.AppendLine($"{RequestSize.Value}");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<RequestReportRecordContract>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RequestReportRecordContract>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(RequestReportRecordContract)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        RequestReportRecordContract IPersistableModel<RequestReportRecordContract>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RequestReportRecordContract>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeRequestReportRecordContract(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RequestReportRecordContract)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<RequestReportRecordContract>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

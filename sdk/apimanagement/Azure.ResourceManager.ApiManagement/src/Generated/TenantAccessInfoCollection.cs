@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.ApiManagement.Models;
 
 namespace Azure.ResourceManager.ApiManagement
@@ -25,51 +26,57 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class TenantAccessInfoCollection : ArmCollection, IEnumerable<TenantAccessInfoResource>, IAsyncEnumerable<TenantAccessInfoResource>
     {
-        private readonly ClientDiagnostics _tenantAccessInfoTenantAccessClientDiagnostics;
-        private readonly TenantAccessRestOperations _tenantAccessInfoTenantAccessRestClient;
+        private readonly ClientDiagnostics _tenantAccessClientDiagnostics;
+        private readonly TenantAccess _tenantAccessRestClient;
+        private readonly ClientDiagnostics _tenantConfigurationClientDiagnostics;
+        private readonly TenantConfiguration _tenantConfigurationRestClient;
+        private readonly ClientDiagnostics _tenantAccessGitClientDiagnostics;
+        private readonly TenantAccessGit _tenantAccessGitRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="TenantAccessInfoCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of TenantAccessInfoCollection for mocking. </summary>
         protected TenantAccessInfoCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="TenantAccessInfoCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantAccessInfoCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal TenantAccessInfoCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _tenantAccessInfoTenantAccessClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", TenantAccessInfoResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(TenantAccessInfoResource.ResourceType, out string tenantAccessInfoTenantAccessApiVersion);
-            _tenantAccessInfoTenantAccessRestClient = new TenantAccessRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, tenantAccessInfoTenantAccessApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(TenantAccessInfoResource.ResourceType, out string tenantAccessInfoApiVersion);
+            _tenantAccessClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", TenantAccessInfoResource.ResourceType.Namespace, Diagnostics);
+            _tenantAccessRestClient = new TenantAccess(_tenantAccessClientDiagnostics, Pipeline, Endpoint, tenantAccessInfoApiVersion ?? "2025-03-01-preview");
+            _tenantConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", TenantAccessInfoResource.ResourceType.Namespace, Diagnostics);
+            _tenantConfigurationRestClient = new TenantConfiguration(_tenantConfigurationClientDiagnostics, Pipeline, Endpoint, tenantAccessInfoApiVersion ?? "2025-03-01-preview");
+            _tenantAccessGitClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", TenantAccessInfoResource.ResourceType.Namespace, Diagnostics);
+            _tenantAccessGitRestClient = new TenantAccessGit(_tenantAccessGitClientDiagnostics, Pipeline, Endpoint, tenantAccessInfoApiVersion ?? "2025-03-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ApiManagementServiceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementServiceResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementServiceResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Update tenant access information details.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant/{accessName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant/{accessName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TenantAccess_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> AccessInformationContracts_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TenantAccessInfoResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -78,21 +85,31 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="content"> Parameters supplied to retrieve the Tenant Access Information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<TenantAccessInfoResource>> CreateOrUpdateAsync(WaitUntil waitUntil, AccessName accessName, ETag ifMatch, TenantAccessInfoCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<TenantAccessInfoResource>> CreateOrUpdateAsync(WaitUntil waitUntil, AccessIdName accessName, string ifMatch, TenantAccessInfoCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _tenantAccessInfoTenantAccessClientDiagnostics.CreateScope("TenantAccessInfoCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _tenantAccessClientDiagnostics.CreateScope("TenantAccessInfoCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _tenantAccessInfoTenantAccessRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessName, ifMatch, content, cancellationToken).ConfigureAwait(false);
-                var uri = _tenantAccessInfoTenantAccessRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessName, ifMatch, content);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApiManagementArmOperation<TenantAccessInfoResource>(Response.FromValue(new TenantAccessInfoResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tenantAccessRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessName.ToString(), ifMatch, TenantAccessInfoCreateOrUpdateContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<TenantAccessInfoData> response = Response.FromValue(TenantAccessInfoData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ApiManagementArmOperation<TenantAccessInfoResource> operation = new ApiManagementArmOperation<TenantAccessInfoResource>(Response.FromValue(new TenantAccessInfoResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -106,20 +123,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// Update tenant access information details.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant/{accessName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant/{accessName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TenantAccess_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> AccessInformationContracts_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TenantAccessInfoResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,21 +141,31 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="content"> Parameters supplied to retrieve the Tenant Access Information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<TenantAccessInfoResource> CreateOrUpdate(WaitUntil waitUntil, AccessName accessName, ETag ifMatch, TenantAccessInfoCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<TenantAccessInfoResource> CreateOrUpdate(WaitUntil waitUntil, AccessIdName accessName, string ifMatch, TenantAccessInfoCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _tenantAccessInfoTenantAccessClientDiagnostics.CreateScope("TenantAccessInfoCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _tenantAccessClientDiagnostics.CreateScope("TenantAccessInfoCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _tenantAccessInfoTenantAccessRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessName, ifMatch, content, cancellationToken);
-                var uri = _tenantAccessInfoTenantAccessRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessName, ifMatch, content);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApiManagementArmOperation<TenantAccessInfoResource>(Response.FromValue(new TenantAccessInfoResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tenantAccessRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessName.ToString(), ifMatch, TenantAccessInfoCreateOrUpdateContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<TenantAccessInfoData> response = Response.FromValue(TenantAccessInfoData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ApiManagementArmOperation<TenantAccessInfoResource> operation = new ApiManagementArmOperation<TenantAccessInfoResource>(Response.FromValue(new TenantAccessInfoResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -156,34 +179,38 @@ namespace Azure.ResourceManager.ApiManagement
         /// Get tenant access information details without secrets.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant/{accessName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant/{accessName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TenantAccess_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AccessInformationContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TenantAccessInfoResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="accessName"> The identifier of the Access configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TenantAccessInfoResource>> GetAsync(AccessName accessName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TenantAccessInfoResource>> GetAsync(AccessIdName accessName, CancellationToken cancellationToken = default)
         {
-            using var scope = _tenantAccessInfoTenantAccessClientDiagnostics.CreateScope("TenantAccessInfoCollection.Get");
+            using DiagnosticScope scope = _tenantAccessClientDiagnostics.CreateScope("TenantAccessInfoCollection.Get");
             scope.Start();
             try
             {
-                var response = await _tenantAccessInfoTenantAccessRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tenantAccessRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessName.ToString(), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<TenantAccessInfoData> response = Response.FromValue(TenantAccessInfoData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new TenantAccessInfoResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -197,34 +224,38 @@ namespace Azure.ResourceManager.ApiManagement
         /// Get tenant access information details without secrets.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant/{accessName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant/{accessName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TenantAccess_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AccessInformationContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TenantAccessInfoResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="accessName"> The identifier of the Access configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TenantAccessInfoResource> Get(AccessName accessName, CancellationToken cancellationToken = default)
+        public virtual Response<TenantAccessInfoResource> Get(AccessIdName accessName, CancellationToken cancellationToken = default)
         {
-            using var scope = _tenantAccessInfoTenantAccessClientDiagnostics.CreateScope("TenantAccessInfoCollection.Get");
+            using DiagnosticScope scope = _tenantAccessClientDiagnostics.CreateScope("TenantAccessInfoCollection.Get");
             scope.Start();
             try
             {
-                var response = _tenantAccessInfoTenantAccessRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tenantAccessRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessName.ToString(), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<TenantAccessInfoData> response = Response.FromValue(TenantAccessInfoData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new TenantAccessInfoResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -238,94 +269,116 @@ namespace Azure.ResourceManager.ApiManagement
         /// Returns list of access infos - for Git and Management endpoints.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TenantAccess_ListByService</description>
+        /// <term> Operation Id. </term>
+        /// <description> AccessInformationContracts_ListByService. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TenantAccessInfoResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> Not used. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TenantAccessInfoResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TenantAccessInfoResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _tenantAccessInfoTenantAccessRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _tenantAccessInfoTenantAccessRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TenantAccessInfoResource(Client, TenantAccessInfoData.DeserializeTenantAccessInfoData(e)), _tenantAccessInfoTenantAccessClientDiagnostics, Pipeline, "TenantAccessInfoCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns list of access infos - for Git and Management endpoints.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TenantAccess_ListByService</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TenantAccessInfoResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Not used. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="TenantAccessInfoResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TenantAccessInfoResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<TenantAccessInfoResource> GetAllAsync(string filter = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _tenantAccessInfoTenantAccessRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _tenantAccessInfoTenantAccessRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TenantAccessInfoResource(Client, TenantAccessInfoData.DeserializeTenantAccessInfoData(e)), _tenantAccessInfoTenantAccessClientDiagnostics, Pipeline, "TenantAccessInfoCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<TenantAccessInfoData, TenantAccessInfoResource>(new TenantAccessGetByServiceAsyncCollectionResultOfT(
+                _tenantAccessRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                filter,
+                context), data => new TenantAccessInfoResource(Client, data));
+        }
+
+        /// <summary>
+        /// Returns list of access infos - for Git and Management endpoints.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AccessInformationContracts_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> Not used. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="TenantAccessInfoResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<TenantAccessInfoResource> GetAll(string filter = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<TenantAccessInfoData, TenantAccessInfoResource>(new TenantAccessGetByServiceCollectionResultOfT(
+                _tenantAccessRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                filter,
+                context), data => new TenantAccessInfoResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant/{accessName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant/{accessName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TenantAccess_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AccessInformationContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TenantAccessInfoResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="accessName"> The identifier of the Access configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> ExistsAsync(AccessName accessName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(AccessIdName accessName, CancellationToken cancellationToken = default)
         {
-            using var scope = _tenantAccessInfoTenantAccessClientDiagnostics.CreateScope("TenantAccessInfoCollection.Exists");
+            using DiagnosticScope scope = _tenantAccessClientDiagnostics.CreateScope("TenantAccessInfoCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _tenantAccessInfoTenantAccessRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tenantAccessRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessName.ToString(), context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<TenantAccessInfoData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(TenantAccessInfoData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((TenantAccessInfoData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -339,32 +392,46 @@ namespace Azure.ResourceManager.ApiManagement
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant/{accessName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant/{accessName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TenantAccess_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AccessInformationContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TenantAccessInfoResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="accessName"> The identifier of the Access configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> Exists(AccessName accessName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(AccessIdName accessName, CancellationToken cancellationToken = default)
         {
-            using var scope = _tenantAccessInfoTenantAccessClientDiagnostics.CreateScope("TenantAccessInfoCollection.Exists");
+            using DiagnosticScope scope = _tenantAccessClientDiagnostics.CreateScope("TenantAccessInfoCollection.Exists");
             scope.Start();
             try
             {
-                var response = _tenantAccessInfoTenantAccessRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tenantAccessRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessName.ToString(), context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<TenantAccessInfoData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(TenantAccessInfoData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((TenantAccessInfoData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -378,34 +445,50 @@ namespace Azure.ResourceManager.ApiManagement
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant/{accessName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant/{accessName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TenantAccess_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AccessInformationContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TenantAccessInfoResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="accessName"> The identifier of the Access configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<NullableResponse<TenantAccessInfoResource>> GetIfExistsAsync(AccessName accessName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<TenantAccessInfoResource>> GetIfExistsAsync(AccessIdName accessName, CancellationToken cancellationToken = default)
         {
-            using var scope = _tenantAccessInfoTenantAccessClientDiagnostics.CreateScope("TenantAccessInfoCollection.GetIfExists");
+            using DiagnosticScope scope = _tenantAccessClientDiagnostics.CreateScope("TenantAccessInfoCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _tenantAccessInfoTenantAccessRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tenantAccessRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessName.ToString(), context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<TenantAccessInfoData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(TenantAccessInfoData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((TenantAccessInfoData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<TenantAccessInfoResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new TenantAccessInfoResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -419,34 +502,50 @@ namespace Azure.ResourceManager.ApiManagement
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant/{accessName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant/{accessName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TenantAccess_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AccessInformationContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TenantAccessInfoResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="accessName"> The identifier of the Access configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NullableResponse<TenantAccessInfoResource> GetIfExists(AccessName accessName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<TenantAccessInfoResource> GetIfExists(AccessIdName accessName, CancellationToken cancellationToken = default)
         {
-            using var scope = _tenantAccessInfoTenantAccessClientDiagnostics.CreateScope("TenantAccessInfoCollection.GetIfExists");
+            using DiagnosticScope scope = _tenantAccessClientDiagnostics.CreateScope("TenantAccessInfoCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _tenantAccessInfoTenantAccessRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tenantAccessRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessName.ToString(), context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<TenantAccessInfoData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(TenantAccessInfoData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((TenantAccessInfoData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<TenantAccessInfoResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new TenantAccessInfoResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -466,6 +565,7 @@ namespace Azure.ResourceManager.ApiManagement
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<TenantAccessInfoResource> IAsyncEnumerable<TenantAccessInfoResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

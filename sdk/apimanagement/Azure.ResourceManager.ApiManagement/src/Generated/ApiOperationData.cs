@@ -13,101 +13,168 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary>
-    /// A class representing the ApiOperation data model.
-    /// API Operation details.
-    /// </summary>
+    /// <summary> API Operation details. </summary>
     public partial class ApiOperationData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiOperationData"/>. </summary>
         public ApiOperationData()
         {
-            TemplateParameters = new ChangeTrackingList<ParameterContract>();
-            Responses = new ChangeTrackingList<ResponseContract>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiOperationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="templateParameters"> Collection of URL template parameters. </param>
-        /// <param name="description"> Description of the operation. May include HTML formatting tags. </param>
-        /// <param name="request"> An entity containing request details. </param>
-        /// <param name="responses"> Array of Operation responses. </param>
-        /// <param name="policies"> Operation Policies. </param>
-        /// <param name="displayName"> Operation Name. </param>
-        /// <param name="method"> A Valid HTTP Operation Method. Typical Http Methods like GET, PUT, POST but not limited by only them. </param>
-        /// <param name="uriTemplate"> Relative URL template identifying the target resource for this operation. May include parameters. Example: /customers/{cid}/orders/{oid}/?date={date}. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiOperationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<ParameterContract> templateParameters, string description, RequestContract request, IList<ResponseContract> responses, string policies, string displayName, string method, string uriTemplate, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the Operation Contract. </param>
+        internal ApiOperationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, OperationContractProperties properties) : base(id, name, resourceType, systemData)
         {
-            TemplateParameters = templateParameters;
-            Description = description;
-            Request = request;
-            Responses = responses;
-            Policies = policies;
-            DisplayName = displayName;
-            Method = method;
-            UriTemplate = uriTemplate;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
+
+        /// <summary> Properties of the Operation Contract. </summary>
+        [WirePath("properties")]
+        internal OperationContractProperties Properties { get; set; }
 
         /// <summary> Collection of URL template parameters. </summary>
         [WirePath("properties.templateParameters")]
-        public IList<ParameterContract> TemplateParameters { get; }
+        public IList<ParameterContract> TemplateParameters
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new OperationContractProperties();
+                }
+                return Properties.TemplateParameters;
+            }
+        }
+
         /// <summary> Description of the operation. May include HTML formatting tags. </summary>
         [WirePath("properties.description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OperationContractProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> An entity containing request details. </summary>
         [WirePath("properties.request")]
-        public RequestContract Request { get; set; }
+        public RequestContract Request
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Request;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OperationContractProperties();
+                }
+                Properties.Request = value;
+            }
+        }
+
         /// <summary> Array of Operation responses. </summary>
         [WirePath("properties.responses")]
-        public IList<ResponseContract> Responses { get; }
+        public IList<ResponseContract> Responses
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new OperationContractProperties();
+                }
+                return Properties.Responses;
+            }
+        }
+
         /// <summary> Operation Policies. </summary>
         [WirePath("properties.policies")]
-        public string Policies { get; set; }
+        public string Policies
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Policies;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OperationContractProperties();
+                }
+                Properties.Policies = value;
+            }
+        }
+
         /// <summary> Operation Name. </summary>
         [WirePath("properties.displayName")]
-        public string DisplayName { get; set; }
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OperationContractProperties();
+                }
+                Properties.DisplayName = value;
+            }
+        }
+
         /// <summary> A Valid HTTP Operation Method. Typical Http Methods like GET, PUT, POST but not limited by only them. </summary>
         [WirePath("properties.method")]
-        public string Method { get; set; }
+        public string Method
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Method;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OperationContractProperties();
+                }
+                Properties.Method = value;
+            }
+        }
+
         /// <summary> Relative URL template identifying the target resource for this operation. May include parameters. Example: /customers/{cid}/orders/{oid}/?date={date}. </summary>
         [WirePath("properties.urlTemplate")]
-        public string UriTemplate { get; set; }
+        public string UrlTemplate
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UrlTemplate;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OperationContractProperties();
+                }
+                Properties.UrlTemplate = value;
+            }
+        }
     }
 }

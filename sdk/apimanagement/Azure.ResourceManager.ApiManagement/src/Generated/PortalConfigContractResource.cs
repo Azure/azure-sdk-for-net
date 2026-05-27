@@ -6,46 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A Class representing a PortalConfigContract along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PortalConfigContractResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetPortalConfigContractResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource"/> using the GetPortalConfigContract method.
+    /// A class representing a PortalConfigContract along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PortalConfigContractResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource"/> using the GetPortalConfigContracts method.
     /// </summary>
     public partial class PortalConfigContractResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="PortalConfigContractResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="serviceName"> The serviceName. </param>
-        /// <param name="portalConfigId"> The portalConfigId. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string portalConfigId)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalconfigs/{portalConfigId}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _portalConfigContractPortalConfigClientDiagnostics;
-        private readonly PortalConfigRestOperations _portalConfigContractPortalConfigRestClient;
+        private readonly ClientDiagnostics _portalConfigClientDiagnostics;
+        private readonly PortalConfig _portalConfigRestClient;
         private readonly PortalConfigContractData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/portalconfigs";
 
-        /// <summary> Initializes a new instance of the <see cref="PortalConfigContractResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of PortalConfigContractResource for mocking. </summary>
         protected PortalConfigContractResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PortalConfigContractResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PortalConfigContractResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PortalConfigContractResource(ArmClient client, PortalConfigContractData data) : this(client, data.Id)
@@ -54,71 +43,93 @@ namespace Azure.ResourceManager.ApiManagement
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PortalConfigContractResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PortalConfigContractResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PortalConfigContractResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _portalConfigContractPortalConfigClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string portalConfigContractPortalConfigApiVersion);
-            _portalConfigContractPortalConfigRestClient = new PortalConfigRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, portalConfigContractPortalConfigApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string portalConfigContractApiVersion);
+            _portalConfigClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            _portalConfigRestClient = new PortalConfig(_portalConfigClientDiagnostics, Pipeline, Endpoint, portalConfigContractApiVersion ?? "2025-03-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual PortalConfigContractData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="portalConfigId"> The portalConfigId. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string portalConfigId)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalconfigs/{portalConfigId}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get the developer portal configuration.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalconfigs/{portalConfigId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalconfigs/{portalConfigId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PortalConfig_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PortalConfigContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PortalConfigContractResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PortalConfigContractResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PortalConfigContractResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _portalConfigContractPortalConfigClientDiagnostics.CreateScope("PortalConfigContractResource.Get");
+            using DiagnosticScope scope = _portalConfigClientDiagnostics.CreateScope("PortalConfigContractResource.Get");
             scope.Start();
             try
             {
-                var response = await _portalConfigContractPortalConfigRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _portalConfigRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PortalConfigContractData> response = Response.FromValue(PortalConfigContractData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PortalConfigContractResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,33 +143,41 @@ namespace Azure.ResourceManager.ApiManagement
         /// Get the developer portal configuration.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalconfigs/{portalConfigId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalconfigs/{portalConfigId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PortalConfig_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PortalConfigContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PortalConfigContractResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PortalConfigContractResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PortalConfigContractResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _portalConfigContractPortalConfigClientDiagnostics.CreateScope("PortalConfigContractResource.Get");
+            using DiagnosticScope scope = _portalConfigClientDiagnostics.CreateScope("PortalConfigContractResource.Get");
             scope.Start();
             try
             {
-                var response = _portalConfigContractPortalConfigRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _portalConfigRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PortalConfigContractData> response = Response.FromValue(PortalConfigContractData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PortalConfigContractResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -172,36 +191,48 @@ namespace Azure.ResourceManager.ApiManagement
         /// Update the developer portal configuration.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalconfigs/{portalConfigId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalconfigs/{portalConfigId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PortalConfig_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> PortalConfigContracts_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PortalConfigContractResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PortalConfigContractResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="data"> Update the developer portal configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<PortalConfigContractResource>> UpdateAsync(ETag ifMatch, PortalConfigContractData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<PortalConfigContractResource>> UpdateAsync(string ifMatch, PortalConfigContractData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _portalConfigContractPortalConfigClientDiagnostics.CreateScope("PortalConfigContractResource.Update");
+            using DiagnosticScope scope = _portalConfigClientDiagnostics.CreateScope("PortalConfigContractResource.Update");
             scope.Start();
             try
             {
-                var response = await _portalConfigContractPortalConfigRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, data, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _portalConfigRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, PortalConfigContractData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PortalConfigContractData> response = Response.FromValue(PortalConfigContractData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PortalConfigContractResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -215,113 +246,49 @@ namespace Azure.ResourceManager.ApiManagement
         /// Update the developer portal configuration.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalconfigs/{portalConfigId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalconfigs/{portalConfigId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PortalConfig_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> PortalConfigContracts_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PortalConfigContractResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PortalConfigContractResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="data"> Update the developer portal configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<PortalConfigContractResource> Update(ETag ifMatch, PortalConfigContractData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<PortalConfigContractResource> Update(string ifMatch, PortalConfigContractData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _portalConfigContractPortalConfigClientDiagnostics.CreateScope("PortalConfigContractResource.Update");
+            using DiagnosticScope scope = _portalConfigClientDiagnostics.CreateScope("PortalConfigContractResource.Update");
             scope.Start();
             try
             {
-                var response = _portalConfigContractPortalConfigRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, data, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _portalConfigRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, PortalConfigContractData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PortalConfigContractData> response = Response.FromValue(PortalConfigContractData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PortalConfigContractResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the entity state (Etag) version of the developer portal configuration.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalconfigs/{portalConfigId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PortalConfig_GetEntityTag</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PortalConfigContractResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> GetEntityTagAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _portalConfigContractPortalConfigClientDiagnostics.CreateScope("PortalConfigContractResource.GetEntityTag");
-            scope.Start();
-            try
-            {
-                var response = await _portalConfigContractPortalConfigRestClient.GetEntityTagAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the entity state (Etag) version of the developer portal configuration.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalconfigs/{portalConfigId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PortalConfig_GetEntityTag</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PortalConfigContractResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> GetEntityTag(CancellationToken cancellationToken = default)
-        {
-            using var scope = _portalConfigContractPortalConfigClientDiagnostics.CreateScope("PortalConfigContractResource.GetEntityTag");
-            scope.Start();
-            try
-            {
-                var response = _portalConfigContractPortalConfigRestClient.GetEntityTag(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
             }
             catch (Exception e)
             {

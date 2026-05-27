@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class CircuitBreakerFailureCondition : IUtf8JsonSerializable, IJsonModel<CircuitBreakerFailureCondition>
+    /// <summary> The trip conditions of the circuit breaker. </summary>
+    public partial class CircuitBreakerFailureCondition : IJsonModel<CircuitBreakerFailureCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CircuitBreakerFailureCondition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CircuitBreakerFailureCondition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CircuitBreakerFailureCondition>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCircuitBreakerFailureCondition(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CircuitBreakerFailureCondition)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CircuitBreakerFailureCondition>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CircuitBreakerFailureCondition)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CircuitBreakerFailureCondition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CircuitBreakerFailureCondition IPersistableModel<CircuitBreakerFailureCondition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CircuitBreakerFailureCondition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CircuitBreakerFailureCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +69,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CircuitBreakerFailureCondition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CircuitBreakerFailureCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CircuitBreakerFailureCondition)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
@@ -55,7 +93,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 writer.WritePropertyName("statusCodeRanges"u8);
                 writer.WriteStartArray();
-                foreach (var item in StatusCodeRanges)
+                foreach (FailureStatusCodeRange item in StatusCodeRanges)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -65,21 +103,26 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 writer.WritePropertyName("errorReasons"u8);
                 writer.WriteStartArray();
-                foreach (var item in ErrorReasons)
+                foreach (string item in ErrorReasons)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -88,22 +131,27 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
         }
 
-        CircuitBreakerFailureCondition IJsonModel<CircuitBreakerFailureCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CircuitBreakerFailureCondition IJsonModel<CircuitBreakerFailureCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CircuitBreakerFailureCondition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CircuitBreakerFailureCondition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CircuitBreakerFailureCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CircuitBreakerFailureCondition)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCircuitBreakerFailureCondition(document.RootElement, options);
         }
 
-        internal static CircuitBreakerFailureCondition DeserializeCircuitBreakerFailureCondition(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static CircuitBreakerFailureCondition DeserializeCircuitBreakerFailureCondition(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -113,231 +161,83 @@ namespace Azure.ResourceManager.ApiManagement.Models
             TimeSpan? interval = default;
             IList<FailureStatusCodeRange> statusCodeRanges = default;
             IList<string> errorReasons = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("count"u8))
+                if (prop.NameEquals("count"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    count = property.Value.GetInt64();
+                    count = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("percentage"u8))
+                if (prop.NameEquals("percentage"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    percentage = property.Value.GetInt64();
+                    percentage = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("interval"u8))
+                if (prop.NameEquals("interval"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    interval = property.Value.GetTimeSpan("P");
+                    interval = prop.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("statusCodeRanges"u8))
+                if (prop.NameEquals("statusCodeRanges"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<FailureStatusCodeRange> array = new List<FailureStatusCodeRange>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(FailureStatusCodeRange.DeserializeFailureStatusCodeRange(item, options));
                     }
                     statusCodeRanges = array;
                     continue;
                 }
-                if (property.NameEquals("errorReasons"u8))
+                if (prop.NameEquals("errorReasons"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     errorReasons = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new CircuitBreakerFailureCondition(
                 count,
                 percentage,
                 interval,
                 statusCodeRanges ?? new ChangeTrackingList<FailureStatusCodeRange>(),
                 errorReasons ?? new ChangeTrackingList<string>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Count), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  count: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Count))
-                {
-                    builder.Append("  count: ");
-                    builder.AppendLine($"'{Count.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Percentage), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  percentage: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Percentage))
-                {
-                    builder.Append("  percentage: ");
-                    builder.AppendLine($"'{Percentage.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Interval), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  interval: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Interval))
-                {
-                    builder.Append("  interval: ");
-                    var formattedTimeSpan = TypeFormatters.ToString(Interval.Value, "P");
-                    builder.AppendLine($"'{formattedTimeSpan}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StatusCodeRanges), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  statusCodeRanges: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(StatusCodeRanges))
-                {
-                    if (StatusCodeRanges.Any())
-                    {
-                        builder.Append("  statusCodeRanges: ");
-                        builder.AppendLine("[");
-                        foreach (var item in StatusCodeRanges)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  statusCodeRanges: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ErrorReasons), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  errorReasons: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(ErrorReasons))
-                {
-                    if (ErrorReasons.Any())
-                    {
-                        builder.Append("  errorReasons: ");
-                        builder.AppendLine("[");
-                        foreach (var item in ErrorReasons)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<CircuitBreakerFailureCondition>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CircuitBreakerFailureCondition>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(CircuitBreakerFailureCondition)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        CircuitBreakerFailureCondition IPersistableModel<CircuitBreakerFailureCondition>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CircuitBreakerFailureCondition>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCircuitBreakerFailureCondition(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CircuitBreakerFailureCondition)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<CircuitBreakerFailureCondition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

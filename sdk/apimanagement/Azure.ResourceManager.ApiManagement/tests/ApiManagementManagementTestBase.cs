@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
     {
         protected AzureLocation DefaultLocation => AzureLocation.WestUS2;
         protected ArmClient Client { get; private set; }
-        protected SubscriptionResource DefaultSubscription { get; private set; }
+        protected Azure.ResourceManager.Resources.SubscriptionResource DefaultSubscription { get; private set; }
 
         protected ApiManagementManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)

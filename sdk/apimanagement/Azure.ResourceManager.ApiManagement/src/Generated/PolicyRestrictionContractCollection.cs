@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ApiManagement
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class PolicyRestrictionContractCollection : ArmCollection, IEnumerable<PolicyRestrictionContractResource>, IAsyncEnumerable<PolicyRestrictionContractResource>
     {
-        private readonly ClientDiagnostics _policyRestrictionContractPolicyRestrictionClientDiagnostics;
-        private readonly PolicyRestrictionRestOperations _policyRestrictionContractPolicyRestrictionRestClient;
+        private readonly ClientDiagnostics _policyRestrictionClientDiagnostics;
+        private readonly PolicyRestriction _policyRestrictionRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="PolicyRestrictionContractCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of PolicyRestrictionContractCollection for mocking. </summary>
         protected PolicyRestrictionContractCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PolicyRestrictionContractCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyRestrictionContractCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PolicyRestrictionContractCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _policyRestrictionContractPolicyRestrictionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", PolicyRestrictionContractResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(PolicyRestrictionContractResource.ResourceType, out string policyRestrictionContractPolicyRestrictionApiVersion);
-            _policyRestrictionContractPolicyRestrictionRestClient = new PolicyRestrictionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, policyRestrictionContractPolicyRestrictionApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(PolicyRestrictionContractResource.ResourceType, out string policyRestrictionContractApiVersion);
+            _policyRestrictionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", PolicyRestrictionContractResource.ResourceType.Namespace, Diagnostics);
+            _policyRestrictionRestClient = new PolicyRestriction(_policyRestrictionClientDiagnostics, Pipeline, Endpoint, policyRestrictionContractApiVersion ?? "2025-03-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ApiManagementServiceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementServiceResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementServiceResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Creates or updates the policy restriction configuration of the Api Management service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policyRestrictions/{policyRestrictionId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policyRestrictions/{policyRestrictionId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyRestriction_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> PolicyRestrictionContracts_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PolicyRestrictionContractResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,23 +76,31 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="data"> The policy restriction to apply. </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyRestrictionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyRestrictionId"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<PolicyRestrictionContractResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string policyRestrictionId, PolicyRestrictionContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="policyRestrictionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<PolicyRestrictionContractResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string policyRestrictionId, PolicyRestrictionContractData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyRestrictionId, nameof(policyRestrictionId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _policyRestrictionContractPolicyRestrictionClientDiagnostics.CreateScope("PolicyRestrictionContractCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _policyRestrictionClientDiagnostics.CreateScope("PolicyRestrictionContractCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _policyRestrictionContractPolicyRestrictionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyRestrictionId, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var uri = _policyRestrictionContractPolicyRestrictionRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyRestrictionId, data, ifMatch);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApiManagementArmOperation<PolicyRestrictionContractResource>(Response.FromValue(new PolicyRestrictionContractResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _policyRestrictionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyRestrictionId, PolicyRestrictionContractData.ToRequestContent(data), ifMatch, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PolicyRestrictionContractData> response = Response.FromValue(PolicyRestrictionContractData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ApiManagementArmOperation<PolicyRestrictionContractResource> operation = new ApiManagementArmOperation<PolicyRestrictionContractResource>(Response.FromValue(new PolicyRestrictionContractResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -107,20 +114,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// Creates or updates the policy restriction configuration of the Api Management service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policyRestrictions/{policyRestrictionId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policyRestrictions/{policyRestrictionId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyRestriction_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> PolicyRestrictionContracts_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PolicyRestrictionContractResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -129,23 +132,31 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="data"> The policy restriction to apply. </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyRestrictionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyRestrictionId"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<PolicyRestrictionContractResource> CreateOrUpdate(WaitUntil waitUntil, string policyRestrictionId, PolicyRestrictionContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="policyRestrictionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<PolicyRestrictionContractResource> CreateOrUpdate(WaitUntil waitUntil, string policyRestrictionId, PolicyRestrictionContractData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyRestrictionId, nameof(policyRestrictionId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _policyRestrictionContractPolicyRestrictionClientDiagnostics.CreateScope("PolicyRestrictionContractCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _policyRestrictionClientDiagnostics.CreateScope("PolicyRestrictionContractCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _policyRestrictionContractPolicyRestrictionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyRestrictionId, data, ifMatch, cancellationToken);
-                var uri = _policyRestrictionContractPolicyRestrictionRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyRestrictionId, data, ifMatch);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApiManagementArmOperation<PolicyRestrictionContractResource>(Response.FromValue(new PolicyRestrictionContractResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _policyRestrictionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyRestrictionId, PolicyRestrictionContractData.ToRequestContent(data), ifMatch, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PolicyRestrictionContractData> response = Response.FromValue(PolicyRestrictionContractData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ApiManagementArmOperation<PolicyRestrictionContractResource> operation = new ApiManagementArmOperation<PolicyRestrictionContractResource>(Response.FromValue(new PolicyRestrictionContractResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -159,38 +170,42 @@ namespace Azure.ResourceManager.ApiManagement
         /// Get the policy restriction of the Api Management service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policyRestrictions/{policyRestrictionId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policyRestrictions/{policyRestrictionId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyRestriction_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PolicyRestrictionContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PolicyRestrictionContractResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyRestrictionId"> Policy restrictions after an entity level. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyRestrictionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyRestrictionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyRestrictionId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<PolicyRestrictionContractResource>> GetAsync(string policyRestrictionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyRestrictionId, nameof(policyRestrictionId));
 
-            using var scope = _policyRestrictionContractPolicyRestrictionClientDiagnostics.CreateScope("PolicyRestrictionContractCollection.Get");
+            using DiagnosticScope scope = _policyRestrictionClientDiagnostics.CreateScope("PolicyRestrictionContractCollection.Get");
             scope.Start();
             try
             {
-                var response = await _policyRestrictionContractPolicyRestrictionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyRestrictionId, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _policyRestrictionRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyRestrictionId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PolicyRestrictionContractData> response = Response.FromValue(PolicyRestrictionContractData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PolicyRestrictionContractResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -204,38 +219,42 @@ namespace Azure.ResourceManager.ApiManagement
         /// Get the policy restriction of the Api Management service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policyRestrictions/{policyRestrictionId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policyRestrictions/{policyRestrictionId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyRestriction_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PolicyRestrictionContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PolicyRestrictionContractResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyRestrictionId"> Policy restrictions after an entity level. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyRestrictionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyRestrictionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyRestrictionId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<PolicyRestrictionContractResource> Get(string policyRestrictionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyRestrictionId, nameof(policyRestrictionId));
 
-            using var scope = _policyRestrictionContractPolicyRestrictionClientDiagnostics.CreateScope("PolicyRestrictionContractCollection.Get");
+            using DiagnosticScope scope = _policyRestrictionClientDiagnostics.CreateScope("PolicyRestrictionContractCollection.Get");
             scope.Start();
             try
             {
-                var response = _policyRestrictionContractPolicyRestrictionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyRestrictionId, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _policyRestrictionRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyRestrictionId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PolicyRestrictionContractData> response = Response.FromValue(PolicyRestrictionContractData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PolicyRestrictionContractResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -249,50 +268,44 @@ namespace Azure.ResourceManager.ApiManagement
         /// Gets all policy restrictions of API Management services.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policyRestrictions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policyRestrictions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyRestriction_ListByService</description>
+        /// <term> Operation Id. </term>
+        /// <description> PolicyRestrictionContracts_ListByService. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PolicyRestrictionContractResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PolicyRestrictionContractResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PolicyRestrictionContractResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PolicyRestrictionContractResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _policyRestrictionContractPolicyRestrictionRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyRestrictionContractPolicyRestrictionRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PolicyRestrictionContractResource(Client, PolicyRestrictionContractData.DeserializePolicyRestrictionContractData(e)), _policyRestrictionContractPolicyRestrictionClientDiagnostics, Pipeline, "PolicyRestrictionContractCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<PolicyRestrictionContractData, PolicyRestrictionContractResource>(new PolicyRestrictionGetByServiceAsyncCollectionResultOfT(_policyRestrictionRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new PolicyRestrictionContractResource(Client, data));
         }
 
         /// <summary>
         /// Gets all policy restrictions of API Management services.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policyRestrictions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policyRestrictions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyRestriction_ListByService</description>
+        /// <term> Operation Id. </term>
+        /// <description> PolicyRestrictionContracts_ListByService. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PolicyRestrictionContractResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -300,45 +313,61 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="PolicyRestrictionContractResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PolicyRestrictionContractResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _policyRestrictionContractPolicyRestrictionRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyRestrictionContractPolicyRestrictionRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PolicyRestrictionContractResource(Client, PolicyRestrictionContractData.DeserializePolicyRestrictionContractData(e)), _policyRestrictionContractPolicyRestrictionClientDiagnostics, Pipeline, "PolicyRestrictionContractCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<PolicyRestrictionContractData, PolicyRestrictionContractResource>(new PolicyRestrictionGetByServiceCollectionResultOfT(_policyRestrictionRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new PolicyRestrictionContractResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policyRestrictions/{policyRestrictionId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policyRestrictions/{policyRestrictionId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyRestriction_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PolicyRestrictionContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PolicyRestrictionContractResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyRestrictionId"> Policy restrictions after an entity level. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyRestrictionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyRestrictionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyRestrictionId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string policyRestrictionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyRestrictionId, nameof(policyRestrictionId));
 
-            using var scope = _policyRestrictionContractPolicyRestrictionClientDiagnostics.CreateScope("PolicyRestrictionContractCollection.Exists");
+            using DiagnosticScope scope = _policyRestrictionClientDiagnostics.CreateScope("PolicyRestrictionContractCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _policyRestrictionContractPolicyRestrictionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyRestrictionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _policyRestrictionRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyRestrictionId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<PolicyRestrictionContractData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PolicyRestrictionContractData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PolicyRestrictionContractData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -352,36 +381,50 @@ namespace Azure.ResourceManager.ApiManagement
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policyRestrictions/{policyRestrictionId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policyRestrictions/{policyRestrictionId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyRestriction_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PolicyRestrictionContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PolicyRestrictionContractResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyRestrictionId"> Policy restrictions after an entity level. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyRestrictionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyRestrictionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyRestrictionId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string policyRestrictionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyRestrictionId, nameof(policyRestrictionId));
 
-            using var scope = _policyRestrictionContractPolicyRestrictionClientDiagnostics.CreateScope("PolicyRestrictionContractCollection.Exists");
+            using DiagnosticScope scope = _policyRestrictionClientDiagnostics.CreateScope("PolicyRestrictionContractCollection.Exists");
             scope.Start();
             try
             {
-                var response = _policyRestrictionContractPolicyRestrictionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyRestrictionId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _policyRestrictionRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyRestrictionId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<PolicyRestrictionContractData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PolicyRestrictionContractData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PolicyRestrictionContractData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -395,38 +438,54 @@ namespace Azure.ResourceManager.ApiManagement
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policyRestrictions/{policyRestrictionId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policyRestrictions/{policyRestrictionId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyRestriction_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PolicyRestrictionContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PolicyRestrictionContractResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyRestrictionId"> Policy restrictions after an entity level. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyRestrictionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyRestrictionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyRestrictionId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<PolicyRestrictionContractResource>> GetIfExistsAsync(string policyRestrictionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyRestrictionId, nameof(policyRestrictionId));
 
-            using var scope = _policyRestrictionContractPolicyRestrictionClientDiagnostics.CreateScope("PolicyRestrictionContractCollection.GetIfExists");
+            using DiagnosticScope scope = _policyRestrictionClientDiagnostics.CreateScope("PolicyRestrictionContractCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _policyRestrictionContractPolicyRestrictionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyRestrictionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _policyRestrictionRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyRestrictionId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<PolicyRestrictionContractData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PolicyRestrictionContractData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PolicyRestrictionContractData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<PolicyRestrictionContractResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new PolicyRestrictionContractResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -440,38 +499,54 @@ namespace Azure.ResourceManager.ApiManagement
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policyRestrictions/{policyRestrictionId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policyRestrictions/{policyRestrictionId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyRestriction_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PolicyRestrictionContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PolicyRestrictionContractResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyRestrictionId"> Policy restrictions after an entity level. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyRestrictionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyRestrictionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyRestrictionId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<PolicyRestrictionContractResource> GetIfExists(string policyRestrictionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyRestrictionId, nameof(policyRestrictionId));
 
-            using var scope = _policyRestrictionContractPolicyRestrictionClientDiagnostics.CreateScope("PolicyRestrictionContractCollection.GetIfExists");
+            using DiagnosticScope scope = _policyRestrictionClientDiagnostics.CreateScope("PolicyRestrictionContractCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _policyRestrictionContractPolicyRestrictionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyRestrictionId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _policyRestrictionRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyRestrictionId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<PolicyRestrictionContractData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PolicyRestrictionContractData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PolicyRestrictionContractData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<PolicyRestrictionContractResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new PolicyRestrictionContractResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -491,6 +566,7 @@ namespace Azure.ResourceManager.ApiManagement
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<PolicyRestrictionContractResource> IAsyncEnumerable<PolicyRestrictionContractResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

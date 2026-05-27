@@ -10,16 +10,75 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class PortalConfigContractData : IUtf8JsonSerializable, IJsonModel<PortalConfigContractData>
+    /// <summary> The developer portal configuration contract. </summary>
+    public partial class PortalConfigContractData : ResourceData, IJsonModel<PortalConfigContractData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PortalConfigContractData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PortalConfigContractData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializePortalConfigContractData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PortalConfigContractData)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PortalConfigContractData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(PortalConfigContractData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PortalConfigContractData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PortalConfigContractData IPersistableModel<PortalConfigContractData>.Create(BinaryData data, ModelReaderWriterOptions options) => (PortalConfigContractData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PortalConfigContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="portalConfigContractData"> The <see cref="PortalConfigContractData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(PortalConfigContractData portalConfigContractData)
+        {
+            if (portalConfigContractData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(portalConfigContractData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PortalConfigContractData"/> from. </param>
+        internal static PortalConfigContractData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializePortalConfigContractData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PortalConfigContractData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,400 +90,105 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PortalConfigContractData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PortalConfigContractData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PortalConfigContractData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(EnableBasicAuth))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("enableBasicAuth"u8);
-                writer.WriteBooleanValue(EnableBasicAuth.Value);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(Signin))
-            {
-                writer.WritePropertyName("signin"u8);
-                writer.WriteObjectValue(Signin, options);
-            }
-            if (Optional.IsDefined(Signup))
-            {
-                writer.WritePropertyName("signup"u8);
-                writer.WriteObjectValue(Signup, options);
-            }
-            if (Optional.IsDefined(Delegation))
-            {
-                writer.WritePropertyName("delegation"u8);
-                writer.WriteObjectValue(Delegation, options);
-            }
-            if (Optional.IsDefined(Cors))
-            {
-                writer.WritePropertyName("cors"u8);
-                writer.WriteObjectValue(Cors, options);
-            }
-            if (Optional.IsDefined(Csp))
-            {
-                writer.WritePropertyName("csp"u8);
-                writer.WriteObjectValue(Csp, options);
-            }
-            writer.WriteEndObject();
         }
 
-        PortalConfigContractData IJsonModel<PortalConfigContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PortalConfigContractData IJsonModel<PortalConfigContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (PortalConfigContractData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PortalConfigContractData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PortalConfigContractData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PortalConfigContractData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePortalConfigContractData(document.RootElement, options);
         }
 
-        internal static PortalConfigContractData DeserializePortalConfigContractData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static PortalConfigContractData DeserializePortalConfigContractData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            bool? enableBasicAuth = default;
-            PortalConfigPropertiesSignin signin = default;
-            PortalConfigPropertiesSignup signup = default;
-            PortalConfigDelegationProperties delegation = default;
-            PortalConfigCorsProperties cors = default;
-            PortalConfigCspProperties csp = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            PortalConfigProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerApiManagementContext.Default);
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("enableBasicAuth"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enableBasicAuth = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("signin"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            signin = PortalConfigPropertiesSignin.DeserializePortalConfigPropertiesSignin(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("signup"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            signup = PortalConfigPropertiesSignup.DeserializePortalConfigPropertiesSignup(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("delegation"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            delegation = PortalConfigDelegationProperties.DeserializePortalConfigDelegationProperties(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("cors"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            cors = PortalConfigCorsProperties.DeserializePortalConfigCorsProperties(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("csp"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            csp = PortalConfigCspProperties.DeserializePortalConfigCspProperties(property0.Value, options);
-                            continue;
-                        }
+                        continue;
                     }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerApiManagementContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = PortalConfigProperties.DeserializePortalConfigProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new PortalConfigContractData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
-                enableBasicAuth,
-                signin,
-                signup,
-                delegation,
-                cors,
-                csp,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties,
+                properties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  systemData: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SystemData))
-                {
-                    builder.Append("  systemData: ");
-                    builder.AppendLine($"'{SystemData.ToString()}'");
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableBasicAuth), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    enableBasicAuth: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EnableBasicAuth))
-                {
-                    builder.Append("    enableBasicAuth: ");
-                    var boolValue = EnableBasicAuth.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("Require", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    signin: ");
-                builder.AppendLine("{");
-                builder.AppendLine("      signin: {");
-                builder.Append("        require: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("      }");
-                builder.AppendLine("    }");
-            }
-            else
-            {
-                if (Optional.IsDefined(Signin))
-                {
-                    builder.Append("    signin: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Signin, options, 4, false, "    signin: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("SignupTermsOfService", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    signup: ");
-                builder.AppendLine("{");
-                builder.AppendLine("      signup: {");
-                builder.Append("        termsOfService: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("      }");
-                builder.AppendLine("    }");
-            }
-            else
-            {
-                if (Optional.IsDefined(Signup))
-                {
-                    builder.Append("    signup: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Signup, options, 4, false, "    signup: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Delegation), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    delegation: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Delegation))
-                {
-                    builder.Append("    delegation: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Delegation, options, 4, false, "    delegation: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("CorsAllowedOrigins", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    cors: ");
-                builder.AppendLine("{");
-                builder.AppendLine("      cors: {");
-                builder.Append("        allowedOrigins: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("      }");
-                builder.AppendLine("    }");
-            }
-            else
-            {
-                if (Optional.IsDefined(Cors))
-                {
-                    builder.Append("    cors: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Cors, options, 4, false, "    cors: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Csp), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    csp: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Csp))
-                {
-                    builder.Append("    csp: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Csp, options, 4, false, "    csp: ");
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<PortalConfigContractData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PortalConfigContractData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(PortalConfigContractData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        PortalConfigContractData IPersistableModel<PortalConfigContractData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PortalConfigContractData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializePortalConfigContractData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PortalConfigContractData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<PortalConfigContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

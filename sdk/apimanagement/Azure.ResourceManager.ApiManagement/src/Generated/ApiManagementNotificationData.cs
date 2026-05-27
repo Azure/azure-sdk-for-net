@@ -13,74 +13,62 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary>
-    /// A class representing the ApiManagementNotification data model.
-    /// Notification details.
-    /// </summary>
+    /// <summary> Notification details. </summary>
     public partial class ApiManagementNotificationData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementNotificationData"/>. </summary>
-        public ApiManagementNotificationData()
+        internal ApiManagementNotificationData()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementNotificationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="title"> Title of the Notification. </param>
-        /// <param name="description"> Description of the Notification. </param>
-        /// <param name="recipients"> Recipient Parameter values. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementNotificationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string title, string description, RecipientsContractProperties recipients, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Notification entity contract properties. </param>
+        internal ApiManagementNotificationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, NotificationContractProperties properties) : base(id, name, resourceType, systemData)
         {
-            Title = title;
-            Description = description;
-            Recipients = recipients;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
+
+        /// <summary> Notification entity contract properties. </summary>
+        [WirePath("properties")]
+        internal NotificationContractProperties Properties { get; }
 
         /// <summary> Title of the Notification. </summary>
         [WirePath("properties.title")]
-        public string Title { get; set; }
+        public string Title
+        {
+            get
+            {
+                return Properties.Title;
+            }
+        }
+
         /// <summary> Description of the Notification. </summary>
         [WirePath("properties.description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties.Description;
+            }
+        }
+
         /// <summary> Recipient Parameter values. </summary>
         [WirePath("properties.recipients")]
-        public RecipientsContractProperties Recipients { get; set; }
+        public RecipientsContractProperties Recipients
+        {
+            get
+            {
+                return Properties.Recipients;
+            }
+        }
     }
 }

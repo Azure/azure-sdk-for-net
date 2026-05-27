@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.ApiManagement.Models;
 
 namespace Azure.ResourceManager.ApiManagement
@@ -21,78 +22,84 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing a collection of <see cref="ApiManagementIdentityProviderResource"/> and their operations.
     /// Each <see cref="ApiManagementIdentityProviderResource"/> in the collection will belong to the same instance of <see cref="ApiManagementServiceResource"/>.
-    /// To get an <see cref="ApiManagementIdentityProviderCollection"/> instance call the GetApiManagementIdentityProviders method from an instance of <see cref="ApiManagementServiceResource"/>.
+    /// To get a <see cref="ApiManagementIdentityProviderCollection"/> instance call the GetApiManagementIdentityProviders method from an instance of <see cref="ApiManagementServiceResource"/>.
     /// </summary>
     public partial class ApiManagementIdentityProviderCollection : ArmCollection, IEnumerable<ApiManagementIdentityProviderResource>, IAsyncEnumerable<ApiManagementIdentityProviderResource>
     {
-        private readonly ClientDiagnostics _apiManagementIdentityProviderIdentityProviderClientDiagnostics;
-        private readonly IdentityProviderRestOperations _apiManagementIdentityProviderIdentityProviderRestClient;
+        private readonly ClientDiagnostics _identityProviderClientDiagnostics;
+        private readonly IdentityProvider _identityProviderRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ApiManagementIdentityProviderCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ApiManagementIdentityProviderCollection for mocking. </summary>
         protected ApiManagementIdentityProviderCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ApiManagementIdentityProviderCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementIdentityProviderCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ApiManagementIdentityProviderCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _apiManagementIdentityProviderIdentityProviderClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementIdentityProviderResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ApiManagementIdentityProviderResource.ResourceType, out string apiManagementIdentityProviderIdentityProviderApiVersion);
-            _apiManagementIdentityProviderIdentityProviderRestClient = new IdentityProviderRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementIdentityProviderIdentityProviderApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ApiManagementIdentityProviderResource.ResourceType, out string apiManagementIdentityProviderApiVersion);
+            _identityProviderClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementIdentityProviderResource.ResourceType.Namespace, Diagnostics);
+            _identityProviderRestClient = new IdentityProvider(_identityProviderClientDiagnostics, Pipeline, Endpoint, apiManagementIdentityProviderApiVersion ?? "2025-03-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ApiManagementServiceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementServiceResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementServiceResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Creates or Updates the IdentityProvider configuration.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/identityProviders/{identityProviderName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/identityProviders/{identityProviderName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IdentityProvider_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> IdentityProviderContracts_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementIdentityProviderResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="identityProviderName"> Identity Provider Type identifier. </param>
-        /// <param name="content"> Create parameters. </param>
+        /// <param name="identityProviderCreateContract"> Create parameters. </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<ApiManagementIdentityProviderResource>> CreateOrUpdateAsync(WaitUntil waitUntil, IdentityProviderType identityProviderName, ApiManagementIdentityProviderCreateOrUpdateContent content, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="identityProviderCreateContract"/> is null. </exception>
+        public virtual async Task<ArmOperation<ApiManagementIdentityProviderResource>> CreateOrUpdateAsync(WaitUntil waitUntil, IdentityProviderType identityProviderName, IdentityProviderCreateContract identityProviderCreateContract, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(identityProviderCreateContract, nameof(identityProviderCreateContract));
 
-            using var scope = _apiManagementIdentityProviderIdentityProviderClientDiagnostics.CreateScope("ApiManagementIdentityProviderCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _identityProviderClientDiagnostics.CreateScope("ApiManagementIdentityProviderCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _apiManagementIdentityProviderIdentityProviderRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, identityProviderName, content, ifMatch, cancellationToken).ConfigureAwait(false);
-                var uri = _apiManagementIdentityProviderIdentityProviderRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, identityProviderName, content, ifMatch);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApiManagementArmOperation<ApiManagementIdentityProviderResource>(Response.FromValue(new ApiManagementIdentityProviderResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _identityProviderRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, identityProviderName.ToString(), IdentityProviderCreateContract.ToRequestContent(identityProviderCreateContract), ifMatch, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ApiManagementIdentityProviderData> response = Response.FromValue(ApiManagementIdentityProviderData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ApiManagementArmOperation<ApiManagementIdentityProviderResource> operation = new ApiManagementArmOperation<ApiManagementIdentityProviderResource>(Response.FromValue(new ApiManagementIdentityProviderResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -106,43 +113,47 @@ namespace Azure.ResourceManager.ApiManagement
         /// Creates or Updates the IdentityProvider configuration.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/identityProviders/{identityProviderName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/identityProviders/{identityProviderName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IdentityProvider_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> IdentityProviderContracts_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementIdentityProviderResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="identityProviderName"> Identity Provider Type identifier. </param>
-        /// <param name="content"> Create parameters. </param>
+        /// <param name="identityProviderCreateContract"> Create parameters. </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<ApiManagementIdentityProviderResource> CreateOrUpdate(WaitUntil waitUntil, IdentityProviderType identityProviderName, ApiManagementIdentityProviderCreateOrUpdateContent content, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="identityProviderCreateContract"/> is null. </exception>
+        public virtual ArmOperation<ApiManagementIdentityProviderResource> CreateOrUpdate(WaitUntil waitUntil, IdentityProviderType identityProviderName, IdentityProviderCreateContract identityProviderCreateContract, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(identityProviderCreateContract, nameof(identityProviderCreateContract));
 
-            using var scope = _apiManagementIdentityProviderIdentityProviderClientDiagnostics.CreateScope("ApiManagementIdentityProviderCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _identityProviderClientDiagnostics.CreateScope("ApiManagementIdentityProviderCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _apiManagementIdentityProviderIdentityProviderRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, identityProviderName, content, ifMatch, cancellationToken);
-                var uri = _apiManagementIdentityProviderIdentityProviderRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, identityProviderName, content, ifMatch);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApiManagementArmOperation<ApiManagementIdentityProviderResource>(Response.FromValue(new ApiManagementIdentityProviderResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _identityProviderRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, identityProviderName.ToString(), IdentityProviderCreateContract.ToRequestContent(identityProviderCreateContract), ifMatch, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ApiManagementIdentityProviderData> response = Response.FromValue(ApiManagementIdentityProviderData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ApiManagementArmOperation<ApiManagementIdentityProviderResource> operation = new ApiManagementArmOperation<ApiManagementIdentityProviderResource>(Response.FromValue(new ApiManagementIdentityProviderResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -156,20 +167,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// Gets the configuration details of the identity Provider configured in specified service instance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/identityProviders/{identityProviderName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/identityProviders/{identityProviderName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IdentityProvider_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IdentityProviderContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementIdentityProviderResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,13 +184,21 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ApiManagementIdentityProviderResource>> GetAsync(IdentityProviderType identityProviderName, CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementIdentityProviderIdentityProviderClientDiagnostics.CreateScope("ApiManagementIdentityProviderCollection.Get");
+            using DiagnosticScope scope = _identityProviderClientDiagnostics.CreateScope("ApiManagementIdentityProviderCollection.Get");
             scope.Start();
             try
             {
-                var response = await _apiManagementIdentityProviderIdentityProviderRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, identityProviderName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _identityProviderRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, identityProviderName.ToString(), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ApiManagementIdentityProviderData> response = Response.FromValue(ApiManagementIdentityProviderData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApiManagementIdentityProviderResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -197,20 +212,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// Gets the configuration details of the identity Provider configured in specified service instance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/identityProviders/{identityProviderName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/identityProviders/{identityProviderName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IdentityProvider_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IdentityProviderContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementIdentityProviderResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -218,13 +229,21 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ApiManagementIdentityProviderResource> Get(IdentityProviderType identityProviderName, CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementIdentityProviderIdentityProviderClientDiagnostics.CreateScope("ApiManagementIdentityProviderCollection.Get");
+            using DiagnosticScope scope = _identityProviderClientDiagnostics.CreateScope("ApiManagementIdentityProviderCollection.Get");
             scope.Start();
             try
             {
-                var response = _apiManagementIdentityProviderIdentityProviderRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, identityProviderName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _identityProviderRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, identityProviderName.ToString(), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ApiManagementIdentityProviderData> response = Response.FromValue(ApiManagementIdentityProviderData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApiManagementIdentityProviderResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -238,50 +257,44 @@ namespace Azure.ResourceManager.ApiManagement
         /// Lists a collection of Identity Provider configured in the specified service instance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/identityProviders</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/identityProviders. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IdentityProvider_ListByService</description>
+        /// <term> Operation Id. </term>
+        /// <description> IdentityProviderContracts_ListByService. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementIdentityProviderResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiManagementIdentityProviderResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApiManagementIdentityProviderResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApiManagementIdentityProviderResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementIdentityProviderIdentityProviderRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementIdentityProviderIdentityProviderRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementIdentityProviderResource(Client, ApiManagementIdentityProviderData.DeserializeApiManagementIdentityProviderData(e)), _apiManagementIdentityProviderIdentityProviderClientDiagnostics, Pipeline, "ApiManagementIdentityProviderCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ApiManagementIdentityProviderData, ApiManagementIdentityProviderResource>(new IdentityProviderGetByServiceAsyncCollectionResultOfT(_identityProviderRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new ApiManagementIdentityProviderResource(Client, data));
         }
 
         /// <summary>
         /// Lists a collection of Identity Provider configured in the specified service instance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/identityProviders</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/identityProviders. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IdentityProvider_ListByService</description>
+        /// <term> Operation Id. </term>
+        /// <description> IdentityProviderContracts_ListByService. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementIdentityProviderResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -289,29 +302,27 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="ApiManagementIdentityProviderResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApiManagementIdentityProviderResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementIdentityProviderIdentityProviderRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementIdentityProviderIdentityProviderRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementIdentityProviderResource(Client, ApiManagementIdentityProviderData.DeserializeApiManagementIdentityProviderData(e)), _apiManagementIdentityProviderIdentityProviderClientDiagnostics, Pipeline, "ApiManagementIdentityProviderCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ApiManagementIdentityProviderData, ApiManagementIdentityProviderResource>(new IdentityProviderGetByServiceCollectionResultOfT(_identityProviderRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new ApiManagementIdentityProviderResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/identityProviders/{identityProviderName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/identityProviders/{identityProviderName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IdentityProvider_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IdentityProviderContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementIdentityProviderResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -319,11 +330,29 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<bool>> ExistsAsync(IdentityProviderType identityProviderName, CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementIdentityProviderIdentityProviderClientDiagnostics.CreateScope("ApiManagementIdentityProviderCollection.Exists");
+            using DiagnosticScope scope = _identityProviderClientDiagnostics.CreateScope("ApiManagementIdentityProviderCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _apiManagementIdentityProviderIdentityProviderRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, identityProviderName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _identityProviderRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, identityProviderName.ToString(), context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ApiManagementIdentityProviderData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApiManagementIdentityProviderData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApiManagementIdentityProviderData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -337,20 +366,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/identityProviders/{identityProviderName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/identityProviders/{identityProviderName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IdentityProvider_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IdentityProviderContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementIdentityProviderResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -358,11 +383,29 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(IdentityProviderType identityProviderName, CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementIdentityProviderIdentityProviderClientDiagnostics.CreateScope("ApiManagementIdentityProviderCollection.Exists");
+            using DiagnosticScope scope = _identityProviderClientDiagnostics.CreateScope("ApiManagementIdentityProviderCollection.Exists");
             scope.Start();
             try
             {
-                var response = _apiManagementIdentityProviderIdentityProviderRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, identityProviderName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _identityProviderRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, identityProviderName.ToString(), context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ApiManagementIdentityProviderData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApiManagementIdentityProviderData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApiManagementIdentityProviderData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -376,20 +419,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/identityProviders/{identityProviderName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/identityProviders/{identityProviderName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IdentityProvider_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IdentityProviderContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementIdentityProviderResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -397,13 +436,33 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<NullableResponse<ApiManagementIdentityProviderResource>> GetIfExistsAsync(IdentityProviderType identityProviderName, CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementIdentityProviderIdentityProviderClientDiagnostics.CreateScope("ApiManagementIdentityProviderCollection.GetIfExists");
+            using DiagnosticScope scope = _identityProviderClientDiagnostics.CreateScope("ApiManagementIdentityProviderCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _apiManagementIdentityProviderIdentityProviderRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, identityProviderName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _identityProviderRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, identityProviderName.ToString(), context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ApiManagementIdentityProviderData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApiManagementIdentityProviderData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApiManagementIdentityProviderData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ApiManagementIdentityProviderResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApiManagementIdentityProviderResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -417,20 +476,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/identityProviders/{identityProviderName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/identityProviders/{identityProviderName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IdentityProvider_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IdentityProviderContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementIdentityProviderResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -438,13 +493,33 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual NullableResponse<ApiManagementIdentityProviderResource> GetIfExists(IdentityProviderType identityProviderName, CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementIdentityProviderIdentityProviderClientDiagnostics.CreateScope("ApiManagementIdentityProviderCollection.GetIfExists");
+            using DiagnosticScope scope = _identityProviderClientDiagnostics.CreateScope("ApiManagementIdentityProviderCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _apiManagementIdentityProviderIdentityProviderRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, identityProviderName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _identityProviderRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, identityProviderName.ToString(), context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ApiManagementIdentityProviderData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApiManagementIdentityProviderData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApiManagementIdentityProviderData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ApiManagementIdentityProviderResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApiManagementIdentityProviderResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -464,6 +539,7 @@ namespace Azure.ResourceManager.ApiManagement
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ApiManagementIdentityProviderResource> IAsyncEnumerable<ApiManagementIdentityProviderResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

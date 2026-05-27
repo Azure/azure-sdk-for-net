@@ -7,76 +7,44 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Issue contract Update Properties. </summary>
     public partial class KeyVaultLastAccessStatusContractProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultLastAccessStatusContractProperties"/>. </summary>
-        public KeyVaultLastAccessStatusContractProperties()
+        internal KeyVaultLastAccessStatusContractProperties()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultLastAccessStatusContractProperties"/>. </summary>
         /// <param name="code"> Last status code for sync and refresh of secret from key vault. </param>
         /// <param name="message"> Details of the error else empty. </param>
-        /// <param name="timeStampUtc">
-        /// Last time secret was accessed. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        ///
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KeyVaultLastAccessStatusContractProperties(string code, string message, DateTimeOffset? timeStampUtc, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="timeStampUtc"> Last time secret was accessed. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal KeyVaultLastAccessStatusContractProperties(string code, string message, DateTimeOffset? timeStampUtc, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;
             TimeStampUtc = timeStampUtc;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Last status code for sync and refresh of secret from key vault. </summary>
         [WirePath("code")]
-        public string Code { get; set; }
+        public string Code { get; }
+
         /// <summary> Details of the error else empty. </summary>
         [WirePath("message")]
-        public string Message { get; set; }
-        /// <summary>
-        /// Last time secret was accessed. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        ///
-        /// </summary>
+        public string Message { get; }
+
+        /// <summary> Last time secret was accessed. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("timeStampUtc")]
-        public DateTimeOffset? TimeStampUtc { get; set; }
+        public DateTimeOffset? TimeStampUtc { get; }
     }
 }

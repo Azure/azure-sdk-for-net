@@ -10,15 +10,65 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class TenantConfigurationSyncStateContract : IUtf8JsonSerializable, IJsonModel<TenantConfigurationSyncStateContract>
+    /// <summary> Result of Tenant Configuration Sync State. </summary>
+    public partial class TenantConfigurationSyncStateContract : ResourceData, IJsonModel<TenantConfigurationSyncStateContract>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TenantConfigurationSyncStateContract>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TenantConfigurationSyncStateContract>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeTenantConfigurationSyncStateContract(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TenantConfigurationSyncStateContract)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TenantConfigurationSyncStateContract>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(TenantConfigurationSyncStateContract)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TenantConfigurationSyncStateContract>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TenantConfigurationSyncStateContract IPersistableModel<TenantConfigurationSyncStateContract>.Create(BinaryData data, ModelReaderWriterOptions options) => (TenantConfigurationSyncStateContract)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TenantConfigurationSyncStateContract>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="TenantConfigurationSyncStateContract"/> from. </param>
+        internal static TenantConfigurationSyncStateContract FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeTenantConfigurationSyncStateContract(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TenantConfigurationSyncStateContract>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,463 +80,105 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TenantConfigurationSyncStateContract>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TenantConfigurationSyncStateContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TenantConfigurationSyncStateContract)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Branch))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("branch"u8);
-                writer.WriteStringValue(Branch);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(CommitId))
-            {
-                writer.WritePropertyName("commitId"u8);
-                writer.WriteStringValue(CommitId);
-            }
-            if (Optional.IsDefined(IsExported))
-            {
-                writer.WritePropertyName("isExport"u8);
-                writer.WriteBooleanValue(IsExported.Value);
-            }
-            if (Optional.IsDefined(IsSynced))
-            {
-                writer.WritePropertyName("isSynced"u8);
-                writer.WriteBooleanValue(IsSynced.Value);
-            }
-            if (Optional.IsDefined(IsGitEnabled))
-            {
-                writer.WritePropertyName("isGitEnabled"u8);
-                writer.WriteBooleanValue(IsGitEnabled.Value);
-            }
-            if (Optional.IsDefined(SyncOn))
-            {
-                writer.WritePropertyName("syncDate"u8);
-                writer.WriteStringValue(SyncOn.Value, "O");
-            }
-            if (Optional.IsDefined(ConfigurationChangeOn))
-            {
-                writer.WritePropertyName("configurationChangeDate"u8);
-                writer.WriteStringValue(ConfigurationChangeOn.Value, "O");
-            }
-            if (Optional.IsDefined(LastOperationId))
-            {
-                writer.WritePropertyName("lastOperationId"u8);
-                writer.WriteStringValue(LastOperationId);
-            }
-            writer.WriteEndObject();
         }
 
-        TenantConfigurationSyncStateContract IJsonModel<TenantConfigurationSyncStateContract>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TenantConfigurationSyncStateContract IJsonModel<TenantConfigurationSyncStateContract>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (TenantConfigurationSyncStateContract)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TenantConfigurationSyncStateContract>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TenantConfigurationSyncStateContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TenantConfigurationSyncStateContract)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeTenantConfigurationSyncStateContract(document.RootElement, options);
         }
 
-        internal static TenantConfigurationSyncStateContract DeserializeTenantConfigurationSyncStateContract(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static TenantConfigurationSyncStateContract DeserializeTenantConfigurationSyncStateContract(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            string branch = default;
-            string commitId = default;
-            bool? isExport = default;
-            bool? isSynced = default;
-            bool? isGitEnabled = default;
-            DateTimeOffset? syncDate = default;
-            DateTimeOffset? configurationChangeDate = default;
-            string lastOperationId = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            TenantConfigurationSyncStateContractProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerApiManagementContext.Default);
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("branch"u8))
-                        {
-                            branch = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("commitId"u8))
-                        {
-                            commitId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("isExport"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            isExport = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("isSynced"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            isSynced = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("isGitEnabled"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            isGitEnabled = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("syncDate"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            syncDate = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("configurationChangeDate"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            configurationChangeDate = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("lastOperationId"u8))
-                        {
-                            lastOperationId = property0.Value.GetString();
-                            continue;
-                        }
+                        continue;
                     }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerApiManagementContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = TenantConfigurationSyncStateContractProperties.DeserializeTenantConfigurationSyncStateContractProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new TenantConfigurationSyncStateContract(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
-                branch,
-                commitId,
-                isExport,
-                isSynced,
-                isGitEnabled,
-                syncDate,
-                configurationChangeDate,
-                lastOperationId,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties,
+                properties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  systemData: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SystemData))
-                {
-                    builder.Append("  systemData: ");
-                    builder.AppendLine($"'{SystemData.ToString()}'");
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Branch), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    branch: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Branch))
-                {
-                    builder.Append("    branch: ");
-                    if (Branch.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Branch}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Branch}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CommitId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    commitId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CommitId))
-                {
-                    builder.Append("    commitId: ");
-                    if (CommitId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CommitId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CommitId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsExported), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    isExport: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsExported))
-                {
-                    builder.Append("    isExport: ");
-                    var boolValue = IsExported.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsSynced), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    isSynced: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsSynced))
-                {
-                    builder.Append("    isSynced: ");
-                    var boolValue = IsSynced.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsGitEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    isGitEnabled: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsGitEnabled))
-                {
-                    builder.Append("    isGitEnabled: ");
-                    var boolValue = IsGitEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SyncOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    syncDate: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SyncOn))
-                {
-                    builder.Append("    syncDate: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(SyncOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConfigurationChangeOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    configurationChangeDate: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ConfigurationChangeOn))
-                {
-                    builder.Append("    configurationChangeDate: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(ConfigurationChangeOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastOperationId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    lastOperationId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LastOperationId))
-                {
-                    builder.Append("    lastOperationId: ");
-                    if (LastOperationId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{LastOperationId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{LastOperationId}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<TenantConfigurationSyncStateContract>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TenantConfigurationSyncStateContract>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(TenantConfigurationSyncStateContract)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        TenantConfigurationSyncStateContract IPersistableModel<TenantConfigurationSyncStateContract>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TenantConfigurationSyncStateContract>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeTenantConfigurationSyncStateContract(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(TenantConfigurationSyncStateContract)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<TenantConfigurationSyncStateContract>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

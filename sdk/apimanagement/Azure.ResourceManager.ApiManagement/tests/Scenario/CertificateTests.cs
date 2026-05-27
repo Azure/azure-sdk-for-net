@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -24,32 +24,31 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
         private ApiManagementServiceResource ApiServiceResource { get; set; }
 
-        private ApiManagementServiceCollection ApiServiceCollection { get; set; }
+        private ApiManagementServiceResourceCollection ApiServiceCollection { get; set; }
 
         private async Task SetCollectionsAsync()
         {
             ResourceGroup = await CreateResourceGroupAsync(AzureLocation.EastUS);
-            ApiServiceCollection = ResourceGroup.GetApiManagementServices();
+            ApiServiceCollection = ResourceGroup.GetApiManagementServiceResources();
         }
 
         private async Task CreateApiServiceAsync()
         {
             await SetCollectionsAsync();
             var apiName = Recording.GenerateAssetName("testapi-");
-            var data = new ApiManagementServiceData(AzureLocation.EastUS, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Developer, 1), "Sample@Sample.com", "sample")
+            var data = new ApiManagementServiceResourceData(AzureLocation.EastUS, "Sample@Sample.com", "sample", new ApiManagementServiceSkuProperties(SkuType.Developer, 1))
             {
-                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
+                Identity = new ApiManagementServiceIdentity(ApimIdentityType.SystemAssigned)
             };
             ApiServiceResource = (await ApiServiceCollection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data)).Value;
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         [PlaybackOnly("linux cert issue")]
         public async Task CRUD()
         {
             await CreateApiServiceAsync();
-            var certCollection = ApiServiceResource.GetApiManagementCertificates();
+            var certCollection = ApiServiceResource.GetCertificates();
 
             // list certificates: there should be none
             var listResponse = await certCollection.GetAllAsync().ToEnumerableAsync();
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                 cert = new X509Certificate2("./Resources/sdktest.cer");
 #endif
             }
-            var content = new ApiManagementCertificateCreateOrUpdateContent()
+            var content = new CertificateCreateOrUpdateContent()
             {
                 Data = "sanitized"
             };
@@ -93,7 +92,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             }
             //create key vault certificate
             //string kvcertificateId = Recording.GenerateAssetName("kvcertificateId");
-            //content = new ApiManagementCertificateCreateOrUpdateContent()
+            //content = new CertificateCreateOrUpdateContent()
             //{
             //    KeyVaultDetails = new KeyVaultContractCreateProperties()
             //    {
@@ -119,7 +118,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.AreEqual(1, listResponse.Count);
 
             // remove the certificate
-            await getResponse.DeleteAsync(WaitUntil.Completed, ETag.All);
+            await getResponse.DeleteAsync(WaitUntil.Completed, ETag.All.ToString());
             var resultFalse = (await certCollection.ExistsAsync(certificateId));
             Assert.IsFalse(resultFalse);
         }

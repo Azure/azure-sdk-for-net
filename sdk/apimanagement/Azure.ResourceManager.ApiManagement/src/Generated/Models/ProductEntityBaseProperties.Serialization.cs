@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ProductEntityBaseProperties : IUtf8JsonSerializable, IJsonModel<ProductEntityBaseProperties>
+    /// <summary> Product Entity Base Parameters. </summary>
+    public partial class ProductEntityBaseProperties : IJsonModel<ProductEntityBaseProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProductEntityBaseProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ProductEntityBaseProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ProductEntityBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeProductEntityBaseProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ProductEntityBaseProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ProductEntityBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ProductEntityBaseProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ProductEntityBaseProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ProductEntityBaseProperties IPersistableModel<ProductEntityBaseProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ProductEntityBaseProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ProductEntityBaseProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +69,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProductEntityBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProductEntityBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ProductEntityBaseProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
@@ -45,35 +84,50 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("terms"u8);
                 writer.WriteStringValue(Terms);
             }
-            if (Optional.IsDefined(IsSubscriptionRequired))
+            if (Optional.IsDefined(SubscriptionRequired))
             {
                 writer.WritePropertyName("subscriptionRequired"u8);
-                writer.WriteBooleanValue(IsSubscriptionRequired.Value);
+                writer.WriteBooleanValue(SubscriptionRequired.Value);
             }
-            if (Optional.IsDefined(IsApprovalRequired))
+            if (Optional.IsDefined(ApprovalRequired))
             {
                 writer.WritePropertyName("approvalRequired"u8);
-                writer.WriteBooleanValue(IsApprovalRequired.Value);
+                writer.WriteBooleanValue(ApprovalRequired.Value);
             }
             if (Optional.IsDefined(SubscriptionsLimit))
             {
                 writer.WritePropertyName("subscriptionsLimit"u8);
                 writer.WriteNumberValue(SubscriptionsLimit.Value);
             }
+            if (Optional.IsCollectionDefined(AuthenticationType))
+            {
+                writer.WritePropertyName("authenticationType"u8);
+                writer.WriteStartArray();
+                foreach (ProductAuthType item in AuthenticationType)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Application))
+            {
+                writer.WritePropertyName("application"u8);
+                writer.WriteObjectValue(Application, options);
+            }
             if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -82,22 +136,27 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
         }
 
-        ProductEntityBaseProperties IJsonModel<ProductEntityBaseProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ProductEntityBaseProperties IJsonModel<ProductEntityBaseProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ProductEntityBaseProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProductEntityBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProductEntityBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ProductEntityBaseProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeProductEntityBaseProperties(document.RootElement, options);
         }
 
-        internal static ProductEntityBaseProperties DeserializeProductEntityBaseProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ProductEntityBaseProperties DeserializeProductEntityBaseProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -107,227 +166,96 @@ namespace Azure.ResourceManager.ApiManagement.Models
             bool? subscriptionRequired = default;
             bool? approvalRequired = default;
             int? subscriptionsLimit = default;
+            IList<ProductAuthType> authenticationType = default;
+            ProductEntityBaseParametersApplication application = default;
             ApiManagementProductState? state = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("description"u8))
+                if (prop.NameEquals("description"u8))
                 {
-                    description = property.Value.GetString();
+                    description = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("terms"u8))
+                if (prop.NameEquals("terms"u8))
                 {
-                    terms = property.Value.GetString();
+                    terms = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subscriptionRequired"u8))
+                if (prop.NameEquals("subscriptionRequired"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    subscriptionRequired = property.Value.GetBoolean();
+                    subscriptionRequired = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("approvalRequired"u8))
+                if (prop.NameEquals("approvalRequired"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    approvalRequired = property.Value.GetBoolean();
+                    approvalRequired = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("subscriptionsLimit"u8))
+                if (prop.NameEquals("subscriptionsLimit"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    subscriptionsLimit = property.Value.GetInt32();
+                    subscriptionsLimit = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("state"u8))
+                if (prop.NameEquals("authenticationType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    state = property.Value.GetString().ToApiManagementProductState();
+                    List<ProductAuthType> array = new List<ProductAuthType>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(new ProductAuthType(item.GetString()));
+                    }
+                    authenticationType = array;
+                    continue;
+                }
+                if (prop.NameEquals("application"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    application = ProductEntityBaseParametersApplication.DeserializeProductEntityBaseParametersApplication(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("state"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    state = prop.Value.GetString().ToApiManagementProductState();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ProductEntityBaseProperties(
                 description,
                 terms,
                 subscriptionRequired,
                 approvalRequired,
                 subscriptionsLimit,
+                authenticationType ?? new ChangeTrackingList<ProductAuthType>(),
+                application,
                 state,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  description: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Description))
-                {
-                    builder.Append("  description: ");
-                    if (Description.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Description}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Description}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Terms), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  terms: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Terms))
-                {
-                    builder.Append("  terms: ");
-                    if (Terms.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Terms}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Terms}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsSubscriptionRequired), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  subscriptionRequired: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsSubscriptionRequired))
-                {
-                    builder.Append("  subscriptionRequired: ");
-                    var boolValue = IsSubscriptionRequired.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsApprovalRequired), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  approvalRequired: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsApprovalRequired))
-                {
-                    builder.Append("  approvalRequired: ");
-                    var boolValue = IsApprovalRequired.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SubscriptionsLimit), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  subscriptionsLimit: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SubscriptionsLimit))
-                {
-                    builder.Append("  subscriptionsLimit: ");
-                    builder.AppendLine($"{SubscriptionsLimit.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  state: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(State))
-                {
-                    builder.Append("  state: ");
-                    builder.AppendLine($"'{State.Value.ToSerialString()}'");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ProductEntityBaseProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ProductEntityBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(ProductEntityBaseProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ProductEntityBaseProperties IPersistableModel<ProductEntityBaseProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ProductEntityBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeProductEntityBaseProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ProductEntityBaseProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ProductEntityBaseProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,157 +6,44 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.ApiManagement.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    internal partial class WorkspaceApiOperationPolicyRestOperations
+    internal partial class WorkspaceApiOperationPolicy
     {
-        private readonly TelemetryDetails _userAgent;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of WorkspaceApiOperationPolicyRestOperations. </summary>
+        /// <summary> Initializes a new instance of WorkspaceApiOperationPolicy for mocking. </summary>
+        protected WorkspaceApiOperationPolicy()
+        {
+        }
+
+        /// <summary> Initializes a new instance of WorkspaceApiOperationPolicy. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public WorkspaceApiOperationPolicyRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal WorkspaceApiOperationPolicy(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-05-01";
-            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _apiVersion = apiVersion;
         }
 
-        internal RequestUriBuilder CreateListByOperationRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string apiId, string operationId)
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string apiId, string operationId, string policyId, string format, RequestContext context)
         {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
-            uri.AppendPath(serviceName, true);
-            uri.AppendPath("/workspaces/", false);
-            uri.AppendPath(workspaceId, true);
-            uri.AppendPath("/apis/", false);
-            uri.AppendPath(apiId, true);
-            uri.AppendPath("/operations/", false);
-            uri.AppendPath(operationId, true);
-            uri.AppendPath("/policies", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateListByOperationRequest(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string apiId, string operationId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
-            uri.AppendPath(serviceName, true);
-            uri.AppendPath("/workspaces/", false);
-            uri.AppendPath(workspaceId, true);
-            uri.AppendPath("/apis/", false);
-            uri.AppendPath(apiId, true);
-            uri.AppendPath("/operations/", false);
-            uri.AppendPath(operationId, true);
-            uri.AppendPath("/policies", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Get the list of policy configuration at the API Operation level. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="serviceName"> The name of the API Management service. </param>
-        /// <param name="workspaceId"> Workspace identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="apiId"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
-        /// <param name="operationId"> Operation identifier within an API. Must be unique in the current API Management service instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/>, <paramref name="apiId"/> or <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/>, <paramref name="apiId"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyListResult>> ListByOperationAsync(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string apiId, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
-            Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var message = CreateListByOperationRequest(subscriptionId, resourceGroupName, serviceName, workspaceId, apiId, operationId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PolicyListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PolicyListResult.DeserializePolicyListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get the list of policy configuration at the API Operation level. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="serviceName"> The name of the API Management service. </param>
-        /// <param name="workspaceId"> Workspace identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="apiId"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
-        /// <param name="operationId"> Operation identifier within an API. Must be unique in the current API Management service instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/>, <paramref name="apiId"/> or <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/>, <paramref name="apiId"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyListResult> ListByOperation(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string apiId, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
-            Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var message = CreateListByOperationRequest(subscriptionId, resourceGroupName, serviceName, workspaceId, apiId, operationId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PolicyListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PolicyListResult.DeserializePolicyListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetEntityTagRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string apiId, string operationId, PolicyName policyId)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
@@ -171,120 +58,55 @@ namespace Azure.ResourceManager.ApiManagement
             uri.AppendPath("/operations/", false);
             uri.AppendPath(operationId, true);
             uri.AppendPath("/policies/", false);
-            uri.AppendPath(policyId.ToString(), true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
+            uri.AppendPath(policyId, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (format != null)
+            {
+                uri.AppendQuery("format", format, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
         }
 
-        internal HttpMessage CreateGetEntityTagRequest(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string apiId, string operationId, PolicyName policyId)
+        internal HttpMessage CreateGetEntityTagRequest(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string apiId, string operationId, string policyId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
+            uri.AppendPath(serviceName, true);
+            uri.AppendPath("/workspaces/", false);
+            uri.AppendPath(workspaceId, true);
+            uri.AppendPath("/apis/", false);
+            uri.AppendPath(apiId, true);
+            uri.AppendPath("/operations/", false);
+            uri.AppendPath(operationId, true);
+            uri.AppendPath("/policies/", false);
+            uri.AppendPath(policyId, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Head;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
-            uri.AppendPath(serviceName, true);
-            uri.AppendPath("/workspaces/", false);
-            uri.AppendPath(workspaceId, true);
-            uri.AppendPath("/apis/", false);
-            uri.AppendPath(apiId, true);
-            uri.AppendPath("/operations/", false);
-            uri.AppendPath(operationId, true);
-            uri.AppendPath("/policies/", false);
-            uri.AppendPath(policyId.ToString(), true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Gets the entity state (Etag) version of the API operation policy specified by its identifier. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="serviceName"> The name of the API Management service. </param>
-        /// <param name="workspaceId"> Workspace identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="apiId"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
-        /// <param name="operationId"> Operation identifier within an API. Must be unique in the current API Management service instance. </param>
-        /// <param name="policyId"> The identifier of the Policy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/>, <paramref name="apiId"/> or <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/>, <paramref name="apiId"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<bool>> GetEntityTagAsync(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string apiId, string operationId, PolicyName policyId, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string apiId, string operationId, string policyId, RequestContent content, ETag? ifMatch, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
-            Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var message = CreateGetEntityTagRequest(subscriptionId, resourceGroupName, serviceName, workspaceId, apiId, operationId, policyId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case int s when s >= 200 && s < 300:
-                    {
-                        bool value = true;
-                        return Response.FromValue(value, message.Response);
-                    }
-                case int s when s >= 400 && s < 500:
-                    {
-                        bool value = false;
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets the entity state (Etag) version of the API operation policy specified by its identifier. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="serviceName"> The name of the API Management service. </param>
-        /// <param name="workspaceId"> Workspace identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="apiId"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
-        /// <param name="operationId"> Operation identifier within an API. Must be unique in the current API Management service instance. </param>
-        /// <param name="policyId"> The identifier of the Policy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/>, <paramref name="apiId"/> or <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/>, <paramref name="apiId"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<bool> GetEntityTag(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string apiId, string operationId, PolicyName policyId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
-            Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var message = CreateGetEntityTagRequest(subscriptionId, resourceGroupName, serviceName, workspaceId, apiId, operationId, policyId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case int s when s >= 200 && s < 300:
-                    {
-                        bool value = true;
-                        return Response.FromValue(value, message.Response);
-                    }
-                case int s when s >= 400 && s < 500:
-                    {
-                        bool value = false;
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string apiId, string operationId, PolicyName policyId, PolicyExportFormat? format)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
@@ -299,266 +121,28 @@ namespace Azure.ResourceManager.ApiManagement
             uri.AppendPath("/operations/", false);
             uri.AppendPath(operationId, true);
             uri.AppendPath("/policies/", false);
-            uri.AppendPath(policyId.ToString(), true);
-            if (format != null)
+            uri.AppendPath(policyId, true);
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("format", format.Value.ToString(), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string apiId, string operationId, PolicyName policyId, PolicyExportFormat? format)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
-            uri.AppendPath(serviceName, true);
-            uri.AppendPath("/workspaces/", false);
-            uri.AppendPath(workspaceId, true);
-            uri.AppendPath("/apis/", false);
-            uri.AppendPath(apiId, true);
-            uri.AppendPath("/operations/", false);
-            uri.AppendPath(operationId, true);
-            uri.AppendPath("/policies/", false);
-            uri.AppendPath(policyId.ToString(), true);
-            if (format != null)
-            {
-                uri.AppendQuery("format", format.Value.ToString(), true);
-            }
-            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Get the policy configuration at the API Operation level. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="serviceName"> The name of the API Management service. </param>
-        /// <param name="workspaceId"> Workspace identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="apiId"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
-        /// <param name="operationId"> Operation identifier within an API. Must be unique in the current API Management service instance. </param>
-        /// <param name="policyId"> The identifier of the Policy. </param>
-        /// <param name="format"> Policy Export Format. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/>, <paramref name="apiId"/> or <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/>, <paramref name="apiId"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyContractData>> GetAsync(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string apiId, string operationId, PolicyName policyId, PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
-            Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, serviceName, workspaceId, apiId, operationId, policyId, format);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PolicyContractData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PolicyContractData.DeserializePolicyContractData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((PolicyContractData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get the policy configuration at the API Operation level. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="serviceName"> The name of the API Management service. </param>
-        /// <param name="workspaceId"> Workspace identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="apiId"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
-        /// <param name="operationId"> Operation identifier within an API. Must be unique in the current API Management service instance. </param>
-        /// <param name="policyId"> The identifier of the Policy. </param>
-        /// <param name="format"> Policy Export Format. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/>, <paramref name="apiId"/> or <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/>, <paramref name="apiId"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyContractData> Get(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string apiId, string operationId, PolicyName policyId, PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
-            Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, serviceName, workspaceId, apiId, operationId, policyId, format);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PolicyContractData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PolicyContractData.DeserializePolicyContractData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((PolicyContractData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string apiId, string operationId, PolicyName policyId, PolicyContractData data, ETag? ifMatch)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
-            uri.AppendPath(serviceName, true);
-            uri.AppendPath("/workspaces/", false);
-            uri.AppendPath(workspaceId, true);
-            uri.AppendPath("/apis/", false);
-            uri.AppendPath(apiId, true);
-            uri.AppendPath("/operations/", false);
-            uri.AppendPath(operationId, true);
-            uri.AppendPath("/policies/", false);
-            uri.AppendPath(policyId.ToString(), true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string apiId, string operationId, PolicyName policyId, PolicyContractData data, ETag? ifMatch)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
             request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
-            uri.AppendPath(serviceName, true);
-            uri.AppendPath("/workspaces/", false);
-            uri.AppendPath(workspaceId, true);
-            uri.AppendPath("/apis/", false);
-            uri.AppendPath(apiId, true);
-            uri.AppendPath("/operations/", false);
-            uri.AppendPath(operationId, true);
-            uri.AppendPath("/policies/", false);
-            uri.AppendPath(policyId.ToString(), true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
             if (ifMatch != null)
             {
                 request.Headers.Add("If-Match", ifMatch.Value);
             }
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
-            _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Creates or updates policy configuration for the API Operation level. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="serviceName"> The name of the API Management service. </param>
-        /// <param name="workspaceId"> Workspace identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="apiId"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
-        /// <param name="operationId"> Operation identifier within an API. Must be unique in the current API Management service instance. </param>
-        /// <param name="policyId"> The identifier of the Policy. </param>
-        /// <param name="data"> The policy contents to apply. </param>
-        /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/>, <paramref name="apiId"/>, <paramref name="operationId"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/>, <paramref name="apiId"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyContractData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string apiId, string operationId, PolicyName policyId, PolicyContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string apiId, string operationId, string policyId, string ifMatch, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
-            Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, serviceName, workspaceId, apiId, operationId, policyId, data, ifMatch);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 201:
-                    {
-                        PolicyContractData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PolicyContractData.DeserializePolicyContractData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Creates or updates policy configuration for the API Operation level. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="serviceName"> The name of the API Management service. </param>
-        /// <param name="workspaceId"> Workspace identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="apiId"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
-        /// <param name="operationId"> Operation identifier within an API. Must be unique in the current API Management service instance. </param>
-        /// <param name="policyId"> The identifier of the Policy. </param>
-        /// <param name="data"> The policy contents to apply. </param>
-        /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/>, <paramref name="apiId"/>, <paramref name="operationId"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/>, <paramref name="apiId"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyContractData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string apiId, string operationId, PolicyName policyId, PolicyContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
-            Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, serviceName, workspaceId, apiId, operationId, policyId, data, ifMatch);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 201:
-                    {
-                        PolicyContractData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PolicyContractData.DeserializePolicyContractData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string apiId, string operationId, PolicyName policyId, ETag ifMatch)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
@@ -573,17 +157,22 @@ namespace Azure.ResourceManager.ApiManagement
             uri.AppendPath("/operations/", false);
             uri.AppendPath(operationId, true);
             uri.AppendPath("/policies/", false);
-            uri.AppendPath(policyId.ToString(), true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string apiId, string operationId, PolicyName policyId, ETag ifMatch)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            uri.AppendPath(policyId, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
+            request.Headers.SetValue("If-Match", ifMatch);
+            return message;
+        }
+
+        internal HttpMessage CreateGetByOperationRequest(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string apiId, string operationId, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
@@ -597,176 +186,40 @@ namespace Azure.ResourceManager.ApiManagement
             uri.AppendPath(apiId, true);
             uri.AppendPath("/operations/", false);
             uri.AppendPath(operationId, true);
-            uri.AppendPath("/policies/", false);
-            uri.AppendPath(policyId.ToString(), true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendPath("/policies", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("If-Match", ifMatch);
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Deletes the policy configuration at the Api Operation. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="serviceName"> The name of the API Management service. </param>
-        /// <param name="workspaceId"> Workspace identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="apiId"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
-        /// <param name="operationId"> Operation identifier within an API. Must be unique in the current API Management service instance. </param>
-        /// <param name="policyId"> The identifier of the Policy. </param>
-        /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/>, <paramref name="apiId"/> or <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/>, <paramref name="apiId"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string apiId, string operationId, PolicyName policyId, ETag ifMatch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
-            Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, serviceName, workspaceId, apiId, operationId, policyId, ifMatch);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Deletes the policy configuration at the Api Operation. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="serviceName"> The name of the API Management service. </param>
-        /// <param name="workspaceId"> Workspace identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="apiId"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
-        /// <param name="operationId"> Operation identifier within an API. Must be unique in the current API Management service instance. </param>
-        /// <param name="policyId"> The identifier of the Policy. </param>
-        /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/>, <paramref name="apiId"/> or <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/>, <paramref name="apiId"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string apiId, string operationId, PolicyName policyId, ETag ifMatch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
-            Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, serviceName, workspaceId, apiId, operationId, policyId, ifMatch);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListByOperationNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string apiId, string operationId)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListByOperationNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string apiId, string operationId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Get the list of policy configuration at the API Operation level. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="serviceName"> The name of the API Management service. </param>
-        /// <param name="workspaceId"> Workspace identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="apiId"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
-        /// <param name="operationId"> Operation identifier within an API. Must be unique in the current API Management service instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/>, <paramref name="apiId"/> or <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/>, <paramref name="apiId"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyListResult>> ListByOperationNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string apiId, string operationId, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateNextGetByOperationRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string apiId, string operationId, RequestContext context)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
-            Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var message = CreateListByOperationNextPageRequest(nextLink, subscriptionId, resourceGroupName, serviceName, workspaceId, apiId, operationId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
             {
-                case 200:
-                    {
-                        PolicyListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PolicyListResult.DeserializePolicyListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(nextPage);
             }
-        }
-
-        /// <summary> Get the list of policy configuration at the API Operation level. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="serviceName"> The name of the API Management service. </param>
-        /// <param name="workspaceId"> Workspace identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="apiId"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
-        /// <param name="operationId"> Operation identifier within an API. Must be unique in the current API Management service instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/>, <paramref name="apiId"/> or <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/>, <paramref name="apiId"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyListResult> ListByOperationNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string apiId, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
-            Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var message = CreateListByOperationNextPageRequest(nextLink, subscriptionId, resourceGroupName, serviceName, workspaceId, apiId, operationId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
+            else
             {
-                case 200:
-                    {
-                        PolicyListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PolicyListResult.DeserializePolicyListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(new Uri(_endpoint, nextPage));
             }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
         }
     }
 }

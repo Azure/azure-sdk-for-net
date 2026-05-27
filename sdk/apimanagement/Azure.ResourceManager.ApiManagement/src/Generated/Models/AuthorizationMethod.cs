@@ -7,24 +7,24 @@
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> The AuthorizationMethod. </summary>
+    /// <summary></summary>
     public enum AuthorizationMethod
     {
         /// <summary> HEAD. </summary>
-        Head,
+        HEAD,
         /// <summary> OPTIONS. </summary>
-        Options,
+        OPTIONS,
         /// <summary> TRACE. </summary>
-        Trace,
+        TRACE,
         /// <summary> GET. </summary>
-        Get,
+        GET,
         /// <summary> POST. </summary>
-        Post,
+        POST,
         /// <summary> PUT. </summary>
-        Put,
+        PUT,
         /// <summary> PATCH. </summary>
-        Patch,
+        PATCH,
         /// <summary> DELETE. </summary>
-        Delete
+        DELETE
     }
 }

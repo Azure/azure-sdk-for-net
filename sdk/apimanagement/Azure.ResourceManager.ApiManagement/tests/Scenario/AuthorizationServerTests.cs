@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -22,26 +22,25 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
         private ResourceGroupResource ResourceGroup { get; set; }
 
-        private ApiManagementServiceCollection ApiServiceCollection { get; set; }
+        private ApiManagementServiceResourceCollection ApiServiceCollection { get; set; }
 
         private ApiManagementServiceResource ApiServiceResource { get; set; }
 
         private async Task SetCollectionsAsync()
         {
             ResourceGroup = await CreateResourceGroupAsync();
-            ApiServiceCollection = ResourceGroup.GetApiManagementServices();
+            ApiServiceCollection = ResourceGroup.GetApiManagementServiceResources();
         }
 
         private async Task CreateApiServiceAsync()
         {
             await SetCollectionsAsync();
             var apiName = Recording.GenerateAssetName("sdktestapimv2-");
-            var data = new ApiManagementServiceData(AzureLocation.WestUS2, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.StandardV2, 1), "Sample@Sample.com", "sample");
+            var data = new ApiManagementServiceResourceData(AzureLocation.WestUS2, "Sample@Sample.com", "sample", new ApiManagementServiceSkuProperties(SkuType.StandardV2, 1));
             ApiServiceResource = (await ApiServiceCollection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data)).Value;
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task CRUD()
         {
             await CreateApiServiceAsync();
@@ -61,15 +60,15 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                 TokenEndpoint = "https://contoso.com/token",
                 ClientRegistrationEndpoint = "https://contoso.com/clients/reg",
                 GrantTypes = { GrantType.AuthorizationCode, GrantType.Implicit, GrantType.ResourceOwnerPassword },
-                AuthorizationMethods = { AuthorizationMethod.Post, AuthorizationMethod.Get },
+                AuthorizationMethods = { AuthorizationMethod.POST, AuthorizationMethod.GET },
                 BearerTokenSendingMethods = { BearerTokenSendingMethod.AuthorizationHeader, BearerTokenSendingMethod.Query },
                 ClientId = Recording.GenerateAssetName("clientid"),
                 Description = Recording.GenerateAssetName("authdescription"),
-                ClientAuthenticationMethods = { ClientAuthenticationMethod.Basic },
+                ClientAuthenticationMethod = { ClientAuthenticationMethod.Basic },
                 ClientSecret = Recording.GenerateAssetName("authclientsecret"),
                 ResourceOwnerPassword = Recording.GenerateAssetName("authresourceownerpwd"),
                 ResourceOwnerUsername = Recording.GenerateAssetName("authresourceownerusername"),
-                DoesSupportState = true,
+                SupportState = true,
                 TokenBodyParameters = { new TokenBodyParameterContract(Recording.GenerateAssetName("tokenname"), Recording.GenerateAssetName("tokenvalue")) }
             };
             var createResponse = (await authCollection.CreateOrUpdateAsync(WaitUntil.Completed, authsid, authorizationServerContract)).Value;
@@ -92,9 +91,9 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.IsTrue(getResponse.Data.GrantTypes.All(gt => authorizationServerContract.GrantTypes.Contains(gt)));
             Assert.AreEqual(authorizationServerContract.AuthorizationMethods.Count, getResponse.Data.AuthorizationMethods.Count);
             Assert.IsTrue(getResponse.Data.AuthorizationMethods.All(gt => authorizationServerContract.AuthorizationMethods.Contains(gt)));
-            Assert.AreEqual(authorizationServerContract.ClientAuthenticationMethods.Count, getResponse.Data.ClientAuthenticationMethods.Count);
-            Assert.IsTrue(getResponse.Data.ClientAuthenticationMethods.All(gt => authorizationServerContract.ClientAuthenticationMethods.Contains(gt)));
-            Assert.AreEqual(authorizationServerContract.DoesSupportState, getResponse.Data.DoesSupportState);
+            Assert.AreEqual(authorizationServerContract.ClientAuthenticationMethod.Count, getResponse.Data.ClientAuthenticationMethod.Count);
+            Assert.IsTrue(getResponse.Data.ClientAuthenticationMethod.All(gt => authorizationServerContract.ClientAuthenticationMethod.Contains(gt)));
+            Assert.AreEqual(authorizationServerContract.SupportState, getResponse.Data.SupportState);
             Assert.AreEqual(authorizationServerContract.TokenBodyParameters.Count, getResponse.Data.TokenBodyParameters.Count);
             Assert.IsTrue(getResponse.Data.TokenBodyParameters.All(p => authorizationServerContract.TokenBodyParameters.Any(p1 => p1.Name.Equals(p.Name, StringComparison.OrdinalIgnoreCase) && p1.Value.Equals(p.Value, StringComparison.OrdinalIgnoreCase))));
 
@@ -113,7 +112,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             {
                 GrantTypes = { GrantType.AuthorizationCode, GrantType.ResourceOwnerPassword }
             };
-            await getResponse.UpdateAsync(ETag.All, updateParameters);
+            await getResponse.UpdateAsync(ETag.All.ToString(), updateParameters);
 
             // get to check is was updated
             getResponse = await getResponse.GetAsync();
@@ -131,14 +130,14 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.IsTrue(getResponse.Data.GrantTypes.All(gt => updateParameters.GrantTypes.Contains(gt)));
             Assert.AreEqual(authorizationServerContract.AuthorizationMethods.Count, getResponse.Data.AuthorizationMethods.Count);
             Assert.IsTrue(getResponse.Data.AuthorizationMethods.All(gt => authorizationServerContract.AuthorizationMethods.Contains(gt)));
-            Assert.AreEqual(authorizationServerContract.ClientAuthenticationMethods.Count, getResponse.Data.ClientAuthenticationMethods.Count);
-            Assert.IsTrue(getResponse.Data.ClientAuthenticationMethods.All(gt => authorizationServerContract.ClientAuthenticationMethods.Contains(gt)));
-            Assert.AreEqual(authorizationServerContract.DoesSupportState, getResponse.Data.DoesSupportState);
+            Assert.AreEqual(authorizationServerContract.ClientAuthenticationMethod.Count, getResponse.Data.ClientAuthenticationMethod.Count);
+            Assert.IsTrue(getResponse.Data.ClientAuthenticationMethod.All(gt => authorizationServerContract.ClientAuthenticationMethod.Contains(gt)));
+            Assert.AreEqual(authorizationServerContract.SupportState, getResponse.Data.SupportState);
             Assert.AreEqual(authorizationServerContract.TokenBodyParameters.Count, getResponse.Data.TokenBodyParameters.Count);
             Assert.IsTrue(getResponse.Data.TokenBodyParameters.All(p => authorizationServerContract.TokenBodyParameters.Any(p1 => p1.Name.Equals(p.Name, StringComparison.OrdinalIgnoreCase) && p1.Value.Equals(p.Value, StringComparison.OrdinalIgnoreCase))));
 
             // delete
-            await getResponse.DeleteAsync(WaitUntil.Completed, ETag.All);
+            await getResponse.DeleteAsync(WaitUntil.Completed, ETag.All.ToString());
             var falseResult = (await authCollection.ExistsAsync(authsid)).Value;
             Assert.IsFalse(falseResult);
         }

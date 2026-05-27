@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -23,21 +23,21 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
         private ApiManagementServiceResource ApiServiceResource { get; set; }
 
-        private ApiManagementServiceCollection ApiServiceCollection { get; set; }
+        private ApiManagementServiceResourceCollection ApiServiceCollection { get; set; }
 
         private async Task SetCollectionsAsync()
         {
             ResourceGroup = await CreateResourceGroupAsync(AzureLocation.EastUS);
-            ApiServiceCollection = ResourceGroup.GetApiManagementServices();
+            ApiServiceCollection = ResourceGroup.GetApiManagementServiceResources();
         }
 
         private async Task CreateApiServiceAsync()
         {
             await SetCollectionsAsync();
             var apiName = Recording.GenerateAssetName("testapi-");
-            var data = new ApiManagementServiceData(AzureLocation.EastUS, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Developer, 1), "Sample@Sample.com", "sample")
+            var data = new ApiManagementServiceResourceData(AzureLocation.EastUS, "Sample@Sample.com", "sample", new ApiManagementServiceSkuProperties(SkuType.Developer, 1))
             {
-                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
+                Identity = new ApiManagementServiceIdentity(ApimIdentityType.SystemAssigned)
             };
             ApiServiceResource = (await ApiServiceCollection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data)).Value;
         }
@@ -53,51 +53,44 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         [PlaybackOnly("ValidationKey Sanitized")]
         public async Task CRUD()
         {
             await CreateApiServiceAsync();
-            var delegationCollection = ApiServiceResource.GetApiManagementPortalDelegationSetting();
+            var delegationCollection = ApiServiceResource.GetPortalDelegationSettings();
 
             //var intialPortalDelegationSettings = await delegationCollection.GetAsync();
 
             string delegationServer = Recording.GenerateAssetName("delegationServer");
             string urlParameter = new UriBuilder("https", delegationServer, 443).Uri.ToString();
 
-            var portalDelegationSettingsParams = new ApiManagementPortalDelegationSettingData()
+            var portalDelegationSettingsParams = new PortalDelegationSettingsData()
             {
-                Subscriptions = new SubscriptionDelegationSettingProperties()
-                {
-                    IsSubscriptionDelegationEnabled = true,
-                },
-                UserRegistration = new RegistrationDelegationSettingProperties()
-                {
-                    IsUserRegistrationDelegationEnabled = true,
-                },
-                Uri = new Uri(urlParameter),
+                SubscriptionsEnabled = true,
+                UserRegistrationEnabled = true,
+                Uri = urlParameter,
                 ValidationKey = "Sanitized"
             };
             var portalDelegationSettings = (await delegationCollection.CreateOrUpdateAsync(WaitUntil.Completed, portalDelegationSettingsParams)).Value;
             Assert.NotNull(portalDelegationSettings);
-            Assert.AreEqual(urlParameter, portalDelegationSettings.Data.Uri.ToString());
+            Assert.AreEqual(urlParameter, portalDelegationSettings.Data.Uri);
             //validation key is generated brand new on playback mode and hence validation fails
             Assert.AreEqual(portalDelegationSettingsParams.ValidationKey, portalDelegationSettings.Data.ValidationKey);
-            Assert.IsTrue(portalDelegationSettings.Data.UserRegistration.IsUserRegistrationDelegationEnabled);
-            Assert.IsTrue(portalDelegationSettings.Data.Subscriptions.IsSubscriptionDelegationEnabled);
+            Assert.IsTrue(portalDelegationSettings.Data.UserRegistrationEnabled);
+            Assert.IsTrue(portalDelegationSettings.Data.SubscriptionsEnabled);
 
             // update the delegation settings
             var data = portalDelegationSettings.Data;
-            data.Subscriptions.IsSubscriptionDelegationEnabled = false;
-            data.UserRegistration.IsUserRegistrationDelegationEnabled = false;
+            data.SubscriptionsEnabled = false;
+            data.UserRegistrationEnabled = false;
 
-            await portalDelegationSettings.UpdateAsync(ETag.All, data);
+            await portalDelegationSettings.UpdateAsync(ETag.All.ToString(), data);
             portalDelegationSettings = await portalDelegationSettings.GetAsync();
             Assert.NotNull(portalDelegationSettings);
-            //Assert.IsNull(portalDelegationSettings.Data.Uri.ToString());
+            //Assert.IsNull(portalDelegationSettings.Data.Uri);
             Assert.IsNull(portalDelegationSettings.Data.ValidationKey);
-            Assert.IsFalse(portalDelegationSettings.Data.UserRegistration.IsUserRegistrationDelegationEnabled);
-            Assert.IsFalse(portalDelegationSettings.Data.Subscriptions.IsSubscriptionDelegationEnabled);
+            Assert.IsFalse(portalDelegationSettings.Data.UserRegistrationEnabled);
+            Assert.IsFalse(portalDelegationSettings.Data.SubscriptionsEnabled);
         }
     }
 }

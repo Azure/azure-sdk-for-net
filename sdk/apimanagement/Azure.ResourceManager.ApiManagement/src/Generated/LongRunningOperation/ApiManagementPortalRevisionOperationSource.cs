@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    internal class ApiManagementPortalRevisionOperationSource : IOperationSource<ApiManagementPortalRevisionResource>
+    /// <summary></summary>
+    internal partial class ApiManagementPortalRevisionOperationSource : IOperationSource<ApiManagementPortalRevisionResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ApiManagementPortalRevisionOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ApiManagementPortalRevisionResource IOperationSource<ApiManagementPortalRevisionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ApiManagementPortalRevisionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerApiManagementContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ApiManagementPortalRevisionData data = ApiManagementPortalRevisionData.DeserializeApiManagementPortalRevisionData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ApiManagementPortalRevisionResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ApiManagementPortalRevisionResource> IOperationSource<ApiManagementPortalRevisionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ApiManagementPortalRevisionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerApiManagementContext.Default);
-            return await Task.FromResult(new ApiManagementPortalRevisionResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ApiManagementPortalRevisionData data = ApiManagementPortalRevisionData.DeserializeApiManagementPortalRevisionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ApiManagementPortalRevisionResource(_client, data);
         }
     }
 }
