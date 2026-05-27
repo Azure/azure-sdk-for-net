@@ -46,6 +46,21 @@ internal static class CredentialResolverEngine
             configureOverrides(workingSection);
         }
 
+        // Build the recursive callback once per Resolve invocation. Resolvers
+        // that override the chain-aware TryResolve overload (e.g., a chain-
+        // owning resolver that walks Sources[]) can invoke this to resolve a
+        // child IConfigurationSection through the same active resolver chain.
+        // The callback re-enters this engine method with the same resolver
+        // list and no overrides — overrides only apply to the top-level
+        // section the caller passed in.
+        //
+        // Note: the recursive Resolve call goes through the full pipeline
+        // (cache lookup, normalization, ordering), so chain entries pick up
+        // caching for free and a single shared engine remains the source of
+        // truth for resolution semantics.
+        Func<IConfigurationSection, AuthenticationTokenProvider?> resolveChild =
+            child => Resolve(child, resolvers, configureOverrides: null)?.TokenProvider;
+
         // Per-resolver cache lookup: the cached settings depend on the
         // (section, resolver-that-actually-produced-it) pair, not on the whole
         // chain. So callers with overlapping chains share entries whenever the
@@ -71,7 +86,7 @@ internal static class CredentialResolverEngine
                     continue;
                 }
 
-                CredentialSettings? matched = CredentialCache.GetOrTryResolve(workingSection, resolver);
+                CredentialSettings? matched = CredentialCache.GetOrTryResolve(workingSection, resolver, resolveChild);
 
                 if (matched is not null)
                 {

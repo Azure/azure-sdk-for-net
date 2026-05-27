@@ -111,9 +111,14 @@ public class CredentialResolverTests
 
         var resolver = new ScopedRecordingResolver("Anything", "x");
 
+        // GetOrTryResolve(IConfigurationSection, CredentialResolver, Func<...>) —
+        // the third param is required (non-nullable) so callers honor the resolver's
+        // chain-aware contract. Pass an explicit no-op since this test bypasses
+        // the engine and has no chain.
+        Func<IConfigurationSection, AuthenticationTokenProvider?> noChain = static _ => null;
         var result = getOrTryResolve.Invoke(
             null,
-            new object?[] { null, resolver });
+            new object?[] { null, resolver, noChain });
 
         Assert.That(result, Is.Null);
         Assert.That(resolver.WasCalled, Is.False, "resolver must not run when the merged section is null");
@@ -937,7 +942,8 @@ public class CredentialResolverTests
     {
         // SCM does not produce a built-in provider for inline ApiKey configs.
         // The standalone caller reads cred.Key directly when TokenProvider
-        // is null. The CredentialSource is normalized to "apikeycredential".
+        // is null. The CredentialSource is normalized to "apikeycredential"
+        // (the one back-compat alias preserved from 1.13.0).
         IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
         {
             ["TestClient:Credential:CredentialSource"] = "ApiKey",
@@ -1184,6 +1190,232 @@ public class CredentialResolverTests
         {
             CallCount++;
             provider = new AsyncDisposableStubTokenProvider();
+            return true;
+        }
+    }
+
+    // ---- Phase 1.97: chain-aware TryResolve overload + case-insensitive normalization ----
+
+    [Test]
+    public void CredentialSource_IsLowercasedOnAssignment()
+    {
+        // CredentialSettings normalizes by lowercasing. Resolvers are
+        // responsible for accepting whichever spellings they want (short and/or
+        // long form). The single exception is "apikey" → "apikeycredential",
+        // a back-compat alias preserved from SCM 1.13.0 because generated
+        // client code dispatches on the long form.
+        var settings = new CredentialSettings(null!);
+
+        settings.CredentialSource = "Broker";
+        Assert.That(settings.CredentialSource, Is.EqualTo("broker"));
+
+        settings.CredentialSource = "BrokerCredential";
+        Assert.That(settings.CredentialSource, Is.EqualTo("brokercredential"));
+
+        settings.CredentialSource = "BROKER";
+        Assert.That(settings.CredentialSource, Is.EqualTo("broker"));
+
+        settings.CredentialSource = "ApiKey";
+        Assert.That(settings.CredentialSource, Is.EqualTo("apikeycredential"),
+            "ApiKey is the one back-compat alias preserved from 1.13.0.");
+
+        settings.CredentialSource = null;
+        Assert.That(settings.CredentialSource, Is.Null);
+    }
+
+    [Test]
+    public void TryResolve_NewOverload_DefaultImplForwardsToLegacyOverload()
+    {
+        // A resolver that overrides only the legacy (section, out provider) overload
+        // must still be reachable through the new (section, resolveChild, out provider)
+        // overload — the default virtual forwards.
+        IConfigurationSection section = BuildConfig(new Dictionary<string, string?>
+        {
+            ["Cred:CredentialSource"] = "Match"
+        }).GetSection("Cred");
+
+        var legacy = new ScopedRecordingResolver("Match", "legacy");
+
+        bool ok = legacy.TryResolve(section, static _ => null, out AuthenticationTokenProvider? provider);
+
+        Assert.That(ok, Is.True);
+        Assert.That(provider, Is.SameAs(legacy.LastProvider));
+    }
+
+    [Test]
+    public void Engine_PassesNonNullResolveChild_ToResolvers()
+    {
+        // Resolvers that override the chain-aware overload receive a non-null
+        // callback from the engine — even when no chain-style nesting is
+        // happening on the top-level call.
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["TestClient:Credential:CredentialSource"] = "Match"
+        });
+
+        var capturing = new CapturingChainAwareResolver(matchSource: "Match");
+
+        CredentialSettings? cred = config.GetCredentialSettings("TestClient:Credential", capturing);
+
+        Assert.That(cred, Is.Not.Null);
+        Assert.That(capturing.LastResolveChild, Is.Not.Null,
+            "Engine must hand resolvers a non-null resolveChild callback so chain-owning resolvers can recurse without a null check.");
+    }
+
+    [Test]
+    public void Engine_ResolveChild_WalksFullChainAndShareCacheWithTopLevel()
+    {
+        // A chain-owning resolver invokes resolveChild(childSection) on a child
+        // section that another resolver in the same chain can claim.
+        // - The child resolver runs (chain walked correctly).
+        // - The returned provider matches what GetCredentialSettings would
+        //   return for that child section directly (cache shared, same key).
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["Parent:CredentialSource"] = "Parent",
+            // child section content
+            ["Parent:Child:CredentialSource"] = "Child",
+            ["Parent:Child:TenantId"] = "t-child",
+        });
+
+        // ChainOwnerResolver: claims "Parent", uses resolveChild to resolve
+        // the child section and stores the returned provider on its stub.
+        var childResolver = new ScopedRecordingResolver("Child", "child-provider");
+        AuthenticationTokenProvider? recursivelyResolved = null;
+        var parentResolver = new InvokeChildResolver("Parent",
+            section => section.GetSection("Child"),
+            provider => recursivelyResolved = provider);
+
+        CredentialSettings? parentCred = config.GetCredentialSettings(
+            "Parent",
+            parentResolver,
+            childResolver);
+
+        Assert.That(parentCred, Is.Not.Null, "parent should resolve");
+        Assert.That(recursivelyResolved, Is.Not.Null, "resolveChild should have produced a provider for the Child section");
+        Assert.That(recursivelyResolved, Is.SameAs(childResolver.LastProvider),
+            "resolveChild should walk the same chain and surface the child resolver's provider");
+
+        // Independent direct call returns the cached child provider — proves
+        // cache identity is shared between recursive path and top-level path.
+        CredentialSettings? childCred = config.GetCredentialSettings(
+            "Parent:Child",
+            parentResolver,
+            childResolver);
+
+        Assert.That(childCred?.TokenProvider, Is.SameAs(recursivelyResolved),
+            "Top-level resolution of the child section must hit the same cache entry the recursive call produced.");
+    }
+
+    [Test]
+    public void Engine_ResolveChild_DoesNotReapplyConfigureOverridesOnRecursion()
+    {
+        // configureOverrides only applies to the top-level call; recursive
+        // resolveChild invocations re-enter the engine with configureOverrides
+        // == null. This is enforced structurally and pinned by an invocation
+        // count — running the override callback twice could double-apply state
+        // (e.g., a callback that increments a counter on the section) and break
+        // resolver caching keyed by merged content.
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["Parent:CredentialSource"] = "Parent",
+            ["Parent:Child:CredentialSource"] = "Child",
+        });
+
+        var childResolver = new ScopedRecordingResolver("Child", "child");
+        var parentResolver = new InvokeChildResolver("Parent",
+            section => section.GetSection("Child"),
+            _ => { });
+
+        int overrideInvocations = 0;
+        config.GetCredentialSettings(
+            "Parent",
+            new CredentialResolver[] { parentResolver, childResolver },
+            section =>
+            {
+                overrideInvocations++;
+                section["TenantId"] = "override-tenant";
+            });
+
+        Assert.That(overrideInvocations, Is.EqualTo(1),
+            "configureOverrides must be invoked exactly once — recursive resolveChild calls re-enter with null overrides.");
+    }
+
+    private sealed class CapturingChainAwareResolver : CredentialResolver
+    {
+        private readonly string _matchSource;
+
+        public CapturingChainAwareResolver(string matchSource) => _matchSource = matchSource;
+
+        public Func<IConfigurationSection, AuthenticationTokenProvider?>? LastResolveChild { get; private set; }
+
+        public override bool TryResolve(IConfigurationSection credentialSection, [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
+        {
+            // Should never be called by the engine — engine always invokes the
+            // chain-aware overload, which this class overrides.
+            provider = null;
+            return false;
+        }
+
+        public override bool TryResolve(
+            IConfigurationSection credentialSection,
+            Func<IConfigurationSection, AuthenticationTokenProvider?> resolveChild,
+            [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
+        {
+            LastResolveChild = resolveChild;
+            string? source = credentialSection["CredentialSource"];
+            if (string.Equals(source, _matchSource, StringComparison.OrdinalIgnoreCase))
+            {
+                provider = new StubTokenProvider("chain-aware");
+                return true;
+            }
+            provider = null;
+            return false;
+        }
+    }
+
+    private sealed class InvokeChildResolver : CredentialResolver
+    {
+        private readonly string _matchSource;
+        private readonly Func<IConfigurationSection, IConfigurationSection> _selectChild;
+        private readonly Action<AuthenticationTokenProvider?> _onChildResolved;
+
+        public InvokeChildResolver(
+            string matchSource,
+            Func<IConfigurationSection, IConfigurationSection> selectChild,
+            Action<AuthenticationTokenProvider?> onChildResolved)
+        {
+            _matchSource = matchSource;
+            _selectChild = selectChild;
+            _onChildResolved = onChildResolved;
+        }
+
+        public override bool TryResolve(IConfigurationSection credentialSection, [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
+        {
+            // Default forwards here from the chain-aware overload when no
+            // resolveChild is plumbed — but in this test the engine always
+            // calls the chain-aware overload, so this branch is unused.
+            provider = null;
+            return false;
+        }
+
+        public override bool TryResolve(
+            IConfigurationSection credentialSection,
+            Func<IConfigurationSection, AuthenticationTokenProvider?> resolveChild,
+            [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
+        {
+            string? source = credentialSection["CredentialSource"];
+            if (!string.Equals(source, _matchSource, StringComparison.OrdinalIgnoreCase))
+            {
+                provider = null;
+                return false;
+            }
+
+            IConfigurationSection child = _selectChild(credentialSection);
+            AuthenticationTokenProvider? childProvider = resolveChild(child);
+            _onChildResolved(childProvider);
+
+            provider = new StubTokenProvider("parent");
             return true;
         }
     }

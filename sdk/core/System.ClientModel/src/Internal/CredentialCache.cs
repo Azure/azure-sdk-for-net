@@ -31,15 +31,25 @@ internal static class CredentialCache
     /// <summary>
     /// Look up a cached <see cref="CredentialSettings"/> for
     /// (<paramref name="mergedSection"/>, <paramref name="resolver"/>); on
-    /// miss, call <see cref="CredentialResolver.TryResolve"/>. If the
-    /// resolver matches and produces a non-null, non-disposable provider,
+    /// miss, call <see cref="CredentialResolver.TryResolve(IConfigurationSection, Func{IConfigurationSection, AuthenticationTokenProvider?}, out AuthenticationTokenProvider?)"/>.
+    /// If the resolver matches and produces a non-null, non-disposable provider,
     /// build and cache a <see cref="CredentialSettings"/> for it. Returns
     /// <see langword="null"/> when the resolver does not match (the no-match
     /// case is handled by <see cref="GetOrCreateInline"/>).
     /// </summary>
+    /// <param name="mergedSection">The credential section to resolve (already
+    /// merged with any overrides).</param>
+    /// <param name="resolver">The resolver to invoke on cache miss.</param>
+    /// <param name="resolveChild">A callback that recursively resolves child
+    /// sections through the active engine. Passed straight through to the
+    /// chain-aware <see cref="CredentialResolver.TryResolve(IConfigurationSection, Func{IConfigurationSection, AuthenticationTokenProvider?}, out AuthenticationTokenProvider?)"/>
+    /// overload so chain-owning resolvers can recurse without re-implementing
+    /// engine logic. Required — callers without a chain pass a no-op
+    /// (<c>static _ =&gt; null</c>) to honor the resolver's non-null contract.</param>
     public static CredentialSettings? GetOrTryResolve(
         IConfigurationSection mergedSection,
-        CredentialResolver resolver)
+        CredentialResolver resolver,
+        Func<IConfigurationSection, AuthenticationTokenProvider?> resolveChild)
     {
         string sectionKey = CredentialSectionHasher.ComputeKey(mergedSection);
         if (sectionKey.Length == 0)
@@ -63,7 +73,10 @@ internal static class CredentialCache
             return existing;
         }
 
-        if (!resolver.TryResolve(mergedSection, out AuthenticationTokenProvider? provider) || provider is null)
+        // Always invoke the chain-aware overload. Resolvers that don't override
+        // it inherit the default implementation, which forwards to the legacy
+        // (section, out provider) overload.
+        if (!resolver.TryResolve(mergedSection, resolveChild, out AuthenticationTokenProvider? provider) || provider is null)
         {
             return null;
         }
