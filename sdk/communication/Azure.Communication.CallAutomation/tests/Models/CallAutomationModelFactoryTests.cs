@@ -398,7 +398,7 @@ namespace Azure.Communication.CallAutomation.Tests.Models
             var operationContext = "testContext";
 
             var eventResult = CallAutomationModelFactory.ContinuousDtmfRecognitionToneReceived(
-                resultInformation, sequenceId, tone, operationContext, callConnectionId, serverCallId, correlationId);
+                sequenceId, tone, callConnectionId, serverCallId, correlationId, resultInformation, operationContext);
 
             Assert.That(eventResult.SequenceId, Is.EqualTo(sequenceId));
             Assert.That(eventResult.Tone, Is.EqualTo(tone));
@@ -416,14 +416,12 @@ namespace Azure.Communication.CallAutomation.Tests.Models
             var serverCallId = "server123";
             var correlationId = "correlation123";
             var recordingId = "recording123";
-            var operationContext = "testContext";
             var state = RecordingState.Active;
             var startDateTime = DateTimeOffset.UtcNow;
             var recordingKind = RecordingKind.AzureCommunicationServices;
-            var resultInformation = CallAutomationModelFactory.ResultInformation(200, 0, "Success");
 
-            var eventResult = CallAutomationModelFactory.RecordingStateChanged(recordingId,
-                state, startDateTime, recordingKind, operationContext, resultInformation, callConnectionId, serverCallId, correlationId);
+            var eventResult = CallAutomationModelFactory.RecordingStateChanged(callConnectionId, serverCallId, correlationId,
+                recordingId, state, startDateTime, recordingKind);
 
             Assert.That(eventResult.CallConnectionId, Is.EqualTo(callConnectionId));
             Assert.That(eventResult.ServerCallId, Is.EqualTo(serverCallId));
@@ -432,7 +430,6 @@ namespace Azure.Communication.CallAutomation.Tests.Models
             Assert.That(eventResult.State, Is.EqualTo(state));
             Assert.That(eventResult.StartDateTime, Is.EqualTo(startDateTime));
             Assert.That(eventResult.RecordingKind, Is.EqualTo(recordingKind));
-            Assert.That(eventResult.ResultInformation, Is.EqualTo(resultInformation));
         }
 
         [Test]
