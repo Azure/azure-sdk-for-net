@@ -273,6 +273,11 @@ namespace Azure.Generator.Management
         }
 
         private HashSet<InputModelType> ResourceModels => _resourceModels ??= BuildResourceModels();
+        private HashSet<string>? _resourceModelIds;
+        private HashSet<string> ResourceModelIds => _resourceModelIds ??= ResourceModels
+            .Select(model => model.CrossLanguageDefinitionId)
+            .Where(id => !string.IsNullOrEmpty(id))
+            .ToHashSet(StringComparer.Ordinal);
 
         private HashSet<InputModelType> BuildResourceModels()
         {
@@ -423,7 +428,8 @@ namespace Azure.Generator.Management
         /// <summary> Determines whether the specified model is a resource model. </summary>
         /// <param name="model"> The input model type to check. </param>
         /// <returns> <c>true</c> if the model is a resource model; otherwise, <c>false</c>. </returns>
-        public bool IsResourceModel(InputModelType model) => ResourceModels.Contains(model);
+        public bool IsResourceModel(InputModelType model)
+            => ResourceModels.Contains(model) || ResourceModelIds.Contains(model.CrossLanguageDefinitionId);
 
         internal bool TryFindEnclosingResourceNameForResourceUpdateModel(InputModelType model, [NotNullWhen(true)] out string? resourceName, out bool isAlsoUsedInCreate)
         {
