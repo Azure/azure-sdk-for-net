@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public AggregateRouteConfiguration AggregateRouteConfiguration { get; set; }
 
         /// <summary> Connected Subnet RoutePolicy. </summary>
-        internal ConnectedSubnetRoutePolicy ConnectedSubnetRoutePolicy { get; set; }
+        public ConnectedSubnetRoutePolicy ConnectedSubnetRoutePolicy { get; set; }
 
         /// <summary> Static Route - route policy. </summary>
         internal StaticRouteRoutePolicyPatch StaticRouteRoutePolicy { get; set; }
@@ -72,23 +72,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> BMP Export Policy configuration. </summary>
         internal BmpExportPolicyPatchProperties ExportPolicyConfiguration { get; set; }
-
-        /// <summary> Array of ARM Resource ID of the RoutePolicies. </summary>
-        public L3ExportRoutePolicy ExportRoutePolicy
-        {
-            get
-            {
-                return ConnectedSubnetRoutePolicy is null ? default : ConnectedSubnetRoutePolicy.ExportRoutePolicy;
-            }
-            set
-            {
-                if (ConnectedSubnetRoutePolicy is null)
-                {
-                    ConnectedSubnetRoutePolicy = new ConnectedSubnetRoutePolicy();
-                }
-                ConnectedSubnetRoutePolicy.ExportRoutePolicy = value;
-            }
-        }
 
         /// <summary> Array of ARM Resource ID of the RoutePolicies. </summary>
         public L3ExportRoutePolicyPatch StaticRouteExportRoutePolicy

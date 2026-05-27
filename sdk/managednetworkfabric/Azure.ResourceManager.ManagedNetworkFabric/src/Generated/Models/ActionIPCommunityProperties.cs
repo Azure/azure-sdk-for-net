@@ -41,19 +41,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         internal IPCommunityIdList Set { get; set; }
 
         /// <summary> List of IP Community resource IDs. </summary>
-        public IList<ResourceIdentifier> AddIPCommunityIds
-        {
-            get
-            {
-                if (Add is null)
-                {
-                    Add = new IPCommunityIdList();
-                }
-                return Add.IPCommunityIds;
-            }
-        }
-
-        /// <summary> List of IP Community resource IDs. </summary>
         public IList<ResourceIdentifier> DeleteIPCommunityIds
         {
             get

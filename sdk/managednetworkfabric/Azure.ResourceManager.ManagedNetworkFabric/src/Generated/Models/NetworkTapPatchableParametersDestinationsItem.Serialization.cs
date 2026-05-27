@@ -17,11 +17,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> The NetworkTapPatchableParametersDestinationsItem. </summary>
     public partial class NetworkTapPatchableParametersDestinationsItem : NetworkTapDestinationProperties, IJsonModel<NetworkTapPatchableParametersDestinationsItem>
     {
-        /// <summary> Initializes a new instance of <see cref="NetworkTapPatchableParametersDestinationsItem"/> for deserialization. </summary>
-        internal NetworkTapPatchableParametersDestinationsItem()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override NetworkTapDestinationProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

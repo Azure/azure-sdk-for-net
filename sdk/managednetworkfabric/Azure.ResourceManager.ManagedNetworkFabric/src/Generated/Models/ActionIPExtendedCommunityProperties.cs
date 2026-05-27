@@ -41,19 +41,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         internal IPExtendedCommunityIdList Set { get; set; }
 
         /// <summary> List of IP Extended Community resource IDs. </summary>
-        public IList<ResourceIdentifier> AddIPExtendedCommunityIds
-        {
-            get
-            {
-                if (Add is null)
-                {
-                    Add = new IPExtendedCommunityIdList();
-                }
-                return Add.IPExtendedCommunityIds;
-            }
-        }
-
-        /// <summary> List of IP Extended Community resource IDs. </summary>
         public IList<ResourceIdentifier> DeleteIPExtendedCommunityIds
         {
             get

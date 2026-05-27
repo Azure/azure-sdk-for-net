@@ -17,11 +17,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> The network tap destination properties. </summary>
     public partial class NetworkTapDestinationProperties : IJsonModel<NetworkTapDestinationProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="NetworkTapDestinationProperties"/> for deserialization. </summary>
-        internal NetworkTapDestinationProperties()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual NetworkTapDestinationProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

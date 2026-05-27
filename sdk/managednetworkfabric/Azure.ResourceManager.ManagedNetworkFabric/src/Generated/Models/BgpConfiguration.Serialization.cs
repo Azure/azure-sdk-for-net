@@ -16,11 +16,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> BGP configuration properties. </summary>
     public partial class BgpConfiguration : AnnotationResourceProperties, IJsonModel<BgpConfiguration>
     {
-        /// <summary> Initializes a new instance of <see cref="BgpConfiguration"/> for deserialization. </summary>
-        internal BgpConfiguration()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AnnotationResourceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

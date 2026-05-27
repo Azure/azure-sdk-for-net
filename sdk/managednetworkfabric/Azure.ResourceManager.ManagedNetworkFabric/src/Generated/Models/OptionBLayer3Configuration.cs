@@ -7,24 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> OptionB Layer3 Configuration properties. </summary>
     public partial class OptionBLayer3Configuration : Layer3IPPrefixProperties
     {
-        /// <summary> Initializes a new instance of <see cref="OptionBLayer3Configuration"/>. </summary>
-        /// <param name="peerAsn"> ASN of PE devices for CE/PE connectivity.Example : 28. </param>
-        /// <param name="vlanId"> VLAN for CE/PE Layer 3 connectivity.Example : 501. </param>
-        public OptionBLayer3Configuration(long? peerAsn, int? vlanId)
-        {
-            PeerAsn = peerAsn;
-            VlanId = vlanId;
-            PeLoopbackIPAddress = new ChangeTrackingList<string>();
-            PrefixLimits = new ChangeTrackingList<OptionBLayer3PrefixLimitProperties>();
-        }
-
         /// <summary> Initializes a new instance of <see cref="OptionBLayer3Configuration"/>. </summary>
         /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
         /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
@@ -47,35 +35,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             PrefixLimits = prefixLimits;
         }
 
-        /// <summary> ASN of PE devices for CE/PE connectivity.Example : 28. </summary>
-        public long? PeerAsn { get; set; }
-
-        /// <summary> VLAN for CE/PE Layer 3 connectivity.Example : 501. </summary>
-        public int? VlanId { get; set; }
-
-        /// <summary> ASN of CE devices for CE/PE connectivity. </summary>
-        public long? FabricAsn { get; }
-
-        /// <summary> Provider Edge (PE) Loopback IP Address. </summary>
-        public IList<string> PeLoopbackIPAddress { get; }
-
         /// <summary> BGP Monitoring Protocol (BMP) Configuration. </summary>
         internal NniBmpProperties BmpConfiguration { get; set; }
-
-        /// <summary> OptionB Layer3 prefix limit configuration. </summary>
-        public IList<OptionBLayer3PrefixLimitProperties> PrefixLimits { get; }
-
-        /// <summary> BGP Monitoring Protocol (BMP) Configuration State. </summary>
-        public BmpConfigurationState? BmpConfigurationState
-        {
-            get
-            {
-                return BmpConfiguration is null ? default : BmpConfiguration.ConfigurationState;
-            }
-            set
-            {
-                BmpConfiguration = value.HasValue ? new NniBmpProperties(value.Value) : default;
-            }
-        }
     }
 }

@@ -17,11 +17,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="IPExtendedCommunityAddOperationProperties"/>. </summary>
-        public IPExtendedCommunityAddOperationProperties()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="IPExtendedCommunityAddOperationProperties"/>. </summary>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal IPExtendedCommunityAddOperationProperties(IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {

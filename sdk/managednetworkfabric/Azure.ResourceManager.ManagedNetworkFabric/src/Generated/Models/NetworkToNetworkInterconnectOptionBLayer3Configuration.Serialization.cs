@@ -16,11 +16,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> The NetworkToNetworkInterconnectOptionBLayer3Configuration. </summary>
     public partial class NetworkToNetworkInterconnectOptionBLayer3Configuration : OptionBLayer3Configuration, IJsonModel<NetworkToNetworkInterconnectOptionBLayer3Configuration>
     {
-        /// <summary> Initializes a new instance of <see cref="NetworkToNetworkInterconnectOptionBLayer3Configuration"/> for deserialization. </summary>
-        internal NetworkToNetworkInterconnectOptionBLayer3Configuration()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override Layer3IPPrefixProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
