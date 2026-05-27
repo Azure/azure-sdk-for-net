@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ResourceHealth
             return message;
         }
 
-        internal HttpMessage CreateGetSecurityAdvisoryImpactedResourcesBySubscriptionIdAndEventIdRequest(string subscriptionId, string eventTrackingId, string filter, RequestContext context)
+        internal HttpMessage CreateGetBySubscriptionIdAndEventIdRequest(string subscriptionId, string eventTrackingId, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ResourceHealth
             return message;
         }
 
-        internal HttpMessage CreateNextGetSecurityAdvisoryImpactedResourcesBySubscriptionIdAndEventIdRequest(Uri nextPage, string subscriptionId, string eventTrackingId, string filter, RequestContext context)
+        internal HttpMessage CreateNextGetBySubscriptionIdAndEventIdRequest(Uri nextPage, string subscriptionId, string eventTrackingId, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

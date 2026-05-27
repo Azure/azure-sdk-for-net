@@ -14,7 +14,7 @@ using Azure.ResourceManager.ResourceHealth.Models;
 
 namespace Azure.ResourceManager.ResourceHealth
 {
-    internal partial class ResourceHealthEventGetSecurityAdvisoryImpactedResourcesBySubscriptionIdAndEventIdCollectionResultOfT : Pageable<ResourceHealthEventImpactedResourceData>
+    internal partial class ResourceHealthEventGetBySubscriptionIdAndEventIdCollectionResultOfT : Pageable<ResourceHealthEventImpactedResourceData>
     {
         private readonly ResourceHealthEvent _client;
         private readonly string _subscriptionId;
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ResourceHealth
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ResourceHealthEventGetSecurityAdvisoryImpactedResourcesBySubscriptionIdAndEventIdCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of ResourceHealthEventGetBySubscriptionIdAndEventIdCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ResourceHealthEvent client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="eventTrackingId"> Event Id which uniquely identifies ServiceHealth event. </param>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ResourceHealthEventGetSecurityAdvisoryImpactedResourcesBySubscriptionIdAndEventIdCollectionResultOfT(ResourceHealthEvent client, string subscriptionId, string eventTrackingId, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ResourceHealthEventGetBySubscriptionIdAndEventIdCollectionResultOfT(ResourceHealthEvent client, string subscriptionId, string eventTrackingId, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.ResourceHealth
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ResourceHealthEventGetSecurityAdvisoryImpactedResourcesBySubscriptionIdAndEventIdCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ResourceHealthEventGetBySubscriptionIdAndEventIdCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ResourceHealthEventGetSecurityAdvisoryImpactedResourcesBySubscriptionIdAndEventIdCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of ResourceHealthEventGetBySubscriptionIdAndEventIdCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<ResourceHealthEventImpactedResourceData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetSecurityAdvisoryImpactedResourcesBySubscriptionIdAndEventIdRequest(nextLink, _subscriptionId, _eventTrackingId, _filter, _context) : _client.CreateGetSecurityAdvisoryImpactedResourcesBySubscriptionIdAndEventIdRequest(_subscriptionId, _eventTrackingId, _filter, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionIdAndEventIdRequest(nextLink, _subscriptionId, _eventTrackingId, _filter, _context) : _client.CreateGetBySubscriptionIdAndEventIdRequest(_subscriptionId, _eventTrackingId, _filter, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

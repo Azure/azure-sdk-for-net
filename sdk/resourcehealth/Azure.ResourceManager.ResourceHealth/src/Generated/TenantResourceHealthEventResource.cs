@@ -309,13 +309,13 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceHealthEventImpactedResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceHealthEventImpactedResourceData> GetSecurityAdvisoryImpactedResourcesByTenantIdAndEventIdAsync(string filter = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ResourceHealthEventImpactedResourceData> GetByTenantIdAndEventIdAsync(string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new TenantResourceHealthEventGetSecurityAdvisoryImpactedResourcesByTenantIdAndEventIdAsyncCollectionResultOfT(_tenantResourceHealthEventRestClient, Id.Name, filter, context, "TenantResourceHealthEventResource.GetSecurityAdvisoryImpactedResourcesByTenantIdAndEventId");
+            return new TenantResourceHealthEventGetByTenantIdAndEventIdAsyncCollectionResultOfT(_tenantResourceHealthEventRestClient, Id.Name, filter, context, "TenantResourceHealthEventResource.GetByTenantIdAndEventId");
         }
 
         /// <summary>
@@ -342,13 +342,13 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceHealthEventImpactedResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceHealthEventImpactedResourceData> GetSecurityAdvisoryImpactedResourcesByTenantIdAndEventId(string filter = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<ResourceHealthEventImpactedResourceData> GetByTenantIdAndEventId(string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new TenantResourceHealthEventGetSecurityAdvisoryImpactedResourcesByTenantIdAndEventIdCollectionResultOfT(_tenantResourceHealthEventRestClient, Id.Name, filter, context, "TenantResourceHealthEventResource.GetSecurityAdvisoryImpactedResourcesByTenantIdAndEventId");
+            return new TenantResourceHealthEventGetByTenantIdAndEventIdCollectionResultOfT(_tenantResourceHealthEventRestClient, Id.Name, filter, context, "TenantResourceHealthEventResource.GetByTenantIdAndEventId");
         }
 
         /// <summary> Gets a collection of TenantResourceHealthEventImpactedResources in the <see cref="TenantResourceHealthEventResource"/>. </summary>
