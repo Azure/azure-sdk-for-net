@@ -1093,6 +1093,8 @@ namespace Azure.AI.Projects.Memory
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the memory store. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="kind"> The kind of the memory item. </param>
         /// <param name="limit">
         /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
         /// default is 20.
@@ -1112,7 +1114,7 @@ namespace Azure.AI.Projects.Memory
         /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
         /// </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>

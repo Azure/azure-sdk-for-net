@@ -19,6 +19,8 @@ namespace Azure.AI.Projects.Memory;
 [CodeGenSuppress("UpdateMemoriesAsync", typeof(string), typeof(string), typeof(IEnumerable<InternalItemParam>), typeof(string), typeof(int?), typeof(CancellationToken))]
 [CodeGenSuppress("GetMemoryStores", typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("GetMemoryStoresAsync", typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
+[CodeGenSuppress("GetMemories", typeof(string), typeof(BinaryContent), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
+[CodeGenSuppress("GetMemories", typeof(string), typeof(BinaryContent), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenType("MemoryStores")]
 [Experimental("AAIP001")]
 public partial class AIProjectMemoryStores
@@ -195,6 +197,8 @@ public partial class AIProjectMemoryStores
 
     /// <summary> List all memory items in a memory store. </summary>
     /// <param name="name"> The name of the memory store. </param>
+    /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
+    /// <param name="kind"> The kind of the memory item. </param>
     /// <param name="limit">
     /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
     /// default is 20.
@@ -217,27 +221,31 @@ public partial class AIProjectMemoryStores
     /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual CollectionResult<MemoryItem> GetMemories(string name, int? limit = default, MemoryStoreListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+    public virtual CollectionResult<MemoryItem> GetMemories(string name, string scope, MemoryItemKind? kind=default, int? limit = default, MemoryStoreListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(name, nameof(name));
-
+        ListMemoriesRequest spreadModel = new ListMemoriesRequest(scope, default);
         return new InternalOpenAICollectionResultOfT<MemoryItem>(
             Pipeline,
             messageGenerator: (localCollectionOptions, localRequestOptions)
                 => CreateGetMemoriesRequest(
-                    localCollectionOptions.Filters[0],
-                    localCollectionOptions.Limit,
-                    localCollectionOptions.Order,
-                    localCollectionOptions.AfterId,
-                    localCollectionOptions.BeforeId,
-                    localRequestOptions),
+                    name: localCollectionOptions.Filters[0],
+                    content: new ListMemoriesRequest(localCollectionOptions.Filters[1], default),
+                    kind: localCollectionOptions.Filters.Count > 2 ? localCollectionOptions.Filters[2] : default,
+                    limit: localCollectionOptions.Limit,
+                    order: localCollectionOptions.Order,
+                    after: localCollectionOptions.AfterId,
+                    before: localCollectionOptions.BeforeId,
+                    options: localRequestOptions),
             dataItemDeserializer: MemoryItem.DeserializeMemoryItem,
-            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, filters: [name]),
+            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, filters: [name, scope, kind?.ToString()]),
             cancellationToken.ToRequestOptions());
     }
 
     /// <summary> List all memory items in a memory store. </summary>
     /// <param name="name"> The name of the memory store. </param>
+    /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
+    /// <param name="kind"> The kind of the memory item. </param>
     /// <param name="limit">
     /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
     /// default is 20.
@@ -260,7 +268,7 @@ public partial class AIProjectMemoryStores
     /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual AsyncCollectionResult<MemoryItem> GetMemoriesAsync(string name, int? limit = default, MemoryStoreListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+    public virtual AsyncCollectionResult<MemoryItem> GetMemoriesAsync(string name, string scope, MemoryItemKind? kind = default, int? limit = default, MemoryStoreListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -268,14 +276,16 @@ public partial class AIProjectMemoryStores
             Pipeline,
             messageGenerator: (localCollectionOptions, localRequestOptions)
                 => CreateGetMemoriesRequest(
-                    localCollectionOptions.Filters[0],
-                    localCollectionOptions.Limit,
-                    localCollectionOptions.Order,
-                    localCollectionOptions.AfterId,
-                    localCollectionOptions.BeforeId,
-                    localRequestOptions),
+                    name: localCollectionOptions.Filters[0],
+                    content: new ListMemoriesRequest(localCollectionOptions.Filters[1], default),
+                    kind: localCollectionOptions.Filters.Count > 2 ? localCollectionOptions.Filters[2] : default,
+                    limit: localCollectionOptions.Limit,
+                    order: localCollectionOptions.Order,
+                    after: localCollectionOptions.AfterId,
+                    before: localCollectionOptions.BeforeId,
+                    options: localRequestOptions),
             dataItemDeserializer: MemoryItem.DeserializeMemoryItem,
-            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, filters: [name]),
+            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, filters: [name, scope, kind?.ToString()]),
             cancellationToken.ToRequestOptions());
     }
 }

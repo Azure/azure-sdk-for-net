@@ -219,9 +219,12 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Download the code zip for a specific version of a code-based hosted agent.
+        /// [Protocol Method] Download the code zip for a code-based hosted agent.
         /// Returns the previously-uploaded zip (`application/zip`).
-        /// The SHA-256 digest of the returned bytes matches the `content_hash` on the agent version's `code_configuration`.
+        /// If `agent_version` is supplied, returns that version's code zip; otherwise
+        /// returns the latest version's code zip.
+        /// The SHA-256 digest of the returned bytes matches the `content_hash` on the
+        /// resolved version's `code_configuration`.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -229,8 +232,11 @@ namespace Azure.AI.Projects.Agents
         /// </list>
         /// </summary>
         /// <param name="agentName"> The name of the agent. </param>
-        /// <param name="agentVersion"> The version of the agent whose code zip should be downloaded. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="agentVersion">
+        /// The version of the agent whose code zip should be downloaded.
+        /// If omitted, the latest version's code zip is returned.
+        /// </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -251,9 +257,12 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Download the code zip for a specific version of a code-based hosted agent.
+        /// [Protocol Method] Download the code zip for a code-based hosted agent.
         /// Returns the previously-uploaded zip (`application/zip`).
-        /// The SHA-256 digest of the returned bytes matches the `content_hash` on the agent version's `code_configuration`.
+        /// If `agent_version` is supplied, returns that version's code zip; otherwise
+        /// returns the latest version's code zip.
+        /// The SHA-256 digest of the returned bytes matches the `content_hash` on the
+        /// resolved version's `code_configuration`.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -261,8 +270,11 @@ namespace Azure.AI.Projects.Agents
         /// </list>
         /// </summary>
         /// <param name="agentName"> The name of the agent. </param>
-        /// <param name="agentVersion"> The version of the agent whose code zip should be downloaded. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="agentVersion">
+        /// The version of the agent whose code zip should be downloaded.
+        /// If omitted, the latest version's code zip is returned.
+        /// </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -283,29 +295,41 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// Download the code zip for a specific version of a code-based hosted agent.
+        /// Download the code zip for a code-based hosted agent.
         /// Returns the previously-uploaded zip (`application/zip`).
-        /// The SHA-256 digest of the returned bytes matches the `content_hash` on the agent version's `code_configuration`.
+        /// If `agent_version` is supplied, returns that version's code zip; otherwise
+        /// returns the latest version's code zip.
+        /// The SHA-256 digest of the returned bytes matches the `content_hash` on the
+        /// resolved version's `code_configuration`.
         /// </summary>
         /// <param name="agentName"> The name of the agent. </param>
-        /// <param name="agentVersion"> The version of the agent whose code zip should be downloaded. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="agentVersion">
+        /// The version of the agent whose code zip should be downloaded.
+        /// If omitted, the latest version's code zip is returned.
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<BinaryData> DownloadAgentVersionCode(string agentName, string agentVersion, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual ClientResult<BinaryData> DownloadAgentCode(string agentName, AgentDefinitionOptInKeys? foundryFeatures = default, string agentVersion = default, CancellationToken cancellationToken = default)
         {
-            ClientResult result = DownloadAgentVersionCode(agentName, agentVersion, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            ClientResult result = DownloadAgentCode(agentName, foundryFeatures?.ToSerialString(), agentVersion, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
         }
 
         /// <summary>
-        /// Download the code zip for a specific version of a code-based hosted agent.
+        /// Download the code zip for a code-based hosted agent.
         /// Returns the previously-uploaded zip (`application/zip`).
-        /// The SHA-256 digest of the returned bytes matches the `content_hash` on the agent version's `code_configuration`.
+        /// If `agent_version` is supplied, returns that version's code zip; otherwise
+        /// returns the latest version's code zip.
+        /// The SHA-256 digest of the returned bytes matches the `content_hash` on the
+        /// resolved version's `code_configuration`.
         /// </summary>
         /// <param name="agentName"> The name of the agent. </param>
-        /// <param name="agentVersion"> The version of the agent whose code zip should be downloaded. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="agentVersion">
+        /// The version of the agent whose code zip should be downloaded.
+        /// If omitted, the latest version's code zip is returned.
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         internal virtual async Task<ClientResult<BinaryData>> DownloadAgentVersionCodeAsync(string agentName, string agentVersion, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
@@ -419,6 +443,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="agentName"> The name of the agent to create a session for. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -451,6 +476,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="agentName"> The name of the agent to create a session for. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -481,6 +507,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="agentName"> The name of the agent. </param>
         /// <param name="sessionId"> The session identifier. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -511,6 +538,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="agentName"> The name of the agent. </param>
         /// <param name="sessionId"> The session identifier. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -542,6 +570,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="agentName"> The name of the agent. </param>
         /// <param name="sessionId"> The session identifier. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -573,6 +602,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="agentName"> The name of the agent. </param>
         /// <param name="sessionId"> The session identifier. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>

@@ -13,13 +13,14 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
     /// <summary>
     /// A class representing a collection of <see cref="SubscriptionRaiPolicyResource"/> and their operations.
-    /// Each <see cref="SubscriptionRaiPolicyResource"/> in the collection will belong to the same instance of <see cref="CognitiveServicesAccountResource"/>.
-    /// To get a <see cref="SubscriptionRaiPolicyCollection"/> instance call the GetSubscriptionRaiPolicies method from an instance of <see cref="CognitiveServicesAccountResource"/>.
+    /// Each <see cref="SubscriptionRaiPolicyResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="SubscriptionRaiPolicyCollection"/> instance call the GetSubscriptionRaiPolicies method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class SubscriptionRaiPolicyCollection : ArmCollection
     {
@@ -46,9 +47,9 @@ namespace Azure.ResourceManager.CognitiveServices
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != CognitiveServicesAccountResource.ResourceType)
+            if (id.ResourceType != SubscriptionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CognitiveServicesAccountResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
             }
         }
 

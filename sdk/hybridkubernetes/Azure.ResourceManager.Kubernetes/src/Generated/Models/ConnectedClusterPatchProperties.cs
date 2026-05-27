@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         /// <param name="azureHybridBenefit"> Indicates whether Azure Hybrid Benefit is opted in. </param>
         /// <param name="gateway"> Indicates whether Gateway is enabled for the connected cluster resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectedClusterPatchProperties(string distribution, string distributionVersion, AzureHybridBenefit? azureHybridBenefit, Gateway gateway, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectedClusterPatchProperties(string distribution, string distributionVersion, ConnectedClusterAzureHybridBenefit? azureHybridBenefit, Gateway gateway, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Distribution = distribution;
             DistributionVersion = distributionVersion;
@@ -43,17 +43,17 @@ namespace Azure.ResourceManager.Kubernetes.Models
         public string DistributionVersion { get; set; }
 
         /// <summary> Indicates whether Azure Hybrid Benefit is opted in. </summary>
-        public AzureHybridBenefit? AzureHybridBenefit { get; set; }
+        public ConnectedClusterAzureHybridBenefit? AzureHybridBenefit { get; set; }
 
         /// <summary> Indicates whether Gateway is enabled for the connected cluster resource. </summary>
         internal Gateway Gateway { get; set; }
 
         /// <summary> Indicates whether the gateway for arc router connectivity is enabled. </summary>
-        public bool? GatewayEnabled
+        public bool? IsGatewayEnabled
         {
             get
             {
-                return Gateway is null ? default : Gateway.Enabled;
+                return Gateway is null ? default : Gateway.IsGatewayEnabled;
             }
             set
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 {
                     Gateway = new Gateway();
                 }
-                Gateway.Enabled = value;
+                Gateway.IsGatewayEnabled = value;
             }
         }
     }

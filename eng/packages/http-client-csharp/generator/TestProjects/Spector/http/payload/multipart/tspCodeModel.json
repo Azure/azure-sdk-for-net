@@ -2579,7 +2579,8 @@
                         "access": "public",
                         "decorators": []
                       }
-                    ]
+                    ],
+                    "serializationOptions": {}
                   }
                 ],
                 "responses": [
@@ -2588,7 +2589,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "POST",
@@ -2703,7 +2705,8 @@
                         "access": "public",
                         "decorators": []
                       }
-                    ]
+                    ],
+                    "serializationOptions": {}
                   }
                 ],
                 "responses": [
@@ -2712,7 +2715,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "POST",
@@ -2827,7 +2831,8 @@
                         "access": "public",
                         "decorators": []
                       }
-                    ]
+                    ],
+                    "serializationOptions": {}
                   }
                 ],
                 "responses": [
@@ -2836,7 +2841,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "POST",
@@ -2951,7 +2957,8 @@
                         "access": "public",
                         "decorators": []
                       }
-                    ]
+                    ],
+                    "serializationOptions": {}
                   }
                 ],
                 "responses": [
@@ -2960,7 +2967,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "POST",
@@ -3075,7 +3083,8 @@
                         "access": "public",
                         "decorators": []
                       }
-                    ]
+                    ],
+                    "serializationOptions": {}
                   }
                 ],
                 "responses": [
@@ -3084,7 +3093,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "POST",
@@ -3199,7 +3209,8 @@
                         "access": "public",
                         "decorators": []
                       }
-                    ]
+                    ],
+                    "serializationOptions": {}
                   }
                 ],
                 "responses": [
@@ -3208,7 +3219,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "POST",
@@ -3323,7 +3335,8 @@
                         "access": "public",
                         "decorators": []
                       }
-                    ]
+                    ],
+                    "serializationOptions": {}
                   }
                 ],
                 "responses": [
@@ -3332,7 +3345,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "POST",
@@ -3447,7 +3461,8 @@
                         "access": "public",
                         "decorators": []
                       }
-                    ]
+                    ],
+                    "serializationOptions": {}
                   }
                 ],
                 "responses": [
@@ -3456,7 +3471,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "POST",
@@ -3571,7 +3587,8 @@
                         "access": "public",
                         "decorators": []
                       }
-                    ]
+                    ],
+                    "serializationOptions": {}
                   }
                 ],
                 "responses": [
@@ -3580,7 +3597,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "POST",
@@ -3742,7 +3760,8 @@
                             "access": "public",
                             "decorators": []
                           }
-                        ]
+                        ],
+                        "serializationOptions": {}
                       }
                     ],
                     "responses": [
@@ -3751,7 +3770,8 @@
                           204
                         ],
                         "headers": [],
-                        "isErrorResponse": false
+                        "isErrorResponse": false,
+                        "serializationOptions": {}
                       }
                     ],
                     "httpMethod": "POST",
@@ -3913,7 +3933,8 @@
                                 "access": "public",
                                 "decorators": []
                               }
-                            ]
+                            ],
+                            "serializationOptions": {}
                           }
                         ],
                         "responses": [
@@ -3922,7 +3943,8 @@
                               204
                             ],
                             "headers": [],
-                            "isErrorResponse": false
+                            "isErrorResponse": false,
+                            "serializationOptions": {}
                           }
                         ],
                         "httpMethod": "POST",
@@ -4037,7 +4059,8 @@
                                 "access": "public",
                                 "decorators": []
                               }
-                            ]
+                            ],
+                            "serializationOptions": {}
                           }
                         ],
                         "responses": [
@@ -4046,7 +4069,8 @@
                               204
                             ],
                             "headers": [],
-                            "isErrorResponse": false
+                            "isErrorResponse": false,
+                            "serializationOptions": {}
                           }
                         ],
                         "httpMethod": "POST",
@@ -4161,7 +4185,8 @@
                                 "access": "public",
                                 "decorators": []
                               }
-                            ]
+                            ],
+                            "serializationOptions": {}
                           }
                         ],
                         "responses": [
@@ -4170,7 +4195,8 @@
                               204
                             ],
                             "headers": [],
-                            "isErrorResponse": false
+                            "isErrorResponse": false,
+                            "serializationOptions": {}
                           }
                         ],
                         "httpMethod": "POST",
@@ -4333,7 +4359,8 @@
                                 "access": "public",
                                 "decorators": []
                               }
-                            ]
+                            ],
+                            "serializationOptions": {}
                           }
                         ],
                         "responses": [
@@ -4342,7 +4369,8 @@
                               204
                             ],
                             "headers": [],
-                            "isErrorResponse": false
+                            "isErrorResponse": false,
+                            "serializationOptions": {}
                           }
                         ],
                         "httpMethod": "POST",
@@ -4506,7 +4534,8 @@
                             "access": "public",
                             "decorators": []
                           }
-                        ]
+                        ],
+                        "serializationOptions": {}
                       }
                     ],
                     "responses": [
@@ -4515,7 +4544,8 @@
                           204
                         ],
                         "headers": [],
-                        "isErrorResponse": false
+                        "isErrorResponse": false,
+                        "serializationOptions": {}
                       }
                     ],
                     "httpMethod": "POST",
@@ -4628,7 +4658,8 @@
                             "access": "public",
                             "decorators": []
                           }
-                        ]
+                        ],
+                        "serializationOptions": {}
                       }
                     ],
                     "responses": [
@@ -4637,7 +4668,8 @@
                           204
                         ],
                         "headers": [],
-                        "isErrorResponse": false
+                        "isErrorResponse": false,
+                        "serializationOptions": {}
                       }
                     ],
                     "httpMethod": "POST",
@@ -4750,7 +4782,8 @@
                             "access": "public",
                             "decorators": []
                           }
-                        ]
+                        ],
+                        "serializationOptions": {}
                       }
                     ],
                     "responses": [
@@ -4759,7 +4792,8 @@
                           204
                         ],
                         "headers": [],
-                        "isErrorResponse": false
+                        "isErrorResponse": false,
+                        "serializationOptions": {}
                       }
                     ],
                     "httpMethod": "POST",

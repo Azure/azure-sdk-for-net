@@ -26,10 +26,13 @@ import {
   isResourceInstancePath,
   sortResourceMethods,
   RequestPath,
-  extractNameConstraintOverrides
+  extractNameConstraintOverrides,
+  extractResourceNameOverride,
+  detectDynamicTypeSegments,
+  resolveFixedEnumNameSegments,
+  isVariableSegment
 } from "./resource-metadata.js";
 import {
-  DecoratorInfo,
   SdkHttpOperation,
   SdkMethod,
   SdkModelType
@@ -42,9 +45,9 @@ import {
   builtInResourceOperationName,
   customAzureResource,
   extensionResourceOperationName,
+  isResourceCollectionAction,
   legacyExtensionResourceOperationName,
-  legacyResourceOperationName,
-  singleton
+  legacyResourceOperationName
 } from "./sdk-context-options.js";
 import {
   DecoratorApplication,
@@ -115,6 +118,14 @@ export function buildArmProviderSchema(
     }
   }
 
+  const reportWarning = (message: string) =>
+    sdkContext.program.reportDiagnostic({
+      code: "general-warning",
+      severity: "warning",
+      message,
+      target: NoTarget
+    });
+
   // Step 2a: locate GETs whose direct response is a candidate model. Each
   // such GET path becomes an instance path. Multiple GETs returning the same
   // model produce multiple instance paths (multi-path resource).
@@ -128,6 +139,14 @@ export function buildArmProviderSchema(
       operationPath: RequestPath;
     }>;
     explicitResourceName?: string;
+    singletonResourceName?: string;
+    /**
+     * Per-enum-value resource-name override map for an expandable
+     * `{parentType}` Read op (from `@@clientOption(op, "resource-name",
+     * #{...}, "csharp")`). Plumbed through expansion via
+     * `resourceNameOverrides`. `undefined` for non-expandable Read ops.
+     */
+    resourceNameOverrideMap?: Map<string, string>;
   };
   const resourceEntries: ResourceEntry[] = [];
   const consumedMethodIds = new Set<string>();
@@ -139,15 +158,54 @@ export function buildArmProviderSchema(
     const respModelId = getDirectResponseModelId(sdkMethod);
     if (!respModelId || !resourceModelIds.has(respModelId)) continue;
 
-    const path = new RequestPath(method.operation.path);
-    if (!isResourceInstancePath(sdkMethod, path)) continue;
+    const rawPath = new RequestPath(method.operation.path);
+    if (!isResourceInstancePath(sdkMethod, rawPath)) continue;
+    // Canonicalizing fixed enum names changes resourceIdPattern from a parameter
+    // to a literal
+    const path = resolveFixedEnumNameSegments(sdkMethod, rawPath);
+
+    let explicitResourceName = getExplicitResourceName(sdkMethod);
+    let resourceNameOverrideMap: Map<string, string> | undefined;
+    const clientOptionOverride = extractResourceNameOverride(
+      sdkMethod,
+      sdkContext.program
+    );
+    if (clientOptionOverride !== undefined) {
+      const isExpandable = detectDynamicTypeSegments(path).length > 0;
+      if (typeof clientOptionOverride === "string") {
+        if (isExpandable) {
+          $lib.reportDiagnostic(sdkContext.program, {
+            code: "resource-name-string-on-expandable",
+            format: { value: clientOptionOverride, path: path.path },
+            target: NoTarget
+          });
+        } else {
+          // Plain string override on an ordinary Read op. Folds into the
+          // existing explicit-name mechanism so it's applied uniformly with
+          // legacy decorators in step 3.
+          explicitResourceName = clientOptionOverride;
+        }
+      } else {
+        if (!isExpandable) {
+          $lib.reportDiagnostic(sdkContext.program, {
+            code: "resource-name-map-on-non-expandable",
+            format: { path: path.path },
+            target: NoTarget
+          });
+        } else {
+          resourceNameOverrideMap = clientOptionOverride;
+        }
+      }
+    }
 
     const entry: ResourceEntry = {
       modelId: respModelId,
       instancePath: path,
       client,
       methods: [],
-      explicitResourceName: getExplicitResourceName(sdkMethod)
+      explicitResourceName,
+      singletonResourceName: path.singletonName,
+      resourceNameOverrideMap
     };
     resourceEntries.push(entry);
     entry.methods.push({
@@ -201,8 +259,9 @@ export function buildArmProviderSchema(
       default:
         continue;
     }
-    const opPath = new RequestPath(method.operation.path);
-    if (!isResourceInstancePath(sdkMethod, opPath)) continue;
+    const rawOpPath = new RequestPath(method.operation.path);
+    if (!isResourceInstancePath(sdkMethod, rawOpPath)) continue;
+    const opPath = resolveFixedEnumNameSegments(sdkMethod, rawOpPath);
     const matched = resourceEntries.find((entry) =>
       entry.instancePath.equals(opPath)
     );
@@ -240,9 +299,7 @@ export function buildArmProviderSchema(
     const metadata: ResourceMetadata = {
       resourceIdPattern: entry.instancePath,
       resourceType: entry.instancePath.resourceType ?? "",
-      singletonResourceName: getSingletonResource(
-        model?.decorators?.find((d) => d.name == singleton)
-      ),
+      singletonResourceName: entry.singletonResourceName,
       scope: {
         kind: ResourceScopeKind.Tenant,
         scopeIdPattern: RequestPath.empty
@@ -263,19 +320,25 @@ export function buildArmProviderSchema(
 
   const nonResourceMethodsArray: NonResourceMethod[] = [];
 
-  const reportWarning = (message: string) =>
-    sdkContext.program.reportDiagnostic({
-      code: "general-warning",
-      severity: "warning",
-      message,
-      target: NoTarget
-    });
+  // Build the per-template-path override map for expansion (only entries with
+  // a map-form `@@clientOption(..., "resource-name", #{...}, ...)`).
+  const resourceNameOverrides = new Map<string, Map<string, string>>();
+  for (const entry of resourceEntries) {
+    if (entry.resourceNameOverrideMap) {
+      resourceNameOverrides.set(
+        entry.instancePath.path,
+        entry.resourceNameOverrideMap
+      );
+    }
+  }
 
   // Step 2c: expand resources with dynamic parent type segments before any
   // path-based parent inference runs, so the inference sees concrete paths.
   const { expandedResources } = expandArmResources(resources, {
     serviceMethods,
-    diagnosticReporter: reportWarning
+    diagnosticReporter: reportWarning,
+    resourceNameOverrides:
+      resourceNameOverrides.size > 0 ? resourceNameOverrides : undefined
   });
 
   // Step 3: resolve parent relationships by walking up each resource's
@@ -384,13 +447,13 @@ function getDirectResponseModelId(
 }
 
 /**
- * Returns the page-item model id for a pageable method, or undefined when the
- * method is not pageable or returns a non-model item type.
+ * Returns the item model id for a method that returns a resource collection.
+ * This covers paging/lropaging methods and basic GET methods that return T[]
+ * directly.
  */
-function getPagingItemModelIdLocal(
+function getCollectionItemModelIdLocal(
   method: SdkMethod<SdkHttpOperation>
 ): string | undefined {
-  if (method.kind !== "paging" && method.kind !== "lropaging") return undefined;
   const r = method.response?.type;
   if (r?.kind === "array" && r.valueType.kind === "model") {
     return (r.valueType as SdkModelType).crossLanguageDefinitionId;
@@ -431,11 +494,14 @@ function assignRemainingOperations(
     const methodId = method.crossLanguageDefinitionId;
     if (consumedMethodIds.has(methodId)) continue;
 
-    const operationPath = new RequestPath(method.operation.path);
     const sdkMethod = serviceMethods.get(methodId);
+    const rawOperationPath = new RequestPath(method.operation.path);
+    const operationPath = sdkMethod
+      ? resolveFixedEnumNameSegments(sdkMethod, rawOperationPath)
+      : rawOperationPath;
     const itemModelId =
       sdkMethod?.operation?.verb === "get"
-        ? getPagingItemModelIdLocal(sdkMethod)
+        ? getCollectionItemModelIdLocal(sdkMethod)
         : undefined;
     const listTarget =
       itemModelId && identifiedResourceModelIds.has(itemModelId)
@@ -458,13 +524,26 @@ function assignRemainingOperations(
       });
     } else if (actionTarget) {
       const scope = buildScopeInfoFromPath(operationPath);
-      actionTarget.metadata.methods.push({
+      const isCollectionAction = isResourceCollectionAction(sdkMethod);
+      const target = isCollectionAction
+        ? findCollectionActionTargetResource(
+            resources,
+            operationPath,
+            actionTarget
+          ) ?? actionTarget
+        : actionTarget;
+      target.metadata.methods.push({
         methodId,
-        kind: ResourceOperationKind.Action,
+        kind: isCollectionAction
+          ? ResourceOperationKind.CollectionAction
+          : ResourceOperationKind.Action,
         operationPath,
         scope: {
           ...scope,
-          scopeIdPattern: actionTarget.metadata.resourceIdPattern
+          scopeIdPattern:
+            target !== actionTarget
+              ? getCollectionContextPath(target)
+              : actionTarget.metadata.resourceIdPattern
         }
       });
     } else {
@@ -482,6 +561,44 @@ function assignRemainingOperations(
   }
 }
 
+function findCollectionActionTargetResource(
+  resources: ValidArmResourceSchema[],
+  operationPath: RequestPath,
+  actionTarget: ValidArmResourceSchema
+): ValidArmResourceSchema | undefined {
+  return findLongestPrefixMatch(operationPath, resources, (resource) => {
+    if (
+      resource === actionTarget ||
+      !getCollectionContextPath(resource).equals(
+        actionTarget.metadata.resourceIdPattern
+      )
+    ) {
+      return undefined;
+    }
+
+    return getResourceCollectionPath(resource.metadata.resourceIdPattern);
+  });
+}
+
+function getResourceCollectionPath(
+  resourcePath: RequestPath
+): RequestPath | undefined {
+  const lastSegment = resourcePath.segments.at(-1);
+  if (!lastSegment || !isVariableSegment(lastSegment)) {
+    return undefined;
+  }
+
+  return RequestPath.fromSegments(resourcePath.segments.slice(0, -1));
+}
+
+function getCollectionContextPath(
+  resource: ValidArmResourceSchema
+): RequestPath {
+  return (
+    resource.metadata.parentResourceId ?? resource.metadata.scope.scopeIdPattern
+  );
+}
+
 function findListTargetResource(
   resources: ValidArmResourceSchema[],
   operationPath: RequestPath,
@@ -491,12 +608,11 @@ function findListTargetResource(
     (resource) => resource.resourceModelId === itemModelId
   );
 
-  const exactCollectionMatches = candidates.filter(
-    (resource) =>
-      resource.metadata.resourceIdPattern.trimLastSegment?.equals(operationPath)
+  const collectionMatches = candidates.filter((resource) =>
+    operationPath.isPrefixOf(resource.metadata.resourceIdPattern)
   );
-  if (exactCollectionMatches.length > 0) {
-    return shortestResourcePath(exactCollectionMatches);
+  if (collectionMatches.length > 0) {
+    return shortestResourcePath(collectionMatches);
   }
 
   const operationType = operationPath.resourceType;
@@ -685,15 +801,6 @@ function getAllResourceModels(codeModel: CodeModel): InputModelType[] {
   return resourceModels;
 }
 
-function getSingletonResource(
-  decorator: DecoratorInfo | undefined
-): string | undefined {
-  if (!decorator) return undefined;
-  const singletonResource = decorator.arguments["keyValue"] as
-    | string
-    | undefined;
-  return singletonResource ?? "default";
-}
 /**
  * Builds an ArmScopeInfo from an operation path.
  * Extracts the scope ID pattern and resource type from the path's scope portion.

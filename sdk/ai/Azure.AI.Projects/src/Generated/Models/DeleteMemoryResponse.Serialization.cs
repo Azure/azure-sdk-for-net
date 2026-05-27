@@ -87,8 +87,6 @@ namespace Azure.AI.Projects
             }
             writer.WritePropertyName("object"u8);
             writer.WriteStringValue(Object.ToString());
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
             writer.WritePropertyName("memory_id"u8);
             writer.WriteStringValue(MemoryId);
             writer.WritePropertyName("deleted"u8);
@@ -136,7 +134,6 @@ namespace Azure.AI.Projects
                 return null;
             }
             MemoryStoreObjectType @object = default;
-            string name = default;
             string memoryId = default;
             bool deleted = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -145,11 +142,6 @@ namespace Azure.AI.Projects
                 if (prop.NameEquals("object"u8))
                 {
                     @object = new MemoryStoreObjectType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("memory_id"u8))
@@ -167,7 +159,7 @@ namespace Azure.AI.Projects
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DeleteMemoryResponse(@object, name, memoryId, deleted, additionalBinaryDataProperties);
+            return new DeleteMemoryResponse(@object, memoryId, deleted, additionalBinaryDataProperties);
         }
     }
 }
