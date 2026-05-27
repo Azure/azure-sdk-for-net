@@ -15,61 +15,61 @@ using Azure.ResourceManager.HybridCompute;
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> Describes a License Profile Update. </summary>
-    public partial class HybridComputeLicenseProfileUpdate : HybridComputeResourceUpdate, IJsonModel<HybridComputeLicenseProfileUpdate>
+    public partial class HybridComputeLicenseProfilePatch : HybridComputeResourceUpdate, IJsonModel<HybridComputeLicenseProfilePatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override HybridComputeResourceUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HybridComputeLicenseProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HybridComputeLicenseProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeHybridComputeLicenseProfileUpdate(document.RootElement, options);
+                        return DeserializeHybridComputeLicenseProfilePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HybridComputeLicenseProfileUpdate)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeLicenseProfilePatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HybridComputeLicenseProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HybridComputeLicenseProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridComputeContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(HybridComputeLicenseProfileUpdate)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeLicenseProfilePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HybridComputeLicenseProfileUpdate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<HybridComputeLicenseProfilePatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HybridComputeLicenseProfileUpdate IPersistableModel<HybridComputeLicenseProfileUpdate>.Create(BinaryData data, ModelReaderWriterOptions options) => (HybridComputeLicenseProfileUpdate)PersistableModelCreateCore(data, options);
+        HybridComputeLicenseProfilePatch IPersistableModel<HybridComputeLicenseProfilePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (HybridComputeLicenseProfilePatch)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HybridComputeLicenseProfileUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HybridComputeLicenseProfilePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="hybridComputeLicenseProfileUpdate"> The <see cref="HybridComputeLicenseProfileUpdate"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(HybridComputeLicenseProfileUpdate hybridComputeLicenseProfileUpdate)
+        /// <param name="hybridComputeLicenseProfilePatch"> The <see cref="HybridComputeLicenseProfilePatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(HybridComputeLicenseProfilePatch hybridComputeLicenseProfilePatch)
         {
-            if (hybridComputeLicenseProfileUpdate == null)
+            if (hybridComputeLicenseProfilePatch == null)
             {
                 return null;
             }
-            return RequestContent.Create(hybridComputeLicenseProfileUpdate, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(hybridComputeLicenseProfilePatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<HybridComputeLicenseProfileUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HybridComputeLicenseProfilePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HybridComputeLicenseProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HybridComputeLicenseProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridComputeLicenseProfileUpdate)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeLicenseProfilePatch)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -95,24 +95,24 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HybridComputeLicenseProfileUpdate IJsonModel<HybridComputeLicenseProfileUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (HybridComputeLicenseProfileUpdate)JsonModelCreateCore(ref reader, options);
+        HybridComputeLicenseProfilePatch IJsonModel<HybridComputeLicenseProfilePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (HybridComputeLicenseProfilePatch)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override HybridComputeResourceUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HybridComputeLicenseProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HybridComputeLicenseProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridComputeLicenseProfileUpdate)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeLicenseProfilePatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHybridComputeLicenseProfileUpdate(document.RootElement, options);
+            return DeserializeHybridComputeLicenseProfilePatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static HybridComputeLicenseProfileUpdate DeserializeHybridComputeLicenseProfileUpdate(JsonElement element, ModelReaderWriterOptions options)
+        internal static HybridComputeLicenseProfilePatch DeserializeHybridComputeLicenseProfilePatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HybridComputeLicenseProfileUpdate(tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties, properties);
+            return new HybridComputeLicenseProfilePatch(tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties, properties);
         }
     }
 }

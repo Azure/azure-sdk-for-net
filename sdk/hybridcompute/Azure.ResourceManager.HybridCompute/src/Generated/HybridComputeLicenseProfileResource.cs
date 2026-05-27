@@ -212,12 +212,12 @@ namespace Azure.ResourceManager.HybridCompute
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="hybridComputeLicenseProfileUpdate"> Parameters supplied to the Update license profile operation. </param>
+        /// <param name="patch"> Parameters supplied to the Update license profile operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hybridComputeLicenseProfileUpdate"/> is null. </exception>
-        public virtual async Task<ArmOperation<HybridComputeLicenseProfileResource>> UpdateAsync(WaitUntil waitUntil, HybridComputeLicenseProfileUpdate hybridComputeLicenseProfileUpdate, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<ArmOperation<HybridComputeLicenseProfileResource>> UpdateAsync(WaitUntil waitUntil, HybridComputeLicenseProfilePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(hybridComputeLicenseProfileUpdate, nameof(hybridComputeLicenseProfileUpdate));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _licenseProfilesClientDiagnostics.CreateScope("HybridComputeLicenseProfileResource.Update");
             scope.Start();
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _licenseProfilesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, HybridComputeLicenseProfileUpdate.ToRequestContent(hybridComputeLicenseProfileUpdate), context);
+                HttpMessage message = _licenseProfilesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, HybridComputeLicenseProfilePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HybridComputeArmOperation<HybridComputeLicenseProfileResource> operation = new HybridComputeArmOperation<HybridComputeLicenseProfileResource>(
                     new HybridComputeLicenseProfileOperationSource(Client),
@@ -271,12 +271,12 @@ namespace Azure.ResourceManager.HybridCompute
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="hybridComputeLicenseProfileUpdate"> Parameters supplied to the Update license profile operation. </param>
+        /// <param name="patch"> Parameters supplied to the Update license profile operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hybridComputeLicenseProfileUpdate"/> is null. </exception>
-        public virtual ArmOperation<HybridComputeLicenseProfileResource> Update(WaitUntil waitUntil, HybridComputeLicenseProfileUpdate hybridComputeLicenseProfileUpdate, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual ArmOperation<HybridComputeLicenseProfileResource> Update(WaitUntil waitUntil, HybridComputeLicenseProfilePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(hybridComputeLicenseProfileUpdate, nameof(hybridComputeLicenseProfileUpdate));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _licenseProfilesClientDiagnostics.CreateScope("HybridComputeLicenseProfileResource.Update");
             scope.Start();
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _licenseProfilesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, HybridComputeLicenseProfileUpdate.ToRequestContent(hybridComputeLicenseProfileUpdate), context);
+                HttpMessage message = _licenseProfilesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, HybridComputeLicenseProfilePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HybridComputeArmOperation<HybridComputeLicenseProfileResource> operation = new HybridComputeArmOperation<HybridComputeLicenseProfileResource>(
                     new HybridComputeLicenseProfileOperationSource(Client),
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.HybridCompute
                 else
                 {
                     HybridComputeLicenseProfileData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    HybridComputeLicenseProfileUpdate patch = new HybridComputeLicenseProfileUpdate();
+                    HybridComputeLicenseProfilePatch patch = new HybridComputeLicenseProfilePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.HybridCompute
                 else
                 {
                     HybridComputeLicenseProfileData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    HybridComputeLicenseProfileUpdate patch = new HybridComputeLicenseProfileUpdate();
+                    HybridComputeLicenseProfilePatch patch = new HybridComputeLicenseProfilePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.HybridCompute
                 else
                 {
                     HybridComputeLicenseProfileData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    HybridComputeLicenseProfileUpdate patch = new HybridComputeLicenseProfileUpdate();
+                    HybridComputeLicenseProfilePatch patch = new HybridComputeLicenseProfilePatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<HybridComputeLicenseProfileResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -575,7 +575,7 @@ namespace Azure.ResourceManager.HybridCompute
                 else
                 {
                     HybridComputeLicenseProfileData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    HybridComputeLicenseProfileUpdate patch = new HybridComputeLicenseProfileUpdate();
+                    HybridComputeLicenseProfilePatch patch = new HybridComputeLicenseProfilePatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<HybridComputeLicenseProfileResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -617,7 +617,7 @@ namespace Azure.ResourceManager.HybridCompute
                 else
                 {
                     HybridComputeLicenseProfileData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    HybridComputeLicenseProfileUpdate patch = new HybridComputeLicenseProfileUpdate();
+                    HybridComputeLicenseProfilePatch patch = new HybridComputeLicenseProfilePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -663,7 +663,7 @@ namespace Azure.ResourceManager.HybridCompute
                 else
                 {
                     HybridComputeLicenseProfileData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    HybridComputeLicenseProfileUpdate patch = new HybridComputeLicenseProfileUpdate();
+                    HybridComputeLicenseProfilePatch patch = new HybridComputeLicenseProfilePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

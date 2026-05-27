@@ -611,20 +611,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="softwareAssuranceCustomer"> Specifies if this machine is licensed as part of a Software Assurance agreement. </param>
-        /// <param name="assignedLicense"> The resource id of the license. </param>
-        /// <param name="subscriptionStatus"> Indicates the subscription status of the product. </param>
-        /// <param name="productType"> Indicates the product type of the license. </param>
-        /// <param name="productFeatures"> The list of product feature updates. </param>
-        /// <returns> A new <see cref="Models.HybridComputeLicenseProfileUpdate"/> instance for mocking. </returns>
-        public static HybridComputeLicenseProfileUpdate HybridComputeLicenseProfileUpdate(IDictionary<string, string> tags = default, bool? softwareAssuranceCustomer = default, string assignedLicense = default, LicenseProfileSubscriptionStatusUpdate? subscriptionStatus = default, LicenseProfileProductType? productType = default, IEnumerable<HybridComputeProductFeatureUpdate> productFeatures = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new HybridComputeLicenseProfileUpdate(tags, additionalBinaryDataProperties: null, softwareAssuranceCustomer is null && assignedLicense is null && subscriptionStatus is null && productType is null && productFeatures is null ? default : new LicenseProfileUpdateProperties(new LicenseProfileUpdatePropertiesSoftwareAssurance(softwareAssuranceCustomer, null), new EsuProfileUpdateProperties(assignedLicense, null), new ProductProfileUpdateProperties(subscriptionStatus, productType, (productFeatures ?? new ChangeTrackingList<HybridComputeProductFeatureUpdate>()).ToList(), null), null));
-        }
-
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="forceUpdateTag"> How the extension handler should be forced to update even if the extension configuration has not changed. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
         /// <param name="machineExtensionUpdatePropertiesType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>

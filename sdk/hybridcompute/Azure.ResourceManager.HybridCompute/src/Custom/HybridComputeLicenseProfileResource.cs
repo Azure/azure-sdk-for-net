@@ -12,30 +12,6 @@ namespace Azure.ResourceManager.HybridCompute
 {
     public partial class HybridComputeLicenseProfileResource
     {
-        /// <summary> The operation to update a license profile. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
-        /// <param name="patch"> Parameters supplied to the Update license profile operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="System.ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Task<ArmOperation<HybridComputeLicenseProfileResource>> UpdateAsync(WaitUntil waitUntil, HybridComputeLicenseProfilePatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            return UpdateAsync(waitUntil, patch.ToUpdate(), cancellationToken);
-        }
-
-        /// <summary> The operation to update a license profile. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
-        /// <param name="patch"> Parameters supplied to the Update license profile operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="System.ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<HybridComputeLicenseProfileResource> Update(WaitUntil waitUntil, HybridComputeLicenseProfilePatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            return Update(waitUntil, patch.ToUpdate(), cancellationToken);
-        }
-
         /// <summary> The operation to create or update a license profile. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
         /// <param name="data"> Parameters supplied to the Create or Update license profile operation. </param>
