@@ -16,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Generator.Mgmt.Tests
 {
-    public class ResourceVisitorTests
+    public class ResourceDataModelProviderTests
     {
         [Test]
         public void ResourceDataModelProviderAvoidsStaleResourceClientCustomCodeView()

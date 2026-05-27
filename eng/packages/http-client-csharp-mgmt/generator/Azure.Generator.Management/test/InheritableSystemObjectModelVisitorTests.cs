@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management;
-using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Tests.TestHelpers;
 using Azure.Generator.Management.Visitors;
@@ -21,23 +20,6 @@ namespace Azure.Generator.Mgmt.Tests
 {
     public class InheritableSystemObjectModelVisitorTests
     {
-        [TestCase(typeof(ResourceData))]
-        [TestCase(typeof(TrackedResourceData))]
-        public void TryGetInheritableSystemTypeByName_MatchesKnownFrameworkType(System.Type expectedType)
-        {
-            var csharpType = new CSharpType(expectedType);
-            Assert.That(KnownManagementTypes.TryGetInheritableSystemTypeByName(csharpType, out var clrType), Is.True);
-            Assert.That(clrType, Is.EqualTo(expectedType));
-        }
-
-        [Test]
-        public void TryGetInheritableSystemTypeByName_DoesNotMatchUnknownType()
-        {
-            // Use a framework type that is NOT a known inheritable system type
-            var csharpType = new CSharpType(typeof(string));
-            Assert.That(KnownManagementTypes.TryGetInheritableSystemTypeByName(csharpType, out _), Is.False);
-        }
-
         [Test]
         public void EnsureFrameworkTypeRegistered_RegistersBothTypes()
         {

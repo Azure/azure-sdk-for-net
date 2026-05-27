@@ -127,25 +127,6 @@ namespace Azure.Generator.Management.Primitives
 
         public static bool TryGetSystemType(string id, [MaybeNullWhen(false)] out CSharpType type) => _idToSystemTypeMap.TryGetValue(id, out type);
 
-        /// <summary>
-        /// Tries to match a CSharpType (e.g., from custom code Roslyn resolution) to a known inheritable system type
-        /// by comparing name and namespace. This handles the case where CSharpType.Equals fails due to
-        /// framework vs non-framework type mismatch.
-        /// </summary>
-        public static bool TryGetInheritableSystemTypeByName(CSharpType type, [MaybeNullWhen(false)] out Type clrType)
-        {
-            foreach (var kvp in _idToInheritableSystemTypeMap)
-            {
-                if (kvp.Value.AreNamesEqual(type))
-                {
-                    clrType = kvp.Value.FrameworkType;
-                    return true;
-                }
-            }
-            clrType = null;
-            return false;
-        }
-
         public static bool TryGetFrameworkType(string fullyQualifiedTypeName, [MaybeNullWhen(false)] out Type frameworkType)
             => _fullyQualifiedNameToFrameworkTypeMap.TryGetValue(fullyQualifiedTypeName, out frameworkType);
 
