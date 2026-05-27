@@ -11,7 +11,6 @@ namespace Azure.ResourceManager.DataMigration.Models
     public abstract partial class MigrateMySqlAzureDBForMySqlSyncTaskOutput
     {
         // Backward-compatible protected constructor for ApiCompat.
-        [EditorBrowsable(EditorBrowsableState.Never)]
         protected MigrateMySqlAzureDBForMySqlSyncTaskOutput() : this(default(string)) { }
     }
 }

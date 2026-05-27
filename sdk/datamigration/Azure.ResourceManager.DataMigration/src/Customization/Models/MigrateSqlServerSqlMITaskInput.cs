@@ -5,7 +5,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 
 namespace Azure.ResourceManager.DataMigration.Models
@@ -14,7 +13,6 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class MigrateSqlServerSqlMITaskInput
     {
         // Backward-compatible constructor with backupBlobShare parameter.
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public MigrateSqlServerSqlMITaskInput(
             DataMigrationSqlConnectionInfo sourceConnectionInfo,
             DataMigrationSqlConnectionInfo targetConnectionInfo,

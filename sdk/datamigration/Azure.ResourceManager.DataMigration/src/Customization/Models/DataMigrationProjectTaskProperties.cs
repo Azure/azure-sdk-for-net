@@ -10,11 +10,9 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     // Suppress the generated internal parameterless ctor and replace with protected
     // to maintain backward compatibility with the GA API surface.
-    [CodeGenSuppress("DataMigrationProjectTaskProperties")]
     public abstract partial class DataMigrationProjectTaskProperties
     {
         // Backward-compatible protected constructor for ApiCompat.
-        [EditorBrowsable(EditorBrowsableState.Never)]
         protected DataMigrationProjectTaskProperties() : this(default(DataMigrationTaskType)) { }
     }
 }

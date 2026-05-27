@@ -11,7 +11,6 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     // Backward-compat justification: the GA contract exposed OutputErrors as IReadOnlyList,
     // but the generator now emits IList. Override to preserve the GA return type.
-    [CodeGenSuppress("OutputErrors")]
     public partial class MigrateMISyncCompleteCommandProperties
     {
         public IReadOnlyList<DataMigrationReportableException> OutputErrors => Output is null ? default : (IReadOnlyList<DataMigrationReportableException>)Output.Errors;

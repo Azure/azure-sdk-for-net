@@ -14,7 +14,6 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class ValidateMigrationInputSqlServerSqlMITaskInput
     {
         // Backward-compatible constructor with backupBlobShare parameter.
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public ValidateMigrationInputSqlServerSqlMITaskInput(
             DataMigrationSqlConnectionInfo sourceConnectionInfo,
             DataMigrationSqlConnectionInfo targetConnectionInfo,
