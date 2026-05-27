@@ -17,6 +17,41 @@ namespace Azure.Security.KeyVault.Administration
         public string RoleName { get { throw null; } set { } }
         public Azure.Security.KeyVault.Administration.KeyVaultRoleScope RoleScope { get { throw null; } }
     }
+    public partial class EkmProxyClientCertificateInfo : System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.EkmProxyClientCertificateInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.EkmProxyClientCertificateInfo>
+    {
+        internal EkmProxyClientCertificateInfo() { }
+        public System.Collections.Generic.IReadOnlyList<System.BinaryData> CaCertificates { get { throw null; } }
+        public string SubjectCommonName { get { throw null; } }
+        protected virtual Azure.Security.KeyVault.Administration.EkmProxyClientCertificateInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.Security.KeyVault.Administration.EkmProxyClientCertificateInfo (Azure.Response response) { throw null; }
+        protected virtual Azure.Security.KeyVault.Administration.EkmProxyClientCertificateInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Security.KeyVault.Administration.EkmProxyClientCertificateInfo System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.EkmProxyClientCertificateInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.EkmProxyClientCertificateInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Security.KeyVault.Administration.EkmProxyClientCertificateInfo System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.EkmProxyClientCertificateInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.EkmProxyClientCertificateInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.EkmProxyClientCertificateInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class EkmProxyInfo : System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.EkmProxyInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.EkmProxyInfo>
+    {
+        internal EkmProxyInfo() { }
+        public string ApiVersion { get { throw null; } }
+        public string EkmProduct { get { throw null; } }
+        public string EkmVendor { get { throw null; } }
+        public string ProxyName { get { throw null; } }
+        public string ProxyVendor { get { throw null; } }
+        protected virtual Azure.Security.KeyVault.Administration.EkmProxyInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.Security.KeyVault.Administration.EkmProxyInfo (Azure.Response response) { throw null; }
+        protected virtual Azure.Security.KeyVault.Administration.EkmProxyInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Security.KeyVault.Administration.EkmProxyInfo System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.EkmProxyInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.EkmProxyInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Security.KeyVault.Administration.EkmProxyInfo System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.EkmProxyInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.EkmProxyInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.EkmProxyInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class GetSettingsResult : System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.GetSettingsResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.GetSettingsResult>
     {
         internal GetSettingsResult() { }
@@ -93,8 +128,8 @@ namespace Azure.Security.KeyVault.Administration
     {
         public static Azure.Security.KeyVault.Administration.KeyVaultBackupOperation BackupOperation(Azure.Response response, Azure.Security.KeyVault.Administration.KeyVaultBackupClient client, string id, System.Uri blobContainerUri, System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), string errorMessage = null) { throw null; }
         public static Azure.Security.KeyVault.Administration.KeyVaultBackupResult BackupResult(System.Uri folderUri, System.DateTimeOffset startTime, System.DateTimeOffset endTime) { throw null; }
-        public static Azure.Security.KeyVault.Administration.Models.EkmProxyClientCertificateInfo EkmProxyClientCertificateInfo(System.Collections.Generic.IEnumerable<System.BinaryData> caCertificates = null, string subjectCommonName = null) { throw null; }
-        public static Azure.Security.KeyVault.Administration.Models.EkmProxyInfo EkmProxyInfo(string apiVersion = null, string proxyVendor = null, string proxyName = null, string ekmVendor = null, string ekmProduct = null) { throw null; }
+        public static Azure.Security.KeyVault.Administration.EkmProxyClientCertificateInfo EkmProxyClientCertificateInfo(System.Collections.Generic.IEnumerable<System.BinaryData> caCertificates = null, string subjectCommonName = null) { throw null; }
+        public static Azure.Security.KeyVault.Administration.EkmProxyInfo EkmProxyInfo(string apiVersion = null, string proxyVendor = null, string proxyName = null, string ekmVendor = null, string ekmProduct = null) { throw null; }
         public static Azure.Security.KeyVault.Administration.GetSettingsResult GetSettingsResult(System.Collections.Generic.IEnumerable<Azure.Security.KeyVault.Administration.KeyVaultSetting> settings = null) { throw null; }
         public static Azure.Security.KeyVault.Administration.KeyVaultEkmConnection KeyVaultEkmConnection(string host = null, string pathPrefix = null, System.Collections.Generic.IEnumerable<System.BinaryData> serverCaCertificates = null, string serverSubjectCommonName = null) { throw null; }
         public static Azure.Security.KeyVault.Administration.KeyVaultPermission KeyVaultPermission(System.Collections.Generic.IEnumerable<string> actions = null, System.Collections.Generic.IEnumerable<string> notActions = null, System.Collections.Generic.IEnumerable<Azure.Security.KeyVault.Administration.KeyVaultDataAction> dataActions = null, System.Collections.Generic.IEnumerable<Azure.Security.KeyVault.Administration.KeyVaultDataAction> notDataActions = null) { throw null; }
@@ -206,14 +241,14 @@ namespace Azure.Security.KeyVault.Administration
         public KeyVaultEkmClient(System.Uri vaultUri, Azure.Core.TokenCredential credential, Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual System.Uri VaultUri { get { throw null; } }
-        public virtual Azure.Response<Azure.Security.KeyVault.Administration.Models.EkmProxyInfo> CheckEkmConnection(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Administration.Models.EkmProxyInfo>> CheckEkmConnectionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Security.KeyVault.Administration.EkmProxyInfo> CheckEkmConnection(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Administration.EkmProxyInfo>> CheckEkmConnectionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultEkmConnection> CreateEkmConnection(Azure.Security.KeyVault.Administration.KeyVaultEkmConnection ekmConnection, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultEkmConnection>> CreateEkmConnectionAsync(Azure.Security.KeyVault.Administration.KeyVaultEkmConnection ekmConnection, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultEkmConnection> DeleteEkmConnection(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultEkmConnection>> DeleteEkmConnectionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Security.KeyVault.Administration.Models.EkmProxyClientCertificateInfo> GetEkmCertificate(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Administration.Models.EkmProxyClientCertificateInfo>> GetEkmCertificateAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Security.KeyVault.Administration.EkmProxyClientCertificateInfo> GetEkmCertificate(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Administration.EkmProxyClientCertificateInfo>> GetEkmCertificateAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultEkmConnection> GetEkmConnection(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultEkmConnection>> GetEkmConnectionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultEkmConnection> UpdateEkmConnection(Azure.Security.KeyVault.Administration.KeyVaultEkmConnection ekmConnection, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -474,44 +509,6 @@ namespace Azure.Security.KeyVault.Administration
         private readonly int _dummyPrimitive;
         public bool AsBoolean() { throw null; }
         public override string ToString() { throw null; }
-    }
-}
-namespace Azure.Security.KeyVault.Administration.Models
-{
-    public partial class EkmProxyClientCertificateInfo : System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.Models.EkmProxyClientCertificateInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.Models.EkmProxyClientCertificateInfo>
-    {
-        internal EkmProxyClientCertificateInfo() { }
-        public System.Collections.Generic.IReadOnlyList<System.BinaryData> CaCertificates { get { throw null; } }
-        public string SubjectCommonName { get { throw null; } }
-        protected virtual Azure.Security.KeyVault.Administration.Models.EkmProxyClientCertificateInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Security.KeyVault.Administration.Models.EkmProxyClientCertificateInfo (Azure.Response response) { throw null; }
-        protected virtual Azure.Security.KeyVault.Administration.Models.EkmProxyClientCertificateInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.Security.KeyVault.Administration.Models.EkmProxyClientCertificateInfo System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.Models.EkmProxyClientCertificateInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.Models.EkmProxyClientCertificateInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Security.KeyVault.Administration.Models.EkmProxyClientCertificateInfo System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.Models.EkmProxyClientCertificateInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.Models.EkmProxyClientCertificateInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.Models.EkmProxyClientCertificateInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class EkmProxyInfo : System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.Models.EkmProxyInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.Models.EkmProxyInfo>
-    {
-        internal EkmProxyInfo() { }
-        public string ApiVersion { get { throw null; } }
-        public string EkmProduct { get { throw null; } }
-        public string EkmVendor { get { throw null; } }
-        public string ProxyName { get { throw null; } }
-        public string ProxyVendor { get { throw null; } }
-        protected virtual Azure.Security.KeyVault.Administration.Models.EkmProxyInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Security.KeyVault.Administration.Models.EkmProxyInfo (Azure.Response response) { throw null; }
-        protected virtual Azure.Security.KeyVault.Administration.Models.EkmProxyInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.Security.KeyVault.Administration.Models.EkmProxyInfo System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.Models.EkmProxyInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.Models.EkmProxyInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Security.KeyVault.Administration.Models.EkmProxyInfo System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.Models.EkmProxyInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.Models.EkmProxyInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.Models.EkmProxyInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }
 namespace Microsoft.Extensions.Azure
