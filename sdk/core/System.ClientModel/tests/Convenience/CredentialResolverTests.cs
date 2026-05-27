@@ -1281,7 +1281,7 @@ public class CredentialResolverTests
     }
 
     [Test]
-    public void Engine_ResolveChild_WalksFullChainAndShareCacheWithTopLevel()
+    public void Engine_ResolveChild_WalksFullChainAndSharesCacheWithTopLevel()
     {
         // A chain-owning resolver invokes resolveChild(childSection) on a child
         // section that another resolver in the same chain can claim.
