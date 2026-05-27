@@ -12,18 +12,18 @@ using Azure.ResourceManager.HybridCompute;
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> Describes a License Profile Update. </summary>
-    public partial class HybridComputeLicenseProfileUpdate : HybridComputeResourceUpdate
+    public partial class HybridComputeLicenseProfilePatch : HybridComputeResourceUpdate
     {
-        /// <summary> Initializes a new instance of <see cref="HybridComputeLicenseProfileUpdate"/>. </summary>
-        public HybridComputeLicenseProfileUpdate()
+        /// <summary> Initializes a new instance of <see cref="HybridComputeLicenseProfilePatch"/>. </summary>
+        public HybridComputeLicenseProfilePatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HybridComputeLicenseProfileUpdate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeLicenseProfilePatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Describe the Update properties of a license profile. </param>
-        internal HybridComputeLicenseProfileUpdate(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, LicenseProfileUpdateProperties properties) : base(tags, additionalBinaryDataProperties)
+        internal HybridComputeLicenseProfilePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, LicenseProfileUpdateProperties properties) : base(tags, additionalBinaryDataProperties)
         {
             Properties = properties;
         }
