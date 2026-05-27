@@ -23,10 +23,10 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
     /// <summary> A class to add extension methods to <see cref="Resources.SubscriptionResource"/>. </summary>
     public partial class MockableApiManagementSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _apiGatewayClientDiagnostics;
-        private ApiGateway _apiGatewayRestClient;
         private ClientDiagnostics _apiManagementServiceClientDiagnostics;
         private ApiManagementService _apiManagementServiceRestClient;
+        private ClientDiagnostics _apiGatewayClientDiagnostics;
+        private ApiGateway _apiGatewayRestClient;
         private ClientDiagnostics _deletedServicesClientDiagnostics;
         private DeletedServices _deletedServicesRestClient;
         private ClientDiagnostics _apiManagementSkusClientDiagnostics;
@@ -48,13 +48,13 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         {
         }
 
-        private ClientDiagnostics ApiGatewayClientDiagnostics => _apiGatewayClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private ApiGateway ApiGatewayRestClient => _apiGatewayRestClient ??= new ApiGateway(ApiGatewayClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
-
         private ClientDiagnostics ApiManagementServiceClientDiagnostics => _apiManagementServiceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private ApiManagementService ApiManagementServiceRestClient => _apiManagementServiceRestClient ??= new ApiManagementService(ApiManagementServiceClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+
+        private ClientDiagnostics ApiGatewayClientDiagnostics => _apiGatewayClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ApiGateway ApiGatewayRestClient => _apiGatewayRestClient ??= new ApiGateway(ApiGatewayClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
 
         private ClientDiagnostics DeletedServicesClientDiagnostics => _deletedServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -140,78 +140,6 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// List all API Management gateways within a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/gateways. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ApiManagementGatewayResources_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="top"> Number of records to return. </param>
-        /// <param name="skipToken"> Skip token for retrieving the next page of results. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiManagementGatewayResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApiManagementGatewayResource> GetApiManagementGatewayResourcesAsync(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<ApiManagementGatewayResourceData, ApiManagementGatewayResource>(new ApiGatewayGetAllAsyncCollectionResultOfT(
-                ApiGatewayRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                top,
-                skipToken,
-                context,
-                "MockableApiManagementSubscriptionResource.GetApiManagementGatewayResources"), data => new ApiManagementGatewayResource(Client, data));
-        }
-
-        /// <summary>
-        /// List all API Management gateways within a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/gateways. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ApiManagementGatewayResources_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="top"> Number of records to return. </param>
-        /// <param name="skipToken"> Skip token for retrieving the next page of results. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiManagementGatewayResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApiManagementGatewayResource> GetApiManagementGatewayResources(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<ApiManagementGatewayResourceData, ApiManagementGatewayResource>(new ApiGatewayGetAllCollectionResultOfT(
-                ApiGatewayRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                top,
-                skipToken,
-                context,
-                "MockableApiManagementSubscriptionResource.GetApiManagementGatewayResources"), data => new ApiManagementGatewayResource(Client, data));
-        }
-
-        /// <summary>
         /// Lists all API Management services within an Azure subscription.
         /// <list type="bullet">
         /// <item>
@@ -281,6 +209,78 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
                 skipToken,
                 context,
                 "MockableApiManagementSubscriptionResource.GetApiManagementServiceResources"), data => new ApiManagementServiceResource(Client, data));
+        }
+
+        /// <summary>
+        /// List all API Management gateways within a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/gateways. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ApiManagementGatewayResources_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skipToken"> Skip token for retrieving the next page of results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ApiManagementGatewayResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiManagementGatewayResource> GetApiManagementGatewayResourcesAsync(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ApiManagementGatewayResourceData, ApiManagementGatewayResource>(new ApiGatewayGetAllAsyncCollectionResultOfT(
+                ApiGatewayRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                top,
+                skipToken,
+                context,
+                "MockableApiManagementSubscriptionResource.GetApiManagementGatewayResources"), data => new ApiManagementGatewayResource(Client, data));
+        }
+
+        /// <summary>
+        /// List all API Management gateways within a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/gateways. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ApiManagementGatewayResources_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skipToken"> Skip token for retrieving the next page of results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ApiManagementGatewayResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiManagementGatewayResource> GetApiManagementGatewayResources(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ApiManagementGatewayResourceData, ApiManagementGatewayResource>(new ApiGatewayGetAllCollectionResultOfT(
+                ApiGatewayRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                top,
+                skipToken,
+                context,
+                "MockableApiManagementSubscriptionResource.GetApiManagementGatewayResources"), data => new ApiManagementGatewayResource(Client, data));
         }
 
         /// <summary>

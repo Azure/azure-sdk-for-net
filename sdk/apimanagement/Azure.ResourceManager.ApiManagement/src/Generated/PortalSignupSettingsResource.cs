@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class PortalSignupSettingsResource : ArmResource
     {
-        private readonly ClientDiagnostics _signUpSettingsClientDiagnostics;
-        private readonly SignUpSettings _signUpSettingsRestClient;
+        private readonly ClientDiagnostics _apiManagementPortalSignUpSettingClientDiagnostics;
+        private readonly ApiManagementPortalSignUpSetting _apiManagementPortalSignUpSettingRestClient;
         private readonly PortalSignupSettingsData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/portalsettings";
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.ApiManagement
         internal PortalSignupSettingsResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string portalSignupSettingsApiVersion);
-            _signUpSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _signUpSettingsRestClient = new SignUpSettings(_signUpSettingsClientDiagnostics, Pipeline, Endpoint, portalSignupSettingsApiVersion ?? "2025-09-01-preview");
+            _apiManagementPortalSignUpSettingClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            _apiManagementPortalSignUpSettingRestClient = new ApiManagementPortalSignUpSetting(_apiManagementPortalSignUpSettingClientDiagnostics, Pipeline, Endpoint, portalSignupSettingsApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _signUpSettingsClientDiagnostics.CreateScope("PortalSignupSettingsResource.CreateOrUpdate");
+            using DiagnosticScope scope = _apiManagementPortalSignUpSettingClientDiagnostics.CreateScope("PortalSignupSettingsResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _signUpSettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, PortalSignupSettingsData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _apiManagementPortalSignUpSettingRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, PortalSignupSettingsData.ToRequestContent(data), ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PortalSignupSettingsData> response = Response.FromValue(PortalSignupSettingsData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _signUpSettingsClientDiagnostics.CreateScope("PortalSignupSettingsResource.CreateOrUpdate");
+            using DiagnosticScope scope = _apiManagementPortalSignUpSettingClientDiagnostics.CreateScope("PortalSignupSettingsResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _signUpSettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, PortalSignupSettingsData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _apiManagementPortalSignUpSettingRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, PortalSignupSettingsData.ToRequestContent(data), ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PortalSignupSettingsData> response = Response.FromValue(PortalSignupSettingsData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PortalSignupSettingsResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _signUpSettingsClientDiagnostics.CreateScope("PortalSignupSettingsResource.Get");
+            using DiagnosticScope scope = _apiManagementPortalSignUpSettingClientDiagnostics.CreateScope("PortalSignupSettingsResource.Get");
             scope.Start();
             try
             {
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _signUpSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                HttpMessage message = _apiManagementPortalSignUpSettingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PortalSignupSettingsData> response = Response.FromValue(PortalSignupSettingsData.FromResponse(result), result);
                 if (response.Value == null)
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PortalSignupSettingsResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _signUpSettingsClientDiagnostics.CreateScope("PortalSignupSettingsResource.Get");
+            using DiagnosticScope scope = _apiManagementPortalSignUpSettingClientDiagnostics.CreateScope("PortalSignupSettingsResource.Get");
             scope.Start();
             try
             {
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _signUpSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                HttpMessage message = _apiManagementPortalSignUpSettingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PortalSignupSettingsData> response = Response.FromValue(PortalSignupSettingsData.FromResponse(result), result);
                 if (response.Value == null)
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _signUpSettingsClientDiagnostics.CreateScope("PortalSignupSettingsResource.Update");
+            using DiagnosticScope scope = _apiManagementPortalSignUpSettingClientDiagnostics.CreateScope("PortalSignupSettingsResource.Update");
             scope.Start();
             try
             {
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _signUpSettingsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, ifMatch, PortalSignupSettingsData.ToRequestContent(data), context);
+                HttpMessage message = _apiManagementPortalSignUpSettingRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, ifMatch, PortalSignupSettingsData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _signUpSettingsClientDiagnostics.CreateScope("PortalSignupSettingsResource.Update");
+            using DiagnosticScope scope = _apiManagementPortalSignUpSettingClientDiagnostics.CreateScope("PortalSignupSettingsResource.Update");
             scope.Start();
             try
             {
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _signUpSettingsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, ifMatch, PortalSignupSettingsData.ToRequestContent(data), context);
+                HttpMessage message = _apiManagementPortalSignUpSettingRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, ifMatch, PortalSignupSettingsData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }

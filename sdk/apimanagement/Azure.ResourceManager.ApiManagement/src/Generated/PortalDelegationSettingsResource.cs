@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class PortalDelegationSettingsResource : ArmResource
     {
-        private readonly ClientDiagnostics _delegationSettingsClientDiagnostics;
-        private readonly DelegationSettings _delegationSettingsRestClient;
+        private readonly ClientDiagnostics _apiManagementPortalDelegationSettingClientDiagnostics;
+        private readonly ApiManagementPortalDelegationSetting _apiManagementPortalDelegationSettingRestClient;
         private readonly PortalDelegationSettingsData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/portalsettings";
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.ApiManagement
         internal PortalDelegationSettingsResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string portalDelegationSettingsApiVersion);
-            _delegationSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _delegationSettingsRestClient = new DelegationSettings(_delegationSettingsClientDiagnostics, Pipeline, Endpoint, portalDelegationSettingsApiVersion ?? "2025-09-01-preview");
+            _apiManagementPortalDelegationSettingClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            _apiManagementPortalDelegationSettingRestClient = new ApiManagementPortalDelegationSetting(_apiManagementPortalDelegationSettingClientDiagnostics, Pipeline, Endpoint, portalDelegationSettingsApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _delegationSettingsClientDiagnostics.CreateScope("PortalDelegationSettingsResource.CreateOrUpdate");
+            using DiagnosticScope scope = _apiManagementPortalDelegationSettingClientDiagnostics.CreateScope("PortalDelegationSettingsResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _delegationSettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, PortalDelegationSettingsData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _apiManagementPortalDelegationSettingRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, PortalDelegationSettingsData.ToRequestContent(data), ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PortalDelegationSettingsData> response = Response.FromValue(PortalDelegationSettingsData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _delegationSettingsClientDiagnostics.CreateScope("PortalDelegationSettingsResource.CreateOrUpdate");
+            using DiagnosticScope scope = _apiManagementPortalDelegationSettingClientDiagnostics.CreateScope("PortalDelegationSettingsResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _delegationSettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, PortalDelegationSettingsData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _apiManagementPortalDelegationSettingRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, PortalDelegationSettingsData.ToRequestContent(data), ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PortalDelegationSettingsData> response = Response.FromValue(PortalDelegationSettingsData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PortalDelegationSettingsResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _delegationSettingsClientDiagnostics.CreateScope("PortalDelegationSettingsResource.Get");
+            using DiagnosticScope scope = _apiManagementPortalDelegationSettingClientDiagnostics.CreateScope("PortalDelegationSettingsResource.Get");
             scope.Start();
             try
             {
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _delegationSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                HttpMessage message = _apiManagementPortalDelegationSettingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PortalDelegationSettingsData> response = Response.FromValue(PortalDelegationSettingsData.FromResponse(result), result);
                 if (response.Value == null)
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PortalDelegationSettingsResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _delegationSettingsClientDiagnostics.CreateScope("PortalDelegationSettingsResource.Get");
+            using DiagnosticScope scope = _apiManagementPortalDelegationSettingClientDiagnostics.CreateScope("PortalDelegationSettingsResource.Get");
             scope.Start();
             try
             {
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _delegationSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                HttpMessage message = _apiManagementPortalDelegationSettingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PortalDelegationSettingsData> response = Response.FromValue(PortalDelegationSettingsData.FromResponse(result), result);
                 if (response.Value == null)
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _delegationSettingsClientDiagnostics.CreateScope("PortalDelegationSettingsResource.Update");
+            using DiagnosticScope scope = _apiManagementPortalDelegationSettingClientDiagnostics.CreateScope("PortalDelegationSettingsResource.Update");
             scope.Start();
             try
             {
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _delegationSettingsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, ifMatch, PortalDelegationSettingsData.ToRequestContent(data), context);
+                HttpMessage message = _apiManagementPortalDelegationSettingRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, ifMatch, PortalDelegationSettingsData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _delegationSettingsClientDiagnostics.CreateScope("PortalDelegationSettingsResource.Update");
+            using DiagnosticScope scope = _apiManagementPortalDelegationSettingClientDiagnostics.CreateScope("PortalDelegationSettingsResource.Update");
             scope.Start();
             try
             {
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _delegationSettingsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, ifMatch, PortalDelegationSettingsData.ToRequestContent(data), context);
+                HttpMessage message = _apiManagementPortalDelegationSettingRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, ifMatch, PortalDelegationSettingsData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PortalSettingValidationKeyContract>> GetSecretsAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _delegationSettingsClientDiagnostics.CreateScope("PortalDelegationSettingsResource.GetSecrets");
+            using DiagnosticScope scope = _apiManagementPortalDelegationSettingClientDiagnostics.CreateScope("PortalDelegationSettingsResource.GetSecrets");
             scope.Start();
             try
             {
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _delegationSettingsRestClient.CreateGetSecretsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                HttpMessage message = _apiManagementPortalDelegationSettingRestClient.CreateGetSecretsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PortalSettingValidationKeyContract> response = Response.FromValue(PortalSettingValidationKeyContract.FromResponse(result), result);
                 if (response.Value == null)
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PortalSettingValidationKeyContract> GetSecrets(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _delegationSettingsClientDiagnostics.CreateScope("PortalDelegationSettingsResource.GetSecrets");
+            using DiagnosticScope scope = _apiManagementPortalDelegationSettingClientDiagnostics.CreateScope("PortalDelegationSettingsResource.GetSecrets");
             scope.Start();
             try
             {
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _delegationSettingsRestClient.CreateGetSecretsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                HttpMessage message = _apiManagementPortalDelegationSettingRestClient.CreateGetSecretsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PortalSettingValidationKeyContract> response = Response.FromValue(PortalSettingValidationKeyContract.FromResponse(result), result);
                 if (response.Value == null)

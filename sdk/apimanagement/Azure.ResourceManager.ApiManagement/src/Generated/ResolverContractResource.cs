@@ -411,11 +411,11 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        /// <summary> Gets a collection of GraphQLApiResolverPolicies in the <see cref="ResolverContractResource"/>. </summary>
-        /// <returns> An object representing collection of GraphQLApiResolverPolicies and their operations over a GraphQLApiResolverPolicyResource. </returns>
-        public virtual GraphQLApiResolverPolicyCollection GetGraphQLApiResolverPolicies()
+        /// <summary> Gets a collection of ServiceApiResolverPolicies in the <see cref="ResolverContractResource"/>. </summary>
+        /// <returns> An object representing collection of ServiceApiResolverPolicies and their operations over a ServiceApiResolverPolicyResource. </returns>
+        public virtual ServiceApiResolverPolicyCollection GetServiceApiResolverPolicies()
         {
-            return GetCachedClient(client => new GraphQLApiResolverPolicyCollection(client, Id));
+            return GetCachedClient(client => new ServiceApiResolverPolicyCollection(client, Id));
         }
 
         /// <summary> Get the policy configuration at the GraphQL API Resolver level. </summary>
@@ -423,9 +423,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="format"> Policy Export Format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<GraphQLApiResolverPolicyResource>> GetGraphQLApiResolverPolicyAsync(PolicyIdName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceApiResolverPolicyResource>> GetServiceApiResolverPolicyAsync(PolicyIdName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
         {
-            return await GetGraphQLApiResolverPolicies().GetAsync(policyId, format, cancellationToken).ConfigureAwait(false);
+            return await GetServiceApiResolverPolicies().GetAsync(policyId, format, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get the policy configuration at the GraphQL API Resolver level. </summary>
@@ -433,9 +433,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="format"> Policy Export Format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<GraphQLApiResolverPolicyResource> GetGraphQLApiResolverPolicy(PolicyIdName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceApiResolverPolicyResource> GetServiceApiResolverPolicy(PolicyIdName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
         {
-            return GetGraphQLApiResolverPolicies().Get(policyId, format, cancellationToken);
+            return GetServiceApiResolverPolicies().Get(policyId, format, cancellationToken);
         }
     }
 }

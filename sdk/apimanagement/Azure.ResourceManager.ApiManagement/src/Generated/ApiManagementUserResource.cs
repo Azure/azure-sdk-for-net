@@ -880,11 +880,11 @@ namespace Azure.ResourceManager.ApiManagement
                 "ApiManagementUserResource.GetAll");
         }
 
-        /// <summary> Gets a collection of UserSubscriptions in the <see cref="ApiManagementUserResource"/>. </summary>
-        /// <returns> An object representing collection of UserSubscriptions and their operations over a UserSubscriptionResource. </returns>
-        public virtual UserSubscriptionCollection GetUserSubscriptions()
+        /// <summary> Gets a collection of ApiManagementUserSubscriptions in the <see cref="ApiManagementUserResource"/>. </summary>
+        /// <returns> An object representing collection of ApiManagementUserSubscriptions and their operations over a ApiManagementUserSubscriptionResource. </returns>
+        public virtual ApiManagementUserSubscriptionCollection GetApiManagementUserSubscriptions()
         {
-            return GetCachedClient(client => new UserSubscriptionCollection(client, Id));
+            return GetCachedClient(client => new ApiManagementUserSubscriptionCollection(client, Id));
         }
 
         /// <summary> Gets the specified Subscription entity associated with a particular user. </summary>
@@ -893,11 +893,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="sid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sid"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<UserSubscriptionResource>> GetUserSubscriptionAsync(string sid, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementUserSubscriptionResource>> GetApiManagementUserSubscriptionAsync(string sid, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sid, nameof(sid));
 
-            return await GetUserSubscriptions().GetAsync(sid, cancellationToken).ConfigureAwait(false);
+            return await GetApiManagementUserSubscriptions().GetAsync(sid, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets the specified Subscription entity associated with a particular user. </summary>
@@ -906,11 +906,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="sid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sid"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<UserSubscriptionResource> GetUserSubscription(string sid, CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementUserSubscriptionResource> GetApiManagementUserSubscription(string sid, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sid, nameof(sid));
 
-            return GetUserSubscriptions().Get(sid, cancellationToken);
+            return GetApiManagementUserSubscriptions().Get(sid, cancellationToken);
         }
     }
 }

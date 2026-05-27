@@ -524,11 +524,11 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        /// <summary> Gets a collection of WorkspaceApis in the <see cref="WorkspaceContractResource"/>. </summary>
-        /// <returns> An object representing collection of WorkspaceApis and their operations over a WorkspaceApiResource. </returns>
-        public virtual WorkspaceApiCollection GetWorkspaceApis()
+        /// <summary> Gets a collection of ServiceWorkspaceApis in the <see cref="WorkspaceContractResource"/>. </summary>
+        /// <returns> An object representing collection of ServiceWorkspaceApis and their operations over a ServiceWorkspaceApiResource. </returns>
+        public virtual ServiceWorkspaceApiCollection GetServiceWorkspaceApis()
         {
-            return GetCachedClient(client => new WorkspaceApiCollection(client, Id));
+            return GetCachedClient(client => new ServiceWorkspaceApiCollection(client, Id));
         }
 
         /// <summary> Gets the details of the API specified by its identifier. </summary>
@@ -537,11 +537,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="apiId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<WorkspaceApiResource>> GetWorkspaceApiAsync(string apiId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceWorkspaceApiResource>> GetServiceWorkspaceApiAsync(string apiId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
 
-            return await GetWorkspaceApis().GetAsync(apiId, cancellationToken).ConfigureAwait(false);
+            return await GetServiceWorkspaceApis().GetAsync(apiId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets the details of the API specified by its identifier. </summary>
@@ -550,28 +550,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="apiId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<WorkspaceApiResource> GetWorkspaceApi(string apiId, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceWorkspaceApiResource> GetServiceWorkspaceApi(string apiId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
 
-            return GetWorkspaceApis().Get(apiId, cancellationToken);
+            return GetServiceWorkspaceApis().Get(apiId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of WorkspacePolicies in the <see cref="WorkspaceContractResource"/>. </summary>
-        /// <returns> An object representing collection of WorkspacePolicies and their operations over a WorkspacePolicyResource. </returns>
-        public virtual WorkspacePolicyCollection GetWorkspacePolicies()
+        /// <summary> Gets a collection of ServiceWorkspacePolicies in the <see cref="WorkspaceContractResource"/>. </summary>
+        /// <returns> An object representing collection of ServiceWorkspacePolicies and their operations over a ServiceWorkspacePolicyResource. </returns>
+        public virtual ServiceWorkspacePolicyCollection GetServiceWorkspacePolicies()
         {
-            return GetCachedClient(client => new WorkspacePolicyCollection(client, Id));
-        }
-
-        /// <summary> Get the policy configuration at the API level. </summary>
-        /// <param name="policyId"> The identifier of the Policy. </param>
-        /// <param name="format"> Policy Export Format. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<WorkspacePolicyResource>> GetWorkspacePolicyAsync(PolicyIdName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
-        {
-            return await GetWorkspacePolicies().GetAsync(policyId, format, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new ServiceWorkspacePolicyCollection(client, Id));
         }
 
         /// <summary> Get the policy configuration at the API level. </summary>
@@ -579,16 +569,26 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="format"> Policy Export Format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<WorkspacePolicyResource> GetWorkspacePolicy(PolicyIdName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceWorkspacePolicyResource>> GetServiceWorkspacePolicyAsync(PolicyIdName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
         {
-            return GetWorkspacePolicies().Get(policyId, format, cancellationToken);
+            return await GetServiceWorkspacePolicies().GetAsync(policyId, format, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of WorkspaceTags in the <see cref="WorkspaceContractResource"/>. </summary>
-        /// <returns> An object representing collection of WorkspaceTags and their operations over a WorkspaceTagResource. </returns>
-        public virtual WorkspaceTagCollection GetWorkspaceTags()
+        /// <summary> Get the policy configuration at the API level. </summary>
+        /// <param name="policyId"> The identifier of the Policy. </param>
+        /// <param name="format"> Policy Export Format. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<ServiceWorkspacePolicyResource> GetServiceWorkspacePolicy(PolicyIdName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(client => new WorkspaceTagCollection(client, Id));
+            return GetServiceWorkspacePolicies().Get(policyId, format, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ServiceWorkspaceTags in the <see cref="WorkspaceContractResource"/>. </summary>
+        /// <returns> An object representing collection of ServiceWorkspaceTags and their operations over a ServiceWorkspaceTagResource. </returns>
+        public virtual ServiceWorkspaceTagCollection GetServiceWorkspaceTags()
+        {
+            return GetCachedClient(client => new ServiceWorkspaceTagCollection(client, Id));
         }
 
         /// <summary> Gets the details of the tag specified by its identifier. </summary>
@@ -597,11 +597,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="tagId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<WorkspaceTagResource>> GetWorkspaceTagAsync(string tagId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceWorkspaceTagResource>> GetServiceWorkspaceTagAsync(string tagId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
 
-            return await GetWorkspaceTags().GetAsync(tagId, cancellationToken).ConfigureAwait(false);
+            return await GetServiceWorkspaceTags().GetAsync(tagId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets the details of the tag specified by its identifier. </summary>
@@ -610,31 +610,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="tagId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<WorkspaceTagResource> GetWorkspaceTag(string tagId, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceWorkspaceTagResource> GetServiceWorkspaceTag(string tagId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
 
-            return GetWorkspaceTags().Get(tagId, cancellationToken);
+            return GetServiceWorkspaceTags().Get(tagId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of WorkspaceDiagnostics in the <see cref="WorkspaceContractResource"/>. </summary>
-        /// <returns> An object representing collection of WorkspaceDiagnostics and their operations over a WorkspaceDiagnosticResource. </returns>
-        public virtual WorkspaceDiagnosticCollection GetWorkspaceDiagnostics()
+        /// <summary> Gets a collection of ServiceWorkspaceDiagnostics in the <see cref="WorkspaceContractResource"/>. </summary>
+        /// <returns> An object representing collection of ServiceWorkspaceDiagnostics and their operations over a ServiceWorkspaceDiagnosticResource. </returns>
+        public virtual ServiceWorkspaceDiagnosticCollection GetServiceWorkspaceDiagnostics()
         {
-            return GetCachedClient(client => new WorkspaceDiagnosticCollection(client, Id));
-        }
-
-        /// <summary> Gets the details of the Diagnostic specified by its identifier. </summary>
-        /// <param name="diagnosticId"> Diagnostic identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="diagnosticId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<WorkspaceDiagnosticResource>> GetWorkspaceDiagnosticAsync(string diagnosticId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(diagnosticId, nameof(diagnosticId));
-
-            return await GetWorkspaceDiagnostics().GetAsync(diagnosticId, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new ServiceWorkspaceDiagnosticCollection(client, Id));
         }
 
         /// <summary> Gets the details of the Diagnostic specified by its identifier. </summary>
@@ -643,18 +630,31 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="diagnosticId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<WorkspaceDiagnosticResource> GetWorkspaceDiagnostic(string diagnosticId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceWorkspaceDiagnosticResource>> GetServiceWorkspaceDiagnosticAsync(string diagnosticId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diagnosticId, nameof(diagnosticId));
 
-            return GetWorkspaceDiagnostics().Get(diagnosticId, cancellationToken);
+            return await GetServiceWorkspaceDiagnostics().GetAsync(diagnosticId, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of WorkspaceApiVersionSets in the <see cref="WorkspaceContractResource"/>. </summary>
-        /// <returns> An object representing collection of WorkspaceApiVersionSets and their operations over a WorkspaceApiVersionSetResource. </returns>
-        public virtual WorkspaceApiVersionSetCollection GetWorkspaceApiVersionSets()
+        /// <summary> Gets the details of the Diagnostic specified by its identifier. </summary>
+        /// <param name="diagnosticId"> Diagnostic identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ServiceWorkspaceDiagnosticResource> GetServiceWorkspaceDiagnostic(string diagnosticId, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(client => new WorkspaceApiVersionSetCollection(client, Id));
+            Argument.AssertNotNullOrEmpty(diagnosticId, nameof(diagnosticId));
+
+            return GetServiceWorkspaceDiagnostics().Get(diagnosticId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ServiceWorkspaceApiVersionSets in the <see cref="WorkspaceContractResource"/>. </summary>
+        /// <returns> An object representing collection of ServiceWorkspaceApiVersionSets and their operations over a ServiceWorkspaceApiVersionSetResource. </returns>
+        public virtual ServiceWorkspaceApiVersionSetCollection GetServiceWorkspaceApiVersionSets()
+        {
+            return GetCachedClient(client => new ServiceWorkspaceApiVersionSetCollection(client, Id));
         }
 
         /// <summary> Gets the details of the Api Version Set specified by its identifier. </summary>
@@ -663,11 +663,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="versionSetId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="versionSetId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<WorkspaceApiVersionSetResource>> GetWorkspaceApiVersionSetAsync(string versionSetId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceWorkspaceApiVersionSetResource>> GetServiceWorkspaceApiVersionSetAsync(string versionSetId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(versionSetId, nameof(versionSetId));
 
-            return await GetWorkspaceApiVersionSets().GetAsync(versionSetId, cancellationToken).ConfigureAwait(false);
+            return await GetServiceWorkspaceApiVersionSets().GetAsync(versionSetId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets the details of the Api Version Set specified by its identifier. </summary>
@@ -676,31 +676,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="versionSetId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="versionSetId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<WorkspaceApiVersionSetResource> GetWorkspaceApiVersionSet(string versionSetId, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceWorkspaceApiVersionSetResource> GetServiceWorkspaceApiVersionSet(string versionSetId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(versionSetId, nameof(versionSetId));
 
-            return GetWorkspaceApiVersionSets().Get(versionSetId, cancellationToken);
+            return GetServiceWorkspaceApiVersionSets().Get(versionSetId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of WorkspaceBackends in the <see cref="WorkspaceContractResource"/>. </summary>
-        /// <returns> An object representing collection of WorkspaceBackends and their operations over a WorkspaceBackendResource. </returns>
-        public virtual WorkspaceBackendCollection GetWorkspaceBackends()
+        /// <summary> Gets a collection of ServiceWorkspaceBackends in the <see cref="WorkspaceContractResource"/>. </summary>
+        /// <returns> An object representing collection of ServiceWorkspaceBackends and their operations over a ServiceWorkspaceBackendResource. </returns>
+        public virtual ServiceWorkspaceBackendCollection GetServiceWorkspaceBackends()
         {
-            return GetCachedClient(client => new WorkspaceBackendCollection(client, Id));
-        }
-
-        /// <summary> Gets the details of the backend specified by its identifier. </summary>
-        /// <param name="backendId"> Identifier of the Backend entity. Must be unique in the current API Management service instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="backendId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="backendId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<WorkspaceBackendResource>> GetWorkspaceBackendAsync(string backendId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(backendId, nameof(backendId));
-
-            return await GetWorkspaceBackends().GetAsync(backendId, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new ServiceWorkspaceBackendCollection(client, Id));
         }
 
         /// <summary> Gets the details of the backend specified by its identifier. </summary>
@@ -709,18 +696,31 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="backendId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="backendId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<WorkspaceBackendResource> GetWorkspaceBackend(string backendId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceWorkspaceBackendResource>> GetServiceWorkspaceBackendAsync(string backendId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backendId, nameof(backendId));
 
-            return GetWorkspaceBackends().Get(backendId, cancellationToken);
+            return await GetServiceWorkspaceBackends().GetAsync(backendId, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of WorkspaceCertificates in the <see cref="WorkspaceContractResource"/>. </summary>
-        /// <returns> An object representing collection of WorkspaceCertificates and their operations over a WorkspaceCertificateResource. </returns>
-        public virtual WorkspaceCertificateCollection GetWorkspaceCertificates()
+        /// <summary> Gets the details of the backend specified by its identifier. </summary>
+        /// <param name="backendId"> Identifier of the Backend entity. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="backendId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backendId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ServiceWorkspaceBackendResource> GetServiceWorkspaceBackend(string backendId, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(client => new WorkspaceCertificateCollection(client, Id));
+            Argument.AssertNotNullOrEmpty(backendId, nameof(backendId));
+
+            return GetServiceWorkspaceBackends().Get(backendId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ServiceWorkspaceCertificates in the <see cref="WorkspaceContractResource"/>. </summary>
+        /// <returns> An object representing collection of ServiceWorkspaceCertificates and their operations over a ServiceWorkspaceCertificateResource. </returns>
+        public virtual ServiceWorkspaceCertificateCollection GetServiceWorkspaceCertificates()
+        {
+            return GetCachedClient(client => new ServiceWorkspaceCertificateCollection(client, Id));
         }
 
         /// <summary> Gets the details of the certificate specified by its identifier. </summary>
@@ -729,11 +729,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="certificateId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="certificateId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<WorkspaceCertificateResource>> GetWorkspaceCertificateAsync(string certificateId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceWorkspaceCertificateResource>> GetServiceWorkspaceCertificateAsync(string certificateId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateId, nameof(certificateId));
 
-            return await GetWorkspaceCertificates().GetAsync(certificateId, cancellationToken).ConfigureAwait(false);
+            return await GetServiceWorkspaceCertificates().GetAsync(certificateId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets the details of the certificate specified by its identifier. </summary>
@@ -742,31 +742,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="certificateId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="certificateId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<WorkspaceCertificateResource> GetWorkspaceCertificate(string certificateId, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceWorkspaceCertificateResource> GetServiceWorkspaceCertificate(string certificateId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateId, nameof(certificateId));
 
-            return GetWorkspaceCertificates().Get(certificateId, cancellationToken);
+            return GetServiceWorkspaceCertificates().Get(certificateId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of WorkspaceGroups in the <see cref="WorkspaceContractResource"/>. </summary>
-        /// <returns> An object representing collection of WorkspaceGroups and their operations over a WorkspaceGroupResource. </returns>
-        public virtual WorkspaceGroupCollection GetWorkspaceGroups()
+        /// <summary> Gets a collection of ServiceWorkspaceGroups in the <see cref="WorkspaceContractResource"/>. </summary>
+        /// <returns> An object representing collection of ServiceWorkspaceGroups and their operations over a ServiceWorkspaceGroupResource. </returns>
+        public virtual ServiceWorkspaceGroupCollection GetServiceWorkspaceGroups()
         {
-            return GetCachedClient(client => new WorkspaceGroupCollection(client, Id));
-        }
-
-        /// <summary> Gets the details of the group specified by its identifier. </summary>
-        /// <param name="groupId"> Group identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<WorkspaceGroupResource>> GetWorkspaceGroupAsync(string groupId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-
-            return await GetWorkspaceGroups().GetAsync(groupId, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new ServiceWorkspaceGroupCollection(client, Id));
         }
 
         /// <summary> Gets the details of the group specified by its identifier. </summary>
@@ -775,18 +762,31 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<WorkspaceGroupResource> GetWorkspaceGroup(string groupId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceWorkspaceGroupResource>> GetServiceWorkspaceGroupAsync(string groupId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            return GetWorkspaceGroups().Get(groupId, cancellationToken);
+            return await GetServiceWorkspaceGroups().GetAsync(groupId, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of WorkspaceLoggers in the <see cref="WorkspaceContractResource"/>. </summary>
-        /// <returns> An object representing collection of WorkspaceLoggers and their operations over a WorkspaceLoggerResource. </returns>
-        public virtual WorkspaceLoggerCollection GetWorkspaceLoggers()
+        /// <summary> Gets the details of the group specified by its identifier. </summary>
+        /// <param name="groupId"> Group identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ServiceWorkspaceGroupResource> GetServiceWorkspaceGroup(string groupId, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(client => new WorkspaceLoggerCollection(client, Id));
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+
+            return GetServiceWorkspaceGroups().Get(groupId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ServiceWorkspaceLoggers in the <see cref="WorkspaceContractResource"/>. </summary>
+        /// <returns> An object representing collection of ServiceWorkspaceLoggers and their operations over a ServiceWorkspaceLoggerResource. </returns>
+        public virtual ServiceWorkspaceLoggerCollection GetServiceWorkspaceLoggers()
+        {
+            return GetCachedClient(client => new ServiceWorkspaceLoggerCollection(client, Id));
         }
 
         /// <summary> Gets the details of the logger specified by its identifier. </summary>
@@ -795,11 +795,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="loggerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="loggerId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<WorkspaceLoggerResource>> GetWorkspaceLoggerAsync(string loggerId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceWorkspaceLoggerResource>> GetServiceWorkspaceLoggerAsync(string loggerId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(loggerId, nameof(loggerId));
 
-            return await GetWorkspaceLoggers().GetAsync(loggerId, cancellationToken).ConfigureAwait(false);
+            return await GetServiceWorkspaceLoggers().GetAsync(loggerId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets the details of the logger specified by its identifier. </summary>
@@ -808,31 +808,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="loggerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="loggerId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<WorkspaceLoggerResource> GetWorkspaceLogger(string loggerId, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceWorkspaceLoggerResource> GetServiceWorkspaceLogger(string loggerId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(loggerId, nameof(loggerId));
 
-            return GetWorkspaceLoggers().Get(loggerId, cancellationToken);
+            return GetServiceWorkspaceLoggers().Get(loggerId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of WorkspaceNamedValues in the <see cref="WorkspaceContractResource"/>. </summary>
-        /// <returns> An object representing collection of WorkspaceNamedValues and their operations over a WorkspaceNamedValueResource. </returns>
-        public virtual WorkspaceNamedValueCollection GetWorkspaceNamedValues()
+        /// <summary> Gets a collection of ServiceWorkspaceNamedValues in the <see cref="WorkspaceContractResource"/>. </summary>
+        /// <returns> An object representing collection of ServiceWorkspaceNamedValues and their operations over a ServiceWorkspaceNamedValueResource. </returns>
+        public virtual ServiceWorkspaceNamedValueCollection GetServiceWorkspaceNamedValues()
         {
-            return GetCachedClient(client => new WorkspaceNamedValueCollection(client, Id));
-        }
-
-        /// <summary> Gets the details of the named value specified by its identifier. </summary>
-        /// <param name="namedValueId"> Identifier of the NamedValue. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="namedValueId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="namedValueId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<WorkspaceNamedValueResource>> GetWorkspaceNamedValueAsync(string namedValueId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(namedValueId, nameof(namedValueId));
-
-            return await GetWorkspaceNamedValues().GetAsync(namedValueId, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new ServiceWorkspaceNamedValueCollection(client, Id));
         }
 
         /// <summary> Gets the details of the named value specified by its identifier. </summary>
@@ -841,43 +828,56 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="namedValueId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="namedValueId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<WorkspaceNamedValueResource> GetWorkspaceNamedValue(string namedValueId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceWorkspaceNamedValueResource>> GetServiceWorkspaceNamedValueAsync(string namedValueId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(namedValueId, nameof(namedValueId));
 
-            return GetWorkspaceNamedValues().Get(namedValueId, cancellationToken);
+            return await GetServiceWorkspaceNamedValues().GetAsync(namedValueId, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of WorkspaceNotifications in the <see cref="WorkspaceContractResource"/>. </summary>
-        /// <returns> An object representing collection of WorkspaceNotifications and their operations over a WorkspaceNotificationResource. </returns>
-        public virtual WorkspaceNotificationCollection GetWorkspaceNotifications()
+        /// <summary> Gets the details of the named value specified by its identifier. </summary>
+        /// <param name="namedValueId"> Identifier of the NamedValue. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="namedValueId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="namedValueId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ServiceWorkspaceNamedValueResource> GetServiceWorkspaceNamedValue(string namedValueId, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(client => new WorkspaceNotificationCollection(client, Id));
+            Argument.AssertNotNullOrEmpty(namedValueId, nameof(namedValueId));
+
+            return GetServiceWorkspaceNamedValues().Get(namedValueId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ServiceWorkspaceNotifications in the <see cref="WorkspaceContractResource"/>. </summary>
+        /// <returns> An object representing collection of ServiceWorkspaceNotifications and their operations over a ServiceWorkspaceNotificationResource. </returns>
+        public virtual ServiceWorkspaceNotificationCollection GetServiceWorkspaceNotifications()
+        {
+            return GetCachedClient(client => new ServiceWorkspaceNotificationCollection(client, Id));
         }
 
         /// <summary> Gets the details of the Notification specified by its identifier. </summary>
         /// <param name="notificationName"> Notification Name Identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<WorkspaceNotificationResource>> GetWorkspaceNotificationAsync(NotificationName notificationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceWorkspaceNotificationResource>> GetServiceWorkspaceNotificationAsync(NotificationName notificationName, CancellationToken cancellationToken = default)
         {
-            return await GetWorkspaceNotifications().GetAsync(notificationName, cancellationToken).ConfigureAwait(false);
+            return await GetServiceWorkspaceNotifications().GetAsync(notificationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets the details of the Notification specified by its identifier. </summary>
         /// <param name="notificationName"> Notification Name Identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<WorkspaceNotificationResource> GetWorkspaceNotification(NotificationName notificationName, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceWorkspaceNotificationResource> GetServiceWorkspaceNotification(NotificationName notificationName, CancellationToken cancellationToken = default)
         {
-            return GetWorkspaceNotifications().Get(notificationName, cancellationToken);
+            return GetServiceWorkspaceNotifications().Get(notificationName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of WorkspacePolicyFragments in the <see cref="WorkspaceContractResource"/>. </summary>
-        /// <returns> An object representing collection of WorkspacePolicyFragments and their operations over a WorkspacePolicyFragmentResource. </returns>
-        public virtual WorkspacePolicyFragmentCollection GetWorkspacePolicyFragments()
+        /// <summary> Gets a collection of ServiceWorkspacePolicyFragments in the <see cref="WorkspaceContractResource"/>. </summary>
+        /// <returns> An object representing collection of ServiceWorkspacePolicyFragments and their operations over a ServiceWorkspacePolicyFragmentResource. </returns>
+        public virtual ServiceWorkspacePolicyFragmentCollection GetServiceWorkspacePolicyFragments()
         {
-            return GetCachedClient(client => new WorkspacePolicyFragmentCollection(client, Id));
+            return GetCachedClient(client => new ServiceWorkspacePolicyFragmentCollection(client, Id));
         }
 
         /// <summary> Gets a policy fragment. </summary>
@@ -887,11 +887,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<WorkspacePolicyFragmentResource>> GetWorkspacePolicyFragmentAsync(string id, PolicyFragmentContentFormat? format = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceWorkspacePolicyFragmentResource>> GetServiceWorkspacePolicyFragmentAsync(string id, PolicyFragmentContentFormat? format = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            return await GetWorkspacePolicyFragments().GetAsync(id, format, cancellationToken).ConfigureAwait(false);
+            return await GetServiceWorkspacePolicyFragments().GetAsync(id, format, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets a policy fragment. </summary>
@@ -901,31 +901,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<WorkspacePolicyFragmentResource> GetWorkspacePolicyFragment(string id, PolicyFragmentContentFormat? format = default, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceWorkspacePolicyFragmentResource> GetServiceWorkspacePolicyFragment(string id, PolicyFragmentContentFormat? format = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            return GetWorkspacePolicyFragments().Get(id, format, cancellationToken);
+            return GetServiceWorkspacePolicyFragments().Get(id, format, cancellationToken);
         }
 
-        /// <summary> Gets a collection of WorkspaceProducts in the <see cref="WorkspaceContractResource"/>. </summary>
-        /// <returns> An object representing collection of WorkspaceProducts and their operations over a WorkspaceProductResource. </returns>
-        public virtual WorkspaceProductCollection GetWorkspaceProducts()
+        /// <summary> Gets a collection of ServiceWorkspaceProducts in the <see cref="WorkspaceContractResource"/>. </summary>
+        /// <returns> An object representing collection of ServiceWorkspaceProducts and their operations over a ServiceWorkspaceProductResource. </returns>
+        public virtual ServiceWorkspaceProductCollection GetServiceWorkspaceProducts()
         {
-            return GetCachedClient(client => new WorkspaceProductCollection(client, Id));
-        }
-
-        /// <summary> Gets the details of the product specified by its identifier. </summary>
-        /// <param name="productId"> Product identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="productId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="productId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<WorkspaceProductResource>> GetWorkspaceProductAsync(string productId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(productId, nameof(productId));
-
-            return await GetWorkspaceProducts().GetAsync(productId, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new ServiceWorkspaceProductCollection(client, Id));
         }
 
         /// <summary> Gets the details of the product specified by its identifier. </summary>
@@ -934,18 +921,31 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="productId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="productId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<WorkspaceProductResource> GetWorkspaceProduct(string productId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceWorkspaceProductResource>> GetServiceWorkspaceProductAsync(string productId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(productId, nameof(productId));
 
-            return GetWorkspaceProducts().Get(productId, cancellationToken);
+            return await GetServiceWorkspaceProducts().GetAsync(productId, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of WorkspaceGlobalSchemas in the <see cref="WorkspaceContractResource"/>. </summary>
-        /// <returns> An object representing collection of WorkspaceGlobalSchemas and their operations over a WorkspaceGlobalSchemaResource. </returns>
-        public virtual WorkspaceGlobalSchemaCollection GetWorkspaceGlobalSchemas()
+        /// <summary> Gets the details of the product specified by its identifier. </summary>
+        /// <param name="productId"> Product identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="productId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="productId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ServiceWorkspaceProductResource> GetServiceWorkspaceProduct(string productId, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(client => new WorkspaceGlobalSchemaCollection(client, Id));
+            Argument.AssertNotNullOrEmpty(productId, nameof(productId));
+
+            return GetServiceWorkspaceProducts().Get(productId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ServiceWorkspaceSchemas in the <see cref="WorkspaceContractResource"/>. </summary>
+        /// <returns> An object representing collection of ServiceWorkspaceSchemas and their operations over a ServiceWorkspaceSchemaResource. </returns>
+        public virtual ServiceWorkspaceSchemaCollection GetServiceWorkspaceSchemas()
+        {
+            return GetCachedClient(client => new ServiceWorkspaceSchemaCollection(client, Id));
         }
 
         /// <summary> Gets the details of the Schema specified by its identifier. </summary>
@@ -954,11 +954,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="schemaId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="schemaId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<WorkspaceGlobalSchemaResource>> GetWorkspaceGlobalSchemaAsync(string schemaId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceWorkspaceSchemaResource>> GetServiceWorkspaceSchemaAsync(string schemaId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(schemaId, nameof(schemaId));
 
-            return await GetWorkspaceGlobalSchemas().GetAsync(schemaId, cancellationToken).ConfigureAwait(false);
+            return await GetServiceWorkspaceSchemas().GetAsync(schemaId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets the details of the Schema specified by its identifier. </summary>
@@ -967,31 +967,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="schemaId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="schemaId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<WorkspaceGlobalSchemaResource> GetWorkspaceGlobalSchema(string schemaId, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceWorkspaceSchemaResource> GetServiceWorkspaceSchema(string schemaId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(schemaId, nameof(schemaId));
 
-            return GetWorkspaceGlobalSchemas().Get(schemaId, cancellationToken);
+            return GetServiceWorkspaceSchemas().Get(schemaId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of WorkspaceSubscriptions in the <see cref="WorkspaceContractResource"/>. </summary>
-        /// <returns> An object representing collection of WorkspaceSubscriptions and their operations over a WorkspaceSubscriptionResource. </returns>
-        public virtual WorkspaceSubscriptionCollection GetWorkspaceSubscriptions()
+        /// <summary> Gets a collection of ServiceWorkspaceSubscriptions in the <see cref="WorkspaceContractResource"/>. </summary>
+        /// <returns> An object representing collection of ServiceWorkspaceSubscriptions and their operations over a ServiceWorkspaceSubscriptionResource. </returns>
+        public virtual ServiceWorkspaceSubscriptionCollection GetServiceWorkspaceSubscriptions()
         {
-            return GetCachedClient(client => new WorkspaceSubscriptionCollection(client, Id));
-        }
-
-        /// <summary> Gets the specified Subscription entity. </summary>
-        /// <param name="sid"> Subscription entity Identifier. The entity represents the association between a user and a product in API Management. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sid"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<WorkspaceSubscriptionResource>> GetWorkspaceSubscriptionAsync(string sid, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(sid, nameof(sid));
-
-            return await GetWorkspaceSubscriptions().GetAsync(sid, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new ServiceWorkspaceSubscriptionCollection(client, Id));
         }
 
         /// <summary> Gets the specified Subscription entity. </summary>
@@ -1000,11 +987,24 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="sid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sid"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<WorkspaceSubscriptionResource> GetWorkspaceSubscription(string sid, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceWorkspaceSubscriptionResource>> GetServiceWorkspaceSubscriptionAsync(string sid, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sid, nameof(sid));
 
-            return GetWorkspaceSubscriptions().Get(sid, cancellationToken);
+            return await GetServiceWorkspaceSubscriptions().GetAsync(sid, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets the specified Subscription entity. </summary>
+        /// <param name="sid"> Subscription entity Identifier. The entity represents the association between a user and a product in API Management. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sid"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ServiceWorkspaceSubscriptionResource> GetServiceWorkspaceSubscription(string sid, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sid, nameof(sid));
+
+            return GetServiceWorkspaceSubscriptions().Get(sid, cancellationToken);
         }
     }
 }

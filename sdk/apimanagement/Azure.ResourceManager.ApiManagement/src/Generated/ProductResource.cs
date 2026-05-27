@@ -1290,11 +1290,11 @@ namespace Azure.ResourceManager.ApiManagement
                 "ProductResource.ProductGroupGetByProduct");
         }
 
-        /// <summary> Gets a collection of ProductPolicies in the <see cref="ProductResource"/>. </summary>
-        /// <returns> An object representing collection of ProductPolicies and their operations over a ProductPolicyResource. </returns>
-        public virtual ProductPolicyCollection GetProductPolicies()
+        /// <summary> Gets a collection of ApiManagementProductPolicies in the <see cref="ProductResource"/>. </summary>
+        /// <returns> An object representing collection of ApiManagementProductPolicies and their operations over a ApiManagementProductPolicyResource. </returns>
+        public virtual ApiManagementProductPolicyCollection GetApiManagementProductPolicies()
         {
-            return GetCachedClient(client => new ProductPolicyCollection(client, Id));
+            return GetCachedClient(client => new ApiManagementProductPolicyCollection(client, Id));
         }
 
         /// <summary> Get the policy configuration at the Product level. </summary>
@@ -1302,9 +1302,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="format"> Policy Export Format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ProductPolicyResource>> GetProductPolicyAsync(PolicyIdName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementProductPolicyResource>> GetApiManagementProductPolicyAsync(PolicyIdName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
         {
-            return await GetProductPolicies().GetAsync(policyId, format, cancellationToken).ConfigureAwait(false);
+            return await GetApiManagementProductPolicies().GetAsync(policyId, format, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get the policy configuration at the Product level. </summary>
@@ -1312,9 +1312,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="format"> Policy Export Format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<ProductPolicyResource> GetProductPolicy(PolicyIdName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementProductPolicyResource> GetApiManagementProductPolicy(PolicyIdName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
         {
-            return GetProductPolicies().Get(policyId, format, cancellationToken);
+            return GetApiManagementProductPolicies().Get(policyId, format, cancellationToken);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ServiceProductWikiResource"/> along with the instance operations that can be performed on it in the <see cref="ProductResource"/>. </summary>
+        /// <returns> Returns a <see cref="ServiceProductWikiResource"/> object. </returns>
+        public virtual ServiceProductWikiResource GetServiceProductWiki()
+        {
+            return new ServiceProductWikiResource(Client, Id.AppendChildResource("wikis", "default"));
         }
 
         /// <summary> Gets a collection of ProductTags in the <see cref="ProductResource"/>. </summary>
@@ -1348,13 +1355,6 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
 
             return GetProductTags().Get(tagId, cancellationToken);
-        }
-
-        /// <summary> Gets an object representing a <see cref="ProductWikiResource"/> along with the instance operations that can be performed on it in the <see cref="ProductResource"/>. </summary>
-        /// <returns> Returns a <see cref="ProductWikiResource"/> object. </returns>
-        public virtual ProductWikiResource GetProductWiki()
-        {
-            return new ProductWikiResource(Client, Id.AppendChildResource("wikis", "default"));
         }
 
         /// <summary> Gets a collection of ProductApiLinks in the <see cref="ProductResource"/>. </summary>
