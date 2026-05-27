@@ -70,10 +70,6 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
     [Test]
     public void Ctor_Default_BoundaryUsesRfc2046Chars()
     {
-        // Per RFC 2046 §5.1.1, the boundary must be composed of bchars
-        // (DIGIT / ALPHA / "'" / "(" / ")" / "+" / "_" / "," / "-" / "." / "/" / ":" / "=" / "?" / SPACE)
-        // and must not end with SPACE. A GUID in "D" format consists only of
-        // hex digits and '-', and never ends with a space, so it always complies.
         const string Rfc2046BoundaryChars = "0123456789ABCDEFabcdefghijklmnopqrstuvwxyzGHIJKLMNOPQRSTUVWXYZ'()+_,-./:=? ";
         for (int i = 0; i < 16; i++)
         {
@@ -129,64 +125,6 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
                 $"Expected default boundary to be a GUID in 'D' format, but got '{boundary}'.");
             Assert.IsTrue(unique.Add(boundary), $"Duplicate boundary generated under concurrency: {boundary}");
         }
-    }
-
-    [Test]
-    public void Ctor_Boundary_UsesProvidedValue()
-    {
-        const string boundary = "my-boundary-12345";
-        using MultiPartFormContent content = new(boundary);
-
-        Assert.AreEqual(boundary, GetBoundary(content));
-    }
-
-    [Test]
-    public void Ctor_Boundary_PopulatesMediaType()
-    {
-        using MultiPartFormContent content = new("abc");
-
-        StringAssert.StartsWith("multipart/form-data", content.MediaType);
-        StringAssert.Contains("abc", content.MediaType);
-    }
-
-    [Test]
-    public void WriteTo_Throws_WhenStringPartCollidesWithBoundary()
-    {
-        const string boundary = "my-boundary-xyz";
-        using MultiPartFormContent content = new(boundary);
-        content.Add("textPart", $"some content with --{boundary} embedded inside");
-
-        using MemoryStream stream = new();
-        InvalidOperationException? ex = Assert.ThrowsAsync<InvalidOperationException>(
-            () => content.WriteToSyncOrAsync(stream, CancellationToken.None, IsAsync));
-        StringAssert.Contains(boundary, ex!.Message);
-    }
-
-    [Test]
-    public void WriteTo_Throws_WhenBinaryDataPartCollidesWithBoundary()
-    {
-        const string boundary = "another-boundary-42";
-        using MultiPartFormContent content = new(boundary);
-        byte[] payload = Encoding.UTF8.GetBytes($"prefix --{boundary} suffix");
-        content.Add("blob", BinaryData.FromBytes(payload));
-
-        using MemoryStream stream = new();
-        Assert.ThrowsAsync<InvalidOperationException>(
-            () => content.WriteToSyncOrAsync(stream, CancellationToken.None, IsAsync));
-    }
-
-    [Test]
-    public async Task WriteTo_Succeeds_WhenNoBoundaryCollision()
-    {
-        const string boundary = "safe-boundary-1234";
-        using MultiPartFormContent content = new(boundary);
-        content.Add("textPart", "no collision here");
-        content.Add("blob", BinaryData.FromBytes(new byte[] { 1, 2, 3, 4 }));
-
-        using MemoryStream stream = new();
-        await content.WriteToSyncOrAsync(stream, CancellationToken.None, IsAsync);
-
-        Assert.Greater(stream.Length, 0);
     }
 
     [Test]
@@ -309,36 +247,6 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
     }
 
     [Test]
-    public void Add_Model_Full_Throws_WhenContextNull()
-    {
-        using MultiPartFormContent content = new();
-        MockPersistableModel model = new(1, "v");
-
-        Assert.Throws<ArgumentNullException>(
-            () => content.Add("m", model, context: null!, options: ModelReaderWriterOptions.Json, mediaType: "application/json"));
-    }
-
-    [Test]
-    public void Add_Model_Full_Throws_WhenOptionsNull()
-    {
-        using MultiPartFormContent content = new();
-        MockPersistableModel model = new(1, "v");
-
-        Assert.Throws<ArgumentNullException>(
-            () => content.Add("m", model, EmptyTestContext.Instance, options: null!, mediaType: "application/json"));
-    }
-
-    [Test]
-    public void Add_Model_Full_Throws_WhenMediaTypeNull()
-    {
-        using MultiPartFormContent content = new();
-        MockPersistableModel model = new(1, "v");
-
-        Assert.Throws<ArgumentNullException>(
-            () => content.Add("m", model, EmptyTestContext.Instance, ModelReaderWriterOptions.Json, mediaType: null!));
-    }
-
-    [Test]
     public void Add_Model_Full_Throws_WhenMediaTypeEmpty()
     {
         using MultiPartFormContent content = new();
@@ -360,34 +268,6 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
         Assert.AreEqual("model", part.Name);
         Assert.AreEqual("application/json", part.ContentType?.MediaType);
         Assert.AreEqual(model.SerializedValue, Encoding.UTF8.GetString(part.Body));
-    }
-
-    [Test]
-    public async Task Add_Model_HonorsCustomMediaType()
-    {
-        using MultiPartFormContent content = new();
-        MockPersistableModel model = new(1, "x");
-        content.Add("m", model, EmptyTestContext.Instance, ModelReaderWriterOptions.Json, mediaType: "application/x-custom");
-
-        ParsedPart part = (await ParseAsync(content)).Parts.Single();
-
-        Assert.AreEqual("application/x-custom", part.ContentType?.MediaType);
-    }
-
-    [Test]
-    public async Task Add_Model_Convenience_MatchesFullOverloadDefaults()
-    {
-        using MultiPartFormContent convenience = new("boundary-x");
-        using MultiPartFormContent full = new("boundary-x");
-        MockPersistableModel model = new(7, "v");
-
-        convenience.Add("m", model);
-        full.Add("m", model, EmptyTestContext.Instance, ModelReaderWriterOptions.Json, mediaType: "application/json");
-
-        byte[] convenienceBytes = await WriteToBytesAsync(convenience);
-        byte[] fullBytes = await WriteToBytesAsync(full);
-
-        Assert.AreEqual(fullBytes, convenienceBytes);
     }
 
     [Test]

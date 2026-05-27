@@ -7,7 +7,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Net;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Text.Json;
 
 namespace System.ClientModel;
@@ -26,14 +25,11 @@ public sealed class MultiPartFormContent : BinaryContent
     private static readonly ModelReaderWriterOptions _modelWriteWireOptions = new ModelReaderWriterOptions("W");
 
     private readonly MultipartFormDataContent _multipartContent;
-    private readonly string _boundary;
-    private int _partCount;
     private bool _disposed;
 
     /// <summary>
     /// Initializes a new instance of <see cref="MultiPartFormContent"/> with a
-    /// randomly generated boundary that conforms to
-    /// <see href="https://www.rfc-editor.org/rfc/rfc2046#section-5.1.1">RFC 2046, Section 5.1.1</see>.
+    /// randomly generated boundary.
     /// </summary>
     public MultiPartFormContent() : this(CreateBoundary()) { }
 
@@ -41,7 +37,6 @@ public sealed class MultiPartFormContent : BinaryContent
     {
         Argument.AssertNotNullOrEmpty(boundary, nameof(boundary));
 
-        _boundary = boundary;
         _multipartContent = new MultipartFormDataContent(boundary);
         MediaType = _multipartContent.Headers.ContentType?.ToString();
     }
@@ -475,17 +470,13 @@ public sealed class MultiPartFormContent : BinaryContent
         CheckDisposed();
         cancellationToken.ThrowIfCancellationRequested();
 
-        using MemoryStream buffer = new();
 #if NET6_0_OR_GREATER
-        _multipartContent.CopyTo(buffer, default, cancellationToken);
+        _multipartContent.CopyTo(stream, default, cancellationToken);
 #else
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
-        _multipartContent.CopyToAsync(buffer).GetAwaiter().GetResult();
+        _multipartContent.CopyToAsync(stream).GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
 #endif
-        ValidateBoundary(buffer.GetBuffer(), (int)buffer.Length);
-        buffer.Position = 0;
-        buffer.CopyTo(stream);
     }
 
     /// <inheritdoc/>
@@ -495,15 +486,11 @@ public sealed class MultiPartFormContent : BinaryContent
         CheckDisposed();
         cancellationToken.ThrowIfCancellationRequested();
 
-        using MemoryStream buffer = new();
 #if NET6_0_OR_GREATER
-        await _multipartContent.CopyToAsync(buffer, cancellationToken).ConfigureAwait(false);
+        await _multipartContent.CopyToAsync(stream, cancellationToken).ConfigureAwait(false);
 #else
-        await _multipartContent.CopyToAsync(buffer).ConfigureAwait(false);
+        await _multipartContent.CopyToAsync(stream).ConfigureAwait(false);
 #endif
-        ValidateBoundary(buffer.GetBuffer(), (int)buffer.Length);
-        buffer.Position = 0;
-        await buffer.CopyToAsync(stream, 81920, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc/>
@@ -543,60 +530,8 @@ public sealed class MultiPartFormContent : BinaryContent
         {
             _multipartContent.Add(content, name);
         }
-        _partCount++;
     }
 
-    /// <summary>
-    /// Validates that the boundary token does not appear inside any part's payload.
-    /// A well-formed multipart payload contains exactly <c>partCount + 1</c> occurrences
-    /// of the <c>--&lt;boundary&gt;</c> token (one opening separator per part plus the
-    /// closing terminator). Any additional occurrence means a part body collides with
-    /// the boundary, which would corrupt the message on the receiving end.
-    /// </summary>
-    private void ValidateBoundary(byte[] buffer, int length)
-    {
-        // The opening separator and the closing terminator both begin with "--<boundary>".
-        // Count non-overlapping occurrences of that token in the serialized payload.
-        byte[] token = Encoding.UTF8.GetBytes("--" + _boundary);
-        int expected = _partCount + 1;
-        int actual = CountOccurrences(buffer, length, token);
-        if (actual > expected)
-        {
-            throw new InvalidOperationException(
-                $"The configured boundary '{_boundary}' collides with the content of one or more parts. " +
-                "Construct the MultiPartFormContent with a different boundary that does not appear in any part's payload.");
-        }
-    }
-
-    private static int CountOccurrences(byte[] buffer, int length, byte[] token)
-    {
-        if (token.Length == 0 || length < token.Length)
-        {
-            return 0;
-        }
-
-        int count = 0;
-        int max = length - token.Length;
-        for (int i = 0; i <= max; i++)
-        {
-            int j = 0;
-            while (j < token.Length && buffer[i + j] == token[j])
-            {
-                j++;
-            }
-            if (j == token.Length)
-            {
-                count++;
-                i += token.Length - 1; // non-overlapping
-            }
-        }
-        return count;
-    }
-
-    // Per RFC 2046 §5.1.1, the boundary must be 1-70 chars composed of `bcharsnospace`/SPACE
-    // (DIGIT / ALPHA / "'" / "(" / ")" / "+" / "_" / "," / "-" / "." / "/" / ":" / "=" / "?").
-    // GUID's canonical "D" form ("xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx") is 36 chars of hex
-    // digits and '-' only, all of which are valid bcharsnospace, so it always satisfies the rule.
     private static string CreateBoundary() => Guid.NewGuid().ToString();
 
     private static MemoryStream CreateJsonStream(object value)
