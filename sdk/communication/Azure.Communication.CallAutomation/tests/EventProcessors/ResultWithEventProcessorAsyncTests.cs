@@ -452,7 +452,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(successCode));
 
             // Create and send event to event processor
-            SendAndProcessEvent(handler, new PlayCanceled(CallConnectionId, ServerCallId, CorrelationId, null));
+            SendAndProcessEvent(handler, new PlayCanceled(null, null, CallConnectionId, ServerCallId, CorrelationId));
 
             CancelAllMediaOperationsEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
@@ -477,7 +477,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(successCode));
 
             // Create and send event to event processor
-            SendAndProcessEvent(handler, new RecognizeCanceled(CallConnectionId, ServerCallId, CorrelationId, null));
+            SendAndProcessEvent(handler, new RecognizeCanceled(null, null, CallConnectionId, ServerCallId, CorrelationId));
 
             CancelAllMediaOperationsEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
