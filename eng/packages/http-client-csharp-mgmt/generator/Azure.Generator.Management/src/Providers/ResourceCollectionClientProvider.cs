@@ -34,6 +34,7 @@ namespace Azure.Generator.Management.Providers
         private readonly IReadOnlyList<FieldProvider> _extraFields;
         private readonly ResourceClientProvider _resource;
         private readonly IReadOnlyList<ResourceMethod> _getAlls;
+        private readonly IReadOnlyList<ResourceMethod> _actions;
         private readonly ResourceMethod? _create;
         private readonly ResourceMethod? _get;
 
@@ -61,7 +62,7 @@ namespace Azure.Generator.Management.Providers
             _resourceTypeExpression = Static(_resource.Type).As<ArmResource>().ResourceType();
 
             var contextualPath = GetContextualPath(resourceMetadata);
-            (_get, _create, _getAlls) = InitializeMethods(resourceMethods, contextualPath);
+            (_get, _create, _getAlls, _actions) = InitializeMethods(resourceMethods, contextualPath);
             _operationContext = InitializeContext(this, contextualPath, _getAlls.Count > 0 ? _getAlls[0] : null);
 
             // this depends on _getAlls being initialized
@@ -135,13 +136,14 @@ namespace Azure.Generator.Management.Providers
             return (extraParameters, extraFields);
         }
 
-        private static (ResourceMethod? Get, ResourceMethod? Create, IReadOnlyList<ResourceMethod> GetAlls) InitializeMethods(
+        private static (ResourceMethod? Get, ResourceMethod? Create, IReadOnlyList<ResourceMethod> GetAlls, IReadOnlyList<ResourceMethod> Actions) InitializeMethods(
             IReadOnlyList<ResourceMethod> resourceMethods,
             RequestPathPattern contextualPath)
         {
             ResourceMethod? getMethod = null;
             ResourceMethod? createMethod = null;
             var listMethods = new List<ResourceMethod>();
+            var actionMethods = new List<ResourceMethod>();
 
             foreach (var method in resourceMethods)
             {
@@ -156,10 +158,13 @@ namespace Azure.Generator.Management.Providers
                     case ResourceOperationKind.Create:
                         createMethod ??= method;
                         break;
+                    case ResourceOperationKind.CollectionAction:
+                        actionMethods.Add(method);
+                        break;
                 }
             }
 
-            return (getMethod, createMethod, SortGetAllMethodsByScopeBreadth(listMethods, contextualPath));
+            return (getMethod, createMethod, SortGetAllMethodsByScopeBreadth(listMethods, contextualPath), actionMethods);
         }
 
         private static IReadOnlyList<ResourceMethod> SortGetAllMethodsByScopeBreadth(
@@ -361,9 +366,36 @@ namespace Azure.Generator.Management.Providers
             methods.AddRange(BuildCreateOrUpdateMethods());
             methods.AddRange(BuildGetMethods());
             methods.AddRange(BuildGetAllMethods());
+            methods.AddRange(BuildActionMethods());
             methods.AddRange(BuildExistsMethods());
             methods.AddRange(BuildGetIfExistsMethods());
             methods.AddRange(BuildEnumeratorMethods());
+
+            return [.. methods];
+        }
+
+        private MethodProvider[] BuildActionMethods()
+        {
+            if (_actions.Count == 0)
+            {
+                return [];
+            }
+
+            var methods = new List<MethodProvider>(_actions.Count * 2);
+            foreach (var action in _actions)
+            {
+                var restClientInfo = _clientInfos[action.InputClient];
+                if (action.InputMethod is InputPagingServiceMethod pagingMethod)
+                {
+                    methods.Add(new PageableOperationMethodProvider(this, _operationContext, restClientInfo, pagingMethod, true, methodName: null, explicitResourceClient: _resource));
+                    methods.Add(new PageableOperationMethodProvider(this, _operationContext, restClientInfo, pagingMethod, false, methodName: null, explicitResourceClient: _resource));
+                }
+                else
+                {
+                    methods.Add(BuildNonPagingGetAllMethod(action.InputMethod, restClientInfo, true, methodName: null));
+                    methods.Add(BuildNonPagingGetAllMethod(action.InputMethod, restClientInfo, false, methodName: null));
+                }
+            }
 
             return [.. methods];
         }
