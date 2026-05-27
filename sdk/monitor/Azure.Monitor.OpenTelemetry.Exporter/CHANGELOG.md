@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Subscribed the Statsbeat `MeterProvider` to the `MicrosoftOpenTelemetryFeatureSdkStatsMeter` meter so Feature SDKStats published by the Microsoft OpenTelemetry distro flow through the existing 24-hour Statsbeat pipeline.
+
 ### Breaking Changes
 
 ### Bugs Fixed

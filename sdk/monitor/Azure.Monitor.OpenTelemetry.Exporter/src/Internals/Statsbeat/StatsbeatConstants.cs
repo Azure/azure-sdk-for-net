@@ -79,5 +79,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
         internal const string FeatureStatsbeatMeterName = "FeatureStatsbeatMeter";
         internal const string FeatureStatsbeatMetricName = "Feature";
+
+        /// <summary>
+        /// Meter name used by the Microsoft OpenTelemetry distro to publish distro-owned Feature
+        /// SDKStats. The distro owns a bit map separate from the classic Application Insights
+        /// <see cref="FeatureStatsbeatMeterName"/> producer to avoid bit-space collisions; the
+        /// Statsbeat <c>MeterProvider</c> subscribes to both so measurements from either producer
+        /// flow through to the same Statsbeat ingestion resource.
+        /// </summary>
+        internal const string DistroFeatureSdkStatsMeterName = "MicrosoftOpenTelemetryFeatureSdkStatsMeter";
     }
 }

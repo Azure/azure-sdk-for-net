@@ -70,6 +70,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
             _statsbeatMeterProvider = Sdk.CreateMeterProviderBuilder()
                 .AddMeter(StatsbeatConstants.AttachStatsbeatMeterName)
                 .AddMeter(StatsbeatConstants.FeatureStatsbeatMeterName)
+                .AddMeter(StatsbeatConstants.DistroFeatureSdkStatsMeterName)
                 .AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions), StatsbeatConstants.GeneralStatsbeatInterval)
                 { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
                 .Build();
