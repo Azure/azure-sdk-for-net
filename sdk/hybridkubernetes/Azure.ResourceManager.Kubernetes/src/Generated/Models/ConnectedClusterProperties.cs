@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.Kubernetes.Models
         /// <param name="arcAgentProfile"> Arc agentry configuration for the provisioned cluster. </param>
         /// <param name="securityProfile"> Security profile for the connected cluster. </param>
         /// <param name="oidcIssuerProfile"> Open ID Connect (OIDC) Issuer Profile for the connected cluster. </param>
-        /// <param name="isGateway"> Details of the gateway used by the Arc router for connectivity. </param>
+        /// <param name="gateway"> Details of the gateway used by the Arc router for connectivity. </param>
         /// <param name="arcAgentryConfigurations"> Configuration settings for customizing the behavior of the connected cluster. </param>
         /// <param name="miscellaneousProperties"> More properties related to the Connected Cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectedClusterProperties(string agentPublicKeyCertificate, string kubernetesVersion, int? totalNodeCount, int? totalCoreCount, string agentVersion, ConnectedClusterProvisioningState? provisioningState, string distribution, string distributionVersion, string infrastructure, string offering, DateTimeOffset? managedIdentityCertificateExpirationOn, DateTimeOffset? lastConnectivityOn, ConnectedClusterConnectivityStatus? connectivityStatus, ConnectedClusterPrivateLinkState? privateLinkState, ResourceIdentifier privateLinkScopeResourceId, ConnectedClusterAzureHybridBenefit? azureHybridBenefit, ConnectedClusterAadProfile aadProfile, ConnectedClusterArcAgentProfile arcAgentProfile, ConnectedClusterSecurityProfile securityProfile, ConnectedClusterOidcIssuerProfile oidcIssuerProfile, Gateway isGateway, IList<ConnectedClusterArcAgentryConfiguration> arcAgentryConfigurations, IReadOnlyDictionary<string, string> miscellaneousProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectedClusterProperties(string agentPublicKeyCertificate, string kubernetesVersion, int? totalNodeCount, int? totalCoreCount, string agentVersion, ConnectedClusterProvisioningState? provisioningState, string distribution, string distributionVersion, string infrastructure, string offering, DateTimeOffset? managedIdentityCertificateExpirationOn, DateTimeOffset? lastConnectivityOn, ConnectedClusterConnectivityStatus? connectivityStatus, ConnectedClusterPrivateLinkState? privateLinkState, ResourceIdentifier privateLinkScopeResourceId, ConnectedClusterAzureHybridBenefit? azureHybridBenefit, ConnectedClusterAadProfile aadProfile, ConnectedClusterArcAgentProfile arcAgentProfile, ConnectedClusterSecurityProfile securityProfile, ConnectedClusterOidcIssuerProfile oidcIssuerProfile, Gateway gateway, IList<ConnectedClusterArcAgentryConfiguration> arcAgentryConfigurations, IReadOnlyDictionary<string, string> miscellaneousProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AgentPublicKeyCertificate = agentPublicKeyCertificate;
             KubernetesVersion = kubernetesVersion;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
             ArcAgentProfile = arcAgentProfile;
             SecurityProfile = securityProfile;
             OidcIssuerProfile = oidcIssuerProfile;
-            IsGateway = isGateway;
+            Gateway = gateway;
             ArcAgentryConfigurations = arcAgentryConfigurations;
             MiscellaneousProperties = miscellaneousProperties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         public ConnectedClusterOidcIssuerProfile OidcIssuerProfile { get; set; }
 
         /// <summary> Details of the gateway used by the Arc router for connectivity. </summary>
-        internal Gateway IsGateway { get; set; }
+        internal Gateway Gateway { get; set; }
 
         /// <summary> Configuration settings for customizing the behavior of the connected cluster. </summary>
         public IList<ConnectedClusterArcAgentryConfiguration> ArcAgentryConfigurations { get; set; }
@@ -174,15 +174,15 @@ namespace Azure.ResourceManager.Kubernetes.Models
         {
             get
             {
-                return IsGateway is null ? default : IsGateway.Enabled;
+                return Gateway is null ? default : Gateway.IsGatewayEnabled;
             }
             set
             {
-                if (IsGateway is null)
+                if (Gateway is null)
                 {
-                    IsGateway = new Gateway();
+                    Gateway = new Gateway();
                 }
-                IsGateway.Enabled = value;
+                Gateway.IsGatewayEnabled = value;
             }
         }
     }

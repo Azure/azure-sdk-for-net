@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 writer.WritePropertyName("azureHybridBenefit"u8);
                 writer.WriteStringValue(AzureHybridBenefit.Value.ToString());
             }
-            if (Optional.IsDefined(IsGateway))
+            if (Optional.IsDefined(Gateway))
             {
                 writer.WritePropertyName("gateway"u8);
-                writer.WriteObjectValue(IsGateway, options);
+                writer.WriteObjectValue(Gateway, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
             string distribution = default;
             string distributionVersion = default;
             ConnectedClusterAzureHybridBenefit? azureHybridBenefit = default;
-            Gateway isGateway = default;
+            Gateway gateway = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                     {
                         continue;
                     }
-                    isGateway = Gateway.DeserializeGateway(prop.Value, options);
+                    gateway = Gateway.DeserializeGateway(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ConnectedClusterPatchProperties(distribution, distributionVersion, azureHybridBenefit, isGateway, additionalBinaryDataProperties);
+            return new ConnectedClusterPatchProperties(distribution, distributionVersion, azureHybridBenefit, gateway, additionalBinaryDataProperties);
         }
     }
 }

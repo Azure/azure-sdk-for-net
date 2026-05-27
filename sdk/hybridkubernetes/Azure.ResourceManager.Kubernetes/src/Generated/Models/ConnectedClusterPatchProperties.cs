@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.Kubernetes.Models
         /// <param name="distribution"> Represents the distribution of the connected cluster. </param>
         /// <param name="distributionVersion"> Represents the Kubernetes distribution version on this connected cluster. </param>
         /// <param name="azureHybridBenefit"> Indicates whether Azure Hybrid Benefit is opted in. </param>
-        /// <param name="isGateway"> Indicates whether Gateway is enabled for the connected cluster resource. </param>
+        /// <param name="gateway"> Indicates whether Gateway is enabled for the connected cluster resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectedClusterPatchProperties(string distribution, string distributionVersion, ConnectedClusterAzureHybridBenefit? azureHybridBenefit, Gateway isGateway, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectedClusterPatchProperties(string distribution, string distributionVersion, ConnectedClusterAzureHybridBenefit? azureHybridBenefit, Gateway gateway, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Distribution = distribution;
             DistributionVersion = distributionVersion;
             AzureHybridBenefit = azureHybridBenefit;
-            IsGateway = isGateway;
+            Gateway = gateway;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -46,22 +46,22 @@ namespace Azure.ResourceManager.Kubernetes.Models
         public ConnectedClusterAzureHybridBenefit? AzureHybridBenefit { get; set; }
 
         /// <summary> Indicates whether Gateway is enabled for the connected cluster resource. </summary>
-        internal Gateway IsGateway { get; set; }
+        internal Gateway Gateway { get; set; }
 
         /// <summary> Indicates whether the gateway for arc router connectivity is enabled. </summary>
         public bool? IsGatewayEnabled
         {
             get
             {
-                return IsGateway is null ? default : IsGateway.Enabled;
+                return Gateway is null ? default : Gateway.IsGatewayEnabled;
             }
             set
             {
-                if (IsGateway is null)
+                if (Gateway is null)
                 {
-                    IsGateway = new Gateway();
+                    Gateway = new Gateway();
                 }
-                IsGateway.Enabled = value;
+                Gateway.IsGatewayEnabled = value;
             }
         }
     }

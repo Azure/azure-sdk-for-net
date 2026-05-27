@@ -177,10 +177,10 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 writer.WritePropertyName("oidcIssuerProfile"u8);
                 writer.WriteObjectValue(OidcIssuerProfile, options);
             }
-            if (Optional.IsDefined(IsGateway))
+            if (Optional.IsDefined(Gateway))
             {
                 writer.WritePropertyName("gateway"u8);
-                writer.WriteObjectValue(IsGateway, options);
+                writer.WriteObjectValue(Gateway, options);
             }
             if (Optional.IsCollectionDefined(ArcAgentryConfigurations))
             {
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
             ConnectedClusterArcAgentProfile arcAgentProfile = default;
             ConnectedClusterSecurityProfile securityProfile = default;
             ConnectedClusterOidcIssuerProfile oidcIssuerProfile = default;
-            Gateway isGateway = default;
+            Gateway gateway = default;
             IList<ConnectedClusterArcAgentryConfiguration> arcAgentryConfigurations = default;
             IReadOnlyDictionary<string, string> miscellaneousProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -432,10 +432,10 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        isGateway = null;
+                        gateway = null;
                         continue;
                     }
-                    isGateway = Gateway.DeserializeGateway(prop.Value, options);
+                    gateway = Gateway.DeserializeGateway(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("arcAgentryConfigurations"u8))
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 arcAgentProfile,
                 securityProfile,
                 oidcIssuerProfile,
-                isGateway,
+                gateway,
                 arcAgentryConfigurations ?? new ChangeTrackingList<ConnectedClusterArcAgentryConfiguration>(),
                 miscellaneousProperties ?? new ChangeTrackingDictionary<string, string>(),
                 additionalBinaryDataProperties);
