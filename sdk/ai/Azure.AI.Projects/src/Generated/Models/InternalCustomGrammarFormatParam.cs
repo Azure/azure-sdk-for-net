@@ -30,9 +30,9 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> The syntax of the grammar definition. One of `lark` or `regex`. </summary>
-        public GrammarSyntax1 Syntax { get; }
+        public GrammarSyntax1 Syntax { get; set; }
 
         /// <summary> The grammar definition. </summary>
-        public string Definition { get; }
+        public string Definition { get; set; }
     }
 }

@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Migrated from AutoRest/Swagger to TypeSpec-based code generation.
+
 ## 1.1.0 (2025-10-17)
 
 ### Features Added

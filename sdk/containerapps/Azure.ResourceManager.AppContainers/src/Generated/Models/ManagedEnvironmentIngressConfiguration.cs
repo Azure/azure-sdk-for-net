@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Settings for the ingress component, including workload profile, scaling, and connection handling. </summary>
     public partial class ManagedEnvironmentIngressConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedEnvironmentIngressConfiguration"/>. </summary>
         public ManagedEnvironmentIngressConfiguration()
@@ -55,25 +27,28 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="terminationGracePeriodSeconds"> Time (in seconds) to allow active connections to complete on termination. Must be between 0 and 3600. Defaults to 480 seconds. </param>
         /// <param name="headerCountLimit"> Maximum number of headers per request allowed by the ingress. Must be at least 1. Defaults to 100. </param>
         /// <param name="requestIdleTimeout"> Duration (in minutes) before idle requests are timed out. Must be between 4 and 30 inclusive. Defaults to 4 minutes. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedEnvironmentIngressConfiguration(string workloadProfileName, int? terminationGracePeriodSeconds, int? headerCountLimit, int? requestIdleTimeout, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedEnvironmentIngressConfiguration(string workloadProfileName, int? terminationGracePeriodSeconds, int? headerCountLimit, int? requestIdleTimeout, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             WorkloadProfileName = workloadProfileName;
             TerminationGracePeriodSeconds = terminationGracePeriodSeconds;
             HeaderCountLimit = headerCountLimit;
             RequestIdleTimeout = requestIdleTimeout;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of the workload profile used by the ingress component. Required. </summary>
         [WirePath("workloadProfileName")]
         public string WorkloadProfileName { get; set; }
+
         /// <summary> Time (in seconds) to allow active connections to complete on termination. Must be between 0 and 3600. Defaults to 480 seconds. </summary>
         [WirePath("terminationGracePeriodSeconds")]
         public int? TerminationGracePeriodSeconds { get; set; }
+
         /// <summary> Maximum number of headers per request allowed by the ingress. Must be at least 1. Defaults to 100. </summary>
         [WirePath("headerCountLimit")]
         public int? HeaderCountLimit { get; set; }
+
         /// <summary> Duration (in minutes) before idle requests are timed out. Must be between 4 and 30 inclusive. Defaults to 4 minutes. </summary>
         [WirePath("requestIdleTimeout")]
         public int? RequestIdleTimeout { get; set; }
