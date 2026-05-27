@@ -13,25 +13,25 @@ namespace Azure.Provisioning.Kubernetes
     /// <summary> The Gateway. </summary>
     internal partial class Gateway : ProvisionableConstruct
     {
-        private BicepValue<bool> _enabled;
+        private BicepValue<bool> _isGatewayEnabled;
 
         /// <summary> Creates a new Gateway. </summary>
         public Gateway()
         {
         }
 
-        /// <summary> Gets or sets the Enabled. </summary>
-        public BicepValue<bool> Enabled
+        /// <summary> Gets or sets the IsGatewayEnabled. </summary>
+        public BicepValue<bool> IsGatewayEnabled
         {
             get
             {
                 Initialize();
-                return _enabled;
+                return _isGatewayEnabled;
             }
             set
             {
                 Initialize();
-                _enabled.Assign(value);
+                _isGatewayEnabled.Assign(value);
             }
         }
 
@@ -39,7 +39,7 @@ namespace Azure.Provisioning.Kubernetes
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _enabled = DefineProperty<bool>(nameof(Enabled), new string[] { "enabled" });
+            _isGatewayEnabled = DefineProperty<bool>(nameof(IsGatewayEnabled), new string[] { "enabled" });
         }
     }
 }

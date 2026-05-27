@@ -8,7 +8,7 @@
 namespace Azure.Provisioning.Kubernetes
 {
     /// <summary> The current deployment state of connectedClusters. </summary>
-    public enum ProvisioningState
+    public enum ConnectedClusterProvisioningState
     {
         /// <summary> Succeeded. </summary>
         Succeeded,

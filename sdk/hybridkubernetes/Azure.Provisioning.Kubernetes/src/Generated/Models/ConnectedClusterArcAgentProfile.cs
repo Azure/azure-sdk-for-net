@@ -11,16 +11,16 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Kubernetes
 {
     /// <summary> Defines the Arc Agent properties for the clusters. </summary>
-    public partial class ArcAgentProfile : ProvisionableConstruct
+    public partial class ConnectedClusterArcAgentProfile : ProvisionableConstruct
     {
         private BicepValue<string> _desiredAgentVersion;
-        private BicepValue<AutoUpgradeOptions> _agentAutoUpgrade;
-        private BicepList<SystemComponent> _systemComponents;
-        private BicepList<AgentError> _agentErrors;
+        private BicepValue<ConnectedClusterAutoUpgradeMode> _agentAutoUpgrade;
+        private BicepList<ConnectedClusterSystemComponent> _systemComponents;
+        private BicepList<ConnectedClusterAgentError> _agentErrors;
         private BicepValue<string> _agentState;
 
-        /// <summary> Creates a new ArcAgentProfile. </summary>
-        public ArcAgentProfile()
+        /// <summary> Creates a new ConnectedClusterArcAgentProfile. </summary>
+        public ConnectedClusterArcAgentProfile()
         {
         }
 
@@ -40,7 +40,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the AgentAutoUpgrade. </summary>
-        public BicepValue<AutoUpgradeOptions> AgentAutoUpgrade
+        public BicepValue<ConnectedClusterAutoUpgradeMode> AgentAutoUpgrade
         {
             get
             {
@@ -55,7 +55,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the SystemComponents. </summary>
-        public BicepList<SystemComponent> SystemComponents
+        public BicepList<ConnectedClusterSystemComponent> SystemComponents
         {
             get
             {
@@ -70,7 +70,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the AgentErrors. </summary>
-        public BicepList<AgentError> AgentErrors
+        public BicepList<ConnectedClusterAgentError> AgentErrors
         {
             get
             {
@@ -94,14 +94,14 @@ namespace Azure.Provisioning.Kubernetes
             }
         }
 
-        /// <summary> Define all the provisionable properties for ArcAgentProfile. </summary>
+        /// <summary> Define all the provisionable properties for ConnectedClusterArcAgentProfile. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _desiredAgentVersion = DefineProperty<string>(nameof(DesiredAgentVersion), new string[] { "desiredAgentVersion" });
-            _agentAutoUpgrade = DefineProperty<AutoUpgradeOptions>(nameof(AgentAutoUpgrade), new string[] { "agentAutoUpgrade" });
-            _systemComponents = DefineListProperty<SystemComponent>(nameof(SystemComponents), new string[] { "systemComponents" });
-            _agentErrors = DefineListProperty<AgentError>(nameof(AgentErrors), new string[] { "agentErrors" });
+            _agentAutoUpgrade = DefineProperty<ConnectedClusterAutoUpgradeMode>(nameof(AgentAutoUpgrade), new string[] { "agentAutoUpgrade" });
+            _systemComponents = DefineListProperty<ConnectedClusterSystemComponent>(nameof(SystemComponents), new string[] { "systemComponents" });
+            _agentErrors = DefineListProperty<ConnectedClusterAgentError>(nameof(AgentErrors), new string[] { "agentErrors" });
             _agentState = DefineProperty<string>(nameof(AgentState), new string[] { "agentState" }, isOutput: true);
         }
     }

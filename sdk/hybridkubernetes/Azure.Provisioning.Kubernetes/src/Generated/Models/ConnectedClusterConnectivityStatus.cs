@@ -8,7 +8,7 @@
 namespace Azure.Provisioning.Kubernetes
 {
     /// <summary> Represents the connectivity status of the connected cluster. </summary>
-    public enum ConnectivityStatus
+    public enum ConnectedClusterConnectivityStatus
     {
         /// <summary> Connecting. </summary>
         Connecting,

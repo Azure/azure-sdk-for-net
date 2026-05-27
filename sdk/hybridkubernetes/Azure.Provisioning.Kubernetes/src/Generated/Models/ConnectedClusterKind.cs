@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Runtime.Serialization;
+
 namespace Azure.Provisioning.Kubernetes
 {
     /// <summary> Indicates the kind of Arc connected cluster based on host infrastructure. </summary>
@@ -12,9 +14,11 @@ namespace Azure.Provisioning.Kubernetes
     {
         /// <summary> ProvisionedCluster. </summary>
         ProvisionedCluster,
-        /// <summary> AWS. </summary>
-        AWS,
+        /// <summary> Aws. </summary>
+        [DataMember(Name = "AWS")]
+        Aws,
         /// <summary> Represents a connected cluster hosted on Google Cloud Platform (GCP). </summary>
-        GCP
+        [DataMember(Name = "GCP")]
+        Gcp
     }
 }

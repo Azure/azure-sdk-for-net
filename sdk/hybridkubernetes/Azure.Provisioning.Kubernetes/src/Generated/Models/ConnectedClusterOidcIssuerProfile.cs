@@ -11,14 +11,14 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Kubernetes
 {
     /// <summary> OIDC Issuer Profile specifies attributes for workload identity integration. </summary>
-    public partial class OidcIssuerProfile : ProvisionableConstruct
+    public partial class ConnectedClusterOidcIssuerProfile : ProvisionableConstruct
     {
         private BicepValue<bool> _enabled;
         private BicepValue<string> _issuerUri;
         private BicepValue<string> _selfHostedIssuerUri;
 
-        /// <summary> Creates a new OidcIssuerProfile. </summary>
-        public OidcIssuerProfile()
+        /// <summary> Creates a new ConnectedClusterOidcIssuerProfile. </summary>
+        public ConnectedClusterOidcIssuerProfile()
         {
         }
 
@@ -62,7 +62,7 @@ namespace Azure.Provisioning.Kubernetes
             }
         }
 
-        /// <summary> Define all the provisionable properties for OidcIssuerProfile. </summary>
+        /// <summary> Define all the provisionable properties for ConnectedClusterOidcIssuerProfile. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();

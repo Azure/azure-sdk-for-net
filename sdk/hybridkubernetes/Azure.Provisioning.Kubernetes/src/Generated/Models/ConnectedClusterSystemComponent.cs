@@ -11,15 +11,15 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Kubernetes
 {
     /// <summary> System extensions and its current versions installed on the cluster resource. </summary>
-    public partial class SystemComponent : ProvisionableConstruct
+    public partial class ConnectedClusterSystemComponent : ProvisionableConstruct
     {
         private BicepValue<string> _type;
         private BicepValue<string> _userSpecifiedVersion;
         private BicepValue<int> _majorVersion;
         private BicepValue<string> _currentVersion;
 
-        /// <summary> Creates a new SystemComponent. </summary>
-        public SystemComponent()
+        /// <summary> Creates a new ConnectedClusterSystemComponent. </summary>
+        public ConnectedClusterSystemComponent()
         {
         }
 
@@ -78,7 +78,7 @@ namespace Azure.Provisioning.Kubernetes
             }
         }
 
-        /// <summary> Define all the provisionable properties for SystemComponent. </summary>
+        /// <summary> Define all the provisionable properties for ConnectedClusterSystemComponent. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();

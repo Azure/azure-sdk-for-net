@@ -1,51 +1,5 @@
 namespace Azure.Provisioning.Kubernetes
 {
-    public partial class AadProfile : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public AadProfile() { }
-        public Azure.Provisioning.BicepList<string> AdminGroupObjectIDs { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> EnableAzureRBAC { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> TenantID { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public partial class AgentError : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public AgentError() { }
-        public Azure.Provisioning.BicepValue<string> Component { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Message { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Severity { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> Time { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public partial class ArcAgentProfile : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public ArcAgentProfile() { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Kubernetes.AutoUpgradeOptions> AgentAutoUpgrade { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Kubernetes.AgentError> AgentErrors { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> AgentState { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> DesiredAgentVersion { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Kubernetes.SystemComponent> SystemComponents { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public partial class ArcAgentryConfigurations : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public ArcAgentryConfigurations() { }
-        public Azure.Provisioning.BicepValue<string> Feature { get { throw null; } set { } }
-        public Azure.Provisioning.BicepDictionary<string> ProtectedSettings { get { throw null; } set { } }
-        public Azure.Provisioning.BicepDictionary<string> Settings { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public enum AutoUpgradeOptions
-    {
-        Enabled = 0,
-        Disabled = 1,
-    }
-    public enum AzureHybridBenefit
-    {
-        True = 0,
-        False = 1,
-        NotApplicable = 2,
-    }
     public partial class ConnectedCluster : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public ConnectedCluster(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -71,47 +25,127 @@ namespace Azure.Provisioning.Kubernetes
             public static readonly string V2025_12_01_PREVIEW;
         }
     }
-    public enum ConnectedClusterKind
+    public partial class ConnectedClusterAadProfile : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
-        ProvisionedCluster = 0,
-        AWS = 1,
-        GCP = 2,
-    }
-    public partial class ConnectedClusterProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public ConnectedClusterProperties() { }
-        public Azure.Provisioning.Kubernetes.AadProfile AadProfile { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> AgentPublicKeyCertificate { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> AgentVersion { get { throw null; } }
-        public Azure.Provisioning.Kubernetes.ArcAgentProfile ArcAgentProfile { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Kubernetes.ArcAgentryConfigurations> ArcAgentryConfigurations { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Kubernetes.AzureHybridBenefit> AzureHybridBenefit { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Kubernetes.ConnectivityStatus> ConnectivityStatus { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Distribution { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> DistributionVersion { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> GatewayEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Infrastructure { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> KubernetesVersion { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> LastConnectivityOn { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ManagedIdentityCertificateExpirationOn { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> MiscellaneousProperties { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Offering { get { throw null; } }
-        public Azure.Provisioning.Kubernetes.OidcIssuerProfile OidcIssuerProfile { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> PrivateLinkScopeResourceId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Kubernetes.PrivateLinkState> PrivateLinkState { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Kubernetes.ProvisioningState> ProvisioningState { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> SecurityWorkloadIdentityEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> TotalCoreCount { get { throw null; } }
-        public Azure.Provisioning.BicepValue<int> TotalNodeCount { get { throw null; } }
+        public ConnectedClusterAadProfile() { }
+        public Azure.Provisioning.BicepList<string> AdminGroupObjectIds { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> EnableAzureRbac { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> TenantId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public enum ConnectivityStatus
+    public partial class ConnectedClusterAgentError : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ConnectedClusterAgentError() { }
+        public Azure.Provisioning.BicepValue<string> Component { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Message { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> OccurredOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Severity { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class ConnectedClusterArcAgentProfile : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ConnectedClusterArcAgentProfile() { }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Kubernetes.ConnectedClusterAutoUpgradeMode> AgentAutoUpgrade { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Kubernetes.ConnectedClusterAgentError> AgentErrors { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> AgentState { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> DesiredAgentVersion { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Kubernetes.ConnectedClusterSystemComponent> SystemComponents { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class ConnectedClusterArcAgentryConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ConnectedClusterArcAgentryConfiguration() { }
+        public Azure.Provisioning.BicepValue<string> Feature { get { throw null; } set { } }
+        public Azure.Provisioning.BicepDictionary<string> ProtectedSettings { get { throw null; } set { } }
+        public Azure.Provisioning.BicepDictionary<string> Settings { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public enum ConnectedClusterAutoUpgradeMode
+    {
+        Enabled = 0,
+        Disabled = 1,
+    }
+    public enum ConnectedClusterAzureHybridBenefit
+    {
+        True = 0,
+        False = 1,
+        NotApplicable = 2,
+    }
+    public enum ConnectedClusterConnectivityStatus
     {
         Connecting = 0,
         Connected = 1,
         Offline = 2,
         Expired = 3,
         AgentNotInstalled = 4,
+    }
+    public enum ConnectedClusterKind
+    {
+        ProvisionedCluster = 0,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="AWS")]
+        Aws = 1,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="GCP")]
+        Gcp = 2,
+    }
+    public partial class ConnectedClusterOidcIssuerProfile : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ConnectedClusterOidcIssuerProfile() { }
+        public Azure.Provisioning.BicepValue<bool> Enabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> IssuerUri { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> SelfHostedIssuerUri { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public enum ConnectedClusterPrivateLinkState
+    {
+        Enabled = 0,
+        Disabled = 1,
+    }
+    public partial class ConnectedClusterProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ConnectedClusterProperties() { }
+        public Azure.Provisioning.Kubernetes.ConnectedClusterAadProfile AadProfile { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> AgentPublicKeyCertificate { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> AgentVersion { get { throw null; } }
+        public Azure.Provisioning.Kubernetes.ConnectedClusterArcAgentProfile ArcAgentProfile { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Kubernetes.ConnectedClusterArcAgentryConfiguration> ArcAgentryConfigurations { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Kubernetes.ConnectedClusterAzureHybridBenefit> AzureHybridBenefit { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Kubernetes.ConnectedClusterConnectivityStatus> ConnectivityStatus { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Distribution { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> DistributionVersion { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Infrastructure { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsGatewayEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> KubernetesVersion { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> LastConnectivityOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ManagedIdentityCertificateExpirationOn { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> MiscellaneousProperties { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Offering { get { throw null; } }
+        public Azure.Provisioning.Kubernetes.ConnectedClusterOidcIssuerProfile OidcIssuerProfile { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateLinkScopeResourceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Kubernetes.ConnectedClusterPrivateLinkState> PrivateLinkState { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Kubernetes.ConnectedClusterProvisioningState> ProvisioningState { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> SecurityIsWorkloadIdentityEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> TotalCoreCount { get { throw null; } }
+        public Azure.Provisioning.BicepValue<int> TotalNodeCount { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public enum ConnectedClusterProvisioningState
+    {
+        Succeeded = 0,
+        Failed = 1,
+        Canceled = 2,
+        Provisioning = 3,
+        Updating = 4,
+        Deleting = 5,
+        Accepted = 6,
+    }
+    public partial class ConnectedClusterSystemComponent : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ConnectedClusterSystemComponent() { }
+        public Azure.Provisioning.BicepValue<string> CurrentVersion { get { throw null; } }
+        public Azure.Provisioning.BicepValue<int> MajorVersion { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Type { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> UserSpecifiedVersion { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct KubernetesBuiltInRole : System.IEquatable<Azure.Provisioning.Kubernetes.KubernetesBuiltInRole>
@@ -128,37 +162,5 @@ namespace Azure.Provisioning.Kubernetes
         public static implicit operator Azure.Provisioning.Kubernetes.KubernetesBuiltInRole (string value) { throw null; }
         public static bool operator !=(Azure.Provisioning.Kubernetes.KubernetesBuiltInRole left, Azure.Provisioning.Kubernetes.KubernetesBuiltInRole right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class OidcIssuerProfile : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public OidcIssuerProfile() { }
-        public Azure.Provisioning.BicepValue<bool> Enabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> IssuerUri { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> SelfHostedIssuerUri { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public enum PrivateLinkState
-    {
-        Enabled = 0,
-        Disabled = 1,
-    }
-    public enum ProvisioningState
-    {
-        Succeeded = 0,
-        Failed = 1,
-        Canceled = 2,
-        Provisioning = 3,
-        Updating = 4,
-        Deleting = 5,
-        Accepted = 6,
-    }
-    public partial class SystemComponent : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public SystemComponent() { }
-        public Azure.Provisioning.BicepValue<string> CurrentVersion { get { throw null; } }
-        public Azure.Provisioning.BicepValue<int> MajorVersion { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Type { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> UserSpecifiedVersion { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
     }
 }

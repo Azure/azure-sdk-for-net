@@ -12,15 +12,15 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Kubernetes
 {
     /// <summary> Agent Errors if any during agent or system component upgrade. </summary>
-    public partial class AgentError : ProvisionableConstruct
+    public partial class ConnectedClusterAgentError : ProvisionableConstruct
     {
         private BicepValue<string> _message;
         private BicepValue<string> _severity;
         private BicepValue<string> _component;
-        private BicepValue<DateTimeOffset> _time;
+        private BicepValue<DateTimeOffset> _occurredOn;
 
-        /// <summary> Creates a new AgentError. </summary>
-        public AgentError()
+        /// <summary> Creates a new ConnectedClusterAgentError. </summary>
+        public ConnectedClusterAgentError()
         {
         }
 
@@ -54,24 +54,24 @@ namespace Azure.Provisioning.Kubernetes
             }
         }
 
-        /// <summary> Gets the Time. </summary>
-        public BicepValue<DateTimeOffset> Time
+        /// <summary> Gets the OccurredOn. </summary>
+        public BicepValue<DateTimeOffset> OccurredOn
         {
             get
             {
                 Initialize();
-                return _time;
+                return _occurredOn;
             }
         }
 
-        /// <summary> Define all the provisionable properties for AgentError. </summary>
+        /// <summary> Define all the provisionable properties for ConnectedClusterAgentError. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _message = DefineProperty<string>(nameof(Message), new string[] { "message" }, isOutput: true);
             _severity = DefineProperty<string>(nameof(Severity), new string[] { "severity" }, isOutput: true);
             _component = DefineProperty<string>(nameof(Component), new string[] { "component" }, isOutput: true);
-            _time = DefineProperty<DateTimeOffset>(nameof(Time), new string[] { "time" }, isOutput: true);
+            _occurredOn = DefineProperty<DateTimeOffset>(nameof(OccurredOn), new string[] { "time" }, isOutput: true);
         }
     }
 }

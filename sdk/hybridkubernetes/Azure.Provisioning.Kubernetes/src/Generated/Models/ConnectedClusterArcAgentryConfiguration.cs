@@ -10,15 +10,15 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Kubernetes
 {
-    /// <summary> The ArcAgentryConfigurations. </summary>
-    public partial class ArcAgentryConfigurations : ProvisionableConstruct
+    /// <summary> The ConnectedClusterArcAgentryConfiguration. </summary>
+    public partial class ConnectedClusterArcAgentryConfiguration : ProvisionableConstruct
     {
         private BicepValue<string> _feature;
         private BicepDictionary<string> _settings;
         private BicepDictionary<string> _protectedSettings;
 
-        /// <summary> Creates a new ArcAgentryConfigurations. </summary>
-        public ArcAgentryConfigurations()
+        /// <summary> Creates a new ConnectedClusterArcAgentryConfiguration. </summary>
+        public ConnectedClusterArcAgentryConfiguration()
         {
         }
 
@@ -67,7 +67,7 @@ namespace Azure.Provisioning.Kubernetes
             }
         }
 
-        /// <summary> Define all the provisionable properties for ArcAgentryConfigurations. </summary>
+        /// <summary> Define all the provisionable properties for ConnectedClusterArcAgentryConfiguration. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();

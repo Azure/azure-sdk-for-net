@@ -11,12 +11,12 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Kubernetes
 {
     /// <summary> The workload identity feature webhook. </summary>
-    internal partial class SecurityProfileWorkloadIdentity : ProvisionableConstruct
+    internal partial class ConnectedClusterWorkloadIdentityProfile : ProvisionableConstruct
     {
         private BicepValue<bool> _enabled;
 
-        /// <summary> Creates a new SecurityProfileWorkloadIdentity. </summary>
-        public SecurityProfileWorkloadIdentity()
+        /// <summary> Creates a new ConnectedClusterWorkloadIdentityProfile. </summary>
+        public ConnectedClusterWorkloadIdentityProfile()
         {
         }
 
@@ -35,7 +35,7 @@ namespace Azure.Provisioning.Kubernetes
             }
         }
 
-        /// <summary> Define all the provisionable properties for SecurityProfileWorkloadIdentity. </summary>
+        /// <summary> Define all the provisionable properties for ConnectedClusterWorkloadIdentityProfile. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();

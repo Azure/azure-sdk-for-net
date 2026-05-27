@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -19,23 +20,23 @@ namespace Azure.Provisioning.Kubernetes
         private BicepValue<int> _totalNodeCount;
         private BicepValue<int> _totalCoreCount;
         private BicepValue<string> _agentVersion;
-        private BicepValue<ProvisioningState> _provisioningState;
+        private BicepValue<ConnectedClusterProvisioningState> _provisioningState;
         private BicepValue<string> _distribution;
         private BicepValue<string> _distributionVersion;
         private BicepValue<string> _infrastructure;
         private BicepValue<string> _offering;
         private BicepValue<DateTimeOffset> _managedIdentityCertificateExpirationOn;
         private BicepValue<DateTimeOffset> _lastConnectivityOn;
-        private BicepValue<ConnectivityStatus> _connectivityStatus;
-        private BicepValue<PrivateLinkState> _privateLinkState;
-        private BicepValue<string> _privateLinkScopeResourceId;
-        private BicepValue<AzureHybridBenefit> _azureHybridBenefit;
-        private AadProfile _aadProfile;
-        private ArcAgentProfile _arcAgentProfile;
-        private SecurityProfile _securityProfile;
-        private OidcIssuerProfile _oidcIssuerProfile;
+        private BicepValue<ConnectedClusterConnectivityStatus> _connectivityStatus;
+        private BicepValue<ConnectedClusterPrivateLinkState> _privateLinkState;
+        private BicepValue<ResourceIdentifier> _privateLinkScopeResourceId;
+        private BicepValue<ConnectedClusterAzureHybridBenefit> _azureHybridBenefit;
+        private ConnectedClusterAadProfile _aadProfile;
+        private ConnectedClusterArcAgentProfile _arcAgentProfile;
+        private ConnectedClusterSecurityProfile _securityProfile;
+        private ConnectedClusterOidcIssuerProfile _oidcIssuerProfile;
         private Gateway _gateway;
-        private BicepList<ArcAgentryConfigurations> _arcAgentryConfigurations;
+        private BicepList<ConnectedClusterArcAgentryConfiguration> _arcAgentryConfigurations;
         private BicepDictionary<string> _miscellaneousProperties;
 
         /// <summary> Creates a new ConnectedClusterProperties. </summary>
@@ -99,7 +100,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the ProvisioningState. </summary>
-        public BicepValue<ProvisioningState> ProvisioningState
+        public BicepValue<ConnectedClusterProvisioningState> ProvisioningState
         {
             get
             {
@@ -189,7 +190,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets the ConnectivityStatus. </summary>
-        public BicepValue<ConnectivityStatus> ConnectivityStatus
+        public BicepValue<ConnectedClusterConnectivityStatus> ConnectivityStatus
         {
             get
             {
@@ -199,7 +200,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the PrivateLinkState. </summary>
-        public BicepValue<PrivateLinkState> PrivateLinkState
+        public BicepValue<ConnectedClusterPrivateLinkState> PrivateLinkState
         {
             get
             {
@@ -214,7 +215,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the PrivateLinkScopeResourceId. </summary>
-        public BicepValue<string> PrivateLinkScopeResourceId
+        public BicepValue<ResourceIdentifier> PrivateLinkScopeResourceId
         {
             get
             {
@@ -229,7 +230,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the AzureHybridBenefit. </summary>
-        public BicepValue<AzureHybridBenefit> AzureHybridBenefit
+        public BicepValue<ConnectedClusterAzureHybridBenefit> AzureHybridBenefit
         {
             get
             {
@@ -244,7 +245,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the AadProfile. </summary>
-        public AadProfile AadProfile
+        public ConnectedClusterAadProfile AadProfile
         {
             get
             {
@@ -259,7 +260,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the ArcAgentProfile. </summary>
-        public ArcAgentProfile ArcAgentProfile
+        public ConnectedClusterArcAgentProfile ArcAgentProfile
         {
             get
             {
@@ -274,7 +275,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the SecurityProfile. </summary>
-        internal SecurityProfile SecurityProfile
+        internal ConnectedClusterSecurityProfile SecurityProfile
         {
             get
             {
@@ -289,7 +290,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the OidcIssuerProfile. </summary>
-        public OidcIssuerProfile OidcIssuerProfile
+        public ConnectedClusterOidcIssuerProfile OidcIssuerProfile
         {
             get
             {
@@ -319,7 +320,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the ArcAgentryConfigurations. </summary>
-        public BicepList<ArcAgentryConfigurations> ArcAgentryConfigurations
+        public BicepList<ConnectedClusterArcAgentryConfiguration> ArcAgentryConfigurations
         {
             get
             {
@@ -344,28 +345,28 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the Enabled. </summary>
-        public BicepValue<bool> SecurityWorkloadIdentityEnabled
+        public BicepValue<bool> SecurityIsWorkloadIdentityEnabled
         {
             get
             {
-                return SecurityProfile is null ? default : SecurityProfile.WorkloadIdentityEnabled;
+                return SecurityProfile is null ? default : SecurityProfile.IsWorkloadIdentityEnabled;
             }
             set
             {
                 if (SecurityProfile is null)
                 {
-                    SecurityProfile = new SecurityProfile();
+                    SecurityProfile = new ConnectedClusterSecurityProfile();
                 }
-                SecurityProfile.WorkloadIdentityEnabled = value;
+                SecurityProfile.IsWorkloadIdentityEnabled = value;
             }
         }
 
-        /// <summary> Gets or sets the Enabled. </summary>
-        public BicepValue<bool> GatewayEnabled
+        /// <summary> Gets or sets the IsGatewayEnabled. </summary>
+        public BicepValue<bool> IsGatewayEnabled
         {
             get
             {
-                return Gateway is null ? default : Gateway.Enabled;
+                return Gateway is null ? default : Gateway.IsGatewayEnabled;
             }
             set
             {
@@ -373,7 +374,7 @@ namespace Azure.Provisioning.Kubernetes
                 {
                     Gateway = new Gateway();
                 }
-                Gateway.Enabled = value;
+                Gateway.IsGatewayEnabled = value;
             }
         }
 
@@ -386,23 +387,23 @@ namespace Azure.Provisioning.Kubernetes
             _totalNodeCount = DefineProperty<int>(nameof(TotalNodeCount), new string[] { "totalNodeCount" }, isOutput: true);
             _totalCoreCount = DefineProperty<int>(nameof(TotalCoreCount), new string[] { "totalCoreCount" }, isOutput: true);
             _agentVersion = DefineProperty<string>(nameof(AgentVersion), new string[] { "agentVersion" }, isOutput: true);
-            _provisioningState = DefineProperty<ProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" });
+            _provisioningState = DefineProperty<ConnectedClusterProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" });
             _distribution = DefineProperty<string>(nameof(Distribution), new string[] { "distribution" });
             _distributionVersion = DefineProperty<string>(nameof(DistributionVersion), new string[] { "distributionVersion" });
             _infrastructure = DefineProperty<string>(nameof(Infrastructure), new string[] { "infrastructure" });
             _offering = DefineProperty<string>(nameof(Offering), new string[] { "offering" }, isOutput: true);
             _managedIdentityCertificateExpirationOn = DefineProperty<DateTimeOffset>(nameof(ManagedIdentityCertificateExpirationOn), new string[] { "managedIdentityCertificateExpirationTime" }, isOutput: true);
             _lastConnectivityOn = DefineProperty<DateTimeOffset>(nameof(LastConnectivityOn), new string[] { "lastConnectivityTime" }, isOutput: true);
-            _connectivityStatus = DefineProperty<ConnectivityStatus>(nameof(ConnectivityStatus), new string[] { "connectivityStatus" }, isOutput: true);
-            _privateLinkState = DefineProperty<PrivateLinkState>(nameof(PrivateLinkState), new string[] { "privateLinkState" });
-            _privateLinkScopeResourceId = DefineProperty<string>(nameof(PrivateLinkScopeResourceId), new string[] { "privateLinkScopeResourceId" });
-            _azureHybridBenefit = DefineProperty<AzureHybridBenefit>(nameof(AzureHybridBenefit), new string[] { "azureHybridBenefit" });
-            _aadProfile = DefineModelProperty<AadProfile>(nameof(AadProfile), new string[] { "aadProfile" });
-            _arcAgentProfile = DefineModelProperty<ArcAgentProfile>(nameof(ArcAgentProfile), new string[] { "arcAgentProfile" });
-            _securityProfile = DefineModelProperty<SecurityProfile>(nameof(SecurityProfile), new string[] { "securityProfile" });
-            _oidcIssuerProfile = DefineModelProperty<OidcIssuerProfile>(nameof(OidcIssuerProfile), new string[] { "oidcIssuerProfile" });
+            _connectivityStatus = DefineProperty<ConnectedClusterConnectivityStatus>(nameof(ConnectivityStatus), new string[] { "connectivityStatus" }, isOutput: true);
+            _privateLinkState = DefineProperty<ConnectedClusterPrivateLinkState>(nameof(PrivateLinkState), new string[] { "privateLinkState" });
+            _privateLinkScopeResourceId = DefineProperty<ResourceIdentifier>(nameof(PrivateLinkScopeResourceId), new string[] { "privateLinkScopeResourceId" });
+            _azureHybridBenefit = DefineProperty<ConnectedClusterAzureHybridBenefit>(nameof(AzureHybridBenefit), new string[] { "azureHybridBenefit" });
+            _aadProfile = DefineModelProperty<ConnectedClusterAadProfile>(nameof(AadProfile), new string[] { "aadProfile" });
+            _arcAgentProfile = DefineModelProperty<ConnectedClusterArcAgentProfile>(nameof(ArcAgentProfile), new string[] { "arcAgentProfile" });
+            _securityProfile = DefineModelProperty<ConnectedClusterSecurityProfile>(nameof(SecurityProfile), new string[] { "securityProfile" });
+            _oidcIssuerProfile = DefineModelProperty<ConnectedClusterOidcIssuerProfile>(nameof(OidcIssuerProfile), new string[] { "oidcIssuerProfile" });
             _gateway = DefineModelProperty<Gateway>(nameof(Gateway), new string[] { "gateway" });
-            _arcAgentryConfigurations = DefineListProperty<ArcAgentryConfigurations>(nameof(ArcAgentryConfigurations), new string[] { "arcAgentryConfigurations" });
+            _arcAgentryConfigurations = DefineListProperty<ConnectedClusterArcAgentryConfiguration>(nameof(ArcAgentryConfigurations), new string[] { "arcAgentryConfigurations" });
             _miscellaneousProperties = DefineDictionaryProperty<string>(nameof(MiscellaneousProperties), new string[] { "miscellaneousProperties" }, isOutput: true);
         }
     }

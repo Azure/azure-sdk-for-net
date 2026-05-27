@@ -8,7 +8,7 @@
 namespace Azure.Provisioning.Kubernetes
 {
     /// <summary> Indicates whether Azure Hybrid Benefit is opted in. </summary>
-    public enum AzureHybridBenefit
+    public enum ConnectedClusterAzureHybridBenefit
     {
         /// <summary> True. </summary>
         True,
