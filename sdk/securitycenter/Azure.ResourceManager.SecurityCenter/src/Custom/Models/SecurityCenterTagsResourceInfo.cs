@@ -25,6 +25,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public IDictionary<string, string> Tags { get; }
 
         // Workaround for https://github.com/Azure/azure-sdk-for-net/issues/59437.
+        // MPG generation omits the base JsonModelWriteCore and explicit MRW interface members for this
+        // abstract discriminated base model, while generated derived models override/call the base writer.
+        // Keep this custom code so the generated hierarchy compiles and preserves unknown JSON properties.
         BinaryData IPersistableModel<SecurityCenterTagsResourceInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
         SecurityCenterTagsResourceInfo IPersistableModel<SecurityCenterTagsResourceInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
         string IPersistableModel<SecurityCenterTagsResourceInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
