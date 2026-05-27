@@ -12,9 +12,8 @@ using Azure.ResourceManager.ManagedNetworkFabric.Models;
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     // Backward compatibility shim for the swagger upgrade from package-2023-06-15 to package-2025-07-15.
-    // The new API version added ipCommunityRules as a required constructor parameter.
-    // This preserves the old constructor signature from v1.1.2 that only required location and keeps
-    // the old IpCommunityRules alias; removing it would break both constructor and property compatibility.
+    // The new API version added ipCommunityRules as a required constructor parameter. This preserves the
+    // old constructor signature from v1.1.2; removing it would break constructor compatibility.
     public partial class NetworkFabricIPCommunityData
     {
         /// <summary> Initializes a new instance of <see cref="NetworkFabricIPCommunityData"/>. </summary>
@@ -24,8 +23,5 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public NetworkFabricIPCommunityData(AzureLocation location) : this(location, Array.Empty<IPCommunityRule>())
         {
         }
-
-        /// <summary> List of IP Community Rules. </summary>
-        public IList<IPCommunityRule> IpCommunityRules => IPCommunityRules;
     }
 }

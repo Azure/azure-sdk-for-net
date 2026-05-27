@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="mtu"> Maximum transmission unit. Default value is 1500. </param>
         /// <param name="extendedVlan"> Extended VLAN status. </param>
         /// <param name="networkToNetworkInterconnectId"> ARM Resource ID of the networkToNetworkInterconnectId of the L2 ISD resource. </param>
-        internal L2IsolationDomainPatchProperties(string annotation, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? mtu, ExtendedVlan? extendedVlan, ResourceIdentifier networkToNetworkInterconnectId) : base(annotation, additionalBinaryDataProperties)
+        internal L2IsolationDomainPatchProperties(string annotation, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? mtu, NetworkFabricExtendedVlan? extendedVlan, ResourceIdentifier networkToNetworkInterconnectId) : base(annotation, additionalBinaryDataProperties)
         {
             Mtu = mtu;
             ExtendedVlan = extendedVlan;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public int? Mtu { get; set; }
 
         /// <summary> Extended VLAN status. </summary>
-        public ExtendedVlan? ExtendedVlan { get; set; }
+        public NetworkFabricExtendedVlan? ExtendedVlan { get; set; }
 
         /// <summary> ARM Resource ID of the networkToNetworkInterconnectId of the L2 ISD resource. </summary>
         public ResourceIdentifier NetworkToNetworkInterconnectId { get; set; }

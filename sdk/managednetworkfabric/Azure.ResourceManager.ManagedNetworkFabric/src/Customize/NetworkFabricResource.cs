@@ -467,8 +467,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 };
                 HttpMessage message = _networkFabricsRestClient.CreateRetrieveTopologyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ManagedNetworkFabricArmOperation<GetTopologyResult> operation = new ManagedNetworkFabricArmOperation<GetTopologyResult>(
-                    new GetTopologyResultOperationSource(),
+                ManagedNetworkFabricArmOperation<NetworkFabricTopologyResult> operation = new ManagedNetworkFabricArmOperation<NetworkFabricTopologyResult>(
+                    new NetworkFabricTopologyResultOperationSource(),
                     _networkFabricsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 }
-                return new CompatArmOperation<GetTopologyResult, ValidateConfigurationResult>(operation, r => new ValidateConfigurationResult(r.Error, null, null, null));
+                return new CompatArmOperation<NetworkFabricTopologyResult, ValidateConfigurationResult>(operation, r => new ValidateConfigurationResult(r.Error, null, null, null));
             }
             catch (Exception e)
             {
@@ -501,8 +501,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 };
                 HttpMessage message = _networkFabricsRestClient.CreateRetrieveTopologyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ManagedNetworkFabricArmOperation<GetTopologyResult> operation = new ManagedNetworkFabricArmOperation<GetTopologyResult>(
-                    new GetTopologyResultOperationSource(),
+                ManagedNetworkFabricArmOperation<NetworkFabricTopologyResult> operation = new ManagedNetworkFabricArmOperation<NetworkFabricTopologyResult>(
+                    new NetworkFabricTopologyResultOperationSource(),
                     _networkFabricsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     operation.WaitForCompletion(cancellationToken);
                 }
-                return new CompatArmOperation<GetTopologyResult, ValidateConfigurationResult>(operation, r => new ValidateConfigurationResult(r.Error, null, null, null));
+                return new CompatArmOperation<NetworkFabricTopologyResult, ValidateConfigurationResult>(operation, r => new ValidateConfigurationResult(r.Error, null, null, null));
             }
             catch (Exception e)
             {

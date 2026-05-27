@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="isMonitoringEnabled"> To check whether monitoring of internal network is enabled or not. </param>
         /// <param name="bgpConfiguration"> BGP configuration properties. </param>
         /// <param name="staticRouteConfiguration"> Static Route Configuration properties. </param>
-        /// <param name="nativeIpv4PrefixLimit"> Native IPv4 Prefix Limit Configuration properties. </param>
-        /// <param name="nativeIpv6PrefixLimit"> Native IPv6 Prefix Limit Configuration properties. </param>
+        /// <param name="nativeIPv4PrefixLimit"> Native IPv4 Prefix Limit Configuration properties. </param>
+        /// <param name="nativeIPv6PrefixLimit"> Native IPv6 Prefix Limit Configuration properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalNetworkPatchProperties(string annotation, int? mtu, IList<ConnectedSubnet> connectedIPv4Subnets, IList<ConnectedSubnet> connectedIPv6Subnets, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId, IsMonitoringEnabled? isMonitoringEnabled, BgpConfiguration bgpConfiguration, StaticRouteConfiguration staticRouteConfiguration, NativeIpv4PrefixLimitPatchProperties nativeIpv4PrefixLimit, NativeIpv6PrefixLimitPatchProperties nativeIpv6PrefixLimit, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalNetworkPatchProperties(string annotation, int? mtu, IList<ConnectedSubnet> connectedIPv4Subnets, IList<ConnectedSubnet> connectedIPv6Subnets, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId, IsMonitoringEnabled? isMonitoringEnabled, BgpConfiguration bgpConfiguration, StaticRouteConfiguration staticRouteConfiguration, NativeIpv4PrefixLimitPatchProperties nativeIPv4PrefixLimit, NativeIpv6PrefixLimitPatchProperties nativeIPv6PrefixLimit, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Annotation = annotation;
             Mtu = mtu;
@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             IsMonitoringEnabled = isMonitoringEnabled;
             BgpConfiguration = bgpConfiguration;
             StaticRouteConfiguration = staticRouteConfiguration;
-            NativeIpv4PrefixLimit = nativeIpv4PrefixLimit;
-            NativeIpv6PrefixLimit = nativeIpv6PrefixLimit;
+            NativeIPv4PrefixLimit = nativeIPv4PrefixLimit;
+            NativeIPv6PrefixLimit = nativeIPv6PrefixLimit;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -92,34 +92,34 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public StaticRouteConfiguration StaticRouteConfiguration { get; set; }
 
         /// <summary> Native IPv4 Prefix Limit Configuration properties. </summary>
-        internal NativeIpv4PrefixLimitPatchProperties NativeIpv4PrefixLimit { get; set; }
+        internal NativeIpv4PrefixLimitPatchProperties NativeIPv4PrefixLimit { get; set; }
 
         /// <summary> Native IPv6 Prefix Limit Configuration properties. </summary>
-        internal NativeIpv6PrefixLimitPatchProperties NativeIpv6PrefixLimit { get; set; }
+        internal NativeIpv6PrefixLimitPatchProperties NativeIPv6PrefixLimit { get; set; }
 
         /// <summary> Prefix limits. </summary>
-        public IList<PrefixLimitPatchProperties> NativeIpv4PrefixLimits
+        public IList<PrefixLimitPatchProperties> NativeIPv4PrefixLimits
         {
             get
             {
-                if (NativeIpv4PrefixLimit is null)
+                if (NativeIPv4PrefixLimit is null)
                 {
-                    NativeIpv4PrefixLimit = new NativeIpv4PrefixLimitPatchProperties();
+                    NativeIPv4PrefixLimit = new NativeIpv4PrefixLimitPatchProperties();
                 }
-                return NativeIpv4PrefixLimit.PrefixLimits;
+                return NativeIPv4PrefixLimit.PrefixLimits;
             }
         }
 
         /// <summary> Prefix limits. </summary>
-        public IList<PrefixLimitPatchProperties> NativeIpv6PrefixLimits
+        public IList<PrefixLimitPatchProperties> NativeIPv6PrefixLimits
         {
             get
             {
-                if (NativeIpv6PrefixLimit is null)
+                if (NativeIPv6PrefixLimit is null)
                 {
-                    NativeIpv6PrefixLimit = new NativeIpv6PrefixLimitPatchProperties();
+                    NativeIPv6PrefixLimit = new NativeIpv6PrefixLimitPatchProperties();
                 }
-                return NativeIpv6PrefixLimit.PrefixLimits;
+                return NativeIPv6PrefixLimit.PrefixLimits;
             }
         }
     }

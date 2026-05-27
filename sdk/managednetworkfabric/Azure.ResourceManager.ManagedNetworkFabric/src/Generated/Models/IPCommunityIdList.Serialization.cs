@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 throw new FormatException($"The model {nameof(IPCommunityIdList)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(IpCommunityIds))
+            if (Optional.IsCollectionDefined(IPCommunityIds))
             {
                 writer.WritePropertyName("ipCommunityIds"u8);
                 writer.WriteStartArray();
-                foreach (ResourceIdentifier item in IpCommunityIds)
+                foreach (ResourceIdentifier item in IPCommunityIds)
                 {
                     if (item == null)
                     {

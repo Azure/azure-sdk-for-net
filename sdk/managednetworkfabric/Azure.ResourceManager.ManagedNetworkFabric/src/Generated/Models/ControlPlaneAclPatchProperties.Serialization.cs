@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 throw new FormatException($"The model {nameof(ControlPlaneAclPatchProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(IpAddressType))
+            if (Optional.IsDefined(IPAddressType))
             {
                 writer.WritePropertyName("ipAddressType"u8);
-                writer.WriteStringValue(IpAddressType.Value.ToString());
+                writer.WriteStringValue(IPAddressType.Value.ToString());
             }
             if (Optional.IsCollectionDefined(MatchConfigurations))
             {

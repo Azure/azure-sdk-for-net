@@ -14,25 +14,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public partial class NetworkToNetworkInterconnectOptionBLayer3Configuration : OptionBLayer3Configuration
     {
         /// <summary> Initializes a new instance of <see cref="NetworkToNetworkInterconnectOptionBLayer3Configuration"/>. </summary>
-        /// <param name="peerASN"> ASN of PE devices for CE/PE connectivity.Example : 28. </param>
+        /// <param name="peerAsn"> ASN of PE devices for CE/PE connectivity.Example : 28. </param>
         /// <param name="vlanId"> VLAN for CE/PE Layer 3 connectivity.Example : 501. </param>
-        public NetworkToNetworkInterconnectOptionBLayer3Configuration(long peerASN, int? vlanId) : base(peerASN, vlanId)
+        public NetworkToNetworkInterconnectOptionBLayer3Configuration(long? peerAsn, int? vlanId) : base(peerAsn, vlanId)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkToNetworkInterconnectOptionBLayer3Configuration"/>. </summary>
-        /// <param name="primaryIpv4Prefix"> IPv4 Address Prefix. </param>
-        /// <param name="primaryIpv6Prefix"> IPv6 Address Prefix. </param>
-        /// <param name="secondaryIpv4Prefix"> Secondary IPv4 Address Prefix. </param>
-        /// <param name="secondaryIpv6Prefix"> Secondary IPv6 Address Prefix. </param>
+        /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
+        /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
+        /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
+        /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="peerASN"> ASN of PE devices for CE/PE connectivity.Example : 28. </param>
+        /// <param name="peerAsn"> ASN of PE devices for CE/PE connectivity.Example : 28. </param>
         /// <param name="vlanId"> VLAN for CE/PE Layer 3 connectivity.Example : 501. </param>
-        /// <param name="fabricASN"> ASN of CE devices for CE/PE connectivity. </param>
-        /// <param name="peLoopbackIpAddress"> Provider Edge (PE) Loopback IP Address. </param>
+        /// <param name="fabricAsn"> ASN of CE devices for CE/PE connectivity. </param>
+        /// <param name="peLoopbackIPAddress"> Provider Edge (PE) Loopback IP Address. </param>
         /// <param name="bmpConfiguration"> BGP Monitoring Protocol (BMP) Configuration. </param>
         /// <param name="prefixLimits"> OptionB Layer3 prefix limit configuration. </param>
-        internal NetworkToNetworkInterconnectOptionBLayer3Configuration(string primaryIpv4Prefix, string primaryIpv6Prefix, string secondaryIpv4Prefix, string secondaryIpv6Prefix, IDictionary<string, BinaryData> additionalBinaryDataProperties, long peerASN, int? vlanId, long? fabricASN, IList<string> peLoopbackIpAddress, NniBmpProperties bmpConfiguration, IList<OptionBLayer3PrefixLimitProperties> prefixLimits) : base(primaryIpv4Prefix, primaryIpv6Prefix, secondaryIpv4Prefix, secondaryIpv6Prefix, additionalBinaryDataProperties, peerASN, vlanId, fabricASN, peLoopbackIpAddress, bmpConfiguration, prefixLimits)
+        internal NetworkToNetworkInterconnectOptionBLayer3Configuration(string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, IDictionary<string, BinaryData> additionalBinaryDataProperties, long? peerAsn, int? vlanId, long? fabricAsn, IList<string> peLoopbackIPAddress, NniBmpProperties bmpConfiguration, IList<OptionBLayer3PrefixLimitProperties> prefixLimits) : base(primaryIPv4Prefix, primaryIPv6Prefix, secondaryIPv4Prefix, secondaryIPv6Prefix, additionalBinaryDataProperties, peerAsn, vlanId, fabricAsn, peLoopbackIPAddress, bmpConfiguration, prefixLimits)
         {
         }
     }

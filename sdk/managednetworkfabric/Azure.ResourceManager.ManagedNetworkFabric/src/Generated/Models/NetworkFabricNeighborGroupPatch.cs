@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Neighbor Group Patch properties. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        internal NetworkFabricNeighborGroupPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, NeighborGroupPatchProperties properties, ManagedServiceIdentityPatch identity) : base(tags, additionalBinaryDataProperties)
+        internal NetworkFabricNeighborGroupPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, NeighborGroupPatchProperties properties, NetworkFabricManagedServiceIdentityPatch identity) : base(tags, additionalBinaryDataProperties)
         {
             Properties = properties;
             Identity = identity;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         internal NeighborGroupPatchProperties Properties { get; set; }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
-        public ManagedServiceIdentityPatch Identity { get; set; }
+        public NetworkFabricManagedServiceIdentityPatch Identity { get; set; }
 
         /// <summary> Switch configuration description. </summary>
         public string Annotation

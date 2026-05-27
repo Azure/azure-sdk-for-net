@@ -10,21 +10,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> BGP configuration properties. </summary>
     public partial class BgpConfiguration
     {
+        // Backward compatibility shim for the TypeSpec migration. The generated constructor requires a
+        // peer ASN, while the shipped SDK allowed parameterless construction. Removing it would break
+        // callers that initialize BgpConfiguration and set optional properties later.
         /// <summary> Initializes a new instance of <see cref="BgpConfiguration"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public BgpConfiguration()
             : this(default)
         {
-        }
-
-        /// <summary> ASN of Network Fabric. </summary>
-        public long? FabricAsn => FabricASN;
-
-        /// <summary> Peer ASN. </summary>
-        public long? PeerAsn
-        {
-            get => PeerASN;
-            set => PeerASN = value.GetValueOrDefault();
         }
     }
 }

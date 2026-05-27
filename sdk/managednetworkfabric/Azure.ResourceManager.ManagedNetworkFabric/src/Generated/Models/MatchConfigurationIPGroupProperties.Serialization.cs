@@ -79,16 +79,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(IpAddressType))
+            if (Optional.IsDefined(IPAddressType))
             {
                 writer.WritePropertyName("ipAddressType"u8);
-                writer.WriteStringValue(IpAddressType.Value.ToString());
+                writer.WriteStringValue(IPAddressType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(IpPrefixes))
+            if (Optional.IsCollectionDefined(IPPrefixes))
             {
                 writer.WritePropertyName("ipPrefixes"u8);
                 writer.WriteStartArray();
-                foreach (string item in IpPrefixes)
+                foreach (string item in IPPrefixes)
                 {
                     if (item == null)
                     {

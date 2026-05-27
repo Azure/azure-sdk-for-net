@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> L2 Isolation Domain resource patch properties. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        internal NetworkFabricL2IsolationDomainPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, L2IsolationDomainPatchProperties properties, ManagedServiceIdentityPatch identity) : base(tags, additionalBinaryDataProperties)
+        internal NetworkFabricL2IsolationDomainPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, L2IsolationDomainPatchProperties properties, NetworkFabricManagedServiceIdentityPatch identity) : base(tags, additionalBinaryDataProperties)
         {
             Properties = properties;
             Identity = identity;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         internal L2IsolationDomainPatchProperties Properties { get; set; }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
-        public ManagedServiceIdentityPatch Identity { get; set; }
+        public NetworkFabricManagedServiceIdentityPatch Identity { get; set; }
 
         /// <summary> Switch configuration description. </summary>
         public string Annotation
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Extended VLAN status. </summary>
-        public ExtendedVlan? ExtendedVlan
+        public NetworkFabricExtendedVlan? ExtendedVlan
         {
             get
             {

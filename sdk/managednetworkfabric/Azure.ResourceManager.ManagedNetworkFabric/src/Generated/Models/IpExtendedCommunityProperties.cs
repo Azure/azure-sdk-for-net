@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         {
             Argument.AssertNotNull(ipExtendedCommunityRules, nameof(ipExtendedCommunityRules));
 
-            IpExtendedCommunityRules = ipExtendedCommunityRules.ToList();
+            IPExtendedCommunityRules = ipExtendedCommunityRules.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="IpExtendedCommunityProperties"/>. </summary>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         internal IpExtendedCommunityProperties(string annotation, IList<IPExtendedCommunityRule> ipExtendedCommunityRules, ResourceIdentifier networkFabricId, LastOperationProperties lastOperation, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Annotation = annotation;
-            IpExtendedCommunityRules = ipExtendedCommunityRules;
+            IPExtendedCommunityRules = ipExtendedCommunityRules;
             NetworkFabricId = networkFabricId;
             LastOperation = lastOperation;
             ConfigurationState = configurationState;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public string Annotation { get; set; }
 
         /// <summary> List of IP Extended Community Rules. </summary>
-        public IList<IPExtendedCommunityRule> IpExtendedCommunityRules { get; } = new ChangeTrackingList<IPExtendedCommunityRule>();
+        public IList<IPExtendedCommunityRule> IPExtendedCommunityRules { get; } = new ChangeTrackingList<IPExtendedCommunityRule>();
 
         /// <summary> ARM Resource ID of the Network Fabric. </summary>
         public ResourceIdentifier NetworkFabricId { get; }

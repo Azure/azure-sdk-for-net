@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [CodeGenMember("ImportRoutePolicy")]
         public ImportRoutePolicy ImportRoutePolicy
         {
-            get => Properties?.ImportRoutePolicy is null ? default : new ImportRoutePolicy { ImportIpv4RoutePolicyId = Properties.ImportRoutePolicy.ImportIpv4RoutePolicyId, ImportIpv6RoutePolicyId = Properties.ImportRoutePolicy.ImportIpv6RoutePolicyId };
+            get => Properties?.ImportRoutePolicy is null ? default : new ImportRoutePolicy { ImportIPv4RoutePolicyId = Properties.ImportRoutePolicy.ImportIPv4RoutePolicyId, ImportIPv6RoutePolicyId = Properties.ImportRoutePolicy.ImportIPv6RoutePolicyId };
             set
             {
                 if (Properties is null)
                 {
                     Properties = new ExternalNetworkPatchProperties();
                 }
-                Properties.ImportRoutePolicy = value is null ? default : new ImportRoutePolicyPatch { ImportIpv4RoutePolicyId = value.ImportIpv4RoutePolicyId, ImportIpv6RoutePolicyId = value.ImportIpv6RoutePolicyId };
+                Properties.ImportRoutePolicy = value is null ? default : new ImportRoutePolicyPatch { ImportIPv4RoutePolicyId = value.ImportIPv4RoutePolicyId, ImportIPv6RoutePolicyId = value.ImportIPv6RoutePolicyId };
             }
         }
 
@@ -34,14 +34,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [CodeGenMember("ExportRoutePolicy")]
         public ExportRoutePolicy ExportRoutePolicy
         {
-            get => Properties?.ExportRoutePolicy is null ? default : new ExportRoutePolicy { ExportIpv4RoutePolicyId = Properties.ExportRoutePolicy.ExportIpv4RoutePolicyId, ExportIpv6RoutePolicyId = Properties.ExportRoutePolicy.ExportIpv6RoutePolicyId };
+            get => Properties?.ExportRoutePolicy is null ? default : new ExportRoutePolicy { ExportIPv4RoutePolicyId = Properties.ExportRoutePolicy.ExportIPv4RoutePolicyId, ExportIPv6RoutePolicyId = Properties.ExportRoutePolicy.ExportIPv6RoutePolicyId };
             set
             {
                 if (Properties is null)
                 {
                     Properties = new ExternalNetworkPatchProperties();
                 }
-                Properties.ExportRoutePolicy = value is null ? default : new ExportRoutePolicyPatch { ExportIpv4RoutePolicyId = value.ExportIpv4RoutePolicyId, ExportIpv6RoutePolicyId = value.ExportIpv6RoutePolicyId };
+                Properties.ExportRoutePolicy = value is null ? default : new ExportRoutePolicyPatch { ExportIPv4RoutePolicyId = value.ExportIPv4RoutePolicyId, ExportIPv6RoutePolicyId = value.ExportIPv6RoutePolicyId };
             }
         }
 

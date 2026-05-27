@@ -126,8 +126,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            BitRate bitRate = default;
-            BurstSize burstSize = default;
+            NetworkFabricBitRate bitRate = default;
+            NetworkFabricBurstSize burstSize = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    bitRate = BitRate.DeserializeBitRate(prop.Value, options);
+                    bitRate = NetworkFabricBitRate.DeserializeNetworkFabricBitRate(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("burstSize"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    burstSize = BurstSize.DeserializeBurstSize(prop.Value, options);
+                    burstSize = NetworkFabricBurstSize.DeserializeNetworkFabricBurstSize(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

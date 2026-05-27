@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     {
         private readonly string _value;
         /// <summary> TCP(Transmission Control Protocol) Protocol. </summary>
-        private const string TCPValue = "TCP";
+        private const string TcpValue = "TCP";
         /// <summary> UDP(User Datagram Protocol) Protocol. </summary>
-        private const string UDPValue = "UDP";
+        private const string UdpValue = "UDP";
         /// <summary> SCTP(Streaming Control Transmission Protocol) Protocol. </summary>
-        private const string SCTPValue = "SCTP";
+        private const string SctpValue = "SCTP";
 
         /// <summary> Initializes a new instance of <see cref="Layer4Protocol"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -32,14 +32,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             _value = value;
         }
 
-        /// <summary> TCP(Transmission Control Protocol) Protocol. </summary>
-        public static Layer4Protocol TCP { get; } = new Layer4Protocol(TCPValue);
-
-        /// <summary> UDP(User Datagram Protocol) Protocol. </summary>
-        public static Layer4Protocol UDP { get; } = new Layer4Protocol(UDPValue);
-
         /// <summary> SCTP(Streaming Control Transmission Protocol) Protocol. </summary>
-        public static Layer4Protocol SCTP { get; } = new Layer4Protocol(SCTPValue);
+        public static Layer4Protocol Sctp { get; } = new Layer4Protocol(SctpValue);
 
         /// <summary> Determines if two <see cref="Layer4Protocol"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

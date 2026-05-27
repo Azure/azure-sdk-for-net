@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 throw new FormatException($"The model {nameof(NetworkFabricControllerServices)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(Ipv4AddressSpaces))
+            if (Optional.IsCollectionDefined(IPv4AddressSpaces))
             {
                 writer.WritePropertyName("ipv4AddressSpaces"u8);
                 writer.WriteStartArray();
-                foreach (string item in Ipv4AddressSpaces)
+                foreach (string item in IPv4AddressSpaces)
                 {
                     if (item == null)
                     {
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Ipv6AddressSpaces))
+            if (Optional.IsCollectionDefined(IPv6AddressSpaces))
             {
                 writer.WritePropertyName("ipv6AddressSpaces"u8);
                 writer.WriteStartArray();
-                foreach (string item in Ipv6AddressSpaces)
+                foreach (string item in IPv6AddressSpaces)
                 {
                     if (item == null)
                     {
@@ -146,8 +146,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            IList<string> ipv4AddressSpaces = default;
-            IList<string> ipv6AddressSpaces = default;
+            IReadOnlyList<string> iPv4AddressSpaces = default;
+            IReadOnlyList<string> iPv6AddressSpaces = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             array.Add(item.GetString());
                         }
                     }
-                    ipv4AddressSpaces = array;
+                    iPv4AddressSpaces = array;
                     continue;
                 }
                 if (prop.NameEquals("ipv6AddressSpaces"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             array.Add(item.GetString());
                         }
                     }
-                    ipv6AddressSpaces = array;
+                    iPv6AddressSpaces = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NetworkFabricControllerServices(ipv4AddressSpaces ?? new ChangeTrackingList<string>(), ipv6AddressSpaces ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new NetworkFabricControllerServices(iPv4AddressSpaces ?? new ChangeTrackingList<string>(), iPv6AddressSpaces ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

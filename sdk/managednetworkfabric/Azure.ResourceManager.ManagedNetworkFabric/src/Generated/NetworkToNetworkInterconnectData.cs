@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Micro Bidirectional Forwarding Detection (BFD) enabled/disabled state. </summary>
-        public MicroBfdState? MicroBfdState
+        public NetworkFabricMicroBfdState? MicroBfdState
         {
             get
             {

@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> List of IP Community IDs. </summary>
-        public IPCommunityIdList Add { get; set; }
+        internal IPCommunityIdList Add { get; set; }
 
         /// <summary> List of IP Community IDs. </summary>
-        public IPCommunityIdList Delete { get; set; }
+        internal IPCommunityIdList Delete { get; set; }
 
         /// <summary> List of IP Community IDs. </summary>
-        public IPCommunityIdList Set { get; set; }
+        internal IPCommunityIdList Set { get; set; }
     }
 }

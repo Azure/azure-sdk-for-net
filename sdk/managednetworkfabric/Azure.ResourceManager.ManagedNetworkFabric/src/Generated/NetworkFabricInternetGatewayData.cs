@@ -82,38 +82,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        /// <summary> IPv4 Address of Internet Gateway. </summary>
-        public string Ipv4Address
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Ipv4Address;
-            }
-        }
-
         /// <summary> Port number of Internet Gateway. </summary>
         public int? Port
         {
             get
             {
                 return Properties is null ? default : Properties.Port;
-            }
-        }
-
-        /// <summary> Gateway Type of the resource. </summary>
-        public InternetGatewayType? Type
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Type;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new InternetGatewayProperties();
-                }
-                Properties.Type = value;
             }
         }
 

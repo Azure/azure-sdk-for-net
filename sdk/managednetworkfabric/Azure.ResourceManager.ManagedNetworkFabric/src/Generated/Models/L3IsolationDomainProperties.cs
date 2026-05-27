@@ -37,15 +37,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="networkFabricId"> ARM Resource ID of the Network Fabric. </param>
         /// <param name="staticRouteRoutePolicy"> Static Route - route policy. </param>
         /// <param name="uniqueRdConfiguration"> Unique Route Distinguisher configuration. </param>
-        /// <param name="v4routePrefixLimit"> IPv4 VRF Limit configuration. </param>
-        /// <param name="v6routePrefixLimit"> IPv6 VRF Limit configuration. </param>
+        /// <param name="v4RoutePrefixLimit"> IPv4 VRF Limit configuration. </param>
+        /// <param name="v6RoutePrefixLimit"> IPv6 VRF Limit configuration. </param>
         /// <param name="lastOperation"> Details of the last operation performed on the resource. </param>
         /// <param name="exportPolicyConfiguration"> BMP Export Policy configuration. </param>
         /// <param name="configurationState"> Configuration state of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal L3IsolationDomainProperties(string annotation, RedistributeConnectedSubnet? redistributeConnectedSubnets, RedistributeStaticRoute? redistributeStaticRoutes, AggregateRouteConfiguration aggregateRouteConfiguration, ConnectedSubnetRoutePolicy connectedSubnetRoutePolicy, ResourceIdentifier networkFabricId, StaticRouteRoutePolicy staticRouteRoutePolicy, L3UniqueRouteDistinguisherProperties uniqueRdConfiguration, RoutePrefixLimitProperties v4routePrefixLimit, RoutePrefixLimitProperties v6routePrefixLimit, LastOperationProperties lastOperation, BmpExportPolicyProperties exportPolicyConfiguration, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal L3IsolationDomainProperties(string annotation, RedistributeConnectedSubnet? redistributeConnectedSubnets, RedistributeStaticRoute? redistributeStaticRoutes, AggregateRouteConfiguration aggregateRouteConfiguration, ConnectedSubnetRoutePolicy connectedSubnetRoutePolicy, ResourceIdentifier networkFabricId, StaticRouteRoutePolicy staticRouteRoutePolicy, L3UniqueRouteDistinguisherProperties uniqueRdConfiguration, RoutePrefixLimitProperties v4RoutePrefixLimit, RoutePrefixLimitProperties v6RoutePrefixLimit, LastOperationProperties lastOperation, BmpExportPolicyProperties exportPolicyConfiguration, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Annotation = annotation;
             RedistributeConnectedSubnets = redistributeConnectedSubnets;
@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             NetworkFabricId = networkFabricId;
             StaticRouteRoutePolicy = staticRouteRoutePolicy;
             UniqueRdConfiguration = uniqueRdConfiguration;
-            V4routePrefixLimit = v4routePrefixLimit;
-            V6routePrefixLimit = v6routePrefixLimit;
+            V4RoutePrefixLimit = v4RoutePrefixLimit;
+            V6RoutePrefixLimit = v6RoutePrefixLimit;
             LastOperation = lastOperation;
             ExportPolicyConfiguration = exportPolicyConfiguration;
             ConfigurationState = configurationState;
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         internal L3UniqueRouteDistinguisherProperties UniqueRdConfiguration { get; set; }
 
         /// <summary> IPv4 VRF Limit configuration. </summary>
-        public RoutePrefixLimitProperties V4routePrefixLimit { get; set; }
+        public RoutePrefixLimitProperties V4RoutePrefixLimit { get; set; }
 
         /// <summary> IPv6 VRF Limit configuration. </summary>
-        public RoutePrefixLimitProperties V6routePrefixLimit { get; set; }
+        public RoutePrefixLimitProperties V6RoutePrefixLimit { get; set; }
 
         /// <summary> Details of the last operation performed on the resource. </summary>
         internal LastOperationProperties LastOperation { get; }
@@ -111,11 +111,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public NetworkFabricAdministrativeState? AdministrativeState { get; }
 
         /// <summary> Array of ARM Resource ID of the RoutePolicies. </summary>
-        public L3ExportRoutePolicy StaticExportRoutePolicy
+        public L3ExportRoutePolicy StaticRouteExportRoutePolicy
         {
             get
             {
-                return StaticRouteRoutePolicy is null ? default : StaticRouteRoutePolicy.StaticExportRoutePolicy;
+                return StaticRouteRoutePolicy is null ? default : StaticRouteRoutePolicy.StaticRouteExportRoutePolicy;
             }
             set
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     StaticRouteRoutePolicy = new StaticRouteRoutePolicy();
                 }
-                StaticRouteRoutePolicy.StaticExportRoutePolicy = value;
+                StaticRouteRoutePolicy.StaticRouteExportRoutePolicy = value;
             }
         }
 

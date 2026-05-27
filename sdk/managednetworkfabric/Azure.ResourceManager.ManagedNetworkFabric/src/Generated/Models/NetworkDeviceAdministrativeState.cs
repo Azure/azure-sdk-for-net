@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     {
         private readonly string _value;
         /// <summary> Device AdministrativeState-RMA. </summary>
-        private const string RMAValue = "RMA";
+        private const string RmaValue = "RMA";
         /// <summary> Device AdministrativeState-RMA(Return Material Authorization) Ungraceful. </summary>
-        private const string UngracefulRMAValue = "UngracefulRMA";
+        private const string UngracefulRmaValue = "UngracefulRMA";
         /// <summary> Device AdministrativeState-Resync. </summary>
         private const string ResyncValue = "Resync";
         /// <summary> Device AdministrativeState-GracefulQuarantine. </summary>
@@ -44,11 +44,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             _value = value;
         }
 
-        /// <summary> Device AdministrativeState-RMA. </summary>
-        public static NetworkDeviceAdministrativeState RMA { get; } = new NetworkDeviceAdministrativeState(RMAValue);
-
         /// <summary> Device AdministrativeState-RMA(Return Material Authorization) Ungraceful. </summary>
-        public static NetworkDeviceAdministrativeState UngracefulRMA { get; } = new NetworkDeviceAdministrativeState(UngracefulRMAValue);
+        public static NetworkDeviceAdministrativeState UngracefulRma { get; } = new NetworkDeviceAdministrativeState(UngracefulRmaValue);
 
         /// <summary> Device AdministrativeState-Resync. </summary>
         public static NetworkDeviceAdministrativeState Resync { get; } = new NetworkDeviceAdministrativeState(ResyncValue);

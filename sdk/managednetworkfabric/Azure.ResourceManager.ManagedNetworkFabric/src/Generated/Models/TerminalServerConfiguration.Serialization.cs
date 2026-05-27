@@ -15,7 +15,7 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The TerminalServerConfiguration. </summary>
-    public partial class TerminalServerConfiguration : NetworkFabricPatchablePropertiesTerminalServerConfiguration, IJsonModel<TerminalServerConfiguration>
+    public partial class TerminalServerConfiguration : TerminalServerPatchableProperties, IJsonModel<TerminalServerConfiguration>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -76,6 +76,26 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 throw new FormatException($"The model {nameof(TerminalServerConfiguration)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(PrimaryIPv4Prefix))
+            {
+                writer.WritePropertyName("primaryIpv4Prefix"u8);
+                writer.WriteStringValue(PrimaryIPv4Prefix);
+            }
+            if (Optional.IsDefined(PrimaryIPv6Prefix))
+            {
+                writer.WritePropertyName("primaryIpv6Prefix"u8);
+                writer.WriteStringValue(PrimaryIPv6Prefix);
+            }
+            if (Optional.IsDefined(SecondaryIPv4Prefix))
+            {
+                writer.WritePropertyName("secondaryIpv4Prefix"u8);
+                writer.WriteStringValue(SecondaryIPv4Prefix);
+            }
+            if (Optional.IsDefined(SecondaryIPv6Prefix))
+            {
+                writer.WritePropertyName("secondaryIpv6Prefix"u8);
+                writer.WriteStringValue(SecondaryIPv6Prefix);
+            }
             if (options.Format != "W" && Optional.IsDefined(NetworkDeviceId))
             {
                 writer.WritePropertyName("networkDeviceId"u8);
@@ -85,7 +105,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 writer.WritePropertyName("secretRotationStatus"u8);
                 writer.WriteStartArray();
-                foreach (SecretRotationStatus item in SecretRotationStatus)
+                foreach (NetworkFabricSecretRotationStatus item in SecretRotationStatus)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -121,13 +141,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             string username = default;
             string password = default;
             string serialNumber = default;
-            string primaryIpv4Prefix = default;
-            string primaryIpv6Prefix = default;
-            string secondaryIpv4Prefix = default;
-            string secondaryIpv6Prefix = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string primaryIPv4Prefix = default;
+            string primaryIPv6Prefix = default;
+            string secondaryIPv4Prefix = default;
+            string secondaryIPv6Prefix = default;
             ResourceIdentifier networkDeviceId = default;
-            IReadOnlyList<SecretRotationStatus> secretRotationStatus = default;
+            IReadOnlyList<NetworkFabricSecretRotationStatus> secretRotationStatus = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("username"u8))
@@ -147,22 +167,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (prop.NameEquals("primaryIpv4Prefix"u8))
                 {
-                    primaryIpv4Prefix = prop.Value.GetString();
+                    primaryIPv4Prefix = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("primaryIpv6Prefix"u8))
                 {
-                    primaryIpv6Prefix = prop.Value.GetString();
+                    primaryIPv6Prefix = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("secondaryIpv4Prefix"u8))
                 {
-                    secondaryIpv4Prefix = prop.Value.GetString();
+                    secondaryIPv4Prefix = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("secondaryIpv6Prefix"u8))
                 {
-                    secondaryIpv6Prefix = prop.Value.GetString();
+                    secondaryIPv6Prefix = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("networkDeviceId"u8))
@@ -180,10 +200,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    List<SecretRotationStatus> array = new List<SecretRotationStatus>();
+                    List<NetworkFabricSecretRotationStatus> array = new List<NetworkFabricSecretRotationStatus>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.SecretRotationStatus.DeserializeSecretRotationStatus(item, options));
+                        array.Add(NetworkFabricSecretRotationStatus.DeserializeNetworkFabricSecretRotationStatus(item, options));
                     }
                     secretRotationStatus = array;
                     continue;
@@ -197,13 +217,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 username,
                 password,
                 serialNumber,
-                primaryIpv4Prefix,
-                primaryIpv6Prefix,
-                secondaryIpv4Prefix,
-                secondaryIpv6Prefix,
                 additionalBinaryDataProperties,
+                primaryIPv4Prefix,
+                primaryIPv6Prefix,
+                secondaryIPv4Prefix,
+                secondaryIPv6Prefix,
                 networkDeviceId,
-                secretRotationStatus ?? new ChangeTrackingList<SecretRotationStatus>());
+                secretRotationStatus ?? new ChangeTrackingList<NetworkFabricSecretRotationStatus>());
         }
     }
 }

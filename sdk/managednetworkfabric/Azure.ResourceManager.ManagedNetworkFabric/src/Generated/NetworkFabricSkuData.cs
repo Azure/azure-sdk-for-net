@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         internal NetworkFabricSkuProperties Properties { get; }
 
         /// <summary> Type of Network Fabric SKU. </summary>
-        public NetworkFabricSkuType? Type
+        public NetworkFabricSkuType? TypePropertiesType
         {
             get
             {
-                return Properties.Type;
+                return Properties.TypePropertiesType;
             }
         }
 

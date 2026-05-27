@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         internal ArmConfigurationDiffResponseProperties Properties { get; }
 
         /// <summary> Storage URL to the diff file. </summary>
-        public string ConfigurationDiffUri
+        public Uri ConfigurationDiffUri
         {
             get
             {

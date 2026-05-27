@@ -7,13 +7,12 @@ using System;
 using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    // Backward compatibility shims for the TypeSpec migration. The generated model flattens some nested
-    // properties differently and normalizes acronym casing. Removing these members would drop the shipped
-    // constructor and public aliases such as FabricAsn/IPv4Prefix/IPv6Prefix.
+    // Backward compatibility shim for the TypeSpec migration. The new generator does not synthesize the
+    // same convenience constructor from the flattened properties. Removing this file would drop the shipped
+    // constructor used by callers to create a minimal NetworkFabricData instance.
     public partial class NetworkFabricData
     {
         /// <summary> Initializes a new instance of <see cref="NetworkFabricData"/>. </summary>
@@ -24,67 +23,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             NetworkFabricSku = networkFabricSku;
             NetworkFabricControllerId = networkFabricControllerId;
             ServerCountPerRack = serverCountPerRack;
-            Ipv4Prefix = ipv4Prefix;
-            FabricASN = fabricAsn;
+            IPv4Prefix = ipv4Prefix;
+            FabricAsn = fabricAsn;
             TerminalServerConfiguration = terminalServerConfiguration;
             ManagementNetworkConfiguration = managementNetworkConfiguration;
-        }
-
-        /// <summary> Network and credentials configuration currently applied to terminal server. </summary>
-        [CodeGenMember("TerminalServerConfiguration")]
-        public TerminalServerConfiguration TerminalServerConfiguration
-        {
-            get => Properties?.TerminalServerConfiguration as TerminalServerConfiguration;
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new NetworkFabricProperties();
-                }
-                Properties.TerminalServerConfiguration = value;
-            }
-        }
-
-        /// <summary> Configuration to be used to setup the management network. </summary>
-        [CodeGenMember("ManagementNetworkConfiguration")]
-        public ManagementNetworkConfigurationProperties ManagementNetworkConfiguration
-        {
-            get => Properties?.ManagementNetworkConfiguration as ManagementNetworkConfigurationProperties;
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new NetworkFabricProperties();
-                }
-                Properties.ManagementNetworkConfiguration = value;
-            }
-        }
-
-        /// <summary> ASN of CE devices for CE/PE connectivity. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("FabricAsn is deprecated, use FabricASN instead.")]
-        public long FabricAsn
-        {
-            get => FabricASN;
-            set => FabricASN = value;
-        }
-
-        /// <summary> IPv4Prefix for Management Network. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("IPv4Prefix is deprecated, use Ipv4Prefix instead.")]
-        public string IPv4Prefix
-        {
-            get => Ipv4Prefix;
-            set => Ipv4Prefix = value;
-        }
-
-        /// <summary> IPv6Prefix for Management Network. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("IPv6Prefix is deprecated, use Ipv6Prefix instead.")]
-        public string IPv6Prefix
-        {
-            get => Ipv6Prefix;
-            set => Ipv6Prefix = value;
         }
     }
 }

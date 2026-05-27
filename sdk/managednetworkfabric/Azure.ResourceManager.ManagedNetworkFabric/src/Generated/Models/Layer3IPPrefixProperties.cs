@@ -22,30 +22,30 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Layer3IPPrefixProperties"/>. </summary>
-        /// <param name="primaryIpv4Prefix"> IPv4 Address Prefix. </param>
-        /// <param name="primaryIpv6Prefix"> IPv6 Address Prefix. </param>
-        /// <param name="secondaryIpv4Prefix"> Secondary IPv4 Address Prefix. </param>
-        /// <param name="secondaryIpv6Prefix"> Secondary IPv6 Address Prefix. </param>
+        /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
+        /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
+        /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
+        /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Layer3IPPrefixProperties(string primaryIpv4Prefix, string primaryIpv6Prefix, string secondaryIpv4Prefix, string secondaryIpv6Prefix, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal Layer3IPPrefixProperties(string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            PrimaryIpv4Prefix = primaryIpv4Prefix;
-            PrimaryIpv6Prefix = primaryIpv6Prefix;
-            SecondaryIpv4Prefix = secondaryIpv4Prefix;
-            SecondaryIpv6Prefix = secondaryIpv6Prefix;
+            PrimaryIPv4Prefix = primaryIPv4Prefix;
+            PrimaryIPv6Prefix = primaryIPv6Prefix;
+            SecondaryIPv4Prefix = secondaryIPv4Prefix;
+            SecondaryIPv6Prefix = secondaryIPv6Prefix;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> IPv4 Address Prefix. </summary>
-        public string PrimaryIpv4Prefix { get; set; }
+        public string PrimaryIPv4Prefix { get; set; }
 
         /// <summary> IPv6 Address Prefix. </summary>
-        public string PrimaryIpv6Prefix { get; set; }
+        public string PrimaryIPv6Prefix { get; set; }
 
         /// <summary> Secondary IPv4 Address Prefix. </summary>
-        public string SecondaryIpv4Prefix { get; set; }
+        public string SecondaryIPv4Prefix { get; set; }
 
         /// <summary> Secondary IPv6 Address Prefix. </summary>
-        public string SecondaryIpv6Prefix { get; set; }
+        public string SecondaryIPv6Prefix { get; set; }
     }
 }

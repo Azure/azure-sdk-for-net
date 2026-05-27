@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             NetworkInterfacePatchProperties properties = default;
-            ManagedServiceIdentityPatch identity = default;
+            NetworkFabricManagedServiceIdentityPatch identity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    identity = ManagedServiceIdentityPatch.DeserializeManagedServiceIdentityPatch(prop.Value, options);
+                    identity = NetworkFabricManagedServiceIdentityPatch.DeserializeNetworkFabricManagedServiceIdentityPatch(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

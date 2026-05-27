@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 throw new FormatException($"The model {nameof(CommonDynamicMatchConfiguration)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(IpGroups))
+            if (Optional.IsCollectionDefined(IPGroups))
             {
                 writer.WritePropertyName("ipGroups"u8);
                 writer.WriteStartArray();
-                foreach (MatchConfigurationIPGroupProperties item in IpGroups)
+                foreach (MatchConfigurationIPGroupProperties item in IPGroups)
                 {
                     writer.WriteObjectValue(item, options);
                 }

@@ -24,16 +24,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricSkuProperties"/>. </summary>
-        /// <param name="type"> Type of Network Fabric SKU. </param>
+        /// <param name="typePropertiesType"> Type of Network Fabric SKU. </param>
         /// <param name="maxComputeRacks"> Maximum number of compute racks available for this Network Fabric SKU. The value of max count racks is 4 for 4 rack SKU and 8 for 8 rack SKU. </param>
         /// <param name="maximumServerCount"> Maximum number of servers available for this Network Fabric SKU. </param>
         /// <param name="supportedVersions"> List of supported Network Fabric SKU versions. </param>
         /// <param name="details"> URL providing detailed configuration of the fabric SKU. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricSkuProperties(NetworkFabricSkuType? @type, int? maxComputeRacks, int? maximumServerCount, IReadOnlyList<string> supportedVersions, string details, NetworkFabricProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkFabricSkuProperties(NetworkFabricSkuType? typePropertiesType, int? maxComputeRacks, int? maximumServerCount, IReadOnlyList<string> supportedVersions, string details, NetworkFabricProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            TypePropertiesType = typePropertiesType;
             MaxComputeRacks = maxComputeRacks;
             MaximumServerCount = maximumServerCount;
             SupportedVersions = supportedVersions;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Type of Network Fabric SKU. </summary>
-        public NetworkFabricSkuType? Type { get; }
+        public NetworkFabricSkuType? TypePropertiesType { get; }
 
         /// <summary> Maximum number of compute racks available for this Network Fabric SKU. The value of max count racks is 4 for 4 rack SKU and 8 for 8 rack SKU. </summary>
         public int? MaxComputeRacks { get; }

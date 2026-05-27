@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Extended VLAN status, default value is Disabled. </summary>
-        public ExtendedVlan? ExtendedVlan
+        public NetworkFabricExtendedVlan? ExtendedVlan
         {
             get
             {

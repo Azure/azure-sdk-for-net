@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric;
@@ -117,15 +118,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("networkRackId"u8);
                 writer.WriteStringValue(NetworkRackId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ManagementIpv4Address))
+            if (options.Format != "W" && Optional.IsDefined(ManagementIPv4Address))
             {
                 writer.WritePropertyName("managementIpv4Address"u8);
-                writer.WriteStringValue(ManagementIpv4Address);
+                writer.WriteStringValue(ManagementIPv4Address.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ManagementIpv6Address))
+            if (options.Format != "W" && Optional.IsDefined(ManagementIPv6Address))
             {
                 writer.WritePropertyName("managementIpv6Address"u8);
-                writer.WriteStringValue(ManagementIpv6Address);
+                writer.WriteStringValue(ManagementIPv6Address);
             }
             if (options.Format != "W" && Optional.IsDefined(RwDeviceConfig))
             {
@@ -156,7 +157,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 writer.WritePropertyName("secretRotationStatus"u8);
                 writer.WriteStartArray();
-                foreach (SecretRotationStatus item in SecretRotationStatus)
+                foreach (NetworkFabricSecretRotationStatus item in SecretRotationStatus)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -166,7 +167,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 writer.WritePropertyName("certificateRotationStatus"u8);
                 writer.WriteStartArray();
-                foreach (CertificateRotationStatus item in CertificateRotationStatus)
+                foreach (NetworkFabricCertificateRotationStatus item in CertificateRotationStatus)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -222,20 +223,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             string annotation = default;
             string hostName = default;
             string serialNumber = default;
-            IdentitySelector identitySelector = default;
+            NetworkFabricIdentitySelector identitySelector = default;
             string version = default;
             string networkDeviceSku = default;
             NetworkDeviceRole? networkDeviceRole = default;
             string networkRackId = default;
-            string managementIpv4Address = default;
-            string managementIpv6Address = default;
+            IPAddress managementIPv4Address = default;
+            string managementIPv6Address = default;
             string rwDeviceConfig = default;
             LastOperationProperties lastOperation = default;
             NetworkFabricConfigurationState? configurationState = default;
             NetworkFabricProvisioningState? provisioningState = default;
             NetworkFabricAdministrativeState? administrativeState = default;
-            IReadOnlyList<SecretRotationStatus> secretRotationStatus = default;
-            IReadOnlyList<CertificateRotationStatus> certificateRotationStatus = default;
+            IReadOnlyList<NetworkFabricSecretRotationStatus> secretRotationStatus = default;
+            IReadOnlyList<NetworkFabricCertificateRotationStatus> certificateRotationStatus = default;
             ResourceIdentifier networkFabricId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -261,7 +262,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    identitySelector = IdentitySelector.DeserializeIdentitySelector(prop.Value, options);
+                    identitySelector = NetworkFabricIdentitySelector.DeserializeNetworkFabricIdentitySelector(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("version"u8))
@@ -290,12 +291,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (prop.NameEquals("managementIpv4Address"u8))
                 {
-                    managementIpv4Address = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    managementIPv4Address = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("managementIpv6Address"u8))
                 {
-                    managementIpv6Address = prop.Value.GetString();
+                    managementIPv6Address = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("rwDeviceConfig"u8))
@@ -345,10 +350,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    List<SecretRotationStatus> array = new List<SecretRotationStatus>();
+                    List<NetworkFabricSecretRotationStatus> array = new List<NetworkFabricSecretRotationStatus>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.SecretRotationStatus.DeserializeSecretRotationStatus(item, options));
+                        array.Add(NetworkFabricSecretRotationStatus.DeserializeNetworkFabricSecretRotationStatus(item, options));
                     }
                     secretRotationStatus = array;
                     continue;
@@ -359,10 +364,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    List<CertificateRotationStatus> array = new List<CertificateRotationStatus>();
+                    List<NetworkFabricCertificateRotationStatus> array = new List<NetworkFabricCertificateRotationStatus>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.CertificateRotationStatus.DeserializeCertificateRotationStatus(item, options));
+                        array.Add(NetworkFabricCertificateRotationStatus.DeserializeNetworkFabricCertificateRotationStatus(item, options));
                     }
                     certificateRotationStatus = array;
                     continue;
@@ -390,15 +395,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 networkDeviceSku,
                 networkDeviceRole,
                 networkRackId,
-                managementIpv4Address,
-                managementIpv6Address,
+                managementIPv4Address,
+                managementIPv6Address,
                 rwDeviceConfig,
                 lastOperation,
                 configurationState,
                 provisioningState,
                 administrativeState,
-                secretRotationStatus ?? new ChangeTrackingList<SecretRotationStatus>(),
-                certificateRotationStatus ?? new ChangeTrackingList<CertificateRotationStatus>(),
+                secretRotationStatus ?? new ChangeTrackingList<NetworkFabricSecretRotationStatus>(),
+                certificateRotationStatus ?? new ChangeTrackingList<NetworkFabricCertificateRotationStatus>(),
                 networkFabricId,
                 additionalBinaryDataProperties);
         }

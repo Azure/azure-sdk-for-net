@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 throw new FormatException($"The model {nameof(NetworkFabricSkuProperties)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Type))
+            if (options.Format != "W" && Optional.IsDefined(TypePropertiesType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(TypePropertiesType.Value.ToString());
             }
             if (Optional.IsDefined(MaxComputeRacks))
             {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            NetworkFabricSkuType? @type = default;
+            NetworkFabricSkuType? typePropertiesType = default;
             int? maxComputeRacks = default;
             int? maximumServerCount = default;
             IReadOnlyList<string> supportedVersions = default;
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    @type = new NetworkFabricSkuType(prop.Value.GetString());
+                    typePropertiesType = new NetworkFabricSkuType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("maxComputeRacks"u8))
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             return new NetworkFabricSkuProperties(
-                @type,
+                typePropertiesType,
                 maxComputeRacks,
                 maximumServerCount,
                 supportedVersions ?? new ChangeTrackingList<string>(),

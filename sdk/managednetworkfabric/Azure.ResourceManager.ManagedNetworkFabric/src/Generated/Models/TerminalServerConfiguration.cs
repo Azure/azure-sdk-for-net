@@ -13,35 +13,51 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The TerminalServerConfiguration. </summary>
-    public partial class TerminalServerConfiguration : NetworkFabricPatchablePropertiesTerminalServerConfiguration
+    public partial class TerminalServerConfiguration : TerminalServerPatchableProperties
     {
         /// <summary> Initializes a new instance of <see cref="TerminalServerConfiguration"/>. </summary>
         public TerminalServerConfiguration()
         {
-            SecretRotationStatus = new ChangeTrackingList<SecretRotationStatus>();
+            SecretRotationStatus = new ChangeTrackingList<NetworkFabricSecretRotationStatus>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TerminalServerConfiguration"/>. </summary>
-        /// <param name="username"> Username for the terminal server connection. </param>
-        /// <param name="password"> Password for the terminal server connection. </param>
-        /// <param name="serialNumber"> Serial Number of Terminal server. </param>
-        /// <param name="primaryIpv4Prefix"> IPv4 Address Prefix. </param>
-        /// <param name="primaryIpv6Prefix"> IPv6 Address Prefix. </param>
-        /// <param name="secondaryIpv4Prefix"> Secondary IPv4 Address Prefix. </param>
-        /// <param name="secondaryIpv6Prefix"> Secondary IPv6 Address Prefix. </param>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <param name="serialNumber"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="networkDeviceId"> ARM Resource ID used for the NetworkDevice. </param>
-        /// <param name="secretRotationStatus"> Secret rotation status for the terminal server's secrets. </param>
-        internal TerminalServerConfiguration(string username, string password, string serialNumber, string primaryIpv4Prefix, string primaryIpv6Prefix, string secondaryIpv4Prefix, string secondaryIpv6Prefix, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier networkDeviceId, IReadOnlyList<SecretRotationStatus> secretRotationStatus) : base(username, password, serialNumber, primaryIpv4Prefix, primaryIpv6Prefix, secondaryIpv4Prefix, secondaryIpv6Prefix, additionalBinaryDataProperties)
+        /// <param name="primaryIPv4Prefix"></param>
+        /// <param name="primaryIPv6Prefix"></param>
+        /// <param name="secondaryIPv4Prefix"></param>
+        /// <param name="secondaryIPv6Prefix"></param>
+        /// <param name="networkDeviceId"></param>
+        /// <param name="secretRotationStatus"></param>
+        internal TerminalServerConfiguration(string username, string password, string serialNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties, string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, ResourceIdentifier networkDeviceId, IReadOnlyList<NetworkFabricSecretRotationStatus> secretRotationStatus) : base(username, password, serialNumber, additionalBinaryDataProperties)
         {
+            PrimaryIPv4Prefix = primaryIPv4Prefix;
+            PrimaryIPv6Prefix = primaryIPv6Prefix;
+            SecondaryIPv4Prefix = secondaryIPv4Prefix;
+            SecondaryIPv6Prefix = secondaryIPv6Prefix;
             NetworkDeviceId = networkDeviceId;
             SecretRotationStatus = secretRotationStatus;
         }
 
-        /// <summary> ARM Resource ID used for the NetworkDevice. </summary>
+        /// <summary> Gets or sets the PrimaryIPv4Prefix. </summary>
+        public string PrimaryIPv4Prefix { get; set; }
+
+        /// <summary> Gets or sets the PrimaryIPv6Prefix. </summary>
+        public string PrimaryIPv6Prefix { get; set; }
+
+        /// <summary> Gets or sets the SecondaryIPv4Prefix. </summary>
+        public string SecondaryIPv4Prefix { get; set; }
+
+        /// <summary> Gets or sets the SecondaryIPv6Prefix. </summary>
+        public string SecondaryIPv6Prefix { get; set; }
+
+        /// <summary> Gets the NetworkDeviceId. </summary>
         public ResourceIdentifier NetworkDeviceId { get; }
 
-        /// <summary> Secret rotation status for the terminal server's secrets. </summary>
-        public IReadOnlyList<SecretRotationStatus> SecretRotationStatus { get; }
+        /// <summary> Gets the SecretRotationStatus. </summary>
+        public IReadOnlyList<NetworkFabricSecretRotationStatus> SecretRotationStatus { get; }
     }
 }

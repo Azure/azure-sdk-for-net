@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             string annotation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             int? mtu = default;
-            ExtendedVlan? extendedVlan = default;
+            NetworkFabricExtendedVlan? extendedVlan = default;
             ResourceIdentifier networkToNetworkInterconnectId = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    extendedVlan = new ExtendedVlan(prop.Value.GetString());
+                    extendedVlan = new NetworkFabricExtendedVlan(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("networkToNetworkInterconnectId"u8))

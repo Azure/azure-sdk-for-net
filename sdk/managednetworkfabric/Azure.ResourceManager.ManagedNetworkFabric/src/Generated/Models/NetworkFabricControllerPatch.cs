@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Network Fabric Controller patch properties. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        internal NetworkFabricControllerPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkFabricControllerPatchProperties properties, ManagedServiceIdentityPatch identity) : base(tags, additionalBinaryDataProperties)
+        internal NetworkFabricControllerPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkFabricControllerPatchProperties properties, NetworkFabricManagedServiceIdentityPatch identity) : base(tags, additionalBinaryDataProperties)
         {
             Properties = properties;
             Identity = identity;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         internal NetworkFabricControllerPatchProperties Properties { get; set; }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
-        public ManagedServiceIdentityPatch Identity { get; set; }
+        public NetworkFabricManagedServiceIdentityPatch Identity { get; set; }
 
         /// <summary> As part of an update, the Infrastructure ExpressRoute CircuitID should be provided to create and Provision a NFC. This Express route is dedicated for Infrastructure services. (This is a Mandatory attribute). </summary>
         public IList<ExpressRouteConnectionInformation> InfrastructureExpressRouteConnections

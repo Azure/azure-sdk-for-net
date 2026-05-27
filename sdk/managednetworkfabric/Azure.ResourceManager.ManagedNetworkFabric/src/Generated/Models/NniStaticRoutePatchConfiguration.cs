@@ -20,20 +20,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="NniStaticRoutePatchConfiguration"/>. </summary>
         public NniStaticRoutePatchConfiguration()
         {
-            Ipv4Routes = new ChangeTrackingList<StaticRoutePatchProperties>();
-            Ipv6Routes = new ChangeTrackingList<StaticRoutePatchProperties>();
+            IPv4Routes = new ChangeTrackingList<StaticRoutePatchProperties>();
+            IPv6Routes = new ChangeTrackingList<StaticRoutePatchProperties>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NniStaticRoutePatchConfiguration"/>. </summary>
         /// <param name="bfdConfiguration"> Bidirectional Forwarding Detection (BFD) configuration properties. </param>
-        /// <param name="ipv4Routes"> List of IPv4 Routes. </param>
-        /// <param name="ipv6Routes"> List of IPv6 Routes. </param>
+        /// <param name="iPv4Routes"> List of IPv4 Routes. </param>
+        /// <param name="iPv6Routes"> List of IPv6 Routes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NniStaticRoutePatchConfiguration(BfdPatchConfiguration bfdConfiguration, IList<StaticRoutePatchProperties> ipv4Routes, IList<StaticRoutePatchProperties> ipv6Routes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NniStaticRoutePatchConfiguration(BfdPatchConfiguration bfdConfiguration, IList<StaticRoutePatchProperties> iPv4Routes, IList<StaticRoutePatchProperties> iPv6Routes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BfdConfiguration = bfdConfiguration;
-            Ipv4Routes = ipv4Routes;
-            Ipv6Routes = ipv6Routes;
+            IPv4Routes = iPv4Routes;
+            IPv6Routes = iPv6Routes;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public BfdPatchConfiguration BfdConfiguration { get; set; }
 
         /// <summary> List of IPv4 Routes. </summary>
-        public IList<StaticRoutePatchProperties> Ipv4Routes { get; }
+        public IList<StaticRoutePatchProperties> IPv4Routes { get; }
 
         /// <summary> List of IPv6 Routes. </summary>
-        public IList<StaticRoutePatchProperties> Ipv6Routes { get; }
+        public IList<StaticRoutePatchProperties> IPv6Routes { get; }
     }
 }

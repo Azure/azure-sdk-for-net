@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             AddressList = new ChangeTrackingList<string>();
             DestinationAddressList = new ChangeTrackingList<string>();
             SourceAddressList = new ChangeTrackingList<string>();
-            HeaderAddressList = new ChangeTrackingList<HeaderAddressProperties>();
+            HeaderAddressList = new ChangeTrackingList<NetworkFabricHeaderAddress>();
         }
 
         /// <summary> Initializes a new instance of <see cref="InternetGatewayRules"/>. </summary>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="sourceAddressList"> List of source IPv4 and IPv6 address to be allowed or denied. </param>
         /// <param name="headerAddressList"> List of header Name and source addresses associated with the header. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternetGatewayRules(InternetGatewayRuleAction action, IList<string> addressList, RuleCondition? condition, IList<string> destinationAddressList, IList<string> sourceAddressList, IList<HeaderAddressProperties> headerAddressList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternetGatewayRules(InternetGatewayRuleAction action, IList<string> addressList, NetworkFabricRuleCondition? condition, IList<string> destinationAddressList, IList<string> sourceAddressList, IList<NetworkFabricHeaderAddress> headerAddressList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Action = action;
             AddressList = addressList;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public IList<string> AddressList { get; }
 
         /// <summary> Specify rule condition. </summary>
-        public RuleCondition? Condition { get; set; }
+        public NetworkFabricRuleCondition? Condition { get; set; }
 
         /// <summary> List of Addresses to be allowed or denied. </summary>
         public IList<string> DestinationAddressList { get; }
@@ -63,6 +63,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public IList<string> SourceAddressList { get; }
 
         /// <summary> List of header Name and source addresses associated with the header. </summary>
-        public IList<HeaderAddressProperties> HeaderAddressList { get; }
+        public IList<NetworkFabricHeaderAddress> HeaderAddressList { get; }
     }
 }

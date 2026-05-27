@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             string annotation = default;
             string hostName = default;
             string serialNumber = default;
-            IdentitySelectorPatch identitySelector = default;
+            NetworkFabricIdentitySelectorPatch identitySelector = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    identitySelector = IdentitySelectorPatch.DeserializeIdentitySelectorPatch(prop.Value, options);
+                    identitySelector = NetworkFabricIdentitySelectorPatch.DeserializeNetworkFabricIdentitySelectorPatch(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

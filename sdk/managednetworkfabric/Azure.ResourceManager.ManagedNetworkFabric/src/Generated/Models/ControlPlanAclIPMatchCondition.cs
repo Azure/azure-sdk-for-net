@@ -11,31 +11,31 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Control Plane Access Control List (ACL) IP condition properties. </summary>
-    public partial class ControlPlanAclIpMatchCondition
+    public partial class ControlPlanAclIPMatchCondition
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ControlPlanAclIpMatchCondition"/>. </summary>
-        public ControlPlanAclIpMatchCondition()
+        /// <summary> Initializes a new instance of <see cref="ControlPlanAclIPMatchCondition"/>. </summary>
+        public ControlPlanAclIPMatchCondition()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ControlPlanAclIpMatchCondition"/>. </summary>
-        /// <param name="sourceIpPrefix"> List of the source IP addresses that need to be matched. </param>
-        /// <param name="destinationIpPrefix"> List of the destination IP addresses that need to be matched. </param>
+        /// <summary> Initializes a new instance of <see cref="ControlPlanAclIPMatchCondition"/>. </summary>
+        /// <param name="sourceIPPrefix"> List of the source IP addresses that need to be matched. </param>
+        /// <param name="destinationIPPrefix"> List of the destination IP addresses that need to be matched. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ControlPlanAclIpMatchCondition(string sourceIpPrefix, string destinationIpPrefix, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ControlPlanAclIPMatchCondition(string sourceIPPrefix, string destinationIPPrefix, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SourceIpPrefix = sourceIpPrefix;
-            DestinationIpPrefix = destinationIpPrefix;
+            SourceIPPrefix = sourceIPPrefix;
+            DestinationIPPrefix = destinationIPPrefix;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> List of the source IP addresses that need to be matched. </summary>
-        public string SourceIpPrefix { get; set; }
+        public string SourceIPPrefix { get; set; }
 
         /// <summary> List of the destination IP addresses that need to be matched. </summary>
-        public string DestinationIpPrefix { get; set; }
+        public string DestinationIPPrefix { get; set; }
     }
 }

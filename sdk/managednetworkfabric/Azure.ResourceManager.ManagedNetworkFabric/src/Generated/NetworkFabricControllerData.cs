@@ -171,11 +171,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> IPv4 Network Fabric Controller Address Space. </summary>
-        public string Ipv4AddressSpace
+        public string IPv4AddressSpace
         {
             get
             {
-                return Properties is null ? default : Properties.Ipv4AddressSpace;
+                return Properties is null ? default : Properties.IPv4AddressSpace;
             }
             set
             {
@@ -183,16 +183,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     Properties = new NetworkFabricControllerProperties();
                 }
-                Properties.Ipv4AddressSpace = value;
+                Properties.IPv4AddressSpace = value;
             }
         }
 
         /// <summary> IPv6 Network Fabric Controller Address Space. </summary>
-        public string Ipv6AddressSpace
+        public string IPv6AddressSpace
         {
             get
             {
-                return Properties is null ? default : Properties.Ipv6AddressSpace;
+                return Properties is null ? default : Properties.IPv6AddressSpace;
             }
             set
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     Properties = new NetworkFabricControllerProperties();
                 }
-                Properties.Ipv6AddressSpace = value;
+                Properties.IPv6AddressSpace = value;
             }
         }
 

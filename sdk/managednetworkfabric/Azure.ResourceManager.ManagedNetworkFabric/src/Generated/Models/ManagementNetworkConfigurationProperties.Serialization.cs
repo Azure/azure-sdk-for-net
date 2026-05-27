@@ -14,7 +14,7 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Configuration to be used to setup the management network. </summary>
-    public partial class ManagementNetworkConfigurationProperties : ManagementNetworkConfigurationPatchableProperties, IJsonModel<ManagementNetworkConfigurationProperties>
+    public partial class ManagementNetworkConfigurationProperties : IJsonModel<ManagementNetworkConfigurationProperties>
     {
         /// <summary> Initializes a new instance of <see cref="ManagementNetworkConfigurationProperties"/> for deserialization. </summary>
         internal ManagementNetworkConfigurationProperties()
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ManagementNetworkConfigurationPatchableProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ManagementNetworkConfigurationProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ManagementNetworkConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ManagementNetworkConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagementNetworkConfigurationProperties IPersistableModel<ManagementNetworkConfigurationProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (ManagementNetworkConfigurationProperties)PersistableModelCreateCore(data, options);
+        ManagementNetworkConfigurationProperties IPersistableModel<ManagementNetworkConfigurationProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ManagementNetworkConfigurationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -72,27 +72,41 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ManagementNetworkConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagementNetworkConfigurationProperties)} does not support writing '{format}' format.");
             }
-            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("infrastructureVpnConfiguration"u8);
             writer.WriteObjectValue(InfrastructureVpnConfiguration, options);
             writer.WritePropertyName("workloadVpnConfiguration"u8);
             writer.WriteObjectValue(WorkloadVpnConfiguration, options);
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagementNetworkConfigurationProperties IJsonModel<ManagementNetworkConfigurationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ManagementNetworkConfigurationProperties)JsonModelCreateCore(ref reader, options);
+        ManagementNetworkConfigurationProperties IJsonModel<ManagementNetworkConfigurationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ManagementNetworkConfigurationPatchableProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ManagementNetworkConfigurationProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ManagementNetworkConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -111,39 +125,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            VpnConfigurationPatchableProperties infrastructureVpnConfiguration = default;
-            VpnConfigurationPatchableProperties workloadVpnConfiguration = default;
+            VpnConfigurationProperties infrastructureVpnConfiguration = default;
+            VpnConfigurationProperties workloadVpnConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            VpnConfigurationProperties infrastructureVpnConfiguration0 = default;
-            VpnConfigurationProperties workloadVpnConfiguration0 = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("infrastructureVpnConfiguration"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    infrastructureVpnConfiguration = VpnConfigurationPatchableProperties.DeserializeVpnConfigurationPatchableProperties(prop.Value, options);
+                    infrastructureVpnConfiguration = VpnConfigurationProperties.DeserializeVpnConfigurationProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("workloadVpnConfiguration"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    workloadVpnConfiguration = VpnConfigurationPatchableProperties.DeserializeVpnConfigurationPatchableProperties(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("infrastructureVpnConfiguration"u8))
-                {
-                    infrastructureVpnConfiguration0 = VpnConfigurationProperties.DeserializeVpnConfigurationProperties(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("workloadVpnConfiguration"u8))
-                {
-                    workloadVpnConfiguration0 = VpnConfigurationProperties.DeserializeVpnConfigurationProperties(prop.Value, options);
+                    workloadVpnConfiguration = VpnConfigurationProperties.DeserializeVpnConfigurationProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -151,7 +145,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagementNetworkConfigurationProperties(infrastructureVpnConfiguration, workloadVpnConfiguration, additionalBinaryDataProperties, infrastructureVpnConfiguration0, workloadVpnConfiguration0);
+            return new ManagementNetworkConfigurationProperties(infrastructureVpnConfiguration, workloadVpnConfiguration, additionalBinaryDataProperties);
         }
     }
 }

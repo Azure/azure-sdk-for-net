@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -18,15 +19,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="IPCommunityIdList"/>. </summary>
+        public IPCommunityIdList()
+        {
+            IPCommunityIds = new ChangeTrackingList<ResourceIdentifier>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IPCommunityIdList"/>. </summary>
         /// <param name="ipCommunityIds"> List of IP Community resource IDs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal IPCommunityIdList(IList<ResourceIdentifier> ipCommunityIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IpCommunityIds = ipCommunityIds;
+            IPCommunityIds = ipCommunityIds;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> List of IP Community resource IDs. </summary>
-        public IList<ResourceIdentifier> IpCommunityIds { get; }
+        public IList<ResourceIdentifier> IPCommunityIds { get; }
     }
 }

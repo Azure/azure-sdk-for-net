@@ -26,16 +26,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="ControlPlaneAclMatchConditionPatch"/>. </summary>
         /// <param name="protocolTypes"> Protocols that need to be matched. </param>
         /// <param name="ipCondition"> IP condition that needs to be matched. </param>
-        /// <param name="ttlMatchCondition"> TTL [Time To Live] values that need to be matched. </param>
+        /// <param name="timeToLiveMatchCondition"> TTL [Time To Live] values that need to be matched. </param>
         /// <param name="portCondition"> Port condition that needs to be matched. </param>
         /// <param name="flags"> Flags that need to be matched. Example: established | initial | &lt;List-of-TCP-flags&gt;. List of eligible TCP Flags are ack, cwr, ece, fin, psh, rst, syn, urg, established. </param>
         /// <param name="icmpConfiguration"> Internet Control Message Protocol (ICMP) configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ControlPlaneAclMatchConditionPatch(string protocolTypes, ControlPlaneAclIpMatchConditionPatch ipCondition, ControlPlaneAclTtlMatchConditionPatch ttlMatchCondition, ControlPlaneAclPortMatchConditionPatch portCondition, IList<string> flags, IcmpConfigurationPatchProperties icmpConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ControlPlaneAclMatchConditionPatch(string protocolTypes, ControlPlaneAclIPMatchConditionPatch ipCondition, ControlPlaneAclTimeToLiveMatchConditionPatch timeToLiveMatchCondition, ControlPlaneAclPortMatchConditionPatch portCondition, IList<string> flags, IcmpConfigurationPatchProperties icmpConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProtocolTypes = protocolTypes;
-            IpCondition = ipCondition;
-            TtlMatchCondition = ttlMatchCondition;
+            IPCondition = ipCondition;
+            TimeToLiveMatchCondition = timeToLiveMatchCondition;
             PortCondition = portCondition;
             Flags = flags;
             IcmpConfiguration = icmpConfiguration;
@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public string ProtocolTypes { get; set; }
 
         /// <summary> IP condition that needs to be matched. </summary>
-        public ControlPlaneAclIpMatchConditionPatch IpCondition { get; set; }
+        public ControlPlaneAclIPMatchConditionPatch IPCondition { get; set; }
 
         /// <summary> TTL [Time To Live] values that need to be matched. </summary>
-        public ControlPlaneAclTtlMatchConditionPatch TtlMatchCondition { get; set; }
+        public ControlPlaneAclTimeToLiveMatchConditionPatch TimeToLiveMatchCondition { get; set; }
 
         /// <summary> Port condition that needs to be matched. </summary>
         public ControlPlaneAclPortMatchConditionPatch PortCondition { get; set; }

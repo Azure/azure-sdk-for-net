@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             ResourceIdentifier storageAccountId = default;
-            IdentitySelector storageAccountIdentity = default;
+            NetworkFabricIdentitySelector storageAccountIdentity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    storageAccountIdentity = IdentitySelector.DeserializeIdentitySelector(prop.Value, options);
+                    storageAccountIdentity = NetworkFabricIdentitySelector.DeserializeNetworkFabricIdentitySelector(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

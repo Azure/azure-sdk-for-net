@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ManagedServiceIdentityPatch identity = default;
+            NetworkFabricManagedServiceIdentityPatch identity = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("tags"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    identity = ManagedServiceIdentityPatch.DeserializeManagedServiceIdentityPatch(prop.Value, options);
+                    identity = NetworkFabricManagedServiceIdentityPatch.DeserializeNetworkFabricManagedServiceIdentityPatch(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="IpPrefixPatchProperties"/>. </summary>
         public IpPrefixPatchProperties()
         {
-            IpPrefixRules = new ChangeTrackingList<IPPrefixRule>();
+            IPPrefixRules = new ChangeTrackingList<IPPrefixRule>();
         }
 
         /// <summary> Initializes a new instance of <see cref="IpPrefixPatchProperties"/>. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         internal IpPrefixPatchProperties(string annotation, IList<IPPrefixRule> ipPrefixRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Annotation = annotation;
-            IpPrefixRules = ipPrefixRules;
+            IPPrefixRules = ipPrefixRules;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public string Annotation { get; set; }
 
         /// <summary> The list of IP Prefix Rules. </summary>
-        public IList<IPPrefixRule> IpPrefixRules { get; } = new ChangeTrackingList<IPPrefixRule>();
+        public IList<IPPrefixRule> IPPrefixRules { get; } = new ChangeTrackingList<IPPrefixRule>();
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Models;
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> The selection of the managed identity to use with this storage account. The identity type must be either system assigned or user assigned. </summary>
-        public IdentitySelector IdentitySelector
+        public NetworkFabricIdentitySelector IdentitySelector
         {
             get
             {
@@ -157,20 +158,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Management IPv4 Address. </summary>
-        public string ManagementIpv4Address
+        public IPAddress ManagementIPv4Address
         {
             get
             {
-                return Properties is null ? default : Properties.ManagementIpv4Address;
+                return Properties is null ? default : Properties.ManagementIPv4Address;
             }
         }
 
         /// <summary> Management IPv6 Address. </summary>
-        public string ManagementIpv6Address
+        public string ManagementIPv6Address
         {
             get
             {
-                return Properties is null ? default : Properties.ManagementIpv6Address;
+                return Properties is null ? default : Properties.ManagementIPv6Address;
             }
         }
 
@@ -211,7 +212,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Secret rotation status for the device's secrets. </summary>
-        public IReadOnlyList<SecretRotationStatus> SecretRotationStatus
+        public IReadOnlyList<NetworkFabricSecretRotationStatus> SecretRotationStatus
         {
             get
             {
@@ -224,7 +225,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Certificate rotation status for the device's certificates. </summary>
-        public IReadOnlyList<CertificateRotationStatus> CertificateRotationStatus
+        public IReadOnlyList<NetworkFabricCertificateRotationStatus> CertificateRotationStatus
         {
             get
             {

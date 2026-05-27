@@ -79,21 +79,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("bfdConfiguration"u8);
                 writer.WriteObjectValue(BfdConfiguration, options);
             }
-            if (Optional.IsCollectionDefined(Ipv4Routes))
+            if (Optional.IsCollectionDefined(IPv4Routes))
             {
                 writer.WritePropertyName("ipv4Routes"u8);
                 writer.WriteStartArray();
-                foreach (StaticRouteProperties item in Ipv4Routes)
+                foreach (StaticRouteProperties item in IPv4Routes)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Ipv6Routes))
+            if (Optional.IsCollectionDefined(IPv6Routes))
             {
                 writer.WritePropertyName("ipv6Routes"u8);
                 writer.WriteStartArray();
-                foreach (StaticRouteProperties item in Ipv6Routes)
+                foreach (StaticRouteProperties item in IPv6Routes)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -142,8 +142,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             BfdConfiguration bfdConfiguration = default;
-            IList<StaticRouteProperties> ipv4Routes = default;
-            IList<StaticRouteProperties> ipv6Routes = default;
+            IList<StaticRouteProperties> iPv4Routes = default;
+            IList<StaticRouteProperties> iPv6Routes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         array.Add(StaticRouteProperties.DeserializeStaticRouteProperties(item, options));
                     }
-                    ipv4Routes = array;
+                    iPv4Routes = array;
                     continue;
                 }
                 if (prop.NameEquals("ipv6Routes"u8))
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         array.Add(StaticRouteProperties.DeserializeStaticRouteProperties(item, options));
                     }
-                    ipv6Routes = array;
+                    iPv6Routes = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ExternalNetworkStaticRouteConfiguration(bfdConfiguration, ipv4Routes ?? new ChangeTrackingList<StaticRouteProperties>(), ipv6Routes ?? new ChangeTrackingList<StaticRouteProperties>(), additionalBinaryDataProperties);
+            return new ExternalNetworkStaticRouteConfiguration(bfdConfiguration, iPv4Routes ?? new ChangeTrackingList<StaticRouteProperties>(), iPv6Routes ?? new ChangeTrackingList<StaticRouteProperties>(), additionalBinaryDataProperties);
         }
     }
 }

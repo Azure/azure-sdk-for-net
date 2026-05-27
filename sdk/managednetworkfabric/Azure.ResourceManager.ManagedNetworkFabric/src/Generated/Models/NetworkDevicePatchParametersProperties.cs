@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="serialNumber"> Serial number of the device. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </param>
         /// <param name="identitySelector"> The selection of the managed identity to use with this storage account. The identity type must be either system assigned or user assigned. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkDevicePatchParametersProperties(string annotation, string hostName, string serialNumber, IdentitySelectorPatch identitySelector, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkDevicePatchParametersProperties(string annotation, string hostName, string serialNumber, NetworkFabricIdentitySelectorPatch identitySelector, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Annotation = annotation;
             HostName = hostName;
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public string SerialNumber { get; set; }
 
         /// <summary> The selection of the managed identity to use with this storage account. The identity type must be either system assigned or user assigned. </summary>
-        public IdentitySelectorPatch IdentitySelector { get; set; }
+        public NetworkFabricIdentitySelectorPatch IdentitySelector { get; set; }
     }
 }

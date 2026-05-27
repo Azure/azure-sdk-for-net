@@ -20,25 +20,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="NetworkFabricControllerServices"/>. </summary>
         internal NetworkFabricControllerServices()
         {
-            Ipv4AddressSpaces = new ChangeTrackingList<string>();
-            Ipv6AddressSpaces = new ChangeTrackingList<string>();
+            IPv4AddressSpaces = new ChangeTrackingList<string>();
+            IPv6AddressSpaces = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricControllerServices"/>. </summary>
-        /// <param name="ipv4AddressSpaces"> The IPv4 Address space is optional, if the value is not defined at the time of NFC creation, then the default value 10.0.0.0/19 is considered. The IPV4 address subnet is an optional attribute. </param>
-        /// <param name="ipv6AddressSpaces"> The IPv6 is not supported right now. </param>
+        /// <param name="iPv4AddressSpaces"> The IPv4 Address space is optional, if the value is not defined at the time of NFC creation, then the default value 10.0.0.0/19 is considered. The IPV4 address subnet is an optional attribute. </param>
+        /// <param name="iPv6AddressSpaces"> The IPv6 is not supported right now. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricControllerServices(IList<string> ipv4AddressSpaces, IList<string> ipv6AddressSpaces, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkFabricControllerServices(IReadOnlyList<string> iPv4AddressSpaces, IReadOnlyList<string> iPv6AddressSpaces, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Ipv4AddressSpaces = ipv4AddressSpaces;
-            Ipv6AddressSpaces = ipv6AddressSpaces;
+            IPv4AddressSpaces = iPv4AddressSpaces;
+            IPv6AddressSpaces = iPv6AddressSpaces;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The IPv4 Address space is optional, if the value is not defined at the time of NFC creation, then the default value 10.0.0.0/19 is considered. The IPV4 address subnet is an optional attribute. </summary>
-        public IList<string> Ipv4AddressSpaces { get; }
+        public IReadOnlyList<string> IPv4AddressSpaces { get; }
 
         /// <summary> The IPv6 is not supported right now. </summary>
-        public IList<string> Ipv6AddressSpaces { get; }
+        public IReadOnlyList<string> IPv6AddressSpaces { get; }
     }
 }

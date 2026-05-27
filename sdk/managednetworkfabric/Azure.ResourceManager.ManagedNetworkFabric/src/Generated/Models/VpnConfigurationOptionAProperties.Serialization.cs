@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Layer3IPPrefixProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override OptionAProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VpnConfigurationOptionAProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -75,6 +75,26 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 throw new FormatException($"The model {nameof(VpnConfigurationOptionAProperties)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(PrimaryIPv4Prefix))
+            {
+                writer.WritePropertyName("primaryIpv4Prefix"u8);
+                writer.WriteStringValue(PrimaryIPv4Prefix);
+            }
+            if (Optional.IsDefined(PrimaryIPv6Prefix))
+            {
+                writer.WritePropertyName("primaryIpv6Prefix"u8);
+                writer.WriteStringValue(PrimaryIPv6Prefix);
+            }
+            if (Optional.IsDefined(SecondaryIPv4Prefix))
+            {
+                writer.WritePropertyName("secondaryIpv4Prefix"u8);
+                writer.WriteStringValue(SecondaryIPv4Prefix);
+            }
+            if (Optional.IsDefined(SecondaryIPv6Prefix))
+            {
+                writer.WritePropertyName("secondaryIpv6Prefix"u8);
+                writer.WriteStringValue(SecondaryIPv6Prefix);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -83,7 +103,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Layer3IPPrefixProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override OptionAProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VpnConfigurationOptionAProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -102,37 +122,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            string primaryIpv4Prefix = default;
-            string primaryIpv6Prefix = default;
-            string secondaryIpv4Prefix = default;
-            string secondaryIpv6Prefix = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             int? mtu = default;
             int? vlanId = default;
-            long peerASN = default;
+            long? peerAsn = default;
             BfdConfiguration bfdConfiguration = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string primaryIPv4Prefix = default;
+            string primaryIPv6Prefix = default;
+            string secondaryIPv4Prefix = default;
+            string secondaryIPv6Prefix = default;
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("primaryIpv4Prefix"u8))
-                {
-                    primaryIpv4Prefix = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("primaryIpv6Prefix"u8))
-                {
-                    primaryIpv6Prefix = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("secondaryIpv4Prefix"u8))
-                {
-                    secondaryIpv4Prefix = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("secondaryIpv6Prefix"u8))
-                {
-                    secondaryIpv6Prefix = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("mtu"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -144,12 +144,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (prop.NameEquals("vlanId"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     vlanId = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("peerASN"u8))
                 {
-                    peerASN = prop.Value.GetInt64();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    peerAsn = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("bfdConfiguration"u8))
@@ -161,21 +169,41 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     bfdConfiguration = BfdConfiguration.DeserializeBfdConfiguration(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("primaryIpv4Prefix"u8))
+                {
+                    primaryIPv4Prefix = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("primaryIpv6Prefix"u8))
+                {
+                    primaryIPv6Prefix = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("secondaryIpv4Prefix"u8))
+                {
+                    secondaryIPv4Prefix = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("secondaryIpv6Prefix"u8))
+                {
+                    secondaryIPv6Prefix = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new VpnConfigurationOptionAProperties(
-                primaryIpv4Prefix,
-                primaryIpv6Prefix,
-                secondaryIpv4Prefix,
-                secondaryIpv6Prefix,
-                additionalBinaryDataProperties,
                 mtu,
                 vlanId,
-                peerASN,
-                bfdConfiguration);
+                peerAsn,
+                bfdConfiguration,
+                additionalBinaryDataProperties,
+                primaryIPv4Prefix,
+                primaryIPv6Prefix,
+                secondaryIPv4Prefix,
+                secondaryIPv6Prefix);
         }
     }
 }

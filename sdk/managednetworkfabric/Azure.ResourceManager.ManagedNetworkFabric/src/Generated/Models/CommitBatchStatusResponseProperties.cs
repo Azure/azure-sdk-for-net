@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="commitBatchState"> Commit Batch State. </param>
         /// <param name="commitBatchDetails"> Commit Batch Details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CommitBatchStatusResponseProperties(string commitBatchId, CommitBatchState? commitBatchState, CommitBatchDetails commitBatchDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CommitBatchStatusResponseProperties(string commitBatchId, NetworkFabricCommitBatchState? commitBatchState, CommitBatchDetails commitBatchDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CommitBatchId = commitBatchId;
             CommitBatchState = commitBatchState;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public string CommitBatchId { get; }
 
         /// <summary> Commit Batch State. </summary>
-        public CommitBatchState? CommitBatchState { get; }
+        public NetworkFabricCommitBatchState? CommitBatchState { get; }
 
         /// <summary> Commit Batch Details. </summary>
         internal CommitBatchDetails CommitBatchDetails { get; }

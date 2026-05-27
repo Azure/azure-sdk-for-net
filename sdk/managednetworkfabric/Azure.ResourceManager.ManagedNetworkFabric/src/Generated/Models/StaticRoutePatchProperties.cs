@@ -7,28 +7,20 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> Route Properties. </summary>
+    /// <summary> The StaticRoutePatchProperties. </summary>
     public partial class StaticRoutePatchProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StaticRoutePatchProperties"/>. </summary>
-        /// <param name="prefix"> Prefix of the route. </param>
-        /// <param name="nextHop"> List of next hop addresses. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="prefix"/> or <paramref name="nextHop"/> is null. </exception>
-        public StaticRoutePatchProperties(string prefix, IEnumerable<string> nextHop)
+        public StaticRoutePatchProperties()
         {
-            Argument.AssertNotNull(prefix, nameof(prefix));
-            Argument.AssertNotNull(nextHop, nameof(nextHop));
-
-            Prefix = prefix;
-            NextHop = nextHop.ToList();
+            NextHop = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="StaticRoutePatchProperties"/>. </summary>
@@ -43,7 +35,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Prefix of the route. </summary>
-        public string Prefix { get; }
+        public string Prefix { get; set; }
 
         /// <summary> List of next hop addresses. </summary>
         public IList<string> NextHop { get; }

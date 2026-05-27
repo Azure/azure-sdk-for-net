@@ -140,15 +140,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("staticRouteConfiguration"u8);
                 writer.WriteObjectValue(StaticRouteConfiguration, options);
             }
-            if (Optional.IsDefined(NativeIpv4PrefixLimit))
+            if (Optional.IsDefined(NativeIPv4PrefixLimit))
             {
                 writer.WritePropertyName("nativeIpv4PrefixLimit"u8);
-                writer.WriteObjectValue(NativeIpv4PrefixLimit, options);
+                writer.WriteObjectValue(NativeIPv4PrefixLimit, options);
             }
-            if (Optional.IsDefined(NativeIpv6PrefixLimit))
+            if (Optional.IsDefined(NativeIPv6PrefixLimit))
             {
                 writer.WritePropertyName("nativeIpv6PrefixLimit"u8);
-                writer.WriteObjectValue(NativeIpv6PrefixLimit, options);
+                writer.WriteObjectValue(NativeIPv6PrefixLimit, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -203,8 +203,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             IsMonitoringEnabled? isMonitoringEnabled = default;
             BgpConfiguration bgpConfiguration = default;
             StaticRouteConfiguration staticRouteConfiguration = default;
-            NativeIpv4PrefixLimitPatchProperties nativeIpv4PrefixLimit = default;
-            NativeIpv6PrefixLimitPatchProperties nativeIpv6PrefixLimit = default;
+            NativeIpv4PrefixLimitPatchProperties nativeIPv4PrefixLimit = default;
+            NativeIpv6PrefixLimitPatchProperties nativeIPv6PrefixLimit = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    nativeIpv4PrefixLimit = NativeIpv4PrefixLimitPatchProperties.DeserializeNativeIpv4PrefixLimitPatchProperties(prop.Value, options);
+                    nativeIPv4PrefixLimit = NativeIpv4PrefixLimitPatchProperties.DeserializeNativeIpv4PrefixLimitPatchProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("nativeIpv6PrefixLimit"u8))
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    nativeIpv6PrefixLimit = NativeIpv6PrefixLimitPatchProperties.DeserializeNativeIpv6PrefixLimitPatchProperties(prop.Value, options);
+                    nativeIPv6PrefixLimit = NativeIpv6PrefixLimitPatchProperties.DeserializeNativeIpv6PrefixLimitPatchProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -348,8 +348,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 isMonitoringEnabled,
                 bgpConfiguration,
                 staticRouteConfiguration,
-                nativeIpv4PrefixLimit,
-                nativeIpv6PrefixLimit,
+                nativeIPv4PrefixLimit,
+                nativeIPv6PrefixLimit,
                 additionalBinaryDataProperties);
         }
     }

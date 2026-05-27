@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="StatementConditionProperties"/>. </summary>
         public StatementConditionProperties()
         {
-            IpExtendedCommunityIds = new ChangeTrackingList<ResourceIdentifier>();
+            IPExtendedCommunityIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of <see cref="StatementConditionProperties"/>. </summary>
@@ -29,18 +29,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="ipPrefixId"> Arm Resource Id of IpPrefix. </param>
         internal StatementConditionProperties(IList<ResourceIdentifier> ipCommunityIds, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<ResourceIdentifier> ipExtendedCommunityIds, RoutePolicyConditionType? routePolicyConditionType, ResourceIdentifier ipPrefixId) : base(ipCommunityIds, additionalBinaryDataProperties)
         {
-            IpExtendedCommunityIds = ipExtendedCommunityIds;
+            IPExtendedCommunityIds = ipExtendedCommunityIds;
             RoutePolicyConditionType = routePolicyConditionType;
-            IpPrefixId = ipPrefixId;
+            IPPrefixId = ipPrefixId;
         }
 
         /// <summary> List of IP Extended Community resource IDs. </summary>
-        public IList<ResourceIdentifier> IpExtendedCommunityIds { get; }
+        public IList<ResourceIdentifier> IPExtendedCommunityIds { get; }
 
         /// <summary> Type of the condition used. </summary>
         public RoutePolicyConditionType? RoutePolicyConditionType { get; set; }
 
         /// <summary> Arm Resource Id of IpPrefix. </summary>
-        public ResourceIdentifier IpPrefixId { get; set; }
+        public ResourceIdentifier IPPrefixId { get; set; }
     }
 }

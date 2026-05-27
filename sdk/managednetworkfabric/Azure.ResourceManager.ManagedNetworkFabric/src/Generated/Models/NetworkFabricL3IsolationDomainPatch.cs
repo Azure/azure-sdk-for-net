@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> L3 Isolation Domain resource patch properties. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        internal NetworkFabricL3IsolationDomainPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, L3IsolationDomainPatchProperties properties, ManagedServiceIdentityPatch identity) : base(tags, additionalBinaryDataProperties)
+        internal NetworkFabricL3IsolationDomainPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, L3IsolationDomainPatchProperties properties, NetworkFabricManagedServiceIdentityPatch identity) : base(tags, additionalBinaryDataProperties)
         {
             Properties = properties;
             Identity = identity;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         internal L3IsolationDomainPatchProperties Properties { get; set; }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
-        public ManagedServiceIdentityPatch Identity { get; set; }
+        public NetworkFabricManagedServiceIdentityPatch Identity { get; set; }
 
         /// <summary> Switch configuration description. </summary>
         public string Annotation
@@ -121,11 +121,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> IPv4 VRF Limit configuration. </summary>
-        public RoutePrefixLimitPatchProperties V4routePrefixLimit
+        public RoutePrefixLimitPatchProperties V4RoutePrefixLimit
         {
             get
             {
-                return Properties is null ? default : Properties.V4routePrefixLimit;
+                return Properties is null ? default : Properties.V4RoutePrefixLimit;
             }
             set
             {
@@ -133,16 +133,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     Properties = new L3IsolationDomainPatchProperties();
                 }
-                Properties.V4routePrefixLimit = value;
+                Properties.V4RoutePrefixLimit = value;
             }
         }
 
         /// <summary> IPv6 VRF Limit configuration. </summary>
-        public RoutePrefixLimitPatchProperties V6routePrefixLimit
+        public RoutePrefixLimitPatchProperties V6RoutePrefixLimit
         {
             get
             {
-                return Properties is null ? default : Properties.V6routePrefixLimit;
+                return Properties is null ? default : Properties.V6RoutePrefixLimit;
             }
             set
             {
@@ -150,16 +150,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     Properties = new L3IsolationDomainPatchProperties();
                 }
-                Properties.V6routePrefixLimit = value;
+                Properties.V6RoutePrefixLimit = value;
             }
         }
 
         /// <summary> Array of ARM Resource ID of the RoutePolicies. </summary>
-        public L3ExportRoutePolicyPatch StaticExportRoutePolicy
+        public L3ExportRoutePolicyPatch StaticRouteExportRoutePolicy
         {
             get
             {
-                return Properties is null ? default : Properties.StaticExportRoutePolicy;
+                return Properties is null ? default : Properties.StaticRouteExportRoutePolicy;
             }
             set
             {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     Properties = new L3IsolationDomainPatchProperties();
                 }
-                Properties.StaticExportRoutePolicy = value;
+                Properties.StaticRouteExportRoutePolicy = value;
             }
         }
 

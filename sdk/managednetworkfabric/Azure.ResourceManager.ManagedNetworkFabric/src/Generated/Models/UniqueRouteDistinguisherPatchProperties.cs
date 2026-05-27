@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="uniqueRdConfigurationState"> Unique Route Distinguisher configuration state. Default is Enabled. </param>
         /// <param name="nniDerivedUniqueRdConfigurationState"> NNI derived unique Route Distinguisher state. Default is Disabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UniqueRouteDistinguisherPatchProperties(UniqueRouteDistinguisherConfigurationState? uniqueRdConfigurationState, NNIDerivedUniqueRouteDistinguisherConfigurationState? nniDerivedUniqueRdConfigurationState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UniqueRouteDistinguisherPatchProperties(UniqueRouteDistinguisherConfigurationState? uniqueRdConfigurationState, NniDerivedUniqueRouteDistinguisherConfigurationState? nniDerivedUniqueRdConfigurationState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UniqueRdConfigurationState = uniqueRdConfigurationState;
             NniDerivedUniqueRdConfigurationState = nniDerivedUniqueRdConfigurationState;
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public UniqueRouteDistinguisherConfigurationState? UniqueRdConfigurationState { get; set; }
 
         /// <summary> NNI derived unique Route Distinguisher state. Default is Disabled. </summary>
-        public NNIDerivedUniqueRouteDistinguisherConfigurationState? NniDerivedUniqueRdConfigurationState { get; set; }
+        public NniDerivedUniqueRouteDistinguisherConfigurationState? NniDerivedUniqueRdConfigurationState { get; set; }
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.ResourceManager.ManagedNetworkFabric;
 
@@ -74,26 +75,26 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 throw new FormatException($"The model {nameof(NeighborGroupDestination)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(Ipv4Addresses))
+            if (Optional.IsCollectionDefined(IPv4Addresses))
             {
                 writer.WritePropertyName("ipv4Addresses"u8);
                 writer.WriteStartArray();
-                foreach (string item in Ipv4Addresses)
+                foreach (IPAddress item in IPv4Addresses)
                 {
                     if (item == null)
                     {
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteStringValue(item);
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Ipv6Addresses))
+            if (Optional.IsCollectionDefined(IPv6Addresses))
             {
                 writer.WritePropertyName("ipv6Addresses"u8);
                 writer.WriteStartArray();
-                foreach (string item in Ipv6Addresses)
+                foreach (string item in IPv6Addresses)
                 {
                     if (item == null)
                     {
@@ -146,8 +147,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            IList<string> ipv4Addresses = default;
-            IList<string> ipv6Addresses = default;
+            IList<IPAddress> iPv4Addresses = default;
+            IList<string> iPv6Addresses = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -157,7 +158,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<IPAddress> array = new List<IPAddress>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
@@ -166,10 +167,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         }
                         else
                         {
-                            array.Add(item.GetString());
+                            array.Add(IPAddress.Parse(item.GetString()));
                         }
                     }
-                    ipv4Addresses = array;
+                    iPv4Addresses = array;
                     continue;
                 }
                 if (prop.NameEquals("ipv6Addresses"u8))
@@ -190,7 +191,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             array.Add(item.GetString());
                         }
                     }
-                    ipv6Addresses = array;
+                    iPv6Addresses = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -198,7 +199,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NeighborGroupDestination(ipv4Addresses ?? new ChangeTrackingList<string>(), ipv6Addresses ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new NeighborGroupDestination(iPv4Addresses ?? new ChangeTrackingList<IPAddress>(), iPv6Addresses ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
@@ -20,25 +21,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="NeighborGroupDestination"/>. </summary>
         public NeighborGroupDestination()
         {
-            Ipv4Addresses = new ChangeTrackingList<string>();
-            Ipv6Addresses = new ChangeTrackingList<string>();
+            IPv4Addresses = new ChangeTrackingList<IPAddress>();
+            IPv6Addresses = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NeighborGroupDestination"/>. </summary>
-        /// <param name="ipv4Addresses"> Array of IPv4 Addresses. </param>
-        /// <param name="ipv6Addresses"> Array of IPv6 Addresses. </param>
+        /// <param name="iPv4Addresses"> Array of IPv4 Addresses. </param>
+        /// <param name="iPv6Addresses"> Array of IPv6 Addresses. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NeighborGroupDestination(IList<string> ipv4Addresses, IList<string> ipv6Addresses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NeighborGroupDestination(IList<IPAddress> iPv4Addresses, IList<string> iPv6Addresses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Ipv4Addresses = ipv4Addresses;
-            Ipv6Addresses = ipv6Addresses;
+            IPv4Addresses = iPv4Addresses;
+            IPv6Addresses = iPv6Addresses;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Array of IPv4 Addresses. </summary>
-        public IList<string> Ipv4Addresses { get; }
+        public IList<IPAddress> IPv4Addresses { get; }
 
         /// <summary> Array of IPv6 Addresses. </summary>
-        public IList<string> Ipv6Addresses { get; }
+        public IList<string> IPv6Addresses { get; }
     }
 }

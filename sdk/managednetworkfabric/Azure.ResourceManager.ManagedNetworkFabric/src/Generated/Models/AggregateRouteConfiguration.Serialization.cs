@@ -74,21 +74,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 throw new FormatException($"The model {nameof(AggregateRouteConfiguration)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(Ipv4Routes))
+            if (Optional.IsCollectionDefined(IPv4Routes))
             {
                 writer.WritePropertyName("ipv4Routes"u8);
                 writer.WriteStartArray();
-                foreach (AggregateRoute item in Ipv4Routes)
+                foreach (AggregateRoute item in IPv4Routes)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Ipv6Routes))
+            if (Optional.IsCollectionDefined(IPv6Routes))
             {
                 writer.WritePropertyName("ipv6Routes"u8);
                 writer.WriteStartArray();
-                foreach (AggregateRoute item in Ipv6Routes)
+                foreach (AggregateRoute item in IPv6Routes)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -136,8 +136,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            IList<AggregateRoute> ipv4Routes = default;
-            IList<AggregateRoute> ipv6Routes = default;
+            IList<AggregateRoute> iPv4Routes = default;
+            IList<AggregateRoute> iPv6Routes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         array.Add(AggregateRoute.DeserializeAggregateRoute(item, options));
                     }
-                    ipv4Routes = array;
+                    iPv4Routes = array;
                     continue;
                 }
                 if (prop.NameEquals("ipv6Routes"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         array.Add(AggregateRoute.DeserializeAggregateRoute(item, options));
                     }
-                    ipv6Routes = array;
+                    iPv6Routes = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AggregateRouteConfiguration(ipv4Routes ?? new ChangeTrackingList<AggregateRoute>(), ipv6Routes ?? new ChangeTrackingList<AggregateRoute>(), additionalBinaryDataProperties);
+            return new AggregateRouteConfiguration(iPv4Routes ?? new ChangeTrackingList<AggregateRoute>(), iPv6Routes ?? new ChangeTrackingList<AggregateRoute>(), additionalBinaryDataProperties);
         }
     }
 }

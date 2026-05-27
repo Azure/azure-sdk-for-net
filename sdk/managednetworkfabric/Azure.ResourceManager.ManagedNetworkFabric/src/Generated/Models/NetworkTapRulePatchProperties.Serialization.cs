@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Uri tapRulesUri = default;
             IList<NetworkTapRuleMatchConfiguration> matchConfigurations = default;
             IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = default;
-            IdentitySelectorPatch identitySelector = default;
+            NetworkFabricIdentitySelectorPatch identitySelector = default;
             GlobalNetworkTapRuleActionPatchProperties globalNetworkTapRuleActions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    identitySelector = IdentitySelectorPatch.DeserializeIdentitySelectorPatch(prop.Value, options);
+                    identitySelector = NetworkFabricIdentitySelectorPatch.DeserializeNetworkFabricIdentitySelectorPatch(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("globalNetworkTapRuleActions"u8))

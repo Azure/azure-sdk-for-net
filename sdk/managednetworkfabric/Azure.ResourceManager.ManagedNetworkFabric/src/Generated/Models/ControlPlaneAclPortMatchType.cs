@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     {
         private readonly string _value;
         /// <summary> Port-eq. </summary>
-        private const string EqualToValue = "eq";
+        private const string EqualsValueValue = "eq";
         /// <summary> Port-neq. </summary>
         private const string NotEqualsValue = "neq";
         /// <summary> Port-gt. </summary>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Port-eq. </summary>
-        public static ControlPlaneAclPortMatchType EqualTo { get; } = new ControlPlaneAclPortMatchType(EqualToValue);
+        public static ControlPlaneAclPortMatchType EqualsValue { get; } = new ControlPlaneAclPortMatchType(EqualsValueValue);
 
         /// <summary> Port-neq. </summary>
         public static ControlPlaneAclPortMatchType NotEquals { get; } = new ControlPlaneAclPortMatchType(NotEqualsValue);

@@ -20,15 +20,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricAccessControlListData"/>. </summary>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="configurationType"> Input method to configure Access Control List. </param>
-        public NetworkFabricAccessControlListData(AzureLocation location, NetworkFabricConfigurationType configurationType) : base(location)
-        {
-
-            Properties = new AccessControlListProperties(configurationType);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="NetworkFabricAccessControlListData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -133,7 +124,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Access Control List (ACL) Type. </summary>
-        public AclType? AclType
+        public NetworkFabricAclType? AclType
         {
             get
             {
@@ -150,7 +141,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Device Role. </summary>
-        public DeviceRole? DeviceRole
+        public NetworkFabricDeviceRole? DeviceRole
         {
             get
             {

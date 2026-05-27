@@ -8,7 +8,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    // The generated SKU model nests several values under Properties and uses Type for the SKU kind.
+    // The generated SKU model nests several values under Properties.
     // These flattened members preserve the shipped SDK names; removing them would drop public properties.
     public partial class NetworkFabricSkuData
     {
@@ -17,9 +17,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             Properties = new NetworkFabricSkuProperties();
         }
-
-        /// <summary> Type of Network Fabric SKU. </summary>
-        public NetworkFabricSkuType? TypePropertiesType => Type;
 
         /// <summary> Maximum number of compute racks available for this Network Fabric SKU. </summary>
         [CodeGenMember("MaxComputeRacks")]

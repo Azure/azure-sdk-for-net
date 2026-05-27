@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="aggregateRouteConfiguration"> Aggregate route configurations. </param>
         /// <param name="connectedSubnetRoutePolicy"> Connected Subnet RoutePolicy. </param>
         /// <param name="staticRouteRoutePolicy"> Static Route - route policy. </param>
-        /// <param name="v4routePrefixLimit"> IPv4 VRF Limit configuration. </param>
-        /// <param name="v6routePrefixLimit"> IPv6 VRF Limit configuration. </param>
+        /// <param name="v4RoutePrefixLimit"> IPv4 VRF Limit configuration. </param>
+        /// <param name="v6RoutePrefixLimit"> IPv6 VRF Limit configuration. </param>
         /// <param name="exportPolicyConfiguration"> BMP Export Policy configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal L3IsolationDomainPatchProperties(string annotation, RedistributeConnectedSubnet? redistributeConnectedSubnets, RedistributeStaticRoute? redistributeStaticRoutes, AggregateRouteConfiguration aggregateRouteConfiguration, ConnectedSubnetRoutePolicy connectedSubnetRoutePolicy, StaticRouteRoutePolicyPatch staticRouteRoutePolicy, RoutePrefixLimitPatchProperties v4routePrefixLimit, RoutePrefixLimitPatchProperties v6routePrefixLimit, BmpExportPolicyPatchProperties exportPolicyConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal L3IsolationDomainPatchProperties(string annotation, RedistributeConnectedSubnet? redistributeConnectedSubnets, RedistributeStaticRoute? redistributeStaticRoutes, AggregateRouteConfiguration aggregateRouteConfiguration, ConnectedSubnetRoutePolicy connectedSubnetRoutePolicy, StaticRouteRoutePolicyPatch staticRouteRoutePolicy, RoutePrefixLimitPatchProperties v4RoutePrefixLimit, RoutePrefixLimitPatchProperties v6RoutePrefixLimit, BmpExportPolicyPatchProperties exportPolicyConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Annotation = annotation;
             RedistributeConnectedSubnets = redistributeConnectedSubnets;
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             AggregateRouteConfiguration = aggregateRouteConfiguration;
             ConnectedSubnetRoutePolicy = connectedSubnetRoutePolicy;
             StaticRouteRoutePolicy = staticRouteRoutePolicy;
-            V4routePrefixLimit = v4routePrefixLimit;
-            V6routePrefixLimit = v6routePrefixLimit;
+            V4RoutePrefixLimit = v4RoutePrefixLimit;
+            V6RoutePrefixLimit = v6RoutePrefixLimit;
             ExportPolicyConfiguration = exportPolicyConfiguration;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -65,20 +65,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         internal StaticRouteRoutePolicyPatch StaticRouteRoutePolicy { get; set; }
 
         /// <summary> IPv4 VRF Limit configuration. </summary>
-        public RoutePrefixLimitPatchProperties V4routePrefixLimit { get; set; }
+        public RoutePrefixLimitPatchProperties V4RoutePrefixLimit { get; set; }
 
         /// <summary> IPv6 VRF Limit configuration. </summary>
-        public RoutePrefixLimitPatchProperties V6routePrefixLimit { get; set; }
+        public RoutePrefixLimitPatchProperties V6RoutePrefixLimit { get; set; }
 
         /// <summary> BMP Export Policy configuration. </summary>
         internal BmpExportPolicyPatchProperties ExportPolicyConfiguration { get; set; }
 
         /// <summary> Array of ARM Resource ID of the RoutePolicies. </summary>
-        public L3ExportRoutePolicyPatch StaticExportRoutePolicy
+        public L3ExportRoutePolicyPatch StaticRouteExportRoutePolicy
         {
             get
             {
-                return StaticRouteRoutePolicy is null ? default : StaticRouteRoutePolicy.StaticExportRoutePolicy;
+                return StaticRouteRoutePolicy is null ? default : StaticRouteRoutePolicy.StaticRouteExportRoutePolicy;
             }
             set
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     StaticRouteRoutePolicy = new StaticRouteRoutePolicyPatch();
                 }
-                StaticRouteRoutePolicy.StaticExportRoutePolicy = value;
+                StaticRouteRoutePolicy.StaticRouteExportRoutePolicy = value;
             }
         }
 

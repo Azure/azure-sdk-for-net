@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Prefix limits. </summary>
-        public IList<PrefixLimitProperties> NativeIpv4PrefixLimits
+        public IList<PrefixLimitProperties> NativeIPv4PrefixLimits
         {
             get
             {
@@ -301,12 +301,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     Properties = new InternalNetworkProperties();
                 }
-                return Properties.NativeIpv4PrefixLimits;
+                return Properties.NativeIPv4PrefixLimits;
             }
         }
 
         /// <summary> Prefix limits. </summary>
-        public IList<PrefixLimitProperties> NativeIpv6PrefixLimits
+        public IList<PrefixLimitProperties> NativeIPv6PrefixLimits
         {
             get
             {
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     Properties = new InternalNetworkProperties();
                 }
-                return Properties.NativeIpv6PrefixLimits;
+                return Properties.NativeIPv6PrefixLimits;
             }
         }
 

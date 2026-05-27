@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> List of IP Extended Community Rules. </summary>
-        public IList<IPExtendedCommunityRule> IpExtendedCommunityRules
+        public IList<IPExtendedCommunityRule> IPExtendedCommunityRules
         {
             get
             {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     Properties = new IpExtendedCommunityPatchProperties();
                 }
-                return Properties.IpExtendedCommunityRules;
+                return Properties.IPExtendedCommunityRules;
             }
         }
     }

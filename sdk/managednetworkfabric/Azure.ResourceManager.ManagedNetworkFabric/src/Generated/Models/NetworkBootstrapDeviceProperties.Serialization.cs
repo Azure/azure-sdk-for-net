@@ -105,35 +105,35 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("networkFabricId"u8);
                 writer.WriteStringValue(NetworkFabricId);
             }
-            if (options.Format != "W" && Optional.IsDefined(SecondaryManagementIpv4Address))
+            if (options.Format != "W" && Optional.IsDefined(SecondaryManagementIPv4Address))
             {
                 writer.WritePropertyName("secondaryManagementIpv4Address"u8);
-                writer.WriteStringValue(SecondaryManagementIpv4Address);
+                writer.WriteStringValue(SecondaryManagementIPv4Address);
             }
-            if (options.Format != "W" && Optional.IsDefined(DhcpV4ServerIpAddress))
+            if (options.Format != "W" && Optional.IsDefined(DhcpV4ServerIPAddress))
             {
                 writer.WritePropertyName("dhcpV4ServerIpAddress"u8);
-                writer.WriteStringValue(DhcpV4ServerIpAddress);
+                writer.WriteStringValue(DhcpV4ServerIPAddress);
             }
-            if (options.Format != "W" && Optional.IsDefined(PrimaryManagementIpv6Address))
+            if (options.Format != "W" && Optional.IsDefined(PrimaryManagementIPv6Address))
             {
                 writer.WritePropertyName("primaryManagementIpv6Address"u8);
-                writer.WriteStringValue(PrimaryManagementIpv6Address);
+                writer.WriteStringValue(PrimaryManagementIPv6Address);
             }
-            if (options.Format != "W" && Optional.IsDefined(SecondaryManagementIpv6Address))
+            if (options.Format != "W" && Optional.IsDefined(SecondaryManagementIPv6Address))
             {
                 writer.WritePropertyName("secondaryManagementIpv6Address"u8);
-                writer.WriteStringValue(SecondaryManagementIpv6Address);
+                writer.WriteStringValue(SecondaryManagementIPv6Address);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(PrimaryManagementIpv4Address))
+            if (options.Format != "W" && Optional.IsDefined(PrimaryManagementIPv4Address))
             {
                 writer.WritePropertyName("primaryManagementIpv4Address"u8);
-                writer.WriteStringValue(PrimaryManagementIpv4Address);
+                writer.WriteStringValue(PrimaryManagementIPv4Address);
             }
             if (options.Format != "W" && Optional.IsDefined(AdministrativeState))
             {
@@ -193,12 +193,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             string version = default;
             string networkDeviceSku = default;
             ResourceIdentifier networkFabricId = default;
-            string secondaryManagementIpv4Address = default;
-            string dhcpV4ServerIpAddress = default;
-            string primaryManagementIpv6Address = default;
-            string secondaryManagementIpv6Address = default;
+            string secondaryManagementIPv4Address = default;
+            string dhcpV4ServerIPAddress = default;
+            string primaryManagementIPv6Address = default;
+            string secondaryManagementIPv6Address = default;
             NetworkFabricProvisioningState? provisioningState = default;
-            string primaryManagementIpv4Address = default;
+            string primaryManagementIPv4Address = default;
             NetworkFabricAdministrativeState? administrativeState = default;
             NetworkFabricConfigurationState? configurationState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -240,22 +240,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (prop.NameEquals("secondaryManagementIpv4Address"u8))
                 {
-                    secondaryManagementIpv4Address = prop.Value.GetString();
+                    secondaryManagementIPv4Address = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("dhcpV4ServerIpAddress"u8))
                 {
-                    dhcpV4ServerIpAddress = prop.Value.GetString();
+                    dhcpV4ServerIPAddress = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("primaryManagementIpv6Address"u8))
                 {
-                    primaryManagementIpv6Address = prop.Value.GetString();
+                    primaryManagementIPv6Address = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("secondaryManagementIpv6Address"u8))
                 {
-                    secondaryManagementIpv6Address = prop.Value.GetString();
+                    secondaryManagementIPv6Address = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (prop.NameEquals("primaryManagementIpv4Address"u8))
                 {
-                    primaryManagementIpv4Address = prop.Value.GetString();
+                    primaryManagementIPv4Address = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("administrativeState"u8))
@@ -302,12 +302,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 version,
                 networkDeviceSku,
                 networkFabricId,
-                secondaryManagementIpv4Address,
-                dhcpV4ServerIpAddress,
-                primaryManagementIpv6Address,
-                secondaryManagementIpv6Address,
+                secondaryManagementIPv4Address,
+                dhcpV4ServerIPAddress,
+                primaryManagementIPv6Address,
+                secondaryManagementIPv6Address,
                 provisioningState,
-                primaryManagementIpv4Address,
+                primaryManagementIPv4Address,
                 administrativeState,
                 configurationState,
                 additionalBinaryDataProperties);

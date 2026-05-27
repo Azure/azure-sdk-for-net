@@ -29,16 +29,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="version"> Current version of the device as defined in SKU. </param>
         /// <param name="networkDeviceSku"> Network Bootstrap Device SKU name. </param>
         /// <param name="networkFabricId"> Associated Network Fabric Resource ID. </param>
-        /// <param name="secondaryManagementIpv4Address"> Secondary Management IPv4 Address. </param>
-        /// <param name="dhcpV4ServerIpAddress"> Dhcp server IPv4 Address. </param>
-        /// <param name="primaryManagementIpv6Address"> Primary Management IPv6 Address. </param>
-        /// <param name="secondaryManagementIpv6Address"> Secondary Management IPv6 Address. </param>
+        /// <param name="secondaryManagementIPv4Address"> Secondary Management IPv4 Address. </param>
+        /// <param name="dhcpV4ServerIPAddress"> Dhcp server IPv4 Address. </param>
+        /// <param name="primaryManagementIPv6Address"> Primary Management IPv6 Address. </param>
+        /// <param name="secondaryManagementIPv6Address"> Secondary Management IPv6 Address. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="primaryManagementIpv4Address"> Primary Management IPv4 Address. </param>
+        /// <param name="primaryManagementIPv4Address"> Primary Management IPv4 Address. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="configurationState"> Configuration state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkBootstrapDeviceProperties(string annotation, string hostName, string serialNumber, string version, string networkDeviceSku, ResourceIdentifier networkFabricId, string secondaryManagementIpv4Address, string dhcpV4ServerIpAddress, string primaryManagementIpv6Address, string secondaryManagementIpv6Address, NetworkFabricProvisioningState? provisioningState, string primaryManagementIpv4Address, NetworkFabricAdministrativeState? administrativeState, NetworkFabricConfigurationState? configurationState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkBootstrapDeviceProperties(string annotation, string hostName, string serialNumber, string version, string networkDeviceSku, ResourceIdentifier networkFabricId, string secondaryManagementIPv4Address, string dhcpV4ServerIPAddress, string primaryManagementIPv6Address, string secondaryManagementIPv6Address, NetworkFabricProvisioningState? provisioningState, string primaryManagementIPv4Address, NetworkFabricAdministrativeState? administrativeState, NetworkFabricConfigurationState? configurationState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Annotation = annotation;
             HostName = hostName;
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Version = version;
             NetworkDeviceSku = networkDeviceSku;
             NetworkFabricId = networkFabricId;
-            SecondaryManagementIpv4Address = secondaryManagementIpv4Address;
-            DhcpV4ServerIpAddress = dhcpV4ServerIpAddress;
-            PrimaryManagementIpv6Address = primaryManagementIpv6Address;
-            SecondaryManagementIpv6Address = secondaryManagementIpv6Address;
+            SecondaryManagementIPv4Address = secondaryManagementIPv4Address;
+            DhcpV4ServerIPAddress = dhcpV4ServerIPAddress;
+            PrimaryManagementIPv6Address = primaryManagementIPv6Address;
+            SecondaryManagementIPv6Address = secondaryManagementIPv6Address;
             ProvisioningState = provisioningState;
-            PrimaryManagementIpv4Address = primaryManagementIpv4Address;
+            PrimaryManagementIPv4Address = primaryManagementIPv4Address;
             AdministrativeState = administrativeState;
             ConfigurationState = configurationState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -76,22 +76,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public ResourceIdentifier NetworkFabricId { get; }
 
         /// <summary> Secondary Management IPv4 Address. </summary>
-        public string SecondaryManagementIpv4Address { get; }
+        public string SecondaryManagementIPv4Address { get; }
 
         /// <summary> Dhcp server IPv4 Address. </summary>
-        public string DhcpV4ServerIpAddress { get; }
+        public string DhcpV4ServerIPAddress { get; }
 
         /// <summary> Primary Management IPv6 Address. </summary>
-        public string PrimaryManagementIpv6Address { get; }
+        public string PrimaryManagementIPv6Address { get; }
 
         /// <summary> Secondary Management IPv6 Address. </summary>
-        public string SecondaryManagementIpv6Address { get; }
+        public string SecondaryManagementIPv6Address { get; }
 
         /// <summary> Provisioning state of the resource. </summary>
         public NetworkFabricProvisioningState? ProvisioningState { get; }
 
         /// <summary> Primary Management IPv4 Address. </summary>
-        public string PrimaryManagementIpv4Address { get; }
+        public string PrimaryManagementIPv4Address { get; }
 
         /// <summary> Administrative state of the resource. </summary>
         public NetworkFabricAdministrativeState? AdministrativeState { get; }

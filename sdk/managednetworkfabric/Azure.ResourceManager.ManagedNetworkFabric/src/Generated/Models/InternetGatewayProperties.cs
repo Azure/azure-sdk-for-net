@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric;
 
@@ -31,21 +32,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="InternetGatewayProperties"/>. </summary>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="internetGatewayRuleId"> ARM Resource ID of the Internet Gateway Rule. </param>
-        /// <param name="ipv4Address"> IPv4 Address of Internet Gateway. </param>
+        /// <param name="iPv4Address"> IPv4 Address of Internet Gateway. </param>
         /// <param name="port"> Port number of Internet Gateway. </param>
-        /// <param name="type"> Gateway Type of the resource. </param>
+        /// <param name="typePropertiesType"> Gateway Type of the resource. </param>
         /// <param name="internetGatewayType"> Gateway Type of the resource. </param>
         /// <param name="networkFabricControllerId"> ARM Resource ID of the Network Fabric Controller. </param>
         /// <param name="lastOperation"> Details of the last operation performed on the resource. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternetGatewayProperties(string annotation, ResourceIdentifier internetGatewayRuleId, string ipv4Address, int? port, InternetGatewayType? @type, InternetGatewayType? internetGatewayType, ResourceIdentifier networkFabricControllerId, LastOperationProperties lastOperation, NetworkFabricProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternetGatewayProperties(string annotation, ResourceIdentifier internetGatewayRuleId, IPAddress iPv4Address, int? port, InternetGatewayType? typePropertiesType, InternetGatewayType? internetGatewayType, ResourceIdentifier networkFabricControllerId, LastOperationProperties lastOperation, NetworkFabricProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Annotation = annotation;
             InternetGatewayRuleId = internetGatewayRuleId;
-            Ipv4Address = ipv4Address;
+            IPv4Address = iPv4Address;
             Port = port;
-            Type = @type;
+            TypePropertiesType = typePropertiesType;
             InternetGatewayType = internetGatewayType;
             NetworkFabricControllerId = networkFabricControllerId;
             LastOperation = lastOperation;
@@ -60,13 +61,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public ResourceIdentifier InternetGatewayRuleId { get; set; }
 
         /// <summary> IPv4 Address of Internet Gateway. </summary>
-        public string Ipv4Address { get; }
+        public IPAddress IPv4Address { get; }
 
         /// <summary> Port number of Internet Gateway. </summary>
         public int? Port { get; }
 
         /// <summary> Gateway Type of the resource. </summary>
-        public InternetGatewayType? Type { get; set; }
+        public InternetGatewayType? TypePropertiesType { get; set; }
 
         /// <summary> Gateway Type of the resource. </summary>
         public InternetGatewayType? InternetGatewayType { get; set; }

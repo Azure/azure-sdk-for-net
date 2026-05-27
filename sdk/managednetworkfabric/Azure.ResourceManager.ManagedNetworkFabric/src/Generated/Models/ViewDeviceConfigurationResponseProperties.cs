@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="ViewDeviceConfigurationResponseProperties"/>. </summary>
         /// <param name="deviceConfigurationUri"> Storage URL to the device configuration file. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ViewDeviceConfigurationResponseProperties(string deviceConfigurationUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ViewDeviceConfigurationResponseProperties(Uri deviceConfigurationUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DeviceConfigurationUri = deviceConfigurationUri;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Storage URL to the device configuration file. </summary>
-        public string DeviceConfigurationUri { get; }
+        public Uri DeviceConfigurationUri { get; }
     }
 }

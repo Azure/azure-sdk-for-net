@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> NetworkDeviceRoleName-ToR(top of rack). </summary>
         private const string ToRValue = "ToR";
         /// <summary> NetworkDeviceRoleName-NPB(Network Packet Broker). </summary>
-        private const string NPBValue = "NPB";
+        private const string NpbValue = "NPB";
         /// <summary> NetworkDeviceRoleName-TS(Terminal Server). </summary>
         private const string TSValue = "TS";
         /// <summary> NetworkDeviceRoleName-Management. </summary>
@@ -41,9 +41,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> NetworkDeviceRoleName-ToR(top of rack). </summary>
         public static NetworkDeviceRoleName ToR { get; } = new NetworkDeviceRoleName(ToRValue);
-
-        /// <summary> NetworkDeviceRoleName-NPB(Network Packet Broker). </summary>
-        public static NetworkDeviceRoleName NPB { get; } = new NetworkDeviceRoleName(NPBValue);
 
         /// <summary> NetworkDeviceRoleName-TS(Terminal Server). </summary>
         public static NetworkDeviceRoleName TS { get; } = new NetworkDeviceRoleName(TSValue);

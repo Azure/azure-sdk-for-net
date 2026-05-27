@@ -75,15 +75,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 throw new FormatException($"The model {nameof(ImportRoutePolicyInformation)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ImportIpv4RoutePolicyId))
+            if (Optional.IsDefined(ImportIPv4RoutePolicyId))
             {
                 writer.WritePropertyName("importIpv4RoutePolicyId"u8);
-                writer.WriteStringValue(ImportIpv4RoutePolicyId);
+                writer.WriteStringValue(ImportIPv4RoutePolicyId);
             }
-            if (Optional.IsDefined(ImportIpv6RoutePolicyId))
+            if (Optional.IsDefined(ImportIPv6RoutePolicyId))
             {
                 writer.WritePropertyName("importIpv6RoutePolicyId"u8);
-                writer.WriteStringValue(ImportIpv6RoutePolicyId);
+                writer.WriteStringValue(ImportIPv6RoutePolicyId);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -127,8 +127,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            ResourceIdentifier importIpv4RoutePolicyId = default;
-            ResourceIdentifier importIpv6RoutePolicyId = default;
+            ResourceIdentifier importIPv4RoutePolicyId = default;
+            ResourceIdentifier importIPv6RoutePolicyId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    importIpv4RoutePolicyId = new ResourceIdentifier(prop.Value.GetString());
+                    importIPv4RoutePolicyId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("importIpv6RoutePolicyId"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    importIpv6RoutePolicyId = new ResourceIdentifier(prop.Value.GetString());
+                    importIPv6RoutePolicyId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ImportRoutePolicyInformation(importIpv4RoutePolicyId, importIpv6RoutePolicyId, additionalBinaryDataProperties);
+            return new ImportRoutePolicyInformation(importIPv4RoutePolicyId, importIPv6RoutePolicyId, additionalBinaryDataProperties);
         }
     }
 }

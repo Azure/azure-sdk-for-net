@@ -76,11 +76,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 throw new FormatException($"The model {nameof(StatementConditionProperties)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsCollectionDefined(IpExtendedCommunityIds))
+            if (Optional.IsCollectionDefined(IPExtendedCommunityIds))
             {
                 writer.WritePropertyName("ipExtendedCommunityIds"u8);
                 writer.WriteStartArray();
-                foreach (ResourceIdentifier item in IpExtendedCommunityIds)
+                foreach (ResourceIdentifier item in IPExtendedCommunityIds)
                 {
                     if (item == null)
                     {
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(RoutePolicyConditionType.Value.ToString());
             }
-            if (Optional.IsDefined(IpPrefixId))
+            if (Optional.IsDefined(IPPrefixId))
             {
                 writer.WritePropertyName("ipPrefixId"u8);
-                writer.WriteStringValue(IpPrefixId);
+                writer.WriteStringValue(IPPrefixId);
             }
         }
 

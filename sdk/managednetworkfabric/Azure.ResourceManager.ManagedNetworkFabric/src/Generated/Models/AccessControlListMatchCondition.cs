@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         {
             EtherTypes = new ChangeTrackingList<string>();
             Fragments = new ChangeTrackingList<string>();
-            IpLengths = new ChangeTrackingList<string>();
+            IPLengths = new ChangeTrackingList<string>();
             TtlValues = new ChangeTrackingList<string>();
             DscpMarkings = new ChangeTrackingList<string>();
             ProtocolNeighbors = new ChangeTrackingList<string>();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         {
             EtherTypes = etherTypes;
             Fragments = fragments;
-            IpLengths = ipLengths;
+            IPLengths = ipLengths;
             TtlValues = ttlValues;
             DscpMarkings = dscpMarkings;
             ProtocolNeighbors = protocolNeighbors;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public IList<string> Fragments { get; }
 
         /// <summary> List of IP Lengths that need to be matched. </summary>
-        public IList<string> IpLengths { get; }
+        public IList<string> IPLengths { get; }
 
         /// <summary> List of TTL [Time To Live] values that need to be matched. </summary>
         public IList<string> TtlValues { get; }

@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ControlPlaneAclPatchProperties(NetworkFabricIPAddressType? ipAddressType, IList<ControlPlaneAclMatchConfigurationPatchProperties> matchConfigurations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IpAddressType = ipAddressType;
+            IPAddressType = ipAddressType;
             MatchConfigurations = matchConfigurations;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> IP Address Type. IPv4 or IPv6. </summary>
-        public NetworkFabricIPAddressType? IpAddressType { get; set; }
+        public NetworkFabricIPAddressType? IPAddressType { get; set; }
 
         /// <summary> Access Control List (ACL) match configurations. </summary>
         public IList<ControlPlaneAclMatchConfigurationPatchProperties> MatchConfigurations { get; }

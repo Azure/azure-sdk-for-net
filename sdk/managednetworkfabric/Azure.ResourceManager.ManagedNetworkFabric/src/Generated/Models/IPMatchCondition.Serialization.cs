@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 throw new FormatException($"The model {nameof(IPMatchCondition)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(SourceDestinationType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(SourceDestinationType.Value.ToString());
             }
             if (Optional.IsDefined(PrefixType))
             {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            SourceDestinationType? @type = default;
+            SourceDestinationType? sourceDestinationType = default;
             IPMatchConditionPrefixType? prefixType = default;
             IList<string> ipPrefixValues = default;
             IList<string> ipGroupNames = default;
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    @type = new SourceDestinationType(prop.Value.GetString());
+                    sourceDestinationType = new SourceDestinationType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("prefixType"u8))
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new IPMatchCondition(@type, prefixType, ipPrefixValues ?? new ChangeTrackingList<string>(), ipGroupNames ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new IPMatchCondition(sourceDestinationType, prefixType, ipPrefixValues ?? new ChangeTrackingList<string>(), ipGroupNames ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

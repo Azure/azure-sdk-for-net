@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     {
         private readonly string _value;
         /// <summary> RebootType GracefulRebootWithZTP. </summary>
-        private const string GracefulRebootWithZTPValue = "GracefulRebootWithZTP";
+        private const string GracefulRebootWithZtpValue = "GracefulRebootWithZTP";
         /// <summary> RebootType GracefulRebootWithoutZTP. </summary>
-        private const string GracefulRebootWithoutZTPValue = "GracefulRebootWithoutZTP";
+        private const string GracefulRebootWithoutZtpValue = "GracefulRebootWithoutZTP";
         /// <summary> RebootType UngracefulRebootWithZTP. </summary>
-        private const string UngracefulRebootWithZTPValue = "UngracefulRebootWithZTP";
+        private const string UngracefulRebootWithZtpValue = "UngracefulRebootWithZTP";
         /// <summary> RebootType UngracefulRebootWithoutZTP. </summary>
-        private const string UngracefulRebootWithoutZTPValue = "UngracefulRebootWithoutZTP";
+        private const string UngracefulRebootWithoutZtpValue = "UngracefulRebootWithoutZTP";
 
         /// <summary> Initializes a new instance of <see cref="NetworkDeviceRebootType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -33,18 +33,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
             _value = value;
         }
-
-        /// <summary> RebootType GracefulRebootWithZTP. </summary>
-        public static NetworkDeviceRebootType GracefulRebootWithZTP { get; } = new NetworkDeviceRebootType(GracefulRebootWithZTPValue);
-
-        /// <summary> RebootType GracefulRebootWithoutZTP. </summary>
-        public static NetworkDeviceRebootType GracefulRebootWithoutZTP { get; } = new NetworkDeviceRebootType(GracefulRebootWithoutZTPValue);
-
-        /// <summary> RebootType UngracefulRebootWithZTP. </summary>
-        public static NetworkDeviceRebootType UngracefulRebootWithZTP { get; } = new NetworkDeviceRebootType(UngracefulRebootWithZTPValue);
-
-        /// <summary> RebootType UngracefulRebootWithoutZTP. </summary>
-        public static NetworkDeviceRebootType UngracefulRebootWithoutZTP { get; } = new NetworkDeviceRebootType(UngracefulRebootWithoutZTPValue);
 
         /// <summary> Determines if two <see cref="NetworkDeviceRebootType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

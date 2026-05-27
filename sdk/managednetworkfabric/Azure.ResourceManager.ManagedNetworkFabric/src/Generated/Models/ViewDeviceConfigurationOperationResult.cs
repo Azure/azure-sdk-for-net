@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         internal ViewDeviceConfigurationResponseProperties Properties { get; }
 
         /// <summary> Storage URL to the device configuration file. </summary>
-        public string DeviceConfigurationUri
+        public Uri DeviceConfigurationUri
         {
             get
             {

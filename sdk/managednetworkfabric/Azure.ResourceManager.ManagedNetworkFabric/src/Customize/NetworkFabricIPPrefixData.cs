@@ -4,7 +4,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
@@ -13,8 +12,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     // Backward compatibility shim for the swagger upgrade from package-2023-06-15 to package-2025-07-15.
     // The new API version added ipPrefixRules as a required constructor parameter.
-    // This preserves the old constructor signature from v1.1.2 that only required location and keeps
-    // the old IpPrefixRules alias; removing it would break both constructor and property compatibility.
+    // This preserves the old constructor signature from v1.1.2 that only required location. Removing
+    // it would break callers that initialize the IP prefix rules after construction.
     public partial class NetworkFabricIPPrefixData
     {
         /// <summary> Initializes a new instance of <see cref="NetworkFabricIPPrefixData"/>. </summary>
@@ -24,8 +23,5 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public NetworkFabricIPPrefixData(AzureLocation location) : this(location, Array.Empty<IPPrefixRule>())
         {
         }
-
-        /// <summary> List of IP Prefix Rules. </summary>
-        public IList<IPPrefixRule> IpPrefixRules => IPPrefixRules;
     }
 }

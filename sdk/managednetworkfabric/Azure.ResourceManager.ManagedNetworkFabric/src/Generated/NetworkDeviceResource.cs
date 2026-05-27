@@ -879,7 +879,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="body"> Request the command. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation<CommonPostActionResponseForDeviceROCommandsOperationStatusResult>> RunRoCommandAsync(WaitUntil waitUntil, DeviceRoCommand body, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CommonPostActionResponseForDeviceROCommandsOperationStatusResult>> RunRoCommandAsync(WaitUntil waitUntil, NetworkFabricDeviceReadOnlyCommand body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -891,7 +891,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkDevicesRestClient.CreateRunRoCommandRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DeviceRoCommand.ToRequestContent(body), context);
+                HttpMessage message = _networkDevicesRestClient.CreateRunRoCommandRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkFabricDeviceReadOnlyCommand.ToRequestContent(body), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<CommonPostActionResponseForDeviceROCommandsOperationStatusResult> operation = new ManagedNetworkFabricArmOperation<CommonPostActionResponseForDeviceROCommandsOperationStatusResult>(
                     new CommonPostActionResponseForDeviceROCommandsOperationStatusResultOperationSource(),
@@ -938,7 +938,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="body"> Request the command. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation<CommonPostActionResponseForDeviceROCommandsOperationStatusResult> RunRoCommand(WaitUntil waitUntil, DeviceRoCommand body, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CommonPostActionResponseForDeviceROCommandsOperationStatusResult> RunRoCommand(WaitUntil waitUntil, NetworkFabricDeviceReadOnlyCommand body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -950,7 +950,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkDevicesRestClient.CreateRunRoCommandRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DeviceRoCommand.ToRequestContent(body), context);
+                HttpMessage message = _networkDevicesRestClient.CreateRunRoCommandRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkFabricDeviceReadOnlyCommand.ToRequestContent(body), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<CommonPostActionResponseForDeviceROCommandsOperationStatusResult> operation = new ManagedNetworkFabricArmOperation<CommonPostActionResponseForDeviceROCommandsOperationStatusResult>(
                     new CommonPostActionResponseForDeviceROCommandsOperationStatusResultOperationSource(),
@@ -997,7 +997,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="body"> Request the command. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation<NetworkDeviceRunRwCommandResult>> RunRwCommandAsync(WaitUntil waitUntil, DeviceRwCommand body, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkDeviceRunRwCommandResult>> RunRwCommandAsync(WaitUntil waitUntil, NetworkFabricDeviceReadWriteCommand body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -1009,7 +1009,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkDevicesRestClient.CreateRunRwCommandRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DeviceRwCommand.ToRequestContent(body), context);
+                HttpMessage message = _networkDevicesRestClient.CreateRunRwCommandRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkFabricDeviceReadWriteCommand.ToRequestContent(body), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<NetworkDeviceRunRwCommandResult> operation = new ManagedNetworkFabricArmOperation<NetworkDeviceRunRwCommandResult>(
                     new NetworkDeviceRunRwCommandResultOperationSource(),
@@ -1056,7 +1056,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="body"> Request the command. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation<NetworkDeviceRunRwCommandResult> RunRwCommand(WaitUntil waitUntil, DeviceRwCommand body, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkDeviceRunRwCommandResult> RunRwCommand(WaitUntil waitUntil, NetworkFabricDeviceReadWriteCommand body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -1068,7 +1068,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkDevicesRestClient.CreateRunRwCommandRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DeviceRwCommand.ToRequestContent(body), context);
+                HttpMessage message = _networkDevicesRestClient.CreateRunRwCommandRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkFabricDeviceReadWriteCommand.ToRequestContent(body), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<NetworkDeviceRunRwCommandResult> operation = new ManagedNetworkFabricArmOperation<NetworkDeviceRunRwCommandResult>(
                     new NetworkDeviceRunRwCommandResultOperationSource(),

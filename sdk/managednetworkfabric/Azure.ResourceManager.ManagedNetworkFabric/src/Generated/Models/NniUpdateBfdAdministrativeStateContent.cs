@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="routeType"> Route Type. Choose either Static or OptionA. </param>
         /// <param name="administrativeState"> State. Select either enable or disable. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NniUpdateBfdAdministrativeStateContent(RouteType? routeType, BfdAdministrativeState? administrativeState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NniUpdateBfdAdministrativeStateContent(NetworkFabricRouteType? routeType, BfdAdministrativeState? administrativeState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RouteType = routeType;
             AdministrativeState = administrativeState;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Route Type. Choose either Static or OptionA. </summary>
-        public RouteType? RouteType { get; set; }
+        public NetworkFabricRouteType? RouteType { get; set; }
 
         /// <summary> State. Select either enable or disable. </summary>
         public BfdAdministrativeState? AdministrativeState { get; set; }

@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("vlanMatchCondition"u8);
                 writer.WriteObjectValue(VlanMatchCondition, options);
             }
-            if (Optional.IsDefined(IpCondition))
+            if (Optional.IsDefined(IPCondition))
             {
                 writer.WritePropertyName("ipCondition"u8);
-                writer.WriteObjectValue(IpCondition, options);
+                writer.WriteObjectValue(IPCondition, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

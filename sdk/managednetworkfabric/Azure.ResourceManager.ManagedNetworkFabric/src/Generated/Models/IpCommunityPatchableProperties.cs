@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="IpCommunityPatchableProperties"/>. </summary>
         public IpCommunityPatchableProperties()
         {
-            IpCommunityRules = new ChangeTrackingList<IPCommunityRule>();
+            IPCommunityRules = new ChangeTrackingList<IPCommunityRule>();
         }
 
         /// <summary> Initializes a new instance of <see cref="IpCommunityPatchableProperties"/>. </summary>
@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal IpCommunityPatchableProperties(IList<IPCommunityRule> ipCommunityRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IpCommunityRules = ipCommunityRules;
+            IPCommunityRules = ipCommunityRules;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> List of IP Community Rules. </summary>
-        public IList<IPCommunityRule> IpCommunityRules { get; } = new ChangeTrackingList<IPCommunityRule>();
+        public IList<IPCommunityRule> IPCommunityRules { get; } = new ChangeTrackingList<IPCommunityRule>();
     }
 }

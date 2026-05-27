@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="IPMatchCondition"/>. </summary>
-        /// <param name="type"> IP Address type that needs to be matched. </param>
+        /// <param name="sourceDestinationType"> IP Address type that needs to be matched. </param>
         /// <param name="prefixType"> IP Prefix Type that needs to be matched. </param>
         /// <param name="ipPrefixValues"> The list of IP Prefixes that need to be matched. </param>
         /// <param name="ipGroupNames"> The List of IP Group Names that need to be matched. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IPMatchCondition(SourceDestinationType? @type, IPMatchConditionPrefixType? prefixType, IList<string> ipPrefixValues, IList<string> ipGroupNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IPMatchCondition(SourceDestinationType? sourceDestinationType, IPMatchConditionPrefixType? prefixType, IList<string> ipPrefixValues, IList<string> ipGroupNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            SourceDestinationType = sourceDestinationType;
             PrefixType = prefixType;
             IPPrefixValues = ipPrefixValues;
             IPGroupNames = ipGroupNames;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> IP Address type that needs to be matched. </summary>
-        public SourceDestinationType? Type { get; set; }
+        public SourceDestinationType? SourceDestinationType { get; set; }
 
         /// <summary> IP Prefix Type that needs to be matched. </summary>
         public IPMatchConditionPrefixType? PrefixType { get; set; }

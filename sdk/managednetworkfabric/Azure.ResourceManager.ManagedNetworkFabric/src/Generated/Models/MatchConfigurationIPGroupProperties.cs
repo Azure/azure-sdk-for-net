@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="MatchConfigurationIPGroupProperties"/>. </summary>
         public MatchConfigurationIPGroupProperties()
         {
-            IpPrefixes = new ChangeTrackingList<string>();
+            IPPrefixes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MatchConfigurationIPGroupProperties"/>. </summary>
@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         internal MatchConfigurationIPGroupProperties(string name, NetworkFabricIPAddressType? ipAddressType, IList<string> ipPrefixes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            IpAddressType = ipAddressType;
-            IpPrefixes = ipPrefixes;
+            IPAddressType = ipAddressType;
+            IPPrefixes = ipPrefixes;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public string Name { get; set; }
 
         /// <summary> IP Address type. </summary>
-        public NetworkFabricIPAddressType? IpAddressType { get; set; }
+        public NetworkFabricIPAddressType? IPAddressType { get; set; }
 
         /// <summary> List of IP Prefixes. </summary>
-        public IList<string> IpPrefixes { get; }
+        public IList<string> IPPrefixes { get; }
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="IpExtendedCommunityPatchProperties"/>. </summary>
         public IpExtendedCommunityPatchProperties()
         {
-            IpExtendedCommunityRules = new ChangeTrackingList<IPExtendedCommunityRule>();
+            IPExtendedCommunityRules = new ChangeTrackingList<IPExtendedCommunityRule>();
         }
 
         /// <summary> Initializes a new instance of <see cref="IpExtendedCommunityPatchProperties"/>. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         internal IpExtendedCommunityPatchProperties(string annotation, IList<IPExtendedCommunityRule> ipExtendedCommunityRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Annotation = annotation;
-            IpExtendedCommunityRules = ipExtendedCommunityRules;
+            IPExtendedCommunityRules = ipExtendedCommunityRules;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public string Annotation { get; set; }
 
         /// <summary> List of IP Extended Community Rules. </summary>
-        public IList<IPExtendedCommunityRule> IpExtendedCommunityRules { get; } = new ChangeTrackingList<IPExtendedCommunityRule>();
+        public IList<IPExtendedCommunityRule> IPExtendedCommunityRules { get; } = new ChangeTrackingList<IPExtendedCommunityRule>();
     }
 }

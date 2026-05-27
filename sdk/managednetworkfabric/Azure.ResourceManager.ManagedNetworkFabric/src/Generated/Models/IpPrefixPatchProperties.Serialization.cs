@@ -79,11 +79,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
-            if (Optional.IsCollectionDefined(IpPrefixRules))
+            if (Optional.IsCollectionDefined(IPPrefixRules))
             {
                 writer.WritePropertyName("ipPrefixRules"u8);
                 writer.WriteStartArray();
-                foreach (IPPrefixRule item in IpPrefixRules)
+                foreach (IPPrefixRule item in IPPrefixRules)
                 {
                     writer.WriteObjectValue(item, options);
                 }

@@ -156,11 +156,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> IPv4 VRF Limit configuration. </summary>
-        public RoutePrefixLimitProperties V4routePrefixLimit
+        public RoutePrefixLimitProperties V4RoutePrefixLimit
         {
             get
             {
-                return Properties is null ? default : Properties.V4routePrefixLimit;
+                return Properties is null ? default : Properties.V4RoutePrefixLimit;
             }
             set
             {
@@ -168,16 +168,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     Properties = new L3IsolationDomainProperties();
                 }
-                Properties.V4routePrefixLimit = value;
+                Properties.V4RoutePrefixLimit = value;
             }
         }
 
         /// <summary> IPv6 VRF Limit configuration. </summary>
-        public RoutePrefixLimitProperties V6routePrefixLimit
+        public RoutePrefixLimitProperties V6RoutePrefixLimit
         {
             get
             {
-                return Properties is null ? default : Properties.V6routePrefixLimit;
+                return Properties is null ? default : Properties.V6RoutePrefixLimit;
             }
             set
             {
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     Properties = new L3IsolationDomainProperties();
                 }
-                Properties.V6routePrefixLimit = value;
+                Properties.V6RoutePrefixLimit = value;
             }
         }
 
@@ -217,11 +217,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Array of ARM Resource ID of the RoutePolicies. </summary>
-        public L3ExportRoutePolicy StaticExportRoutePolicy
+        public L3ExportRoutePolicy StaticRouteExportRoutePolicy
         {
             get
             {
-                return Properties is null ? default : Properties.StaticExportRoutePolicy;
+                return Properties is null ? default : Properties.StaticRouteExportRoutePolicy;
             }
             set
             {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     Properties = new L3IsolationDomainProperties();
                 }
-                Properties.StaticExportRoutePolicy = value;
+                Properties.StaticRouteExportRoutePolicy = value;
             }
         }
 

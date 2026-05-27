@@ -20,25 +20,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="AggregateRouteConfiguration"/>. </summary>
         public AggregateRouteConfiguration()
         {
-            Ipv4Routes = new ChangeTrackingList<AggregateRoute>();
-            Ipv6Routes = new ChangeTrackingList<AggregateRoute>();
+            IPv4Routes = new ChangeTrackingList<AggregateRoute>();
+            IPv6Routes = new ChangeTrackingList<AggregateRoute>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AggregateRouteConfiguration"/>. </summary>
-        /// <param name="ipv4Routes"> List of IPv4 Route prefixes. </param>
-        /// <param name="ipv6Routes"> List of Ipv6Routes prefixes. </param>
+        /// <param name="iPv4Routes"> List of IPv4 Route prefixes. </param>
+        /// <param name="iPv6Routes"> List of Ipv6Routes prefixes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AggregateRouteConfiguration(IList<AggregateRoute> ipv4Routes, IList<AggregateRoute> ipv6Routes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AggregateRouteConfiguration(IList<AggregateRoute> iPv4Routes, IList<AggregateRoute> iPv6Routes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Ipv4Routes = ipv4Routes;
-            Ipv6Routes = ipv6Routes;
+            IPv4Routes = iPv4Routes;
+            IPv6Routes = iPv6Routes;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> List of IPv4 Route prefixes. </summary>
-        public IList<AggregateRoute> Ipv4Routes { get; }
+        public IList<AggregateRoute> IPv4Routes { get; }
 
         /// <summary> List of Ipv6Routes prefixes. </summary>
-        public IList<AggregateRoute> Ipv6Routes { get; }
+        public IList<AggregateRoute> IPv6Routes { get; }
     }
 }

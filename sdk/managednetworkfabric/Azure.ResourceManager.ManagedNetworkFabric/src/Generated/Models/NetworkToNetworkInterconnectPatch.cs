@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Micro BFD enabled/disabled state. </summary>
-        public MicroBfdState? MicroBfdState
+        public NetworkFabricMicroBfdState? MicroBfdState
         {
             get
             {

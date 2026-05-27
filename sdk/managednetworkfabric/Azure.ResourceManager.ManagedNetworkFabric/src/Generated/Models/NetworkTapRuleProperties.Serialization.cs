@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             string annotation = default;
             NetworkFabricConfigurationType configurationType = default;
             Uri tapRulesUri = default;
-            IdentitySelector identitySelector = default;
+            NetworkFabricIdentitySelector identitySelector = default;
             IList<NetworkTapRuleMatchConfiguration> matchConfigurations = default;
             IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = default;
             string networkTapId = default;
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    identitySelector = IdentitySelector.DeserializeIdentitySelector(prop.Value, options);
+                    identitySelector = NetworkFabricIdentitySelector.DeserializeNetworkFabricIdentitySelector(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("matchConfigurations"u8))

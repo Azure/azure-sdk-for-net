@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             writer.WritePropertyName("ipExtendedCommunityRules"u8);
             writer.WriteStartArray();
-            foreach (IPExtendedCommunityRule item in IpExtendedCommunityRules)
+            foreach (IPExtendedCommunityRule item in IPExtendedCommunityRules)
             {
                 writer.WriteObjectValue(item, options);
             }

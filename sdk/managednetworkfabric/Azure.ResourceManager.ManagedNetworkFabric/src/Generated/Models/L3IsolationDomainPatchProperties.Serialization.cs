@@ -104,15 +104,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("staticRouteRoutePolicy"u8);
                 writer.WriteObjectValue(StaticRouteRoutePolicy, options);
             }
-            if (Optional.IsDefined(V4routePrefixLimit))
+            if (Optional.IsDefined(V4RoutePrefixLimit))
             {
                 writer.WritePropertyName("v4routePrefixLimit"u8);
-                writer.WriteObjectValue(V4routePrefixLimit, options);
+                writer.WriteObjectValue(V4RoutePrefixLimit, options);
             }
-            if (Optional.IsDefined(V6routePrefixLimit))
+            if (Optional.IsDefined(V6RoutePrefixLimit))
             {
                 writer.WritePropertyName("v6routePrefixLimit"u8);
-                writer.WriteObjectValue(V6routePrefixLimit, options);
+                writer.WriteObjectValue(V6RoutePrefixLimit, options);
             }
             if (Optional.IsDefined(ExportPolicyConfiguration))
             {
@@ -167,8 +167,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             AggregateRouteConfiguration aggregateRouteConfiguration = default;
             ConnectedSubnetRoutePolicy connectedSubnetRoutePolicy = default;
             StaticRouteRoutePolicyPatch staticRouteRoutePolicy = default;
-            RoutePrefixLimitPatchProperties v4routePrefixLimit = default;
-            RoutePrefixLimitPatchProperties v6routePrefixLimit = default;
+            RoutePrefixLimitPatchProperties v4RoutePrefixLimit = default;
+            RoutePrefixLimitPatchProperties v6RoutePrefixLimit = default;
             BmpExportPolicyPatchProperties exportPolicyConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    v4routePrefixLimit = RoutePrefixLimitPatchProperties.DeserializeRoutePrefixLimitPatchProperties(prop.Value, options);
+                    v4RoutePrefixLimit = RoutePrefixLimitPatchProperties.DeserializeRoutePrefixLimitPatchProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("v6routePrefixLimit"u8))
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    v6routePrefixLimit = RoutePrefixLimitPatchProperties.DeserializeRoutePrefixLimitPatchProperties(prop.Value, options);
+                    v6RoutePrefixLimit = RoutePrefixLimitPatchProperties.DeserializeRoutePrefixLimitPatchProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("exportPolicyConfiguration"u8))
@@ -262,8 +262,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 aggregateRouteConfiguration,
                 connectedSubnetRoutePolicy,
                 staticRouteRoutePolicy,
-                v4routePrefixLimit,
-                v6routePrefixLimit,
+                v4RoutePrefixLimit,
+                v6RoutePrefixLimit,
                 exportPolicyConfiguration,
                 additionalBinaryDataProperties);
         }

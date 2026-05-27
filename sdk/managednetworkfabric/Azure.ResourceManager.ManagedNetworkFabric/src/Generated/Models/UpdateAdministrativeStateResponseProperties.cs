@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="successfulResources"> List of ARM Resource IDs for which the given action applied successfully. </param>
         /// <param name="failedResources"> List of ARM Resource IDs for which the given action failed to apply. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UpdateAdministrativeStateResponseProperties(IList<ResourceIdentifier> successfulResources, IList<ResourceIdentifier> failedResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UpdateAdministrativeStateResponseProperties(IReadOnlyList<ResourceIdentifier> successfulResources, IReadOnlyList<ResourceIdentifier> failedResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SuccessfulResources = successfulResources;
             FailedResources = failedResources;
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> List of ARM Resource IDs for which the given action applied successfully. </summary>
-        public IList<ResourceIdentifier> SuccessfulResources { get; }
+        public IReadOnlyList<ResourceIdentifier> SuccessfulResources { get; }
 
         /// <summary> List of ARM Resource IDs for which the given action failed to apply. </summary>
-        public IList<ResourceIdentifier> FailedResources { get; }
+        public IReadOnlyList<ResourceIdentifier> FailedResources { get; }
     }
 }

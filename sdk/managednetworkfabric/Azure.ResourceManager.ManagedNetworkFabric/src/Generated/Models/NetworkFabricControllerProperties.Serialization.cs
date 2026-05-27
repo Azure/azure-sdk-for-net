@@ -150,15 +150,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Ipv4AddressSpace))
+            if (Optional.IsDefined(IPv4AddressSpace))
             {
                 writer.WritePropertyName("ipv4AddressSpace"u8);
-                writer.WriteStringValue(Ipv4AddressSpace);
+                writer.WriteStringValue(IPv4AddressSpace);
             }
-            if (Optional.IsDefined(Ipv6AddressSpace))
+            if (Optional.IsDefined(IPv6AddressSpace))
             {
                 writer.WritePropertyName("ipv6AddressSpace"u8);
-                writer.WriteStringValue(Ipv6AddressSpace);
+                writer.WriteStringValue(IPv6AddressSpace);
             }
             if (Optional.IsDefined(NfcSku))
             {
@@ -226,8 +226,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             IReadOnlyList<ResourceIdentifier> networkFabricIds = default;
             IsWorkloadManagementNetworkEnabled? isWorkloadManagementNetworkEnabled = default;
             IReadOnlyList<ResourceIdentifier> tenantInternetGatewayIds = default;
-            string ipv4AddressSpace = default;
-            string ipv6AddressSpace = default;
+            string iPv4AddressSpace = default;
+            string iPv6AddressSpace = default;
             NetworkFabricControllerSKU? nfcSku = default;
             LastOperationProperties lastOperation = default;
             NetworkFabricProvisioningState? provisioningState = default;
@@ -347,12 +347,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (prop.NameEquals("ipv4AddressSpace"u8))
                 {
-                    ipv4AddressSpace = prop.Value.GetString();
+                    iPv4AddressSpace = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("ipv6AddressSpace"u8))
                 {
-                    ipv6AddressSpace = prop.Value.GetString();
+                    iPv6AddressSpace = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("nfcSku"u8))
@@ -397,8 +397,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 networkFabricIds ?? new ChangeTrackingList<ResourceIdentifier>(),
                 isWorkloadManagementNetworkEnabled,
                 tenantInternetGatewayIds ?? new ChangeTrackingList<ResourceIdentifier>(),
-                ipv4AddressSpace,
-                ipv6AddressSpace,
+                iPv4AddressSpace,
+                iPv6AddressSpace,
                 nfcSku,
                 lastOperation,
                 provisioningState,

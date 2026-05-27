@@ -7,7 +7,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     public readonly partial struct NetworkDeviceRole
     {
+        // The TypeSpec generator does not emit this service-defined NPB value as a public constant.
+        // Removing this shim would drop the shipped Npb member and break callers compiled against the GA SDK.
+
         /// <summary> NetworkDeviceRole-NPB(Network Packet Broker). </summary>
-        public static NetworkDeviceRole Npb => NPB;
+        public static NetworkDeviceRole Npb => new NetworkDeviceRole("NPB");
     }
 }

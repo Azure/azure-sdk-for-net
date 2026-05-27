@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     [CodeGenSuppress("NetworkFabricAccessControlListData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(IDictionary<string, string>), typeof(AzureLocation), typeof(string), typeof(NetworkFabricConfigurationType?), typeof(Uri), typeof(CommunityActionType?), typeof(IEnumerable<AccessControlListMatchConfiguration>), typeof(IEnumerable<CommonDynamicMatchConfiguration>), typeof(DateTimeOffset?), typeof(NetworkFabricConfigurationState?), typeof(NetworkFabricProvisioningState?), typeof(NetworkFabricAdministrativeState?))]
     [CodeGenSuppress("NetworkFabricAccessControlListData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(IDictionary<string, string>), typeof(AzureLocation), typeof(string), typeof(NetworkFabricConfigurationType?), typeof(Uri), typeof(IEnumerable<AccessControlListMatchConfiguration>), typeof(IEnumerable<CommonDynamicMatchConfiguration>), typeof(DateTimeOffset?), typeof(NetworkFabricConfigurationState?), typeof(NetworkFabricProvisioningState?), typeof(NetworkFabricAdministrativeState?))]
     [CodeGenSuppress("NetworkFabricControllerData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(IDictionary<string, string>), typeof(AzureLocation), typeof(string), typeof(IEnumerable<ExpressRouteConnectionInformation>), typeof(IEnumerable<ExpressRouteConnectionInformation>), typeof(NetworkFabricControllerServices), typeof(NetworkFabricControllerServices), typeof(ManagedResourceGroupConfiguration), typeof(IEnumerable<ResourceIdentifier>), typeof(IsWorkloadManagementNetworkEnabled?), typeof(IEnumerable<ResourceIdentifier>), typeof(string), typeof(string), typeof(NetworkFabricControllerSKU?), typeof(NetworkFabricProvisioningState?), typeof(string), typeof(ManagedServiceIdentity))]
-    [CodeGenSuppress("TerminalServerConfiguration", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(ResourceIdentifier), typeof(IEnumerable<SecretRotationStatus>))]
+    [CodeGenSuppress("TerminalServerConfiguration", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(ResourceIdentifier), typeof(IEnumerable<NetworkFabricSecretRotationStatus>))]
     [CodeGenSuppress("TerminalServerConfiguration", typeof(string), typeof(string), typeof(string), typeof(ResourceIdentifier), typeof(string), typeof(string), typeof(string), typeof(string))]
     public static partial class ArmManagedNetworkFabricModelFactory
     {
@@ -177,11 +177,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="networkDeviceId"> ARM Resource ID used for the NetworkDevice. </param>
         /// <param name="secretRotationStatus"> Secret rotation status for the terminal server's secrets. </param>
         /// <returns> A new <see cref="Models.TerminalServerConfiguration"/> instance for mocking. </returns>
-        public static TerminalServerConfiguration TerminalServerConfiguration(string username = default, string password = default, string serialNumber = default, string primaryIpv4Prefix = default, string primaryIpv6Prefix = default, string secondaryIpv4Prefix = default, string secondaryIpv6Prefix = default, ResourceIdentifier networkDeviceId = default, IEnumerable<SecretRotationStatus> secretRotationStatus = default)
+        public static TerminalServerConfiguration TerminalServerConfiguration(string username = default, string password = default, string serialNumber = default, string primaryIpv4Prefix = default, string primaryIpv6Prefix = default, string secondaryIpv4Prefix = default, string secondaryIpv6Prefix = default, ResourceIdentifier networkDeviceId = default, IEnumerable<NetworkFabricSecretRotationStatus> secretRotationStatus = default)
         {
-            secretRotationStatus ??= new ChangeTrackingList<SecretRotationStatus>();
+            secretRotationStatus ??= new ChangeTrackingList<NetworkFabricSecretRotationStatus>();
 
-            return new TerminalServerConfiguration(username, password, serialNumber, primaryIpv4Prefix, primaryIpv6Prefix, secondaryIpv4Prefix, secondaryIpv6Prefix, additionalBinaryDataProperties: null, networkDeviceId, secretRotationStatus.ToList());
+            return new TerminalServerConfiguration(username, password, serialNumber, additionalBinaryDataProperties: null, primaryIpv4Prefix, primaryIpv6Prefix, secondaryIpv4Prefix, secondaryIpv6Prefix, networkDeviceId, secretRotationStatus.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TerminalServerConfiguration"/>. </summary>

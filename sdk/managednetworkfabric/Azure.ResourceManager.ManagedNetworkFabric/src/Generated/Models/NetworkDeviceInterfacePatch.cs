@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="properties"> Network Interface Patch properties. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkDeviceInterfacePatch(NetworkInterfacePatchProperties properties, ManagedServiceIdentityPatch identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkDeviceInterfacePatch(NetworkInterfacePatchProperties properties, NetworkFabricManagedServiceIdentityPatch identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             Identity = identity;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         internal NetworkInterfacePatchProperties Properties { get; set; }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
-        public ManagedServiceIdentityPatch Identity { get; set; }
+        public NetworkFabricManagedServiceIdentityPatch Identity { get; set; }
 
         /// <summary> Switch configuration description. </summary>
         public string Annotation

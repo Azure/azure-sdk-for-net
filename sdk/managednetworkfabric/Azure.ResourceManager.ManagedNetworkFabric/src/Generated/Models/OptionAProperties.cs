@@ -10,37 +10,42 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> option A properties. </summary>
-    public partial class OptionAProperties : Layer3IPPrefixProperties
+    /// <summary> The OptionAProperties. </summary>
+    public partial class OptionAProperties
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="OptionAProperties"/>. </summary>
-        /// <param name="vlanId"> Vlan Id.Example : 501. </param>
-        /// <param name="peerASN"> Peer ASN number.Example : 28. </param>
-        public OptionAProperties(int? vlanId, long peerASN)
+        public OptionAProperties()
         {
-            VlanId = vlanId;
-            PeerASN = peerASN;
         }
 
         /// <summary> Initializes a new instance of <see cref="OptionAProperties"/>. </summary>
-        /// <param name="primaryIpv4Prefix"> IPv4 Address Prefix. </param>
-        /// <param name="primaryIpv6Prefix"> IPv6 Address Prefix. </param>
-        /// <param name="secondaryIpv4Prefix"> Secondary IPv4 Address Prefix. </param>
-        /// <param name="secondaryIpv6Prefix"> Secondary IPv6 Address Prefix. </param>
+        /// <param name="mtu"></param>
+        /// <param name="vlanId"></param>
+        /// <param name="peerAsn"></param>
+        /// <param name="bfdConfiguration"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="mtu"> MTU to use for option A peering. </param>
-        /// <param name="vlanId"> Vlan Id.Example : 501. </param>
-        /// <param name="peerASN"> Peer ASN number.Example : 28. </param>
-        /// <param name="bfdConfiguration"> BFD Configuration properties. </param>
-        internal OptionAProperties(string primaryIpv4Prefix, string primaryIpv6Prefix, string secondaryIpv4Prefix, string secondaryIpv6Prefix, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? mtu, int? vlanId, long peerASN, BfdConfiguration bfdConfiguration) : base(primaryIpv4Prefix, primaryIpv6Prefix, secondaryIpv4Prefix, secondaryIpv6Prefix, additionalBinaryDataProperties)
+        internal OptionAProperties(int? mtu, int? vlanId, long? peerAsn, BfdConfiguration bfdConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Mtu = mtu;
             VlanId = vlanId;
-            PeerASN = peerASN;
+            PeerAsn = peerAsn;
             BfdConfiguration = bfdConfiguration;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Peer ASN number.Example : 28. </summary>
-        public long PeerASN { get; set; }
+        /// <summary> Gets or sets the Mtu. </summary>
+        public int? Mtu { get; set; }
+
+        /// <summary> Gets or sets the VlanId. </summary>
+        public int? VlanId { get; set; }
+
+        /// <summary> Gets or sets the PeerAsn. </summary>
+        public long? PeerAsn { get; set; }
+
+        /// <summary> Gets or sets the BfdConfiguration. </summary>
+        public BfdConfiguration BfdConfiguration { get; set; }
     }
 }

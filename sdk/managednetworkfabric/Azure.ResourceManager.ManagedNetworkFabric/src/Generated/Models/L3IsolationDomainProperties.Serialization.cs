@@ -117,15 +117,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("uniqueRdConfiguration"u8);
                 writer.WriteObjectValue(UniqueRdConfiguration, options);
             }
-            if (Optional.IsDefined(V4routePrefixLimit))
+            if (Optional.IsDefined(V4RoutePrefixLimit))
             {
                 writer.WritePropertyName("v4routePrefixLimit"u8);
-                writer.WriteObjectValue(V4routePrefixLimit, options);
+                writer.WriteObjectValue(V4RoutePrefixLimit, options);
             }
-            if (Optional.IsDefined(V6routePrefixLimit))
+            if (Optional.IsDefined(V6RoutePrefixLimit))
             {
                 writer.WritePropertyName("v6routePrefixLimit"u8);
-                writer.WriteObjectValue(V6routePrefixLimit, options);
+                writer.WriteObjectValue(V6RoutePrefixLimit, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LastOperation))
             {
@@ -202,8 +202,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             ResourceIdentifier networkFabricId = default;
             StaticRouteRoutePolicy staticRouteRoutePolicy = default;
             L3UniqueRouteDistinguisherProperties uniqueRdConfiguration = default;
-            RoutePrefixLimitProperties v4routePrefixLimit = default;
-            RoutePrefixLimitProperties v6routePrefixLimit = default;
+            RoutePrefixLimitProperties v4RoutePrefixLimit = default;
+            RoutePrefixLimitProperties v6RoutePrefixLimit = default;
             LastOperationProperties lastOperation = default;
             BmpExportPolicyProperties exportPolicyConfiguration = default;
             NetworkFabricConfigurationState? configurationState = default;
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    v4routePrefixLimit = RoutePrefixLimitProperties.DeserializeRoutePrefixLimitProperties(prop.Value, options);
+                    v4RoutePrefixLimit = RoutePrefixLimitProperties.DeserializeRoutePrefixLimitProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("v6routePrefixLimit"u8))
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    v6routePrefixLimit = RoutePrefixLimitProperties.DeserializeRoutePrefixLimitProperties(prop.Value, options);
+                    v6RoutePrefixLimit = RoutePrefixLimitProperties.DeserializeRoutePrefixLimitProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("lastOperation"u8))
@@ -353,8 +353,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 networkFabricId,
                 staticRouteRoutePolicy,
                 uniqueRdConfiguration,
-                v4routePrefixLimit,
-                v6routePrefixLimit,
+                v4RoutePrefixLimit,
+                v6RoutePrefixLimit,
                 lastOperation,
                 exportPolicyConfiguration,
                 configurationState,

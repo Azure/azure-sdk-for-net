@@ -20,24 +20,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="InternalNetworkBmpProperties"/>. </summary>
         public InternalNetworkBmpProperties()
         {
-            NeighborIpExclusions = new ChangeTrackingList<string>();
+            NeighborIPExclusions = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalNetworkBmpProperties"/>. </summary>
-        /// <param name="neighborIpExclusions"> BMP Collector Address. </param>
+        /// <param name="neighborIPExclusions"> BMP Collector Address. </param>
         /// <param name="bmpConfigurationState"> BMP Monitoring configuration state. </param>
         /// <param name="exportPolicyConfiguration"> BMP Export Policy configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalNetworkBmpProperties(IList<string> neighborIpExclusions, BmpConfigurationState? bmpConfigurationState, BmpExportPolicyProperties exportPolicyConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalNetworkBmpProperties(IList<string> neighborIPExclusions, BmpConfigurationState? bmpConfigurationState, BmpExportPolicyProperties exportPolicyConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            NeighborIpExclusions = neighborIpExclusions;
+            NeighborIPExclusions = neighborIPExclusions;
             BmpConfigurationState = bmpConfigurationState;
             ExportPolicyConfiguration = exportPolicyConfiguration;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> BMP Collector Address. </summary>
-        public IList<string> NeighborIpExclusions { get; }
+        public IList<string> NeighborIPExclusions { get; }
 
         /// <summary> BMP Monitoring configuration state. </summary>
         public BmpConfigurationState? BmpConfigurationState { get; set; }

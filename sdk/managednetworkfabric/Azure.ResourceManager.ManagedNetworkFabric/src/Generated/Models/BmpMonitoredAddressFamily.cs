@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     {
         private readonly string _value;
         /// <summary> IPv4 Unicast. </summary>
-        private const string Ipv4UnicastValue = "ipv4Unicast";
+        private const string IPv4UnicastValue = "ipv4Unicast";
         /// <summary> IPv6 Unicast. </summary>
-        private const string Ipv6UnicastValue = "ipv6Unicast";
+        private const string IPv6UnicastValue = "ipv6Unicast";
         /// <summary> VPN IPv4. </summary>
-        private const string VpnIpv4Value = "vpnIpv4";
+        private const string VpnIPv4Value = "vpnIpv4";
         /// <summary> VPN IPv6. </summary>
-        private const string VpnIpv6Value = "vpnIpv6";
+        private const string VpnIPv6Value = "vpnIpv6";
         /// <summary> All Address Families. </summary>
         private const string AllValue = "All";
 
@@ -37,16 +37,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> IPv4 Unicast. </summary>
-        public static BmpMonitoredAddressFamily Ipv4Unicast { get; } = new BmpMonitoredAddressFamily(Ipv4UnicastValue);
+        public static BmpMonitoredAddressFamily IPv4Unicast { get; } = new BmpMonitoredAddressFamily(IPv4UnicastValue);
 
         /// <summary> IPv6 Unicast. </summary>
-        public static BmpMonitoredAddressFamily Ipv6Unicast { get; } = new BmpMonitoredAddressFamily(Ipv6UnicastValue);
+        public static BmpMonitoredAddressFamily IPv6Unicast { get; } = new BmpMonitoredAddressFamily(IPv6UnicastValue);
 
         /// <summary> VPN IPv4. </summary>
-        public static BmpMonitoredAddressFamily VpnIpv4 { get; } = new BmpMonitoredAddressFamily(VpnIpv4Value);
+        public static BmpMonitoredAddressFamily VpnIPv4 { get; } = new BmpMonitoredAddressFamily(VpnIPv4Value);
 
         /// <summary> VPN IPv6. </summary>
-        public static BmpMonitoredAddressFamily VpnIpv6 { get; } = new BmpMonitoredAddressFamily(VpnIpv6Value);
+        public static BmpMonitoredAddressFamily VpnIPv6 { get; } = new BmpMonitoredAddressFamily(VpnIPv6Value);
 
         /// <summary> All Address Families. </summary>
         public static BmpMonitoredAddressFamily All { get; } = new BmpMonitoredAddressFamily(AllValue);

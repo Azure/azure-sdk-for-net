@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric;
 
@@ -26,8 +27,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Argument.AssertNotNull(serialNumber, nameof(serialNumber));
 
             SerialNumber = serialNumber;
-            SecretRotationStatus = new ChangeTrackingList<SecretRotationStatus>();
-            CertificateRotationStatus = new ChangeTrackingList<CertificateRotationStatus>();
+            SecretRotationStatus = new ChangeTrackingList<NetworkFabricSecretRotationStatus>();
+            CertificateRotationStatus = new ChangeTrackingList<NetworkFabricCertificateRotationStatus>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkDeviceProperties"/>. </summary>
@@ -39,8 +40,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="networkDeviceSku"> Network Device SKU name. </param>
         /// <param name="networkDeviceRole"> NetworkDeviceRole is the device role: Example: CE | ToR. </param>
         /// <param name="networkRackId"> Reference to network rack resource id. </param>
-        /// <param name="managementIpv4Address"> Management IPv4 Address. </param>
-        /// <param name="managementIpv6Address"> Management IPv6 Address. </param>
+        /// <param name="managementIPv4Address"> Management IPv4 Address. </param>
+        /// <param name="managementIPv6Address"> Management IPv6 Address. </param>
         /// <param name="rwDeviceConfig"> User configured read-write configuration applied on the network devices. </param>
         /// <param name="lastOperation"> Details of the last operation performed on the resource. </param>
         /// <param name="configurationState"> Configuration state of the resource. </param>
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="certificateRotationStatus"> Certificate rotation status for the device's certificates. </param>
         /// <param name="networkFabricId"> Associated Network Fabric Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkDeviceProperties(string annotation, string hostName, string serialNumber, IdentitySelector identitySelector, string version, string networkDeviceSku, NetworkDeviceRole? networkDeviceRole, string networkRackId, string managementIpv4Address, string managementIpv6Address, string rwDeviceConfig, LastOperationProperties lastOperation, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IReadOnlyList<SecretRotationStatus> secretRotationStatus, IReadOnlyList<CertificateRotationStatus> certificateRotationStatus, ResourceIdentifier networkFabricId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkDeviceProperties(string annotation, string hostName, string serialNumber, NetworkFabricIdentitySelector identitySelector, string version, string networkDeviceSku, NetworkDeviceRole? networkDeviceRole, string networkRackId, IPAddress managementIPv4Address, string managementIPv6Address, string rwDeviceConfig, LastOperationProperties lastOperation, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IReadOnlyList<NetworkFabricSecretRotationStatus> secretRotationStatus, IReadOnlyList<NetworkFabricCertificateRotationStatus> certificateRotationStatus, ResourceIdentifier networkFabricId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Annotation = annotation;
             HostName = hostName;
@@ -60,8 +61,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             NetworkDeviceSku = networkDeviceSku;
             NetworkDeviceRole = networkDeviceRole;
             NetworkRackId = networkRackId;
-            ManagementIpv4Address = managementIpv4Address;
-            ManagementIpv6Address = managementIpv6Address;
+            ManagementIPv4Address = managementIPv4Address;
+            ManagementIPv6Address = managementIPv6Address;
             RwDeviceConfig = rwDeviceConfig;
             LastOperation = lastOperation;
             ConfigurationState = configurationState;
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public string SerialNumber { get; set; }
 
         /// <summary> The selection of the managed identity to use with this storage account. The identity type must be either system assigned or user assigned. </summary>
-        public IdentitySelector IdentitySelector { get; set; }
+        public NetworkFabricIdentitySelector IdentitySelector { get; set; }
 
         /// <summary> Current version of the device as defined in SKU. </summary>
         public string Version { get; }
@@ -98,10 +99,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public string NetworkRackId { get; }
 
         /// <summary> Management IPv4 Address. </summary>
-        public string ManagementIpv4Address { get; }
+        public IPAddress ManagementIPv4Address { get; }
 
         /// <summary> Management IPv6 Address. </summary>
-        public string ManagementIpv6Address { get; }
+        public string ManagementIPv6Address { get; }
 
         /// <summary> User configured read-write configuration applied on the network devices. </summary>
         public string RwDeviceConfig { get; }
@@ -119,10 +120,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public NetworkFabricAdministrativeState? AdministrativeState { get; }
 
         /// <summary> Secret rotation status for the device's secrets. </summary>
-        public IReadOnlyList<SecretRotationStatus> SecretRotationStatus { get; } = new ChangeTrackingList<SecretRotationStatus>();
+        public IReadOnlyList<NetworkFabricSecretRotationStatus> SecretRotationStatus { get; } = new ChangeTrackingList<NetworkFabricSecretRotationStatus>();
 
         /// <summary> Certificate rotation status for the device's certificates. </summary>
-        public IReadOnlyList<CertificateRotationStatus> CertificateRotationStatus { get; } = new ChangeTrackingList<CertificateRotationStatus>();
+        public IReadOnlyList<NetworkFabricCertificateRotationStatus> CertificateRotationStatus { get; } = new ChangeTrackingList<NetworkFabricCertificateRotationStatus>();
 
         /// <summary> Associated Network Fabric Resource ID. </summary>
         public ResourceIdentifier NetworkFabricId { get; }

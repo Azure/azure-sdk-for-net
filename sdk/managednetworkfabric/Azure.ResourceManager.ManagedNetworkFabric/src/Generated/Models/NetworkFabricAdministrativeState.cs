@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Disabled Administrative State. </summary>
         private const string DisabledValue = "Disabled";
         /// <summary> MAT(Manual Action Taken) Administrative State. </summary>
-        private const string MATValue = "MAT";
+        private const string MatValue = "MAT";
         /// <summary> RMA(Return Material Authorization) Administrative State. </summary>
-        private const string RMAValue = "RMA";
+        private const string RmaValue = "RMA";
         /// <summary> UnderMaintenance Administrative State. </summary>
         private const string UnderMaintenanceValue = "UnderMaintenance";
         /// <summary> EnabledDegraded Administrative State. </summary>
@@ -43,12 +43,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Disabled Administrative State. </summary>
         public static NetworkFabricAdministrativeState Disabled { get; } = new NetworkFabricAdministrativeState(DisabledValue);
-
-        /// <summary> MAT(Manual Action Taken) Administrative State. </summary>
-        public static NetworkFabricAdministrativeState MAT { get; } = new NetworkFabricAdministrativeState(MATValue);
-
-        /// <summary> RMA(Return Material Authorization) Administrative State. </summary>
-        public static NetworkFabricAdministrativeState RMA { get; } = new NetworkFabricAdministrativeState(RMAValue);
 
         /// <summary> UnderMaintenance Administrative State. </summary>
         public static NetworkFabricAdministrativeState UnderMaintenance { get; } = new NetworkFabricAdministrativeState(UnderMaintenanceValue);

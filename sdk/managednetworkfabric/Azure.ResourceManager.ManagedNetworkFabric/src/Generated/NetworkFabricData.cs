@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Network Fabric Lock details. </summary>
-        public IReadOnlyList<FabricLockProperties> FabricLocks
+        public IReadOnlyList<NetworkFabricLock> FabricLocks
         {
             get
             {
@@ -188,11 +188,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> IPv4Prefix for Management Network. Example: 10.1.0.0/19. </summary>
-        public string Ipv4Prefix
+        public string IPv4Prefix
         {
             get
             {
-                return Properties is null ? default : Properties.Ipv4Prefix;
+                return Properties is null ? default : Properties.IPv4Prefix;
             }
             set
             {
@@ -200,16 +200,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     Properties = new NetworkFabricProperties();
                 }
-                Properties.Ipv4Prefix = value;
+                Properties.IPv4Prefix = value;
             }
         }
 
         /// <summary> IPv6Prefix for Management Network. Example: 3FFE:FFFF:0:CD40::/59. </summary>
-        public string Ipv6Prefix
+        public string IPv6Prefix
         {
             get
             {
-                return Properties is null ? default : Properties.Ipv6Prefix;
+                return Properties is null ? default : Properties.IPv6Prefix;
             }
             set
             {
@@ -217,16 +217,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     Properties = new NetworkFabricProperties();
                 }
-                Properties.Ipv6Prefix = value;
+                Properties.IPv6Prefix = value;
             }
         }
 
         /// <summary> ASN of CE devices for CE/PE connectivity. </summary>
-        public long FabricASN
+        public long FabricAsn
         {
             get
             {
-                return Properties is null ? default : Properties.FabricASN;
+                return Properties is null ? default : Properties.FabricAsn;
             }
             set
             {
@@ -234,7 +234,41 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     Properties = new NetworkFabricProperties();
                 }
-                Properties.FabricASN = value;
+                Properties.FabricAsn = value;
+            }
+        }
+
+        /// <summary> Network and credentials configuration currently applied to terminal server. </summary>
+        public TerminalServerConfiguration TerminalServerConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TerminalServerConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkFabricProperties();
+                }
+                Properties.TerminalServerConfiguration = value;
+            }
+        }
+
+        /// <summary> Configuration to be used to setup the management network. </summary>
+        public ManagementNetworkConfigurationProperties ManagementNetworkConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ManagementNetworkConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkFabricProperties();
+                }
+                Properties.ManagementNetworkConfiguration = value;
             }
         }
 
@@ -308,7 +342,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> NetworkFabric feature flag configuration information. </summary>
-        public IList<FeatureFlagProperties> FeatureFlags
+        public IList<NetworkFabricFeatureFlag> FeatureFlags
         {
             get
             {
@@ -321,7 +355,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Trusted IP Prefixes ARM resource IDs. </summary>
-        public IList<ResourceIdentifier> TrustedIpPrefixes
+        public IList<ResourceIdentifier> TrustedIPPrefixes
         {
             get
             {
@@ -329,7 +363,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     Properties = new NetworkFabricProperties();
                 }
-                return Properties.TrustedIpPrefixes;
+                return Properties.TrustedIPPrefixes;
             }
         }
 
@@ -443,7 +477,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> QoS configuration state. Default is Disabled. </summary>
-        public QosConfigurationState? QosConfigurationState
+        public NetworkFabricQosConfigurationState? QosConfigurationState
         {
             get
             {

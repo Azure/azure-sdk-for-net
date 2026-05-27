@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 throw new FormatException($"The model {nameof(AccessControlListAction)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(AclActionType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(AclActionType.Value.ToString());
             }
             if (Optional.IsDefined(CounterName))
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            AclActionType? @type = default;
+            AclActionType? aclActionType = default;
             string counterName = default;
             string remarkComment = default;
             PoliceRateConfigurationProperties policeRateConfiguration = default;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    @type = new AclActionType(prop.Value.GetString());
+                    aclActionType = new AclActionType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("counterName"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AccessControlListAction(@type, counterName, remarkComment, policeRateConfiguration, additionalBinaryDataProperties);
+            return new AccessControlListAction(aclActionType, counterName, remarkComment, policeRateConfiguration, additionalBinaryDataProperties);
         }
     }
 }

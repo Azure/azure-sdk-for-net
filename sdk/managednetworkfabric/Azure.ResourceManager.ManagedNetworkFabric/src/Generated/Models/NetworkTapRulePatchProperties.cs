@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="identitySelector"> The selection of the managed identity to use with this storage account. The identity type must be either system assigned or user assigned. </param>
         /// <param name="globalNetworkTapRuleActions"> Global network tap rule actions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkTapRulePatchProperties(string annotation, NetworkFabricConfigurationType? configurationType, Uri tapRulesUri, IList<NetworkTapRuleMatchConfiguration> matchConfigurations, IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, IdentitySelectorPatch identitySelector, GlobalNetworkTapRuleActionPatchProperties globalNetworkTapRuleActions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkTapRulePatchProperties(string annotation, NetworkFabricConfigurationType? configurationType, Uri tapRulesUri, IList<NetworkTapRuleMatchConfiguration> matchConfigurations, IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, NetworkFabricIdentitySelectorPatch identitySelector, GlobalNetworkTapRuleActionPatchProperties globalNetworkTapRuleActions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Annotation = annotation;
             ConfigurationType = configurationType;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public IList<CommonDynamicMatchConfiguration> DynamicMatchConfigurations { get; } = new ChangeTrackingList<CommonDynamicMatchConfiguration>();
 
         /// <summary> The selection of the managed identity to use with this storage account. The identity type must be either system assigned or user assigned. </summary>
-        public IdentitySelectorPatch IdentitySelector { get; set; }
+        public NetworkFabricIdentitySelectorPatch IdentitySelector { get; set; }
 
         /// <summary> Global network tap rule actions. </summary>
         public GlobalNetworkTapRuleActionPatchProperties GlobalNetworkTapRuleActions { get; set; }

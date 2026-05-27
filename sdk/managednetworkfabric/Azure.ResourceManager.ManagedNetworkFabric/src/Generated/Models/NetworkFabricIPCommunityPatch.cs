@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         internal IpCommunityPatchableProperties Properties { get; set; }
 
         /// <summary> List of IP Community Rules. </summary>
-        public IList<IPCommunityRule> IpCommunityRules
+        public IList<IPCommunityRule> IPCommunityRules
         {
             get
             {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     Properties = new IpCommunityPatchableProperties();
                 }
-                return Properties.IpCommunityRules;
+                return Properties.IPCommunityRules;
             }
         }
     }

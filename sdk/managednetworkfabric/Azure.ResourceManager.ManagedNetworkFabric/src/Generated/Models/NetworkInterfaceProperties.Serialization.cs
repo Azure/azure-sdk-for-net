@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric;
@@ -91,15 +92,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("interfaceType"u8);
                 writer.WriteStringValue(InterfaceType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Ipv4Address))
+            if (options.Format != "W" && Optional.IsDefined(IPv4Address))
             {
                 writer.WritePropertyName("ipv4Address"u8);
-                writer.WriteStringValue(Ipv4Address);
+                writer.WriteStringValue(IPv4Address.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Ipv6Address))
+            if (options.Format != "W" && Optional.IsDefined(IPv6Address))
             {
                 writer.WritePropertyName("ipv6Address"u8);
-                writer.WriteStringValue(Ipv6Address);
+                writer.WriteStringValue(IPv6Address);
             }
             if (options.Format != "W" && Optional.IsDefined(Description))
             {
@@ -168,8 +169,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             string physicalIdentifier = default;
             string connectedTo = default;
             NetworkDeviceInterfaceType? interfaceType = default;
-            string ipv4Address = default;
-            string ipv6Address = default;
+            IPAddress iPv4Address = default;
+            string iPv6Address = default;
             string description = default;
             string additionalDescription = default;
             LastOperationProperties lastOperation = default;
@@ -205,12 +206,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (prop.NameEquals("ipv4Address"u8))
                 {
-                    ipv4Address = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    iPv4Address = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("ipv6Address"u8))
                 {
-                    ipv6Address = prop.Value.GetString();
+                    iPv6Address = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("description"u8))
@@ -279,8 +284,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 physicalIdentifier,
                 connectedTo,
                 interfaceType,
-                ipv4Address,
-                ipv6Address,
+                iPv4Address,
+                iPv6Address,
                 description,
                 additionalDescription,
                 lastOperation,

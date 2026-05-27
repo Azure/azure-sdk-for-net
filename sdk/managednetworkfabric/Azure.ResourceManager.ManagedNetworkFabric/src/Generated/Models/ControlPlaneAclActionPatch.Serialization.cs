@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 throw new FormatException($"The model {nameof(ControlPlaneAclActionPatch)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(ActionType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(ActionType.Value.ToString());
             }
             if (Optional.IsDefined(RemarkComment))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            ControlPlaneAclActionType? @type = default;
+            ControlPlaneAclActionType? actionType = default;
             string remarkComment = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    @type = new ControlPlaneAclActionType(prop.Value.GetString());
+                    actionType = new ControlPlaneAclActionType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("remarkComment"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ControlPlaneAclActionPatch(@type, remarkComment, additionalBinaryDataProperties);
+            return new ControlPlaneAclActionPatch(actionType, remarkComment, additionalBinaryDataProperties);
         }
     }
 }

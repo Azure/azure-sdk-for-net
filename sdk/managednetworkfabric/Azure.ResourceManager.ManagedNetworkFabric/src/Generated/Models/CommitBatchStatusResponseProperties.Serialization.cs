@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             string commitBatchId = default;
-            CommitBatchState? commitBatchState = default;
+            NetworkFabricCommitBatchState? commitBatchState = default;
             CommitBatchDetails commitBatchDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    commitBatchState = new CommitBatchState(prop.Value.GetString());
+                    commitBatchState = new NetworkFabricCommitBatchState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("commitBatchDetails"u8))

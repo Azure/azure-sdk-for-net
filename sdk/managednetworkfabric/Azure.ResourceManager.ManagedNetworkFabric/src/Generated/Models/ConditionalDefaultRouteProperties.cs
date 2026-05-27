@@ -20,25 +20,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="ConditionalDefaultRouteProperties"/>. </summary>
         public ConditionalDefaultRouteProperties()
         {
-            Ipv4Routes = new ChangeTrackingList<StaticRouteProperties>();
-            Ipv6Routes = new ChangeTrackingList<StaticRouteProperties>();
+            IPv4Routes = new ChangeTrackingList<StaticRouteProperties>();
+            IPv6Routes = new ChangeTrackingList<StaticRouteProperties>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ConditionalDefaultRouteProperties"/>. </summary>
-        /// <param name="ipv4Routes"> List of IPv4 Routes. </param>
-        /// <param name="ipv6Routes"> List of IPv6 Routes. </param>
+        /// <param name="iPv4Routes"> List of IPv4 Routes. </param>
+        /// <param name="iPv6Routes"> List of IPv6 Routes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConditionalDefaultRouteProperties(IList<StaticRouteProperties> ipv4Routes, IList<StaticRouteProperties> ipv6Routes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConditionalDefaultRouteProperties(IList<StaticRouteProperties> iPv4Routes, IList<StaticRouteProperties> iPv6Routes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Ipv4Routes = ipv4Routes;
-            Ipv6Routes = ipv6Routes;
+            IPv4Routes = iPv4Routes;
+            IPv6Routes = iPv6Routes;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> List of IPv4 Routes. </summary>
-        public IList<StaticRouteProperties> Ipv4Routes { get; }
+        public IList<StaticRouteProperties> IPv4Routes { get; }
 
         /// <summary> List of IPv6 Routes. </summary>
-        public IList<StaticRouteProperties> Ipv6Routes { get; }
+        public IList<StaticRouteProperties> IPv6Routes { get; }
     }
 }

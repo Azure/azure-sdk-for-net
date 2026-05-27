@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 throw new FormatException($"The model {nameof(IpCommunityPatchableProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(IpCommunityRules))
+            if (Optional.IsCollectionDefined(IPCommunityRules))
             {
                 writer.WritePropertyName("ipCommunityRules"u8);
                 writer.WriteStartArray();
-                foreach (IPCommunityRule item in IpCommunityRules)
+                foreach (IPCommunityRule item in IPCommunityRules)
                 {
                     writer.WriteObjectValue(item, options);
                 }

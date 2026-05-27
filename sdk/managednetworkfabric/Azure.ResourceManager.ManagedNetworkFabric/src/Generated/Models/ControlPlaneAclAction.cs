@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ControlPlaneAclAction"/>. </summary>
-        /// <param name="type"> Type of actions that can be performed. </param>
+        /// <param name="actionType"> Type of actions that can be performed. </param>
         /// <param name="remarkComment"> Remark comment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ControlPlaneAclAction(ControlPlaneAclActionType? @type, string remarkComment, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ControlPlaneAclAction(ControlPlaneAclActionType? actionType, string remarkComment, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            ActionType = actionType;
             RemarkComment = remarkComment;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Type of actions that can be performed. </summary>
-        public ControlPlaneAclActionType? Type { get; set; }
+        public ControlPlaneAclActionType? ActionType { get; set; }
 
         /// <summary> Remark comment. </summary>
         public string RemarkComment { get; set; }

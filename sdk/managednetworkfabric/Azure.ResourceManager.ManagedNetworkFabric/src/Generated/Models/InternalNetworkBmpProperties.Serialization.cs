@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 throw new FormatException($"The model {nameof(InternalNetworkBmpProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(NeighborIpExclusions))
+            if (Optional.IsCollectionDefined(NeighborIPExclusions))
             {
                 writer.WritePropertyName("neighborIpExclusions"u8);
                 writer.WriteStartArray();
-                foreach (string item in NeighborIpExclusions)
+                foreach (string item in NeighborIPExclusions)
                 {
                     if (item == null)
                     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            IList<string> neighborIpExclusions = default;
+            IList<string> neighborIPExclusions = default;
             BmpConfigurationState? bmpConfigurationState = default;
             BmpExportPolicyProperties exportPolicyConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             array.Add(item.GetString());
                         }
                     }
-                    neighborIpExclusions = array;
+                    neighborIPExclusions = array;
                     continue;
                 }
                 if (prop.NameEquals("bmpConfigurationState"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InternalNetworkBmpProperties(neighborIpExclusions ?? new ChangeTrackingList<string>(), bmpConfigurationState, exportPolicyConfiguration, additionalBinaryDataProperties);
+            return new InternalNetworkBmpProperties(neighborIPExclusions ?? new ChangeTrackingList<string>(), bmpConfigurationState, exportPolicyConfiguration, additionalBinaryDataProperties);
         }
     }
 }

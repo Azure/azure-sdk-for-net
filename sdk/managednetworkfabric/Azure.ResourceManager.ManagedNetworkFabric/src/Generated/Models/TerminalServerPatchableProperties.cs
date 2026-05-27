@@ -10,43 +10,37 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> Network and credentials configuration already applied to terminal server. </summary>
+    /// <summary> The TerminalServerPatchableProperties. </summary>
     public partial class TerminalServerPatchableProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TerminalServerPatchableProperties"/>. </summary>
-        /// <param name="username"> Username for the terminal server connection. </param>
-        /// <param name="password"> Password for the terminal server connection. </param>
-        /// <param name="serialNumber"> Serial Number of Terminal server. </param>
-        /// <param name="primaryIpv4Prefix"> IPv4 Address Prefix. </param>
-        /// <param name="primaryIpv6Prefix"> IPv6 Address Prefix. </param>
-        /// <param name="secondaryIpv4Prefix"> Secondary IPv4 Address Prefix. </param>
-        /// <param name="secondaryIpv6Prefix"> Secondary IPv6 Address Prefix. </param>
+        public TerminalServerPatchableProperties()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TerminalServerPatchableProperties"/>. </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <param name="serialNumber"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TerminalServerPatchableProperties(string username, string password, string serialNumber, string primaryIpv4Prefix, string primaryIpv6Prefix, string secondaryIpv4Prefix, string secondaryIpv6Prefix, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TerminalServerPatchableProperties(string username, string password, string serialNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Username = username;
             Password = password;
             SerialNumber = serialNumber;
-            PrimaryIpv4Prefix = primaryIpv4Prefix;
-            PrimaryIpv6Prefix = primaryIpv6Prefix;
-            SecondaryIpv4Prefix = secondaryIpv4Prefix;
-            SecondaryIpv6Prefix = secondaryIpv6Prefix;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> IPv4 Address Prefix. </summary>
-        public string PrimaryIpv4Prefix { get; set; }
+        /// <summary> Gets or sets the Username. </summary>
+        public string Username { get; set; }
 
-        /// <summary> IPv6 Address Prefix. </summary>
-        public string PrimaryIpv6Prefix { get; set; }
+        /// <summary> Gets or sets the Password. </summary>
+        public string Password { get; set; }
 
-        /// <summary> Secondary IPv4 Address Prefix. </summary>
-        public string SecondaryIpv4Prefix { get; set; }
-
-        /// <summary> Secondary IPv6 Address Prefix. </summary>
-        public string SecondaryIpv6Prefix { get; set; }
+        /// <summary> Gets or sets the SerialNumber. </summary>
+        public string SerialNumber { get; set; }
     }
 }

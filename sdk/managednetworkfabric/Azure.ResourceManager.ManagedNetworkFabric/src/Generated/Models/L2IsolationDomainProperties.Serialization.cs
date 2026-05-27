@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             ResourceIdentifier networkFabricId = default;
             int vlanId = default;
             int? mtu = default;
-            ExtendedVlan? extendedVlan = default;
+            NetworkFabricExtendedVlan? extendedVlan = default;
             ResourceIdentifier networkToNetworkInterconnectId = default;
             LastOperationProperties lastOperation = default;
             NetworkFabricConfigurationState? configurationState = default;
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    extendedVlan = new ExtendedVlan(prop.Value.GetString());
+                    extendedVlan = new NetworkFabricExtendedVlan(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("networkToNetworkInterconnectId"u8))

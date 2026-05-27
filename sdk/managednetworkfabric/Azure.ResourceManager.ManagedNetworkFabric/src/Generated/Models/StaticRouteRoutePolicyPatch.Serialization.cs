@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 throw new FormatException($"The model {nameof(StaticRouteRoutePolicyPatch)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(StaticExportRoutePolicy))
+            if (Optional.IsDefined(StaticRouteExportRoutePolicy))
             {
                 writer.WritePropertyName("exportRoutePolicy"u8);
-                writer.WriteObjectValue(StaticExportRoutePolicy, options);
+                writer.WriteObjectValue(StaticRouteExportRoutePolicy, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            L3ExportRoutePolicyPatch staticExportRoutePolicy = default;
+            L3ExportRoutePolicyPatch staticRouteExportRoutePolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    staticExportRoutePolicy = L3ExportRoutePolicyPatch.DeserializeL3ExportRoutePolicyPatch(prop.Value, options);
+                    staticRouteExportRoutePolicy = L3ExportRoutePolicyPatch.DeserializeL3ExportRoutePolicyPatch(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new StaticRouteRoutePolicyPatch(staticExportRoutePolicy, additionalBinaryDataProperties);
+            return new StaticRouteRoutePolicyPatch(staticRouteExportRoutePolicy, additionalBinaryDataProperties);
         }
     }
 }

@@ -86,15 +86,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("vlanId"u8);
                 writer.WriteNumberValue(VlanId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(FabricASN))
+            if (options.Format != "W" && Optional.IsDefined(FabricAsn))
             {
                 writer.WritePropertyName("fabricASN"u8);
-                writer.WriteNumberValue(FabricASN.Value);
+                writer.WriteNumberValue(FabricAsn.Value);
             }
-            if (Optional.IsDefined(PeerASN))
+            if (Optional.IsDefined(PeerAsn))
             {
                 writer.WritePropertyName("peerASN"u8);
-                writer.WriteNumberValue(PeerASN.Value);
+                writer.WriteNumberValue(PeerAsn.Value);
             }
             if (Optional.IsDefined(BfdConfiguration))
             {
@@ -126,15 +126,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("v6OverV4BgpSession"u8);
                 writer.WriteStringValue(V6OverV4BgpSession.Value.ToString());
             }
-            if (Optional.IsDefined(NativeIpv4PrefixLimit))
+            if (Optional.IsDefined(NativeIPv4PrefixLimit))
             {
                 writer.WritePropertyName("nativeIpv4PrefixLimit"u8);
-                writer.WriteObjectValue(NativeIpv4PrefixLimit, options);
+                writer.WriteObjectValue(NativeIPv4PrefixLimit, options);
             }
-            if (Optional.IsDefined(NativeIpv6PrefixLimit))
+            if (Optional.IsDefined(NativeIPv6PrefixLimit))
             {
                 writer.WritePropertyName("nativeIpv6PrefixLimit"u8);
-                writer.WriteObjectValue(NativeIpv6PrefixLimit, options);
+                writer.WriteObjectValue(NativeIPv6PrefixLimit, options);
             }
         }
 
@@ -163,43 +163,43 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            string primaryIpv4Prefix = default;
-            string primaryIpv6Prefix = default;
-            string secondaryIpv4Prefix = default;
-            string secondaryIpv6Prefix = default;
+            string primaryIPv4Prefix = default;
+            string primaryIPv6Prefix = default;
+            string secondaryIPv4Prefix = default;
+            string secondaryIPv6Prefix = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             int? mtu = default;
             int? vlanId = default;
-            long? fabricASN = default;
-            long? peerASN = default;
+            long? fabricAsn = default;
+            long? peerAsn = default;
             BfdConfiguration bfdConfiguration = default;
             ResourceIdentifier ingressAclId = default;
             ResourceIdentifier egressAclId = default;
             ExternalNetworkBmpPatchProperties bmpConfiguration = default;
-            V4OverV6BgpSessionState? v4OverV6BgpSession = default;
-            V6OverV4BgpSessionState? v6OverV4BgpSession = default;
-            NativeIpv4PrefixLimitPatchProperties nativeIpv4PrefixLimit = default;
-            NativeIpv6PrefixLimitPatchProperties nativeIpv6PrefixLimit = default;
+            NetworkFabricV4OverV6BgpSessionState? v4OverV6BgpSession = default;
+            NetworkFabricV6OverV4BgpSessionState? v6OverV4BgpSession = default;
+            NativeIpv4PrefixLimitPatchProperties nativeIPv4PrefixLimit = default;
+            NativeIpv6PrefixLimitPatchProperties nativeIPv6PrefixLimit = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("primaryIpv4Prefix"u8))
                 {
-                    primaryIpv4Prefix = prop.Value.GetString();
+                    primaryIPv4Prefix = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("primaryIpv6Prefix"u8))
                 {
-                    primaryIpv6Prefix = prop.Value.GetString();
+                    primaryIPv6Prefix = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("secondaryIpv4Prefix"u8))
                 {
-                    secondaryIpv4Prefix = prop.Value.GetString();
+                    secondaryIPv4Prefix = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("secondaryIpv6Prefix"u8))
                 {
-                    secondaryIpv6Prefix = prop.Value.GetString();
+                    secondaryIPv6Prefix = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("mtu"u8))
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    fabricASN = prop.Value.GetInt64();
+                    fabricAsn = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("peerASN"u8))
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    peerASN = prop.Value.GetInt64();
+                    peerAsn = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("bfdConfiguration"u8))
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    v4OverV6BgpSession = new V4OverV6BgpSessionState(prop.Value.GetString());
+                    v4OverV6BgpSession = new NetworkFabricV4OverV6BgpSessionState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("v6OverV4BgpSession"u8))
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    v6OverV4BgpSession = new V6OverV4BgpSessionState(prop.Value.GetString());
+                    v6OverV4BgpSession = new NetworkFabricV6OverV4BgpSessionState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("nativeIpv4PrefixLimit"u8))
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    nativeIpv4PrefixLimit = NativeIpv4PrefixLimitPatchProperties.DeserializeNativeIpv4PrefixLimitPatchProperties(prop.Value, options);
+                    nativeIPv4PrefixLimit = NativeIpv4PrefixLimitPatchProperties.DeserializeNativeIpv4PrefixLimitPatchProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("nativeIpv6PrefixLimit"u8))
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    nativeIpv6PrefixLimit = NativeIpv6PrefixLimitPatchProperties.DeserializeNativeIpv6PrefixLimitPatchProperties(prop.Value, options);
+                    nativeIPv6PrefixLimit = NativeIpv6PrefixLimitPatchProperties.DeserializeNativeIpv6PrefixLimitPatchProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -316,23 +316,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             return new ExternalNetworkPatchOptionAProperties(
-                primaryIpv4Prefix,
-                primaryIpv6Prefix,
-                secondaryIpv4Prefix,
-                secondaryIpv6Prefix,
+                primaryIPv4Prefix,
+                primaryIPv6Prefix,
+                secondaryIPv4Prefix,
+                secondaryIPv6Prefix,
                 additionalBinaryDataProperties,
                 mtu,
                 vlanId,
-                fabricASN,
-                peerASN,
+                fabricAsn,
+                peerAsn,
                 bfdConfiguration,
                 ingressAclId,
                 egressAclId,
                 bmpConfiguration,
                 v4OverV6BgpSession,
                 v6OverV4BgpSession,
-                nativeIpv4PrefixLimit,
-                nativeIpv6PrefixLimit);
+                nativeIPv4PrefixLimit,
+                nativeIPv6PrefixLimit);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="CommonDynamicMatchConfiguration"/>. </summary>
         public CommonDynamicMatchConfiguration()
         {
-            IpGroups = new ChangeTrackingList<MatchConfigurationIPGroupProperties>();
+            IPGroups = new ChangeTrackingList<MatchConfigurationIPGroupProperties>();
             VlanGroups = new ChangeTrackingList<VlanGroupProperties>();
             PortGroups = new ChangeTrackingList<PortGroupProperties>();
         }
@@ -32,14 +32,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal CommonDynamicMatchConfiguration(IList<MatchConfigurationIPGroupProperties> ipGroups, IList<VlanGroupProperties> vlanGroups, IList<PortGroupProperties> portGroups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IpGroups = ipGroups;
+            IPGroups = ipGroups;
             VlanGroups = vlanGroups;
             PortGroups = portGroups;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> List of IP Groups. </summary>
-        public IList<MatchConfigurationIPGroupProperties> IpGroups { get; }
+        public IList<MatchConfigurationIPGroupProperties> IPGroups { get; }
 
         /// <summary> List of vlan groups. </summary>
         public IList<VlanGroupProperties> VlanGroups { get; }

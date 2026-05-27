@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="interfaceType"> Type of the interface. </param>
         /// <param name="description"> Description of the interface. </param>
         /// <param name="additionalDescription"> Additional description of the interface. </param>
-        /// <param name="ipv4Address"> IPv4Address of the interface. </param>
-        /// <param name="ipv6Address"> IPv6Address of the interface. </param>
+        /// <param name="iPv4Address"> IPv4Address of the interface. </param>
+        /// <param name="iPv6Address"> IPv6Address of the interface. </param>
         /// <param name="serialNumber"> Serial number of the interface. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </param>
-        internal NetworkBootstrapInterfaceProperties(string annotation, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, NetworkFabricConfigurationState? configurationState, string physicalIdentifier, string connectedTo, NetworkDeviceInterfaceType? interfaceType, string description, string additionalDescription, string ipv4Address, string ipv6Address, string serialNumber) : base(annotation, additionalBinaryDataProperties)
+        internal NetworkBootstrapInterfaceProperties(string annotation, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, NetworkFabricConfigurationState? configurationState, string physicalIdentifier, string connectedTo, NetworkDeviceInterfaceType? interfaceType, string description, string additionalDescription, string iPv4Address, string iPv6Address, string serialNumber) : base(annotation, additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             AdministrativeState = administrativeState;
@@ -42,8 +42,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             InterfaceType = interfaceType;
             Description = description;
             AdditionalDescription = additionalDescription;
-            Ipv4Address = ipv4Address;
-            Ipv6Address = ipv6Address;
+            IPv4Address = iPv4Address;
+            IPv6Address = iPv6Address;
             SerialNumber = serialNumber;
         }
 
@@ -72,10 +72,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public string AdditionalDescription { get; set; }
 
         /// <summary> IPv4Address of the interface. </summary>
-        public string Ipv4Address { get; }
+        public string IPv4Address { get; }
 
         /// <summary> IPv6Address of the interface. </summary>
-        public string Ipv6Address { get; }
+        public string IPv6Address { get; }
 
         /// <summary> Serial number of the interface. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </summary>
         public string SerialNumber { get; set; }

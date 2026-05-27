@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkTapRuleProperties(string annotation, NetworkFabricConfigurationType configurationType, Uri tapRulesUri, IdentitySelector identitySelector, IList<NetworkTapRuleMatchConfiguration> matchConfigurations, IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, string networkTapId, IReadOnlyList<ResourceIdentifier> networkTapIds, int? pollingIntervalInSeconds, DateTimeOffset? lastSyncedOn, GlobalNetworkTapRuleActionProperties globalNetworkTapRuleActions, LastOperationProperties lastOperation, IReadOnlyList<ResourceIdentifier> networkFabricIds, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkTapRuleProperties(string annotation, NetworkFabricConfigurationType configurationType, Uri tapRulesUri, NetworkFabricIdentitySelector identitySelector, IList<NetworkTapRuleMatchConfiguration> matchConfigurations, IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, string networkTapId, IReadOnlyList<ResourceIdentifier> networkTapIds, int? pollingIntervalInSeconds, DateTimeOffset? lastSyncedOn, GlobalNetworkTapRuleActionProperties globalNetworkTapRuleActions, LastOperationProperties lastOperation, IReadOnlyList<ResourceIdentifier> networkFabricIds, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Annotation = annotation;
             ConfigurationType = configurationType;
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public Uri TapRulesUri { get; set; }
 
         /// <summary> The selection of the managed identity to use with this storage account. The identity type must be either system assigned or user assigned. </summary>
-        public IdentitySelector IdentitySelector { get; set; }
+        public NetworkFabricIdentitySelector IdentitySelector { get; set; }
 
         /// <summary> List of match configurations. </summary>
         public IList<NetworkTapRuleMatchConfiguration> MatchConfigurations { get; } = new ChangeTrackingList<NetworkTapRuleMatchConfiguration>();

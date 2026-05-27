@@ -74,25 +74,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 throw new FormatException($"The model {nameof(Layer3IPPrefixProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(PrimaryIpv4Prefix))
+            if (Optional.IsDefined(PrimaryIPv4Prefix))
             {
                 writer.WritePropertyName("primaryIpv4Prefix"u8);
-                writer.WriteStringValue(PrimaryIpv4Prefix);
+                writer.WriteStringValue(PrimaryIPv4Prefix);
             }
-            if (Optional.IsDefined(PrimaryIpv6Prefix))
+            if (Optional.IsDefined(PrimaryIPv6Prefix))
             {
                 writer.WritePropertyName("primaryIpv6Prefix"u8);
-                writer.WriteStringValue(PrimaryIpv6Prefix);
+                writer.WriteStringValue(PrimaryIPv6Prefix);
             }
-            if (Optional.IsDefined(SecondaryIpv4Prefix))
+            if (Optional.IsDefined(SecondaryIPv4Prefix))
             {
                 writer.WritePropertyName("secondaryIpv4Prefix"u8);
-                writer.WriteStringValue(SecondaryIpv4Prefix);
+                writer.WriteStringValue(SecondaryIPv4Prefix);
             }
-            if (Optional.IsDefined(SecondaryIpv6Prefix))
+            if (Optional.IsDefined(SecondaryIPv6Prefix))
             {
                 writer.WritePropertyName("secondaryIpv6Prefix"u8);
-                writer.WriteStringValue(SecondaryIpv6Prefix);
+                writer.WriteStringValue(SecondaryIPv6Prefix);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -136,31 +136,31 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            string primaryIpv4Prefix = default;
-            string primaryIpv6Prefix = default;
-            string secondaryIpv4Prefix = default;
-            string secondaryIpv6Prefix = default;
+            string primaryIPv4Prefix = default;
+            string primaryIPv6Prefix = default;
+            string secondaryIPv4Prefix = default;
+            string secondaryIPv6Prefix = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("primaryIpv4Prefix"u8))
                 {
-                    primaryIpv4Prefix = prop.Value.GetString();
+                    primaryIPv4Prefix = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("primaryIpv6Prefix"u8))
                 {
-                    primaryIpv6Prefix = prop.Value.GetString();
+                    primaryIPv6Prefix = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("secondaryIpv4Prefix"u8))
                 {
-                    secondaryIpv4Prefix = prop.Value.GetString();
+                    secondaryIPv4Prefix = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("secondaryIpv6Prefix"u8))
                 {
-                    secondaryIpv6Prefix = prop.Value.GetString();
+                    secondaryIPv6Prefix = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new Layer3IPPrefixProperties(primaryIpv4Prefix, primaryIpv6Prefix, secondaryIpv4Prefix, secondaryIpv6Prefix, additionalBinaryDataProperties);
+            return new Layer3IPPrefixProperties(primaryIPv4Prefix, primaryIPv6Prefix, secondaryIPv4Prefix, secondaryIPv6Prefix, additionalBinaryDataProperties);
         }
     }
 }

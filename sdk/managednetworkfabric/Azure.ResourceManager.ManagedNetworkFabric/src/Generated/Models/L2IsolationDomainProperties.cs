@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="configurationState"> Configuration state of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
-        internal L2IsolationDomainProperties(string annotation, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier networkFabricId, int vlanId, int? mtu, ExtendedVlan? extendedVlan, ResourceIdentifier networkToNetworkInterconnectId, LastOperationProperties lastOperation, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState) : base(annotation, additionalBinaryDataProperties)
+        internal L2IsolationDomainProperties(string annotation, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier networkFabricId, int vlanId, int? mtu, NetworkFabricExtendedVlan? extendedVlan, ResourceIdentifier networkToNetworkInterconnectId, LastOperationProperties lastOperation, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState) : base(annotation, additionalBinaryDataProperties)
         {
             NetworkFabricId = networkFabricId;
             VlanId = vlanId;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public int? Mtu { get; set; }
 
         /// <summary> Extended VLAN status, default value is Disabled. </summary>
-        public ExtendedVlan? ExtendedVlan { get; set; }
+        public NetworkFabricExtendedVlan? ExtendedVlan { get; set; }
 
         /// <summary> ARM Resource ID of the networkToNetworkInterconnectId of the L2 ISD resource. </summary>
         public ResourceIdentifier NetworkToNetworkInterconnectId { get; set; }

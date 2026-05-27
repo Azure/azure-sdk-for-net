@@ -23,20 +23,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ImportRoutePolicyPatch"/>. </summary>
-        /// <param name="importIpv4RoutePolicyId"> ARM resource ID of RoutePolicy. </param>
-        /// <param name="importIpv6RoutePolicyId"> ARM resource ID of RoutePolicy. </param>
+        /// <param name="importIPv4RoutePolicyId"> ARM resource ID of RoutePolicy. </param>
+        /// <param name="importIPv6RoutePolicyId"> ARM resource ID of RoutePolicy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImportRoutePolicyPatch(ResourceIdentifier importIpv4RoutePolicyId, ResourceIdentifier importIpv6RoutePolicyId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImportRoutePolicyPatch(ResourceIdentifier importIPv4RoutePolicyId, ResourceIdentifier importIPv6RoutePolicyId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ImportIpv4RoutePolicyId = importIpv4RoutePolicyId;
-            ImportIpv6RoutePolicyId = importIpv6RoutePolicyId;
+            ImportIPv4RoutePolicyId = importIPv4RoutePolicyId;
+            ImportIPv6RoutePolicyId = importIPv6RoutePolicyId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> ARM resource ID of RoutePolicy. </summary>
-        public ResourceIdentifier ImportIpv4RoutePolicyId { get; set; }
+        public ResourceIdentifier ImportIPv4RoutePolicyId { get; set; }
 
         /// <summary> ARM resource ID of RoutePolicy. </summary>
-        public ResourceIdentifier ImportIpv6RoutePolicyId { get; set; }
+        public ResourceIdentifier ImportIPv6RoutePolicyId { get; set; }
     }
 }

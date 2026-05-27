@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Access Control List (ACL) Type. </summary>
-        public AclType? AclType
+        public NetworkFabricAclType? AclType
         {
             get
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Device Role. </summary>
-        public DeviceRole? DeviceRole
+        public NetworkFabricDeviceRole? DeviceRole
         {
             get
             {

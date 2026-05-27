@@ -23,20 +23,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ImportRoutePolicyInformation"/>. </summary>
-        /// <param name="importIpv4RoutePolicyId"> Import IPv4 Route Policy Id. </param>
-        /// <param name="importIpv6RoutePolicyId"> Import IPv6 Route Policy Id. </param>
+        /// <param name="importIPv4RoutePolicyId"> Import IPv4 Route Policy Id. </param>
+        /// <param name="importIPv6RoutePolicyId"> Import IPv6 Route Policy Id. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImportRoutePolicyInformation(ResourceIdentifier importIpv4RoutePolicyId, ResourceIdentifier importIpv6RoutePolicyId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImportRoutePolicyInformation(ResourceIdentifier importIPv4RoutePolicyId, ResourceIdentifier importIPv6RoutePolicyId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ImportIpv4RoutePolicyId = importIpv4RoutePolicyId;
-            ImportIpv6RoutePolicyId = importIpv6RoutePolicyId;
+            ImportIPv4RoutePolicyId = importIPv4RoutePolicyId;
+            ImportIPv6RoutePolicyId = importIPv6RoutePolicyId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Import IPv4 Route Policy Id. </summary>
-        public ResourceIdentifier ImportIpv4RoutePolicyId { get; set; }
+        public ResourceIdentifier ImportIPv4RoutePolicyId { get; set; }
 
         /// <summary> Import IPv6 Route Policy Id. </summary>
-        public ResourceIdentifier ImportIpv6RoutePolicyId { get; set; }
+        public ResourceIdentifier ImportIPv6RoutePolicyId { get; set; }
     }
 }

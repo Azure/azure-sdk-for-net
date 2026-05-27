@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Network Fabric Patch properties. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        internal NetworkFabricPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkFabricPatchProperties properties, ManagedServiceIdentityPatch identity) : base(tags, additionalBinaryDataProperties)
+        internal NetworkFabricPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkFabricPatchProperties properties, NetworkFabricManagedServiceIdentityPatch identity) : base(tags, additionalBinaryDataProperties)
         {
             Properties = properties;
             Identity = identity;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         internal NetworkFabricPatchProperties Properties { get; set; }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
-        public ManagedServiceIdentityPatch Identity { get; set; }
+        public NetworkFabricManagedServiceIdentityPatch Identity { get; set; }
 
         /// <summary> Switch configuration description. </summary>
         public string Annotation
@@ -88,11 +88,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> IPv4Prefix for Management Network. Example: 10.1.0.0/19. </summary>
-        public string Ipv4Prefix
+        public string IPv4Prefix
         {
             get
             {
-                return Properties is null ? default : Properties.Ipv4Prefix;
+                return Properties is null ? default : Properties.IPv4Prefix;
             }
             set
             {
@@ -100,16 +100,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     Properties = new NetworkFabricPatchProperties();
                 }
-                Properties.Ipv4Prefix = value;
+                Properties.IPv4Prefix = value;
             }
         }
 
         /// <summary> IPv6Prefix for Management Network. Example: 3FFE:FFFF:0:CD40::/59. </summary>
-        public string Ipv6Prefix
+        public string IPv6Prefix
         {
             get
             {
-                return Properties is null ? default : Properties.Ipv6Prefix;
+                return Properties is null ? default : Properties.IPv6Prefix;
             }
             set
             {
@@ -117,16 +117,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     Properties = new NetworkFabricPatchProperties();
                 }
-                Properties.Ipv6Prefix = value;
+                Properties.IPv6Prefix = value;
             }
         }
 
         /// <summary> ASN of CE devices for CE/PE connectivity. </summary>
-        public long? FabricASN
+        public long? FabricAsn
         {
             get
             {
-                return Properties is null ? default : Properties.FabricASN;
+                return Properties is null ? default : Properties.FabricAsn;
             }
             set
             {
@@ -134,7 +134,41 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     Properties = new NetworkFabricPatchProperties();
                 }
-                Properties.FabricASN = value;
+                Properties.FabricAsn = value;
+            }
+        }
+
+        /// <summary> Network and credentials configuration already applied to terminal server. </summary>
+        public NetworkFabricPatchablePropertiesTerminalServerConfiguration TerminalServerConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TerminalServerConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkFabricPatchProperties();
+                }
+                Properties.TerminalServerConfiguration = value;
+            }
+        }
+
+        /// <summary> Configuration to be used to setup the management network. </summary>
+        public ManagementNetworkConfigurationPatchableProperties ManagementNetworkConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ManagementNetworkConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkFabricPatchProperties();
+                }
+                Properties.ManagementNetworkConfiguration = value;
             }
         }
 
@@ -186,7 +220,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Trusted IP Prefix ARM resource IDs. </summary>
-        public IList<ResourceIdentifier> TrustedIpPrefixes
+        public IList<ResourceIdentifier> TrustedIPPrefixes
         {
             get
             {
@@ -194,7 +228,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     Properties = new NetworkFabricPatchProperties();
                 }
-                return Properties.TrustedIpPrefixes;
+                return Properties.TrustedIPPrefixes;
             }
         }
 
@@ -216,7 +250,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> NetworkFabric feature flag configuration information. </summary>
-        public IList<FeatureFlagProperties> FeatureFlags
+        public IList<NetworkFabricFeatureFlag> FeatureFlags
         {
             get
             {
@@ -246,7 +280,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> QoS configuration state. Default is Disabled. </summary>
-        public QosConfigurationState? QosConfigurationState
+        public NetworkFabricQosConfigurationState? QosConfigurationState
         {
             get
             {

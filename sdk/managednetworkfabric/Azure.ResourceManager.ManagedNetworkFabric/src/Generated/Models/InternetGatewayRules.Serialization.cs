@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 writer.WritePropertyName("headerAddressList"u8);
                 writer.WriteStartArray();
-                foreach (HeaderAddressProperties item in HeaderAddressList)
+                foreach (NetworkFabricHeaderAddress item in HeaderAddressList)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -185,10 +185,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             InternetGatewayRuleAction action = default;
             IList<string> addressList = default;
-            RuleCondition? condition = default;
+            NetworkFabricRuleCondition? condition = default;
             IList<string> destinationAddressList = default;
             IList<string> sourceAddressList = default;
-            IList<HeaderAddressProperties> headerAddressList = default;
+            IList<NetworkFabricHeaderAddress> headerAddressList = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    condition = new RuleCondition(prop.Value.GetString());
+                    condition = new NetworkFabricRuleCondition(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("destinationAddressList"u8))
@@ -275,10 +275,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    List<HeaderAddressProperties> array = new List<HeaderAddressProperties>();
+                    List<NetworkFabricHeaderAddress> array = new List<NetworkFabricHeaderAddress>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(HeaderAddressProperties.DeserializeHeaderAddressProperties(item, options));
+                        array.Add(NetworkFabricHeaderAddress.DeserializeNetworkFabricHeaderAddress(item, options));
                     }
                     headerAddressList = array;
                     continue;
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 condition,
                 destinationAddressList ?? new ChangeTrackingList<string>(),
                 sourceAddressList ?? new ChangeTrackingList<string>(),
-                headerAddressList ?? new ChangeTrackingList<HeaderAddressProperties>(),
+                headerAddressList ?? new ChangeTrackingList<NetworkFabricHeaderAddress>(),
                 additionalBinaryDataProperties);
         }
     }

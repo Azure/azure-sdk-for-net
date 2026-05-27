@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            RouteType? routeType = default;
+            NetworkFabricRouteType? routeType = default;
             BfdAdministrativeState? administrativeState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    routeType = new RouteType(prop.Value.GetString());
+                    routeType = new NetworkFabricRouteType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("administrativeState"u8))

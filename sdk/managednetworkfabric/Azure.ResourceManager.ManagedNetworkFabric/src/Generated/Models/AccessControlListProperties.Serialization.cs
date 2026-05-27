@@ -231,8 +231,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             IList<AccessControlListMatchConfiguration> matchConfigurations = default;
             IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = default;
             DateTimeOffset? lastSyncedOn = default;
-            AclType? aclType = default;
-            DeviceRole? deviceRole = default;
+            NetworkFabricAclType? aclType = default;
+            NetworkFabricDeviceRole? deviceRole = default;
             GlobalAccessControlListActionProperties globalAccessControlListActions = default;
             LastOperationProperties lastOperation = default;
             IReadOnlyList<ResourceIdentifier> networkFabricIds = default;
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    aclType = new AclType(prop.Value.GetString());
+                    aclType = new NetworkFabricAclType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("deviceRole"u8))
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    deviceRole = new DeviceRole(prop.Value.GetString());
+                    deviceRole = new NetworkFabricDeviceRole(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("globalAccessControlListActions"u8))

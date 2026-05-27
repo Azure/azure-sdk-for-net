@@ -108,15 +108,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             NetworkFabricBooleanValue? defaultRouteOriginate = default;
             int? allowAS = default;
             AllowASOverride? allowASOverride = default;
-            long? fabricASN = default;
-            long peerASN = default;
+            long? fabricAsn = default;
+            long? peerAsn = default;
             IList<string> iPv4ListenRangePrefixes = default;
             IList<string> iPv6ListenRangePrefixes = default;
             IList<NeighborAddress> iPv4NeighborAddress = default;
             IList<NeighborAddress> iPv6NeighborAddress = default;
             InternalNetworkBmpProperties bmpConfiguration = default;
-            V4OverV6BgpSessionState? v4OverV6BgpSession = default;
-            V6OverV4BgpSessionState? v6OverV4BgpSession = default;
+            NetworkFabricV4OverV6BgpSessionState? v4OverV6BgpSession = default;
+            NetworkFabricV6OverV4BgpSessionState? v6OverV4BgpSession = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("annotation"u8))
@@ -166,12 +166,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    fabricASN = prop.Value.GetInt64();
+                    fabricAsn = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("peerASN"u8))
                 {
-                    peerASN = prop.Value.GetInt64();
+                    peerAsn = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("ipv4ListenRangePrefixes"u8))
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    v4OverV6BgpSession = new V4OverV6BgpSessionState(prop.Value.GetString());
+                    v4OverV6BgpSession = new NetworkFabricV4OverV6BgpSessionState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("v6OverV4BgpSession"u8))
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    v6OverV4BgpSession = new V6OverV4BgpSessionState(prop.Value.GetString());
+                    v6OverV4BgpSession = new NetworkFabricV6OverV4BgpSessionState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -283,8 +283,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 defaultRouteOriginate,
                 allowAS,
                 allowASOverride,
-                fabricASN,
-                peerASN,
+                fabricAsn,
+                peerAsn,
                 iPv4ListenRangePrefixes ?? new ChangeTrackingList<string>(),
                 iPv6ListenRangePrefixes ?? new ChangeTrackingList<string>(),
                 iPv4NeighborAddress ?? new ChangeTrackingList<NeighborAddress>(),

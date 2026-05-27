@@ -37,13 +37,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="networkFabricIds"> The NF-ID will be an input parameter used by the NF to link and get associated with the parent NFC Service. </param>
         /// <param name="isWorkloadManagementNetworkEnabled"> A workload management network is required for all the tenant (workload) traffic. This traffic is only dedicated for Tenant workloads which are required to access internet or any other MSFT/Public endpoints. </param>
         /// <param name="tenantInternetGatewayIds"> List of tenant InternetGateway resource IDs. </param>
-        /// <param name="ipv4AddressSpace"> IPv4 Network Fabric Controller Address Space. </param>
-        /// <param name="ipv6AddressSpace"> IPv6 Network Fabric Controller Address Space. </param>
+        /// <param name="iPv4AddressSpace"> IPv4 Network Fabric Controller Address Space. </param>
+        /// <param name="iPv6AddressSpace"> IPv6 Network Fabric Controller Address Space. </param>
         /// <param name="nfcSku"> Network Fabric Controller SKU. </param>
         /// <param name="lastOperation"> Details of the last operation performed on the resource. </param>
         /// <param name="provisioningState"> Provides you the latest status of the NFC service, whether it is Accepted, updating, Succeeded or Failed. During this process, the states keep changing based on the status of NFC provisioning. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricControllerProperties(string annotation, IList<ExpressRouteConnectionInformation> infrastructureExpressRouteConnections, IList<ExpressRouteConnectionInformation> workloadExpressRouteConnections, NetworkFabricControllerServices infrastructureServices, NetworkFabricControllerServices workloadServices, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, IReadOnlyList<ResourceIdentifier> networkFabricIds, IsWorkloadManagementNetworkEnabled? isWorkloadManagementNetworkEnabled, IReadOnlyList<ResourceIdentifier> tenantInternetGatewayIds, string ipv4AddressSpace, string ipv6AddressSpace, NetworkFabricControllerSKU? nfcSku, LastOperationProperties lastOperation, NetworkFabricProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkFabricControllerProperties(string annotation, IList<ExpressRouteConnectionInformation> infrastructureExpressRouteConnections, IList<ExpressRouteConnectionInformation> workloadExpressRouteConnections, NetworkFabricControllerServices infrastructureServices, NetworkFabricControllerServices workloadServices, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, IReadOnlyList<ResourceIdentifier> networkFabricIds, IsWorkloadManagementNetworkEnabled? isWorkloadManagementNetworkEnabled, IReadOnlyList<ResourceIdentifier> tenantInternetGatewayIds, string iPv4AddressSpace, string iPv6AddressSpace, NetworkFabricControllerSKU? nfcSku, LastOperationProperties lastOperation, NetworkFabricProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Annotation = annotation;
             InfrastructureExpressRouteConnections = infrastructureExpressRouteConnections;
@@ -54,8 +54,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             NetworkFabricIds = networkFabricIds;
             IsWorkloadManagementNetworkEnabled = isWorkloadManagementNetworkEnabled;
             TenantInternetGatewayIds = tenantInternetGatewayIds;
-            Ipv4AddressSpace = ipv4AddressSpace;
-            Ipv6AddressSpace = ipv6AddressSpace;
+            IPv4AddressSpace = iPv4AddressSpace;
+            IPv6AddressSpace = iPv6AddressSpace;
             NfcSku = nfcSku;
             LastOperation = lastOperation;
             ProvisioningState = provisioningState;
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public IReadOnlyList<ResourceIdentifier> TenantInternetGatewayIds { get; } = new ChangeTrackingList<ResourceIdentifier>();
 
         /// <summary> IPv4 Network Fabric Controller Address Space. </summary>
-        public string Ipv4AddressSpace { get; set; }
+        public string IPv4AddressSpace { get; set; }
 
         /// <summary> IPv6 Network Fabric Controller Address Space. </summary>
-        public string Ipv6AddressSpace { get; set; }
+        public string IPv6AddressSpace { get; set; }
 
         /// <summary> Network Fabric Controller SKU. </summary>
         public NetworkFabricControllerSKU? NfcSku { get; set; }

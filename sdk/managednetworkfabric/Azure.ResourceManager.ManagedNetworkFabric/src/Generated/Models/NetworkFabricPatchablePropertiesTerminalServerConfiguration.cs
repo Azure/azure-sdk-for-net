@@ -19,16 +19,32 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricPatchablePropertiesTerminalServerConfiguration"/>. </summary>
-        /// <param name="username"> Username for the terminal server connection. </param>
-        /// <param name="password"> Password for the terminal server connection. </param>
-        /// <param name="serialNumber"> Serial Number of Terminal server. </param>
-        /// <param name="primaryIpv4Prefix"> IPv4 Address Prefix. </param>
-        /// <param name="primaryIpv6Prefix"> IPv6 Address Prefix. </param>
-        /// <param name="secondaryIpv4Prefix"> Secondary IPv4 Address Prefix. </param>
-        /// <param name="secondaryIpv6Prefix"> Secondary IPv6 Address Prefix. </param>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <param name="serialNumber"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricPatchablePropertiesTerminalServerConfiguration(string username, string password, string serialNumber, string primaryIpv4Prefix, string primaryIpv6Prefix, string secondaryIpv4Prefix, string secondaryIpv6Prefix, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(username, password, serialNumber, primaryIpv4Prefix, primaryIpv6Prefix, secondaryIpv4Prefix, secondaryIpv6Prefix, additionalBinaryDataProperties)
+        /// <param name="primaryIPv4Prefix"></param>
+        /// <param name="primaryIPv6Prefix"></param>
+        /// <param name="secondaryIPv4Prefix"></param>
+        /// <param name="secondaryIPv6Prefix"></param>
+        internal NetworkFabricPatchablePropertiesTerminalServerConfiguration(string username, string password, string serialNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties, string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix) : base(username, password, serialNumber, additionalBinaryDataProperties)
         {
+            PrimaryIPv4Prefix = primaryIPv4Prefix;
+            PrimaryIPv6Prefix = primaryIPv6Prefix;
+            SecondaryIPv4Prefix = secondaryIPv4Prefix;
+            SecondaryIPv6Prefix = secondaryIPv6Prefix;
         }
+
+        /// <summary> Gets or sets the PrimaryIPv4Prefix. </summary>
+        public string PrimaryIPv4Prefix { get; set; }
+
+        /// <summary> Gets or sets the PrimaryIPv6Prefix. </summary>
+        public string PrimaryIPv6Prefix { get; set; }
+
+        /// <summary> Gets or sets the SecondaryIPv4Prefix. </summary>
+        public string SecondaryIPv4Prefix { get; set; }
+
+        /// <summary> Gets or sets the SecondaryIPv6Prefix. </summary>
+        public string SecondaryIPv6Prefix { get; set; }
     }
 }

@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             ExportRoutePolicyInformation exportRoutePolicy = default;
             ResourceIdentifier egressAclId = default;
             ResourceIdentifier ingressAclId = default;
-            MicroBfdState? microBfdState = default;
+            NetworkFabricMicroBfdState? microBfdState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    microBfdState = new MicroBfdState(prop.Value.GetString());
+                    microBfdState = new NetworkFabricMicroBfdState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

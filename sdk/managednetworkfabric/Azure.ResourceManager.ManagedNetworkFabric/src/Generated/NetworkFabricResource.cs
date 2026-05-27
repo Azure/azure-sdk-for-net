@@ -997,7 +997,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<GetTopologyResult>> RetrieveTopologyAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkFabricTopologyResult>> RetrieveTopologyAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _networkFabricsClientDiagnostics.CreateScope("NetworkFabricResource.RetrieveTopology");
             scope.Start();
@@ -1009,8 +1009,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 };
                 HttpMessage message = _networkFabricsRestClient.CreateRetrieveTopologyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ManagedNetworkFabricArmOperation<GetTopologyResult> operation = new ManagedNetworkFabricArmOperation<GetTopologyResult>(
-                    new GetTopologyResultOperationSource(),
+                ManagedNetworkFabricArmOperation<NetworkFabricTopologyResult> operation = new ManagedNetworkFabricArmOperation<NetworkFabricTopologyResult>(
+                    new NetworkFabricTopologyResultOperationSource(),
                     _networkFabricsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -1052,7 +1052,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<GetTopologyResult> RetrieveTopology(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkFabricTopologyResult> RetrieveTopology(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _networkFabricsClientDiagnostics.CreateScope("NetworkFabricResource.RetrieveTopology");
             scope.Start();
@@ -1064,8 +1064,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 };
                 HttpMessage message = _networkFabricsRestClient.CreateRetrieveTopologyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ManagedNetworkFabricArmOperation<GetTopologyResult> operation = new ManagedNetworkFabricArmOperation<GetTopologyResult>(
-                    new GetTopologyResultOperationSource(),
+                ManagedNetworkFabricArmOperation<NetworkFabricTopologyResult> operation = new ManagedNetworkFabricArmOperation<NetworkFabricTopologyResult>(
+                    new NetworkFabricTopologyResultOperationSource(),
                     _networkFabricsClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -13,16 +13,18 @@ using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     // Backward compatibility shim for the TypeSpec migration. The generated constructor now requires
-    // configurationType because the service property is required. Removing it would also drop the shipped
-    // flattened ConfigurationType/NetworkTapId/PollingIntervalInSeconds members.
+    // configurationType because the service property is required. Removing this suppression would add a
+    // new public constructor, and removing the custom members would drop shipped flattened properties.
+    [CodeGenSuppress("NetworkTapRuleData", typeof(AzureLocation), typeof(NetworkFabricConfigurationType))]
     public partial class NetworkTapRuleData
     {
         /// <summary> Initializes a new instance of <see cref="NetworkTapRuleData"/>. </summary>
         /// <param name="location"> The location. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This constructor is obsolete and will be removed in a future version.")]
-        public NetworkTapRuleData(AzureLocation location) : this(location, default)
+        public NetworkTapRuleData(AzureLocation location) : base(location)
         {
+            Properties = new NetworkTapRuleProperties();
         }
 
         /// <summary> Input method to configure Network Tap Rule. </summary>

@@ -105,11 +105,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IpLengths))
+            if (Optional.IsCollectionDefined(IPLengths))
             {
                 writer.WritePropertyName("ipLengths"u8);
                 writer.WriteStartArray();
-                foreach (string item in IpLengths)
+                foreach (string item in IPLengths)
                 {
                     if (item == null)
                     {

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         {
             ProtocolTypes = protocolTypes;
             VlanMatchCondition = vlanMatchCondition;
-            IpCondition = ipCondition;
+            IPCondition = ipCondition;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public VlanMatchCondition VlanMatchCondition { get; set; }
 
         /// <summary> IP condition that needs to be matched. </summary>
-        public IPMatchCondition IpCondition { get; set; }
+        public IPMatchCondition IPCondition { get; set; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
@@ -25,8 +26,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="physicalIdentifier"> Physical Identifier of the network interface. </param>
         /// <param name="connectedTo"> The ARM resource id of the interface or compute server its connected to. </param>
         /// <param name="interfaceType"> The Interface Type. Example: Management/Data. </param>
-        /// <param name="ipv4Address"> IPv4Address of the interface. </param>
-        /// <param name="ipv6Address"> IPv6Address of the interface. </param>
+        /// <param name="iPv4Address"> IPv4Address of the interface. </param>
+        /// <param name="iPv6Address"> IPv6Address of the interface. </param>
         /// <param name="description"> Description of the interface. </param>
         /// <param name="additionalDescription"> Additional description of the interface. </param>
         /// <param name="lastOperation"> Details of the last operation performed on the resource. </param>
@@ -34,13 +35,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="configurationState"> Configuration state of the resource. </param>
-        internal NetworkInterfaceProperties(string annotation, IDictionary<string, BinaryData> additionalBinaryDataProperties, string physicalIdentifier, string connectedTo, NetworkDeviceInterfaceType? interfaceType, string ipv4Address, string ipv6Address, string description, string additionalDescription, LastOperationProperties lastOperation, ResourceIdentifier networkFabricId, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, NetworkFabricConfigurationState? configurationState) : base(annotation, additionalBinaryDataProperties)
+        internal NetworkInterfaceProperties(string annotation, IDictionary<string, BinaryData> additionalBinaryDataProperties, string physicalIdentifier, string connectedTo, NetworkDeviceInterfaceType? interfaceType, IPAddress iPv4Address, string iPv6Address, string description, string additionalDescription, LastOperationProperties lastOperation, ResourceIdentifier networkFabricId, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, NetworkFabricConfigurationState? configurationState) : base(annotation, additionalBinaryDataProperties)
         {
             PhysicalIdentifier = physicalIdentifier;
             ConnectedTo = connectedTo;
             InterfaceType = interfaceType;
-            Ipv4Address = ipv4Address;
-            Ipv6Address = ipv6Address;
+            IPv4Address = iPv4Address;
+            IPv6Address = iPv6Address;
             Description = description;
             AdditionalDescription = additionalDescription;
             LastOperation = lastOperation;
@@ -60,10 +61,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public NetworkDeviceInterfaceType? InterfaceType { get; }
 
         /// <summary> IPv4Address of the interface. </summary>
-        public string Ipv4Address { get; }
+        public IPAddress IPv4Address { get; }
 
         /// <summary> IPv6Address of the interface. </summary>
-        public string Ipv6Address { get; }
+        public string IPv6Address { get; }
 
         /// <summary> Description of the interface. </summary>
         public string Description { get; }

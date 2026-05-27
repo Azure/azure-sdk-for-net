@@ -7,22 +7,44 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Configuration to be used to setup the management network. </summary>
-    public partial class ManagementNetworkConfigurationProperties : ManagementNetworkConfigurationPatchableProperties
+    public partial class ManagementNetworkConfigurationProperties
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="ManagementNetworkConfigurationProperties"/>. </summary>
+        /// <param name="infrastructureVpnConfiguration"> VPN Configuration properties. </param>
+        /// <param name="workloadVpnConfiguration"> VPN Configuration properties. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="infrastructureVpnConfiguration"/> or <paramref name="workloadVpnConfiguration"/> is null. </exception>
+        public ManagementNetworkConfigurationProperties(VpnConfigurationProperties infrastructureVpnConfiguration, VpnConfigurationProperties workloadVpnConfiguration)
+        {
+            Argument.AssertNotNull(infrastructureVpnConfiguration, nameof(infrastructureVpnConfiguration));
+            Argument.AssertNotNull(workloadVpnConfiguration, nameof(workloadVpnConfiguration));
+
+            InfrastructureVpnConfiguration = infrastructureVpnConfiguration;
+            WorkloadVpnConfiguration = workloadVpnConfiguration;
+        }
+
         /// <summary> Initializes a new instance of <see cref="ManagementNetworkConfigurationProperties"/>. </summary>
         /// <param name="infrastructureVpnConfiguration"> VPN Configuration properties. </param>
         /// <param name="workloadVpnConfiguration"> VPN Configuration properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="infrastructureVpnConfiguration0"> VPN Configuration properties. </param>
-        /// <param name="workloadVpnConfiguration0"> VPN Configuration properties. </param>
-        internal ManagementNetworkConfigurationProperties(VpnConfigurationPatchableProperties infrastructureVpnConfiguration, VpnConfigurationPatchableProperties workloadVpnConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, VpnConfigurationProperties infrastructureVpnConfiguration0, VpnConfigurationProperties workloadVpnConfiguration0) : base(infrastructureVpnConfiguration, workloadVpnConfiguration, additionalBinaryDataProperties)
+        internal ManagementNetworkConfigurationProperties(VpnConfigurationProperties infrastructureVpnConfiguration, VpnConfigurationProperties workloadVpnConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            InfrastructureVpnConfiguration = infrastructureVpnConfiguration0;
-            WorkloadVpnConfiguration = workloadVpnConfiguration0;
+            InfrastructureVpnConfiguration = infrastructureVpnConfiguration;
+            WorkloadVpnConfiguration = workloadVpnConfiguration;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> VPN Configuration properties. </summary>
+        public VpnConfigurationProperties InfrastructureVpnConfiguration { get; set; }
+
+        /// <summary> VPN Configuration properties. </summary>
+        public VpnConfigurationProperties WorkloadVpnConfiguration { get; set; }
     }
 }

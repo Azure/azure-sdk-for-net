@@ -14,51 +14,51 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Control Plane Access Control List (ACL) IP condition properties. </summary>
-    public partial class ControlPlanAclIpMatchCondition : IJsonModel<ControlPlanAclIpMatchCondition>
+    public partial class ControlPlanAclIPMatchCondition : IJsonModel<ControlPlanAclIPMatchCondition>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ControlPlanAclIpMatchCondition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ControlPlanAclIPMatchCondition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ControlPlanAclIpMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ControlPlanAclIPMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeControlPlanAclIpMatchCondition(document.RootElement, options);
+                        return DeserializeControlPlanAclIPMatchCondition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ControlPlanAclIpMatchCondition)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ControlPlanAclIPMatchCondition)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ControlPlanAclIpMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ControlPlanAclIPMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ControlPlanAclIpMatchCondition)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ControlPlanAclIPMatchCondition)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ControlPlanAclIpMatchCondition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ControlPlanAclIPMatchCondition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ControlPlanAclIpMatchCondition IPersistableModel<ControlPlanAclIpMatchCondition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ControlPlanAclIPMatchCondition IPersistableModel<ControlPlanAclIPMatchCondition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ControlPlanAclIpMatchCondition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ControlPlanAclIPMatchCondition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ControlPlanAclIpMatchCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ControlPlanAclIPMatchCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,20 +69,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ControlPlanAclIpMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ControlPlanAclIPMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ControlPlanAclIpMatchCondition)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ControlPlanAclIPMatchCondition)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(SourceIpPrefix))
+            if (Optional.IsDefined(SourceIPPrefix))
             {
                 writer.WritePropertyName("sourceIpPrefix"u8);
-                writer.WriteStringValue(SourceIpPrefix);
+                writer.WriteStringValue(SourceIPPrefix);
             }
-            if (Optional.IsDefined(DestinationIpPrefix))
+            if (Optional.IsDefined(DestinationIPPrefix))
             {
                 writer.WritePropertyName("destinationIpPrefix"u8);
-                writer.WriteStringValue(DestinationIpPrefix);
+                writer.WriteStringValue(DestinationIPPrefix);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -103,42 +103,42 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ControlPlanAclIpMatchCondition IJsonModel<ControlPlanAclIpMatchCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ControlPlanAclIPMatchCondition IJsonModel<ControlPlanAclIPMatchCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ControlPlanAclIpMatchCondition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ControlPlanAclIPMatchCondition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ControlPlanAclIpMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ControlPlanAclIPMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ControlPlanAclIpMatchCondition)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ControlPlanAclIPMatchCondition)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeControlPlanAclIpMatchCondition(document.RootElement, options);
+            return DeserializeControlPlanAclIPMatchCondition(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ControlPlanAclIpMatchCondition DeserializeControlPlanAclIpMatchCondition(JsonElement element, ModelReaderWriterOptions options)
+        internal static ControlPlanAclIPMatchCondition DeserializeControlPlanAclIPMatchCondition(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string sourceIpPrefix = default;
-            string destinationIpPrefix = default;
+            string sourceIPPrefix = default;
+            string destinationIPPrefix = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("sourceIpPrefix"u8))
                 {
-                    sourceIpPrefix = prop.Value.GetString();
+                    sourceIPPrefix = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("destinationIpPrefix"u8))
                 {
-                    destinationIpPrefix = prop.Value.GetString();
+                    destinationIPPrefix = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ControlPlanAclIpMatchCondition(sourceIpPrefix, destinationIpPrefix, additionalBinaryDataProperties);
+            return new ControlPlanAclIPMatchCondition(sourceIPPrefix, destinationIPPrefix, additionalBinaryDataProperties);
         }
     }
 }

@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            QosConfigurationState? qosConfigurationState = default;
+            NetworkFabricQosConfigurationState? qosConfigurationState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    qosConfigurationState = new QosConfigurationState(prop.Value.GetString());
+                    qosConfigurationState = new NetworkFabricQosConfigurationState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

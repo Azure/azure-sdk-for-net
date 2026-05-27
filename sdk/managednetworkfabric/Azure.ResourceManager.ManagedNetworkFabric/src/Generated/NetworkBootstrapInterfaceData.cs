@@ -139,20 +139,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> IPv4Address of the interface. </summary>
-        public string Ipv4Address
+        public string IPv4Address
         {
             get
             {
-                return Properties is null ? default : Properties.Ipv4Address;
+                return Properties is null ? default : Properties.IPv4Address;
             }
         }
 
         /// <summary> IPv6Address of the interface. </summary>
-        public string Ipv6Address
+        public string IPv6Address
         {
             get
             {
-                return Properties is null ? default : Properties.Ipv6Address;
+                return Properties is null ? default : Properties.IPv6Address;
             }
         }
 

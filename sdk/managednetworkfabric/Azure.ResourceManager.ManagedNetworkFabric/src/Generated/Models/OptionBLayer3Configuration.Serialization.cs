@@ -76,19 +76,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("peerASN"u8);
-            writer.WriteNumberValue(PeerASN);
+            writer.WriteNumberValue(PeerAsn.Value);
             writer.WritePropertyName("vlanId"u8);
             writer.WriteNumberValue(VlanId.Value);
-            if (options.Format != "W" && Optional.IsDefined(FabricASN))
+            if (options.Format != "W" && Optional.IsDefined(FabricAsn))
             {
                 writer.WritePropertyName("fabricASN"u8);
-                writer.WriteNumberValue(FabricASN.Value);
+                writer.WriteNumberValue(FabricAsn.Value);
             }
-            if (Optional.IsCollectionDefined(PeLoopbackIpAddress))
+            if (Optional.IsCollectionDefined(PeLoopbackIPAddress))
             {
                 writer.WritePropertyName("peLoopbackIpAddress"u8);
                 writer.WriteStartArray();
-                foreach (string item in PeLoopbackIpAddress)
+                foreach (string item in PeLoopbackIPAddress)
                 {
                     if (item == null)
                     {
@@ -141,42 +141,42 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            string primaryIpv4Prefix = default;
-            string primaryIpv6Prefix = default;
-            string secondaryIpv4Prefix = default;
-            string secondaryIpv6Prefix = default;
+            string primaryIPv4Prefix = default;
+            string primaryIPv6Prefix = default;
+            string secondaryIPv4Prefix = default;
+            string secondaryIPv6Prefix = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            long peerASN = default;
+            long? peerAsn = default;
             int? vlanId = default;
-            long? fabricASN = default;
-            IList<string> peLoopbackIpAddress = default;
+            long? fabricAsn = default;
+            IList<string> peLoopbackIPAddress = default;
             NniBmpProperties bmpConfiguration = default;
             IList<OptionBLayer3PrefixLimitProperties> prefixLimits = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("primaryIpv4Prefix"u8))
                 {
-                    primaryIpv4Prefix = prop.Value.GetString();
+                    primaryIPv4Prefix = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("primaryIpv6Prefix"u8))
                 {
-                    primaryIpv6Prefix = prop.Value.GetString();
+                    primaryIPv6Prefix = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("secondaryIpv4Prefix"u8))
                 {
-                    secondaryIpv4Prefix = prop.Value.GetString();
+                    secondaryIPv4Prefix = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("secondaryIpv6Prefix"u8))
                 {
-                    secondaryIpv6Prefix = prop.Value.GetString();
+                    secondaryIPv6Prefix = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("peerASN"u8))
                 {
-                    peerASN = prop.Value.GetInt64();
+                    peerAsn = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("vlanId"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    fabricASN = prop.Value.GetInt64();
+                    fabricAsn = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("peLoopbackIpAddress"u8))
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             array.Add(item.GetString());
                         }
                     }
-                    peLoopbackIpAddress = array;
+                    peLoopbackIPAddress = array;
                     continue;
                 }
                 if (prop.NameEquals("bmpConfiguration"u8))
@@ -243,15 +243,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             return new OptionBLayer3Configuration(
-                primaryIpv4Prefix,
-                primaryIpv6Prefix,
-                secondaryIpv4Prefix,
-                secondaryIpv6Prefix,
+                primaryIPv4Prefix,
+                primaryIPv6Prefix,
+                secondaryIPv4Prefix,
+                secondaryIPv6Prefix,
                 additionalBinaryDataProperties,
-                peerASN,
+                peerAsn,
                 vlanId,
-                fabricASN,
-                peLoopbackIpAddress ?? new ChangeTrackingList<string>(),
+                fabricAsn,
+                peLoopbackIPAddress ?? new ChangeTrackingList<string>(),
                 bmpConfiguration,
                 prefixLimits ?? new ChangeTrackingList<OptionBLayer3PrefixLimitProperties>());
         }

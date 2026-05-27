@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="QosProperties"/>. </summary>
         /// <param name="qosConfigurationState"> QoS configuration state. Default is Disabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QosProperties(QosConfigurationState? qosConfigurationState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QosProperties(NetworkFabricQosConfigurationState? qosConfigurationState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             QosConfigurationState = qosConfigurationState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> QoS configuration state. Default is Disabled. </summary>
-        public QosConfigurationState? QosConfigurationState { get; set; }
+        public NetworkFabricQosConfigurationState? QosConfigurationState { get; set; }
     }
 }

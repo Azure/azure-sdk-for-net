@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> The list of IP Prefix Rules. </summary>
-        public IList<IPPrefixRule> IpPrefixRules
+        public IList<IPPrefixRule> IPPrefixRules
         {
             get
             {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     Properties = new IpPrefixPatchProperties();
                 }
-                return Properties.IpPrefixRules;
+                return Properties.IPPrefixRules;
             }
         }
     }

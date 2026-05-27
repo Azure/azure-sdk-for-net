@@ -136,38 +136,38 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Secondary Management IPv4 Address. </summary>
-        public string SecondaryManagementIpv4Address
+        public string SecondaryManagementIPv4Address
         {
             get
             {
-                return Properties is null ? default : Properties.SecondaryManagementIpv4Address;
+                return Properties is null ? default : Properties.SecondaryManagementIPv4Address;
             }
         }
 
         /// <summary> Dhcp server IPv4 Address. </summary>
-        public string DhcpV4ServerIpAddress
+        public string DhcpV4ServerIPAddress
         {
             get
             {
-                return Properties is null ? default : Properties.DhcpV4ServerIpAddress;
+                return Properties is null ? default : Properties.DhcpV4ServerIPAddress;
             }
         }
 
         /// <summary> Primary Management IPv6 Address. </summary>
-        public string PrimaryManagementIpv6Address
+        public string PrimaryManagementIPv6Address
         {
             get
             {
-                return Properties is null ? default : Properties.PrimaryManagementIpv6Address;
+                return Properties is null ? default : Properties.PrimaryManagementIPv6Address;
             }
         }
 
         /// <summary> Secondary Management IPv6 Address. </summary>
-        public string SecondaryManagementIpv6Address
+        public string SecondaryManagementIPv6Address
         {
             get
             {
-                return Properties is null ? default : Properties.SecondaryManagementIpv6Address;
+                return Properties is null ? default : Properties.SecondaryManagementIPv6Address;
             }
         }
 
@@ -181,11 +181,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Primary Management IPv4 Address. </summary>
-        public string PrimaryManagementIpv4Address
+        public string PrimaryManagementIPv4Address
         {
             get
             {
-                return Properties is null ? default : Properties.PrimaryManagementIpv4Address;
+                return Properties is null ? default : Properties.PrimaryManagementIPv4Address;
             }
         }
 

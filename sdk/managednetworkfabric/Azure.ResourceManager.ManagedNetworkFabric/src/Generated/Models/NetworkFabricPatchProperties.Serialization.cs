@@ -90,20 +90,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("serverCountPerRack"u8);
                 writer.WriteNumberValue(ServerCountPerRack.Value);
             }
-            if (Optional.IsDefined(Ipv4Prefix))
+            if (Optional.IsDefined(IPv4Prefix))
             {
                 writer.WritePropertyName("ipv4Prefix"u8);
-                writer.WriteStringValue(Ipv4Prefix);
+                writer.WriteStringValue(IPv4Prefix);
             }
-            if (Optional.IsDefined(Ipv6Prefix))
+            if (Optional.IsDefined(IPv6Prefix))
             {
                 writer.WritePropertyName("ipv6Prefix"u8);
-                writer.WriteStringValue(Ipv6Prefix);
+                writer.WriteStringValue(IPv6Prefix);
             }
-            if (Optional.IsDefined(FabricASN))
+            if (Optional.IsDefined(FabricAsn))
             {
                 writer.WritePropertyName("fabricASN"u8);
-                writer.WriteNumberValue(FabricASN.Value);
+                writer.WriteNumberValue(FabricAsn.Value);
             }
             if (Optional.IsDefined(TerminalServerConfiguration))
             {
@@ -140,11 +140,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TrustedIpPrefixes))
+            if (Optional.IsCollectionDefined(TrustedIPPrefixes))
             {
                 writer.WritePropertyName("trustedIpPrefixes"u8);
                 writer.WriteStartArray();
-                foreach (ResourceIdentifier item in TrustedIpPrefixes)
+                foreach (ResourceIdentifier item in TrustedIPPrefixes)
                 {
                     if (item == null)
                     {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 writer.WritePropertyName("featureFlags"u8);
                 writer.WriteStartArray();
-                foreach (FeatureFlagProperties item in FeatureFlags)
+                foreach (NetworkFabricFeatureFlag item in FeatureFlags)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -225,18 +225,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             string annotation = default;
             int? rackCount = default;
             int? serverCountPerRack = default;
-            string ipv4Prefix = default;
-            string ipv6Prefix = default;
-            long? fabricASN = default;
+            string iPv4Prefix = default;
+            string iPv6Prefix = default;
+            long? fabricAsn = default;
             NetworkFabricPatchablePropertiesTerminalServerConfiguration terminalServerConfiguration = default;
             ManagementNetworkConfigurationPatchableProperties managementNetworkConfiguration = default;
             StorageAccountPatchConfiguration storageAccountConfiguration = default;
             int? hardwareAlertThreshold = default;
             IList<ResourceIdentifier> controlPlaneAcls = default;
-            IList<ResourceIdentifier> trustedIpPrefixes = default;
+            IList<ResourceIdentifier> trustedIPPrefixes = default;
             UniqueRouteDistinguisherPatchProperties uniqueRdConfiguration = default;
             QosPatchProperties qosConfiguration = default;
-            IList<FeatureFlagProperties> featureFlags = default;
+            IList<NetworkFabricFeatureFlag> featureFlags = default;
             AuthorizedTransceiverPatchProperties authorizedTransceiver = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -266,12 +266,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (prop.NameEquals("ipv4Prefix"u8))
                 {
-                    ipv4Prefix = prop.Value.GetString();
+                    iPv4Prefix = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("ipv6Prefix"u8))
                 {
-                    ipv6Prefix = prop.Value.GetString();
+                    iPv6Prefix = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("fabricASN"u8))
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    fabricASN = prop.Value.GetInt64();
+                    fabricAsn = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("terminalServerConfiguration"u8))
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             array.Add(new ResourceIdentifier(item.GetString()));
                         }
                     }
-                    trustedIpPrefixes = array;
+                    trustedIPPrefixes = array;
                     continue;
                 }
                 if (prop.NameEquals("uniqueRdConfiguration"u8))
@@ -385,10 +385,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    List<FeatureFlagProperties> array = new List<FeatureFlagProperties>();
+                    List<NetworkFabricFeatureFlag> array = new List<NetworkFabricFeatureFlag>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(FeatureFlagProperties.DeserializeFeatureFlagProperties(item, options));
+                        array.Add(NetworkFabricFeatureFlag.DeserializeNetworkFabricFeatureFlag(item, options));
                     }
                     featureFlags = array;
                     continue;
@@ -411,18 +411,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 annotation,
                 rackCount,
                 serverCountPerRack,
-                ipv4Prefix,
-                ipv6Prefix,
-                fabricASN,
+                iPv4Prefix,
+                iPv6Prefix,
+                fabricAsn,
                 terminalServerConfiguration,
                 managementNetworkConfiguration,
                 storageAccountConfiguration,
                 hardwareAlertThreshold,
                 controlPlaneAcls ?? new ChangeTrackingList<ResourceIdentifier>(),
-                trustedIpPrefixes ?? new ChangeTrackingList<ResourceIdentifier>(),
+                trustedIPPrefixes ?? new ChangeTrackingList<ResourceIdentifier>(),
                 uniqueRdConfiguration,
                 qosConfiguration,
-                featureFlags ?? new ChangeTrackingList<FeatureFlagProperties>(),
+                featureFlags ?? new ChangeTrackingList<NetworkFabricFeatureFlag>(),
                 authorizedTransceiver,
                 additionalBinaryDataProperties);
         }
