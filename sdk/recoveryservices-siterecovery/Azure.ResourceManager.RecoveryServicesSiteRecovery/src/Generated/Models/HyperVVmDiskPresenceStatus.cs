@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public readonly partial struct HyperVVmDiskPresenceStatus : IEquatable<HyperVVmDiskPresenceStatus>
     {
         private readonly string _value;
+        /// <summary> Unknown. </summary>
+        private const string UnknownValue = "Unknown";
+        /// <summary> Present. </summary>
+        private const string PresentValue = "Present";
+        /// <summary> NotPresent. </summary>
+        private const string NotPresentValue = "NotPresent";
 
         /// <summary> Initializes a new instance of <see cref="HyperVVmDiskPresenceStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HyperVVmDiskPresenceStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnknownValue = "Unknown";
-        private const string PresentValue = "Present";
-        private const string NotPresentValue = "NotPresent";
+            _value = value;
+        }
 
         /// <summary> Unknown. </summary>
         public static HyperVVmDiskPresenceStatus Unknown { get; } = new HyperVVmDiskPresenceStatus(UnknownValue);
+
         /// <summary> Present. </summary>
         public static HyperVVmDiskPresenceStatus Present { get; } = new HyperVVmDiskPresenceStatus(PresentValue);
+
         /// <summary> NotPresent. </summary>
         public static HyperVVmDiskPresenceStatus NotPresent { get; } = new HyperVVmDiskPresenceStatus(NotPresentValue);
+
         /// <summary> Determines if two <see cref="HyperVVmDiskPresenceStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HyperVVmDiskPresenceStatus left, HyperVVmDiskPresenceStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HyperVVmDiskPresenceStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HyperVVmDiskPresenceStatus left, HyperVVmDiskPresenceStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HyperVVmDiskPresenceStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HyperVVmDiskPresenceStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HyperVVmDiskPresenceStatus(string value) => new HyperVVmDiskPresenceStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HyperVVmDiskPresenceStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HyperVVmDiskPresenceStatus?(string value) => value == null ? null : new HyperVVmDiskPresenceStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HyperVVmDiskPresenceStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HyperVVmDiskPresenceStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
