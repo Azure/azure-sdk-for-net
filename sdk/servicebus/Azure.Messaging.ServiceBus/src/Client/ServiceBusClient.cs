@@ -28,6 +28,9 @@ namespace Azure.Messaging.ServiceBus
     ///</remarks>
     public class ServiceBusClient : IAsyncDisposable
     {
+        /// <summary>The number of session IDs to request per management call when listing sessions.</summary>
+        private const int SessionBrowsePageSize = 100;
+
         private readonly ServiceBusClientOptions _options;
 
         /// <summary>Indicates whether or not this instance has been closed.</summary>
@@ -678,13 +681,12 @@ namespace Azure.Messaging.ServiceBus
 
             try
             {
-                int skip = 0;
-                const int pageSize = 100;
+                var skip = 0;
 
                 while (true)
                 {
                     var page = await transportReceiver.GetMessageSessionsAsync(
-                        lastUpdatedTime, skip, pageSize, cancellationToken).ConfigureAwait(false);
+                        lastUpdatedTime, skip, SessionBrowsePageSize, cancellationToken).ConfigureAwait(false);
 
                     if (page == null)
                     {
@@ -705,7 +707,7 @@ namespace Azure.Messaging.ServiceBus
                         yield return sessionId;
                     }
 
-                    if (page.Count < pageSize)
+                    if (page.Count < SessionBrowsePageSize)
                     {
                         break;
                     }
