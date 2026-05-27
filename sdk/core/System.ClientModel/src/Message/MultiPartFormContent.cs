@@ -7,6 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Net;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Text.Json;
 
 namespace System.ClientModel;
@@ -32,6 +33,8 @@ public sealed class MultiPartFormContent : BinaryContent
 #endif
 
     private readonly MultipartFormDataContent _multipartContent;
+    private readonly string _boundary;
+    private int _partCount;
     private bool _disposed;
 
     /// <summary>
@@ -50,6 +53,7 @@ public sealed class MultiPartFormContent : BinaryContent
     {
         Argument.AssertNotNullOrEmpty(boundary, nameof(boundary));
 
+        _boundary = boundary;
         _multipartContent = new MultipartFormDataContent(boundary);
         MediaType = _multipartContent.Headers.ContentType?.ToString();
     }
@@ -79,24 +83,24 @@ public sealed class MultiPartFormContent : BinaryContent
     /// <typeparam name="T">The model type.</typeparam>
     /// <param name="name">The form field name for the part.</param>
     /// <param name="model">The <see cref="IPersistableModel{T}"/> to add as a part.</param>
-    /// <param name="context">The <see cref="ModelReaderWriterContext"/> used to write the model, or <see langword="null"/> to use reflection-based serialization.</param>
-    /// <param name="options">The <see cref="ModelReaderWriterOptions"/> that indicates what format the <paramref name="model"/> will be written in, or <see langword="null"/> to use the default wire-format options.</param>
-    /// <param name="mediaType">The media type for the part, or <see langword="null"/> to omit the <c>Content-Type</c> header.</param>
+    /// <param name="context">The <see cref="ModelReaderWriterContext"/> used to write the model.</param>
+    /// <param name="options">The <see cref="ModelReaderWriterOptions"/> that indicates what format the <paramref name="model"/> will be written in.</param>
+    /// <param name="mediaType">The media type for the part.</param>
     public void Add<T>(
         string name,
         IPersistableModel<T> model,
-        ModelReaderWriterContext? context,
-        ModelReaderWriterOptions? options,
-        string? mediaType)
+        ModelReaderWriterContext context,
+        ModelReaderWriterOptions options,
+        string mediaType)
     {
         Argument.AssertNotNullOrEmpty(name, nameof(name));
         Argument.AssertNotNull(model, nameof(model));
+        Argument.AssertNotNull(context, nameof(context));
+        Argument.AssertNotNull(options, nameof(options));
+        Argument.AssertNotNullOrEmpty(mediaType, nameof(mediaType));
         CheckDisposed();
 
-        options ??= _modelWriteWireOptions;
-        BinaryData data = context != null
-            ? ModelReaderWriter.Write(model, options, context)
-            : model.Write(options);
+        BinaryData data = ModelReaderWriter.Write(model, options, context);
         Add(name, data.WithMediaType(mediaType));
     }
 
@@ -109,7 +113,14 @@ public sealed class MultiPartFormContent : BinaryContent
     /// <param name="name">The form field name for the part.</param>
     /// <param name="model">The <see cref="IPersistableModel{T}"/> to add as a part.</param>
     public void Add<T>(string name, IPersistableModel<T> model)
-        => Add(name, model, context: null, options: null, mediaType: MediaTypeApplicationJson);
+    {
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
+        Argument.AssertNotNull(model, nameof(model));
+        CheckDisposed();
+
+        BinaryData data = model.Write(_modelWriteWireOptions);
+        Add(name, data.WithMediaType(MediaTypeApplicationJson));
+    }
 
     /// <summary>
     /// Adds the bytes held in the provided <see cref="BinaryData"/> as a part
@@ -476,13 +487,17 @@ public sealed class MultiPartFormContent : BinaryContent
         CheckDisposed();
         cancellationToken.ThrowIfCancellationRequested();
 
+        using MemoryStream buffer = new();
 #if NET6_0_OR_GREATER
-        _multipartContent.CopyTo(stream, default, cancellationToken);
+        _multipartContent.CopyTo(buffer, default, cancellationToken);
 #else
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
-        _multipartContent.CopyToAsync(stream).GetAwaiter().GetResult();
+        _multipartContent.CopyToAsync(buffer).GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
 #endif
+        ValidateBoundary(buffer.GetBuffer(), (int)buffer.Length);
+        buffer.Position = 0;
+        buffer.CopyTo(stream);
     }
 
     /// <inheritdoc/>
@@ -492,11 +507,15 @@ public sealed class MultiPartFormContent : BinaryContent
         CheckDisposed();
         cancellationToken.ThrowIfCancellationRequested();
 
+        using MemoryStream buffer = new();
 #if NET6_0_OR_GREATER
-        await _multipartContent.CopyToAsync(stream, cancellationToken).ConfigureAwait(false);
+        await _multipartContent.CopyToAsync(buffer, cancellationToken).ConfigureAwait(false);
 #else
-        await _multipartContent.CopyToAsync(stream).ConfigureAwait(false);
+        await _multipartContent.CopyToAsync(buffer).ConfigureAwait(false);
 #endif
+        ValidateBoundary(buffer.GetBuffer(), (int)buffer.Length);
+        buffer.Position = 0;
+        await buffer.CopyToAsync(stream, 81920, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc/>
@@ -536,6 +555,54 @@ public sealed class MultiPartFormContent : BinaryContent
         {
             _multipartContent.Add(content, name);
         }
+        _partCount++;
+    }
+
+    /// <summary>
+    /// Validates that the boundary token does not appear inside any part's payload.
+    /// A well-formed multipart payload contains exactly <c>partCount + 1</c> occurrences
+    /// of the <c>--&lt;boundary&gt;</c> token (one opening separator per part plus the
+    /// closing terminator). Any additional occurrence means a part body collides with
+    /// the boundary, which would corrupt the message on the receiving end.
+    /// </summary>
+    private void ValidateBoundary(byte[] buffer, int length)
+    {
+        // The opening separator and the closing terminator both begin with "--<boundary>".
+        // Count non-overlapping occurrences of that token in the serialized payload.
+        byte[] token = Encoding.UTF8.GetBytes("--" + _boundary);
+        int expected = _partCount + 1;
+        int actual = CountOccurrences(buffer, length, token);
+        if (actual > expected)
+        {
+            throw new InvalidOperationException(
+                $"The configured boundary '{_boundary}' collides with the content of one or more parts. " +
+                "Construct the MultiPartFormContent with a different boundary that does not appear in any part's payload.");
+        }
+    }
+
+    private static int CountOccurrences(byte[] buffer, int length, byte[] token)
+    {
+        if (token.Length == 0 || length < token.Length)
+        {
+            return 0;
+        }
+
+        int count = 0;
+        int max = length - token.Length;
+        for (int i = 0; i <= max; i++)
+        {
+            int j = 0;
+            while (j < token.Length && buffer[i + j] == token[j])
+            {
+                j++;
+            }
+            if (j == token.Length)
+            {
+                count++;
+                i += token.Length - 1; // non-overlapping
+            }
+        }
+        return count;
     }
 
     private static string CreateBoundary()

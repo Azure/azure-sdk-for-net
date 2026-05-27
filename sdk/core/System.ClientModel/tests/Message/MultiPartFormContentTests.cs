@@ -160,6 +160,46 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
     }
 
     [Test]
+    public void WriteTo_Throws_WhenStringPartCollidesWithBoundary()
+    {
+        const string boundary = "my-boundary-xyz";
+        using MultiPartFormContent content = new(boundary);
+        content.Add("textPart", $"some content with --{boundary} embedded inside");
+
+        using MemoryStream stream = new();
+        InvalidOperationException? ex = Assert.ThrowsAsync<InvalidOperationException>(
+            () => content.WriteToSyncOrAsync(stream, CancellationToken.None, IsAsync));
+        StringAssert.Contains(boundary, ex!.Message);
+    }
+
+    [Test]
+    public void WriteTo_Throws_WhenBinaryDataPartCollidesWithBoundary()
+    {
+        const string boundary = "another-boundary-42";
+        using MultiPartFormContent content = new(boundary);
+        byte[] payload = Encoding.UTF8.GetBytes($"prefix --{boundary} suffix");
+        content.Add("blob", BinaryData.FromBytes(payload));
+
+        using MemoryStream stream = new();
+        Assert.ThrowsAsync<InvalidOperationException>(
+            () => content.WriteToSyncOrAsync(stream, CancellationToken.None, IsAsync));
+    }
+
+    [Test]
+    public async Task WriteTo_Succeeds_WhenNoBoundaryCollision()
+    {
+        const string boundary = "safe-boundary-1234";
+        using MultiPartFormContent content = new(boundary);
+        content.Add("textPart", "no collision here");
+        content.Add("blob", BinaryData.FromBytes(new byte[] { 1, 2, 3, 4 }));
+
+        using MemoryStream stream = new();
+        await content.WriteToSyncOrAsync(stream, CancellationToken.None, IsAsync);
+
+        Assert.Greater(stream.Length, 0);
+    }
+
+    [Test]
     public void Add_File_Throws_WhenNameNull()
     {
         using MultiPartFormContent content = new();
@@ -279,6 +319,46 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
     }
 
     [Test]
+    public void Add_Model_Full_Throws_WhenContextNull()
+    {
+        using MultiPartFormContent content = new();
+        MockPersistableModel model = new(1, "v");
+
+        Assert.Throws<ArgumentNullException>(
+            () => content.Add("m", model, context: null!, options: ModelReaderWriterOptions.Json, mediaType: "application/json"));
+    }
+
+    [Test]
+    public void Add_Model_Full_Throws_WhenOptionsNull()
+    {
+        using MultiPartFormContent content = new();
+        MockPersistableModel model = new(1, "v");
+
+        Assert.Throws<ArgumentNullException>(
+            () => content.Add("m", model, EmptyTestContext.Instance, options: null!, mediaType: "application/json"));
+    }
+
+    [Test]
+    public void Add_Model_Full_Throws_WhenMediaTypeNull()
+    {
+        using MultiPartFormContent content = new();
+        MockPersistableModel model = new(1, "v");
+
+        Assert.Throws<ArgumentNullException>(
+            () => content.Add("m", model, EmptyTestContext.Instance, ModelReaderWriterOptions.Json, mediaType: null!));
+    }
+
+    [Test]
+    public void Add_Model_Full_Throws_WhenMediaTypeEmpty()
+    {
+        using MultiPartFormContent content = new();
+        MockPersistableModel model = new(1, "v");
+
+        Assert.Throws<ArgumentException>(
+            () => content.Add("m", model, EmptyTestContext.Instance, ModelReaderWriterOptions.Json, mediaType: string.Empty));
+    }
+
+    [Test]
     public async Task Add_Model_DefaultsToApplicationJson()
     {
         using MultiPartFormContent content = new();
@@ -297,7 +377,7 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
     {
         using MultiPartFormContent content = new();
         MockPersistableModel model = new(1, "x");
-        content.Add("m", model, context: null, options: null, mediaType: "application/x-custom");
+        content.Add("m", model, EmptyTestContext.Instance, ModelReaderWriterOptions.Json, mediaType: "application/x-custom");
 
         ParsedPart part = (await ParseAsync(content)).Parts.Single();
 
@@ -312,7 +392,7 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
         MockPersistableModel model = new(7, "v");
 
         convenience.Add("m", model);
-        full.Add("m", model, context: null, options: null, mediaType: "application/json");
+        full.Add("m", model, EmptyTestContext.Instance, ModelReaderWriterOptions.Json, mediaType: "application/json");
 
         byte[] convenienceBytes = await WriteToBytesAsync(convenience);
         byte[] fullBytes = await WriteToBytesAsync(full);
@@ -1276,7 +1356,7 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
         }
 
         content.Add("filePart", file);
-        content.Add("modelFull", model, context: null, options: null, mediaType: "application/json");
+        content.Add("modelFull", model, EmptyTestContext.Instance, ModelReaderWriterOptions.Json, mediaType: "application/json");
         content.Add("modelConv", model);
         content.Add("blob", BinaryData.FromBytes(binaryDataBytes).WithMediaType("application/x-binary"));
         content.Add("bytesDefault", rawBytes);
@@ -1822,6 +1902,13 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
             }
             return BinaryData.FromBytes(stream.ToArray());
         }
+    }
+
+    private sealed class EmptyTestContext : ModelReaderWriterContext
+    {
+        public static readonly EmptyTestContext Instance = new();
+
+        private EmptyTestContext() { }
     }
 }
 

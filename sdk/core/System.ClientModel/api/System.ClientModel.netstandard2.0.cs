@@ -120,7 +120,7 @@ namespace System.ClientModel
         public void Add(string name, uint content, string? mediaType = "text/plain") { }
         public void Add(string name, ulong content, string? mediaType = "text/plain") { }
         public void Add<T>(string name, System.ClientModel.Primitives.IPersistableModel<T> model) { }
-        public void Add<T>(string name, System.ClientModel.Primitives.IPersistableModel<T> model, System.ClientModel.Primitives.ModelReaderWriterContext? context, System.ClientModel.Primitives.ModelReaderWriterOptions? options, string? mediaType) { }
+        public void Add<T>(string name, System.ClientModel.Primitives.IPersistableModel<T> model, System.ClientModel.Primitives.ModelReaderWriterContext context, System.ClientModel.Primitives.ModelReaderWriterOptions options, string mediaType) { }
         public override void Dispose() { }
         public override bool TryComputeLength(out long length) { throw null; }
         public override void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
