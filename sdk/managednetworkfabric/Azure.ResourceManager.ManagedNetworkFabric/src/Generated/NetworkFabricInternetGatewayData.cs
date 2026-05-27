@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Models;
@@ -82,12 +83,38 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
+        /// <summary> IPv4 Address of Internet Gateway. </summary>
+        public IPAddress IPv4Address
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IPv4Address;
+            }
+        }
+
         /// <summary> Port number of Internet Gateway. </summary>
         public int? Port
         {
             get
             {
                 return Properties is null ? default : Properties.Port;
+            }
+        }
+
+        /// <summary> Gateway Type of the resource. </summary>
+        public InternetGatewayType? TypePropertiesType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TypePropertiesType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new InternetGatewayProperties();
+                }
+                Properties.TypePropertiesType = value;
             }
         }
 

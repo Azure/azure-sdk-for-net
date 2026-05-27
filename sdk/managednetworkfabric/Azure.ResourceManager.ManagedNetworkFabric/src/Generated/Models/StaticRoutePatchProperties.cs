@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
@@ -18,14 +19,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StaticRoutePatchProperties"/>. </summary>
-        public StaticRoutePatchProperties()
+        /// <param name="prefix"></param>
+        /// <param name="nextHop"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="prefix"/> or <paramref name="nextHop"/> is null. </exception>
+        public StaticRoutePatchProperties(string prefix, IEnumerable<string> nextHop)
         {
-            NextHop = new ChangeTrackingList<string>();
+            Argument.AssertNotNull(prefix, nameof(prefix));
+            Argument.AssertNotNull(nextHop, nameof(nextHop));
+
+            Prefix = prefix;
+            NextHop = nextHop.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="StaticRoutePatchProperties"/>. </summary>
-        /// <param name="prefix"> Prefix of the route. </param>
-        /// <param name="nextHop"> List of next hop addresses. </param>
+        /// <param name="prefix"></param>
+        /// <param name="nextHop"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal StaticRoutePatchProperties(string prefix, IList<string> nextHop, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -34,10 +42,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Prefix of the route. </summary>
+        /// <summary> Gets or sets the Prefix. </summary>
         public string Prefix { get; set; }
 
-        /// <summary> List of next hop addresses. </summary>
+        /// <summary> Gets the NextHop. </summary>
         public IList<string> NextHop { get; }
     }
 }

@@ -18,6 +18,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VpnConfigurationProperties"/>. </summary>
+        /// <param name="peeringOption"> Peering option list. </param>
+        public VpnConfigurationProperties(PeeringOption peeringOption)
+        {
+            PeeringOption = peeringOption;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VpnConfigurationProperties"/>. </summary>
         /// <param name="networkToNetworkInterconnectId"> ARM Resource ID of the Network To Network Interconnect. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="peeringOption"> Peering option list. </param>
@@ -33,5 +40,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             OptionAProperties = optionAProperties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> ARM Resource ID of the Network To Network Interconnect. </summary>
+        public ResourceIdentifier NetworkToNetworkInterconnectId { get; set; }
+
+        /// <summary> Administrative state of the resource. </summary>
+        public NetworkFabricAdministrativeState? AdministrativeState { get; }
+
+        /// <summary> Peering option list. </summary>
+        public PeeringOption PeeringOption { get; set; }
+
+        /// <summary> option B properties. </summary>
+        public OptionBProperties OptionBProperties { get; set; }
+
+        /// <summary> option A properties. </summary>
+        public VpnConfigurationOptionAProperties OptionAProperties { get; set; }
     }
 }

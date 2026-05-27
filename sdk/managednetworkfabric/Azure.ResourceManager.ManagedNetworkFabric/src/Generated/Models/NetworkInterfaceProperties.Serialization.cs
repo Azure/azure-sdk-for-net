@@ -15,8 +15,7 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> Network Interface Properties defines the properties of the resource. </summary>
-    public partial class NetworkInterfaceProperties : AnnotationResourceProperties, IJsonModel<NetworkInterfaceProperties>
+    internal partial class NetworkInterfaceProperties : AnnotationResourceProperties, IJsonModel<NetworkInterfaceProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

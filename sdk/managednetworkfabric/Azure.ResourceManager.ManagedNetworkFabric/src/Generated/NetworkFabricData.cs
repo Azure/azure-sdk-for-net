@@ -20,6 +20,34 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricData"/>. </summary>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="networkFabricSku"> Supported Network Fabric SKU.Example: Compute / Aggregate racks. Once the user chooses a particular SKU, only supported racks can be added to the Network Fabric. The SKU determines whether it is a single / multi rack Network Fabric. </param>
+        /// <param name="networkFabricControllerId"> Azure resource ID for the NetworkFabricController the NetworkFabric belongs. </param>
+        /// <param name="serverCountPerRack"> Number of servers.Possible values are from 1-16. </param>
+        /// <param name="iPv4Prefix"> IPv4Prefix for Management Network. Example: 10.1.0.0/19. </param>
+        /// <param name="fabricAsn"> ASN of CE devices for CE/PE connectivity. </param>
+        /// <param name="terminalServerConfiguration"> Network and credentials configuration currently applied to terminal server. </param>
+        /// <param name="managementNetworkConfiguration"> Configuration to be used to setup the management network. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkFabricSku"/>, <paramref name="networkFabricControllerId"/>, <paramref name="iPv4Prefix"/>, <paramref name="terminalServerConfiguration"/> or <paramref name="managementNetworkConfiguration"/> is null. </exception>
+        public NetworkFabricData(AzureLocation location, string networkFabricSku, ResourceIdentifier networkFabricControllerId, int serverCountPerRack, string iPv4Prefix, long fabricAsn, TerminalServerConfiguration terminalServerConfiguration, ManagementNetworkConfigurationProperties managementNetworkConfiguration) : base(location)
+        {
+            Argument.AssertNotNull(networkFabricSku, nameof(networkFabricSku));
+            Argument.AssertNotNull(networkFabricControllerId, nameof(networkFabricControllerId));
+            Argument.AssertNotNull(iPv4Prefix, nameof(iPv4Prefix));
+            Argument.AssertNotNull(terminalServerConfiguration, nameof(terminalServerConfiguration));
+            Argument.AssertNotNull(managementNetworkConfiguration, nameof(managementNetworkConfiguration));
+
+            Properties = new NetworkFabricProperties(
+                networkFabricSku,
+                networkFabricControllerId,
+                serverCountPerRack,
+                iPv4Prefix,
+                fabricAsn,
+                terminalServerConfiguration,
+                managementNetworkConfiguration);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>

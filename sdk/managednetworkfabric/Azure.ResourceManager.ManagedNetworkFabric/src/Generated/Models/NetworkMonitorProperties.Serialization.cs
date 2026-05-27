@@ -13,8 +13,7 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> Network Monitor Properties defines the properties of the resource. </summary>
-    public partial class NetworkMonitorProperties : AnnotationResourceProperties, IJsonModel<NetworkMonitorProperties>
+    internal partial class NetworkMonitorProperties : AnnotationResourceProperties, IJsonModel<NetworkMonitorProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

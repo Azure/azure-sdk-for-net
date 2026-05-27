@@ -34,6 +34,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             _value = value;
         }
 
+        /// <summary> RebootType GracefulRebootWithZTP. </summary>
+        public static NetworkDeviceRebootType GracefulRebootWithZtp { get; } = new NetworkDeviceRebootType(GracefulRebootWithZtpValue);
+
+        /// <summary> RebootType GracefulRebootWithoutZTP. </summary>
+        public static NetworkDeviceRebootType GracefulRebootWithoutZtp { get; } = new NetworkDeviceRebootType(GracefulRebootWithoutZtpValue);
+
+        /// <summary> RebootType UngracefulRebootWithZTP. </summary>
+        public static NetworkDeviceRebootType UngracefulRebootWithZtp { get; } = new NetworkDeviceRebootType(UngracefulRebootWithZtpValue);
+
+        /// <summary> RebootType UngracefulRebootWithoutZTP. </summary>
+        public static NetworkDeviceRebootType UngracefulRebootWithoutZtp { get; } = new NetworkDeviceRebootType(UngracefulRebootWithoutZtpValue);
+
         /// <summary> Determines if two <see cref="NetworkDeviceRebootType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>

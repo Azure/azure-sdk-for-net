@@ -19,8 +19,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Initializes a new instance of <see cref="NetworkDeviceSkuProperties"/>. </summary>
         /// <param name="model"> Model of the network device. </param>
-        internal NetworkDeviceSkuProperties(string model)
+        /// <exception cref="ArgumentNullException"> <paramref name="model"/> is null. </exception>
+        public NetworkDeviceSkuProperties(string model)
         {
+            Argument.AssertNotNull(model, nameof(model));
+
             Model = model;
             SupportedVersions = new ChangeTrackingList<SupportedVersionProperties>();
             SupportedRoleTypes = new ChangeTrackingList<NetworkDeviceRoleName>();
@@ -47,10 +50,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Model of the network device. </summary>
-        public string Model { get; }
+        public string Model { get; set; }
 
         /// <summary> Manufacturer of the network device. </summary>
-        public string Manufacturer { get; }
+        public string Manufacturer { get; set; }
 
         /// <summary> List of supported version details of network device. </summary>
         public IList<SupportedVersionProperties> SupportedVersions { get; } = new ChangeTrackingList<SupportedVersionProperties>();

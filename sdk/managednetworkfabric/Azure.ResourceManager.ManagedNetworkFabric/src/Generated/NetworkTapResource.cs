@@ -428,9 +428,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<NetworkTapResyncResult>> SynchronizeAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<StateUpdateCommonPostActionResult>> ResyncAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _networkTapsClientDiagnostics.CreateScope("NetworkTapResource.Synchronize");
+            using DiagnosticScope scope = _networkTapsClientDiagnostics.CreateScope("NetworkTapResource.Resync");
             scope.Start();
             try
             {
@@ -438,10 +438,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkTapsRestClient.CreateSynchronizeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _networkTapsRestClient.CreateResyncRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ManagedNetworkFabricArmOperation<NetworkTapResyncResult> operation = new ManagedNetworkFabricArmOperation<NetworkTapResyncResult>(
-                    new NetworkTapResyncResultOperationSource(),
+                ManagedNetworkFabricArmOperation<StateUpdateCommonPostActionResult> operation = new ManagedNetworkFabricArmOperation<StateUpdateCommonPostActionResult>(
+                    new StateUpdateCommonPostActionResultOperationSource(),
                     _networkTapsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -483,9 +483,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<NetworkTapResyncResult> Synchronize(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<StateUpdateCommonPostActionResult> Resync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _networkTapsClientDiagnostics.CreateScope("NetworkTapResource.Synchronize");
+            using DiagnosticScope scope = _networkTapsClientDiagnostics.CreateScope("NetworkTapResource.Resync");
             scope.Start();
             try
             {
@@ -493,10 +493,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkTapsRestClient.CreateSynchronizeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _networkTapsRestClient.CreateResyncRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ManagedNetworkFabricArmOperation<NetworkTapResyncResult> operation = new ManagedNetworkFabricArmOperation<NetworkTapResyncResult>(
-                    new NetworkTapResyncResultOperationSource(),
+                ManagedNetworkFabricArmOperation<StateUpdateCommonPostActionResult> operation = new ManagedNetworkFabricArmOperation<StateUpdateCommonPostActionResult>(
+                    new StateUpdateCommonPostActionResultOperationSource(),
                     _networkTapsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -540,11 +540,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="content"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<UpdateAdministrativeStateResult>> SetAdministrativeStateAsync(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DeviceUpdateCommonPostActionResult>> UpdateAdministrativeStateAsync(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _networkTapsClientDiagnostics.CreateScope("NetworkTapResource.SetAdministrativeState");
+            using DiagnosticScope scope = _networkTapsClientDiagnostics.CreateScope("NetworkTapResource.UpdateAdministrativeState");
             scope.Start();
             try
             {
@@ -552,10 +552,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkTapsRestClient.CreateSetAdministrativeStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UpdateAdministrativeStateContent.ToRequestContent(content), context);
+                HttpMessage message = _networkTapsRestClient.CreateUpdateAdministrativeStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UpdateAdministrativeStateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult> operation = new ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult>(
-                    new UpdateAdministrativeStateResultOperationSource(),
+                ManagedNetworkFabricArmOperation<DeviceUpdateCommonPostActionResult> operation = new ManagedNetworkFabricArmOperation<DeviceUpdateCommonPostActionResult>(
+                    new DeviceUpdateCommonPostActionResultOperationSource(),
                     _networkTapsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -599,11 +599,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="content"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<UpdateAdministrativeStateResult> SetAdministrativeState(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DeviceUpdateCommonPostActionResult> UpdateAdministrativeState(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _networkTapsClientDiagnostics.CreateScope("NetworkTapResource.SetAdministrativeState");
+            using DiagnosticScope scope = _networkTapsClientDiagnostics.CreateScope("NetworkTapResource.UpdateAdministrativeState");
             scope.Start();
             try
             {
@@ -611,10 +611,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkTapsRestClient.CreateSetAdministrativeStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UpdateAdministrativeStateContent.ToRequestContent(content), context);
+                HttpMessage message = _networkTapsRestClient.CreateUpdateAdministrativeStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UpdateAdministrativeStateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult> operation = new ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult>(
-                    new UpdateAdministrativeStateResultOperationSource(),
+                ManagedNetworkFabricArmOperation<DeviceUpdateCommonPostActionResult> operation = new ManagedNetworkFabricArmOperation<DeviceUpdateCommonPostActionResult>(
+                    new DeviceUpdateCommonPostActionResultOperationSource(),
                     _networkTapsClientDiagnostics,
                     Pipeline,
                     message.Request,

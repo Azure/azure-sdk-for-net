@@ -13,18 +13,13 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> Network Tap Properties defines the properties of the resource. </summary>
-    public partial class NetworkTapProperties : AnnotationResourceProperties
+    internal partial class NetworkTapProperties : AnnotationResourceProperties
     {
         /// <summary> Initializes a new instance of <see cref="NetworkTapProperties"/>. </summary>
         /// <param name="networkPacketBrokerId"> ARM resource ID of the Network Packet Broker. </param>
         /// <param name="destinations"> List of destinations to send the filter traffic. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkPacketBrokerId"/> or <paramref name="destinations"/> is null. </exception>
         public NetworkTapProperties(ResourceIdentifier networkPacketBrokerId, IEnumerable<NetworkTapPropertiesDestinationsItem> destinations)
         {
-            Argument.AssertNotNull(networkPacketBrokerId, nameof(networkPacketBrokerId));
-            Argument.AssertNotNull(destinations, nameof(destinations));
-
             NetworkPacketBrokerId = networkPacketBrokerId;
             NetworkFabricIds = new ChangeTrackingList<ResourceIdentifier>();
             Destinations = destinations.ToList();

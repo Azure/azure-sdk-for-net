@@ -19,10 +19,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkTapRuleProperties"/>. </summary>
-        /// <param name="configurationType"> Input method to configure Network Tap Rule. </param>
-        public NetworkTapRuleProperties(NetworkFabricConfigurationType configurationType)
+        public NetworkTapRuleProperties()
         {
-            ConfigurationType = configurationType;
             MatchConfigurations = new ChangeTrackingList<NetworkTapRuleMatchConfiguration>();
             DynamicMatchConfigurations = new ChangeTrackingList<CommonDynamicMatchConfiguration>();
             NetworkTapIds = new ChangeTrackingList<ResourceIdentifier>();
@@ -47,7 +45,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkTapRuleProperties(string annotation, NetworkFabricConfigurationType configurationType, Uri tapRulesUri, NetworkFabricIdentitySelector identitySelector, IList<NetworkTapRuleMatchConfiguration> matchConfigurations, IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, string networkTapId, IReadOnlyList<ResourceIdentifier> networkTapIds, int? pollingIntervalInSeconds, DateTimeOffset? lastSyncedOn, GlobalNetworkTapRuleActionProperties globalNetworkTapRuleActions, LastOperationProperties lastOperation, IReadOnlyList<ResourceIdentifier> networkFabricIds, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkTapRuleProperties(string annotation, NetworkFabricConfigurationType? configurationType, Uri tapRulesUri, NetworkFabricIdentitySelector identitySelector, IList<NetworkTapRuleMatchConfiguration> matchConfigurations, IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, string networkTapId, IReadOnlyList<ResourceIdentifier> networkTapIds, PollingIntervalInSecond? pollingIntervalInSeconds, DateTimeOffset? lastSyncedOn, GlobalNetworkTapRuleActionProperties globalNetworkTapRuleActions, LastOperationProperties lastOperation, IReadOnlyList<ResourceIdentifier> networkFabricIds, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Annotation = annotation;
             ConfigurationType = configurationType;
@@ -72,7 +70,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public string Annotation { get; set; }
 
         /// <summary> Input method to configure Network Tap Rule. </summary>
-        public NetworkFabricConfigurationType ConfigurationType { get; set; }
+        public NetworkFabricConfigurationType? ConfigurationType { get; set; }
 
         /// <summary> Network Tap Rules file URL. </summary>
         public Uri TapRulesUri { get; set; }
@@ -93,7 +91,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public IReadOnlyList<ResourceIdentifier> NetworkTapIds { get; } = new ChangeTrackingList<ResourceIdentifier>();
 
         /// <summary> Polling interval in seconds. </summary>
-        public int? PollingIntervalInSeconds { get; set; }
+        public PollingIntervalInSecond? PollingIntervalInSeconds { get; set; }
 
         /// <summary> The last sync timestamp. </summary>
         public DateTimeOffset? LastSyncedOn { get; }

@@ -13,8 +13,7 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> The Network Tap resource patch definition. </summary>
-    public partial class NetworkTapPatchProperties : AnnotationResourceProperties, IJsonModel<NetworkTapPatchProperties>
+    internal partial class NetworkTapPatchProperties : AnnotationResourceProperties, IJsonModel<NetworkTapPatchProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

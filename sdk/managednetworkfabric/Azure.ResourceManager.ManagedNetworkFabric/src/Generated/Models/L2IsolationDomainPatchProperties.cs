@@ -11,8 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> L2 Isolation Domain Patch Properties defines the patchable properties of the resource. </summary>
-    public partial class L2IsolationDomainPatchProperties : AnnotationResourceProperties
+    internal partial class L2IsolationDomainPatchProperties : AnnotationResourceProperties
     {
         /// <summary> Initializes a new instance of <see cref="L2IsolationDomainPatchProperties"/>. </summary>
         public L2IsolationDomainPatchProperties()

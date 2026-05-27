@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             _value = value;
         }
 
+        /// <summary> Device AdministrativeState-RMA. </summary>
+        public static NetworkDeviceAdministrativeState Rma { get; } = new NetworkDeviceAdministrativeState(RmaValue);
+
         /// <summary> Device AdministrativeState-RMA(Return Material Authorization) Ungraceful. </summary>
         public static NetworkDeviceAdministrativeState UngracefulRma { get; } = new NetworkDeviceAdministrativeState(UngracefulRmaValue);
 

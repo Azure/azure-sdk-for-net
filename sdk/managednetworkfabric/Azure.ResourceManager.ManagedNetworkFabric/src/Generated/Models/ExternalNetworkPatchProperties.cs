@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="optionAProperties"> option A properties object. </param>
         /// <param name="staticRouteConfiguration"> Static Route Configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExternalNetworkPatchProperties(string annotation, ResourceIdentifier networkToNetworkInterconnectId, ImportRoutePolicyPatch importRoutePolicy, ExportRoutePolicyPatch exportRoutePolicy, PeeringOption? peeringOption, L3OptionBProperties optionBProperties, ExternalNetworkPatchOptionAProperties optionAProperties, ExternalNetworkStaticRoutePatchConfiguration staticRouteConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExternalNetworkPatchProperties(string annotation, ResourceIdentifier networkToNetworkInterconnectId, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, PeeringOption? peeringOption, L3OptionBProperties optionBProperties, ExternalNetworkPatchOptionAProperties optionAProperties, ExternalNetworkStaticRoutePatchConfiguration staticRouteConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Annotation = annotation;
             NetworkToNetworkInterconnectId = networkToNetworkInterconnectId;
@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public ResourceIdentifier NetworkToNetworkInterconnectId { get; set; }
 
         /// <summary> Import Route Policy either IPv4 or IPv6. </summary>
-        public ImportRoutePolicyPatch ImportRoutePolicy { get; set; }
+        public ImportRoutePolicy ImportRoutePolicy { get; set; }
 
         /// <summary> Export Route Policy either IPv4 or IPv6. </summary>
-        public ExportRoutePolicyPatch ExportRoutePolicy { get; set; }
+        public ExportRoutePolicy ExportRoutePolicy { get; set; }
 
         /// <summary> Peering option list. </summary>
         public PeeringOption? PeeringOption { get; set; }

@@ -159,8 +159,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             string annotation = default;
             ResourceIdentifier networkToNetworkInterconnectId = default;
-            ImportRoutePolicyPatch importRoutePolicy = default;
-            ExportRoutePolicyPatch exportRoutePolicy = default;
+            ImportRoutePolicy importRoutePolicy = default;
+            ExportRoutePolicy exportRoutePolicy = default;
             PeeringOption? peeringOption = default;
             L3OptionBProperties optionBProperties = default;
             ExternalNetworkPatchOptionAProperties optionAProperties = default;
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    importRoutePolicy = ImportRoutePolicyPatch.DeserializeImportRoutePolicyPatch(prop.Value, options);
+                    importRoutePolicy = ImportRoutePolicy.DeserializeImportRoutePolicy(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("exportRoutePolicy"u8))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    exportRoutePolicy = ExportRoutePolicyPatch.DeserializeExportRoutePolicyPatch(prop.Value, options);
+                    exportRoutePolicy = ExportRoutePolicy.DeserializeExportRoutePolicy(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("peeringOption"u8))

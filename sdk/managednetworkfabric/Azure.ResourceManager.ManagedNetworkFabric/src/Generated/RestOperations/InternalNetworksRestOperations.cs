@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return message;
         }
 
-        internal HttpMessage CreateSetAdministrativeStateRequest(Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, string internalNetworkName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateAdministrativeStateRequest(Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, string internalNetworkName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return message;
         }
 
-        internal HttpMessage CreateSetBgpAdministrativeStateRequest(Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, string internalNetworkName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateBgpAdministrativeStateRequest(Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, string internalNetworkName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return message;
         }
 
-        internal HttpMessage CreateSetStaticRouteBfdAdministrativeStateRequest(Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, string internalNetworkName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateStaticRouteBfdAdministrativeStateRequest(Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, string internalNetworkName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

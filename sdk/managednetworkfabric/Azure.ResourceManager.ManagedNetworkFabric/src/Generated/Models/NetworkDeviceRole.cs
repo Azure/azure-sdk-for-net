@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> NetworkDeviceRole-ToR(top of rack). </summary>
         public static NetworkDeviceRole ToR { get; } = new NetworkDeviceRole(ToRValue);
 
+        /// <summary> NetworkDeviceRole-NPB(Network Packet Broker). </summary>
+        public static NetworkDeviceRole Npb { get; } = new NetworkDeviceRole(NpbValue);
+
         /// <summary> NetworkDeviceRole-TS(Terminal Server). </summary>
         public static NetworkDeviceRole TS { get; } = new NetworkDeviceRole(TSValue);
 

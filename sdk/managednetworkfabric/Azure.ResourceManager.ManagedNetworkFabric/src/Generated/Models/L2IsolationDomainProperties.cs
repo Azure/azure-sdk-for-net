@@ -8,21 +8,16 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> L2Isolation Domain Properties defines the properties of the resource. </summary>
-    public partial class L2IsolationDomainProperties : AnnotationResourceProperties
+    internal partial class L2IsolationDomainProperties : AnnotationResourceProperties
     {
         /// <summary> Initializes a new instance of <see cref="L2IsolationDomainProperties"/>. </summary>
         /// <param name="networkFabricId"> ARM Resource ID of the Network Fabric. </param>
         /// <param name="vlanId"> Vlan Identifier of the Network Fabric. Example: 501. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkFabricId"/> is null. </exception>
         public L2IsolationDomainProperties(ResourceIdentifier networkFabricId, int vlanId)
         {
-            Argument.AssertNotNull(networkFabricId, nameof(networkFabricId));
-
             NetworkFabricId = networkFabricId;
             VlanId = vlanId;
         }

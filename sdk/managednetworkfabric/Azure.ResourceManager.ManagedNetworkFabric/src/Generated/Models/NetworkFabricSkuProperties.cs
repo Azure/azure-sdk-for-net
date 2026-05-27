@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricSkuProperties"/>. </summary>
-        internal NetworkFabricSkuProperties()
+        public NetworkFabricSkuProperties()
         {
             SupportedVersions = new ChangeTrackingList<string>();
         }
@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public NetworkFabricSkuType? TypePropertiesType { get; }
 
         /// <summary> Maximum number of compute racks available for this Network Fabric SKU. The value of max count racks is 4 for 4 rack SKU and 8 for 8 rack SKU. </summary>
-        public int? MaxComputeRacks { get; }
+        public int? MaxComputeRacks { get; set; }
 
         /// <summary> Maximum number of servers available for this Network Fabric SKU. </summary>
-        public int? MaximumServerCount { get; }
+        public int? MaximumServerCount { get; set; }
 
         /// <summary> List of supported Network Fabric SKU versions. </summary>
         public IReadOnlyList<string> SupportedVersions { get; } = new ChangeTrackingList<string>();

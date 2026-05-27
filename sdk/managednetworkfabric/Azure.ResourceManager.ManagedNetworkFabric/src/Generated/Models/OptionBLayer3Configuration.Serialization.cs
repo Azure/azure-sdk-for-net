@@ -16,6 +16,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> OptionB Layer3 Configuration properties. </summary>
     public partial class OptionBLayer3Configuration : Layer3IPPrefixProperties, IJsonModel<OptionBLayer3Configuration>
     {
+        /// <summary> Initializes a new instance of <see cref="OptionBLayer3Configuration"/> for deserialization. </summary>
+        internal OptionBLayer3Configuration()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override Layer3IPPrefixProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return message;
         }
 
-        internal HttpMessage CreateActivateRequest(Guid subscriptionId, string resourceGroupName, string networkFabricName, RequestContext context)
+        internal HttpMessage CreateProvisionRequest(Guid subscriptionId, string resourceGroupName, string networkFabricName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return message;
         }
 
-        internal HttpMessage CreateDeactivateRequest(Guid subscriptionId, string resourceGroupName, string networkFabricName, RequestContext context)
+        internal HttpMessage CreateDeprovisionRequest(Guid subscriptionId, string resourceGroupName, string networkFabricName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return message;
         }
 
-        internal HttpMessage CreateReloadConfigurationRequest(Guid subscriptionId, string resourceGroupName, string networkFabricName, RequestContext context)
+        internal HttpMessage CreateRefreshConfigurationRequest(Guid subscriptionId, string resourceGroupName, string networkFabricName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return message;
         }
 
-        internal HttpMessage CreateSetWorkloadManagementBfdConfigurationRequest(Guid subscriptionId, string resourceGroupName, string networkFabricName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateWorkloadManagementBfdConfigurationRequest(Guid subscriptionId, string resourceGroupName, string networkFabricName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return message;
         }
 
-        internal HttpMessage CreateSetInfraManagementBfdConfigurationRequest(Guid subscriptionId, string resourceGroupName, string networkFabricName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateInfraManagementBfdConfigurationRequest(Guid subscriptionId, string resourceGroupName, string networkFabricName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return message;
         }
 
-        internal HttpMessage CreateRetrieveTopologyRequest(Guid subscriptionId, string resourceGroupName, string networkFabricName, RequestContext context)
+        internal HttpMessage CreateGetTopologyRequest(Guid subscriptionId, string resourceGroupName, string networkFabricName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return message;
         }
 
-        internal HttpMessage CreateApplyConfigurationRequest(Guid subscriptionId, string resourceGroupName, string networkFabricName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCommitConfigurationRequest(Guid subscriptionId, string resourceGroupName, string networkFabricName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -429,12 +429,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if (content != null)
-            {
-                request.Headers.SetValue("Content-Type", "application/json");
-            }
             request.Headers.SetValue("Accept", "application/json");
-            request.Content = content;
             return message;
         }
 

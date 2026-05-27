@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Represents the disabled state of BFD administrative state. </summary>
         private const string DisabledValue = "Disabled";
         /// <summary> Represents the MAT(Manual Action Taken) state of BFD administrative state. </summary>
-        private const string MATValue = "MAT";
+        private const string MatValue = "MAT";
         /// <summary> Represents the RMA(Return Material Authorization) state of BFD administrative state. </summary>
-        private const string RMAValue = "RMA";
+        private const string RmaValue = "RMA";
 
         /// <summary> Initializes a new instance of <see cref="BfdAdministrativeState"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static BfdAdministrativeState Disabled { get; } = new BfdAdministrativeState(DisabledValue);
 
         /// <summary> Represents the MAT(Manual Action Taken) state of BFD administrative state. </summary>
-        public static BfdAdministrativeState MAT { get; } = new BfdAdministrativeState(MATValue);
+        public static BfdAdministrativeState Mat { get; } = new BfdAdministrativeState(MatValue);
 
         /// <summary> Represents the RMA(Return Material Authorization) state of BFD administrative state. </summary>
-        public static BfdAdministrativeState RMA { get; } = new BfdAdministrativeState(RMAValue);
+        public static BfdAdministrativeState Rma { get; } = new BfdAdministrativeState(RmaValue);
 
         /// <summary> Determines if two <see cref="BfdAdministrativeState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

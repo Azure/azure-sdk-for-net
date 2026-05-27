@@ -10,8 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> Network Interface Patch properties. </summary>
-    public partial class NetworkInterfacePatchProperties : AnnotationResourceProperties
+    internal partial class NetworkInterfacePatchProperties : AnnotationResourceProperties
     {
         /// <summary> Initializes a new instance of <see cref="NetworkInterfacePatchProperties"/>. </summary>
         public NetworkInterfacePatchProperties()

@@ -17,11 +17,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Network Tap Rule Properties defines the resource properties. </summary>
     internal partial class NetworkTapRuleProperties : IJsonModel<NetworkTapRuleProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="NetworkTapRuleProperties"/> for deserialization. </summary>
-        internal NetworkTapRuleProperties()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual NetworkTapRuleProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -85,8 +80,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
-            writer.WritePropertyName("configurationType"u8);
-            writer.WriteStringValue(ConfigurationType.ToString());
+            if (Optional.IsDefined(ConfigurationType))
+            {
+                writer.WritePropertyName("configurationType"u8);
+                writer.WriteStringValue(ConfigurationType.Value.ToString());
+            }
             if (Optional.IsDefined(TapRulesUri))
             {
                 writer.WritePropertyName("tapRulesUrl"u8);
@@ -140,7 +138,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(PollingIntervalInSeconds))
             {
                 writer.WritePropertyName("pollingIntervalInSeconds"u8);
-                writer.WriteNumberValue(PollingIntervalInSeconds.Value);
+                writer.WriteNumberValue(PollingIntervalInSeconds.Value.ToSerialInt32());
             }
             if (options.Format != "W" && Optional.IsDefined(LastSyncedOn))
             {
@@ -230,14 +228,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             string annotation = default;
-            NetworkFabricConfigurationType configurationType = default;
+            NetworkFabricConfigurationType? configurationType = default;
             Uri tapRulesUri = default;
             NetworkFabricIdentitySelector identitySelector = default;
             IList<NetworkTapRuleMatchConfiguration> matchConfigurations = default;
             IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = default;
             string networkTapId = default;
             IReadOnlyList<ResourceIdentifier> networkTapIds = default;
-            int? pollingIntervalInSeconds = default;
+            PollingIntervalInSecond? pollingIntervalInSeconds = default;
             DateTimeOffset? lastSyncedOn = default;
             GlobalNetworkTapRuleActionProperties globalNetworkTapRuleActions = default;
             LastOperationProperties lastOperation = default;
@@ -255,6 +253,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (prop.NameEquals("configurationType"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     configurationType = new NetworkFabricConfigurationType(prop.Value.GetString());
                     continue;
                 }
@@ -336,7 +338,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    pollingIntervalInSeconds = prop.Value.GetInt32();
+                    pollingIntervalInSeconds = new PollingIntervalInSecond(prop.Value.GetInt32());
                     continue;
                 }
                 if (prop.NameEquals("lastSyncedTime"u8))

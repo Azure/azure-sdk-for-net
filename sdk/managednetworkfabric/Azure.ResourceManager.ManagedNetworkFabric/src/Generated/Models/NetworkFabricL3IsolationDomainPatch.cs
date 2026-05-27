@@ -103,23 +103,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
         }
 
-        /// <summary> Connected Subnet RoutePolicy. </summary>
-        public ConnectedSubnetRoutePolicy ConnectedSubnetRoutePolicy
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ConnectedSubnetRoutePolicy;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new L3IsolationDomainPatchProperties();
-                }
-                Properties.ConnectedSubnetRoutePolicy = value;
-            }
-        }
-
         /// <summary> IPv4 VRF Limit configuration. </summary>
         public RoutePrefixLimitPatchProperties V4RoutePrefixLimit
         {
@@ -151,6 +134,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     Properties = new L3IsolationDomainPatchProperties();
                 }
                 Properties.V6RoutePrefixLimit = value;
+            }
+        }
+
+        /// <summary> Array of ARM Resource ID of the RoutePolicies. </summary>
+        public L3ExportRoutePolicy ExportRoutePolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExportRoutePolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new L3IsolationDomainPatchProperties();
+                }
+                Properties.ExportRoutePolicy = value;
             }
         }
 

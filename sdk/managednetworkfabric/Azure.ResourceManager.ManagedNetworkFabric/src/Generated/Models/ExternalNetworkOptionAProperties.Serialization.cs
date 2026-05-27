@@ -17,6 +17,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> option A properties object. </summary>
     public partial class ExternalNetworkOptionAProperties : Layer3IPPrefixProperties, IJsonModel<ExternalNetworkOptionAProperties>
     {
+        /// <summary> Initializes a new instance of <see cref="ExternalNetworkOptionAProperties"/> for deserialization. </summary>
+        internal ExternalNetworkOptionAProperties()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override Layer3IPPrefixProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

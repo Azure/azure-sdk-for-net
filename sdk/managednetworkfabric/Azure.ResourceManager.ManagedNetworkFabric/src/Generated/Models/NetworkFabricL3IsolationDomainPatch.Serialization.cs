@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> The L3 Isolation Domain patch resource definition. </summary>
     public partial class NetworkFabricL3IsolationDomainPatch : NetworkRackPatch, IJsonModel<NetworkFabricL3IsolationDomainPatch>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override NetworkRackPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkFabricL3IsolationDomainPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNetworkFabricL3IsolationDomainPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetworkFabricL3IsolationDomainPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
@@ -84,6 +101,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         NetworkFabricL3IsolationDomainPatch IJsonModel<NetworkFabricL3IsolationDomainPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (NetworkFabricL3IsolationDomainPatch)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override NetworkRackPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkFabricL3IsolationDomainPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetworkFabricL3IsolationDomainPatch)} does not support reading '{format}' format.");
+            }
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkFabricL3IsolationDomainPatch(document.RootElement, options);
+        }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

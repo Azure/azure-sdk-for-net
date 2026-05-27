@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return message;
         }
 
-        internal HttpMessage CreateSynchronizeRequest(Guid subscriptionId, string resourceGroupName, string networkTapRuleName, RequestContext context)
+        internal HttpMessage CreateResyncRequest(Guid subscriptionId, string resourceGroupName, string networkTapRuleName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

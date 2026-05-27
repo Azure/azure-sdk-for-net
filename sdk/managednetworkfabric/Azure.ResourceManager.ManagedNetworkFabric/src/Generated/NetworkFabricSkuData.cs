@@ -20,10 +20,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricSkuData"/>. </summary>
-        /// <param name="properties"> The Network Fabric SKU properties. </param>
-        internal NetworkFabricSkuData(NetworkFabricSkuProperties properties)
+        public NetworkFabricSkuData()
         {
-            Properties = properties;
+
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricSkuData"/>. </summary>
@@ -40,14 +39,48 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> The Network Fabric SKU properties. </summary>
-        internal NetworkFabricSkuProperties Properties { get; }
+        internal NetworkFabricSkuProperties Properties { get; set; }
 
         /// <summary> Type of Network Fabric SKU. </summary>
         public NetworkFabricSkuType? TypePropertiesType
         {
             get
             {
-                return Properties.TypePropertiesType;
+                return Properties is null ? default : Properties.TypePropertiesType;
+            }
+        }
+
+        /// <summary> Maximum number of compute racks available for this Network Fabric SKU. The value of max count racks is 4 for 4 rack SKU and 8 for 8 rack SKU. </summary>
+        public int? MaxComputeRacks
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaxComputeRacks;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkFabricSkuProperties();
+                }
+                Properties.MaxComputeRacks = value;
+            }
+        }
+
+        /// <summary> Maximum number of servers available for this Network Fabric SKU. </summary>
+        public int? MaximumServerCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaximumServerCount;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkFabricSkuProperties();
+                }
+                Properties.MaximumServerCount = value;
             }
         }
 
@@ -56,7 +89,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             get
             {
-                return Properties is null ? default : Properties.SupportedVersions;
+                if (Properties is null)
+                {
+                    Properties = new NetworkFabricSkuProperties();
+                }
+                return Properties.SupportedVersions;
             }
         }
 
@@ -65,7 +102,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             get
             {
-                return Properties.Details;
+                return Properties is null ? default : Properties.Details;
             }
         }
 
@@ -74,7 +111,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             get
             {
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
     }

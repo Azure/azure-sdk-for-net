@@ -14,8 +14,7 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> L2 Isolation Domain Patch Properties defines the patchable properties of the resource. </summary>
-    public partial class L2IsolationDomainPatchProperties : AnnotationResourceProperties, IJsonModel<L2IsolationDomainPatchProperties>
+    internal partial class L2IsolationDomainPatchProperties : AnnotationResourceProperties, IJsonModel<L2IsolationDomainPatchProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

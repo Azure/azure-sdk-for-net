@@ -32,6 +32,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             _value = value;
         }
 
+        /// <summary> TCP(Transmission Control Protocol) Protocol. </summary>
+        public static Layer4Protocol Tcp { get; } = new Layer4Protocol(TcpValue);
+
+        /// <summary> UDP(User Datagram Protocol) Protocol. </summary>
+        public static Layer4Protocol Udp { get; } = new Layer4Protocol(UdpValue);
+
         /// <summary> SCTP(Streaming Control Transmission Protocol) Protocol. </summary>
         public static Layer4Protocol Sctp { get; } = new Layer4Protocol(SctpValue);
 

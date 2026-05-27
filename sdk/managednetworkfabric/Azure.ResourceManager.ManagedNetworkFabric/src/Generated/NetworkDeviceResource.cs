@@ -15,7 +15,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
@@ -431,11 +430,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="content"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<OperationStatusResult>> RestartAsync(WaitUntil waitUntil, NetworkDeviceRebootContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<StateUpdateCommonPostActionResult>> RebootAsync(WaitUntil waitUntil, NetworkDeviceRebootContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _networkDevicesClientDiagnostics.CreateScope("NetworkDeviceResource.Restart");
+            using DiagnosticScope scope = _networkDevicesClientDiagnostics.CreateScope("NetworkDeviceResource.Reboot");
             scope.Start();
             try
             {
@@ -443,10 +442,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkDevicesRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkDeviceRebootContent.ToRequestContent(content), context);
+                HttpMessage message = _networkDevicesRestClient.CreateRebootRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkDeviceRebootContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ManagedNetworkFabricArmOperation<OperationStatusResult> operation = new ManagedNetworkFabricArmOperation<OperationStatusResult>(
-                    new OperationStatusResultOperationSource(),
+                ManagedNetworkFabricArmOperation<StateUpdateCommonPostActionResult> operation = new ManagedNetworkFabricArmOperation<StateUpdateCommonPostActionResult>(
+                    new StateUpdateCommonPostActionResultOperationSource(),
                     _networkDevicesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -490,11 +489,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="content"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<OperationStatusResult> Restart(WaitUntil waitUntil, NetworkDeviceRebootContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<StateUpdateCommonPostActionResult> Reboot(WaitUntil waitUntil, NetworkDeviceRebootContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _networkDevicesClientDiagnostics.CreateScope("NetworkDeviceResource.Restart");
+            using DiagnosticScope scope = _networkDevicesClientDiagnostics.CreateScope("NetworkDeviceResource.Reboot");
             scope.Start();
             try
             {
@@ -502,10 +501,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkDevicesRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkDeviceRebootContent.ToRequestContent(content), context);
+                HttpMessage message = _networkDevicesRestClient.CreateRebootRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkDeviceRebootContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ManagedNetworkFabricArmOperation<OperationStatusResult> operation = new ManagedNetworkFabricArmOperation<OperationStatusResult>(
-                    new OperationStatusResultOperationSource(),
+                ManagedNetworkFabricArmOperation<StateUpdateCommonPostActionResult> operation = new ManagedNetworkFabricArmOperation<StateUpdateCommonPostActionResult>(
+                    new StateUpdateCommonPostActionResultOperationSource(),
                     _networkDevicesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -547,9 +546,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<NetworkDeviceRefreshConfigurationResult>> ReloadConfigurationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<StateUpdateCommonPostActionResult>> RefreshConfigurationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _networkDevicesClientDiagnostics.CreateScope("NetworkDeviceResource.ReloadConfiguration");
+            using DiagnosticScope scope = _networkDevicesClientDiagnostics.CreateScope("NetworkDeviceResource.RefreshConfiguration");
             scope.Start();
             try
             {
@@ -557,10 +556,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkDevicesRestClient.CreateReloadConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _networkDevicesRestClient.CreateRefreshConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ManagedNetworkFabricArmOperation<NetworkDeviceRefreshConfigurationResult> operation = new ManagedNetworkFabricArmOperation<NetworkDeviceRefreshConfigurationResult>(
-                    new NetworkDeviceRefreshConfigurationResultOperationSource(),
+                ManagedNetworkFabricArmOperation<StateUpdateCommonPostActionResult> operation = new ManagedNetworkFabricArmOperation<StateUpdateCommonPostActionResult>(
+                    new StateUpdateCommonPostActionResultOperationSource(),
                     _networkDevicesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -602,9 +601,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<NetworkDeviceRefreshConfigurationResult> ReloadConfiguration(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<StateUpdateCommonPostActionResult> RefreshConfiguration(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _networkDevicesClientDiagnostics.CreateScope("NetworkDeviceResource.ReloadConfiguration");
+            using DiagnosticScope scope = _networkDevicesClientDiagnostics.CreateScope("NetworkDeviceResource.RefreshConfiguration");
             scope.Start();
             try
             {
@@ -612,10 +611,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkDevicesRestClient.CreateReloadConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _networkDevicesRestClient.CreateRefreshConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ManagedNetworkFabricArmOperation<NetworkDeviceRefreshConfigurationResult> operation = new ManagedNetworkFabricArmOperation<NetworkDeviceRefreshConfigurationResult>(
-                    new NetworkDeviceRefreshConfigurationResultOperationSource(),
+                ManagedNetworkFabricArmOperation<StateUpdateCommonPostActionResult> operation = new ManagedNetworkFabricArmOperation<StateUpdateCommonPostActionResult>(
+                    new StateUpdateCommonPostActionResultOperationSource(),
                     _networkDevicesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -1115,11 +1114,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="content"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<NetworkDeviceUpdateAdministrativeStateResult>> SetAdministrativeStateAsync(WaitUntil waitUntil, UpdateDeviceAdministrativeStateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<StateUpdateCommonPostActionResult>> UpdateAdministrativeStateAsync(WaitUntil waitUntil, UpdateDeviceAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _networkDevicesClientDiagnostics.CreateScope("NetworkDeviceResource.SetAdministrativeState");
+            using DiagnosticScope scope = _networkDevicesClientDiagnostics.CreateScope("NetworkDeviceResource.UpdateAdministrativeState");
             scope.Start();
             try
             {
@@ -1127,10 +1126,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkDevicesRestClient.CreateSetAdministrativeStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UpdateDeviceAdministrativeStateContent.ToRequestContent(content), context);
+                HttpMessage message = _networkDevicesRestClient.CreateUpdateAdministrativeStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UpdateDeviceAdministrativeStateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ManagedNetworkFabricArmOperation<NetworkDeviceUpdateAdministrativeStateResult> operation = new ManagedNetworkFabricArmOperation<NetworkDeviceUpdateAdministrativeStateResult>(
-                    new NetworkDeviceUpdateAdministrativeStateResultOperationSource(),
+                ManagedNetworkFabricArmOperation<StateUpdateCommonPostActionResult> operation = new ManagedNetworkFabricArmOperation<StateUpdateCommonPostActionResult>(
+                    new StateUpdateCommonPostActionResultOperationSource(),
                     _networkDevicesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -1174,11 +1173,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="content"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<NetworkDeviceUpdateAdministrativeStateResult> SetAdministrativeState(WaitUntil waitUntil, UpdateDeviceAdministrativeStateContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<StateUpdateCommonPostActionResult> UpdateAdministrativeState(WaitUntil waitUntil, UpdateDeviceAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _networkDevicesClientDiagnostics.CreateScope("NetworkDeviceResource.SetAdministrativeState");
+            using DiagnosticScope scope = _networkDevicesClientDiagnostics.CreateScope("NetworkDeviceResource.UpdateAdministrativeState");
             scope.Start();
             try
             {
@@ -1186,10 +1185,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkDevicesRestClient.CreateSetAdministrativeStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UpdateDeviceAdministrativeStateContent.ToRequestContent(content), context);
+                HttpMessage message = _networkDevicesRestClient.CreateUpdateAdministrativeStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UpdateDeviceAdministrativeStateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ManagedNetworkFabricArmOperation<NetworkDeviceUpdateAdministrativeStateResult> operation = new ManagedNetworkFabricArmOperation<NetworkDeviceUpdateAdministrativeStateResult>(
-                    new NetworkDeviceUpdateAdministrativeStateResultOperationSource(),
+                ManagedNetworkFabricArmOperation<StateUpdateCommonPostActionResult> operation = new ManagedNetworkFabricArmOperation<StateUpdateCommonPostActionResult>(
+                    new StateUpdateCommonPostActionResultOperationSource(),
                     _networkDevicesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -1233,7 +1232,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="content"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<NetworkDeviceUpgradeResult>> UpgradeAsync(WaitUntil waitUntil, NetworkDeviceUpgradeContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<StateUpdateCommonPostActionResult>> UpgradeAsync(WaitUntil waitUntil, NetworkFabricUpdateVersionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1245,10 +1244,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkDevicesRestClient.CreateUpgradeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkDeviceUpgradeContent.ToRequestContent(content), context);
+                HttpMessage message = _networkDevicesRestClient.CreateUpgradeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkFabricUpdateVersionContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ManagedNetworkFabricArmOperation<NetworkDeviceUpgradeResult> operation = new ManagedNetworkFabricArmOperation<NetworkDeviceUpgradeResult>(
-                    new NetworkDeviceUpgradeResultOperationSource(),
+                ManagedNetworkFabricArmOperation<StateUpdateCommonPostActionResult> operation = new ManagedNetworkFabricArmOperation<StateUpdateCommonPostActionResult>(
+                    new StateUpdateCommonPostActionResultOperationSource(),
                     _networkDevicesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -1292,7 +1291,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="content"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<NetworkDeviceUpgradeResult> Upgrade(WaitUntil waitUntil, NetworkDeviceUpgradeContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<StateUpdateCommonPostActionResult> Upgrade(WaitUntil waitUntil, NetworkFabricUpdateVersionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1304,10 +1303,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkDevicesRestClient.CreateUpgradeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkDeviceUpgradeContent.ToRequestContent(content), context);
+                HttpMessage message = _networkDevicesRestClient.CreateUpgradeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkFabricUpdateVersionContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ManagedNetworkFabricArmOperation<NetworkDeviceUpgradeResult> operation = new ManagedNetworkFabricArmOperation<NetworkDeviceUpgradeResult>(
-                    new NetworkDeviceUpgradeResultOperationSource(),
+                ManagedNetworkFabricArmOperation<StateUpdateCommonPostActionResult> operation = new ManagedNetworkFabricArmOperation<StateUpdateCommonPostActionResult>(
+                    new StateUpdateCommonPostActionResultOperationSource(),
                     _networkDevicesClientDiagnostics,
                     Pipeline,
                     message.Request,

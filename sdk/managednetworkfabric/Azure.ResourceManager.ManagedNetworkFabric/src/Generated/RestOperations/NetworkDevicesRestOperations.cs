@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return message;
         }
 
-        internal HttpMessage CreateRestartRequest(Guid subscriptionId, string resourceGroupName, string networkDeviceName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateRebootRequest(Guid subscriptionId, string resourceGroupName, string networkDeviceName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return message;
         }
 
-        internal HttpMessage CreateReloadConfigurationRequest(Guid subscriptionId, string resourceGroupName, string networkDeviceName, RequestContext context)
+        internal HttpMessage CreateRefreshConfigurationRequest(Guid subscriptionId, string resourceGroupName, string networkDeviceName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return message;
         }
 
-        internal HttpMessage CreateSetAdministrativeStateRequest(Guid subscriptionId, string resourceGroupName, string networkDeviceName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateAdministrativeStateRequest(Guid subscriptionId, string resourceGroupName, string networkDeviceName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

@@ -11,8 +11,7 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> The Network Tap resource patch definition. </summary>
-    public partial class NetworkTapPatchProperties : AnnotationResourceProperties
+    internal partial class NetworkTapPatchProperties : AnnotationResourceProperties
     {
         /// <summary> Initializes a new instance of <see cref="NetworkTapPatchProperties"/>. </summary>
         public NetworkTapPatchProperties()

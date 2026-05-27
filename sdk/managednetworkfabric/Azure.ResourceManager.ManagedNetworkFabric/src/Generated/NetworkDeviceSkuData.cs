@@ -20,10 +20,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkDeviceSkuData"/>. </summary>
-        /// <param name="properties"> The Network Device SKU properties. </param>
-        internal NetworkDeviceSkuData(NetworkDeviceSkuProperties properties)
+        /// <param name="model"> Model of the network device. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="model"/> is null. </exception>
+        public NetworkDeviceSkuData(string model)
         {
-            Properties = properties;
+            Argument.AssertNotNull(model, nameof(model));
+
+            Properties = new NetworkDeviceSkuProperties(model);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkDeviceSkuData"/>. </summary>
@@ -40,14 +43,52 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> The Network Device SKU properties. </summary>
-        internal NetworkDeviceSkuProperties Properties { get; }
+        internal NetworkDeviceSkuProperties Properties { get; set; }
+
+        /// <summary> Model of the network device. </summary>
+        public string Model
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Model;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkDeviceSkuProperties();
+                }
+                Properties.Model = value;
+            }
+        }
+
+        /// <summary> Manufacturer of the network device. </summary>
+        public string Manufacturer
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Manufacturer;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkDeviceSkuProperties();
+                }
+                Properties.Manufacturer = value;
+            }
+        }
 
         /// <summary> List of supported version details of network device. </summary>
         public IList<SupportedVersionProperties> SupportedVersions
         {
             get
             {
-                return Properties is null ? default : Properties.SupportedVersions;
+                if (Properties is null)
+                {
+                    Properties = new NetworkDeviceSkuProperties();
+                }
+                return Properties.SupportedVersions;
             }
         }
 
@@ -56,7 +97,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             get
             {
-                return Properties is null ? default : Properties.SupportedRoleTypes;
+                if (Properties is null)
+                {
+                    Properties = new NetworkDeviceSkuProperties();
+                }
+                return Properties.SupportedRoleTypes;
             }
         }
 
@@ -65,7 +110,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             get
             {
-                return Properties is null ? default : Properties.Interfaces;
+                if (Properties is null)
+                {
+                    Properties = new NetworkDeviceSkuProperties();
+                }
+                return Properties.Interfaces;
             }
         }
 
@@ -74,7 +123,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             get
             {
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
     }

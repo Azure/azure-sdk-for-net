@@ -10,8 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> Network Bootstrap Interface Properties defines the properties of the resource. </summary>
-    public partial class NetworkBootstrapInterfaceProperties : AnnotationResourceProperties
+    internal partial class NetworkBootstrapInterfaceProperties : AnnotationResourceProperties
     {
         /// <summary> Initializes a new instance of <see cref="NetworkBootstrapInterfaceProperties"/>. </summary>
         public NetworkBootstrapInterfaceProperties()

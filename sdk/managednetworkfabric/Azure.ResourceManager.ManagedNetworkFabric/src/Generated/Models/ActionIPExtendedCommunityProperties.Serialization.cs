@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ActionIPExtendedCommunityProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override IPExtendedCommunityAddOperationProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ActionIPExtendedCommunityProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ActionIPExtendedCommunityProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ActionIPExtendedCommunityProperties IPersistableModel<ActionIPExtendedCommunityProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ActionIPExtendedCommunityProperties IPersistableModel<ActionIPExtendedCommunityProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (ActionIPExtendedCommunityProperties)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ActionIPExtendedCommunityProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -65,13 +65,40 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             writer.WriteEndObject();
         }
 
-        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ActionIPExtendedCommunityProperties IJsonModel<ActionIPExtendedCommunityProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ActionIPExtendedCommunityProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ActionIPExtendedCommunityProperties)} does not support writing '{format}' format.");
+            }
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Add))
+            {
+                writer.WritePropertyName("add"u8);
+                writer.WriteObjectValue(Add, options);
+            }
+            if (Optional.IsDefined(Delete))
+            {
+                writer.WritePropertyName("delete"u8);
+                writer.WriteObjectValue(Delete, options);
+            }
+            if (Optional.IsDefined(Set))
+            {
+                writer.WritePropertyName("set"u8);
+                writer.WriteObjectValue(Set, options);
+            }
+        }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ActionIPExtendedCommunityProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ActionIPExtendedCommunityProperties IJsonModel<ActionIPExtendedCommunityProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ActionIPExtendedCommunityProperties)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override IPExtendedCommunityAddOperationProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ActionIPExtendedCommunityProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -90,10 +117,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IPExtendedCommunityIdList @add = default;
             IPExtendedCommunityIdList delete = default;
             IPExtendedCommunityIdList @set = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("add"u8))
@@ -128,7 +155,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ActionIPExtendedCommunityProperties(@add, delete, @set, additionalBinaryDataProperties);
+            return new ActionIPExtendedCommunityProperties(additionalBinaryDataProperties, @add, delete, @set);
         }
     }
 }

@@ -22,13 +22,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         /// <summary> Initializes a new instance of <see cref="NetworkDeviceData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="serialNumber"> Serial number of the device. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serialNumber"/> is null. </exception>
-        public NetworkDeviceData(AzureLocation location, string serialNumber) : base(location)
+        public NetworkDeviceData(AzureLocation location) : base(location)
         {
-            Argument.AssertNotNull(serialNumber, nameof(serialNumber));
 
-            Properties = new NetworkDeviceProperties(serialNumber);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkDeviceData"/>. </summary>
@@ -154,6 +150,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             get
             {
                 return Properties is null ? default : Properties.NetworkDeviceRole;
+            }
+        }
+
+        /// <summary> Reference to network rack resource id. </summary>
+        public ResourceIdentifier NetworkRackId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkRackId;
             }
         }
 

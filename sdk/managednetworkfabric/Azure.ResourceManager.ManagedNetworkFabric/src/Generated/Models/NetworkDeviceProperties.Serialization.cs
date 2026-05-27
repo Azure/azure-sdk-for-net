@@ -18,11 +18,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Network Device Properties defines the properties of the resource. </summary>
     internal partial class NetworkDeviceProperties : IJsonModel<NetworkDeviceProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="NetworkDeviceProperties"/> for deserialization. </summary>
-        internal NetworkDeviceProperties()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual NetworkDeviceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -91,8 +86,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            writer.WritePropertyName("serialNumber"u8);
-            writer.WriteStringValue(SerialNumber);
+            if (Optional.IsDefined(SerialNumber))
+            {
+                writer.WritePropertyName("serialNumber"u8);
+                writer.WriteStringValue(SerialNumber);
+            }
             if (Optional.IsDefined(IdentitySelector))
             {
                 writer.WritePropertyName("identitySelector"u8);
@@ -227,7 +225,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             string version = default;
             string networkDeviceSku = default;
             NetworkDeviceRole? networkDeviceRole = default;
-            string networkRackId = default;
+            ResourceIdentifier networkRackId = default;
             IPAddress managementIPv4Address = default;
             string managementIPv6Address = default;
             string rwDeviceConfig = default;
@@ -286,7 +284,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (prop.NameEquals("networkRackId"u8))
                 {
-                    networkRackId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    networkRackId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("managementIpv4Address"u8))

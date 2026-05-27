@@ -540,11 +540,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="content"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<UpdateAdministrativeStateResult>> SetAdministrativeStateAsync(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DeviceUpdateCommonPostActionResult>> UpdateAdministrativeStateAsync(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _l2IsolationDomainsClientDiagnostics.CreateScope("NetworkFabricL2IsolationDomainResource.SetAdministrativeState");
+            using DiagnosticScope scope = _l2IsolationDomainsClientDiagnostics.CreateScope("NetworkFabricL2IsolationDomainResource.UpdateAdministrativeState");
             scope.Start();
             try
             {
@@ -552,10 +552,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _l2IsolationDomainsRestClient.CreateSetAdministrativeStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UpdateAdministrativeStateContent.ToRequestContent(content), context);
+                HttpMessage message = _l2IsolationDomainsRestClient.CreateUpdateAdministrativeStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UpdateAdministrativeStateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult> operation = new ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult>(
-                    new UpdateAdministrativeStateResultOperationSource(),
+                ManagedNetworkFabricArmOperation<DeviceUpdateCommonPostActionResult> operation = new ManagedNetworkFabricArmOperation<DeviceUpdateCommonPostActionResult>(
+                    new DeviceUpdateCommonPostActionResultOperationSource(),
                     _l2IsolationDomainsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -599,11 +599,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="content"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<UpdateAdministrativeStateResult> SetAdministrativeState(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DeviceUpdateCommonPostActionResult> UpdateAdministrativeState(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _l2IsolationDomainsClientDiagnostics.CreateScope("NetworkFabricL2IsolationDomainResource.SetAdministrativeState");
+            using DiagnosticScope scope = _l2IsolationDomainsClientDiagnostics.CreateScope("NetworkFabricL2IsolationDomainResource.UpdateAdministrativeState");
             scope.Start();
             try
             {
@@ -611,10 +611,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _l2IsolationDomainsRestClient.CreateSetAdministrativeStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UpdateAdministrativeStateContent.ToRequestContent(content), context);
+                HttpMessage message = _l2IsolationDomainsRestClient.CreateUpdateAdministrativeStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UpdateAdministrativeStateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult> operation = new ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult>(
-                    new UpdateAdministrativeStateResultOperationSource(),
+                ManagedNetworkFabricArmOperation<DeviceUpdateCommonPostActionResult> operation = new ManagedNetworkFabricArmOperation<DeviceUpdateCommonPostActionResult>(
+                    new DeviceUpdateCommonPostActionResultOperationSource(),
                     _l2IsolationDomainsClientDiagnostics,
                     Pipeline,
                     message.Request,

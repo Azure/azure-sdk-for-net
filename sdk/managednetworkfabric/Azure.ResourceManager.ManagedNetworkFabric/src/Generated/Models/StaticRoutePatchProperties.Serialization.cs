@@ -16,6 +16,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> The StaticRoutePatchProperties. </summary>
     public partial class StaticRoutePatchProperties : IJsonModel<StaticRoutePatchProperties>
     {
+        /// <summary> Initializes a new instance of <see cref="StaticRoutePatchProperties"/> for deserialization. </summary>
+        internal StaticRoutePatchProperties()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual StaticRoutePatchProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -74,26 +79,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 throw new FormatException($"The model {nameof(StaticRoutePatchProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Prefix))
+            writer.WritePropertyName("prefix"u8);
+            writer.WriteStringValue(Prefix);
+            writer.WritePropertyName("nextHop"u8);
+            writer.WriteStartArray();
+            foreach (string item in NextHop)
             {
-                writer.WritePropertyName("prefix"u8);
-                writer.WriteStringValue(Prefix);
-            }
-            if (Optional.IsCollectionDefined(NextHop))
-            {
-                writer.WritePropertyName("nextHop"u8);
-                writer.WriteStartArray();
-                foreach (string item in NextHop)
+                if (item == null)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
+                    writer.WriteNullValue();
+                    continue;
                 }
-                writer.WriteEndArray();
+                writer.WriteStringValue(item);
             }
+            writer.WriteEndArray();
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -148,10 +147,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (prop.NameEquals("nextHop"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
@@ -172,7 +167,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new StaticRoutePatchProperties(prefix, nextHop ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new StaticRoutePatchProperties(prefix, nextHop, additionalBinaryDataProperties);
         }
     }
 }

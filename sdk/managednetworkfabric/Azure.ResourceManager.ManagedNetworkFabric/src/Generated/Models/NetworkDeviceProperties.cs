@@ -20,13 +20,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkDeviceProperties"/>. </summary>
-        /// <param name="serialNumber"> Serial number of the device. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serialNumber"/> is null. </exception>
-        public NetworkDeviceProperties(string serialNumber)
+        public NetworkDeviceProperties()
         {
-            Argument.AssertNotNull(serialNumber, nameof(serialNumber));
-
-            SerialNumber = serialNumber;
             SecretRotationStatus = new ChangeTrackingList<NetworkFabricSecretRotationStatus>();
             CertificateRotationStatus = new ChangeTrackingList<NetworkFabricCertificateRotationStatus>();
         }
@@ -51,7 +46,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="certificateRotationStatus"> Certificate rotation status for the device's certificates. </param>
         /// <param name="networkFabricId"> Associated Network Fabric Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkDeviceProperties(string annotation, string hostName, string serialNumber, NetworkFabricIdentitySelector identitySelector, string version, string networkDeviceSku, NetworkDeviceRole? networkDeviceRole, string networkRackId, IPAddress managementIPv4Address, string managementIPv6Address, string rwDeviceConfig, LastOperationProperties lastOperation, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IReadOnlyList<NetworkFabricSecretRotationStatus> secretRotationStatus, IReadOnlyList<NetworkFabricCertificateRotationStatus> certificateRotationStatus, ResourceIdentifier networkFabricId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkDeviceProperties(string annotation, string hostName, string serialNumber, NetworkFabricIdentitySelector identitySelector, string version, string networkDeviceSku, NetworkDeviceRole? networkDeviceRole, ResourceIdentifier networkRackId, IPAddress managementIPv4Address, string managementIPv6Address, string rwDeviceConfig, LastOperationProperties lastOperation, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IReadOnlyList<NetworkFabricSecretRotationStatus> secretRotationStatus, IReadOnlyList<NetworkFabricCertificateRotationStatus> certificateRotationStatus, ResourceIdentifier networkFabricId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Annotation = annotation;
             HostName = hostName;
@@ -96,7 +91,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public NetworkDeviceRole? NetworkDeviceRole { get; }
 
         /// <summary> Reference to network rack resource id. </summary>
-        public string NetworkRackId { get; }
+        public ResourceIdentifier NetworkRackId { get; }
 
         /// <summary> Management IPv4 Address. </summary>
         public IPAddress ManagementIPv4Address { get; }

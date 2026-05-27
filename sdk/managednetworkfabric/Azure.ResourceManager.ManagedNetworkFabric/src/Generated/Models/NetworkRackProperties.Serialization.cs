@@ -14,8 +14,7 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> Network Rack Properties defines the properties of the resource. </summary>
-    public partial class NetworkRackProperties : AnnotationResourceProperties, IJsonModel<NetworkRackProperties>
+    internal partial class NetworkRackProperties : AnnotationResourceProperties, IJsonModel<NetworkRackProperties>
     {
         /// <summary> Initializes a new instance of <see cref="NetworkRackProperties"/> for deserialization. </summary>
         internal NetworkRackProperties()

@@ -428,9 +428,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<NetworkTapRuleResyncResult>> SynchronizeAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<StateUpdateCommonPostActionResult>> ResyncAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _networkTapRulesClientDiagnostics.CreateScope("NetworkTapRuleResource.Synchronize");
+            using DiagnosticScope scope = _networkTapRulesClientDiagnostics.CreateScope("NetworkTapRuleResource.Resync");
             scope.Start();
             try
             {
@@ -438,10 +438,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkTapRulesRestClient.CreateSynchronizeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _networkTapRulesRestClient.CreateResyncRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ManagedNetworkFabricArmOperation<NetworkTapRuleResyncResult> operation = new ManagedNetworkFabricArmOperation<NetworkTapRuleResyncResult>(
-                    new NetworkTapRuleResyncResultOperationSource(),
+                ManagedNetworkFabricArmOperation<StateUpdateCommonPostActionResult> operation = new ManagedNetworkFabricArmOperation<StateUpdateCommonPostActionResult>(
+                    new StateUpdateCommonPostActionResultOperationSource(),
                     _networkTapRulesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -483,9 +483,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<NetworkTapRuleResyncResult> Synchronize(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<StateUpdateCommonPostActionResult> Resync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _networkTapRulesClientDiagnostics.CreateScope("NetworkTapRuleResource.Synchronize");
+            using DiagnosticScope scope = _networkTapRulesClientDiagnostics.CreateScope("NetworkTapRuleResource.Resync");
             scope.Start();
             try
             {
@@ -493,10 +493,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkTapRulesRestClient.CreateSynchronizeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _networkTapRulesRestClient.CreateResyncRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ManagedNetworkFabricArmOperation<NetworkTapRuleResyncResult> operation = new ManagedNetworkFabricArmOperation<NetworkTapRuleResyncResult>(
-                    new NetworkTapRuleResyncResultOperationSource(),
+                ManagedNetworkFabricArmOperation<StateUpdateCommonPostActionResult> operation = new ManagedNetworkFabricArmOperation<StateUpdateCommonPostActionResult>(
+                    new StateUpdateCommonPostActionResultOperationSource(),
                     _networkTapRulesClientDiagnostics,
                     Pipeline,
                     message.Request,

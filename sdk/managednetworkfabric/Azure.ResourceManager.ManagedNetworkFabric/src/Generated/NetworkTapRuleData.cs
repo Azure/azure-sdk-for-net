@@ -20,6 +20,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkTapRuleData"/>. </summary>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        public NetworkTapRuleData(AzureLocation location) : base(location)
+        {
+
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkTapRuleData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -56,6 +63,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     Properties = new NetworkTapRuleProperties();
                 }
                 Properties.Annotation = value;
+            }
+        }
+
+        /// <summary> Input method to configure Network Tap Rule. </summary>
+        public NetworkFabricConfigurationType? ConfigurationType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConfigurationType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkTapRuleProperties();
+                }
+                Properties.ConfigurationType = value;
             }
         }
 
@@ -119,6 +143,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
+        /// <summary> The ARM resource Id of the NetworkTap. </summary>
+        public string NetworkTapId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkTapId;
+            }
+        }
+
         /// <summary> The ARM resource Id of the NetworkTap Rules. </summary>
         public IReadOnlyList<ResourceIdentifier> NetworkTapIds
         {
@@ -129,6 +162,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     Properties = new NetworkTapRuleProperties();
                 }
                 return Properties.NetworkTapIds;
+            }
+        }
+
+        /// <summary> Polling interval in seconds. </summary>
+        public PollingIntervalInSecond? PollingIntervalInSeconds
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PollingIntervalInSeconds;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkTapRuleProperties();
+                }
+                Properties.PollingIntervalInSeconds = value;
             }
         }
 

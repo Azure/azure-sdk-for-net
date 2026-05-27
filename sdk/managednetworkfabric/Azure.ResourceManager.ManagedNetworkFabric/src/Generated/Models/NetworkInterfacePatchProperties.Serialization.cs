@@ -13,8 +13,7 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> Network Interface Patch properties. </summary>
-    public partial class NetworkInterfacePatchProperties : AnnotationResourceProperties, IJsonModel<NetworkInterfacePatchProperties>
+    internal partial class NetworkInterfacePatchProperties : AnnotationResourceProperties, IJsonModel<NetworkInterfacePatchProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

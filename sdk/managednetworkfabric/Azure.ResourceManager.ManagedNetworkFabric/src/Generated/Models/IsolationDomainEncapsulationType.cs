@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Encapsulation-None. </summary>
         private const string NoneValue = "None";
         /// <summary> Encapsulation-GRE. </summary>
-        private const string GREValue = "GRE";
+        private const string GreValue = "GRE";
 
         /// <summary> Initializes a new instance of <see cref="IsolationDomainEncapsulationType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static IsolationDomainEncapsulationType None { get; } = new IsolationDomainEncapsulationType(NoneValue);
 
         /// <summary> Encapsulation-GRE. </summary>
-        public static IsolationDomainEncapsulationType GRE { get; } = new IsolationDomainEncapsulationType(GREValue);
+        public static IsolationDomainEncapsulationType Gre { get; } = new IsolationDomainEncapsulationType(GreValue);
 
         /// <summary> Determines if two <see cref="IsolationDomainEncapsulationType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

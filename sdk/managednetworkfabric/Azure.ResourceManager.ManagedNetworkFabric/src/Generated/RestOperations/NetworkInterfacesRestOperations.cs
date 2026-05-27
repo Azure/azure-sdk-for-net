@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return message;
         }
 
-        internal HttpMessage CreateSetAdministrativeStateRequest(Guid subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateAdministrativeStateRequest(Guid subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
