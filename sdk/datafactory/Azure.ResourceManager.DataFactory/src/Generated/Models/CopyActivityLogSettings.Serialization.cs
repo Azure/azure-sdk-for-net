@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    logLevel = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    logLevel = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("enableReliableLogging"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    enableReliableLogging = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    enableReliableLogging = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (options.Format != "W")

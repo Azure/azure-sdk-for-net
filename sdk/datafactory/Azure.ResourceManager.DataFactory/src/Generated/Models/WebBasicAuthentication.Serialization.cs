@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("url"u8))
                 {
-                    uri = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    uri = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("authenticationType"u8))
@@ -131,12 +131,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("username"u8))
                 {
-                    username = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    username = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("password"u8))
                 {
-                    password = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    password = default /* TODO(#59298): DeserializeDataFactorySecret is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (options.Format != "W")

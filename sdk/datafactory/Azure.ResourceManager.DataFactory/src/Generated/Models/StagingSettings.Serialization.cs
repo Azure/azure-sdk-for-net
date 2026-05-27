@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("linkedServiceName"u8))
                 {
-                    linkedServiceName = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    linkedServiceName = default /* TODO(#59298): DeserializeDataFactoryLinkedServiceReference is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("path"u8))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    path = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    path = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("enableCompression"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    enableCompression = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    enableCompression = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));

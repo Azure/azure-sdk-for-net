@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -150,7 +151,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DataFactoryLinkedServiceReference> array = new List<DataFactoryLinkedServiceReference>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(default); /* TODO(#59298): Deserialize* not implemented; stub until generator fix */
+                        array.Add(default); /* TODO(#59298): DeserializeDataFactoryLinkedServiceReference is not implemented; stub until generator fix */
                     }
                     linkedServices = array;
                     continue;

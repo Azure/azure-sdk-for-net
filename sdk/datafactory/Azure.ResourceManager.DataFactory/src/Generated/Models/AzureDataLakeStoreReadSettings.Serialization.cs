@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    maxConcurrentConnections = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    maxConcurrentConnections = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("disableMetricsCollection"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    disableMetricsCollection = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    disableMetricsCollection = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("recursive"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    recursive = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    recursive = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("wildcardFolderPath"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    wildcardFolderPath = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    wildcardFolderPath = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("wildcardFileName"u8))
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    wildcardFileName = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    wildcardFileName = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("fileListPath"u8))
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    fileListPath = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    fileListPath = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("listAfter"u8))
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    listAfter = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    listAfter = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("listBefore"u8))
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    listBefore = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    listBefore = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("enablePartitionDiscovery"u8))
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    enablePartitionDiscovery = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    enablePartitionDiscovery = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("partitionRootPath"u8))
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    partitionRootPath = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    partitionRootPath = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("deleteFilesAfterCompletion"u8))
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    deleteFilesAfterCompletion = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    deleteFilesAfterCompletion = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("modifiedDatetimeStart"u8))
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    modifiedDatetimeStart = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    modifiedDatetimeStart = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("modifiedDatetimeEnd"u8))
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    modifiedDatetimeEnd = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    modifiedDatetimeEnd = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));

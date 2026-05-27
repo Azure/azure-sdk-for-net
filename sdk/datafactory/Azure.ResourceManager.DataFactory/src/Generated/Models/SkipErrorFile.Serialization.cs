@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    fileMissing = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    fileMissing = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("dataInconsistency"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    dataInconsistency = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    dataInconsistency = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (options.Format != "W")

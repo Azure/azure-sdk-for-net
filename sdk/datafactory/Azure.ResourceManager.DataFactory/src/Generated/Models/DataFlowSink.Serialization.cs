@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedService = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    linkedService = default /* TODO(#59298): DeserializeDataFactoryLinkedServiceReference is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("flowlet"u8))
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    schemaLinkedService = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    schemaLinkedService = default /* TODO(#59298): DeserializeDataFactoryLinkedServiceReference is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("rejectedDataLinkedService"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    rejectedDataLinkedService = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    rejectedDataLinkedService = default /* TODO(#59298): DeserializeDataFactoryLinkedServiceReference is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (options.Format != "W")

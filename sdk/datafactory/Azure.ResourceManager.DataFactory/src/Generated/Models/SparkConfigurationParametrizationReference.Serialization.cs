@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("referenceName"u8))
                 {
-                    referenceName = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    referenceName = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (options.Format != "W")

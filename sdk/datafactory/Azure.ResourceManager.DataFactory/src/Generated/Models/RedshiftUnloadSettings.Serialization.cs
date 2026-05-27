@@ -133,12 +133,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("s3LinkedServiceName"u8))
                 {
-                    s3LinkedServiceName = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    s3LinkedServiceName = default /* TODO(#59298): DeserializeDataFactoryLinkedServiceReference is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("bucketName"u8))
                 {
-                    bucketName = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    bucketName = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (options.Format != "W")

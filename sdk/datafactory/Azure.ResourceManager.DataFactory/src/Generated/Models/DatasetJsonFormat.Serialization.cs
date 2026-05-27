@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    serializer = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    serializer = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("deserializer"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    deserializer = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    deserializer = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("filePattern"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    nestingSeparator = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    nestingSeparator = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("encodingName"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    encodingName = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    encodingName = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("jsonNodeReference"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    jsonNodeReference = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    jsonNodeReference = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("jsonPathDefinition"u8))

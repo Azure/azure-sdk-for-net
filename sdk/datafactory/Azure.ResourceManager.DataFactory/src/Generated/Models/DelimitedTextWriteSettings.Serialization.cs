@@ -144,12 +144,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    quoteAllText = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    quoteAllText = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("fileExtension"u8))
                 {
-                    fileExtension = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    fileExtension = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("maxRowsPerFile"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    maxRowsPerFile = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    maxRowsPerFile = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("fileNamePrefix"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    fileNamePrefix = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    fileNamePrefix = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));

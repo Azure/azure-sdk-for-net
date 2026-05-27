@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    pfx = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    pfx = default /* TODO(#59298): DeserializeDataFactorySecret is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("username"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    username = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    username = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("password"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    password = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    password = default /* TODO(#59298): DeserializeDataFactorySecret is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("resource"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    resource = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    resource = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("userTenant"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    userTenant = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    userTenant = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("credential"u8))

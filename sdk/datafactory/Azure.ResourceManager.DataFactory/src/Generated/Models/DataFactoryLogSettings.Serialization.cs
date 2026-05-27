@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    enableCopyActivityLog = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    enableCopyActivityLog = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("copyActivityLogSettings"u8))

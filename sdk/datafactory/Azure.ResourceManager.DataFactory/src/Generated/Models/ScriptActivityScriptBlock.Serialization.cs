@@ -144,12 +144,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("text"u8))
                 {
-                    text = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    text = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    queryType = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    queryType = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("parameters"u8))

@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    structure = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    structure = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("schema"u8))
@@ -150,12 +150,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    schema = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    schema = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("linkedServiceName"u8))
                 {
-                    linkedServiceName = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    linkedServiceName = default /* TODO(#59298): DeserializeDataFactoryLinkedServiceReference is not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("parameters"u8))
