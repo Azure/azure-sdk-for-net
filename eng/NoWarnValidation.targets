@@ -134,7 +134,13 @@
         Condition="$(_AllowedCodesDelimited.Contains(';%(Identity);'))" />
     </ItemGroup>
 
-    <!-- Recording mode: just print the non-central codes for auditing -->
+    <!--
+      Recording mode: prints the residual non-central, non-allow-listed codes for the project
+      — i.e. exactly the codes that would error in enforcement mode. Use this to seed or update
+      eng/analyzerallowlist/<ProjectName>.txt, or to debug a current AZSDK0002 failure. It is
+      not a full dump of the project's effective NoWarn; central codes and codes already
+      approved in the project's allow-list file are intentionally filtered out as noise.
+    -->
     <Message
       Condition="'$(NoWarnValidationMode)' == 'record'"
       Importance="High"
