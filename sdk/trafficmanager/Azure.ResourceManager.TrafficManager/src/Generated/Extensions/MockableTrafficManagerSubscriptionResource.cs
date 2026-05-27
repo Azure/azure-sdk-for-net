@@ -38,34 +38,7 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
 
         private ClientDiagnostics ProfilesClientDiagnostics => _profilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.TrafficManager.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Profiles ProfilesRestClient => _profilesRestClient ??= new Profiles(ProfilesClientDiagnostics, Pipeline, Endpoint, "2022-04-01");
-
-        /// <summary>
-        /// Get the subscription-level key used for Real User Metrics collection.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/trafficManagerUserMetricsKeys/default. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> UserMetricsModels_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2022-04-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="TrafficManagerUserMetricsResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <returns> Returns a <see cref="TrafficManagerUserMetricsResource"/> object. </returns>
-        public virtual TrafficManagerUserMetricsResource GetTrafficManagerUserMetric()
-        {
-            return new TrafficManagerUserMetricsResource(Client, Id.AppendProviderResource("Microsoft.Network", "trafficManagerUserMetricsKeys", "default"));
-        }
+        private Profiles ProfilesRestClient => _profilesRestClient ??= new Profiles(ProfilesClientDiagnostics, Pipeline, Endpoint, "2024-04-01-preview");
 
         /// <summary>
         /// Lists all Traffic Manager profiles within a subscription.
@@ -80,7 +53,7 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-04-01. </description>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -92,7 +65,7 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TrafficManagerProfileData, TrafficManagerProfileResource>(new ProfilesGetBySubscriptionAsyncCollectionResultOfT(ProfilesRestClient, Id.SubscriptionId, context, "MockableTrafficManagerSubscriptionResource.GetTrafficManagerProfiles"), data => new TrafficManagerProfileResource(Client, data));
+            return new AsyncPageableWrapper<TrafficManagerProfileData, TrafficManagerProfileResource>(new ProfilesGetBySubscriptionAsyncCollectionResultOfT(ProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableTrafficManagerSubscriptionResource.GetTrafficManagerProfiles"), data => new TrafficManagerProfileResource(Client, data));
         }
 
         /// <summary>
@@ -108,7 +81,7 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-04-01. </description>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -120,7 +93,7 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TrafficManagerProfileData, TrafficManagerProfileResource>(new ProfilesGetBySubscriptionCollectionResultOfT(ProfilesRestClient, Id.SubscriptionId, context, "MockableTrafficManagerSubscriptionResource.GetTrafficManagerProfiles"), data => new TrafficManagerProfileResource(Client, data));
+            return new PageableWrapper<TrafficManagerProfileData, TrafficManagerProfileResource>(new ProfilesGetBySubscriptionCollectionResultOfT(ProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableTrafficManagerSubscriptionResource.GetTrafficManagerProfiles"), data => new TrafficManagerProfileResource(Client, data));
         }
 
         /// <summary>
@@ -136,7 +109,7 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-04-01. </description>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -155,7 +128,7 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ProfilesRestClient.CreateCheckTrafficManagerNameAvailabilityV2Request(Id.SubscriptionId, TrafficManagerRelativeDnsNameAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = ProfilesRestClient.CreateCheckTrafficManagerNameAvailabilityV2Request(Guid.Parse(Id.SubscriptionId), TrafficManagerRelativeDnsNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TrafficManagerNameAvailabilityResult> response = Response.FromValue(TrafficManagerNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -184,7 +157,7 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-04-01. </description>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -203,7 +176,7 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ProfilesRestClient.CreateCheckTrafficManagerNameAvailabilityV2Request(Id.SubscriptionId, TrafficManagerRelativeDnsNameAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = ProfilesRestClient.CreateCheckTrafficManagerNameAvailabilityV2Request(Guid.Parse(Id.SubscriptionId), TrafficManagerRelativeDnsNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TrafficManagerNameAvailabilityResult> response = Response.FromValue(TrafficManagerNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)

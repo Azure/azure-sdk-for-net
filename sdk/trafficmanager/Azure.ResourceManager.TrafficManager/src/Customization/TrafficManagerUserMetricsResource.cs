@@ -9,12 +9,9 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.TrafficManager.Models;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.TrafficManager
 {
-    // TODO - this rename attribute is also incorrect. we need to remove it and do it correctly.
-    [CodeGenType("TrafficManagerUserMetricResource")]
     public partial class TrafficManagerUserMetricsResource
     {
         // The generator emits delete methods with ArmOperation<TrafficManagerDeleteOperationResult>.
@@ -32,7 +29,7 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _trafficManagerUserMetricsKeysRestClient.CreateDeleteRequest(Id.SubscriptionId, context);
+                HttpMessage message = _trafficManagerUserMetricsKeysRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TrafficManagerDeleteOperationResult> response = Response.FromValue(TrafficManagerDeleteOperationResult.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -64,7 +61,7 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _trafficManagerUserMetricsKeysRestClient.CreateDeleteRequest(Id.SubscriptionId, context);
+                HttpMessage message = _trafficManagerUserMetricsKeysRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TrafficManagerDeleteOperationResult> response = Response.FromValue(TrafficManagerDeleteOperationResult.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
