@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ResourceHealthEventImpactedResourceData, TenantResourceHealthEventImpactedResource>(new TenantResourceHealthEventImpactedResourcesGetByTenantIdAndEventIdAsyncCollectionResultOfT(_tenantResourceHealthEventImpactedResourcesRestClient, Id.Name, filter, context, "TenantResourceHealthEventImpactedResourceCollection.GetAll"), data => new TenantResourceHealthEventImpactedResource(Client, data));
+            return new AsyncPageableWrapper<ResourceHealthEventImpactedResourceData, TenantResourceHealthEventImpactedResource>(new TenantResourceHealthEventImpactedResourcesGetSecurityAdvisoryImpactedResourcesByTenantIdAndEventIdAsyncCollectionResultOfT(_tenantResourceHealthEventImpactedResourcesRestClient, Id.Name, filter, context, "TenantResourceHealthEventImpactedResourceCollection.GetAll"), data => new TenantResourceHealthEventImpactedResource(Client, data));
         }
 
         /// <summary>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ResourceHealthEventImpactedResourceData, TenantResourceHealthEventImpactedResource>(new TenantResourceHealthEventImpactedResourcesGetByTenantIdAndEventIdCollectionResultOfT(_tenantResourceHealthEventImpactedResourcesRestClient, Id.Name, filter, context, "TenantResourceHealthEventImpactedResourceCollection.GetAll"), data => new TenantResourceHealthEventImpactedResource(Client, data));
+            return new PageableWrapper<ResourceHealthEventImpactedResourceData, TenantResourceHealthEventImpactedResource>(new TenantResourceHealthEventImpactedResourcesGetSecurityAdvisoryImpactedResourcesByTenantIdAndEventIdCollectionResultOfT(_tenantResourceHealthEventImpactedResourcesRestClient, Id.Name, filter, context, "TenantResourceHealthEventImpactedResourceCollection.GetAll"), data => new TenantResourceHealthEventImpactedResource(Client, data));
         }
 
         /// <summary>

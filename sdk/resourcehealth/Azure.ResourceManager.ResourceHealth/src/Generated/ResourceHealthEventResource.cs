@@ -406,19 +406,19 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceHealthEventImpactedResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceHealthEventImpactedResourceData> GetBySubscriptionIdAndEventIdAsync(string filter = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ResourceHealthEventImpactedResourceData> GetSecurityAdvisoryImpactedResourcesBySubscriptionIdAndEventIdAsync(string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ResourceHealthEventGetBySubscriptionIdAndEventIdAsyncCollectionResultOfT(
+            return new ResourceHealthEventGetSecurityAdvisoryImpactedResourcesBySubscriptionIdAndEventIdAsyncCollectionResultOfT(
                 _resourceHealthEventRestClient,
                 Id.SubscriptionId,
                 Id.Name,
                 filter,
                 context,
-                "ResourceHealthEventResource.GetBySubscriptionIdAndEventId");
+                "ResourceHealthEventResource.GetSecurityAdvisoryImpactedResourcesBySubscriptionIdAndEventId");
         }
 
         /// <summary>
@@ -445,19 +445,19 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceHealthEventImpactedResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceHealthEventImpactedResourceData> GetBySubscriptionIdAndEventId(string filter = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<ResourceHealthEventImpactedResourceData> GetSecurityAdvisoryImpactedResourcesBySubscriptionIdAndEventId(string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ResourceHealthEventGetBySubscriptionIdAndEventIdCollectionResultOfT(
+            return new ResourceHealthEventGetSecurityAdvisoryImpactedResourcesBySubscriptionIdAndEventIdCollectionResultOfT(
                 _resourceHealthEventRestClient,
                 Id.SubscriptionId,
                 Id.Name,
                 filter,
                 context,
-                "ResourceHealthEventResource.GetBySubscriptionIdAndEventId");
+                "ResourceHealthEventResource.GetSecurityAdvisoryImpactedResourcesBySubscriptionIdAndEventId");
         }
 
         /// <summary> Gets a collection of ResourceHealthEventImpactedResources in the <see cref="ResourceHealthEventResource"/>. </summary>
