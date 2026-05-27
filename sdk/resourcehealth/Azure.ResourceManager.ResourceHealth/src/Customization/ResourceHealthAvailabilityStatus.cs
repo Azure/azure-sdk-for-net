@@ -10,7 +10,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
-#pragma warning disable CS1591
+    /// <summary> Wrapper type that preserves the GA 1.0.0 shape of availability status with Location and Properties. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class ResourceHealthAvailabilityStatus : ResourceData, IJsonModel<ResourceHealthAvailabilityStatus>, IPersistableModel<ResourceHealthAvailabilityStatus>
     {
@@ -81,5 +81,4 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             return BinaryData.FromString("{}");
         }
     }
-#pragma warning restore CS1591
 }
