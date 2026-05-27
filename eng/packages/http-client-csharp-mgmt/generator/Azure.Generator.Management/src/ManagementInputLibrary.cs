@@ -22,7 +22,7 @@ namespace Azure.Generator.Management
 
         private IReadOnlyDictionary<string, InputServiceMethod>? _inputServiceMethodsByCrossLanguageDefinitionId;
         private IReadOnlyDictionary<InputServiceMethod, InputClient>? _intMethodClientMap;
-        private HashSet<InputModelType>? _resourceModels;
+        private HashSet<string>? _resourceModelIds;
         private HashSet<InputModelType>? _safeFlattenDisabledModels;
         private HashSet<InputModelType>? _clientNameOverriddenModels;
         private HashSet<InputServiceMethod>? _clientNameOverriddenMethods;
@@ -272,26 +272,25 @@ namespace Azure.Generator.Management
             return base.InputNamespace;
         }
 
-        private HashSet<InputModelType> ResourceModels => _resourceModels ??= BuildResourceModels();
-        private HashSet<string>? _resourceModelIds;
-        private HashSet<string> ResourceModelIds => _resourceModelIds ??= ResourceModels
-            .Select(model => model.CrossLanguageDefinitionId)
-            .Where(id => !string.IsNullOrEmpty(id))
-            .ToHashSet(StringComparer.Ordinal);
+        // Resource-model checks must use the model's semantic identity rather than InputModelType object identity.
+        // Some generator paths can see equivalent InputModelType instances for the same TypeSpec model, and those
+        // instances would not match a HashSet<InputModelType> built from ArmProviderSchema.Resources.
+        private HashSet<string> ResourceModelIds => _resourceModelIds ??= BuildResourceModelIds();
 
-        private HashSet<InputModelType> BuildResourceModels()
+        private HashSet<string> BuildResourceModelIds()
         {
             // Get resource models from ArmProviderSchema
-            var resourceModels = new HashSet<InputModelType>();
+            var resourceModelIds = new HashSet<string>(StringComparer.Ordinal);
             foreach (var resource in ArmProviderSchema.Resources)
             {
-                if (resource.ResourceModel != null)
+                var resourceModelId = resource.ResourceModel?.CrossLanguageDefinitionId;
+                if (!string.IsNullOrEmpty(resourceModelId))
                 {
-                    resourceModels.Add(resource.ResourceModel);
+                    resourceModelIds.Add(resourceModelId);
                 }
             }
 
-            return resourceModels;
+            return resourceModelIds;
         }
 
         internal IReadOnlyList<ArmResourceMetadata> ResourceMetadatas => ArmProviderSchema.Resources;
@@ -429,7 +428,7 @@ namespace Azure.Generator.Management
         /// <param name="model"> The input model type to check. </param>
         /// <returns> <c>true</c> if the model is a resource model; otherwise, <c>false</c>. </returns>
         public bool IsResourceModel(InputModelType model)
-            => ResourceModels.Contains(model) || ResourceModelIds.Contains(model.CrossLanguageDefinitionId);
+            => ResourceModelIds.Contains(model.CrossLanguageDefinitionId);
 
         internal bool TryFindEnclosingResourceNameForResourceUpdateModel(InputModelType model, [NotNullWhen(true)] out string? resourceName, out bool isAlsoUsedInCreate)
         {
