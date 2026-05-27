@@ -384,20 +384,21 @@ namespace Azure.Generator.Management.Providers
             var methods = new List<MethodProvider>(_actions.Count * 2);
             foreach (var action in _actions)
             {
-                var restClientInfo = _clientInfos[action.InputClient];
-                if (action.InputMethod is InputPagingServiceMethod pagingMethod)
-                {
-                    methods.Add(new PageableOperationMethodProvider(this, _operationContext, restClientInfo, pagingMethod, true, methodName: null, explicitResourceClient: _resource));
-                    methods.Add(new PageableOperationMethodProvider(this, _operationContext, restClientInfo, pagingMethod, false, methodName: null, explicitResourceClient: _resource));
-                }
-                else
-                {
-                    methods.Add(BuildNonPagingGetAllMethod(action.InputMethod, restClientInfo, true, methodName: null));
-                    methods.Add(BuildNonPagingGetAllMethod(action.InputMethod, restClientInfo, false, methodName: null));
-                }
+                methods.Add(BuildActionMethod(action, true));
+                methods.Add(BuildActionMethod(action, false));
             }
 
             return [.. methods];
+        }
+
+        private MethodProvider BuildActionMethod(ResourceMethod action, bool isAsync)
+        {
+            var restClientInfo = _clientInfos[action.InputClient];
+            return action.InputMethod switch
+            {
+                InputPagingServiceMethod pagingAction => new PageableOperationMethodProvider(this, _operationContext, restClientInfo, pagingAction, isAsync, methodName: null, explicitResourceClient: _resource),
+                _ => BuildNonPagingResourceMethod(action.InputMethod, restClientInfo, isAsync, methodName: null, explicitResourceClient: _resource)
+            };
         }
 
         private MethodProvider[] BuildGetAllMethods()
@@ -476,20 +477,20 @@ namespace Azure.Generator.Management.Providers
             return getAll.InputMethod switch
             {
                 InputPagingServiceMethod pagingGetAll => new PageableOperationMethodProvider(this, _operationContext, restClientInfo, pagingGetAll, isAsync, methodName, _resource),
-                _ => BuildNonPagingGetAllMethod(getAll.InputMethod, restClientInfo, isAsync, methodName)
+                _ => BuildNonPagingResourceMethod(getAll.InputMethod, restClientInfo, isAsync, methodName, explicitResourceClient: _resource)
             };
         }
 
-        private MethodProvider BuildNonPagingGetAllMethod(InputServiceMethod method, RestClientInfo clientInfo, bool isAsync, string? methodName)
+        private MethodProvider BuildNonPagingResourceMethod(InputServiceMethod method, RestClientInfo clientInfo, bool isAsync, string? methodName, ResourceClientProvider? explicitResourceClient)
         {
             // Check if the response body type is a list - if so, wrap it in a single-page pageable
             var responseBodyType = method.GetResponseBodyType();
             if (responseBodyType != null && responseBodyType.IsList)
             {
-                return new ArrayResponseOperationMethodProvider(this, _operationContext, clientInfo, method, isAsync, methodName, _resource);
+                return new ArrayResponseOperationMethodProvider(this, _operationContext, clientInfo, method, isAsync, methodName, explicitResourceClient);
             }
 
-            return new ResourceOperationMethodProvider(this, _operationContext, clientInfo, method, isAsync, methodName);
+            return new ResourceOperationMethodProvider(this, _operationContext, clientInfo, method, isAsync, methodName, explicitResourceClient: explicitResourceClient);
         }
 
         private MethodProvider? BuildGetMethod(bool isAsync)

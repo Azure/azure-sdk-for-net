@@ -681,7 +681,7 @@ namespace Azure.Generator.Management.Tests.Common
             var createMethod = InputFactory.BasicServiceMethod("createTest", createOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter, dataParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
             var actionMethod = InputFactory.BasicServiceMethod("doAction", actionOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
 
-             var resourceIdPattern = new RequestPathPattern(resourcePath);
+            var resourceIdPattern = new RequestPathPattern(resourcePath);
             var armProviderDecorator = BuildArmProviderSchema(responseModel, [
                 new ResourceMethod(ResourceOperationKind.Read, getMethod, new RequestPathPattern(getMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!),
                 new ResourceMethod(ResourceOperationKind.Create, createMethod, new RequestPathPattern(createMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!),
@@ -703,6 +703,11 @@ namespace Azure.Generator.Management.Tests.Common
             return (mainClient, actionClient, [responseModel]);
         }
 
+        /// <summary>
+        /// Two-client fixture where ActionClient contains a collection action. Unlike
+        /// ClientWithResourceActionInDifferentClient, the action is expected to emit on the
+        /// collection and therefore the collection must include ActionClient fields.
+        /// </summary>
         public static (InputClient MainClient, InputClient ActionClient, IReadOnlyList<InputModelType> InputModels) ClientWithResourceCollectionActionInDifferentClient()
         {
             const string MainClientName = "MainClient";
