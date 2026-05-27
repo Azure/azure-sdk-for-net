@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Microsoft.TypeSpec.Generator.ClientModel;
@@ -11,36 +11,24 @@ namespace Azure.Generator.Management.Visitors;
 
 internal class ResourceVisitor : ScmLibraryVisitor
 {
+    // ResourceDataModelProvider already applies the initial 'Data' suffix at construction time
+    // (which is required to preserve the correct BaseType against custom-code-view collisions).
+    // We still need this pass because NameVisitor.PreVisitModel may rename known types
+    // (e.g. PrivateEndpointConnection -> {ResourceProviderName}PrivateEndpointConnection) and drop the suffix.
     protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)
     {
-        if (type is not null)
+        if (type is not null && ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(model))
         {
-            TransformResource(model, type);
+            if (!type.Name.EndsWith("Data", StringComparison.Ordinal))
+            {
+                type.Update(name: $"{type.Name}Data");
+            }
         }
         return type;
     }
 
-    private void TransformResource(InputModelType model, TypeProvider type)
-    {
-        if (type is ModelProvider && ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(model))
-        {
-            var resourceDataName = TransformName(type);
-            type.Update(
-                relativeFilePath: TransformRelativeFilePath(resourceDataName),
-                name: resourceDataName,
-                @namespace: ManagementClientGenerator.Instance.TypeFactory.PrimaryNamespace);
-
-            foreach (var serialization in type.SerializationProviders)
-            {
-                serialization.Update(
-                    relativeFilePath: TransformRelativeFilePathForSerialization(resourceDataName),
-                    name: resourceDataName,
-                    @namespace: ManagementClientGenerator.Instance.TypeFactory.PrimaryNamespace);
-            }
-        }
-    }
-
-    // Because we have NamespaceVisitor with VisitType in Azure.Generater, we need to override the namespace with VisitType here
+    // Re-assert the namespace and fix serialization providers' file paths after Azure.Generator's
+    // NamespaceVisitor (which runs in VisitType) has had a chance to override them.
     protected override TypeProvider? VisitType(TypeProvider type)
     {
         if (type is not null)
@@ -58,20 +46,10 @@ internal class ResourceVisitor : ScmLibraryVisitor
 
             foreach (var serialization in type.SerializationProviders)
             {
-                serialization.Update(@namespace: ManagementClientGenerator.Instance.TypeFactory.PrimaryNamespace);
+                serialization.Update(
+                    relativeFilePath: Path.Combine("src", "Generated", $"{model.Name}.Serialization.cs"),
+                    @namespace: ManagementClientGenerator.Instance.TypeFactory.PrimaryNamespace);
             }
         }
     }
-
-    private static string TransformName(TypeProvider model)
-    {
-        var name = model.Name;
-        return name.EndsWith("Data", StringComparison.Ordinal) ? name : $"{name}Data";
-    }
-
-    private static string TransformRelativeFilePath(string name)
-        => Path.Combine("src", "Generated", $"{name}.cs");
-
-    private static string TransformRelativeFilePathForSerialization(string name)
-        => Path.Combine("src", "Generated", $"{name}.Serialization.cs");
 }
