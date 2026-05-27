@@ -13,52 +13,52 @@ using Azure.ResourceManager.Kubernetes;
 
 namespace Azure.ResourceManager.Kubernetes.Models
 {
-    /// <summary> The credential result response. </summary>
-    public partial class CredentialResult : IJsonModel<CredentialResult>
+    /// <summary> OIDC Issuer Profile specifies attributes for workload identity integration. </summary>
+    public partial class ConnectedClusterOidcIssuerProfile : IJsonModel<ConnectedClusterOidcIssuerProfile>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CredentialResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ConnectedClusterOidcIssuerProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CredentialResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectedClusterOidcIssuerProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCredentialResult(document.RootElement, options);
+                        return DeserializeConnectedClusterOidcIssuerProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CredentialResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectedClusterOidcIssuerProfile)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CredentialResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectedClusterOidcIssuerProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerKubernetesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CredentialResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectedClusterOidcIssuerProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CredentialResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ConnectedClusterOidcIssuerProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CredentialResult IPersistableModel<CredentialResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ConnectedClusterOidcIssuerProfile IPersistableModel<ConnectedClusterOidcIssuerProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CredentialResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ConnectedClusterOidcIssuerProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CredentialResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ConnectedClusterOidcIssuerProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,20 +69,25 @@ namespace Azure.ResourceManager.Kubernetes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CredentialResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectedClusterOidcIssuerProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CredentialResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectedClusterOidcIssuerProfile)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (Optional.IsDefined(Enabled))
             {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
+                writer.WritePropertyName("enabled"u8);
+                writer.WriteBooleanValue(Enabled.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Value))
+            if (options.Format != "W" && Optional.IsDefined(IssuerUri))
             {
-                writer.WritePropertyName("value"u8);
-                writer.WriteBase64StringValue(Value.ToArray(), "D");
+                writer.WritePropertyName("issuerUrl"u8);
+                writer.WriteStringValue(IssuerUri);
+            }
+            if (Optional.IsDefined(SelfHostedIssuerUri))
+            {
+                writer.WritePropertyName("selfHostedIssuerUrl"u8);
+                writer.WriteStringValue(SelfHostedIssuerUri);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -103,46 +108,52 @@ namespace Azure.ResourceManager.Kubernetes.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CredentialResult IJsonModel<CredentialResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ConnectedClusterOidcIssuerProfile IJsonModel<ConnectedClusterOidcIssuerProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CredentialResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ConnectedClusterOidcIssuerProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CredentialResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectedClusterOidcIssuerProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CredentialResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectedClusterOidcIssuerProfile)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCredentialResult(document.RootElement, options);
+            return DeserializeConnectedClusterOidcIssuerProfile(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CredentialResult DeserializeCredentialResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static ConnectedClusterOidcIssuerProfile DeserializeConnectedClusterOidcIssuerProfile(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string name = default;
-            BinaryData value = default;
+            bool? enabled = default;
+            string issuerUri = default;
+            string selfHostedIssuerUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("value"u8))
+                if (prop.NameEquals("enabled"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    value = BinaryData.FromBytes(prop.Value.GetBytesFromBase64("D"));
+                    enabled = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("issuerUrl"u8))
+                {
+                    issuerUri = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("selfHostedIssuerUrl"u8))
+                {
+                    selfHostedIssuerUri = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +161,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CredentialResult(name, value, additionalBinaryDataProperties);
+            return new ConnectedClusterOidcIssuerProfile(enabled, issuerUri, selfHostedIssuerUri, additionalBinaryDataProperties);
         }
     }
 }

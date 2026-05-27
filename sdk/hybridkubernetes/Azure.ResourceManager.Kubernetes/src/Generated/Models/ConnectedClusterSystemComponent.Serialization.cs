@@ -13,52 +13,52 @@ using Azure.ResourceManager.Kubernetes;
 
 namespace Azure.ResourceManager.Kubernetes.Models
 {
-    /// <summary> Agent Errors if any during agent or system component upgrade. </summary>
-    public partial class AgentError : IJsonModel<AgentError>
+    /// <summary> System extensions and its current versions installed on the cluster resource. </summary>
+    public partial class ConnectedClusterSystemComponent : IJsonModel<ConnectedClusterSystemComponent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AgentError PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ConnectedClusterSystemComponent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectedClusterSystemComponent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAgentError(document.RootElement, options);
+                        return DeserializeConnectedClusterSystemComponent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AgentError)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectedClusterSystemComponent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectedClusterSystemComponent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerKubernetesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AgentError)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectedClusterSystemComponent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AgentError>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ConnectedClusterSystemComponent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AgentError IPersistableModel<AgentError>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ConnectedClusterSystemComponent IPersistableModel<ConnectedClusterSystemComponent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AgentError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ConnectedClusterSystemComponent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AgentError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ConnectedClusterSystemComponent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,30 +69,30 @@ namespace Azure.ResourceManager.Kubernetes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectedClusterSystemComponent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentError)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectedClusterSystemComponent)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Message))
+            if (Optional.IsDefined(Type))
             {
-                writer.WritePropertyName("message"u8);
-                writer.WriteStringValue(Message);
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(Type);
             }
-            if (options.Format != "W" && Optional.IsDefined(Severity))
+            if (Optional.IsDefined(UserSpecifiedVersion))
             {
-                writer.WritePropertyName("severity"u8);
-                writer.WriteStringValue(Severity);
+                writer.WritePropertyName("userSpecifiedVersion"u8);
+                writer.WriteStringValue(UserSpecifiedVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(Component))
+            if (Optional.IsDefined(MajorVersion))
             {
-                writer.WritePropertyName("component"u8);
-                writer.WriteStringValue(Component);
+                writer.WritePropertyName("majorVersion"u8);
+                writer.WriteNumberValue(MajorVersion.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Time))
+            if (options.Format != "W" && Optional.IsDefined(CurrentVersion))
             {
-                writer.WritePropertyName("time"u8);
-                writer.WriteStringValue(Time.Value, "O");
+                writer.WritePropertyName("currentVersion"u8);
+                writer.WriteStringValue(CurrentVersion);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -113,58 +113,58 @@ namespace Azure.ResourceManager.Kubernetes.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AgentError IJsonModel<AgentError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ConnectedClusterSystemComponent IJsonModel<ConnectedClusterSystemComponent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AgentError JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ConnectedClusterSystemComponent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectedClusterSystemComponent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentError)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectedClusterSystemComponent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAgentError(document.RootElement, options);
+            return DeserializeConnectedClusterSystemComponent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AgentError DeserializeAgentError(JsonElement element, ModelReaderWriterOptions options)
+        internal static ConnectedClusterSystemComponent DeserializeConnectedClusterSystemComponent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string message = default;
-            string severity = default;
-            string component = default;
-            DateTimeOffset? time = default;
+            string @type = default;
+            string userSpecifiedVersion = default;
+            int? majorVersion = default;
+            string currentVersion = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("message"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    message = prop.Value.GetString();
+                    @type = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("severity"u8))
+                if (prop.NameEquals("userSpecifiedVersion"u8))
                 {
-                    severity = prop.Value.GetString();
+                    userSpecifiedVersion = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("component"u8))
-                {
-                    component = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("time"u8))
+                if (prop.NameEquals("majorVersion"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    time = prop.Value.GetDateTimeOffset("O");
+                    majorVersion = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("currentVersion"u8))
+                {
+                    currentVersion = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AgentError(message, severity, component, time, additionalBinaryDataProperties);
+            return new ConnectedClusterSystemComponent(@type, userSpecifiedVersion, majorVersion, currentVersion, additionalBinaryDataProperties);
         }
     }
 }

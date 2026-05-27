@@ -14,67 +14,67 @@ using Azure.ResourceManager.Kubernetes;
 
 namespace Azure.ResourceManager.Kubernetes.Models
 {
-    /// <summary> The ListClusterUserCredentialProperties. </summary>
-    public partial class ListClusterUserCredentialProperties : IJsonModel<ListClusterUserCredentialProperties>
+    /// <summary> The GetClusterUserCredentialContent. </summary>
+    public partial class GetClusterUserCredentialContent : IJsonModel<GetClusterUserCredentialContent>
     {
-        /// <summary> Initializes a new instance of <see cref="ListClusterUserCredentialProperties"/> for deserialization. </summary>
-        internal ListClusterUserCredentialProperties()
+        /// <summary> Initializes a new instance of <see cref="GetClusterUserCredentialContent"/> for deserialization. </summary>
+        internal GetClusterUserCredentialContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ListClusterUserCredentialProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual GetClusterUserCredentialContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ListClusterUserCredentialProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GetClusterUserCredentialContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeListClusterUserCredentialProperties(document.RootElement, options);
+                        return DeserializeGetClusterUserCredentialContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ListClusterUserCredentialProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GetClusterUserCredentialContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ListClusterUserCredentialProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GetClusterUserCredentialContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerKubernetesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ListClusterUserCredentialProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GetClusterUserCredentialContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ListClusterUserCredentialProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<GetClusterUserCredentialContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ListClusterUserCredentialProperties IPersistableModel<ListClusterUserCredentialProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        GetClusterUserCredentialContent IPersistableModel<GetClusterUserCredentialContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ListClusterUserCredentialProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<GetClusterUserCredentialContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="listClusterUserCredentialProperties"> The <see cref="ListClusterUserCredentialProperties"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ListClusterUserCredentialProperties listClusterUserCredentialProperties)
+        /// <param name="getClusterUserCredentialContent"> The <see cref="GetClusterUserCredentialContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(GetClusterUserCredentialContent getClusterUserCredentialContent)
         {
-            if (listClusterUserCredentialProperties == null)
+            if (getClusterUserCredentialContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(listClusterUserCredentialProperties, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(getClusterUserCredentialContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ListClusterUserCredentialProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<GetClusterUserCredentialContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -85,15 +85,15 @@ namespace Azure.ResourceManager.Kubernetes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ListClusterUserCredentialProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GetClusterUserCredentialContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ListClusterUserCredentialProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(GetClusterUserCredentialContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("authenticationMethod"u8);
             writer.WriteStringValue(AuthenticationMethod.ToString());
             writer.WritePropertyName("clientProxy"u8);
-            writer.WriteBooleanValue(ClientProxy);
+            writer.WriteBooleanValue(UseClientProxy);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -113,42 +113,42 @@ namespace Azure.ResourceManager.Kubernetes.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ListClusterUserCredentialProperties IJsonModel<ListClusterUserCredentialProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        GetClusterUserCredentialContent IJsonModel<GetClusterUserCredentialContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ListClusterUserCredentialProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual GetClusterUserCredentialContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ListClusterUserCredentialProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GetClusterUserCredentialContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ListClusterUserCredentialProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(GetClusterUserCredentialContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeListClusterUserCredentialProperties(document.RootElement, options);
+            return DeserializeGetClusterUserCredentialContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ListClusterUserCredentialProperties DeserializeListClusterUserCredentialProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static GetClusterUserCredentialContent DeserializeGetClusterUserCredentialContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            AuthenticationMethod authenticationMethod = default;
-            bool clientProxy = default;
+            ClusterUserCredentialAuthenticationMethod authenticationMethod = default;
+            bool useClientProxy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("authenticationMethod"u8))
                 {
-                    authenticationMethod = new AuthenticationMethod(prop.Value.GetString());
+                    authenticationMethod = new ClusterUserCredentialAuthenticationMethod(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("clientProxy"u8))
                 {
-                    clientProxy = prop.Value.GetBoolean();
+                    useClientProxy = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ListClusterUserCredentialProperties(authenticationMethod, clientProxy, additionalBinaryDataProperties);
+            return new GetClusterUserCredentialContent(authenticationMethod, useClientProxy, additionalBinaryDataProperties);
         }
     }
 }

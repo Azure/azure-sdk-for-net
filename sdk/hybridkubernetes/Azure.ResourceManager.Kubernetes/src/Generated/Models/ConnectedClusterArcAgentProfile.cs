@@ -12,26 +12,26 @@ using Azure.ResourceManager.Kubernetes;
 namespace Azure.ResourceManager.Kubernetes.Models
 {
     /// <summary> Defines the Arc Agent properties for the clusters. </summary>
-    public partial class ArcAgentProfile
+    public partial class ConnectedClusterArcAgentProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ArcAgentProfile"/>. </summary>
-        public ArcAgentProfile()
+        /// <summary> Initializes a new instance of <see cref="ConnectedClusterArcAgentProfile"/>. </summary>
+        public ConnectedClusterArcAgentProfile()
         {
-            SystemComponents = new ChangeTrackingList<SystemComponent>();
-            AgentErrors = new ChangeTrackingList<AgentError>();
+            SystemComponents = new ChangeTrackingList<ConnectedClusterSystemComponent>();
+            AgentErrors = new ChangeTrackingList<ConnectedClusterAgentError>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ArcAgentProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedClusterArcAgentProfile"/>. </summary>
         /// <param name="desiredAgentVersion"> Version of the Arc agents to be installed on the cluster resource. </param>
         /// <param name="agentAutoUpgrade"> Indicates whether the Arc agents on the be upgraded automatically to the latest version. Defaults to Enabled. </param>
         /// <param name="systemComponents"> List of system extensions that are installed on the cluster resource. </param>
         /// <param name="agentErrors"> List of arc agentry and system components errors on the cluster resource. </param>
         /// <param name="agentState"> Represents the current state of the Arc agentry and its dependent components. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ArcAgentProfile(string desiredAgentVersion, AutoUpgradeOptions? agentAutoUpgrade, IList<SystemComponent> systemComponents, IList<AgentError> agentErrors, string agentState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectedClusterArcAgentProfile(string desiredAgentVersion, ConnectedClusterAutoUpgradeMode? agentAutoUpgrade, IList<ConnectedClusterSystemComponent> systemComponents, IList<ConnectedClusterAgentError> agentErrors, string agentState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DesiredAgentVersion = desiredAgentVersion;
             AgentAutoUpgrade = agentAutoUpgrade;
@@ -45,13 +45,13 @@ namespace Azure.ResourceManager.Kubernetes.Models
         public string DesiredAgentVersion { get; set; }
 
         /// <summary> Indicates whether the Arc agents on the be upgraded automatically to the latest version. Defaults to Enabled. </summary>
-        public AutoUpgradeOptions? AgentAutoUpgrade { get; set; }
+        public ConnectedClusterAutoUpgradeMode? AgentAutoUpgrade { get; set; }
 
         /// <summary> List of system extensions that are installed on the cluster resource. </summary>
-        public IList<SystemComponent> SystemComponents { get; }
+        public IList<ConnectedClusterSystemComponent> SystemComponents { get; }
 
         /// <summary> List of arc agentry and system components errors on the cluster resource. </summary>
-        public IList<AgentError> AgentErrors { get; }
+        public IList<ConnectedClusterAgentError> AgentErrors { get; }
 
         /// <summary> Represents the current state of the Arc agentry and its dependent components. </summary>
         public string AgentState { get; }

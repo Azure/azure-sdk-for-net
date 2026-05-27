@@ -11,25 +11,25 @@ using Azure.ResourceManager.Kubernetes;
 
 namespace Azure.ResourceManager.Kubernetes.Models
 {
-    /// <summary> The ArcAgentryConfigurations. </summary>
-    public partial class ArcAgentryConfigurations
+    /// <summary> The ConnectedClusterArcAgentryConfiguration. </summary>
+    public partial class ConnectedClusterArcAgentryConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ArcAgentryConfigurations"/>. </summary>
-        public ArcAgentryConfigurations()
+        /// <summary> Initializes a new instance of <see cref="ConnectedClusterArcAgentryConfiguration"/>. </summary>
+        public ConnectedClusterArcAgentryConfiguration()
         {
             Settings = new ChangeTrackingDictionary<string, string>();
             ProtectedSettings = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ArcAgentryConfigurations"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedClusterArcAgentryConfiguration"/>. </summary>
         /// <param name="feature"> Specifies the name of the feature for the configuration setting. </param>
         /// <param name="settings"> The configuration settings for the feature that do not contain any sensitive or secret information. </param>
         /// <param name="protectedSettings"> The configuration settings for the feature that contain any sensitive or secret information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ArcAgentryConfigurations(string feature, IDictionary<string, string> settings, IDictionary<string, string> protectedSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectedClusterArcAgentryConfiguration(string feature, IDictionary<string, string> settings, IDictionary<string, string> protectedSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Feature = feature;
             Settings = settings;

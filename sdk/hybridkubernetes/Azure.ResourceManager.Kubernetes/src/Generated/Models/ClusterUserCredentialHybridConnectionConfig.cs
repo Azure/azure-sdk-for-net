@@ -11,27 +11,27 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Kubernetes.Models
 {
     /// <summary> Contains the REP (rendezvous endpoint) and “Sender” access token. </summary>
-    public partial class HybridConnectionConfig
+    public partial class ClusterUserCredentialHybridConnectionConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="HybridConnectionConfig"/>. </summary>
-        internal HybridConnectionConfig()
+        /// <summary> Initializes a new instance of <see cref="ClusterUserCredentialHybridConnectionConfig"/>. </summary>
+        internal ClusterUserCredentialHybridConnectionConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HybridConnectionConfig"/>. </summary>
-        /// <param name="expirationTime"> Timestamp when this token will be expired. </param>
+        /// <summary> Initializes a new instance of <see cref="ClusterUserCredentialHybridConnectionConfig"/>. </summary>
+        /// <param name="expirationTimeInSeconds"> Timestamp when this token will be expired. </param>
         /// <param name="hybridConnectionName"> Name of the connection. </param>
         /// <param name="relay"> Name of the relay. </param>
         /// <param name="token"> Sender access token. </param>
         /// <param name="relayTid"> TenantID of the relay. </param>
         /// <param name="relayType"> Type of relay. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HybridConnectionConfig(long? expirationTime, string hybridConnectionName, string relay, string token, string relayTid, string relayType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterUserCredentialHybridConnectionConfig(long? expirationTimeInSeconds, string hybridConnectionName, string relay, string token, string relayTid, string relayType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ExpirationTime = expirationTime;
+            ExpirationTimeInSeconds = expirationTimeInSeconds;
             HybridConnectionName = hybridConnectionName;
             Relay = relay;
             Token = token;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         }
 
         /// <summary> Timestamp when this token will be expired. </summary>
-        public long? ExpirationTime { get; }
+        public long? ExpirationTimeInSeconds { get; }
 
         /// <summary> Name of the connection. </summary>
         public string HybridConnectionName { get; }

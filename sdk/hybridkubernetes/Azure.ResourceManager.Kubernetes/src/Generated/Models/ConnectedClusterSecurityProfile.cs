@@ -11,42 +11,42 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Kubernetes.Models
 {
     /// <summary> Security Profile specifies attributes for cluster security features. </summary>
-    internal partial class SecurityProfile
+    internal partial class ConnectedClusterSecurityProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SecurityProfile"/>. </summary>
-        public SecurityProfile()
+        /// <summary> Initializes a new instance of <see cref="ConnectedClusterSecurityProfile"/>. </summary>
+        public ConnectedClusterSecurityProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SecurityProfile"/>. </summary>
-        /// <param name="workloadIdentity"> The workload identity feature webhook. </param>
+        /// <summary> Initializes a new instance of <see cref="ConnectedClusterSecurityProfile"/>. </summary>
+        /// <param name="isWorkloadIdentity"> The workload identity feature webhook. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityProfile(SecurityProfileWorkloadIdentity workloadIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectedClusterSecurityProfile(ConnectedClusterWorkloadIdentityProfile isWorkloadIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            WorkloadIdentity = workloadIdentity;
+            IsWorkloadIdentity = isWorkloadIdentity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The workload identity feature webhook. </summary>
-        internal SecurityProfileWorkloadIdentity WorkloadIdentity { get; set; }
+        internal ConnectedClusterWorkloadIdentityProfile IsWorkloadIdentity { get; set; }
 
         /// <summary> Whether to enable or disable the workload identity Webhook. </summary>
-        public bool? WorkloadIdentityEnabled
+        public bool? IsWorkloadIdentityEnabled
         {
             get
             {
-                return WorkloadIdentity is null ? default : WorkloadIdentity.Enabled;
+                return IsWorkloadIdentity is null ? default : IsWorkloadIdentity.Enabled;
             }
             set
             {
-                if (WorkloadIdentity is null)
+                if (IsWorkloadIdentity is null)
                 {
-                    WorkloadIdentity = new SecurityProfileWorkloadIdentity();
+                    IsWorkloadIdentity = new ConnectedClusterWorkloadIdentityProfile();
                 }
-                WorkloadIdentity.Enabled = value;
+                IsWorkloadIdentity.Enabled = value;
             }
         }
     }

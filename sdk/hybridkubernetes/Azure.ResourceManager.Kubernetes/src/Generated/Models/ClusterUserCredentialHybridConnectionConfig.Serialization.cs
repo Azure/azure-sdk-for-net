@@ -14,51 +14,51 @@ using Azure.ResourceManager.Kubernetes;
 namespace Azure.ResourceManager.Kubernetes.Models
 {
     /// <summary> Contains the REP (rendezvous endpoint) and “Sender” access token. </summary>
-    public partial class HybridConnectionConfig : IJsonModel<HybridConnectionConfig>
+    public partial class ClusterUserCredentialHybridConnectionConfig : IJsonModel<ClusterUserCredentialHybridConnectionConfig>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HybridConnectionConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ClusterUserCredentialHybridConnectionConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HybridConnectionConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ClusterUserCredentialHybridConnectionConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeHybridConnectionConfig(document.RootElement, options);
+                        return DeserializeClusterUserCredentialHybridConnectionConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HybridConnectionConfig)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterUserCredentialHybridConnectionConfig)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HybridConnectionConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ClusterUserCredentialHybridConnectionConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerKubernetesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(HybridConnectionConfig)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterUserCredentialHybridConnectionConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HybridConnectionConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ClusterUserCredentialHybridConnectionConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HybridConnectionConfig IPersistableModel<HybridConnectionConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ClusterUserCredentialHybridConnectionConfig IPersistableModel<ClusterUserCredentialHybridConnectionConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HybridConnectionConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ClusterUserCredentialHybridConnectionConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<HybridConnectionConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ClusterUserCredentialHybridConnectionConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,15 +69,15 @@ namespace Azure.ResourceManager.Kubernetes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HybridConnectionConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ClusterUserCredentialHybridConnectionConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridConnectionConfig)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterUserCredentialHybridConnectionConfig)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpirationTime))
+            if (options.Format != "W" && Optional.IsDefined(ExpirationTimeInSeconds))
             {
                 writer.WritePropertyName("expirationTime"u8);
-                writer.WriteNumberValue(ExpirationTime.Value);
+                writer.WriteNumberValue(ExpirationTimeInSeconds.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(HybridConnectionName))
             {
@@ -123,30 +123,30 @@ namespace Azure.ResourceManager.Kubernetes.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HybridConnectionConfig IJsonModel<HybridConnectionConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ClusterUserCredentialHybridConnectionConfig IJsonModel<ClusterUserCredentialHybridConnectionConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HybridConnectionConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ClusterUserCredentialHybridConnectionConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HybridConnectionConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ClusterUserCredentialHybridConnectionConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridConnectionConfig)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterUserCredentialHybridConnectionConfig)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHybridConnectionConfig(document.RootElement, options);
+            return DeserializeClusterUserCredentialHybridConnectionConfig(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static HybridConnectionConfig DeserializeHybridConnectionConfig(JsonElement element, ModelReaderWriterOptions options)
+        internal static ClusterUserCredentialHybridConnectionConfig DeserializeClusterUserCredentialHybridConnectionConfig(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            long? expirationTime = default;
+            long? expirationTimeInSeconds = default;
             string hybridConnectionName = default;
             string relay = default;
             string token = default;
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                     {
                         continue;
                     }
-                    expirationTime = prop.Value.GetInt64();
+                    expirationTimeInSeconds = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("hybridConnectionName"u8))
@@ -194,8 +194,8 @@ namespace Azure.ResourceManager.Kubernetes.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HybridConnectionConfig(
-                expirationTime,
+            return new ClusterUserCredentialHybridConnectionConfig(
+                expirationTimeInSeconds,
                 hybridConnectionName,
                 relay,
                 token,
