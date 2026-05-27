@@ -84,6 +84,14 @@ namespace Azure.ResourceManager.Reservations
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="reservationOrderId"> The reservationOrderId. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(Guid reservationOrderId)
+        {
+            string resourceId = $"/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}";
+            return new ResourceIdentifier(resourceId);
+        }
+
         /// <param name="id"></param>
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
@@ -641,6 +649,26 @@ namespace Azure.ResourceManager.Reservations
         public virtual ReservationDetailCollection GetReservationDetails()
         {
             return GetCachedClient(client => new ReservationDetailCollection(client, Id));
+        }
+
+        /// <summary> Get specific `Reservation` details. </summary>
+        /// <param name="reservationId"> Id of the reservation item. </param>
+        /// <param name="expand"> Supported value of this query is renewProperties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ReservationDetailResource>> GetReservationDetailAsync(Guid reservationId, string expand = default, CancellationToken cancellationToken = default)
+        {
+            return await GetReservationDetails().GetAsync(reservationId, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get specific `Reservation` details. </summary>
+        /// <param name="reservationId"> Id of the reservation item. </param>
+        /// <param name="expand"> Supported value of this query is renewProperties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<ReservationDetailResource> GetReservationDetail(Guid reservationId, string expand = default, CancellationToken cancellationToken = default)
+        {
+            return GetReservationDetails().Get(reservationId, expand, cancellationToken);
         }
     }
 }
