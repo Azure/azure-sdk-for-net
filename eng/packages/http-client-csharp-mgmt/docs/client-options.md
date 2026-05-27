@@ -154,7 +154,6 @@ Overrides how a resource action is represented in the emitted ARM resource metad
 
 ```typespec
 #suppress "@azure-tools/typespec-client-generator-core/client-option" "Mark collection action placement"
-#suppress "@azure-tools/typespec-client-generator-core/client-option-requires-scope" "Mark collection action placement"
 @@clientOption(AlertActions.simulate, "resource-operation-kind", "CollectionAction", "csharp");
 ```
 
