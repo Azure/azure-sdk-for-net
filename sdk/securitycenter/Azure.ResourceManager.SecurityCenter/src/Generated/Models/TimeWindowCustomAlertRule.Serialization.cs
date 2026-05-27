@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             string displayName = default;
             string description = default;
-            string ruleType = "TimeWindowCustomAlertRule";
             bool isEnabled = default;
+            string ruleType = "TimeWindowCustomAlertRule";
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             int minThreshold = default;
             int maxThreshold = default;
@@ -129,14 +129,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     description = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("ruleType"u8))
-                {
-                    ruleType = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("isEnabled"u8))
                 {
                     isEnabled = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("ruleType"u8))
+                {
+                    ruleType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("minThreshold"u8))
@@ -162,8 +162,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new TimeWindowCustomAlertRule(
                 displayName,
                 description,
-                ruleType,
                 isEnabled,
+                ruleType,
                 additionalBinaryDataProperties,
                 minThreshold,
                 maxThreshold,

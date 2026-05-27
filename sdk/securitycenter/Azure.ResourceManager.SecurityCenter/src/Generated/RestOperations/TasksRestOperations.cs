@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetResourceGroupLevelTaskRequest(Guid subscriptionId, string resourceGroupName, AzureLocation ascLocation, string taskName, RequestContext context)
+        internal HttpMessage CreateGetResourceGroupLevelTaskRequest(Guid subscriptionId, string resourceGroupName, AzureLocation location, string taskName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecurityCenter
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Security/locations/", false);
-            uri.AppendPath(ascLocation.ToString(), true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/tasks/", false);
             uri.AppendPath(taskName, true);
             if (_apiVersion != null)
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        internal HttpMessage CreateGetByResourceGroupRequest(Guid subscriptionId, string resourceGroupName, AzureLocation ascLocation, string filter, RequestContext context)
+        internal HttpMessage CreateGetByResourceGroupRequest(Guid subscriptionId, string resourceGroupName, AzureLocation location, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SecurityCenter
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Security/locations/", false);
-            uri.AppendPath(ascLocation.ToString(), true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/tasks", false);
             if (_apiVersion != null)
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        internal HttpMessage CreateNextGetByResourceGroupRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, AzureLocation ascLocation, string filter, RequestContext context)
+        internal HttpMessage CreateNextGetByResourceGroupRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, AzureLocation location, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        internal HttpMessage CreateUpdateResourceGroupLevelTaskStateRequest(Guid subscriptionId, string resourceGroupName, AzureLocation ascLocation, string taskName, string taskUpdateActionType, RequestContext context)
+        internal HttpMessage CreateUpdateResourceGroupLevelTaskStateRequest(Guid subscriptionId, string resourceGroupName, AzureLocation location, string taskName, string taskUpdateActionType, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.SecurityCenter
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Security/locations/", false);
-            uri.AppendPath(ascLocation.ToString(), true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/tasks/", false);
             uri.AppendPath(taskName, true);
             uri.AppendPath("/", false);
@@ -140,14 +140,14 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        internal HttpMessage CreateGetSubscriptionLevelTaskRequest(Guid subscriptionId, AzureLocation ascLocation, string taskName, RequestContext context)
+        internal HttpMessage CreateGetSubscriptionLevelTaskRequest(Guid subscriptionId, AzureLocation location, string taskName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Security/locations/", false);
-            uri.AppendPath(ascLocation.ToString(), true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/tasks/", false);
             uri.AppendPath(taskName, true);
             if (_apiVersion != null)
@@ -162,14 +162,14 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        internal HttpMessage CreateGetByHomeRegionRequest(Guid subscriptionId, AzureLocation ascLocation, string filter, RequestContext context)
+        internal HttpMessage CreateGetByHomeRegionRequest(Guid subscriptionId, AzureLocation location, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Security/locations/", false);
-            uri.AppendPath(ascLocation.ToString(), true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/tasks", false);
             if (_apiVersion != null)
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        internal HttpMessage CreateNextGetByHomeRegionRequest(Uri nextPage, Guid subscriptionId, AzureLocation ascLocation, string filter, RequestContext context)
+        internal HttpMessage CreateNextGetByHomeRegionRequest(Uri nextPage, Guid subscriptionId, AzureLocation location, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -210,14 +210,14 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        internal HttpMessage CreateUpdateSubscriptionLevelTaskStateRequest(Guid subscriptionId, AzureLocation ascLocation, string taskName, string taskUpdateActionType, RequestContext context)
+        internal HttpMessage CreateUpdateSubscriptionLevelTaskStateRequest(Guid subscriptionId, AzureLocation location, string taskName, string taskUpdateActionType, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Security/locations/", false);
-            uri.AppendPath(ascLocation.ToString(), true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/tasks/", false);
             uri.AppendPath(taskName, true);
             uri.AppendPath("/", false);

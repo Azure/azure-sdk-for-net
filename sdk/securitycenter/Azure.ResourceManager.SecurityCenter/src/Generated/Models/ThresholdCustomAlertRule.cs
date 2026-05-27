@@ -26,23 +26,23 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="ThresholdCustomAlertRule"/>. </summary>
         /// <param name="displayName"> The display name of the custom alert. </param>
         /// <param name="description"> The description of the custom alert. </param>
-        /// <param name="ruleType"> The type of the custom alert rule. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>
+        /// <param name="ruleType"> The type of the custom alert rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="minThreshold"> The minimum threshold. </param>
         /// <param name="maxThreshold"> The maximum threshold. </param>
-        internal ThresholdCustomAlertRule(string displayName, string description, string ruleType, bool isEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties, int minThreshold, int maxThreshold) : base(displayName, description, ruleType, isEnabled, additionalBinaryDataProperties)
+        internal ThresholdCustomAlertRule(string displayName, string description, bool isEnabled, string ruleType, IDictionary<string, BinaryData> additionalBinaryDataProperties, int minThreshold, int maxThreshold) : base(displayName, description, isEnabled, ruleType, additionalBinaryDataProperties)
         {
             MinThreshold = minThreshold;
             MaxThreshold = maxThreshold;
         }
 
         /// <summary> Initializes a new instance of <see cref="ThresholdCustomAlertRule"/>. </summary>
-        /// <param name="ruleType"> The type of the custom alert rule. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>
+        /// <param name="ruleType"> The type of the custom alert rule. </param>
         /// <param name="minThreshold"> The minimum threshold. </param>
         /// <param name="maxThreshold"> The maximum threshold. </param>
-        private protected ThresholdCustomAlertRule(string ruleType, bool isEnabled, int minThreshold, int maxThreshold) : base(ruleType, isEnabled)
+        private protected ThresholdCustomAlertRule(bool isEnabled, string ruleType, int minThreshold, int maxThreshold) : base(ruleType, isEnabled)
         {
             MinThreshold = minThreshold;
             MaxThreshold = maxThreshold;

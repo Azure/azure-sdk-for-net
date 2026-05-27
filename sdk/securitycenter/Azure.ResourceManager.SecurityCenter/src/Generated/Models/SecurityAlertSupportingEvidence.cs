@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Type of the supportingEvidence. </summary>
-        public string SecurityAlertSupportingEvidenceType { get; set; }
+        public string SecurityAlertSupportingEvidenceType { get; }
 
         /// <summary> Gets the AdditionalProperties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;

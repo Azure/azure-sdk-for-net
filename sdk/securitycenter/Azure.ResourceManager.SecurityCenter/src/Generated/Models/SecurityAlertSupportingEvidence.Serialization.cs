@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 throw new FormatException($"The model {nameof(SecurityAlertSupportingEvidence)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(SecurityAlertSupportingEvidenceType))
+            if (options.Format != "W" && Optional.IsDefined(SecurityAlertSupportingEvidenceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(SecurityAlertSupportingEvidenceType);

@@ -18,21 +18,21 @@ namespace Azure.ResourceManager.SecurityCenter
     {
         private readonly Alerts _client;
         private readonly Guid _subscriptionId;
-        private readonly AzureLocation _ascLocation;
+        private readonly AzureLocation _location;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of AlertsGetSubscriptionLevelByRegionCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Alerts client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public AlertsGetSubscriptionLevelByRegionCollectionResultOfT(Alerts client, Guid subscriptionId, AzureLocation ascLocation, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public AlertsGetSubscriptionLevelByRegionCollectionResultOfT(Alerts client, Guid subscriptionId, AzureLocation location, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
-            _ascLocation = ascLocation;
+            _location = location;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetSubscriptionLevelByRegionRequest(nextLink, _subscriptionId, _ascLocation, _context) : _client.CreateGetSubscriptionLevelByRegionRequest(_subscriptionId, _ascLocation, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetSubscriptionLevelByRegionRequest(nextLink, _subscriptionId, _location, _context) : _client.CreateGetSubscriptionLevelByRegionRequest(_subscriptionId, _location, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

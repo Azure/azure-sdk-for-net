@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="ListCustomAlertRule"/>. </summary>
         /// <param name="displayName"> The display name of the custom alert. </param>
         /// <param name="description"> The description of the custom alert. </param>
-        /// <param name="ruleType"> The type of the custom alert rule. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>
+        /// <param name="ruleType"> The type of the custom alert rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="valueType"> The value type of the items in the list. </param>
-        internal ListCustomAlertRule(string displayName, string description, string ruleType, bool isEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties, SecurityValueType? valueType) : base(displayName, description, ruleType, isEnabled, additionalBinaryDataProperties)
+        internal ListCustomAlertRule(string displayName, string description, bool isEnabled, string ruleType, IDictionary<string, BinaryData> additionalBinaryDataProperties, SecurityValueType? valueType) : base(displayName, description, isEnabled, ruleType, additionalBinaryDataProperties)
         {
             ValueType = valueType;
         }
 
         /// <summary> Initializes a new instance of <see cref="ListCustomAlertRule"/>. </summary>
-        /// <param name="ruleType"> The type of the custom alert rule. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>
-        private protected ListCustomAlertRule(string ruleType, bool isEnabled) : base(ruleType, isEnabled)
+        /// <param name="ruleType"> The type of the custom alert rule. </param>
+        private protected ListCustomAlertRule(bool isEnabled, string ruleType) : base(ruleType, isEnabled)
         {
         }
 

@@ -760,8 +760,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new ThresholdCustomAlertRule(
                 displayName,
                 description,
-                "ThresholdCustomAlertRule",
                 isEnabled,
+                "ThresholdCustomAlertRule",
                 additionalBinaryDataProperties: null,
                 minThreshold,
                 maxThreshold);
@@ -773,12 +773,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// </summary>
         /// <param name="displayName"> The display name of the custom alert. </param>
         /// <param name="description"> The description of the custom alert. </param>
-        /// <param name="ruleType"> The type of the custom alert rule. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>
+        /// <param name="ruleType"> The type of the custom alert rule. </param>
         /// <returns> A new <see cref="Models.CustomAlertRule"/> instance for mocking. </returns>
-        public static CustomAlertRule CustomAlertRule(string displayName = default, string description = default, string ruleType = default, bool isEnabled = default)
+        public static CustomAlertRule CustomAlertRule(string displayName = default, string description = default, bool isEnabled = default, string ruleType = default)
         {
-            return new UnknownCustomAlertRule(displayName, description, ruleType, isEnabled, additionalBinaryDataProperties: null);
+            return new UnknownCustomAlertRule(displayName, description, isEnabled, ruleType, additionalBinaryDataProperties: null);
         }
 
         /// <summary> A custom alert rule that checks if the number of activities (depends on the custom alert type) in a time window is within the given range. </summary>
@@ -794,8 +794,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new TimeWindowCustomAlertRule(
                 displayName,
                 description,
-                "ThresholdCustomAlertRule",
                 isEnabled,
+                "ThresholdCustomAlertRule",
                 additionalBinaryDataProperties: null,
                 minThreshold,
                 maxThreshold,
@@ -816,8 +816,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new AllowlistCustomAlertRule(
                 displayName,
                 description,
-                "ListCustomAlertRule",
                 isEnabled,
+                "ListCustomAlertRule",
                 additionalBinaryDataProperties: null,
                 valueType,
                 allowlistValues.ToList());
@@ -834,8 +834,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new ListCustomAlertRule(
                 displayName,
                 description,
-                "ListCustomAlertRule",
                 isEnabled,
+                "ListCustomAlertRule",
                 additionalBinaryDataProperties: null,
                 valueType);
         }
@@ -854,8 +854,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new DenylistCustomAlertRule(
                 displayName,
                 description,
-                "ListCustomAlertRule",
                 isEnabled,
+                "ListCustomAlertRule",
                 additionalBinaryDataProperties: null,
                 valueType,
                 denylistValues.ToList());

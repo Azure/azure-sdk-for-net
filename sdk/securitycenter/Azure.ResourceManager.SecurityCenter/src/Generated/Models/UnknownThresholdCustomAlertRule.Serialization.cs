@@ -108,8 +108,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             string displayName = default;
             string description = default;
-            string ruleType = "unknown";
             bool isEnabled = default;
+            string ruleType = "unknown";
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             int minThreshold = default;
             int maxThreshold = default;
@@ -125,14 +125,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     description = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("ruleType"u8))
-                {
-                    ruleType = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("isEnabled"u8))
                 {
                     isEnabled = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("ruleType"u8))
+                {
+                    ruleType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("minThreshold"u8))
@@ -153,8 +153,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new UnknownThresholdCustomAlertRule(
                 displayName,
                 description,
-                ruleType,
                 isEnabled,
+                ruleType,
                 additionalBinaryDataProperties,
                 minThreshold,
                 maxThreshold);

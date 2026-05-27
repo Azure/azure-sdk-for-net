@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 throw new FormatException($"The model {nameof(SecurityAlertEntity)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(AlertEntityType))
+            if (options.Format != "W" && Optional.IsDefined(AlertEntityType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(AlertEntityType);

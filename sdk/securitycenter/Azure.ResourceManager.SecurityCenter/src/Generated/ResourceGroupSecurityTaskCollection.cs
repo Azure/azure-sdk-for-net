@@ -28,8 +28,8 @@ namespace Azure.ResourceManager.SecurityCenter
     {
         private readonly ClientDiagnostics _tasksClientDiagnostics;
         private readonly Tasks _tasksRestClient;
-        /// <summary> The ascLocation. </summary>
-        private readonly AzureLocation _ascLocation;
+        /// <summary> The location. </summary>
+        private readonly AzureLocation _location;
 
         /// <summary> Initializes a new instance of ResourceGroupSecurityTaskCollection for mocking. </summary>
         protected ResourceGroupSecurityTaskCollection()
@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of <see cref="ResourceGroupSecurityTaskCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        /// <param name="ascLocation"> The ascLocation for the resource. </param>
-        internal ResourceGroupSecurityTaskCollection(ArmClient client, ResourceIdentifier id, AzureLocation ascLocation) : base(client, id)
+        /// <param name="location"> The location for the resource. </param>
+        internal ResourceGroupSecurityTaskCollection(ArmClient client, ResourceIdentifier id, AzureLocation location) : base(client, id)
         {
             TryGetApiVersion(ResourceGroupSecurityTaskResource.ResourceType, out string resourceGroupSecurityTaskApiVersion);
-            _ascLocation = ascLocation;
+            _location = location;
             _tasksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceGroupSecurityTaskResource.ResourceType.Namespace, Diagnostics);
             _tasksRestClient = new Tasks(_tasksClientDiagnostics, Pipeline, Endpoint, resourceGroupSecurityTaskApiVersion ?? "2015-06-01-preview");
             ValidateResourceId(id);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{location}/tasks/{taskName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tasksRestClient.CreateGetResourceGroupLevelTaskRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, taskName, context);
+                HttpMessage message = _tasksRestClient.CreateGetResourceGroupLevelTaskRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _location, taskName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecurityTaskData> response = Response.FromValue(SecurityTaskData.FromResponse(result), result);
                 if (response.Value == null)
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{location}/tasks/{taskName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tasksRestClient.CreateGetResourceGroupLevelTaskRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, taskName, context);
+                HttpMessage message = _tasksRestClient.CreateGetResourceGroupLevelTaskRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _location, taskName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecurityTaskData> response = Response.FromValue(SecurityTaskData.FromResponse(result), result);
                 if (response.Value == null)
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/tasks. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{location}/tasks. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 _tasksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
-                _ascLocation,
+                _location,
                 filter,
                 context,
                 "ResourceGroupSecurityTaskCollection.GetAll"), data => new ResourceGroupSecurityTaskResource(Client, data));
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/tasks. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{location}/tasks. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 _tasksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
-                _ascLocation,
+                _location,
                 filter,
                 context,
                 "ResourceGroupSecurityTaskCollection.GetAll"), data => new ResourceGroupSecurityTaskResource(Client, data));
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{location}/tasks/{taskName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tasksRestClient.CreateGetResourceGroupLevelTaskRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, taskName, context);
+                HttpMessage message = _tasksRestClient.CreateGetResourceGroupLevelTaskRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _location, taskName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SecurityTaskData> response = default;
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{location}/tasks/{taskName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tasksRestClient.CreateGetResourceGroupLevelTaskRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, taskName, context);
+                HttpMessage message = _tasksRestClient.CreateGetResourceGroupLevelTaskRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _location, taskName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SecurityTaskData> response = default;
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{location}/tasks/{taskName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tasksRestClient.CreateGetResourceGroupLevelTaskRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, taskName, context);
+                HttpMessage message = _tasksRestClient.CreateGetResourceGroupLevelTaskRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _location, taskName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SecurityTaskData> response = default;
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{location}/tasks/{taskName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tasksRestClient.CreateGetResourceGroupLevelTaskRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, taskName, context);
+                HttpMessage message = _tasksRestClient.CreateGetResourceGroupLevelTaskRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _location, taskName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SecurityTaskData> response = default;

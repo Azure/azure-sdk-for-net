@@ -70,16 +70,6 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        /// <summary> Generate the resource identifier for this resource. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="ascLocation"> The ascLocation. </param>
-        /// <param name="alertName"> The alertName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation ascLocation, string alertName)
-        {
-            string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
         /// <param name="id"></param>
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
@@ -95,7 +85,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{location}/alerts/{alertName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -143,7 +133,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{location}/alerts/{alertName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -191,7 +181,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}/activate. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{location}/alerts/{alertName}/activate. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -234,7 +224,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}/activate. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{location}/alerts/{alertName}/activate. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -277,7 +267,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}/dismiss. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{location}/alerts/{alertName}/dismiss. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -320,7 +310,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}/dismiss. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{location}/alerts/{alertName}/dismiss. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -363,7 +353,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}/inProgress. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{location}/alerts/{alertName}/inProgress. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -406,7 +396,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}/inProgress. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{location}/alerts/{alertName}/inProgress. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -449,7 +439,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}/resolve. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{location}/alerts/{alertName}/resolve. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -492,7 +482,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}/resolve. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{location}/alerts/{alertName}/resolve. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>

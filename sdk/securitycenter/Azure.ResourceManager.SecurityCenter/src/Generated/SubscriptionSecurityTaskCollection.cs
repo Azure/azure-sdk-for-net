@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{location}/tasks/{taskName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{location}/tasks/{taskName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/tasks. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{location}/tasks. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/tasks. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{location}/tasks. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{location}/tasks/{taskName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{location}/tasks/{taskName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{location}/tasks/{taskName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{location}/tasks/{taskName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>

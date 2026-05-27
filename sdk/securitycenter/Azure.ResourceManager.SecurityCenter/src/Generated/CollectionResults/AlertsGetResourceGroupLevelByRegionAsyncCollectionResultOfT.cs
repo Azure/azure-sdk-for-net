@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly Alerts _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
-        private readonly AzureLocation _ascLocation;
+        private readonly AzureLocation _location;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
@@ -28,15 +28,15 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="client"> The Alerts client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public AlertsGetResourceGroupLevelByRegionAsyncCollectionResultOfT(Alerts client, Guid subscriptionId, string resourceGroupName, AzureLocation ascLocation, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public AlertsGetResourceGroupLevelByRegionAsyncCollectionResultOfT(Alerts client, Guid subscriptionId, string resourceGroupName, AzureLocation location, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
-            _ascLocation = ascLocation;
+            _location = location;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetResourceGroupLevelByRegionRequest(nextLink, _subscriptionId, _resourceGroupName, _ascLocation, _context) : _client.CreateGetResourceGroupLevelByRegionRequest(_subscriptionId, _resourceGroupName, _ascLocation, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetResourceGroupLevelByRegionRequest(nextLink, _subscriptionId, _resourceGroupName, _location, _context) : _client.CreateGetResourceGroupLevelByRegionRequest(_subscriptionId, _resourceGroupName, _location, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

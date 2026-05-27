@@ -20,17 +20,26 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CustomAlertRule"/>. </summary>
+        /// <param name="isEnabled"> Status of the custom alert. </param>
+        /// <param name="ruleType"> The type of the custom alert rule. </param>
+        private protected CustomAlertRule(bool isEnabled, string ruleType)
+        {
+            IsEnabled = isEnabled;
+            RuleType = ruleType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CustomAlertRule"/>. </summary>
         /// <param name="displayName"> The display name of the custom alert. </param>
         /// <param name="description"> The description of the custom alert. </param>
-        /// <param name="ruleType"> The type of the custom alert rule. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>
+        /// <param name="ruleType"> The type of the custom alert rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CustomAlertRule(string displayName, string description, string ruleType, bool isEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CustomAlertRule(string displayName, string description, bool isEnabled, string ruleType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             Description = description;
-            RuleType = ruleType;
             IsEnabled = isEnabled;
+            RuleType = ruleType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -40,10 +49,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> The description of the custom alert. </summary>
         public string Description { get; }
 
-        /// <summary> The type of the custom alert rule. </summary>
-        internal string RuleType { get; set; }
-
         /// <summary> Status of the custom alert. </summary>
         public bool IsEnabled { get; set; }
+
+        /// <summary> The type of the custom alert rule. </summary>
+        internal string RuleType { get; set; }
     }
 }
