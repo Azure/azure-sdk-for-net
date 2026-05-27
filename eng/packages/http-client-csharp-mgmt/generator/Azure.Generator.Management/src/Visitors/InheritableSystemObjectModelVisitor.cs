@@ -127,7 +127,9 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         }
 
         StripOrphanedVirtualModifiers(model.BaseModelProvider!, removedPropertyNames);
-        model.Update(properties: remainingProperties.ToArray());
+        // Reset cached constructors, serialization, and model factories so they do not keep
+        // references to inherited ARM properties removed from the model surface.
+        model.Update(properties: remainingProperties.ToArray(), reset: true);
 
         _regularUpdated.Add(model);
     }

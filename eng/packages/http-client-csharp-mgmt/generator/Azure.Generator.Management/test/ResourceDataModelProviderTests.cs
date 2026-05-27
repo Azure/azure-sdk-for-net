@@ -95,6 +95,11 @@ namespace Azure.Generator.Mgmt.Tests
                 new SystemObjectModelProvider(trackedResourceType, trackedResourceModel);
 
             var resourceDataModel = new ResourceDataModelProvider(resourceModel);
+            // Reproduce the real generation ordering where constructors and serialization can be
+            // built before inherited ARM properties are removed by the visitor.
+            _ = resourceDataModel.Constructors;
+            _ = resourceDataModel.SerializationProviders.SelectMany(s => s.Methods).ToArray();
+
             var visitor = new TestableInheritableSystemObjectModelVisitor();
             var result = visitor.InvokePreVisitModel(resourceModel, resourceDataModel);
 
@@ -149,11 +154,40 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(serializationContent, Does.Not.Contain("global::Samples.Models.ResponseTypeData"));
         }
 
+        [Test]
+        public void ResourceDataSerializationUsesRootNamespaceForSelfReferences()
+        {
+            var (client, models) = InputResourceData.ClientWithResource();
+            var resourceModel = models.Single();
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => models,
+                clients: () => [client]);
+
+            var resourceDataModel = plugin.Object.TypeFactory.CreateModel(resourceModel);
+            Assert.That(resourceDataModel, Is.Not.Null);
+
+            var visitor = new TestableResourceVisitor();
+            var result = visitor.InvokeVisitType(resourceDataModel!);
+            var serialization = result!.SerializationProviders.OfType<MrwSerializationTypeDefinition>().Single();
+            var serializationContent = new TypeProviderWriter(serialization).Write().Content;
+
+            Assert.That(serializationContent, Does.Not.Contain("Models.ResponseTypeData"));
+            Assert.That(serializationContent, Does.Not.Contain("global::Samples.Models.ResponseTypeData"));
+        }
+
         private class TestableInheritableSystemObjectModelVisitor : InheritableSystemObjectModelVisitor
         {
             public ModelProvider? InvokePreVisitModel(InputModelType inputType, ModelProvider? type)
             {
                 return base.PreVisitModel(inputType, type);
+            }
+        }
+
+        private class TestableResourceVisitor : ResourceVisitor
+        {
+            public TypeProvider? InvokeVisitType(TypeProvider type)
+            {
+                return base.VisitType(type);
             }
         }
     }

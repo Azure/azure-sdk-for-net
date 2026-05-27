@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Management.Providers;
+using Azure.ResourceManager.Models;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -17,11 +19,13 @@ internal class ResourceVisitor : ScmLibraryVisitor
     // NamespaceVisitor (which runs in VisitType) has had a chance to override them.
     protected override TypeProvider? VisitType(TypeProvider type)
     {
-        if (type is not null)
+        TransformNamespaceForResource(type);
+        foreach (var serialization in type.SerializationProviders)
         {
-            TransformNamespaceForResource(type);
+            base.VisitType(serialization);
         }
-        return type;
+
+        return base.VisitType(type);
     }
 
     protected override PropertyProvider? VisitProperty(PropertyProvider property)
@@ -83,6 +87,16 @@ internal class ResourceVisitor : ScmLibraryVisitor
 
     protected override ValueExpression? VisitInvokeMethodExpression(InvokeMethodExpression expression, MethodProvider method)
     {
+        if (TryGetResourceDataExpression(expression.InstanceReference, out var instanceReference))
+        {
+            expression.Update(instanceReference: instanceReference);
+        }
+
+        if (UpdateResourceDataExpressions(expression.Arguments) is { } arguments)
+        {
+            expression.Update(arguments: arguments);
+        }
+
         if (expression.TypeArguments is not null &&
             UpdateResourceDataTypes(expression.TypeArguments) is { } updatedTypeArguments)
         {
@@ -97,9 +111,22 @@ internal class ResourceVisitor : ScmLibraryVisitor
         return base.VisitInvokeMethodExpression(expression, method);
     }
 
+    protected override ValueExpression? VisitMemberExpression(MemberExpression expression, MethodProvider method)
+    {
+        if (TryGetResourceDataExpression(expression.Inner, out var inner))
+        {
+            expression.Update(inner: inner);
+        }
+
+        return base.VisitMemberExpression(expression, method);
+    }
+
     private void TransformNamespaceForResource(TypeProvider type)
     {
-        if (type is ModelProvider model && ManagementClientGenerator.Instance.OutputLibrary.IsResourceModelType(model.Type))
+        if (type is ModelProvider model &&
+            (model is ResourceDataModelProvider
+                || IsResourceDataModel(model)
+                || ManagementClientGenerator.Instance.OutputLibrary.IsResourceModelType(model.Type)))
         {
             type.Update(@namespace: ManagementClientGenerator.Instance.TypeFactory.PrimaryNamespace);
 
@@ -111,6 +138,10 @@ internal class ResourceVisitor : ScmLibraryVisitor
             }
         }
     }
+
+    private static bool IsResourceDataModel(ModelProvider model)
+        => model.BaseModelProvider is SystemObjectModelProvider { SystemType.FrameworkType: { } frameworkType } &&
+            typeof(ResourceData).IsAssignableFrom(frameworkType);
 
     private static void UpdateResourceDataParameterType(ParameterProvider parameter)
     {
@@ -134,6 +165,34 @@ internal class ResourceVisitor : ScmLibraryVisitor
         }
 
         return updatedTypes;
+    }
+
+    private static IReadOnlyList<ValueExpression>? UpdateResourceDataExpressions(IReadOnlyList<ValueExpression> expressions)
+    {
+        List<ValueExpression>? updatedExpressions = null;
+        for (var i = 0; i < expressions.Count; i++)
+        {
+            if (TryGetResourceDataExpression(expressions[i], out var resourceDataExpression))
+            {
+                updatedExpressions ??= expressions.ToList();
+                updatedExpressions[i] = resourceDataExpression;
+            }
+        }
+
+        return updatedExpressions;
+    }
+
+    private static bool TryGetResourceDataExpression(ValueExpression? expression, out ValueExpression resourceDataExpression)
+    {
+        if (expression is TypeReferenceExpression { Type: { } type } &&
+            TryGetResourceDataType(type, out var resourceDataType))
+        {
+            resourceDataExpression = resourceDataType;
+            return true;
+        }
+
+        resourceDataExpression = null!;
+        return false;
     }
 
     private static bool TryGetResourceDataType(CSharpType? type, out CSharpType resourceDataType)

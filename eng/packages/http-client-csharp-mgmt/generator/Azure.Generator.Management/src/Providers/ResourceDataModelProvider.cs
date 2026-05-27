@@ -25,12 +25,9 @@ namespace Azure.Generator.Management.Providers
     /// </remarks>
     internal class ResourceDataModelProvider : ModelProvider
     {
-        private readonly InputModelType _inputModel;
-
         public ResourceDataModelProvider(InputModelType inputModel)
             : base(inputModel)
         {
-            _inputModel = inputModel;
         }
 
         protected override string BuildName()
