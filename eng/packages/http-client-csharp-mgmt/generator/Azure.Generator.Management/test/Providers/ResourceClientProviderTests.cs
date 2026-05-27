@@ -202,6 +202,40 @@ namespace Azure.Generator.Management.Tests.Providers
         }
 
         [TestCase]
+        public void Verify_SubscriptionSingletonBodylessCreateOperation_IsEmittedOnResource()
+        {
+            var (client, models) = InputResourceData.ClientWithSubscriptionSingletonResourceBodylessPut();
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var resourceProvider = plugin.Object.OutputLibrary.TypeProviders
+                .OfType<ResourceClientProvider>()
+                .FirstOrDefault();
+            Assert.That(resourceProvider, Is.Not.Null);
+            Assert.That(
+                plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceCollectionClientProvider>(),
+                Is.Empty,
+                "Singleton resources should not generate a collection provider.");
+
+            var createOrUpdateMethod = resourceProvider!.Methods.FirstOrDefault(m => m.Signature.Name == "CreateOrUpdate");
+            Assert.That(createOrUpdateMethod, Is.Not.Null);
+            var createOrUpdateSignature = createOrUpdateMethod!.Signature;
+            Assert.That(createOrUpdateSignature.Modifiers, Is.EqualTo(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual));
+            Assert.That(createOrUpdateSignature.Parameters.Count, Is.EqualTo(2));
+            Assert.That(createOrUpdateSignature.Parameters[0].Type.FrameworkType, Is.EqualTo(typeof(WaitUntil)));
+            Assert.That(createOrUpdateSignature.Parameters[1].Type.FrameworkType, Is.EqualTo(typeof(CancellationToken)));
+            Assert.That(createOrUpdateSignature.ReturnType?.FrameworkType, Is.EqualTo(typeof(ArmOperation<>)));
+
+            var createOrUpdateAsyncMethod = resourceProvider.Methods.FirstOrDefault(m => m.Signature.Name == "CreateOrUpdateAsync");
+            Assert.That(createOrUpdateAsyncMethod, Is.Not.Null);
+            var createOrUpdateAsyncSignature = createOrUpdateAsyncMethod!.Signature;
+            Assert.That(createOrUpdateAsyncSignature.Modifiers, Is.EqualTo(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual | MethodSignatureModifiers.Async));
+            Assert.That(createOrUpdateAsyncSignature.Parameters.Count, Is.EqualTo(2));
+            Assert.That(createOrUpdateAsyncSignature.Parameters[0].Type.FrameworkType, Is.EqualTo(typeof(WaitUntil)));
+            Assert.That(createOrUpdateAsyncSignature.Parameters[1].Type.FrameworkType, Is.EqualTo(typeof(CancellationToken)));
+            Assert.That(createOrUpdateAsyncSignature.ReturnType?.FrameworkType, Is.EqualTo(typeof(Task<>)));
+            Assert.That(createOrUpdateAsyncSignature.ReturnType?.Arguments[0].FrameworkType, Is.EqualTo(typeof(ArmOperation<>)));
+        }
+
+        [TestCase]
         public void Verify_NestedChildResource_CollectionGetter_IncludesPathParameters()
         {
             var (parentClient, childClient, models) = InputResourceData.ClientWithNestedChildResource();
