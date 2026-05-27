@@ -175,6 +175,9 @@ jobs:
 
         - template: /eng/common/pipelines/templates/steps/eng-common-workflow-enforcer.yml
 
+        - pwsh: ./eng/scripts/Test-NoWarnValidation.ps1
+          displayName: Validate NoWarn enforcement targets
+
     - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
       parameters:
         GenerateJobName: generate_target_service_test_matrix

@@ -62,7 +62,7 @@
   -->
 
   <PropertyGroup>
-    <_NoWarnSkipListFile>$(RepoEngPath)\NoWarnSkipValidation.txt</_NoWarnSkipListFile>
+    <_NoWarnSkipListFile Condition="'$(_NoWarnSkipListFile)' == ''">$(RepoEngPath)\NoWarnSkipValidation.txt</_NoWarnSkipListFile>
   </PropertyGroup>
 
   <!--
@@ -185,7 +185,10 @@
             var lines = System.IO.File.ReadAllLines(ProjectFile);
             for (int i = 0; i < lines.Length; i++)
             {
-              int col = lines[i].IndexOf("NoWarn", System.StringComparison.OrdinalIgnoreCase);
+              // Match the opening element `<NoWarn` (case-insensitive) so we don't
+              // hit unrelated property names like `_NoWarnSkipListFile` that happen
+              // to contain the substring "NoWarn".
+              int col = lines[i].IndexOf("<NoWarn", System.StringComparison.OrdinalIgnoreCase);
               if (col >= 0)
               {
                 line = i + 1;
