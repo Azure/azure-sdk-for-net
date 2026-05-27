@@ -6,7 +6,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    [CodeGenSuppress("AppliedScopes")]
     public partial class ReservationPurchaseContent
     {
          // The generator only produces a get-only collection by default; customization preserves the GA setter behavior.

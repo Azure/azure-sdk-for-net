@@ -10,7 +10,6 @@ namespace Azure.ResourceManager.Reservations
     // Justification: GA exposed QuotaRequestDetailData.QuotaRequestValue as
     // IReadOnlyList<SubContent>. The new generator emits IList<SubContent> via the flattened
     // QuotaRequestProperties; this shim restores the read-only collection surface.
-    [CodeGenSuppress("QuotaRequestValue")]
     public partial class QuotaRequestDetailData
     {
         /// <summary> The quotaRequests. </summary>

@@ -6,7 +6,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Reservations
 {
-    [CodeGenSuppress("Reservations")]
     public partial class ReservationOrderData
     {
         // Customization is required to restore the GA public surface from the new generator's
