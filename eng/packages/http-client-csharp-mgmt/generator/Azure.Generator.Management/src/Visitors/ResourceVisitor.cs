@@ -2,17 +2,33 @@
 // Licensed under the MIT License.
 
 using Microsoft.TypeSpec.Generator.ClientModel;
+using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Providers;
+using System;
 using System.IO;
 
 namespace Azure.Generator.Management.Visitors;
 
 internal class ResourceVisitor : ScmLibraryVisitor
 {
-    // Name, namespace, and relative file path for resource data models are handled at construction
-    // time by ResourceDataModelProvider (see ManagementTypeFactory.CreateModelCore). What remains
-    // for the visitor is fixing the *serialization* providers' file paths and re-asserting the
-    // namespace after Azure.Generator's NamespaceVisitor runs.
+    // ResourceDataModelProvider already applies the initial 'Data' suffix at construction time
+    // (which is required to preserve the correct BaseType against custom-code-view collisions).
+    // We still need this pass because NameVisitor.PreVisitModel may rename known types
+    // (e.g. PrivateEndpointConnection -> {ResourceProviderName}PrivateEndpointConnection) and drop the suffix.
+    protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)
+    {
+        if (type is not null && ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(model))
+        {
+            if (!type.Name.EndsWith("Data", StringComparison.Ordinal))
+            {
+                type.Update(name: $"{type.Name}Data");
+            }
+        }
+        return type;
+    }
+
+    // Re-assert the namespace and fix serialization providers' file paths after Azure.Generator's
+    // NamespaceVisitor (which runs in VisitType) has had a chance to override them.
     protected override TypeProvider? VisitType(TypeProvider type)
     {
         if (type is not null)
