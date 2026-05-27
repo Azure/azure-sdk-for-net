@@ -12,21 +12,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.ResourceManager.HybridCompute
 {
     // Preserve previous GA WirePath attributes while delegating to the new nested license profile shape.
-    [CodeGenSuppress("SoftwareAssuranceCustomer")]
-    [CodeGenSuppress("AssignedLicenseImmutableId")]
-    [CodeGenSuppress("EsuKeys")]
-    [CodeGenSuppress("ServerType")]
-    [CodeGenSuppress("EsuEligibility")]
-    [CodeGenSuppress("EsuKeyState")]
-    [CodeGenSuppress("AssignedLicense")]
-    [CodeGenSuppress("SubscriptionStatus")]
-    [CodeGenSuppress("ProductType")]
-    [CodeGenSuppress("EnrollmentOn")]
-    [CodeGenSuppress("BillingStartOn")]
-    [CodeGenSuppress("DisenrollmentOn")]
-    [CodeGenSuppress("BillingEndOn")]
-    [CodeGenSuppress("Error")]
-    [CodeGenSuppress("ProductFeatures")]
     public partial class HybridComputeLicenseProfileData
     {
         /// <summary> Specifies if this machine is licensed as part of a Software Assurance agreement. </summary>

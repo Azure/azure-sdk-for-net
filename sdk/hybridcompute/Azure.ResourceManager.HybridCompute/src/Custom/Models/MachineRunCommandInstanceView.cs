@@ -8,7 +8,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    [CodeGenSuppress("Statuses")]
     public partial class MachineRunCommandInstanceView
     {
         /// <summary> The  status information. </summary>

@@ -13,10 +13,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    [CodeGenSuppress("EsuKey", typeof(string), typeof(int?), typeof(IDictionary<string, BinaryData>))]
-    [CodeGenSuppress("LicenseStatus")]
-    [CodeGenSuppress("JsonModelWriteCore", typeof(Utf8JsonWriter), typeof(ModelReaderWriterOptions))]
-    [CodeGenSuppress("DeserializeEsuKey", typeof(JsonElement), typeof(ModelReaderWriterOptions))]
     public partial class EsuKey
     {
         internal EsuKey(string sku, int? licenseStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)

@@ -9,11 +9,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     // Restore setters that existed in the previous GA SDK while retaining the new nested model shape.
-    [CodeGenSuppress("SoftwareAssurance")]
-    [CodeGenSuppress("ProductProfile")]
-    [CodeGenSuppress("IsSoftwareAssuranceCustomer")]
-    [CodeGenSuppress("SubscriptionStatus")]
-    [CodeGenSuppress("ProductType")]
     public partial class LicenseProfileMachineInstanceView
     {
         /// <summary> Gets or sets the SoftwareAssurance. </summary>

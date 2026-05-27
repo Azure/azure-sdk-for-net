@@ -8,23 +8,9 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.HybridCompute;
 using Azure.ResourceManager.Models;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    [CodeGenSuppress("EsuKey", typeof(string), typeof(int?))]
-    [CodeGenSuppress("HybridComputePrivateLinkScopeProperties", typeof(HybridComputePublicNetworkAccessType?), typeof(string), typeof(string), typeof(IEnumerable<PrivateEndpointConnectionDataModel>), typeof(IEnumerable<ServiceExtension>))]
-    [CodeGenSuppress("HybridComputePrivateLinkScopeProperties", typeof(HybridComputePublicNetworkAccessType?), typeof(string), typeof(string), typeof(IEnumerable<PrivateEndpointConnectionDataModel>))]
-    [CodeGenSuppress("HybridComputeWindowsConfiguration")]
-    [CodeGenSuppress("HybridComputeWindowsConfiguration", typeof(AssessmentModeType?), typeof(PatchModeType?), typeof(bool?), typeof(HybridComputePatchSettingsStatus))]
-    [CodeGenSuppress("HybridComputeWindowsConfiguration", typeof(PatchSettings), typeof(IDictionary<string, BinaryData>))]
-    [CodeGenSuppress("HybridComputeLinuxConfiguration")]
-    [CodeGenSuppress("HybridComputeLinuxConfiguration", typeof(AssessmentModeType?), typeof(PatchModeType?), typeof(bool?), typeof(HybridComputePatchSettingsStatus))]
-    [CodeGenSuppress("HybridComputeLinuxConfiguration", typeof(AssessmentModeType), typeof(PatchModeType), typeof(bool), typeof(HybridComputePatchSettingsStatus))]
-    [CodeGenSuppress("HybridComputeLinuxConfiguration", typeof(PatchSettings), typeof(IDictionary<string, BinaryData>))]
-    [CodeGenSuppress("LicenseProfileMachineInstanceViewEsuProperties", typeof(Guid?), typeof(IEnumerable<EsuKey>), typeof(EsuServerType?), typeof(EsuEligibility?), typeof(EsuKeyState?), typeof(HybridComputeLicense), typeof(LicenseAssignmentState?))]
-    [CodeGenSuppress("HybridComputeMachineData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(IDictionary<string, string>), typeof(AzureLocation), typeof(HybridComputeLocation), typeof(AgentConfiguration), typeof(HybridComputeServiceStatuses), typeof(HybridComputeHardwareProfile), typeof(HybridComputeFirmwareProfile), typeof(AgentUpgrade), typeof(HybridComputeOSProfile), typeof(LicenseProfileMachineInstanceView), typeof(string), typeof(HybridComputeStatusType?), typeof(DateTimeOffset?), typeof(IEnumerable<ResponseError>), typeof(string), typeof(Guid?), typeof(string), typeof(string), typeof(string), typeof(IdentityKeyStore?), typeof(string), typeof(string), typeof(string), typeof(string), typeof(Guid?), typeof(IEnumerable<MachineExtensionInstanceView>), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(ResourceIdentifier), typeof(ResourceIdentifier), typeof(ResourceIdentifier), typeof(string), typeof(IReadOnlyDictionary<string, string>), typeof(IEnumerable<HybridComputeDisk>), typeof(string), typeof(IEnumerable<HybridComputeNetworkInterface>), typeof(IEnumerable<HybridComputeMachineExtensionData>), typeof(ManagedServiceIdentity), typeof(ArcKindEnum?))]
-    [CodeGenSuppress("HybridComputeMachineData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(IDictionary<string, string>), typeof(AzureLocation), typeof(IEnumerable<HybridComputeMachineExtensionData>), typeof(ManagedServiceIdentity), typeof(ArcKindEnum?), typeof(HybridComputeLocation), typeof(AgentConfiguration), typeof(HybridComputeServiceStatuses), typeof(string), typeof(AgentUpgrade), typeof(HybridComputeOSProfile), typeof(LicenseProfileMachineInstanceView), typeof(string), typeof(HybridComputeStatusType?), typeof(DateTimeOffset?), typeof(IEnumerable<ResponseError>), typeof(string), typeof(Guid?), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(Guid?), typeof(IEnumerable<MachineExtensionInstanceView>), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(ResourceIdentifier), typeof(ResourceIdentifier), typeof(string), typeof(IReadOnlyDictionary<string, string>), typeof(IEnumerable<HybridComputeNetworkInterface>))]
     public static partial class ArmHybridComputeModelFactory
     {
         /// <summary>
