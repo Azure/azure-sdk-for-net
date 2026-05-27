@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Text.Json;
 using NUnit.Framework;
 
@@ -368,6 +369,40 @@ namespace Azure.Communication
 
             Assert.That(identifier.RawId, Is.EqualTo(expectedIdentifier.RawId));
             Assert.That(identifier, Is.EqualTo(expectedIdentifier));
+        }
+
+        // The following tests exercise TeamsExtensionUserIdentifier through the unified serializer.
+        // The TeamsExtensionUser nested model only exists on newer consumer SDK contracts; in older
+        // consumers the serializer should surface NotSupportedException instead of silently swallowing
+        // the request. These tests run against whichever consumer SDK link-compiles this file and
+        // detect support via reflection on CommunicationIdentifierModel.
+        private static bool ConsumerSupportsTeamsExtensionUser
+            => typeof(CommunicationIdentifierModel).GetProperty("TeamsExtensionUser") != null;
+
+        [Test]
+        public void SerializeTeamsExtensionUser_RoundTripsOrThrowsNotSupported()
+        {
+            const string userId = "207ffef6-9444-41fb-92ab-20eacaae2768";
+            const string tenantId = "45ab2481-1c1c-4005-be24-0ffb879b1130";
+            const string resourceId = "bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd";
+
+            var expected = new TeamsExtensionUserIdentifier(userId, tenantId, resourceId, CommunicationCloudEnvironment.Gcch);
+
+            if (!ConsumerSupportsTeamsExtensionUser)
+            {
+                Assert.Throws<NotSupportedException>(() => CommunicationIdentifierSerializer.Serialize(expected));
+                return;
+            }
+
+            CommunicationIdentifierModel model = CommunicationIdentifierSerializer.Serialize(expected);
+            Assert.That(model.RawId, Is.EqualTo(expected.RawId));
+
+            var roundTripped = (TeamsExtensionUserIdentifier)CommunicationIdentifierSerializer.Deserialize(model);
+            Assert.That(roundTripped.UserId, Is.EqualTo(expected.UserId));
+            Assert.That(roundTripped.TenantId, Is.EqualTo(expected.TenantId));
+            Assert.That(roundTripped.ResourceId, Is.EqualTo(expected.ResourceId));
+            Assert.That(roundTripped.Cloud, Is.EqualTo(expected.Cloud));
+            Assert.That(roundTripped, Is.EqualTo(expected));
         }
     }
 }
