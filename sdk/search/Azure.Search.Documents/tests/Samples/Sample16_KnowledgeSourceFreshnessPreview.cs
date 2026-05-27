@@ -25,27 +25,29 @@ namespace Azure.Search.Documents.Tests.Samples
 
         [Test]
         [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
-        public async Task CreateIndexedSourceWithFreshnessAndDefaults()
+        public async Task CreateKnowledgeSourceWithFreshnessPolicy()
         {
-            await using SearchResources resources = await SearchResources.CreateWithHotelsIndexAsync(this);
+            await using SearchResources resources = await SearchResources.CreateWithBlobStorageAndIndexAsync(this, populate: true);
 
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
             Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
             Environment.SetEnvironmentVariable("SEARCH_INDEX", resources.IndexName);
             Environment.SetEnvironmentVariable("OPENAI_ENDPOINT", TestEnvironment.OpenAIEndpoint);
             Environment.SetEnvironmentVariable("OPENAI_KEY", TestEnvironment.OpenAIKey);
+            Environment.SetEnvironmentVariable("STORAGE_CONNECTION_STRING", resources.StorageAccountConnectionString);
+            Environment.SetEnvironmentVariable("STORAGE_CONTAINER_NAME", resources.BlobContainerName ?? "my-documents");
 
-            string testSourceName = Recording.Random.GetName();
+            string testBlobSourceName = Recording.Random.GetName();
+            string testSearchSourceName = Recording.Random.GetName();
             string testBaseName = Recording.Random.GetName();
             SearchIndexClient testClient = null;
 
             try
             {
-                #region Snippet:Azure_Search_Tests_Samples_Sample16_Freshness_CreateSourceWithDefaults
+                #region Snippet:Azure_Search_Tests_Samples_Sample16_Freshness_CreateSourceWithPolicy
                 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
                 AzureKeyCredential credential = new AzureKeyCredential(
                     Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
-                string indexName = Environment.GetEnvironmentVariable("SEARCH_INDEX");
 
                 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
 #if !SNIPPET
@@ -53,20 +55,72 @@ namespace Azure.Search.Documents.Tests.Samples
                 testClient = indexClient;
 #endif
 
-                // Create a search index knowledge source with a base filter.
-                // The base filter is applied at retrieval time by default and can
-                // be combined with a filterAddOn at query time using AND logic.
-                string searchSourceName = "my-hotels-search-source";
+                // Configure ingestion parameters with a freshness policy.
+                // The freshnessPolicy enables freshness-aware retrieval, biasing
+                // results toward newer documents during RAG scenarios.
+                // BoostingDuration uses ISO 8601 duration format (e.g., "P90D" = 90 days).
+                // Documents modified within this window receive the highest freshness boost.
+                string openAIEndpoint = Environment.GetEnvironmentVariable("OPENAI_ENDPOINT");
+                string openAIKey = Environment.GetEnvironmentVariable("OPENAI_KEY");
+
+                string blobSourceName = "my-blob-source";
 #if !SNIPPET
-                searchSourceName = testSourceName;
+                blobSourceName = testBlobSourceName;
 #endif
+
+                string storageConnectionString = Environment.GetEnvironmentVariable("STORAGE_CONNECTION_STRING");
+                string containerName = Environment.GetEnvironmentVariable("STORAGE_CONTAINER_NAME");
+
+                AzureBlobKnowledgeSource blobSource = new AzureBlobKnowledgeSource(
+                    blobSourceName,
+                    new AzureBlobKnowledgeSourceParameters(
+                        storageConnectionString,
+                        containerName)
+                    {
+                        IngestionParameters = new KnowledgeSourceIngestionParameters
+                        {
+                            FreshnessPolicy = new FreshnessPolicy
+                            {
+                                // Documents modified within the last 90 days get the highest boost.
+                                // The boost decays linearly over this window.
+                                BoostingDuration = "P90D"
+                            },
+                            EmbeddingModel = new KnowledgeSourceAzureOpenAIVectorizer
+                            {
+                                AzureOpenAIParameters = new AzureOpenAIVectorizerParameters
+                                {
+                                    ResourceUri = new Uri(openAIEndpoint),
+                                    ApiKey = openAIKey,
+                                    DeploymentName = "text-embedding-3-large",
+                                    ModelName = "text-embedding-3-large"
+                                }
+                            }
+                        }
+                    })
+                {
+                    Description = "Blob source with freshness-aware retrieval"
+                };
+
+                KnowledgeSource createdSource = await indexClient.CreateKnowledgeSourceAsync(blobSource);
+                Console.WriteLine($"Created knowledge source '{createdSource.Name}' with freshness policy");
+                #endregion Snippet:Azure_Search_Tests_Samples_Sample16_Freshness_CreateSourceWithPolicy
+
+                Assert.AreEqual(testBlobSourceName, createdSource.Name);
+                Assert.IsTrue(createdSource is AzureBlobKnowledgeSource);
+
+                await DelayAsync(TimeSpan.FromSeconds(2));
+
+                // Also create a search index source without freshness for the multi-source KB
+                string searchSourceName = "my-search-source";
+#if !SNIPPET
+                searchSourceName = testSearchSourceName;
+#endif
+                string indexName = Environment.GetEnvironmentVariable("SEARCH_INDEX");
+
                 SearchIndexKnowledgeSource searchSource = new SearchIndexKnowledgeSource(
                     searchSourceName,
                     new SearchIndexKnowledgeSourceParameters(indexName)
                     {
-                        // Set a base filter that is always applied to this source at retrieve time.
-                        // This acts as a persistent "default" filter for the knowledge source.
-                        BaseFilter = "category eq 'Luxury'",
                         SourceDataFields =
                         {
                             new SearchIndexFieldReference("hotelId"),
@@ -75,18 +129,18 @@ namespace Azure.Search.Documents.Tests.Samples
                         }
                     })
                 {
-                    Description = "Hotels search index source with base filter"
+                    Description = "Search index source without freshness"
                 };
 
                 await indexClient.CreateKnowledgeSourceAsync(searchSource);
-                Console.WriteLine($"Created search index knowledge source '{searchSourceName}'");
-                #endregion Snippet:Azure_Search_Tests_Samples_Sample16_Freshness_CreateSourceWithDefaults
 
                 await DelayAsync(TimeSpan.FromSeconds(2));
 
-                #region Snippet:Azure_Search_Tests_Samples_Sample16_Freshness_CreateKBWithDefaults
-                // Create a knowledge base with persisted retrieval defaults.
-                // These defaults apply to every retrieve call unless overridden at request time.
+                #region Snippet:Azure_Search_Tests_Samples_Sample16_Freshness_CreateKBWithFreshness
+                // Create a knowledge base and enable freshness per knowledge source.
+                // enableFreshness = true activates the freshness scoring profile for
+                // that source during retrieval, biasing results toward newer documents.
+                // Sources without freshness enabled use standard relevance ranking.
                 string knowledgeBaseName = "my-freshness-kb";
 #if !SNIPPET
                 knowledgeBaseName = testBaseName;
@@ -95,27 +149,56 @@ namespace Azure.Search.Documents.Tests.Samples
                     knowledgeBaseName,
                     knowledgeSources: new[]
                     {
+                        new KnowledgeSourceReference(blobSourceName)
+                        {
+                            // Enable freshness-aware retrieval for the blob source
+                            EnableFreshness = true
+                        },
                         new KnowledgeSourceReference(searchSourceName)
+                        {
+                            // Freshness not enabled for this source — standard ranking applies
+                            EnableFreshness = false
+                        }
                     })
                 {
-                    Description = "KB with persisted defaults and base filter",
-
-                    // KB-level defaults for output mode and reasoning effort
+                    Description = "KB with selective freshness-aware retrieval",
                     OutputMode = KnowledgeRetrievalOutputMode.ExtractiveData,
                     RetrievalReasoningEffort = new KnowledgeRetrievalMinimalReasoningEffort()
                 };
 
+#if !SNIPPET
+                string openAIEndpoint2 = TestEnvironment.OpenAIEndpoint;
+                string openAIKey2 = TestEnvironment.OpenAIKey;
+                if (!string.IsNullOrEmpty(openAIEndpoint2))
+                {
+                    knowledgeBase.Models.Add(
+                        new KnowledgeBaseAzureOpenAIModel(
+                            new AzureOpenAIVectorizerParameters
+                            {
+                                ResourceUri = new Uri(openAIEndpoint2),
+                                ApiKey = openAIKey2,
+                                DeploymentName = "gpt-5.4-mini",
+                                ModelName = AzureOpenAIModelName.Gpt54Mini
+                            }));
+                }
+#endif
+
                 KnowledgeBase createdBase = await indexClient.CreateKnowledgeBaseAsync(knowledgeBase);
                 Console.WriteLine($"Created knowledge base '{createdBase.Name}'");
-                Console.WriteLine($"  Output mode default: {createdBase.OutputMode}");
-                #endregion Snippet:Azure_Search_Tests_Samples_Sample16_Freshness_CreateKBWithDefaults
+
+                // Verify freshness settings on the knowledge source references
+                foreach (KnowledgeSourceReference ksRef in createdBase.KnowledgeSources)
+                {
+                    Console.WriteLine($"  Source '{ksRef.Name}': freshness = {ksRef.EnableFreshness}");
+                }
+                #endregion Snippet:Azure_Search_Tests_Samples_Sample16_Freshness_CreateKBWithFreshness
 
                 await DelayAsync(TimeSpan.FromSeconds(2));
 
-                #region Snippet:Azure_Search_Tests_Samples_Sample16_Freshness_RetrieveWithDefaults
-                // Retrieve using the KB's persisted defaults and compose a filterAddOn
-                // with the source's baseFilter. The baseFilter ("category eq 'Luxury'") is
-                // automatically applied, and the filterAddOn is combined with AND.
+                #region Snippet:Azure_Search_Tests_Samples_Sample16_Freshness_Retrieve
+                // Retrieve from the knowledge base. The blob source will use
+                // freshness-aware ranking (newer documents boosted), while the
+                // search index source uses standard relevance ranking.
                 KnowledgeBaseRetrievalClient retrievalClient = new KnowledgeBaseRetrievalClient(
                     endpoint, knowledgeBaseName, credential);
 #if !SNIPPET
@@ -123,45 +206,31 @@ namespace Azure.Search.Documents.Tests.Samples
                     endpoint, testBaseName, credential, InstrumentClientOptions(new SearchClientOptions())));
 #endif
 
-                // The request inherits the KB-level defaults (outputMode, reasoning effort).
-                // Use knowledgeSourceParams to add a filterAddOn that composes with the
-                // source's baseFilter using AND logic.
                 KnowledgeBaseRetrievalRequest request = new KnowledgeBaseRetrievalRequest
                 {
                     IncludeActivity = true
                 };
-                request.Intents.Add(new KnowledgeRetrievalSemanticIntent("What are the best luxury hotels?"));
-
-                // Add per-source runtime parameters with filterAddOn.
-                // At retrieval time the effective filter becomes:
-                //   (category eq 'Luxury') AND (rating ge 4)
-                request.KnowledgeSourceParams.Add(
-                    new SearchIndexKnowledgeSourceParams(searchSourceName)
-                    {
-                        FilterAddOn = "rating ge 4",
-                        IncludeReferences = true,
-                        IncludeReferenceSourceData = true
-                    });
+                request.Intents.Add(new KnowledgeRetrievalSemanticIntent("What are the latest updates?"));
 
                 Response<KnowledgeBaseRetrievalResponse> response = await retrievalClient.RetrieveAsync(request);
                 KnowledgeBaseRetrievalResponse retrievalResponse = response.Value;
 
-                // Display references and their source data
-                foreach (KnowledgeBaseReference reference in retrievalResponse.References)
+                foreach (KnowledgeBaseMessage message in retrievalResponse.Response)
                 {
-                    Console.WriteLine($"Reference ID: {reference.Id}, Score: {reference.RerankerScore}");
-                    foreach (var kvp in reference.SourceData)
+                    foreach (KnowledgeBaseMessageContent content in message.Content)
                     {
-                        Console.WriteLine($"  {kvp.Key}: {kvp.Value}");
+                        if (content is KnowledgeBaseMessageTextContent textContent)
+                        {
+                            Console.WriteLine($"Response: {textContent.Text}");
+                        }
                     }
                 }
 
-                // Activity records show the retrieval flow
-                foreach (KnowledgeBaseActivityRecord activity in retrievalResponse.Activity)
+                foreach (KnowledgeBaseReference reference in retrievalResponse.References)
                 {
-                    Console.WriteLine($"Activity ID: {activity.Id}, Elapsed: {activity.ElapsedMs}ms");
+                    Console.WriteLine($"Reference ID: {reference.Id}");
                 }
-                #endregion Snippet:Azure_Search_Tests_Samples_Sample16_Freshness_RetrieveWithDefaults
+                #endregion Snippet:Azure_Search_Tests_Samples_Sample16_Freshness_Retrieve
 
                 Assert.IsNotNull(retrievalResponse);
                 Assert.IsNotNull(retrievalResponse.Response);
@@ -174,7 +243,10 @@ namespace Azure.Search.Documents.Tests.Samples
                     { await testClient.DeleteKnowledgeBaseAsync(testBaseName, cancellationToken: CancellationToken.None); }
                     catch { }
                     try
-                    { await testClient.DeleteKnowledgeSourceAsync(testSourceName, cancellationToken: CancellationToken.None); }
+                    { await testClient.DeleteKnowledgeSourceAsync(testBlobSourceName, cancellationToken: CancellationToken.None); }
+                    catch { }
+                    try
+                    { await testClient.DeleteKnowledgeSourceAsync(testSearchSourceName, cancellationToken: CancellationToken.None); }
                     catch { }
                 }
             }

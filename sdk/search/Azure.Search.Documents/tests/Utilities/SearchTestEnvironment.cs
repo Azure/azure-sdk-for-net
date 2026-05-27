@@ -81,6 +81,11 @@ namespace Azure.Search.Documents.Tests
         public string SearchCognitiveKey => GetRecordedVariable(CognitiveKeyVariableName, options => options.IsSecret());
 
         /// <summary>
+        /// Gets the Cognitive Services endpoint.
+        /// </summary>
+        public string SearchCognitiveEndpoint => GetRecordedOptionalVariable("SEARCH_COGNITIVE_ENDPOINT");
+
+        /// <summary>
         /// Gets the search service suffix.
         /// </summary>
         public string SearchEndpointSuffix => GetRecordedOptionalVariable("SEARCH_ENDPOINT_SUFFIX") ?? "search.windows.net";

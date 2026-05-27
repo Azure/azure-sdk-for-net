@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -95,6 +96,38 @@ namespace Azure.Search.Documents.Tests.Samples
 
                 await DelayAsync(TimeSpan.FromSeconds(2));
 
+                #region Snippet:Azure_Search_Tests_Samples_Sample17_FileKS_UploadFiles
+                // Upload files directly to the File knowledge source.
+                // Files are uploaded as binary content with a Content-Disposition header
+                // specifying the filename.
+                string filePath = "path/to/azure-search-overview.txt";
+#if !SNIPPET
+                filePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Samples", "azure-search-overview.txt");
+#endif
+                string fileName = Path.GetFileName(filePath);
+                BinaryData fileData = BinaryData.FromBytes(File.ReadAllBytes(filePath));
+
+                Response<KnowledgeSourceFile> uploadResponse = await indexClient.UploadKnowledgeSourceFileAsync(
+                    knowledgeSourceName,
+                    contentDisposition: $"attachment; filename=\"{fileName}\"",
+                    file: fileData);
+
+                KnowledgeSourceFile uploadedFile = uploadResponse.Value;
+                Console.WriteLine($"Uploaded file '{uploadedFile.FileName}' (ID: {uploadedFile.FileId}, Size: {uploadedFile.FileSizeBytes} bytes)");
+
+                // List all files in the knowledge source
+                await foreach (KnowledgeSourceFile file in indexClient.GetKnowledgeSourceFilesAsync(knowledgeSourceName))
+                {
+                    Console.WriteLine($"  File: {file.FileName} (ID: {file.FileId})");
+                }
+
+                // Delete a file from the knowledge source if needed
+                await indexClient.DeleteKnowledgeSourceFileAsync(uploadedFile.FileId, knowledgeSourceName);
+                Console.WriteLine($"Deleted file '{uploadedFile.FileName}'");
+                #endregion Snippet:Azure_Search_Tests_Samples_Sample17_FileKS_UploadFiles
+
+                await DelayAsync(TimeSpan.FromSeconds(2));
+
                 #region Snippet:Azure_Search_Tests_Samples_Sample17_FileKS_GetAndList
                 // Get the file knowledge source back
                 KnowledgeSource retrievedSource = await indexClient.GetKnowledgeSourceAsync(knowledgeSourceName);
@@ -143,8 +176,8 @@ namespace Azure.Search.Documents.Tests.Samples
                             {
                                 ResourceUri = new Uri(openAIEndpoint2),
                                 ApiKey = openAIKey2,
-                                DeploymentName = "gpt-5-mini",
-                                ModelName = AzureOpenAIModelName.Gpt5Mini
+                                DeploymentName = "gpt-5.4-mini",
+                                ModelName = AzureOpenAIModelName.Gpt54Mini
                             }));
                 }
 #endif
@@ -168,7 +201,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 {
                     IncludeActivity = true
                 };
-                request.Intents.Add(new KnowledgeRetrievalSemanticIntent("What documents have been uploaded?"));
+                request.Intents.Add(new KnowledgeRetrievalSemanticIntent("What is Azure AI Search?"));
 
                 Response<KnowledgeBaseRetrievalResponse> response = await retrievalClient.RetrieveAsync(request);
                 KnowledgeBaseRetrievalResponse retrievalResponse = response.Value;

@@ -1,6 +1,6 @@
 # File Knowledge Source
 
-This sample demonstrates how to create and use a File knowledge source. File sources support direct document upload and indexing without needing an external data store like Azure Blob Storage. You can configure ingestion parameters including content extraction mode and an embedding model for vectorization.
+This sample demonstrates how to create and use a File knowledge source. File sources support direct document upload and indexing without needing an external data store like Azure Blob Storage. You can configure ingestion parameters including content extraction mode and an embedding model for vectorization, then upload, list, and delete files in the source.
 
 For more information, see the [agentic retrieval documentation](https://learn.microsoft.com/azure/search/agentic-retrieval-overview).
 
@@ -58,6 +58,37 @@ FileKnowledgeSource fileSource = new FileKnowledgeSource(
 
 KnowledgeSource createdSource = await indexClient.CreateKnowledgeSourceAsync(fileSource);
 Console.WriteLine($"Created file knowledge source '{createdSource.Name}'");
+```
+
+## Upload Files to the Knowledge Source
+
+Upload documents directly to the File knowledge source, list uploaded files, and delete them when no longer needed.
+
+```C# Snippet:Azure_Search_Tests_Samples_Sample17_FileKS_UploadFiles
+// Upload files directly to the File knowledge source.
+// Files are uploaded as binary content with a Content-Disposition header
+// specifying the filename.
+string filePath = "path/to/azure-search-overview.txt";
+string fileName = Path.GetFileName(filePath);
+BinaryData fileData = BinaryData.FromBytes(File.ReadAllBytes(filePath));
+
+Response<KnowledgeSourceFile> uploadResponse = await indexClient.UploadKnowledgeSourceFileAsync(
+    knowledgeSourceName,
+    contentDisposition: $"attachment; filename=\"{fileName}\"",
+    file: fileData);
+
+KnowledgeSourceFile uploadedFile = uploadResponse.Value;
+Console.WriteLine($"Uploaded file '{uploadedFile.FileName}' (ID: {uploadedFile.FileId}, Size: {uploadedFile.FileSizeBytes} bytes)");
+
+// List all files in the knowledge source
+await foreach (KnowledgeSourceFile file in indexClient.GetKnowledgeSourceFilesAsync(knowledgeSourceName))
+{
+    Console.WriteLine($"  File: {file.FileName} (ID: {file.FileId})");
+}
+
+// Delete a file from the knowledge source if needed
+await indexClient.DeleteKnowledgeSourceFileAsync(uploadedFile.FileId, knowledgeSourceName);
+Console.WriteLine($"Deleted file '{uploadedFile.FileName}'");
 ```
 
 ## Get and List File Knowledge Sources
@@ -120,7 +151,7 @@ KnowledgeBaseRetrievalRequest request = new KnowledgeBaseRetrievalRequest
 {
     IncludeActivity = true
 };
-request.Intents.Add(new KnowledgeRetrievalSemanticIntent("What documents have been uploaded?"));
+request.Intents.Add(new KnowledgeRetrievalSemanticIntent("What is Azure AI Search?"));
 
 Response<KnowledgeBaseRetrievalResponse> response = await retrievalClient.RetrieveAsync(request);
 KnowledgeBaseRetrievalResponse retrievalResponse = response.Value;

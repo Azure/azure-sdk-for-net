@@ -342,6 +342,11 @@
             "condition": "[parameters('deployStorage')]",
             "value": "[listKeys(variables('cognitiveServicesAccountName'), variables('cognitiveServicesApiVersion')).key1]"
         },
+        "SEARCH_COGNITIVE_ENDPOINT": {
+            "type": "string",
+            "condition": "[parameters('deployStorage')]",
+            "value": "[reference(variables('cognitiveServicesAccountName')).endpoint]"
+        },
         "SEARCH_KEYVAULT_URL": {
             "type": "string",
             "condition": "[and(contains(variables('searchEncryptionLocations'), parameters('location')), not(equals(parameters('searchSku'), 'free')))]",
