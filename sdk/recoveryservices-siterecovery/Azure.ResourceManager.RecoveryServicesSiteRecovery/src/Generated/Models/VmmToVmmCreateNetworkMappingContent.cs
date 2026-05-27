@@ -14,17 +14,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class VmmToVmmCreateNetworkMappingContent : FabricSpecificCreateNetworkMappingContent
     {
         /// <summary> Initializes a new instance of <see cref="VmmToVmmCreateNetworkMappingContent"/>. </summary>
-        public VmmToVmmCreateNetworkMappingContent()
+        public VmmToVmmCreateNetworkMappingContent() : base("VmmToVmm")
         {
-            InstanceType = "VmmToVmm";
         }
 
         /// <summary> Initializes a new instance of <see cref="VmmToVmmCreateNetworkMappingContent"/>. </summary>
         /// <param name="instanceType"> The instance type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VmmToVmmCreateNetworkMappingContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(instanceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VmmToVmmCreateNetworkMappingContent(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(instanceType, additionalBinaryDataProperties)
         {
-            InstanceType = instanceType ?? "VmmToVmm";
         }
     }
 }

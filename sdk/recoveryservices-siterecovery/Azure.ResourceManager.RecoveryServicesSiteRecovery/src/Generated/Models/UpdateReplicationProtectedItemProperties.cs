@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Update protected item input properties. </summary>
     public partial class UpdateReplicationProtectedItemProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="UpdateReplicationProtectedItemProperties"/>. </summary>
         public UpdateReplicationProtectedItemProperties()
@@ -62,13 +34,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="vmNics"> The list of VM nic details. </param>
         /// <param name="licenseType"> License type. </param>
         /// <param name="recoveryAvailabilitySetId"> The target availability set Id. </param>
-        /// <param name="providerSpecificDetails">
-        /// The provider specific input to update replication protected item.
-        /// Please note <see cref="UpdateReplicationProtectedItemProviderContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="A2AUpdateReplicationProtectedItemContent"/>, <see cref="HyperVReplicaAzureUpdateReplicationProtectedItemContent"/>, <see cref="InMageAzureV2UpdateReplicationProtectedItemContent"/> and <see cref="InMageRcmUpdateReplicationProtectedItemContent"/>.
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UpdateReplicationProtectedItemProperties(string recoveryAzureVmName, string recoveryAzureVmSize, ResourceIdentifier selectedRecoveryAzureNetworkId, ResourceIdentifier selectedTfoAzureNetworkId, string selectedSourceNicId, string enableRdpOnTargetOption, IList<VmNicContentDetails> vmNics, SiteRecoveryLicenseType? licenseType, ResourceIdentifier recoveryAvailabilitySetId, UpdateReplicationProtectedItemProviderContent providerSpecificDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="providerSpecificDetails"> The provider specific input to update replication protected item. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UpdateReplicationProtectedItemProperties(string recoveryAzureVmName, string recoveryAzureVmSize, ResourceIdentifier selectedRecoveryAzureNetworkId, ResourceIdentifier selectedTfoAzureNetworkId, string selectedSourceNicId, string enableRdpOnTargetOption, IList<VmNicContentDetails> vmNics, SiteRecoveryLicenseType? licenseType, ResourceIdentifier recoveryAvailabilitySetId, UpdateReplicationProtectedItemProviderContent providerSpecificDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RecoveryAzureVmName = recoveryAzureVmName;
             RecoveryAzureVmSize = recoveryAzureVmSize;
@@ -80,32 +48,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             LicenseType = licenseType;
             RecoveryAvailabilitySetId = recoveryAvailabilitySetId;
             ProviderSpecificDetails = providerSpecificDetails;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Target Azure VM name given by the user. </summary>
         public string RecoveryAzureVmName { get; set; }
+
         /// <summary> Target Azure VM size. </summary>
         public string RecoveryAzureVmSize { get; set; }
+
         /// <summary> Target Azure Network Id. </summary>
         public ResourceIdentifier SelectedRecoveryAzureNetworkId { get; set; }
+
         /// <summary> The Azure Network Id for test failover. </summary>
         public ResourceIdentifier SelectedTfoAzureNetworkId { get; set; }
+
         /// <summary> The selected source nic Id which will be used as the primary nic during failover. </summary>
         public string SelectedSourceNicId { get; set; }
+
         /// <summary> The selected option to enable RDP\SSH on target vm after failover. String value of SrsDataContract.EnableRDPOnTargetOption enum. </summary>
         public string EnableRdpOnTargetOption { get; set; }
+
         /// <summary> The list of VM nic details. </summary>
         public IList<VmNicContentDetails> VmNics { get; }
+
         /// <summary> License type. </summary>
         public SiteRecoveryLicenseType? LicenseType { get; set; }
+
         /// <summary> The target availability set Id. </summary>
         public ResourceIdentifier RecoveryAvailabilitySetId { get; set; }
-        /// <summary>
-        /// The provider specific input to update replication protected item.
-        /// Please note <see cref="UpdateReplicationProtectedItemProviderContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="A2AUpdateReplicationProtectedItemContent"/>, <see cref="HyperVReplicaAzureUpdateReplicationProtectedItemContent"/>, <see cref="InMageAzureV2UpdateReplicationProtectedItemContent"/> and <see cref="InMageRcmUpdateReplicationProtectedItemContent"/>.
-        /// </summary>
+
+        /// <summary> The provider specific input to update replication protected item. </summary>
         public UpdateReplicationProtectedItemProviderContent ProviderSpecificDetails { get; set; }
     }
 }
