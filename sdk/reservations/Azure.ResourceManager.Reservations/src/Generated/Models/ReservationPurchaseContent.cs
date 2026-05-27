@@ -18,6 +18,11 @@ namespace Azure.ResourceManager.Reservations.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ReservationPurchaseContent"/>. </summary>
+        public ReservationPurchaseContent()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ReservationPurchaseContent"/>. </summary>
         /// <param name="sku"> The name of sku. </param>
         /// <param name="location"> The Azure region where the reserved resource lives. </param>
         /// <param name="properties"> Properties of reservation purchase request. </param>
