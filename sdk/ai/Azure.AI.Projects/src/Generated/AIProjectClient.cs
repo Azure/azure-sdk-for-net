@@ -56,7 +56,7 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of AIProjectRoutines. </summary>
         public virtual AIProjectRoutines GetAIProjectRoutinesClient()
         {
-            return Volatile.Read(ref _cachedAIProjectRoutines) ?? Interlocked.CompareExchange(ref _cachedAIProjectRoutines, new AIProjectRoutines(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectRoutines;
+            return Volatile.Read(ref _cachedAIProjectRoutines) ?? Interlocked.CompareExchange(ref _cachedAIProjectRoutines, new AIProjectRoutines(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectRoutines;
         }
     }
 }

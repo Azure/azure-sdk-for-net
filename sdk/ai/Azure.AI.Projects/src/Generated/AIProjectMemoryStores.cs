@@ -1118,73 +1118,20 @@ namespace Azure.AI.Projects.Memory
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual CollectionResult GetMemories(string name, int? limit, string order, string after, string before, RequestOptions options)
+        public virtual AsyncCollectionResult GetMemoriesAsync(string name, BinaryContent content, string kind = default, int? limit = default, string order = default, string after = default, string before = default, RequestOptions options = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.GetMemories");
             scope.Start();
             try
             {
                 Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-                return new AIProjectMemoryStoresGetMemoriesCollectionResult(
-                    this,
-                    name,
-                    limit,
-                    order,
-                    after,
-                    before,
-                    options);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] List all memory items in a memory store.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> The name of the memory store. </param>
-        /// <param name="limit">
-        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
-        /// default is 20.
-        /// </param>
-        /// <param name="order">
-        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
-        /// for descending order.
-        /// </param>
-        /// <param name="after">
-        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
-        /// </param>
-        /// <param name="before">
-        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
-        /// </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual AsyncCollectionResult GetMemoriesAsync(string name, int? limit, string order, string after, string before, RequestOptions options)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.GetMemories");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNull(content, nameof(content));
 
                 return new AIProjectMemoryStoresGetMemoriesAsyncCollectionResult(
                     this,
                     name,
+                    content,
+                    kind,
                     limit,
                     order,
                     after,

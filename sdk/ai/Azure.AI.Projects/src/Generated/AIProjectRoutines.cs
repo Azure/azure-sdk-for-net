@@ -24,11 +24,13 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Initializes a new instance of AIProjectRoutines. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal AIProjectRoutines(ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal AIProjectRoutines(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint, string apiVersion)
         {
+            ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
@@ -36,6 +38,9 @@ namespace Azure.AI.Projects
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
         /// [Protocol Method] Create or update a routine.
@@ -55,11 +60,21 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult CreateOrUpdateRoutine(string routineName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectRoutines.CreateOrUpdateRoutine");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateOrUpdateRoutineRequest(routineName, content, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateCreateOrUpdateRoutineRequest(routineName, content, foundryFeatures, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -80,11 +95,21 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> CreateOrUpdateRoutineAsync(string routineName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectRoutines.CreateOrUpdateRoutine");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateOrUpdateRoutineRequest(routineName, content, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateCreateOrUpdateRoutineRequest(routineName, content, foundryFeatures, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create or update a routine. </summary>
@@ -148,10 +173,20 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult GetRoutine(string routineName, string foundryFeatures, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectRoutines.GetRoutine");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
 
-            using PipelineMessage message = CreateGetRoutineRequest(routineName, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateGetRoutineRequest(routineName, foundryFeatures, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -171,10 +206,20 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> GetRoutineAsync(string routineName, string foundryFeatures, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectRoutines.GetRoutine");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
 
-            using PipelineMessage message = CreateGetRoutineRequest(routineName, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateGetRoutineRequest(routineName, foundryFeatures, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Retrieve a routine. </summary>
@@ -224,10 +269,20 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult EnableRoutine(string routineName, string foundryFeatures, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectRoutines.EnableRoutine");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
 
-            using PipelineMessage message = CreateEnableRoutineRequest(routineName, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateEnableRoutineRequest(routineName, foundryFeatures, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -247,10 +302,20 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> EnableRoutineAsync(string routineName, string foundryFeatures, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectRoutines.EnableRoutine");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
 
-            using PipelineMessage message = CreateEnableRoutineRequest(routineName, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateEnableRoutineRequest(routineName, foundryFeatures, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Enable a routine. </summary>
@@ -300,10 +365,20 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult DisableRoutine(string routineName, string foundryFeatures, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectRoutines.DisableRoutine");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
 
-            using PipelineMessage message = CreateDisableRoutineRequest(routineName, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateDisableRoutineRequest(routineName, foundryFeatures, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -323,10 +398,20 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> DisableRoutineAsync(string routineName, string foundryFeatures, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectRoutines.DisableRoutine");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
 
-            using PipelineMessage message = CreateDisableRoutineRequest(routineName, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateDisableRoutineRequest(routineName, foundryFeatures, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Disable a routine. </summary>
@@ -391,14 +476,24 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual CollectionResult GetRoutines(string foundryFeatures, int? limit, string order, string after, string before, RequestOptions options)
         {
-            return new AIProjectRoutinesGetRoutinesCollectionResult(
-                this,
-                foundryFeatures,
-                limit,
-                order,
-                after,
-                before,
-                options);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectRoutines.GetRoutines");
+            scope.Start();
+            try
+            {
+                return new AIProjectRoutinesGetRoutinesCollectionResult(
+                    this,
+                    foundryFeatures,
+                    limit,
+                    order,
+                    after,
+                    before,
+                    options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -433,14 +528,24 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncCollectionResult GetRoutinesAsync(string foundryFeatures, int? limit, string order, string after, string before, RequestOptions options)
         {
-            return new AIProjectRoutinesGetRoutinesAsyncCollectionResult(
-                this,
-                foundryFeatures,
-                limit,
-                order,
-                after,
-                before,
-                options);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectRoutines.GetRoutines");
+            scope.Start();
+            try
+            {
+                return new AIProjectRoutinesGetRoutinesAsyncCollectionResult(
+                    this,
+                    foundryFeatures,
+                    limit,
+                    order,
+                    after,
+                    before,
+                    options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> List routines. </summary>
@@ -528,10 +633,20 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult DeleteRoutine(string routineName, string foundryFeatures, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectRoutines.DeleteRoutine");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
 
-            using PipelineMessage message = CreateDeleteRoutineRequest(routineName, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateDeleteRoutineRequest(routineName, foundryFeatures, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -551,10 +666,20 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> DeleteRoutineAsync(string routineName, string foundryFeatures, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectRoutines.DeleteRoutine");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
 
-            using PipelineMessage message = CreateDeleteRoutineRequest(routineName, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateDeleteRoutineRequest(routineName, foundryFeatures, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Delete a routine. </summary>
@@ -621,18 +746,28 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual CollectionResult GetRoutineRuns(string routineName, string foundryFeatures, string filter, int? limit, string order, string after, string before, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectRoutines.GetRoutineRuns");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
 
-            return new AIProjectRoutinesGetRoutineRunsCollectionResult(
-                this,
-                routineName,
-                foundryFeatures,
-                filter,
-                limit,
-                order,
-                after,
-                before,
-                options);
+                return new AIProjectRoutinesGetRoutineRunsCollectionResult(
+                    this,
+                    routineName,
+                    foundryFeatures,
+                    filter,
+                    limit,
+                    order,
+                    after,
+                    before,
+                    options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -671,18 +806,28 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncCollectionResult GetRoutineRunsAsync(string routineName, string foundryFeatures, string filter, int? limit, string order, string after, string before, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectRoutines.GetRoutineRuns");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
 
-            return new AIProjectRoutinesGetRoutineRunsAsyncCollectionResult(
-                this,
-                routineName,
-                foundryFeatures,
-                filter,
-                limit,
-                order,
-                after,
-                before,
-                options);
+                return new AIProjectRoutinesGetRoutineRunsAsyncCollectionResult(
+                    this,
+                    routineName,
+                    foundryFeatures,
+                    filter,
+                    limit,
+                    order,
+                    after,
+                    before,
+                    options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> List prior runs for a routine. </summary>
@@ -787,11 +932,21 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult DispatchRoutineAsync(string routineName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectRoutines.DispatchRoutine");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateDispatchRoutineAsyncRequest(routineName, content, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateDispatchRoutineAsyncRequest(routineName, content, foundryFeatures, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -812,11 +967,21 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> DispatchRoutineAsyncAsync(string routineName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectRoutines.DispatchRoutineAsync");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateDispatchRoutineAsyncRequest(routineName, content, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateDispatchRoutineAsyncRequest(routineName, content, foundryFeatures, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Queue an asynchronous routine dispatch. </summary>

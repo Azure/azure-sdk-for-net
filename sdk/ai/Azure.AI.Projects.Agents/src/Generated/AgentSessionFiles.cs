@@ -65,13 +65,13 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult UploadSessionFile(string agentName, string agentSessionId, string path, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        internal virtual ClientResult UploadSessionFile(string agentName, string agentSessionId, string path, BinaryContent content, string foundryFeatures = default, string userIsolationKey = default, RequestOptions options = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentSessionFiles.UploadSessionFile");
             scope.Start();
             try
             {
-                using PipelineMessage message = CreateUploadSessionFileRequest(agentName, agentSessionId, path, content, foundryFeatures, options);
+                using PipelineMessage message = CreateUploadSessionFileRequest(agentName, agentSessionId, path, content, foundryFeatures, userIsolationKey, options);
                 return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
             }
             catch (Exception e)
@@ -99,13 +99,13 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> UploadSessionFileAsync(string agentName, string agentSessionId, string path, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        internal virtual async Task<ClientResult> UploadSessionFileAsync(string agentName, string agentSessionId, string path, BinaryContent content, string foundryFeatures = default, string userIsolationKey = default, RequestOptions options = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentSessionFiles.UploadSessionFile");
             scope.Start();
             try
             {
-                using PipelineMessage message = CreateUploadSessionFileRequest(agentName, agentSessionId, path, content, foundryFeatures, options);
+                using PipelineMessage message = CreateUploadSessionFileRequest(agentName, agentSessionId, path, content, foundryFeatures, userIsolationKey, options);
                 return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
             }
             catch (Exception e)
@@ -167,13 +167,13 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult DownloadSessionFile(string agentName, string agentSessionId, string path, string foundryFeatures, RequestOptions options)
+        internal virtual ClientResult DownloadSessionFile(string agentName, string agentSessionId, string path, string foundryFeatures, string userIsolationKey, RequestOptions options)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentSessionFiles.DownloadSessionFile");
             scope.Start();
             try
             {
-                using PipelineMessage message = CreateDownloadSessionFileRequest(agentName, agentSessionId, path, foundryFeatures, options);
+                using PipelineMessage message = CreateDownloadSessionFileRequest(agentName, agentSessionId, path, foundryFeatures, userIsolationKey, options);
                 return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
             }
             catch (Exception e)
@@ -199,13 +199,13 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> DownloadSessionFileAsync(string agentName, string agentSessionId, string path, string foundryFeatures, RequestOptions options)
+        internal virtual async Task<ClientResult> DownloadSessionFileAsync(string agentName, string agentSessionId, string path, string foundryFeatures, string userIsolationKey, RequestOptions options)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentSessionFiles.DownloadSessionFile");
             scope.Start();
             try
             {
-                using PipelineMessage message = CreateDownloadSessionFileRequest(agentName, agentSessionId, path, foundryFeatures, options);
+                using PipelineMessage message = CreateDownloadSessionFileRequest(agentName, agentSessionId, path, foundryFeatures, userIsolationKey, options);
                 return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
             }
             catch (Exception e)
@@ -260,13 +260,13 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult GetSessionFiles(string agentName, string agentSessionId, string path, string foundryFeatures, RequestOptions options)
+        internal virtual ClientResult GetSessionFiles(string agentName, string agentSessionId, string path, string foundryFeatures, string userIsolationKey, RequestOptions options)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentSessionFiles.GetSessionFiles");
             scope.Start();
             try
             {
-                using PipelineMessage message = CreateGetSessionFilesRequest(agentName, agentSessionId, path, foundryFeatures, options);
+                using PipelineMessage message = CreateGetSessionFilesRequest(agentName, agentSessionId, path, foundryFeatures, userIsolationKey, options);
                 return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
             }
             catch (Exception e)
@@ -293,13 +293,13 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> GetSessionFilesAsync(string agentName, string agentSessionId, string path, string foundryFeatures, RequestOptions options)
+        internal virtual async Task<ClientResult> GetSessionFilesAsync(string agentName, string agentSessionId, string path, string foundryFeatures, string userIsolationKey, RequestOptions options)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentSessionFiles.GetSessionFiles");
             scope.Start();
             try
             {
-                using PipelineMessage message = CreateGetSessionFilesRequest(agentName, agentSessionId, path, foundryFeatures, options);
+                using PipelineMessage message = CreateGetSessionFilesRequest(agentName, agentSessionId, path, foundryFeatures, userIsolationKey, options);
                 return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
             }
             catch (Exception e)
@@ -361,13 +361,13 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult DeleteSessionFile(string agentName, string agentSessionId, string path, string foundryFeatures, bool? recursive, RequestOptions options)
+        internal virtual ClientResult DeleteSessionFile(string agentName, string agentSessionId, string path, string foundryFeatures, bool? recursive, string userIsolationKey, RequestOptions options)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentSessionFiles.DeleteSessionFile");
             scope.Start();
             try
             {
-                using PipelineMessage message = CreateDeleteSessionFileRequest(agentName, agentSessionId, path, foundryFeatures, recursive, options);
+                using PipelineMessage message = CreateDeleteSessionFileRequest(agentName, agentSessionId, path, foundryFeatures, recursive, userIsolationKey, options);
                 return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
             }
             catch (Exception e)
@@ -395,13 +395,13 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> DeleteSessionFileAsync(string agentName, string agentSessionId, string path, string foundryFeatures, bool? recursive, RequestOptions options)
+        internal virtual async Task<ClientResult> DeleteSessionFileAsync(string agentName, string agentSessionId, string path, string foundryFeatures, bool? recursive, string userIsolationKey, RequestOptions options)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentSessionFiles.DeleteSessionFile");
             scope.Start();
             try
             {
-                using PipelineMessage message = CreateDeleteSessionFileRequest(agentName, agentSessionId, path, foundryFeatures, recursive, options);
+                using PipelineMessage message = CreateDeleteSessionFileRequest(agentName, agentSessionId, path, foundryFeatures, recursive, userIsolationKey, options);
                 return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
             }
             catch (Exception e)
