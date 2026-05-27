@@ -3,9 +3,7 @@
 
 using System;
 using System.ClientModel;
-using System.ClientModel.Primitives;
 using System.IO;
-using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -64,7 +62,11 @@ public class Sample_CodeAgent : ProjectsOpenAITestBase
 #endif
         AIProjectClient projectClient = new(endpoint: new(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         #endregion
-
+        try
+        {
+            Directory.Delete(Path.GetFullPath("./AgentCode"), recursive: true);
+        }
+        catch { }
         #region Snippet:Sample_CreateAgent_CodeAgent_Async
         ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionFromCodeAsync(
             agentName: "myCodeAgent",
@@ -98,9 +100,14 @@ public class Sample_CodeAgent : ProjectsOpenAITestBase
             {
                 SessionLogEvent logEvent = await projectClient.AgentAdministrationClient.GetSessionLogStreamAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version, sessionId: session[0].Value.Trim('\''));
                 Console.WriteLine(logEvent.Data);
-                throw;
             }
+            throw;
         }
+        #endregion
+        #region Snippet:Sample_DownloadCode_CodeAgent_Async
+        string downloadPath = Path.GetFullPath("./AgentCode");
+        await projectClient.AgentAdministrationClient.DownloadAgentCodeAsync(agentName: agentVersion.Name, path: downloadPath);
+        Console.WriteLine($"The Agent code was downloaded to {downloadPath}");
         #endregion
         #region Snippet:DeleteCodeAgent_CodeAgent_Async
         await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentVersion.Name, force: true);
@@ -118,7 +125,11 @@ public class Sample_CodeAgent : ProjectsOpenAITestBase
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
 #endif
         AIProjectClient projectClient = new(endpoint: new(projectEndpoint), tokenProvider: new DefaultAzureCredential());
-
+        try
+        {
+            Directory.Delete(Path.GetFullPath("./AgentCode"), recursive: true);
+        }
+        catch { }
         #region Snippet:Sample_CreateAgent_CodeAgent_Sync
         ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersionFromCode(
             agentName: "myCodeAgent",
@@ -152,11 +163,16 @@ public class Sample_CodeAgent : ProjectsOpenAITestBase
             {
                 SessionLogEvent logEvent = projectClient.AgentAdministrationClient.GetSessionLogStream(agentName: agentVersion.Name, agentVersion: agentVersion.Version, sessionId: session[0].Value.Trim('\''));
                 Console.WriteLine(logEvent.Data);
-                throw;
             }
+            throw;
         }
         #endregion
-        #region Snippet:DeleteCodeAgent_CodeAgent_Async
+        #region Snippet:Sample_DownloadCode_CodeAgent_Sync
+        string downloadPath = Path.GetFullPath("./AgentCode");
+        projectClient.AgentAdministrationClient.DownloadAgentCode(agentName: agentVersion.Name, path: downloadPath);
+        Console.WriteLine($"The Agent code was downloaded to {downloadPath}");
+        #endregion
+        #region Snippet:DeleteCodeAgent_CodeAgent_Sync
         projectClient.AgentAdministrationClient.DeleteAgent(agentVersion.Name, force: true);
         #endregion
     }
