@@ -51,13 +51,13 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult CreateConversation(BinaryContent content, RequestOptions options = null)
+        public virtual ClientResult CreateConversation(BinaryContent content, string userIsolationKey = default, RequestOptions options = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Conversations.CreateConversation");
             scope.Start();
             try
             {
-                using PipelineMessage message = CreateCreateConversationRequest(content, options);
+                using PipelineMessage message = CreateCreateConversationRequest(content, userIsolationKey, options);
                 return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
             }
             catch (Exception e)
@@ -80,13 +80,13 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> CreateConversationAsync(BinaryContent content, RequestOptions options = null)
+        public virtual async Task<ClientResult> CreateConversationAsync(BinaryContent content, string userIsolationKey = default, RequestOptions options = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Conversations.CreateConversation");
             scope.Start();
             try
             {
-                using PipelineMessage message = CreateCreateConversationRequest(content, options);
+                using PipelineMessage message = CreateCreateConversationRequest(content, userIsolationKey, options);
                 return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
             }
             catch (Exception e)
@@ -136,13 +136,13 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult UpdateConversation(string conversationId, BinaryContent content, RequestOptions options = null)
+        public virtual ClientResult UpdateConversation(string conversationId, BinaryContent content, string userIsolationKey = default, RequestOptions options = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Conversations.UpdateConversation");
             scope.Start();
             try
             {
-                using PipelineMessage message = CreateUpdateConversationRequest(conversationId, content, options);
+                using PipelineMessage message = CreateUpdateConversationRequest(conversationId, content, userIsolationKey, options);
                 return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
             }
             catch (Exception e)
@@ -166,13 +166,13 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> UpdateConversationAsync(string conversationId, BinaryContent content, RequestOptions options = null)
+        public virtual async Task<ClientResult> UpdateConversationAsync(string conversationId, BinaryContent content, string userIsolationKey = default, RequestOptions options = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Conversations.UpdateConversation");
             scope.Start();
             try
             {
-                using PipelineMessage message = CreateUpdateConversationRequest(conversationId, content, options);
+                using PipelineMessage message = CreateUpdateConversationRequest(conversationId, content, userIsolationKey, options);
                 return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
             }
             catch (Exception e)
