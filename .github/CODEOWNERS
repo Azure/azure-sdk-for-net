@@ -191,10 +191,10 @@
 # ServiceOwners: @quentinRobinson
 
 # PRLabel: %Cognitive - Translator
-/sdk/translation/    @jrjrguo
+/sdk/translation/    @jrjrguo @zhangeugenia
 
 # ServiceLabel: %Cognitive - Translator
-# ServiceOwners: @jrjrguo
+# ServiceOwners: @jrjrguo @zhangeugenia
 
 # PRLabel: %Communication
 /sdk/communication/    @acsdevx-msft
