@@ -3,7 +3,6 @@
 
 using System.Collections.Generic;
 using Azure.ResourceManager.Reservations.Models;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Reservations
 {

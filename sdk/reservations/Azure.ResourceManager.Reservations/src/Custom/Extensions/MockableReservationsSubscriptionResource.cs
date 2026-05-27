@@ -6,7 +6,6 @@
 using System.Threading;
 using Azure.Core;
 using Azure.ResourceManager.Reservations.Models;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Reservations.Mocking
 {

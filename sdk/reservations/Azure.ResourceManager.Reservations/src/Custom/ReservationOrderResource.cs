@@ -11,16 +11,10 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Reservations.Models;
-using Microsoft.TypeSpec.Generator.Customizations;
-using TypeSpecCodeGenSuppress = Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute;
 using System.ComponentModel;
 
 namespace Azure.ResourceManager.Reservations
 {
-    [TypeSpecCodeGenSuppress("MergeReservation", typeof(WaitUntil), typeof(MergeContent), typeof(CancellationToken))]
-    [TypeSpecCodeGenSuppress("MergeReservationAsync", typeof(WaitUntil), typeof(MergeContent), typeof(CancellationToken))]
-    [TypeSpecCodeGenSuppress("SplitReservation", typeof(WaitUntil), typeof(SplitContent), typeof(CancellationToken))]
-    [TypeSpecCodeGenSuppress("SplitReservationAsync", typeof(WaitUntil), typeof(SplitContent), typeof(CancellationToken))]
     public partial class ReservationOrderResource
     {
         /// <summary>
