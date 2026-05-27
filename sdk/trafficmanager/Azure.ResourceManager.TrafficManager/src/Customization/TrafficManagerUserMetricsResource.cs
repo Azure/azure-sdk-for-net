@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.TrafficManager
     [CodeGenType("TrafficManagerUserMetricResource")]
     public partial class TrafficManagerUserMetricsResource
     {
+        // The generator emits delete methods with ArmOperation<TrafficManagerDeleteOperationResult>.
+        // Keep these custom methods to preserve the existing non-generic ArmOperation public API.
         /// <summary> Delete a subscription-level key used for Real User Metrics collection. </summary>
         /// <param name="waitUntil"> Completion option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
