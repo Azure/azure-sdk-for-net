@@ -1243,6 +1243,24 @@ public class CredentialResolverTests
     }
 
     [Test]
+    public void TryResolve_NewOverload_DefaultImplThrowsOnNullResolveChild()
+    {
+        // The new overload documents resolveChild as non-null; the base virtual
+        // enforces that contract so derived resolvers (which may assume non-null)
+        // see a clear ArgumentNullException at the API boundary rather than an
+        // NRE deep in their override.
+        IConfigurationSection section = BuildConfig(new Dictionary<string, string?>
+        {
+            ["Cred:CredentialSource"] = "Match"
+        }).GetSection("Cred");
+
+        var legacy = new ScopedRecordingResolver("Match", "legacy");
+
+        Assert.Throws<ArgumentNullException>(() =>
+            legacy.TryResolve(section, null!, out _));
+    }
+
+    [Test]
     public void Engine_PassesNonNullResolveChild_ToResolvers()
     {
         // Resolvers that override the chain-aware overload receive a non-null

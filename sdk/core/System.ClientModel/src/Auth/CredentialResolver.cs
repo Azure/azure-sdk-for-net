@@ -3,6 +3,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.Configuration;
+using System.ClientModel.Internal;
 
 namespace System.ClientModel.Primitives;
 
@@ -64,5 +65,8 @@ public abstract class CredentialResolver
         IConfigurationSection credentialSection,
         Func<IConfigurationSection, AuthenticationTokenProvider?> resolveChild,
         [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
-        => TryResolve(credentialSection, out provider);
+    {
+        Argument.AssertNotNull(resolveChild, nameof(resolveChild));
+        return TryResolve(credentialSection, out provider);
+    }
 }
