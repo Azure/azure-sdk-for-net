@@ -11,28 +11,28 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Kubernetes.Models
 {
     /// <summary> Agent Errors if any during agent or system component upgrade. </summary>
-    public partial class AgentError
+    public partial class ConnectedClusterAgentError
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AgentError"/>. </summary>
-        public AgentError()
+        /// <summary> Initializes a new instance of <see cref="ConnectedClusterAgentError"/>. </summary>
+        public ConnectedClusterAgentError()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgentError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedClusterAgentError"/>. </summary>
         /// <param name="message"> Agent error message. </param>
         /// <param name="severity"> Severity of the error message. </param>
         /// <param name="component"> Agent component where error message occured. </param>
-        /// <param name="time"> The timestamp of error occured (UTC). </param>
+        /// <param name="occurredOn"> The timestamp of error occured (UTC). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentError(string message, string severity, string component, DateTimeOffset? time, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectedClusterAgentError(string message, string severity, string component, DateTimeOffset? occurredOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Message = message;
             Severity = severity;
             Component = component;
-            Time = time;
+            OccurredOn = occurredOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.Kubernetes.Models
         public string Component { get; }
 
         /// <summary> The timestamp of error occured (UTC). </summary>
-        public DateTimeOffset? Time { get; }
+        public DateTimeOffset? OccurredOn { get; }
     }
 }

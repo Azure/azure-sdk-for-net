@@ -11,22 +11,22 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Kubernetes.Models
 {
     /// <summary> OIDC Issuer Profile specifies attributes for workload identity integration. </summary>
-    public partial class OidcIssuerProfile
+    public partial class ConnectedClusterOidcIssuerProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OidcIssuerProfile"/>. </summary>
-        public OidcIssuerProfile()
+        /// <summary> Initializes a new instance of <see cref="ConnectedClusterOidcIssuerProfile"/>. </summary>
+        public ConnectedClusterOidcIssuerProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="OidcIssuerProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedClusterOidcIssuerProfile"/>. </summary>
         /// <param name="enabled"> Whether to enable oidc issuer for workload identity integration. </param>
         /// <param name="issuerUri"> The issuer url for hybrid clusters connected to Arc used for the workload identity feature. </param>
         /// <param name="selfHostedIssuerUri"> The issuer url for public cloud clusters - AKS, EKS, GKE - used for the workload identity feature. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OidcIssuerProfile(bool? enabled, string issuerUri, string selfHostedIssuerUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectedClusterOidcIssuerProfile(bool? enabled, string issuerUri, string selfHostedIssuerUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Enabled = enabled;
             IssuerUri = issuerUri;

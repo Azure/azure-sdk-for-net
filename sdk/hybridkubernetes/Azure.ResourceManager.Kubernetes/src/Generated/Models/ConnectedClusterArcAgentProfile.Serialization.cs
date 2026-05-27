@@ -14,51 +14,51 @@ using Azure.ResourceManager.Kubernetes;
 namespace Azure.ResourceManager.Kubernetes.Models
 {
     /// <summary> Defines the Arc Agent properties for the clusters. </summary>
-    public partial class ArcAgentProfile : IJsonModel<ArcAgentProfile>
+    public partial class ConnectedClusterArcAgentProfile : IJsonModel<ConnectedClusterArcAgentProfile>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ArcAgentProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ConnectedClusterArcAgentProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ArcAgentProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectedClusterArcAgentProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeArcAgentProfile(document.RootElement, options);
+                        return DeserializeConnectedClusterArcAgentProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ArcAgentProfile)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectedClusterArcAgentProfile)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ArcAgentProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectedClusterArcAgentProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerKubernetesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ArcAgentProfile)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectedClusterArcAgentProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ArcAgentProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ConnectedClusterArcAgentProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ArcAgentProfile IPersistableModel<ArcAgentProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ConnectedClusterArcAgentProfile IPersistableModel<ConnectedClusterArcAgentProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ArcAgentProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ConnectedClusterArcAgentProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ArcAgentProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ConnectedClusterArcAgentProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Kubernetes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ArcAgentProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectedClusterArcAgentProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArcAgentProfile)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectedClusterArcAgentProfile)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(DesiredAgentVersion))
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
             {
                 writer.WritePropertyName("systemComponents"u8);
                 writer.WriteStartArray();
-                foreach (SystemComponent item in SystemComponents)
+                foreach (ConnectedClusterSystemComponent item in SystemComponents)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
             {
                 writer.WritePropertyName("agentErrors"u8);
                 writer.WriteStartArray();
-                foreach (AgentError item in AgentErrors)
+                foreach (ConnectedClusterAgentError item in AgentErrors)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -128,33 +128,33 @@ namespace Azure.ResourceManager.Kubernetes.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ArcAgentProfile IJsonModel<ArcAgentProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ConnectedClusterArcAgentProfile IJsonModel<ConnectedClusterArcAgentProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ArcAgentProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ConnectedClusterArcAgentProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ArcAgentProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectedClusterArcAgentProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArcAgentProfile)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectedClusterArcAgentProfile)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeArcAgentProfile(document.RootElement, options);
+            return DeserializeConnectedClusterArcAgentProfile(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ArcAgentProfile DeserializeArcAgentProfile(JsonElement element, ModelReaderWriterOptions options)
+        internal static ConnectedClusterArcAgentProfile DeserializeConnectedClusterArcAgentProfile(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string desiredAgentVersion = default;
-            AutoUpgradeOptions? agentAutoUpgrade = default;
-            IList<SystemComponent> systemComponents = default;
-            IList<AgentError> agentErrors = default;
+            ConnectedClusterAutoUpgradeMode? agentAutoUpgrade = default;
+            IList<ConnectedClusterSystemComponent> systemComponents = default;
+            IList<ConnectedClusterAgentError> agentErrors = default;
             string agentState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                     {
                         continue;
                     }
-                    agentAutoUpgrade = new AutoUpgradeOptions(prop.Value.GetString());
+                    agentAutoUpgrade = new ConnectedClusterAutoUpgradeMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("systemComponents"u8))
@@ -179,10 +179,10 @@ namespace Azure.ResourceManager.Kubernetes.Models
                     {
                         continue;
                     }
-                    List<SystemComponent> array = new List<SystemComponent>();
+                    List<ConnectedClusterSystemComponent> array = new List<ConnectedClusterSystemComponent>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SystemComponent.DeserializeSystemComponent(item, options));
+                        array.Add(ConnectedClusterSystemComponent.DeserializeConnectedClusterSystemComponent(item, options));
                     }
                     systemComponents = array;
                     continue;
@@ -193,10 +193,10 @@ namespace Azure.ResourceManager.Kubernetes.Models
                     {
                         continue;
                     }
-                    List<AgentError> array = new List<AgentError>();
+                    List<ConnectedClusterAgentError> array = new List<ConnectedClusterAgentError>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AgentError.DeserializeAgentError(item, options));
+                        array.Add(ConnectedClusterAgentError.DeserializeConnectedClusterAgentError(item, options));
                     }
                     agentErrors = array;
                     continue;
@@ -211,11 +211,11 @@ namespace Azure.ResourceManager.Kubernetes.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ArcAgentProfile(
+            return new ConnectedClusterArcAgentProfile(
                 desiredAgentVersion,
                 agentAutoUpgrade,
-                systemComponents ?? new ChangeTrackingList<SystemComponent>(),
-                agentErrors ?? new ChangeTrackingList<AgentError>(),
+                systemComponents ?? new ChangeTrackingList<ConnectedClusterSystemComponent>(),
+                agentErrors ?? new ChangeTrackingList<ConnectedClusterAgentError>(),
                 agentState,
                 additionalBinaryDataProperties);
         }

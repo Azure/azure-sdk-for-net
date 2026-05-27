@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Kubernetes.Models
 {
     /// <summary> The workload identity feature webhook. </summary>
-    internal partial class SecurityProfileWorkloadIdentity
+    internal partial class ConnectedClusterWorkloadIdentityProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SecurityProfileWorkloadIdentity"/>. </summary>
-        public SecurityProfileWorkloadIdentity()
+        /// <summary> Initializes a new instance of <see cref="ConnectedClusterWorkloadIdentityProfile"/>. </summary>
+        public ConnectedClusterWorkloadIdentityProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SecurityProfileWorkloadIdentity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedClusterWorkloadIdentityProfile"/>. </summary>
         /// <param name="enabled"> Whether to enable or disable the workload identity Webhook. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityProfileWorkloadIdentity(bool? enabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectedClusterWorkloadIdentityProfile(bool? enabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Enabled = enabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
