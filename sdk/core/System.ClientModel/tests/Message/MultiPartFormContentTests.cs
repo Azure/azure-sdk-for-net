@@ -160,6 +160,63 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
     }
 
     [Test]
+    public void Ctor_Boundary_Throws_WhenTooLong()
+    {
+        string boundary = new string('a', BoundaryLength + 1);
+        ArgumentException ex = Assert.Throws<ArgumentException>(() => new MultiPartFormContent(boundary))!;
+        Assert.AreEqual("boundary", ex.ParamName);
+    }
+
+    [Test]
+    public void Ctor_Boundary_Succeeds_AtMaxLength()
+    {
+        string boundary = new string('a', BoundaryLength);
+        using MultiPartFormContent content = new(boundary);
+        Assert.AreEqual(boundary, GetBoundary(content));
+    }
+
+    [TestCase("bad@char")]
+    [TestCase("bad!char")]
+    [TestCase("bad#char")]
+    [TestCase("bad%char")]
+    [TestCase("bad;char")]
+    [TestCase("bad<char")]
+    [TestCase("bad>char")]
+    [TestCase("bad[char")]
+    [TestCase("bad]char")]
+    [TestCase("bad{char")]
+    [TestCase("bad}char")]
+    [TestCase("bad\"char")]
+    [TestCase("bad\\char")]
+    [TestCase("bad\tchar")]
+    [TestCase("bad\nchar")]
+    [TestCase("bad\u00e9char")]
+    public void Ctor_Boundary_Throws_WhenContainsInvalidChar(string boundary)
+    {
+        ArgumentException ex = Assert.Throws<ArgumentException>(() => new MultiPartFormContent(boundary))!;
+        Assert.AreEqual("boundary", ex.ParamName);
+    }
+
+    [Test]
+    public void Ctor_Boundary_Throws_WhenEndsWithSpace()
+    {
+        ArgumentException ex = Assert.Throws<ArgumentException>(() => new MultiPartFormContent("my-boundary "))!;
+        Assert.AreEqual("boundary", ex.ParamName);
+    }
+
+    [TestCase("abc")]
+    [TestCase("ABC")]
+    [TestCase("0123456789")]
+    [TestCase("'()+_,-./:=?")]
+    [TestCase("space in middle")]
+    [TestCase("a")]
+    public void Ctor_Boundary_Succeeds_WithRfc2046Chars(string boundary)
+    {
+        using MultiPartFormContent content = new(boundary);
+        Assert.AreEqual(boundary, GetBoundary(content));
+    }
+
+    [Test]
     public void WriteTo_Throws_WhenStringPartCollidesWithBoundary()
     {
         const string boundary = "my-boundary-xyz";

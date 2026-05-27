@@ -48,14 +48,90 @@ public sealed class MultiPartFormContent : BinaryContent
     /// specified boundary.
     /// </summary>
     /// <param name="boundary">The boundary string used to separate parts in the
-    /// <c>multipart/form-data</c> payload.</param>
+    /// <c>multipart/form-data</c> payload. Must conform to the <c>boundary</c>
+    /// rule defined by <see href="https://www.rfc-editor.org/rfc/rfc2046#section-5.1.1">RFC 2046, Section 5.1.1</see>:
+    /// 1-70 characters in length, composed only of the characters
+    /// <c>A-Z</c>, <c>a-z</c>, <c>0-9</c>, <c>'</c>, <c>(</c>, <c>)</c>,
+    /// <c>+</c>, <c>_</c>, <c>,</c>, <c>-</c>, <c>.</c>, <c>/</c>, <c>:</c>,
+    /// <c>=</c>, <c>?</c>, or space, and must not end with a space.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="boundary"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentException"><paramref name="boundary"/> is empty,
+    /// longer than 70 characters, contains characters disallowed by RFC 2046,
+    /// or ends with a space.</exception>
     public MultiPartFormContent(string boundary)
     {
         Argument.AssertNotNullOrEmpty(boundary, nameof(boundary));
+        ValidateBoundary(boundary, nameof(boundary));
 
         _boundary = boundary;
         _multipartContent = new MultipartFormDataContent(boundary);
         MediaType = _multipartContent.Headers.ContentType?.ToString();
+    }
+
+    // RFC 2046, Section 5.1.1:
+    //   boundary      := 0*69<bchars> bcharsnospace
+    //   bchars        := bcharsnospace / " "
+    //   bcharsnospace := DIGIT / ALPHA / "'" / "(" / ")" / "+" / "_"
+    //                  / "," / "-" / "." / "/" / ":" / "=" / "?"
+    private static void ValidateBoundary(string boundary, string paramName)
+    {
+        if (boundary.Length > BoundaryLength)
+        {
+            throw new ArgumentException(
+                $"Boundary must be 1-{BoundaryLength} characters long (RFC 2046, Section 5.1.1). Actual length: {boundary.Length}.",
+                paramName);
+        }
+
+        for (int i = 0; i < boundary.Length; i++)
+        {
+            char c = boundary[i];
+            if (!IsBoundaryChar(c))
+            {
+                throw new ArgumentException(
+                    $"Boundary contains invalid character '{c}' (0x{(int)c:X4}) at index {i}. Allowed characters are defined by RFC 2046, Section 5.1.1.",
+                    paramName);
+            }
+        }
+
+        if (boundary[boundary.Length - 1] == ' ')
+        {
+            throw new ArgumentException(
+                "Boundary must not end with a space (RFC 2046, Section 5.1.1).",
+                paramName);
+        }
+    }
+
+    private static bool IsBoundaryChar(char c)
+    {
+        // bcharsnospace: DIGIT / ALPHA / "'" / "(" / ")" / "+" / "_"
+        //              / "," / "-" / "." / "/" / ":" / "=" / "?"
+        // bchars adds SPACE.
+        if ((c >= '0' && c <= '9') ||
+            (c >= 'A' && c <= 'Z') ||
+            (c >= 'a' && c <= 'z'))
+        {
+            return true;
+        }
+
+        switch (c)
+        {
+            case '\'':
+            case '(':
+            case ')':
+            case '+':
+            case '_':
+            case ',':
+            case '-':
+            case '.':
+            case '/':
+            case ':':
+            case '=':
+            case '?':
+            case ' ':
+                return true;
+            default:
+                return false;
+        }
     }
 
     /// <summary>
