@@ -152,7 +152,7 @@ namespace Azure.Generator.Management
             {
                 return new ResourceDataModelProvider(model);
             }
-            return base.CreateModelCore(model);
+            return new ManagementModelProvider(model);
         }
 
         /// <inheritdoc/>

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Providers;
-using Azure.ResourceManager.Models;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -125,7 +124,7 @@ internal class ResourceVisitor : ScmLibraryVisitor
     {
         if (type is ModelProvider model &&
             (model is ResourceDataModelProvider
-                || IsResourceDataModel(model)
+                || IsOutputResourceDataModel(model)
                 || ManagementClientGenerator.Instance.OutputLibrary.IsResourceModelType(model.Type)))
         {
             type.Update(@namespace: ManagementClientGenerator.Instance.TypeFactory.PrimaryNamespace);
@@ -139,9 +138,11 @@ internal class ResourceVisitor : ScmLibraryVisitor
         }
     }
 
-    private static bool IsResourceDataModel(ModelProvider model)
-        => model.BaseModelProvider is SystemObjectModelProvider { SystemType.FrameworkType: { } frameworkType } &&
-            typeof(ResourceData).IsAssignableFrom(frameworkType);
+    // Some customized plain models intentionally inherit ResourceData. Only actual
+    // resource data providers should be moved to the root namespace; checking the
+    // base type here would incorrectly move those plain models out of .Models.
+    private static bool IsOutputResourceDataModel(ModelProvider model)
+        => ManagementClientGenerator.Instance.OutputLibrary.ResourceProviders.Any(resource => ReferenceEquals(resource.ResourceData, model));
 
     private static void UpdateResourceDataParameterType(ParameterProvider parameter)
     {
@@ -200,7 +201,7 @@ internal class ResourceVisitor : ScmLibraryVisitor
         if (type is not null)
         {
             var expectedModelsNamespace = $"{ManagementClientGenerator.Instance.TypeFactory.PrimaryNamespace}.Models";
-            if (type.Namespace == expectedModelsNamespace)
+            if (type.Namespace == expectedModelsNamespace && type.Name.EndsWith("Data", System.StringComparison.Ordinal))
             {
                 foreach (var resource in ManagementClientGenerator.Instance.OutputLibrary.ResourceProviders)
                 {

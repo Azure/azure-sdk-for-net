@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> A reference to a related connection. </summary>
-    public partial class CycleTestConnectionReference
+    public partial class CycleTestConnectionReference : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

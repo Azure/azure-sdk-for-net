@@ -67,10 +67,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The private endpoint connection properties. </param>
-        /// <returns> A new <see cref="Tests.AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PrivateEndpointConnectionProperties properties = default)
+        /// <returns> A new <see cref="Tests.PrivateEndpointConnectionData"/> instance for mocking. </returns>
+        public static PrivateEndpointConnectionData PrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PrivateEndpointConnectionProperties properties = default)
         {
-            return new AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData(
+            return new PrivateEndpointConnectionData(
                 id,
                 name,
                 resourceType,
@@ -301,66 +301,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 tags,
                 location,
                 properties,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="isEnabled"> enabled. </param>
-        /// <param name="stringArray"></param>
-        /// <param name="propertyLeft"> enabled. </param>
-        /// <param name="anotherPropertyLeft"> enabled. </param>
-        /// <param name="innerProp1"> Gets or sets the InnerProp1. </param>
-        /// <param name="innerProp2"> Gets or sets the InnerProp2. </param>
-        /// <param name="middleProp1"> Gets or sets the MiddleProp1. </param>
-        /// <param name="middleProp2"> Gets the MiddleProp2. </param>
-        /// <param name="prop1"> Gets the Prop1. </param>
-        /// <param name="prop2"> Gets or sets the Prop2. </param>
-        /// <param name="optionalFlattenPropertyRandomCollectionProp"> Gets the RandomCollectionProp. </param>
-        /// <param name="discriminatorProperty"></param>
-        /// <returns> A new <see cref="Tests.BarSettingsResourceData"/> instance for mocking. </returns>
-        public static BarSettingsResourceData BarSettingsResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isEnabled = default, IEnumerable<string> stringArray = default, string propertyLeft = default, string anotherPropertyLeft = default, int? innerProp1 = default, string innerProp2 = default, int middleProp1 = default, IDictionary<string, string> middleProp2 = default, IEnumerable<string> prop1 = default, int prop2 = default, IEnumerable<string> optionalFlattenPropertyRandomCollectionProp = default, LimitJsonObject discriminatorProperty = default)
-        {
-            stringArray ??= new ChangeTrackingList<string>();
-
-            return new BarSettingsResourceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                isEnabled is null ? default : new BarSettingsProperties(isEnabled, null),
-                stringArray.ToList(),
-                new BarQuotaProperties(propertyLeft, null),
-                new BarQuotaProperties(anotherPropertyLeft, null),
-                new BarNestedQuotaProperties(
-                    innerProp1,
-                    innerProp2,
-                    null,
-                    middleProp1,
-                    middleProp2,
-                    (prop1 ?? new ChangeTrackingList<string>()).ToList(),
-                    prop2),
-                optionalFlattenPropertyRandomCollectionProp is null ? default : new OptionalFlattenPropertyType((optionalFlattenPropertyRandomCollectionProp ?? new ChangeTrackingList<string>()).ToList(), null),
-                discriminatorProperty,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="barQuotaLeft"> enabled. </param>
-        /// <returns> A new <see cref="Tests.BarQuotaResourceData"/> instance for mocking. </returns>
-        public static BarQuotaResourceData BarQuotaResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string barQuotaLeft = default)
-        {
-            return new BarQuotaResourceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                barQuotaLeft is null ? default : new BarQuotaProperties(barQuotaLeft, null),
                 additionalBinaryDataProperties: null);
         }
 
@@ -1340,25 +1280,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         public static HcrpConfigurationAssignmentProperties HcrpConfigurationAssignmentProperties(string configurationName = default, HcrpConfigurationAssignmentPropertiesMachineComplianceStatus? machineComplianceStatus = default)
         {
             return new HcrpConfigurationAssignmentProperties(configurationName, machineComplianceStatus, additionalBinaryDataProperties: null);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="disabled"> Additional property after inner to verify it is not skipped. </param>
-        /// <param name="innerSelectionType"> Gets or sets the SelectionType. </param>
-        /// <param name="channel"> Required property that will be customized via [CodeGenMember] to change its position. </param>
-        /// <returns> A new <see cref="Tests.MultiFlattenTestData"/> instance for mocking. </returns>
-        public static MultiFlattenTestData MultiFlattenTestData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? disabled = default, string innerSelectionType = default, FlattenChannel? channel = default)
-        {
-            return new MultiFlattenTestData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                disabled is null && innerSelectionType is null && channel is null ? default : new MultiFlattenProperties(channel, new SafeFlattenInner(innerSelectionType, null), disabled, null),
-                additionalBinaryDataProperties: null);
         }
 
         /// <summary>
