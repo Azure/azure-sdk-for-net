@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
-    internal class SiteRecoveryVaultSettingOperationSource : IOperationSource<SiteRecoveryVaultSettingResource>
+    /// <summary></summary>
+    internal partial class SiteRecoveryVaultSettingOperationSource : IOperationSource<SiteRecoveryVaultSettingResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal SiteRecoveryVaultSettingOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         SiteRecoveryVaultSettingResource IOperationSource<SiteRecoveryVaultSettingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SiteRecoveryVaultSettingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            SiteRecoveryVaultSettingData data = SiteRecoveryVaultSettingData.DeserializeSiteRecoveryVaultSettingData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new SiteRecoveryVaultSettingResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<SiteRecoveryVaultSettingResource> IOperationSource<SiteRecoveryVaultSettingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SiteRecoveryVaultSettingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
-            return await Task.FromResult(new SiteRecoveryVaultSettingResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            SiteRecoveryVaultSettingData data = SiteRecoveryVaultSettingData.DeserializeSiteRecoveryVaultSettingData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new SiteRecoveryVaultSettingResource(_client, data);
         }
     }
 }
