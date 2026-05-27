@@ -9,6 +9,7 @@
       "$id": "1",
       "kind": "client",
       "name": "MoveToNewSubClient",
+      "isExactName": false,
       "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToNewSubClient",
       "doc": "Test for @clientLocation decorator - moving operations between clients",
       "methods": [],
@@ -41,7 +42,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToNewSubClient.endpoint"
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToNewSubClient.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -53,17 +55,20 @@
           "$id": "5",
           "kind": "client",
           "name": "ProductOperations",
+          "isExactName": false,
           "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToNewSubClient",
           "methods": [
             {
               "$id": "6",
               "kind": "basic",
               "name": "listProducts",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "7",
                 "name": "listProducts",
+                "isExactName": false,
                 "resourceName": "ProductOperations",
                 "accessibility": "public",
                 "parameters": [],
@@ -124,7 +129,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToNewSubClient.ProductOperations.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToNewSubClient.ProductOperations.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -140,17 +146,20 @@
           "$id": "11",
           "kind": "client",
           "name": "ArchiveOperations",
+          "isExactName": false,
           "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToNewSubClient",
           "methods": [
             {
               "$id": "12",
               "kind": "basic",
               "name": "archiveProduct",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "13",
                 "name": "archiveProduct",
+                "isExactName": false,
                 "resourceName": "ProductOperations",
                 "accessibility": "public",
                 "parameters": [],
@@ -211,7 +220,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToNewSubClient.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToNewSubClient.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
