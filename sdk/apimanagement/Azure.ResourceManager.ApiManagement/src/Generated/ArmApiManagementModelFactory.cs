@@ -934,18 +934,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 value is null && format is null ? default : new PolicyContractProperties(value, format, null));
         }
 
-        /// <summary> The response of the list policy operation. </summary>
-        /// <param name="value"> Policy Contract value. </param>
-        /// <param name="count"> Total record count number. </param>
-        /// <param name="nextLink"> Next page link if any. </param>
-        /// <returns> A new <see cref="Models.PolicyListResult"/> instance for mocking. </returns>
-        public static PolicyListResult PolicyListResult(IEnumerable<ApiManagementPolicyData> value = default, long? count = default, string nextLink = default)
-        {
-            value ??= new ChangeTrackingList<ApiManagementPolicyData>();
-
-            return new PolicyListResult(value.ToList(), count, nextLink, additionalBinaryDataProperties: null);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -3643,17 +3631,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 groupId is null && requiredMembers is null && requiredZoneNames is null ? default : new ApiManagementPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), null));
-        }
-
-        /// <summary> The response of a PrivateLinkResource list operation. </summary>
-        /// <param name="value"> The PrivateLinkResource items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <returns> A new <see cref="Models.ApiManagementPrivateLinkResourceListResult"/> instance for mocking. </returns>
-        public static ApiManagementPrivateLinkResourceListResult ApiManagementPrivateLinkResourceListResult(IEnumerable<ApiManagementPrivateLinkResourceData> value = default, Uri nextLink = default)
-        {
-            value ??= new ChangeTrackingList<ApiManagementPrivateLinkResourceData>();
-
-            return new ApiManagementPrivateLinkResourceListResult(value.ToList(), nextLink, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

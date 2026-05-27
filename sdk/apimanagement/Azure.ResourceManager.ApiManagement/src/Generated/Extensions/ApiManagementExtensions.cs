@@ -256,21 +256,21 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="OperationsPoliciesResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ApiOperationPolicyResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableApiManagementArmClient.GetOperationsPoliciesResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiOperationPolicyResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="OperationsPoliciesResource"/> object. </returns>
-        public static OperationsPoliciesResource GetOperationsPoliciesResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiOperationPolicyResource"/> object. </returns>
+        public static ApiOperationPolicyResource GetApiOperationPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableApiManagementArmClient(client).GetOperationsPoliciesResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiOperationPolicyResource(id);
         }
 
         /// <summary>
@@ -1840,39 +1840,39 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ApiManagementServiceResourcePrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ApiManagementPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiManagementServiceResourcePrivateEndpointConnectionResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiManagementPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiManagementServiceResourcePrivateEndpointConnectionResource"/> object. </returns>
-        public static ApiManagementServiceResourcePrivateEndpointConnectionResource GetApiManagementServiceResourcePrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiManagementPrivateEndpointConnectionResource"/> object. </returns>
+        public static ApiManagementPrivateEndpointConnectionResource GetApiManagementPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableApiManagementArmClient(client).GetApiManagementServiceResourcePrivateEndpointConnectionResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiManagementPrivateEndpointConnectionResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ApiManagementServiceResourcePrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ApiManagementPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiManagementServiceResourcePrivateLinkResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiManagementPrivateLinkResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiManagementServiceResourcePrivateLinkResource"/> object. </returns>
-        public static ApiManagementServiceResourcePrivateLinkResource GetApiManagementServiceResourcePrivateLinkResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiManagementPrivateLinkResource"/> object. </returns>
+        public static ApiManagementPrivateLinkResource GetApiManagementPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableApiManagementArmClient(client).GetApiManagementServiceResourcePrivateLinkResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiManagementPrivateLinkResource(id);
         }
 
         /// <summary>

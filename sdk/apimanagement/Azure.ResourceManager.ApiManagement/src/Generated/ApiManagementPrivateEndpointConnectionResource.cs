@@ -17,11 +17,11 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A class representing a ApiManagementServiceResourcePrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ApiManagementServiceResourcePrivateEndpointConnectionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource"/> using the GetApiManagementServiceResourcePrivateEndpointConnections method.
+    /// A class representing a ApiManagementPrivateEndpointConnection along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ApiManagementPrivateEndpointConnectionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource"/> using the GetApiManagementPrivateEndpointConnections method.
     /// </summary>
-    public partial class ApiManagementServiceResourcePrivateEndpointConnectionResource : ArmResource
+    public partial class ApiManagementPrivateEndpointConnectionResource : ArmResource
     {
         private readonly ClientDiagnostics _privateEndpointConnectionClientDiagnostics;
         private readonly PrivateEndpointConnection _privateEndpointConnectionRestClient;
@@ -29,28 +29,28 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/privateEndpointConnections";
 
-        /// <summary> Initializes a new instance of ApiManagementServiceResourcePrivateEndpointConnectionResource for mocking. </summary>
-        protected ApiManagementServiceResourcePrivateEndpointConnectionResource()
+        /// <summary> Initializes a new instance of ApiManagementPrivateEndpointConnectionResource for mocking. </summary>
+        protected ApiManagementPrivateEndpointConnectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApiManagementServiceResourcePrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ApiManagementServiceResourcePrivateEndpointConnectionResource(ArmClient client, ApiManagementPrivateEndpointConnectionData data) : this(client, data.Id)
+        internal ApiManagementPrivateEndpointConnectionResource(ArmClient client, ApiManagementPrivateEndpointConnectionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApiManagementServiceResourcePrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ApiManagementServiceResourcePrivateEndpointConnectionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ApiManagementPrivateEndpointConnectionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string apiManagementServiceResourcePrivateEndpointConnectionApiVersion);
+            TryGetApiVersion(ResourceType, out string apiManagementPrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionRestClient = new PrivateEndpointConnection(_privateEndpointConnectionClientDiagnostics, Pipeline, Endpoint, apiManagementServiceResourcePrivateEndpointConnectionApiVersion ?? "2025-09-01-preview");
+            _privateEndpointConnectionRestClient = new PrivateEndpointConnection(_privateEndpointConnectionClientDiagnostics, Pipeline, Endpoint, apiManagementPrivateEndpointConnectionApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ApiManagementServiceResourcePrivateEndpointConnectionResource"/>. </description>
+        /// <description> <see cref="ApiManagementPrivateEndpointConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ApiManagementServiceResourcePrivateEndpointConnectionResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementPrivateEndpointConnectionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateEndpointConnectionClientDiagnostics.CreateScope("ApiManagementServiceResourcePrivateEndpointConnectionResource.Get");
+            using DiagnosticScope scope = _privateEndpointConnectionClientDiagnostics.CreateScope("ApiManagementPrivateEndpointConnectionResource.Get");
             scope.Start();
             try
             {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ApiManagementServiceResourcePrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiManagementPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ApiManagementServiceResourcePrivateEndpointConnectionResource"/>. </description>
+        /// <description> <see cref="ApiManagementPrivateEndpointConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ApiManagementServiceResourcePrivateEndpointConnectionResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementPrivateEndpointConnectionResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateEndpointConnectionClientDiagnostics.CreateScope("ApiManagementServiceResourcePrivateEndpointConnectionResource.Get");
+            using DiagnosticScope scope = _privateEndpointConnectionClientDiagnostics.CreateScope("ApiManagementPrivateEndpointConnectionResource.Get");
             scope.Start();
             try
             {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ApiManagementServiceResourcePrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiManagementPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ApiManagementServiceResourcePrivateEndpointConnectionResource"/>. </description>
+        /// <description> <see cref="ApiManagementPrivateEndpointConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateEndpointConnectionClientDiagnostics.CreateScope("ApiManagementServiceResourcePrivateEndpointConnectionResource.Delete");
+            using DiagnosticScope scope = _privateEndpointConnectionClientDiagnostics.CreateScope("ApiManagementPrivateEndpointConnectionResource.Delete");
             scope.Start();
             try
             {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ApiManagementServiceResourcePrivateEndpointConnectionResource"/>. </description>
+        /// <description> <see cref="ApiManagementPrivateEndpointConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateEndpointConnectionClientDiagnostics.CreateScope("ApiManagementServiceResourcePrivateEndpointConnectionResource.Delete");
+            using DiagnosticScope scope = _privateEndpointConnectionClientDiagnostics.CreateScope("ApiManagementPrivateEndpointConnectionResource.Delete");
             scope.Start();
             try
             {

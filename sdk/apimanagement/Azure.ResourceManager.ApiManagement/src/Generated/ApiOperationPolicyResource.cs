@@ -18,11 +18,11 @@ using Azure.ResourceManager.ApiManagement.Models;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A class representing a OperationsPolicies along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="OperationsPoliciesResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiOperationResource"/> using the GetAllOperationsPolicies method.
+    /// A class representing a ApiOperationPolicy along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ApiOperationPolicyResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiOperationResource"/> using the GetApiOperationPolicies method.
     /// </summary>
-    public partial class OperationsPoliciesResource : ArmResource
+    public partial class ApiOperationPolicyResource : ArmResource
     {
         private readonly ClientDiagnostics _apiOperationPolicyClientDiagnostics;
         private readonly ApiOperationPolicy _apiOperationPolicyRestClient;
@@ -30,28 +30,28 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/apis/operations/policies";
 
-        /// <summary> Initializes a new instance of OperationsPoliciesResource for mocking. </summary>
-        protected OperationsPoliciesResource()
+        /// <summary> Initializes a new instance of ApiOperationPolicyResource for mocking. </summary>
+        protected ApiOperationPolicyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="OperationsPoliciesResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiOperationPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal OperationsPoliciesResource(ArmClient client, ApiManagementPolicyData data) : this(client, data.Id)
+        internal ApiOperationPolicyResource(ArmClient client, ApiManagementPolicyData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OperationsPoliciesResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiOperationPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal OperationsPoliciesResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ApiOperationPolicyResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string operationsPoliciesApiVersion);
+            TryGetApiVersion(ResourceType, out string apiOperationPolicyApiVersion);
             _apiOperationPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _apiOperationPolicyRestClient = new ApiOperationPolicy(_apiOperationPolicyClientDiagnostics, Pipeline, Endpoint, operationsPoliciesApiVersion ?? "2025-09-01-preview");
+            _apiOperationPolicyRestClient = new ApiOperationPolicy(_apiOperationPolicyClientDiagnostics, Pipeline, Endpoint, apiOperationPolicyApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -111,15 +111,15 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="OperationsPoliciesResource"/>. </description>
+        /// <description> <see cref="ApiOperationPolicyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="format"> Policy Export Format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<OperationsPoliciesResource>> GetAsync(PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiOperationPolicyResource>> GetAsync(PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _apiOperationPolicyClientDiagnostics.CreateScope("OperationsPoliciesResource.Get");
+            using DiagnosticScope scope = _apiOperationPolicyClientDiagnostics.CreateScope("ApiOperationPolicyResource.Get");
             scope.Start();
             try
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new OperationsPoliciesResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiOperationPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -160,15 +160,15 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="OperationsPoliciesResource"/>. </description>
+        /// <description> <see cref="ApiOperationPolicyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="format"> Policy Export Format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<OperationsPoliciesResource> Get(PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
+        public virtual Response<ApiOperationPolicyResource> Get(PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _apiOperationPolicyClientDiagnostics.CreateScope("OperationsPoliciesResource.Get");
+            using DiagnosticScope scope = _apiOperationPolicyClientDiagnostics.CreateScope("ApiOperationPolicyResource.Get");
             scope.Start();
             try
             {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new OperationsPoliciesResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiOperationPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="OperationsPoliciesResource"/>. </description>
+        /// <description> <see cref="ApiOperationPolicyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
 
-            using DiagnosticScope scope = _apiOperationPolicyClientDiagnostics.CreateScope("OperationsPoliciesResource.Delete");
+            using DiagnosticScope scope = _apiOperationPolicyClientDiagnostics.CreateScope("ApiOperationPolicyResource.Delete");
             scope.Start();
             try
             {
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="OperationsPoliciesResource"/>. </description>
+        /// <description> <see cref="ApiOperationPolicyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
 
-            using DiagnosticScope scope = _apiOperationPolicyClientDiagnostics.CreateScope("OperationsPoliciesResource.Delete");
+            using DiagnosticScope scope = _apiOperationPolicyClientDiagnostics.CreateScope("ApiOperationPolicyResource.Delete");
             scope.Start();
             try
             {
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Update a OperationsPolicies.
+        /// Update a ApiOperationPolicy.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="OperationsPoliciesResource"/>. </description>
+        /// <description> <see cref="ApiOperationPolicyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -330,11 +330,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<OperationsPoliciesResource>> UpdateAsync(WaitUntil waitUntil, ApiManagementPolicyData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ApiOperationPolicyResource>> UpdateAsync(WaitUntil waitUntil, ApiManagementPolicyData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _apiOperationPolicyClientDiagnostics.CreateScope("OperationsPoliciesResource.Update");
+            using DiagnosticScope scope = _apiOperationPolicyClientDiagnostics.CreateScope("ApiOperationPolicyResource.Update");
             scope.Start();
             try
             {
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.ApiManagement
                 Response<ApiManagementPolicyData> response = Response.FromValue(ApiManagementPolicyData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ApiManagementArmOperation<OperationsPoliciesResource> operation = new ApiManagementArmOperation<OperationsPoliciesResource>(Response.FromValue(new OperationsPoliciesResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                ApiManagementArmOperation<ApiOperationPolicyResource> operation = new ApiManagementArmOperation<ApiOperationPolicyResource>(Response.FromValue(new ApiOperationPolicyResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Update a OperationsPolicies.
+        /// Update a ApiOperationPolicy.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="OperationsPoliciesResource"/>. </description>
+        /// <description> <see cref="ApiOperationPolicyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -387,11 +387,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<OperationsPoliciesResource> Update(WaitUntil waitUntil, ApiManagementPolicyData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ApiOperationPolicyResource> Update(WaitUntil waitUntil, ApiManagementPolicyData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _apiOperationPolicyClientDiagnostics.CreateScope("OperationsPoliciesResource.Update");
+            using DiagnosticScope scope = _apiOperationPolicyClientDiagnostics.CreateScope("ApiOperationPolicyResource.Update");
             scope.Start();
             try
             {
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.ApiManagement
                 Response<ApiManagementPolicyData> response = Response.FromValue(ApiManagementPolicyData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ApiManagementArmOperation<OperationsPoliciesResource> operation = new ApiManagementArmOperation<OperationsPoliciesResource>(Response.FromValue(new OperationsPoliciesResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                ApiManagementArmOperation<ApiOperationPolicyResource> operation = new ApiManagementArmOperation<ApiOperationPolicyResource>(Response.FromValue(new ApiOperationPolicyResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);

@@ -8755,11 +8755,11 @@ namespace Azure.ResourceManager.ApiManagement
             return GetApiManagementWorkspaceLinksResources().Get(workspaceId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ApiManagementServiceResourcePrivateEndpointConnections in the <see cref="ApiManagementServiceResource"/>. </summary>
-        /// <returns> An object representing collection of ApiManagementServiceResourcePrivateEndpointConnections and their operations over a ApiManagementServiceResourcePrivateEndpointConnectionResource. </returns>
-        public virtual ApiManagementServiceResourcePrivateEndpointConnectionCollection GetApiManagementServiceResourcePrivateEndpointConnections()
+        /// <summary> Gets a collection of ApiManagementPrivateEndpointConnections in the <see cref="ApiManagementServiceResource"/>. </summary>
+        /// <returns> An object representing collection of ApiManagementPrivateEndpointConnections and their operations over a ApiManagementPrivateEndpointConnectionResource. </returns>
+        public virtual ApiManagementPrivateEndpointConnectionCollection GetApiManagementPrivateEndpointConnections()
         {
-            return GetCachedClient(client => new ApiManagementServiceResourcePrivateEndpointConnectionCollection(client, Id));
+            return GetCachedClient(client => new ApiManagementPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary> Gets the details of the Private Endpoint Connection specified by its identifier. </summary>
@@ -8768,11 +8768,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ApiManagementServiceResourcePrivateEndpointConnectionResource>> GetApiManagementServiceResourcePrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementPrivateEndpointConnectionResource>> GetApiManagementPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            return await GetApiManagementServiceResourcePrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+            return await GetApiManagementPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets the details of the Private Endpoint Connection specified by its identifier. </summary>
@@ -8781,31 +8781,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ApiManagementServiceResourcePrivateEndpointConnectionResource> GetApiManagementServiceResourcePrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementPrivateEndpointConnectionResource> GetApiManagementPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            return GetApiManagementServiceResourcePrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
+            return GetApiManagementPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ApiManagementServiceResourcePrivateLinkResources in the <see cref="ApiManagementServiceResource"/>. </summary>
-        /// <returns> An object representing collection of ApiManagementServiceResourcePrivateLinkResources and their operations over a ApiManagementServiceResourcePrivateLinkResource. </returns>
-        public virtual ApiManagementServiceResourcePrivateLinkResourceCollection GetApiManagementServiceResourcePrivateLinkResources()
+        /// <summary> Gets a collection of ApiManagementPrivateLinks in the <see cref="ApiManagementServiceResource"/>. </summary>
+        /// <returns> An object representing collection of ApiManagementPrivateLinks and their operations over a ApiManagementPrivateLinkResource. </returns>
+        public virtual ApiManagementPrivateLinkCollection GetApiManagementPrivateLinks()
         {
-            return GetCachedClient(client => new ApiManagementServiceResourcePrivateLinkResourceCollection(client, Id));
-        }
-
-        /// <summary> Gets the private link resources. </summary>
-        /// <param name="privateLinkSubResourceName"> The name of the private link associated with the Azure resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkSubResourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateLinkSubResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ApiManagementServiceResourcePrivateLinkResource>> GetApiManagementServiceResourcePrivateLinkResourceAsync(string privateLinkSubResourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(privateLinkSubResourceName, nameof(privateLinkSubResourceName));
-
-            return await GetApiManagementServiceResourcePrivateLinkResources().GetAsync(privateLinkSubResourceName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new ApiManagementPrivateLinkCollection(client, Id));
         }
 
         /// <summary> Gets the private link resources. </summary>
@@ -8814,11 +8801,24 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkSubResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateLinkSubResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ApiManagementServiceResourcePrivateLinkResource> GetApiManagementServiceResourcePrivateLinkResource(string privateLinkSubResourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementPrivateLinkResource>> GetApiManagementPrivateLinkAsync(string privateLinkSubResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateLinkSubResourceName, nameof(privateLinkSubResourceName));
 
-            return GetApiManagementServiceResourcePrivateLinkResources().Get(privateLinkSubResourceName, cancellationToken);
+            return await GetApiManagementPrivateLinks().GetAsync(privateLinkSubResourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets the private link resources. </summary>
+        /// <param name="privateLinkSubResourceName"> The name of the private link associated with the Azure resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkSubResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkSubResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ApiManagementPrivateLinkResource> GetApiManagementPrivateLink(string privateLinkSubResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateLinkSubResourceName, nameof(privateLinkSubResourceName));
+
+            return GetApiManagementPrivateLinks().Get(privateLinkSubResourceName, cancellationToken);
         }
     }
 }

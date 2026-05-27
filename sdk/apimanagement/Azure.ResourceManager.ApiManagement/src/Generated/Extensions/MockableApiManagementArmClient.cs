@@ -134,13 +134,13 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
             return new ServiceWorkspacePolicyResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="OperationsPoliciesResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ApiOperationPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OperationsPoliciesResource"/> object. </returns>
-        public virtual OperationsPoliciesResource GetOperationsPoliciesResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiOperationPolicyResource"/> object. </returns>
+        public virtual ApiOperationPolicyResource GetApiOperationPolicyResource(ResourceIdentifier id)
         {
-            OperationsPoliciesResource.ValidateResourceId(id);
-            return new OperationsPoliciesResource(Client, id);
+            ApiOperationPolicyResource.ValidateResourceId(id);
+            return new ApiOperationPolicyResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ServiceApiResolverPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -926,22 +926,22 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
             return new PortalDelegationSettingsResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ApiManagementServiceResourcePrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ApiManagementPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiManagementServiceResourcePrivateEndpointConnectionResource"/> object. </returns>
-        public virtual ApiManagementServiceResourcePrivateEndpointConnectionResource GetApiManagementServiceResourcePrivateEndpointConnectionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiManagementPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual ApiManagementPrivateEndpointConnectionResource GetApiManagementPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            ApiManagementServiceResourcePrivateEndpointConnectionResource.ValidateResourceId(id);
-            return new ApiManagementServiceResourcePrivateEndpointConnectionResource(Client, id);
+            ApiManagementPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new ApiManagementPrivateEndpointConnectionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ApiManagementServiceResourcePrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ApiManagementPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiManagementServiceResourcePrivateLinkResource"/> object. </returns>
-        public virtual ApiManagementServiceResourcePrivateLinkResource GetApiManagementServiceResourcePrivateLinkResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiManagementPrivateLinkResource"/> object. </returns>
+        public virtual ApiManagementPrivateLinkResource GetApiManagementPrivateLinkResource(ResourceIdentifier id)
         {
-            ApiManagementServiceResourcePrivateLinkResource.ValidateResourceId(id);
-            return new ApiManagementServiceResourcePrivateLinkResource(Client, id);
+            ApiManagementPrivateLinkResource.ValidateResourceId(id);
+            return new ApiManagementPrivateLinkResource(Client, id);
         }
     }
 }

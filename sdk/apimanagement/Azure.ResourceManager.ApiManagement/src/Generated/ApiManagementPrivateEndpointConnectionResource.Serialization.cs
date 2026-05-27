@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary></summary>
-    public partial class ApiManagementServiceResourcePrivateEndpointConnectionResource : IJsonModel<ApiManagementPrivateEndpointConnectionData>
+    public partial class ApiManagementPrivateEndpointConnectionResource : IJsonModel<ApiManagementPrivateEndpointConnectionData>
     {
         private static IJsonModel<ApiManagementPrivateEndpointConnectionData> s_dataDeserializationInstance;
 

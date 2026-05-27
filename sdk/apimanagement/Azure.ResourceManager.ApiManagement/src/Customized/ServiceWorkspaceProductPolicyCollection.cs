@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual Pageable<ServiceWorkspaceProductPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-            HttpMessage message = _serviceWorkspaceProductPolicyRestClient.CreateGetByProductRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+            HttpMessage message = _workspaceProductPolicyRestClient.CreateGetByProductRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
             Response result = Pipeline.ProcessMessage(message, context);
             PolicyListResult listResult = PolicyListResult.FromResponse(result);
             var items = listResult.Value.Select(d => new ServiceWorkspaceProductPolicyResource(Client, d)).ToList();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual AsyncPageable<ServiceWorkspaceProductPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-            HttpMessage message = _serviceWorkspaceProductPolicyRestClient.CreateGetByProductRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+            HttpMessage message = _workspaceProductPolicyRestClient.CreateGetByProductRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
             Response result = Pipeline.ProcessMessage(message, context);
             PolicyListResult listResult = PolicyListResult.FromResponse(result);
             var items = listResult.Value.Select(d => new ServiceWorkspaceProductPolicyResource(Client, d)).ToList();

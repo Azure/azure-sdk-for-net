@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary></summary>
-    public partial class OperationsPoliciesResource : IJsonModel<ApiManagementPolicyData>
+    public partial class ApiOperationPolicyResource : IJsonModel<ApiManagementPolicyData>
     {
         private static IJsonModel<ApiManagementPolicyData> s_dataDeserializationInstance;
 

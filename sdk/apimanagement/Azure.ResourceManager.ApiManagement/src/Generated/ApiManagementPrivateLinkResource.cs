@@ -17,11 +17,11 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A class representing a ApiManagementServiceResourcePrivateLinkResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ApiManagementServiceResourcePrivateLinkResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource"/> using the GetApiManagementServiceResourcePrivateLinkResources method.
+    /// A class representing a ApiManagementPrivateLink along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ApiManagementPrivateLinkResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource"/> using the GetApiManagementPrivateLinks method.
     /// </summary>
-    public partial class ApiManagementServiceResourcePrivateLinkResource : ArmResource
+    public partial class ApiManagementPrivateLinkResource : ArmResource
     {
         private readonly ClientDiagnostics _privateEndpointConnectionClientDiagnostics;
         private readonly PrivateEndpointConnection _privateEndpointConnectionRestClient;
@@ -29,28 +29,28 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/privateLinkResources";
 
-        /// <summary> Initializes a new instance of ApiManagementServiceResourcePrivateLinkResource for mocking. </summary>
-        protected ApiManagementServiceResourcePrivateLinkResource()
+        /// <summary> Initializes a new instance of ApiManagementPrivateLinkResource for mocking. </summary>
+        protected ApiManagementPrivateLinkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApiManagementServiceResourcePrivateLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementPrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ApiManagementServiceResourcePrivateLinkResource(ArmClient client, ApiManagementPrivateLinkResourceData data) : this(client, data.Id)
+        internal ApiManagementPrivateLinkResource(ArmClient client, ApiManagementPrivateLinkResourceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApiManagementServiceResourcePrivateLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementPrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ApiManagementServiceResourcePrivateLinkResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ApiManagementPrivateLinkResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string apiManagementServiceResourcePrivateLinkResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string apiManagementPrivateLinkApiVersion);
             _privateEndpointConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionRestClient = new PrivateEndpointConnection(_privateEndpointConnectionClientDiagnostics, Pipeline, Endpoint, apiManagementServiceResourcePrivateLinkResourceApiVersion ?? "2025-09-01-preview");
+            _privateEndpointConnectionRestClient = new PrivateEndpointConnection(_privateEndpointConnectionClientDiagnostics, Pipeline, Endpoint, apiManagementPrivateLinkApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ApiManagementServiceResourcePrivateLinkResource"/>. </description>
+        /// <description> <see cref="ApiManagementPrivateLinkResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ApiManagementServiceResourcePrivateLinkResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementPrivateLinkResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateEndpointConnectionClientDiagnostics.CreateScope("ApiManagementServiceResourcePrivateLinkResource.Get");
+            using DiagnosticScope scope = _privateEndpointConnectionClientDiagnostics.CreateScope("ApiManagementPrivateLinkResource.Get");
             scope.Start();
             try
             {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ApiManagementServiceResourcePrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiManagementPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ApiManagementServiceResourcePrivateLinkResource"/>. </description>
+        /// <description> <see cref="ApiManagementPrivateLinkResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ApiManagementServiceResourcePrivateLinkResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementPrivateLinkResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateEndpointConnectionClientDiagnostics.CreateScope("ApiManagementServiceResourcePrivateLinkResource.Get");
+            using DiagnosticScope scope = _privateEndpointConnectionClientDiagnostics.CreateScope("ApiManagementPrivateLinkResource.Get");
             scope.Start();
             try
             {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ApiManagementServiceResourcePrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiManagementPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

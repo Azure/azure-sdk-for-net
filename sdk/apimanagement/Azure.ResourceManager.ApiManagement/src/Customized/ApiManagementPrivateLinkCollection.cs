@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ApiManagement
 {
     [CodeGenSuppress("GetAllAsync", typeof(CancellationToken))]
     [CodeGenSuppress("GetAll", typeof(CancellationToken))]
-    public partial class ApiManagementPrivateLinkResourceCollection
+    public partial class ApiManagementPrivateLinkCollection
     {
         /// <summary> Gets all resources in this collection. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

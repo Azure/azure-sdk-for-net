@@ -603,11 +603,11 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        /// <summary> Gets a collection of OperationsPolicies in the <see cref="ApiOperationResource"/>. </summary>
-        /// <returns> An object representing collection of OperationsPolicies and their operations over a OperationsPoliciesResource. </returns>
-        public virtual OperationsPoliciesCollection GetAllOperationsPolicies()
+        /// <summary> Gets a collection of ApiOperationPolicies in the <see cref="ApiOperationResource"/>. </summary>
+        /// <returns> An object representing collection of ApiOperationPolicies and their operations over a ApiOperationPolicyResource. </returns>
+        public virtual ApiOperationPolicyCollection GetApiOperationPolicies()
         {
-            return GetCachedClient(client => new OperationsPoliciesCollection(client, Id));
+            return GetCachedClient(client => new ApiOperationPolicyCollection(client, Id));
         }
 
         /// <summary> Get the policy configuration at the API Operation level. </summary>
@@ -615,9 +615,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="format"> Policy Export Format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<OperationsPoliciesResource>> GetOperationsPoliciesAsync(PolicyIdName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiOperationPolicyResource>> GetApiOperationPolicyAsync(PolicyIdName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
         {
-            return await GetAllOperationsPolicies().GetAsync(policyId, format, cancellationToken).ConfigureAwait(false);
+            return await GetApiOperationPolicies().GetAsync(policyId, format, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get the policy configuration at the API Operation level. </summary>
@@ -625,9 +625,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="format"> Policy Export Format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<OperationsPoliciesResource> GetOperationsPolicies(PolicyIdName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
+        public virtual Response<ApiOperationPolicyResource> GetApiOperationPolicy(PolicyIdName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
         {
-            return GetAllOperationsPolicies().Get(policyId, format, cancellationToken);
+            return GetApiOperationPolicies().Get(policyId, format, cancellationToken);
         }
 
         /// <summary> Gets a collection of ApiOperationTags in the <see cref="ApiOperationResource"/>. </summary>
