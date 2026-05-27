@@ -88,7 +88,7 @@ namespace Azure.Communication
             if (kind == (CommunicationIdentifierModelKind)TeamsExtensionUserKindValue
                 && teamsExtensionUser is not null)
             {
-                return DeserializeTeamsExtensionUser(teamsExtensionUser);
+                return DeserializeTeamsExtensionUser(teamsExtensionUser, rawId);
             }
 
             return new UnknownIdentifier(rawId);
@@ -112,7 +112,7 @@ namespace Azure.Communication
             }
         }
 
-        private static TeamsExtensionUserIdentifier DeserializeTeamsExtensionUser(object teamsExtensionUserModel)
+        private static TeamsExtensionUserIdentifier DeserializeTeamsExtensionUser(object teamsExtensionUserModel, string rawId)
         {
             const string modelName = "TeamsExtensionUserIdentifierModel";
 
@@ -125,7 +125,8 @@ namespace Azure.Communication
                 AssertNotNullRef(userId, nameof(TeamsExtensionUserIdentifier.UserId), modelName),
                 AssertNotNullRef(tenantId, nameof(TeamsExtensionUserIdentifier.TenantId), modelName),
                 AssertNotNullRef(resourceId, nameof(TeamsExtensionUserIdentifier.ResourceId), modelName),
-                Deserialize(AssertNotNull(cloud, nameof(TeamsExtensionUserIdentifier.Cloud), modelName)));
+                Deserialize(AssertNotNull(cloud, nameof(TeamsExtensionUserIdentifier.Cloud), modelName)),
+                rawId);
         }
 
         private static T AssertNotNullRef<T>(T? value, string name, string type) where T : class
