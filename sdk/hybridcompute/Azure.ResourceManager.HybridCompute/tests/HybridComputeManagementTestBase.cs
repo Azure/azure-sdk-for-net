@@ -488,8 +488,9 @@ namespace Azure.ResourceManager.HybridCompute.Tests
 
         protected async Task<HybridComputeLicenseProfileData> createLicenseProfile()
         {
-            ResourceIdentifier hybridComputeLicenseProfileResourceId = HybridComputeLicenseProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupNameProfile, machineNamePaygo, "default");
-            HybridComputeLicenseProfileResource hybridComputeLicenseProfile = ArmClient.GetHybridComputeLicenseProfileResource(hybridComputeLicenseProfileResourceId);
+            ResourceIdentifier hybridComputeMachineResourceId = HybridComputeMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupNameProfile, machineNamePaygo);
+            HybridComputeMachineResource hybridComputeMachine = ArmClient.GetHybridComputeMachineResource(hybridComputeMachineResourceId);
+            HybridComputeLicenseProfileCollection hybridComputeLicenseProfiles = hybridComputeMachine.GetHybridComputeLicenseProfiles();
 
             // invoke the operation
             HybridComputeLicenseProfileData data = new HybridComputeLicenseProfileData(new AzureLocation("eastus"))
@@ -505,7 +506,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests
                     }
                 },
             };
-            ArmOperation<HybridComputeLicenseProfileResource> lro = await hybridComputeLicenseProfile.CreateOrUpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<HybridComputeLicenseProfileResource> lro = await hybridComputeLicenseProfiles.CreateOrUpdateAsync(WaitUntil.Completed, data);
             HybridComputeLicenseProfileResource result = lro.Value;
 
             return result.Data;
