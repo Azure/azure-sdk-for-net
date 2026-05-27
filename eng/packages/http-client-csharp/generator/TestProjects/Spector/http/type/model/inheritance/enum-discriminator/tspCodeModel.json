@@ -329,6 +329,7 @@
                       "decorators": [],
                       "doc": "Species golden",
                       "name": "Golden",
+                      "isExactName": false,
                       "value": "golden",
                       "valueType": {
                         "$ref": "31"
@@ -496,6 +497,7 @@
                       "decorators": [],
                       "doc": "Species cobra",
                       "name": "Cobra",
+                      "isExactName": false,
                       "value": "cobra",
                       "enumType": {
                         "$ref": "40"
@@ -609,7 +611,12 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ]
+                ],
+                "serializationOptions": {
+                  "json": {
+                    "name": ""
+                  }
+                }
               }
             ],
             "httpMethod": "GET",
@@ -726,7 +733,12 @@
                     "access": "public",
                     "decorators": []
                   }
-                ]
+                ],
+                "serializationOptions": {
+                  "json": {
+                    "name": "input"
+                  }
+                }
               }
             ],
             "responses": [
@@ -735,7 +747,8 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false
+                "isErrorResponse": false,
+                "serializationOptions": {}
               }
             ],
             "httpMethod": "PUT",
@@ -827,7 +840,12 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ]
+                ],
+                "serializationOptions": {
+                  "json": {
+                    "name": ""
+                  }
+                }
               }
             ],
             "httpMethod": "GET",
@@ -917,7 +935,12 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ]
+                ],
+                "serializationOptions": {
+                  "json": {
+                    "name": ""
+                  }
+                }
               }
             ],
             "httpMethod": "GET",
@@ -1007,7 +1030,12 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ]
+                ],
+                "serializationOptions": {
+                  "json": {
+                    "name": ""
+                  }
+                }
               }
             ],
             "httpMethod": "GET",
@@ -1124,7 +1152,12 @@
                     "access": "public",
                     "decorators": []
                   }
-                ]
+                ],
+                "serializationOptions": {
+                  "json": {
+                    "name": "input"
+                  }
+                }
               }
             ],
             "responses": [
@@ -1133,7 +1166,8 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false
+                "isErrorResponse": false,
+                "serializationOptions": {}
               }
             ],
             "httpMethod": "PUT",
@@ -1225,7 +1259,12 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ]
+                ],
+                "serializationOptions": {
+                  "json": {
+                    "name": ""
+                  }
+                }
               }
             ],
             "httpMethod": "GET",
@@ -1315,7 +1354,12 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ]
+                ],
+                "serializationOptions": {
+                  "json": {
+                    "name": ""
+                  }
+                }
               }
             ],
             "httpMethod": "GET",

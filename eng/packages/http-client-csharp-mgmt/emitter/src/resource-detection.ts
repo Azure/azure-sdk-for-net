@@ -29,7 +29,8 @@ import {
   extractNameConstraintOverrides,
   extractResourceNameOverride,
   detectDynamicTypeSegments,
-  resolveFixedEnumNameSegments
+  resolveFixedEnumNameSegments,
+  isVariableSegment
 } from "./resource-metadata.js";
 import {
   SdkHttpOperation,
@@ -44,6 +45,7 @@ import {
   builtInResourceOperationName,
   customAzureResource,
   extensionResourceOperationName,
+  isResourceCollectionAction,
   legacyExtensionResourceOperationName,
   legacyResourceOperationName
 } from "./sdk-context-options.js";
@@ -522,13 +524,26 @@ function assignRemainingOperations(
       });
     } else if (actionTarget) {
       const scope = buildScopeInfoFromPath(operationPath);
-      actionTarget.metadata.methods.push({
+      const isCollectionAction = isResourceCollectionAction(sdkMethod);
+      const target = isCollectionAction
+        ? findCollectionActionTargetResource(
+            resources,
+            operationPath,
+            actionTarget
+          ) ?? actionTarget
+        : actionTarget;
+      target.metadata.methods.push({
         methodId,
-        kind: ResourceOperationKind.Action,
+        kind: isCollectionAction
+          ? ResourceOperationKind.CollectionAction
+          : ResourceOperationKind.Action,
         operationPath,
         scope: {
           ...scope,
-          scopeIdPattern: actionTarget.metadata.resourceIdPattern
+          scopeIdPattern:
+            target !== actionTarget
+              ? getCollectionContextPath(target)
+              : actionTarget.metadata.resourceIdPattern
         }
       });
     } else {
@@ -546,6 +561,44 @@ function assignRemainingOperations(
   }
 }
 
+function findCollectionActionTargetResource(
+  resources: ValidArmResourceSchema[],
+  operationPath: RequestPath,
+  actionTarget: ValidArmResourceSchema
+): ValidArmResourceSchema | undefined {
+  return findLongestPrefixMatch(operationPath, resources, (resource) => {
+    if (
+      resource === actionTarget ||
+      !getCollectionContextPath(resource).equals(
+        actionTarget.metadata.resourceIdPattern
+      )
+    ) {
+      return undefined;
+    }
+
+    return getResourceCollectionPath(resource.metadata.resourceIdPattern);
+  });
+}
+
+function getResourceCollectionPath(
+  resourcePath: RequestPath
+): RequestPath | undefined {
+  const lastSegment = resourcePath.segments.at(-1);
+  if (!lastSegment || !isVariableSegment(lastSegment)) {
+    return undefined;
+  }
+
+  return RequestPath.fromSegments(resourcePath.segments.slice(0, -1));
+}
+
+function getCollectionContextPath(
+  resource: ValidArmResourceSchema
+): RequestPath {
+  return (
+    resource.metadata.parentResourceId ?? resource.metadata.scope.scopeIdPattern
+  );
+}
+
 function findListTargetResource(
   resources: ValidArmResourceSchema[],
   operationPath: RequestPath,
@@ -555,12 +608,11 @@ function findListTargetResource(
     (resource) => resource.resourceModelId === itemModelId
   );
 
-  const exactCollectionMatches = candidates.filter(
-    (resource) =>
-      resource.metadata.resourceIdPattern.trimLastSegment?.equals(operationPath)
+  const collectionMatches = candidates.filter((resource) =>
+    operationPath.isPrefixOf(resource.metadata.resourceIdPattern)
   );
-  if (exactCollectionMatches.length > 0) {
-    return shortestResourcePath(exactCollectionMatches);
+  if (collectionMatches.length > 0) {
+    return shortestResourcePath(collectionMatches);
   }
 
   const operationType = operationPath.resourceType;

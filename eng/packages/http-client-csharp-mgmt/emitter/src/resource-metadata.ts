@@ -626,6 +626,7 @@ export interface ResourceMethod {
 export enum ResourceOperationKind {
   Action = "Action",
   CheckExistence = "CheckExistence",
+  CollectionAction = "CollectionAction",
   Create = "Create",
   Delete = "Delete",
   Read = "Read",
@@ -668,6 +669,8 @@ function getKindSortOrder(kind: ResourceOperationKind): number {
       return 2;
     case ResourceOperationKind.CheckExistence:
       return 3;
+    case ResourceOperationKind.CollectionAction:
+      return 7;
     case ResourceOperationKind.Update:
       return 4;
     case ResourceOperationKind.Delete:
@@ -675,7 +678,7 @@ function getKindSortOrder(kind: ResourceOperationKind): number {
     case ResourceOperationKind.List:
       return 6;
     case ResourceOperationKind.Action:
-      return 7;
+      return 8;
     default:
       return 99;
   }

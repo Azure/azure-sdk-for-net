@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public readonly partial struct SiteRecoveryEthernetAddressType : IEquatable<SiteRecoveryEthernetAddressType>
     {
         private readonly string _value;
+        /// <summary> Dynamic. </summary>
+        private const string DynamicValue = "Dynamic";
+        /// <summary> Static. </summary>
+        private const string StaticValue = "Static";
 
         /// <summary> Initializes a new instance of <see cref="SiteRecoveryEthernetAddressType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SiteRecoveryEthernetAddressType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DynamicValue = "Dynamic";
-        private const string StaticValue = "Static";
+            _value = value;
+        }
 
         /// <summary> Dynamic. </summary>
         public static SiteRecoveryEthernetAddressType Dynamic { get; } = new SiteRecoveryEthernetAddressType(DynamicValue);
+
         /// <summary> Static. </summary>
         public static SiteRecoveryEthernetAddressType Static { get; } = new SiteRecoveryEthernetAddressType(StaticValue);
+
         /// <summary> Determines if two <see cref="SiteRecoveryEthernetAddressType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SiteRecoveryEthernetAddressType left, SiteRecoveryEthernetAddressType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SiteRecoveryEthernetAddressType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SiteRecoveryEthernetAddressType left, SiteRecoveryEthernetAddressType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SiteRecoveryEthernetAddressType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SiteRecoveryEthernetAddressType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SiteRecoveryEthernetAddressType(string value) => new SiteRecoveryEthernetAddressType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SiteRecoveryEthernetAddressType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SiteRecoveryEthernetAddressType?(string value) => value == null ? null : new SiteRecoveryEthernetAddressType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SiteRecoveryEthernetAddressType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SiteRecoveryEthernetAddressType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

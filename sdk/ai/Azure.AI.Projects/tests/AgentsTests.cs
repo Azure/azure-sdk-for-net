@@ -817,6 +817,7 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.A2A)]
     [TestCase(ToolType.A2ASpecialConnection)]
     [TestCase(ToolType.AzureFunction)]
+    [TestCase(ToolType.WorkIQTool)]
     public async Task TestTool(ToolType toolType)
     {
         Dictionary<string, string> headers = [];
@@ -918,6 +919,7 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.A2A)]
     [TestCase(ToolType.A2ASpecialConnection)]
     [TestCase(ToolType.AzureFunction)]
+    [TestCase(ToolType.WorkIQTool)]
     public async Task TestToolStreaming(ToolType toolType)
     {
         AIProjectClient projectClient = GetTestProjectClient();
