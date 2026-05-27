@@ -440,14 +440,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="UserContractResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<UserContractResource> GetAllAsync(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ApiManagementUserResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiManagementUserResource> GetAllAsync(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiManagementUserData, UserContractResource>(new WorkspaceGroupUserGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiManagementUserData, ApiManagementUserResource>(new WorkspaceGroupUserGetAllAsyncCollectionResultOfT(
                 _workspaceGroupUserRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.ApiManagement
                 top,
                 skip,
                 context,
-                "ServiceWorkspaceGroupResource.GetAll"), data => new UserContractResource(Client, data));
+                "ServiceWorkspaceGroupResource.GetAll"), data => new ApiManagementUserResource(Client, data));
         }
 
         /// <summary>
@@ -486,14 +486,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="UserContractResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<UserContractResource> GetAll(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ApiManagementUserResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiManagementUserResource> GetAll(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiManagementUserData, UserContractResource>(new WorkspaceGroupUserGetAllCollectionResultOfT(
+            return new PageableWrapper<ApiManagementUserData, ApiManagementUserResource>(new WorkspaceGroupUserGetAllCollectionResultOfT(
                 _workspaceGroupUserRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.ApiManagement
                 top,
                 skip,
                 context,
-                "ServiceWorkspaceGroupResource.GetAll"), data => new UserContractResource(Client, data));
+                "ServiceWorkspaceGroupResource.GetAll"), data => new ApiManagementUserResource(Client, data));
         }
 
         /// <summary>
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<UserContractResource>> CreateAsync(string userId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementUserResource>> CreateAsync(string userId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
@@ -551,7 +551,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new UserContractResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiManagementUserResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -585,7 +585,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<UserContractResource> Create(string userId, CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementUserResource> Create(string userId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new UserContractResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiManagementUserResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

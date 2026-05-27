@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing a ApiManagementUserSubscription along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ApiManagementUserSubscriptionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="UserContractResource"/> using the GetApiManagementUserSubscriptions method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiManagementUserResource"/> using the GetApiManagementUserSubscriptions method.
     /// </summary>
     public partial class ApiManagementUserSubscriptionResource : ArmResource
     {

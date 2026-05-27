@@ -1499,118 +1499,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Create/Update tag description in scope of the Api.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/tagDescriptions/{tagDescriptionId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> TagDescriptionContracts_CreateOrUpdate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ApiResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tagDescriptionId"> Tag description identifier. Used when creating tagDescription for API/Tag association. Based on API and Tag names. </param>
-        /// <param name="content"> Create parameters. </param>
-        /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tagDescriptionId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="tagDescriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<TagDescriptionContractResource>> CreateOrUpdateAsync(string tagDescriptionId, TagDescriptionCreateContent content, ETag? ifMatch = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(tagDescriptionId, nameof(tagDescriptionId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using DiagnosticScope scope = _apiTagDescriptionClientDiagnostics.CreateScope("ApiResource.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _apiTagDescriptionRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagDescriptionId, TagDescriptionCreateContent.ToRequestContent(content), ifMatch, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ApiTagDescriptionData> response = Response.FromValue(ApiTagDescriptionData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return Response.FromValue(new TagDescriptionContractResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Create/Update tag description in scope of the Api.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/tagDescriptions/{tagDescriptionId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> TagDescriptionContracts_CreateOrUpdate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ApiResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tagDescriptionId"> Tag description identifier. Used when creating tagDescription for API/Tag association. Based on API and Tag names. </param>
-        /// <param name="content"> Create parameters. </param>
-        /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tagDescriptionId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="tagDescriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<TagDescriptionContractResource> CreateOrUpdate(string tagDescriptionId, TagDescriptionCreateContent content, ETag? ifMatch = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(tagDescriptionId, nameof(tagDescriptionId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using DiagnosticScope scope = _apiTagDescriptionClientDiagnostics.CreateScope("ApiResource.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _apiTagDescriptionRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagDescriptionId, TagDescriptionCreateContent.ToRequestContent(content), ifMatch, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ApiTagDescriptionData> response = Response.FromValue(ApiTagDescriptionData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return Response.FromValue(new TagDescriptionContractResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Gets the entity state version of the tag specified by its identifier.
         /// <list type="bullet">
         /// <item>
@@ -2148,11 +2036,11 @@ namespace Azure.ResourceManager.ApiManagement
             return GetApiIssues().Get(issueId, expandCommentsAttachments, cancellationToken);
         }
 
-        /// <summary> Gets a collection of TagDescriptionContracts in the <see cref="ApiResource"/>. </summary>
-        /// <returns> An object representing collection of TagDescriptionContracts and their operations over a TagDescriptionContractResource. </returns>
-        public virtual TagDescriptionContractCollection GetTagDescriptionContracts()
+        /// <summary> Gets a collection of ApiTagDescriptions in the <see cref="ApiResource"/>. </summary>
+        /// <returns> An object representing collection of ApiTagDescriptions and their operations over a ApiTagDescriptionResource. </returns>
+        public virtual ApiTagDescriptionCollection GetApiTagDescriptions()
         {
-            return GetCachedClient(client => new TagDescriptionContractCollection(client, Id));
+            return GetCachedClient(client => new ApiTagDescriptionCollection(client, Id));
         }
 
         /// <summary> Get Tag description in scope of API. </summary>
@@ -2161,11 +2049,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="tagDescriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="tagDescriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<TagDescriptionContractResource>> GetTagDescriptionContractAsync(string tagDescriptionId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiTagDescriptionResource>> GetApiTagDescriptionAsync(string tagDescriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tagDescriptionId, nameof(tagDescriptionId));
 
-            return await GetTagDescriptionContracts().GetAsync(tagDescriptionId, cancellationToken).ConfigureAwait(false);
+            return await GetApiTagDescriptions().GetAsync(tagDescriptionId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get Tag description in scope of API. </summary>
@@ -2174,11 +2062,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="tagDescriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="tagDescriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<TagDescriptionContractResource> GetTagDescriptionContract(string tagDescriptionId, CancellationToken cancellationToken = default)
+        public virtual Response<ApiTagDescriptionResource> GetApiTagDescription(string tagDescriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tagDescriptionId, nameof(tagDescriptionId));
 
-            return GetTagDescriptionContracts().Get(tagDescriptionId, cancellationToken);
+            return GetApiTagDescriptions().Get(tagDescriptionId, cancellationToken);
         }
 
         /// <summary> Gets an object representing a <see cref="ServiceApiWikiResource"/> along with the instance operations that can be performed on it in the <see cref="ApiResource"/>. </summary>

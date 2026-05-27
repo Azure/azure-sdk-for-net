@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A class representing a collection of <see cref="ApiManagementUserSubscriptionResource"/> and their operations.
-    /// Each <see cref="ApiManagementUserSubscriptionResource"/> in the collection will belong to the same instance of <see cref="UserContractResource"/>.
-    /// To get a <see cref="ApiManagementUserSubscriptionCollection"/> instance call the GetApiManagementUserSubscriptions method from an instance of <see cref="UserContractResource"/>.
+    /// Each <see cref="ApiManagementUserSubscriptionResource"/> in the collection will belong to the same instance of <see cref="ApiManagementUserResource"/>.
+    /// To get a <see cref="ApiManagementUserSubscriptionCollection"/> instance call the GetApiManagementUserSubscriptions method from an instance of <see cref="ApiManagementUserResource"/>.
     /// </summary>
     public partial class ApiManagementUserSubscriptionCollection : ArmCollection, IEnumerable<ApiManagementUserSubscriptionResource>, IAsyncEnumerable<ApiManagementUserSubscriptionResource>
     {
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.ApiManagement
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != UserContractResource.ResourceType)
+            if (id.ResourceType != ApiManagementUserResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, UserContractResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementUserResource.ResourceType), nameof(id));
             }
         }
 

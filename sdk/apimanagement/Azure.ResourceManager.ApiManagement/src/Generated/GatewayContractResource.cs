@@ -1594,11 +1594,11 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        /// <summary> Gets a collection of GatewayHostnameConfigurationContracts in the <see cref="GatewayContractResource"/>. </summary>
-        /// <returns> An object representing collection of GatewayHostnameConfigurationContracts and their operations over a GatewayHostnameConfigurationContractResource. </returns>
-        public virtual GatewayHostnameConfigurationContractCollection GetGatewayHostnameConfigurationContracts()
+        /// <summary> Gets a collection of ApiManagementGatewayHostnameConfigurations in the <see cref="GatewayContractResource"/>. </summary>
+        /// <returns> An object representing collection of ApiManagementGatewayHostnameConfigurations and their operations over a ApiManagementGatewayHostnameConfigurationResource. </returns>
+        public virtual ApiManagementGatewayHostnameConfigurationCollection GetApiManagementGatewayHostnameConfigurations()
         {
-            return GetCachedClient(client => new GatewayHostnameConfigurationContractCollection(client, Id));
+            return GetCachedClient(client => new ApiManagementGatewayHostnameConfigurationCollection(client, Id));
         }
 
         /// <summary> Get details of a hostname configuration. </summary>
@@ -1607,11 +1607,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="hcId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="hcId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<GatewayHostnameConfigurationContractResource>> GetGatewayHostnameConfigurationContractAsync(string hcId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementGatewayHostnameConfigurationResource>> GetApiManagementGatewayHostnameConfigurationAsync(string hcId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(hcId, nameof(hcId));
 
-            return await GetGatewayHostnameConfigurationContracts().GetAsync(hcId, cancellationToken).ConfigureAwait(false);
+            return await GetApiManagementGatewayHostnameConfigurations().GetAsync(hcId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get details of a hostname configuration. </summary>
@@ -1620,31 +1620,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="hcId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="hcId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<GatewayHostnameConfigurationContractResource> GetGatewayHostnameConfigurationContract(string hcId, CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementGatewayHostnameConfigurationResource> GetApiManagementGatewayHostnameConfiguration(string hcId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(hcId, nameof(hcId));
 
-            return GetGatewayHostnameConfigurationContracts().Get(hcId, cancellationToken);
+            return GetApiManagementGatewayHostnameConfigurations().Get(hcId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of GatewayCertificateAuthorityContracts in the <see cref="GatewayContractResource"/>. </summary>
-        /// <returns> An object representing collection of GatewayCertificateAuthorityContracts and their operations over a GatewayCertificateAuthorityContractResource. </returns>
-        public virtual GatewayCertificateAuthorityContractCollection GetGatewayCertificateAuthorityContracts()
+        /// <summary> Gets a collection of ApiManagementGatewayCertificateAuthorities in the <see cref="GatewayContractResource"/>. </summary>
+        /// <returns> An object representing collection of ApiManagementGatewayCertificateAuthorities and their operations over a ApiManagementGatewayCertificateAuthorityResource. </returns>
+        public virtual ApiManagementGatewayCertificateAuthorityCollection GetApiManagementGatewayCertificateAuthorities()
         {
-            return GetCachedClient(client => new GatewayCertificateAuthorityContractCollection(client, Id));
-        }
-
-        /// <summary> Get assigned Gateway Certificate Authority details. </summary>
-        /// <param name="certificateId"> Identifier of the certificate entity. Must be unique in the current API Management service instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="certificateId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="certificateId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<GatewayCertificateAuthorityContractResource>> GetGatewayCertificateAuthorityContractAsync(string certificateId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(certificateId, nameof(certificateId));
-
-            return await GetGatewayCertificateAuthorityContracts().GetAsync(certificateId, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new ApiManagementGatewayCertificateAuthorityCollection(client, Id));
         }
 
         /// <summary> Get assigned Gateway Certificate Authority details. </summary>
@@ -1653,11 +1640,24 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="certificateId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="certificateId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<GatewayCertificateAuthorityContractResource> GetGatewayCertificateAuthorityContract(string certificateId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementGatewayCertificateAuthorityResource>> GetApiManagementGatewayCertificateAuthorityAsync(string certificateId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateId, nameof(certificateId));
 
-            return GetGatewayCertificateAuthorityContracts().Get(certificateId, cancellationToken);
+            return await GetApiManagementGatewayCertificateAuthorities().GetAsync(certificateId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get assigned Gateway Certificate Authority details. </summary>
+        /// <param name="certificateId"> Identifier of the certificate entity. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="certificateId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ApiManagementGatewayCertificateAuthorityResource> GetApiManagementGatewayCertificateAuthority(string certificateId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(certificateId, nameof(certificateId));
+
+            return GetApiManagementGatewayCertificateAuthorities().Get(certificateId, cancellationToken);
         }
     }
 }

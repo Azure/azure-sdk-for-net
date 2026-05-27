@@ -1,5 +1,5 @@
 directory: specification/apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement
-commit: 60f8625d6bedd1f0ad6e1fc0e95cbfc73a27e6bf
+commit: 745d6e307576a00d7388f44499339eba748cceb3
 repo: Azure/azure-rest-api-specs
 cleanup: false
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
