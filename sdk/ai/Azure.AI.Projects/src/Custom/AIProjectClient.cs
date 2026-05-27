@@ -200,13 +200,13 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of DataGenerationJobs. </summary>
         internal virtual DataGenerationJobs GetDataGenerationJobsClient()
         {
-            return Volatile.Read(ref _cachedDataGenerationJobs) ?? Interlocked.CompareExchange(ref _cachedDataGenerationJobs, new DataGenerationJobs(Pipeline, _endpoint, _apiVersion), null) ?? _cachedDataGenerationJobs;
+            return Volatile.Read(ref _cachedDataGenerationJobs) ?? Interlocked.CompareExchange(ref _cachedDataGenerationJobs, new DataGenerationJobs(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedDataGenerationJobs;
         }
 
         /// <summary> Initializes a new instance of EvaluatorGenerationJobs. </summary>
         internal virtual EvaluatorGenerationJobs GetEvaluatorGenerationJobsClient()
         {
-            return Volatile.Read(ref _cachedEvaluatorGenerationJobs) ?? Interlocked.CompareExchange(ref _cachedEvaluatorGenerationJobs, new EvaluatorGenerationJobs(Pipeline, _endpoint, _apiVersion), null) ?? _cachedEvaluatorGenerationJobs;
+            return Volatile.Read(ref _cachedEvaluatorGenerationJobs) ?? Interlocked.CompareExchange(ref _cachedEvaluatorGenerationJobs, new EvaluatorGenerationJobs(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedEvaluatorGenerationJobs;
         }
         /// <summary> Gets the client for managing connections. </summary>
         public virtual AIProjectConnectionsOperations Connections { get => GetAIProjectConnectionsOperationsClient(); }
