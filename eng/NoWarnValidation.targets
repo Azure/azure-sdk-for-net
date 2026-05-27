@@ -203,8 +203,8 @@
           column = 1;
         }
         string message = "Unapproved NoWarn codes in " + ProjectName + ": " + UnapprovedCodes +
-          ". Do not use NoWarn to suppress warnings. Preferred fix: remove the suppression and fix the underlying warning." +
-          " If the warning genuinely cannot be fixed for this project, add a `nowarn:CODE` entry with a justification comment to eng/analyzerallowlist/" + ProjectName + ".txt." +
+          ". Project-level <NoWarn> is blocked unless explicitly approved. Preferred fix: remove the suppression and fix the underlying warning." +
+          " If the warning truly cannot be fixed in this project, request an approved exception by adding a `nowarn:CODE` entry with a justification comment to eng/analyzerallowlist/" + ProjectName + ".txt." +
           " See https://github.com/Azure/azure-sdk-for-net/blob/main/eng/analyzerallowlist/README.md";
         Log.LogError(
           subcategory: null,
