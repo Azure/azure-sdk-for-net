@@ -88,6 +88,9 @@ public class AzureClientGenerator : ScmCodeModelGenerator
 
         // Visitors that do any renaming must be added first so that any visitors relying on custom code view will have the CustomCodeView set.
         AddVisitor(new ModelFactoryRenamerVisitor());
+        // Must run before serialization providers are built so the additional-properties backing
+        // field is wired up before MrwSerializationTypeDefinition computes its lazy state.
+        AddVisitor(new AdditionalPropertiesBackingFieldVisitor());
 
         // Rest of the visitors can be added in any order.
         AddVisitor(new NamespaceVisitor());
