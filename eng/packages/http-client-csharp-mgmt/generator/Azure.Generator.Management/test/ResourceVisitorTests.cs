@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Tests.TestHelpers;
 using Azure.Generator.Management.Visitors;
@@ -18,22 +19,17 @@ namespace Azure.Generator.Mgmt.Tests
     public class ResourceVisitorTests
     {
         [Test]
-        public void ResourceModelRenameClearsStaleResourceClientCustomCodeView()
+        public void ResourceDataModelProviderAvoidsStaleResourceClientCustomCodeView()
         {
             var (client, models) = InputResourceData.ClientWithResource();
             var resourceModel = models.Single();
             _ = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
 
-            var modelProvider = new ModelProvider(resourceModel);
-            Assert.That(modelProvider.Name, Is.EqualTo("ResponseType"));
+            var modelProvider = new ResourceDataModelProvider(resourceModel);
+
+            Assert.That(modelProvider.Name, Is.EqualTo("ResponseTypeData"));
             Assert.That(modelProvider.CustomCodeView, Is.Null);
-
-            var visitor = new TestableResourceVisitor();
-            var result = visitor.InvokePreVisitModel(resourceModel, modelProvider);
-
-            Assert.That(result, Is.Not.Null);
-            Assert.That(result!.Name, Is.EqualTo("ResponseTypeData"));
-            Assert.That(result.BaseType?.FrameworkType, Is.Not.EqualTo(typeof(ArmResource)));
+            Assert.That(modelProvider.BaseType?.FrameworkType, Is.Not.EqualTo(typeof(ArmResource)));
         }
 
         [Test]
@@ -98,9 +94,7 @@ namespace Azure.Generator.Mgmt.Tests
             ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[trackedResourceType] =
                 new SystemObjectModelProvider(trackedResourceType, trackedResourceModel);
 
-            var modelProvider = new ModelProvider(resourceModel);
-            var resourceVisitor = new TestableResourceVisitor();
-            var resourceDataModel = resourceVisitor.InvokePreVisitModel(resourceModel, modelProvider);
+            var resourceDataModel = new ResourceDataModelProvider(resourceModel);
             var visitor = new TestableInheritableSystemObjectModelVisitor();
             var result = visitor.InvokePreVisitModel(resourceModel, resourceDataModel);
 
@@ -127,14 +121,6 @@ namespace Azure.Generator.Mgmt.Tests
             var serializationContent = new TypeProviderWriter(serialization).Write().Content;
             Assert.That(serializationContent, Does.Contain("protected override void JsonModelWriteCore"));
             Assert.That(serializationContent, Does.Contain("base.JsonModelWriteCore(writer, options);"));
-        }
-
-        private class TestableResourceVisitor : ResourceVisitor
-        {
-            public ModelProvider? InvokePreVisitModel(InputModelType inputType, ModelProvider? type)
-            {
-                return base.PreVisitModel(inputType, type);
-            }
         }
 
         private class TestableInheritableSystemObjectModelVisitor : InheritableSystemObjectModelVisitor
