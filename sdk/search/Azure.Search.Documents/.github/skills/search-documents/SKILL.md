@@ -19,8 +19,8 @@ References (load on demand):
 - [references/testing.md](./references/testing.md) — coverage tiers, version matrix, preview isolation, post-regen test workflow
 
 Related skills:
-- [search-documents-typespec-validation](../.github/skills/search-documents-typespec-validation/SKILL.md) — exhaustive SDK ↔ TypeSpec parity check at a single commit
-- [search-documents-version-diff](../.github/skills/search-documents-version-diff/SKILL.md) — diff public API surface between two versions to catch regressions
+- [search-documents-typespec-validation](../search-documents-typespec-validation/SKILL.md) — exhaustive SDK ↔ TypeSpec parity check at a single commit
+- [search-documents-version-diff](../search-documents-version-diff/SKILL.md) — diff public API surface between two versions to catch regressions
 
 
 ---
