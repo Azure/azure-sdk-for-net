@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/microsoft.Compute/virtualMachines/", false);
+            uri.AppendPath("/providers/Microsoft.Compute/virtualMachines/", false);
             uri.AppendPath(virtualMachineName, true);
             uri.AppendPath("/providers/Microsoft.RecoveryServices/replicationEligibilityResults/default", false);
             if (_apiVersion != null)
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/microsoft.Compute/virtualMachines/", false);
+            uri.AppendPath("/providers/Microsoft.Compute/virtualMachines/", false);
             uri.AppendPath(virtualMachineName, true);
             uri.AppendPath("/providers/Microsoft.RecoveryServices/replicationEligibilityResults", false);
             if (_apiVersion != null)
