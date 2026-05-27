@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Net.ServerSentEvents;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -665,7 +664,7 @@ public class AgentsTests : AgentsTestBase
         Assert.That(itemIds, Does.Contain(orangeSKU.MemoryId));
         // Update
         string newContent = "Some other description.";
-        item = await projectClient.MemoryStores.UpdateMemoryAsync(name: store.Name, memoryId: customerData.MemoryId, newContent);
+        item = await projectClient.MemoryStores.UpdateMemoryAsync(name: store.Name, memoryId: customerData.MemoryId, content: newContent);
         Assert.That(item.Content, Is.EqualTo(newContent));
         item = await projectClient.MemoryStores.GetMemoryAsync(name: store.Name, memoryId: customerData.MemoryId);
         Assert.That(item.MemoryId, Is.EqualTo(customerData.MemoryId));

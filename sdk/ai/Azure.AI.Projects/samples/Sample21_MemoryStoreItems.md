@@ -79,13 +79,13 @@ Console.WriteLine($"Created memory store item {orangeSKU.MemoryId}: {orangeSKU.C
 
 Synchronous sample:
 ```C# Snippet:Sample_UpdateItem_MemoryStoreItems_Sync
-MemoryItem item = projectClient.MemoryStores.UpdateMemory(name: memoryStore.Name, memoryId: orangeSKU.MemoryId, "Apple SKU is 786545.");
+MemoryItem item = projectClient.MemoryStores.UpdateMemory(name: memoryStore.Name, memoryId: orangeSKU.MemoryId, content: "Apple SKU is 786545.");
 Console.WriteLine($"Updated memory store item {item.MemoryId}, new content: {item.Content}");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_UpdateItem_MemoryStoreItems_Async
-MemoryItem item = await projectClient.MemoryStores.UpdateMemoryAsync(name: memoryStore.Name, memoryId: orangeSKU.MemoryId, "Apple SKU is 786545.");
+MemoryItem item = await projectClient.MemoryStores.UpdateMemoryAsync(name: memoryStore.Name, memoryId: orangeSKU.MemoryId, content: "Apple SKU is 786545.");
 Console.WriteLine($"Updated memory store item {item.MemoryId}, new content: {item.Content}");
 ```
 
@@ -108,18 +108,18 @@ Console.WriteLine($"Retrieved memory store item {item.MemoryId}: {item.Content}"
 Synchronous sample:
 ```C# Snippet:Sample_ListItems_MemoryStoreItems_Sync
 Console.WriteLine($"Listing memory store items from {memoryStore.Name}");
-foreach (MemoryItem oneItem in projectClient.MemoryStores.GetMemories(name: memoryStore.Name))
+foreach (MemoryItem oneItem in projectClient.MemoryStores.GetMemories(name: memoryStore.Name, scope: scope))
 {
-    Console.WriteLine($"    item {item.MemoryId}: {item.Content}");
+    Console.WriteLine($"    item {oneItem.MemoryId}: {oneItem.Content}");
 }
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_ListItems_MemoryStoreItems_Async
 Console.WriteLine($"Listing memory store items from {memoryStore.Name}");
-await foreach (MemoryItem oneItem in projectClient.MemoryStores.GetMemoriesAsync(name: memoryStore.Name))
+await foreach (MemoryItem oneItem in projectClient.MemoryStores.GetMemoriesAsync(name: memoryStore.Name, scope: scope))
 {
-    Console.WriteLine($"    item {item.MemoryId}: {item.Content}");
+    Console.WriteLine($"    item {oneItem.MemoryId}: {oneItem.Content}");
 }
 ```
 
@@ -128,27 +128,27 @@ await foreach (MemoryItem oneItem in projectClient.MemoryStores.GetMemoriesAsync
 Synchronous sample:
 ```C# Snippet:Sample_Delete_UpdateStoreItems_Sync
 DeleteMemoryResponse response = projectClient.MemoryStores.DeleteMemory(name: memoryStore.Name, memoryId: customerData.MemoryId);
-Console.WriteLine($"Memory Item with name {response.Name} and {response.MemoryId} was{(response.Deleted ? " " : " not ")}removed.");
+Console.WriteLine($"Memory Item with ID {response.MemoryId} was{(response.Deleted ? " " : " not ")}removed.");
 response = projectClient.MemoryStores.DeleteMemory(name: memoryStore.Name, memoryId: orangeSKU.MemoryId);
-Console.WriteLine($"Memory Item with name {response.Name} and {response.MemoryId} was{(response.Deleted ? " " : " not ")}removed.");
+Console.WriteLine($"Memory Item with ID {response.MemoryId} was{(response.Deleted ? " " : " not ")}removed.");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_Delete_UpdateStoreItems_Async
 DeleteMemoryResponse response = await projectClient.MemoryStores.DeleteMemoryAsync(name: memoryStore.Name, memoryId: customerData.MemoryId);
-Console.WriteLine($"Memory Item with name {response.Name} and {response.MemoryId} was{(response.Deleted ? " " : " not ")}removed.");
+Console.WriteLine($"Memory Item with ID {response.MemoryId} was{(response.Deleted ? " " : " not ")}removed.");
 response = await projectClient.MemoryStores.DeleteMemoryAsync(name: memoryStore.Name, memoryId: orangeSKU.MemoryId);
-Console.WriteLine($"Memory Item with name {response.Name} and {response.MemoryId} was{(response.Deleted ? " " : " not ")}removed.");
+Console.WriteLine($"Memory Item with ID {response.MemoryId} was{(response.Deleted ? " " : " not ")}removed.");
 ```
 
 8. Delete memory store.
 
 Synchronous sample:
 ```C# Snippet:Sample_DeleteMemoryStore_UpdateStoreItems_Sync
-projectClient.MemoryStores.DeleteMemoryStore(memoryStore.Id);
+projectClient.MemoryStores.DeleteMemoryStore(memoryStore.Name);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_DeleteMemoryStore_UpdateStoreItems_Async
-await projectClient.MemoryStores.DeleteMemoryStoreAsync(memoryStore.Id);
+await projectClient.MemoryStores.DeleteMemoryStoreAsync(memoryStore.Name);
 ```

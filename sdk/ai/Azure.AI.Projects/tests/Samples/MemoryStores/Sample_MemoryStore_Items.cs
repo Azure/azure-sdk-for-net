@@ -7,7 +7,6 @@ using Azure.AI.Projects.Memory;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
-using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Tests.Samples;
 
@@ -62,7 +61,7 @@ public class Sample_MemoryStoreItems : SamplesBase
         Console.WriteLine($"Created memory store item {orangeSKU.MemoryId}: {orangeSKU.Content}");
         #endregion
         #region Snippet:Sample_UpdateItem_MemoryStoreItems_Async
-        MemoryItem item = await projectClient.MemoryStores.UpdateMemoryAsync(name: memoryStore.Name, memoryId: orangeSKU.MemoryId, "Apple SKU is 786545.");
+        MemoryItem item = await projectClient.MemoryStores.UpdateMemoryAsync(name: memoryStore.Name, memoryId: orangeSKU.MemoryId, content: "Apple SKU is 786545.");
         Console.WriteLine($"Updated memory store item {item.MemoryId}, new content: {item.Content}");
         #endregion
         #region Snippet:Sample_GetItems_MemoryStoreItems_Async
@@ -73,7 +72,7 @@ public class Sample_MemoryStoreItems : SamplesBase
         Console.WriteLine($"Listing memory store items from {memoryStore.Name}");
         await foreach (MemoryItem oneItem in projectClient.MemoryStores.GetMemoriesAsync(name: memoryStore.Name, scope: scope))
         {
-            Console.WriteLine($"    item {item.MemoryId}: {item.Content}");
+            Console.WriteLine($"    item {oneItem.MemoryId}: {oneItem.Content}");
         }
         #endregion
         #region Snippet:Sample_Delete_UpdateStoreItems_Async
@@ -132,7 +131,7 @@ public class Sample_MemoryStoreItems : SamplesBase
         Console.WriteLine($"Created memory store item {orangeSKU.MemoryId}: {orangeSKU.Content}");
         #endregion
         #region Snippet:Sample_UpdateItem_MemoryStoreItems_Sync
-        MemoryItem item = projectClient.MemoryStores.UpdateMemory(name: memoryStore.Name, memoryId: orangeSKU.MemoryId, "Apple SKU is 786545.");
+        MemoryItem item = projectClient.MemoryStores.UpdateMemory(name: memoryStore.Name, memoryId: orangeSKU.MemoryId, content: "Apple SKU is 786545.");
         Console.WriteLine($"Updated memory store item {item.MemoryId}, new content: {item.Content}");
         #endregion
         #region Snippet:Sample_GetItems_MemoryStoreItems_Sync
@@ -143,7 +142,7 @@ public class Sample_MemoryStoreItems : SamplesBase
         Console.WriteLine($"Listing memory store items from {memoryStore.Name}");
         foreach (MemoryItem oneItem in projectClient.MemoryStores.GetMemories(name: memoryStore.Name, scope: scope))
         {
-            Console.WriteLine($"    item {item.MemoryId}: {item.Content}");
+            Console.WriteLine($"    item {oneItem.MemoryId}: {oneItem.Content}");
         }
         #endregion
         #region Snippet:Sample_Delete_UpdateStoreItems_Sync
