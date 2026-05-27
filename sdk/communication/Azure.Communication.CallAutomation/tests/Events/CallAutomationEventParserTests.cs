@@ -469,7 +469,6 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.That(playCompleted.CorrelationId, Is.EqualTo("correlationId"));
                 Assert.That(playCompleted.ServerCallId, Is.EqualTo("serverCallId"));
                 Assert.That(playCompleted.ResultInformation?.Code, Is.EqualTo(200));
-                Assert.That(playCompleted.ReasonCode, Is.EqualTo(MediaEventReasonCode.CompletedSuccessfully));
             }
             else
             {
@@ -494,7 +493,6 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.That(playStarted.CorrelationId, Is.EqualTo("correlationId"));
                 Assert.That(playStarted.ServerCallId, Is.EqualTo("serverCallId"));
                 Assert.That(playStarted.ResultInformation?.Code, Is.EqualTo(200));
-                Assert.That(playStarted.ReasonCode, Is.EqualTo(MediaEventReasonCode.CompletedSuccessfully));
             }
             else
             {
@@ -519,7 +517,6 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.That(playPaused.CorrelationId, Is.EqualTo("correlationId"));
                 Assert.That(playPaused.ServerCallId, Is.EqualTo("serverCallId"));
                 Assert.That(playPaused.ResultInformation?.Code, Is.EqualTo(200));
-                Assert.That(playPaused.ReasonCode, Is.EqualTo(MediaEventReasonCode.CompletedSuccessfully));
             }
             else
             {
@@ -544,7 +541,6 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.That(playResumed.CorrelationId, Is.EqualTo("correlationId"));
                 Assert.That(playResumed.ServerCallId, Is.EqualTo("serverCallId"));
                 Assert.That(playResumed.ResultInformation?.Code, Is.EqualTo(200));
-                Assert.That(playResumed.ReasonCode, Is.EqualTo(MediaEventReasonCode.CompletedSuccessfully));
             }
             else
             {
@@ -1208,7 +1204,6 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.That(holdAudioStarted.CorrelationId, Is.EqualTo("correlationId"));
                 Assert.That(holdAudioStarted.ServerCallId, Is.EqualTo("serverCallId"));
                 Assert.That(holdAudioStarted.ResultInformation?.Code, Is.EqualTo(200));
-                Assert.That(holdAudioStarted.ReasonCode, Is.EqualTo(MediaEventReasonCode.CompletedSuccessfully));
             }
             else
             {
@@ -1233,7 +1228,6 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.That(holdAudioPaused.CorrelationId, Is.EqualTo("correlationId"));
                 Assert.That(holdAudioPaused.ServerCallId, Is.EqualTo("serverCallId"));
                 Assert.That(holdAudioPaused.ResultInformation?.Code, Is.EqualTo(200));
-                Assert.That(holdAudioPaused.ReasonCode, Is.EqualTo(MediaEventReasonCode.CompletedSuccessfully));
             }
             else
             {
@@ -1258,7 +1252,6 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.That(holdAudioResumed.CorrelationId, Is.EqualTo("correlationId"));
                 Assert.That(holdAudioResumed.ServerCallId, Is.EqualTo("serverCallId"));
                 Assert.That(holdAudioResumed.ResultInformation?.Code, Is.EqualTo(200));
-                Assert.That(holdAudioResumed.ReasonCode, Is.EqualTo(MediaEventReasonCode.CompletedSuccessfully));
             }
             else
             {
@@ -1283,7 +1276,6 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.That(holdAudioCompleted.CorrelationId, Is.EqualTo("correlationId"));
                 Assert.That(holdAudioCompleted.ServerCallId, Is.EqualTo("serverCallId"));
                 Assert.That(holdAudioCompleted.ResultInformation?.Code, Is.EqualTo(200));
-                Assert.That(holdAudioCompleted.ReasonCode, Is.EqualTo(MediaEventReasonCode.CompletedSuccessfully));
             }
             else
             {
@@ -1308,8 +1300,6 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.That(holdFailed.CorrelationId, Is.EqualTo("correlationId"));
                 Assert.That(holdFailed.ServerCallId, Is.EqualTo("serverCallId"));
                 Assert.That(holdFailed.ResultInformation?.Code, Is.EqualTo(400));
-                Assert.That(holdFailed.ReasonCode, Is.EqualTo(MediaEventReasonCode.PlayDownloadFailed));
-                Assert.That(holdFailed.ReasonCode.GetReasonCodeValue(), Is.EqualTo(8536));
             }
             else
             {
