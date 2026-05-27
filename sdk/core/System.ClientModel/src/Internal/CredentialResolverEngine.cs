@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Microsoft.Extensions.Configuration;
 
 namespace System.ClientModel.Primitives;
@@ -46,20 +47,34 @@ internal static class CredentialResolverEngine
             configureOverrides(workingSection);
         }
 
+        // Materialize the resolver chain once at the top of every Resolve
+        // call. The recursive resolveChild callback below re-enters this
+        // method with the same enumerable, so a non-reentrant /
+        // single-use IEnumerable (e.g., a custom iterator that throws on
+        // second GetEnumerator) would blow up when the outer foreach has
+        // already started walking it. Pass the materialized list through
+        // the recursion so every layer sees the same snapshot.
+        IReadOnlyList<CredentialResolver>? resolverList = resolvers switch
+        {
+            null => null,
+            IReadOnlyList<CredentialResolver> list => list,
+            _ => resolvers.ToArray()
+        };
+
         // Build the recursive callback once per Resolve invocation. Resolvers
         // that override the chain-aware TryResolve overload (e.g., a chain-
         // owning resolver that walks Sources[]) can invoke this to resolve a
         // child IConfigurationSection through the same active resolver chain.
-        // The callback re-enters this engine method with the same resolver
-        // list and no overrides — overrides only apply to the top-level
-        // section the caller passed in.
+        // The callback re-enters this engine method with the materialized
+        // resolver list and no overrides — overrides only apply to the
+        // top-level section the caller passed in.
         //
         // Note: the recursive Resolve call goes through the full pipeline
         // (cache lookup, normalization, ordering), so chain entries pick up
         // caching for free and a single shared engine remains the source of
         // truth for resolution semantics.
         Func<IConfigurationSection, AuthenticationTokenProvider?> resolveChild =
-            child => Resolve(child, resolvers, configureOverrides: null)?.TokenProvider;
+            child => Resolve(child, resolverList, configureOverrides: null)?.TokenProvider;
 
         // Per-resolver cache lookup: the cached settings depend on the
         // (section, resolver-that-actually-produced-it) pair, not on the whole
@@ -77,9 +92,9 @@ internal static class CredentialResolverEngine
         // Reference-identity (RuntimeHelpers.GetHashCode) is used so distinct
         // instances of the same type don't leak providers into each other,
         // and any GetHashCode override on the resolver is bypassed.
-        if (resolvers is not null)
+        if (resolverList is not null)
         {
-            foreach (CredentialResolver resolver in resolvers)
+            foreach (CredentialResolver resolver in resolverList)
             {
                 if (resolver is null)
                 {

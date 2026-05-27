@@ -1359,6 +1359,41 @@ public class CredentialResolverTests
             "configureOverrides must be invoked exactly once — recursive resolveChild calls re-enter with null overrides.");
     }
 
+    [Test]
+    public void Engine_ResolveChild_HandlesSingleUseResolverEnumerable()
+    {
+        // Pinning the contract surfaced in PR review: when a chain-owning
+        // resolver invokes resolveChild, the engine re-enters Resolve with the
+        // same resolver enumerable while the outer foreach is still walking it.
+        // If the engine doesn't materialize the enumerable once per top-level
+        // call, a non-reentrant / single-use IEnumerable<CredentialResolver>
+        // (custom iterator, throws on second GetEnumerator) would blow up.
+        // The engine must enumerate it exactly once and reuse the materialized
+        // copy for the recursive call.
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["Parent:CredentialSource"] = "Parent",
+            ["Parent:Child:CredentialSource"] = "Child",
+        });
+
+        var childResolver = new ScopedRecordingResolver("Child", "child");
+        var parentResolver = new InvokeChildResolver(
+            "Parent",
+            section => section.GetSection("Child"),
+            _ => { });
+
+        var singleUse = new SingleUseResolverList(parentResolver, childResolver);
+
+        CredentialSettings? cred = config.GetCredentialSettings("Parent", singleUse, _ => { });
+
+        Assert.That(cred, Is.Not.Null,
+            "Top-level resolution should succeed without the recursive call re-enumerating the single-use list.");
+        Assert.That(singleUse.EnumerateCount, Is.EqualTo(1),
+            "Engine must materialize resolvers once and reuse for recursion.");
+        Assert.That(childResolver.WasCalled, Is.True,
+            "resolveChild should have walked the chain and matched the child resolver.");
+    }
+
     private sealed class CapturingChainAwareResolver : CredentialResolver
     {
         private readonly string _matchSource;
@@ -1436,5 +1471,32 @@ public class CredentialResolverTests
             provider = new StubTokenProvider("parent");
             return true;
         }
+    }
+
+    // Enumerable that throws if GetEnumerator() is called more than once.
+    // Mirrors "non-reentrant / single-use" iterators a caller might pass.
+    private sealed class SingleUseResolverList : IEnumerable<CredentialResolver>
+    {
+        private readonly CredentialResolver[] _resolvers;
+        private int _enumerateCount;
+
+        public SingleUseResolverList(params CredentialResolver[] resolvers)
+        {
+            _resolvers = resolvers;
+        }
+
+        public int EnumerateCount => _enumerateCount;
+
+        public IEnumerator<CredentialResolver> GetEnumerator()
+        {
+            int n = System.Threading.Interlocked.Increment(ref _enumerateCount);
+            if (n > 1)
+            {
+                throw new InvalidOperationException("SingleUseResolverList enumerated more than once.");
+            }
+            return ((IEnumerable<CredentialResolver>)_resolvers).GetEnumerator();
+        }
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }
