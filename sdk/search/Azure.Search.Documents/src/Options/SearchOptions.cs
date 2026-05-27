@@ -224,7 +224,8 @@ namespace Azure.Search.Documents
             get { return SemanticSearch?.QueryAnswer?.QueryAnswerRaw; }
             set
             {
-                if (string.IsNullOrEmpty(value)) { return; }
+                if (string.IsNullOrEmpty(value))
+                { return; }
                 SemanticSearch ??= new SemanticSearchOptions();
                 SemanticSearch.QueryAnswer ??= new QueryAnswer();
                 SemanticSearch.QueryAnswer.QueryAnswerRaw = value;
@@ -238,7 +239,8 @@ namespace Azure.Search.Documents
             get { return SemanticSearch?.QueryCaption?.QueryCaptionRaw; }
             set
             {
-                if (string.IsNullOrEmpty(value)) { return; }
+                if (string.IsNullOrEmpty(value))
+                { return; }
                 SemanticSearch ??= new SemanticSearchOptions();
                 SemanticSearch.QueryCaption ??= new QueryCaption();
                 SemanticSearch.QueryCaption.QueryCaptionRaw = value;
@@ -378,7 +380,8 @@ namespace Azure.Search.Documents
             get { return SemanticSearch?.QueryRewrites?.QueryRewritesRaw; }
             set
             {
-                if (string.IsNullOrEmpty(value)) { return; }
+                if (string.IsNullOrEmpty(value))
+                { return; }
                 SemanticSearch ??= new SemanticSearchOptions();
                 SemanticSearch.QueryRewrites ??= new QueryRewrites();
                 SemanticSearch.QueryRewrites.QueryRewritesRaw = value;
