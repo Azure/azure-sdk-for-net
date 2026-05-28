@@ -12,17 +12,17 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    // Backward compatibility shims for the TypeSpec migration. The generated model no longer includes
-    // the old constructor, and it cannot attach the shipped Obsolete attribute to IPv4Address or the
-    // old TypePropertiesType property name. Removing this file would break callers that use the old
-    // InternetGatewayType constructor, the IPV4Address alias, or the TypePropertiesType property.
-    [CodeGenSuppress("IPv4Address")]
+    // 1. The service has duplicate gateway type properties: type and internetGatewayType.
+    // 2. We suppress the less descriptive generated Type property and keep InternetGatewayType as the current property.
+    // 3. Without this customization, the SDK would expose both Type and InternetGatewayType for the same service value.
+    [CodeGenSuppress("Type")]
     public partial class NetworkFabricInternetGatewayData
     {
         /// <summary> Initializes a new instance of <see cref="NetworkFabricInternetGatewayData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="typePropertiesType"> Type of Gateway. </param>
         /// <param name="networkFabricControllerId"> Resource ID of the network fabric controller. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This constructor is obsolete and will be removed in a future version.")]
         public NetworkFabricInternetGatewayData(AzureLocation location, InternetGatewayType typePropertiesType, ResourceIdentifier networkFabricControllerId) : this(location, networkFabricControllerId)
         {
@@ -32,26 +32,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> IPv4 Address of Internet Gateway. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("IPv4Address is deprecated, use IPV4Address instead")]
-        public IPAddress IPv4Address => Properties?.IPv4Address;
+        public IPAddress IPv4Address => IPAddress.TryParse(IPV4Address, out IPAddress address) ? address : null;
 
-        /// <summary> IPv4 Address of Internet Gateway. </summary>
-        public string IPV4Address => Properties?.IPv4Address?.ToString();
-
+        // 1. The new API version replaced the shipped TypePropertiesType property with InternetGatewayType.
+        // 2. We keep the obsolete TypePropertiesType property and redirect it to InternetGatewayType.
+        // 3. Without this custom code, the shipped TypePropertiesType API surface would be removed.
         /// <summary> Gateway Type of the resource. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This property is obsolete and will be removed in a future version. Use InternetGatewayType instead.")]
         public InternetGatewayType TypePropertiesType
         {
-            get => Properties?.InternetGatewayType ?? default;
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new InternetGatewayProperties();
-                }
-
-                Properties.InternetGatewayType = value;
-            }
+            get => InternetGatewayType ?? default;
+            set => InternetGatewayType = value;
         }
     }
 }

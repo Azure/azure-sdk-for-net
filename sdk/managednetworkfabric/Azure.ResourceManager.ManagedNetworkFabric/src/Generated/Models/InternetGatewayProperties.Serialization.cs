@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Net;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric;
@@ -91,10 +90,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("internetGatewayRuleId"u8);
                 writer.WriteStringValue(InternetGatewayRuleId);
             }
-            if (options.Format != "W" && Optional.IsDefined(IPv4Address))
+            if (options.Format != "W" && Optional.IsDefined(IPV4Address))
             {
                 writer.WritePropertyName("ipv4Address"u8);
-                writer.WriteStringValue(IPv4Address.ToString());
+                writer.WriteStringValue(IPV4Address);
             }
             if (options.Format != "W" && Optional.IsDefined(Port))
             {
@@ -167,7 +166,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             string annotation = default;
             ResourceIdentifier internetGatewayRuleId = default;
-            IPAddress iPv4Address = default;
+            string ipV4Address = default;
             int? port = default;
             InternetGatewayType? @type = default;
             InternetGatewayType? internetGatewayType = default;
@@ -193,11 +192,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (prop.NameEquals("ipv4Address"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    iPv4Address = IPAddress.Parse(prop.Value.GetString());
+                    ipV4Address = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("port"u8))
@@ -258,7 +253,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new InternetGatewayProperties(
                 annotation,
                 internetGatewayRuleId,
-                iPv4Address,
+                ipV4Address,
                 port,
                 @type,
                 internetGatewayType,

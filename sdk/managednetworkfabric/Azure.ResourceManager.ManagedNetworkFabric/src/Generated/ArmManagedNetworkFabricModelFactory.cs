@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="internetGatewayRuleId"> ARM Resource ID of the Internet Gateway Rule. </param>
-        /// <param name="iPv4Address"> IPv4 Address of Internet Gateway. </param>
+        /// <param name="ipV4Address"> IPv4 Address of Internet Gateway. </param>
         /// <param name="port"> Port number of Internet Gateway. </param>
         /// <param name="type"> Gateway Type of the resource. </param>
         /// <param name="internetGatewayType"> Gateway Type of the resource. </param>
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="provisioningState"> Provisioning state of resource. </param>
         /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricInternetGatewayData"/> instance for mocking. </returns>
-        public static NetworkFabricInternetGatewayData NetworkFabricInternetGatewayData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, ResourceIdentifier internetGatewayRuleId = default, IPAddress iPv4Address = default, int? port = default, InternetGatewayType? @type = default, InternetGatewayType? internetGatewayType = default, ResourceIdentifier networkFabricControllerId = default, NetworkFabricProvisioningState? provisioningState = default, string lastOperationDetails = default)
+        public static NetworkFabricInternetGatewayData NetworkFabricInternetGatewayData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, ResourceIdentifier internetGatewayRuleId = default, string ipV4Address = default, int? port = default, InternetGatewayType? @type = default, InternetGatewayType? internetGatewayType = default, ResourceIdentifier networkFabricControllerId = default, NetworkFabricProvisioningState? provisioningState = default, string lastOperationDetails = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 new InternetGatewayProperties(
                     annotation,
                     internetGatewayRuleId,
-                    iPv4Address,
+                    ipV4Address,
                     port,
                     @type,
                     internetGatewayType,
@@ -3076,10 +3076,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                annotation is null && internetGatewayRuleId is null && ipv4Address is null && port is null && networkFabricControllerId is null && provisioningState is null ? default : new InternetGatewayProperties(
+                annotation is null && internetGatewayRuleId is null && port is null && networkFabricControllerId is null && provisioningState is null ? default : new InternetGatewayProperties(
                     annotation,
                     internetGatewayRuleId,
-                    ipv4Address,
+                    default,
                     port,
                     typePropertiesType,
                     default,
@@ -3117,10 +3117,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                annotation is null && internetGatewayRuleId is null && port is null && networkFabricControllerId is null && provisioningState is null ? default : new InternetGatewayProperties(
+                annotation is null && internetGatewayRuleId is null && ipV4Address is null && port is null && networkFabricControllerId is null && provisioningState is null ? default : new InternetGatewayProperties(
                     annotation,
                     internetGatewayRuleId,
-                    default,
+                    ipV4Address,
                     port,
                     typePropertiesType,
                     default,
