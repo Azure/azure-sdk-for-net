@@ -56,6 +56,15 @@ namespace Azure.Generator.Management
                 ModelFactoryBackwardCompatHelper.FixModelFactoryConstructorCalls(modelFactory.Methods);
                 ModelFactoryBackwardCompatHelper.FixModelFactoryBackwardCompatOverloads(modelFactory.Methods);
             }
+            else
+            {
+                ModelFactoryBackwardCompatHelper.FixConstructorCalls(provider.Methods);
+            }
+
+            foreach (var serialization in provider.SerializationProviders)
+            {
+                ModelFactoryBackwardCompatHelper.FixConstructorCalls(serialization.Methods);
+            }
 
             return base.GetWriter(provider);
         }

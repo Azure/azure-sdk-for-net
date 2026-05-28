@@ -194,7 +194,7 @@ namespace Azure.Generator.Mgmt.Tests
             var inputModel = InputFactory.Model(
                 "TestModel",
                 usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
-                properties:
+                 properties:
                 [
                     InputFactory.Property("id", InputPrimitiveType.String),
                     InputFactory.Property("name", InputPrimitiveType.String),
@@ -221,6 +221,72 @@ namespace Azure.Generator.Mgmt.Tests
             Management.Visitors.ModelFactoryBackwardCompatHelper.FixModelFactoryConstructorCalls(modelFactory.Methods);
 
             var rendered = new TypeProviderWriter(modelFactory).Write().Content;
+            Assert.That(rendered, Does.Contain("return new global::Samples.Models.TestModel(id, name, default);"));
+        }
+
+        [Test]
+        public void SkipsAmbiguousDuplicateFactoryParameters()
+        {
+            var inputModel = InputFactory.Model(
+                "TestModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("name", InputPrimitiveType.String)]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel]);
+            var model = plugin.Object.TypeFactory.CreateModel(inputModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var firstNameParameter = new ParameterProvider("name", $"", typeof(string));
+            var secondNameParameter = new ParameterProvider("name", $"", typeof(string));
+            var signature = new MethodSignature(
+                "TestModel",
+                $"Creates a test model.",
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                model.Type,
+                $"A test model.",
+                [firstNameParameter, secondNameParameter]);
+            var method = new MethodProvider(
+                signature,
+                Return(new NewInstanceExpression(model.Type, [firstNameParameter])),
+                modelFactory);
+            modelFactory.Update(methods: [method]);
+
+            Assert.DoesNotThrow(() => Management.Visitors.ModelFactoryBackwardCompatHelper.FixModelFactoryConstructorCalls(modelFactory.Methods));
+        }
+
+        [Test]
+        public void RebuildsDeserializeConstructorCallFromCurrentConstructor()
+        {
+            var inputModel = InputFactory.Model(
+                "TestModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties:
+                [
+                    InputFactory.Property("id", InputPrimitiveType.String),
+                    InputFactory.Property("name", InputPrimitiveType.String),
+                ]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel]);
+            var model = plugin.Object.TypeFactory.CreateModel(inputModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var id = new VariableExpression(typeof(string), "id");
+            var name = new VariableExpression(typeof(string), "name");
+            var staleName = new VariableExpression(typeof(string), "name0");
+            var method = new MethodProvider(
+                new MethodSignature(
+                    "DeserializeTestModel",
+                    null,
+                    MethodSignatureModifiers.Internal | MethodSignatureModifiers.Static,
+                    model.Type,
+                    null,
+                    []),
+                Return(new NewInstanceExpression(model.Type, [id, name, staleName])),
+                modelFactory);
+            modelFactory.Update(methods: [method]);
+
+            Management.Visitors.ModelFactoryBackwardCompatHelper.FixConstructorCalls(modelFactory.Methods);
+
+            var rendered = new TypeProviderWriter(modelFactory).Write().Content;
+            Assert.That(rendered, Does.Contain("global::System.GC.KeepAlive(name0);"));
             Assert.That(rendered, Does.Contain("return new global::Samples.Models.TestModel(id, name, default);"));
         }
 
