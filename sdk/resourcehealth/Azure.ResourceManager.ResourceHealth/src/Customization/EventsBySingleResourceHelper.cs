@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ResourceHealth
 
         // Manually drives the generated REST requests because Azure.Core.Page<Event> under ArmProviderActionSync did not produce a generated CollectionResult/public pageable method;
         // replacing this would require the spec to use a custom list result model with explicit @pageItems/@nextLink.
-        public IEnumerable<Page<ResourceHealthEventData>> GetPages(string filter, CancellationToken cancellationToken)
+        public IEnumerable<Page<ResourceHealthEventData>> GetPages(string filter, string continuationToken, CancellationToken cancellationToken)
         {
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-            Uri nextLink = null;
+            Uri nextLink = CreateNextLinkUri(continuationToken);
 
             while (true)
             {
@@ -62,15 +62,15 @@ namespace Azure.ResourceManager.ResourceHealth
                 if (string.IsNullOrEmpty(nextLinkStr))
                     break;
 
-                nextLink = new Uri(nextLinkStr);
+                nextLink = CreateNextLinkUri(nextLinkStr);
             }
         }
 
         // Async counterpart to GetPages for the same generator gap; it preserves the GA-compatible public shape without changing the shared TypeSpec response model.
-        public async IAsyncEnumerable<Page<ResourceHealthEventData>> GetPagesAsync(string filter, [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken cancellationToken)
+        public async IAsyncEnumerable<Page<ResourceHealthEventData>> GetPagesAsync(string filter, string continuationToken, [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken cancellationToken)
         {
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-            Uri nextLink = null;
+            Uri nextLink = CreateNextLinkUri(continuationToken);
 
             while (true)
             {
@@ -101,8 +101,11 @@ namespace Azure.ResourceManager.ResourceHealth
                 if (string.IsNullOrEmpty(nextLinkStr))
                     break;
 
-                nextLink = new Uri(nextLinkStr);
+                nextLink = CreateNextLinkUri(nextLinkStr);
             }
         }
+
+        private static Uri CreateNextLinkUri(string nextLink)
+            => string.IsNullOrEmpty(nextLink) ? null : new Uri(nextLink, UriKind.RelativeOrAbsolute);
     }
 }

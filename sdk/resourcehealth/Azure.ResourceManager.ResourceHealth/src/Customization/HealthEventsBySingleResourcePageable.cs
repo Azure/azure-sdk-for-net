@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ResourceHealth
         public override IEnumerable<Page<ResourceHealthEventData>> AsPages(string continuationToken = null, int? pageSizeHint = null)
         {
             var helper = _client.GetCachedClient(c => new EventsBySingleResourceHelper(c, _scope));
-            return helper.GetPages(_filter, _cancellationToken);
+            return helper.GetPages(_filter, continuationToken, _cancellationToken);
         }
     }
 }

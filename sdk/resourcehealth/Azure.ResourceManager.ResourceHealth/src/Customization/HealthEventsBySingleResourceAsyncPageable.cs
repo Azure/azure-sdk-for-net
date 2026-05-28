@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ResourceHealth
         public override async IAsyncEnumerable<Page<ResourceHealthEventData>> AsPages(string continuationToken = null, int? pageSizeHint = null)
         {
             var helper = _client.GetCachedClient(c => new EventsBySingleResourceHelper(c, _scope));
-            await foreach (var page in helper.GetPagesAsync(_filter, _cancellationToken).ConfigureAwait(false))
+            await foreach (var page in helper.GetPagesAsync(_filter, continuationToken, _cancellationToken).ConfigureAwait(false))
             {
                 yield return page;
             }
