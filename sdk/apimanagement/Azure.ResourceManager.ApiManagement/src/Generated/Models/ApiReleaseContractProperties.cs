@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="updatedOn"> The time the API release was updated. </param>
         /// <param name="notes"> Release Notes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApiReleaseContractProperties(string apiId, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string notes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApiReleaseContractProperties(ResourceIdentifier apiId, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string notes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ApiId = apiId;
             CreatedOn = createdOn;
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Identifier of the API the release belongs to. </summary>
         [WirePath("apiId")]
-        public string ApiId { get; set; }
+        public ResourceIdentifier ApiId { get; set; }
 
         /// <summary> The time the API was released. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </summary>
         [WirePath("createdDateTime")]

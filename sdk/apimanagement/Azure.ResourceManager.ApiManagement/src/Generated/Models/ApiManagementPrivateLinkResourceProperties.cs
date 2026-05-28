@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementPrivateLinkResourceProperties"/>. </summary>
-        internal ApiManagementPrivateLinkResourceProperties()
+        public ApiManagementPrivateLinkResourceProperties()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();

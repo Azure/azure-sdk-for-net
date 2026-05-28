@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ApiManagement
     {
         private readonly ClientDiagnostics _apiGatewayConfigConnectionClientDiagnostics;
         private readonly ApiGatewayConfigConnection _apiGatewayConfigConnectionRestClient;
-        private readonly ApiManagementGatewayConfigConnectionResourceData _data;
+        private readonly ApiGatewayConfigConnectionData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/gateways/configConnections";
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayConfigConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ApiManagementGatewayConfigConnectionResource(ArmClient client, ApiManagementGatewayConfigConnectionResourceData data) : this(client, data.Id)
+        internal ApiManagementGatewayConfigConnectionResource(ArmClient client, ApiGatewayConfigConnectionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual ApiManagementGatewayConfigConnectionResourceData Data
+        public virtual ApiGatewayConfigConnectionData Data
         {
             get
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ApiManagement
                 };
                 HttpMessage message = _apiGatewayConfigConnectionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ApiManagementGatewayConfigConnectionResourceData> response = Response.FromValue(ApiManagementGatewayConfigConnectionResourceData.FromResponse(result), result);
+                Response<ApiGatewayConfigConnectionData> response = Response.FromValue(ApiGatewayConfigConnectionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ApiManagement
                 };
                 HttpMessage message = _apiGatewayConfigConnectionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ApiManagementGatewayConfigConnectionResourceData> response = Response.FromValue(ApiManagementGatewayConfigConnectionResourceData.FromResponse(result), result);
+                Response<ApiGatewayConfigConnectionData> response = Response.FromValue(ApiGatewayConfigConnectionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -211,12 +211,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, string ifMatch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, ETag ifMatch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
-
             using DiagnosticScope scope = _apiGatewayConfigConnectionClientDiagnostics.CreateScope("ApiManagementGatewayConfigConnectionResource.Delete");
             scope.Start();
             try
@@ -265,12 +261,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, string ifMatch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, ETag ifMatch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
-
             using DiagnosticScope scope = _apiGatewayConfigConnectionClientDiagnostics.CreateScope("ApiManagementGatewayConfigConnectionResource.Delete");
             scope.Start();
             try
@@ -320,7 +312,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="data"> Parameters supplied to the CreateOrUpdate API Management gateway config connection operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ApiManagementGatewayConfigConnectionResource>> UpdateAsync(WaitUntil waitUntil, ApiManagementGatewayConfigConnectionResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ApiManagementGatewayConfigConnectionResource>> UpdateAsync(WaitUntil waitUntil, ApiGatewayConfigConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -332,7 +324,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiGatewayConfigConnectionRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ApiManagementGatewayConfigConnectionResourceData.ToRequestContent(data), context);
+                HttpMessage message = _apiGatewayConfigConnectionRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ApiGatewayConfigConnectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ApiManagementArmOperation<ApiManagementGatewayConfigConnectionResource> operation = new ApiManagementArmOperation<ApiManagementGatewayConfigConnectionResource>(
                     new ApiManagementGatewayConfigConnectionResourceOperationSource(Client),
@@ -379,7 +371,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="data"> Parameters supplied to the CreateOrUpdate API Management gateway config connection operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ApiManagementGatewayConfigConnectionResource> Update(WaitUntil waitUntil, ApiManagementGatewayConfigConnectionResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ApiManagementGatewayConfigConnectionResource> Update(WaitUntil waitUntil, ApiGatewayConfigConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -391,7 +383,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiGatewayConfigConnectionRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ApiManagementGatewayConfigConnectionResourceData.ToRequestContent(data), context);
+                HttpMessage message = _apiGatewayConfigConnectionRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ApiGatewayConfigConnectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ApiManagementArmOperation<ApiManagementGatewayConfigConnectionResource> operation = new ApiManagementArmOperation<ApiManagementGatewayConfigConnectionResource>(
                     new ApiManagementGatewayConfigConnectionResourceOperationSource(Client),

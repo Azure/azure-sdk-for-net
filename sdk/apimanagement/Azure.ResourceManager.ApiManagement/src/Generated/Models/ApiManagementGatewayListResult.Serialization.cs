@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (ApiManagementGatewayResourceData item in Value)
+            foreach (ApiManagementGatewayData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            IList<ApiManagementGatewayResourceData> value = default;
+            IList<ApiManagementGatewayData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<ApiManagementGatewayResourceData> array = new List<ApiManagementGatewayResourceData>();
+                    List<ApiManagementGatewayData> array = new List<ApiManagementGatewayData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementGatewayResourceData.DeserializeApiManagementGatewayResourceData(item, options));
+                        array.Add(ApiManagementGatewayData.DeserializeApiManagementGatewayData(item, options));
                     }
                     value = array;
                     continue;

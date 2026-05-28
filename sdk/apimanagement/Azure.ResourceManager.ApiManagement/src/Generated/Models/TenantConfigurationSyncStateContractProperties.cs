@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TenantConfigurationSyncStateContractProperties"/>. </summary>
-        internal TenantConfigurationSyncStateContractProperties()
+        public TenantConfigurationSyncStateContractProperties()
         {
         }
 
@@ -47,34 +47,34 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> The name of Git branch. </summary>
         [WirePath("branch")]
-        public string Branch { get; }
+        public string Branch { get; set; }
 
         /// <summary> The latest commit Id. </summary>
         [WirePath("commitId")]
-        public string CommitId { get; }
+        public string CommitId { get; set; }
 
         /// <summary> value indicating if last sync was save (true) or deploy (false) operation. </summary>
         [WirePath("isExport")]
-        public bool? IsExport { get; }
+        public bool? IsExport { get; set; }
 
         /// <summary> value indicating if last synchronization was later than the configuration change. </summary>
         [WirePath("isSynced")]
-        public bool? IsSynced { get; }
+        public bool? IsSynced { get; set; }
 
         /// <summary> value indicating whether Git configuration access is enabled. </summary>
         [WirePath("isGitEnabled")]
-        public bool? IsGitEnabled { get; }
+        public bool? IsGitEnabled { get; set; }
 
         /// <summary> The date of the latest synchronization. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("syncDate")]
-        public DateTimeOffset? SyncOn { get; }
+        public DateTimeOffset? SyncOn { get; set; }
 
         /// <summary> The date of the latest configuration change. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("configurationChangeDate")]
-        public DateTimeOffset? ConfigurationChangeOn { get; }
+        public DateTimeOffset? ConfigurationChangeOn { get; set; }
 
         /// <summary> Most recent tenant configuration operation identifier. </summary>
         [WirePath("lastOperationId")]
-        public string LastOperationId { get; }
+        public string LastOperationId { get; set; }
     }
 }

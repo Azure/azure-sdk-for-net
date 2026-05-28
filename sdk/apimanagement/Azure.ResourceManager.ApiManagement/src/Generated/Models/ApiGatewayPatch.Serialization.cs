@@ -9,67 +9,68 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Parameter supplied to Update API Management gateway. </summary>
-    public partial class ApiManagementGatewayResourcePatch : ApimResource, IJsonModel<ApiManagementGatewayResourcePatch>
+    public partial class ApiGatewayPatch : ApimResource, IJsonModel<ApiGatewayPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ApimResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementGatewayResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiGatewayPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeApiManagementGatewayResourcePatch(document.RootElement, options);
+                        return DeserializeApiGatewayPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementGatewayResourcePatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiGatewayPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementGatewayResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiGatewayPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementGatewayResourcePatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiGatewayPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ApiManagementGatewayResourcePatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ApiGatewayPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApiManagementGatewayResourcePatch IPersistableModel<ApiManagementGatewayResourcePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (ApiManagementGatewayResourcePatch)PersistableModelCreateCore(data, options);
+        ApiGatewayPatch IPersistableModel<ApiGatewayPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (ApiGatewayPatch)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ApiManagementGatewayResourcePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ApiGatewayPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="apiManagementGatewayResourcePatch"> The <see cref="ApiManagementGatewayResourcePatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ApiManagementGatewayResourcePatch apiManagementGatewayResourcePatch)
+        /// <param name="apiGatewayPatch"> The <see cref="ApiGatewayPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ApiGatewayPatch apiGatewayPatch)
         {
-            if (apiManagementGatewayResourcePatch == null)
+            if (apiGatewayPatch == null)
             {
                 return null;
             }
-            return RequestContent.Create(apiManagementGatewayResourcePatch, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(apiGatewayPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ApiManagementGatewayResourcePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ApiGatewayPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +81,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementGatewayResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiGatewayPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementGatewayResourcePatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiGatewayPatch)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -99,30 +100,30 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApiManagementGatewayResourcePatch IJsonModel<ApiManagementGatewayResourcePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ApiManagementGatewayResourcePatch)JsonModelCreateCore(ref reader, options);
+        ApiGatewayPatch IJsonModel<ApiGatewayPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ApiGatewayPatch)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ApimResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementGatewayResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiGatewayPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementGatewayResourcePatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiGatewayPatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeApiManagementGatewayResourcePatch(document.RootElement, options);
+            return DeserializeApiGatewayPatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ApiManagementGatewayResourcePatch DeserializeApiManagementGatewayResourcePatch(JsonElement element, ModelReaderWriterOptions options)
+        internal static ApiGatewayPatch DeserializeApiGatewayPatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ApiManagementGatewayUpdateProperties properties = default;
             ApiManagementGatewaySkuPropertiesForPatch sku = default;
-            string eTag = default;
+            ETag? eTag = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -194,7 +195,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (prop.NameEquals("etag"u8))
                 {
-                    eTag = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -202,7 +207,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ApiManagementGatewayResourcePatch(
+            return new ApiGatewayPatch(
                 id,
                 name,
                 @type,

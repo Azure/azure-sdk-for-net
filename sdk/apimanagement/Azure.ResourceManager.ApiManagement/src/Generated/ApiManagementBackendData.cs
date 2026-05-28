@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Runtime Url of the Backend. Required when backend type is 'Single'. </summary>
         [WirePath("properties.url")]
-        public string Uri
+        public Uri Uri
         {
             get
             {

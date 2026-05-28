@@ -326,11 +326,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="wikiUpdateContract"> Wiki Update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="wikiUpdateContract"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ServiceApiWikiResource>> UpdateAsync(string ifMatch, WikiUpdateContract wikiUpdateContract, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="wikiUpdateContract"/> is null. </exception>
+        public virtual async Task<Response<ServiceApiWikiResource>> UpdateAsync(ETag ifMatch, WikiUpdateContract wikiUpdateContract, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(wikiUpdateContract, nameof(wikiUpdateContract));
 
             using DiagnosticScope scope = _apiWikiClientDiagnostics.CreateScope("ServiceApiWikiResource.Update");
@@ -381,11 +379,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="wikiUpdateContract"> Wiki Update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="wikiUpdateContract"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ServiceApiWikiResource> Update(string ifMatch, WikiUpdateContract wikiUpdateContract, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="wikiUpdateContract"/> is null. </exception>
+        public virtual Response<ServiceApiWikiResource> Update(ETag ifMatch, WikiUpdateContract wikiUpdateContract, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(wikiUpdateContract, nameof(wikiUpdateContract));
 
             using DiagnosticScope scope = _apiWikiClientDiagnostics.CreateScope("ServiceApiWikiResource.Update");
@@ -436,12 +432,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, string ifMatch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, ETag ifMatch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
-
             using DiagnosticScope scope = _apiWikiClientDiagnostics.CreateScope("ServiceApiWikiResource.Delete");
             scope.Start();
             try
@@ -492,12 +484,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, string ifMatch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, ETag ifMatch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
-
             using DiagnosticScope scope = _apiWikiClientDiagnostics.CreateScope("ServiceApiWikiResource.Delete");
             scope.Start();
             try

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="text"> Comment text. </param>
         /// <param name="userId"> A resource identifier for the user who left the comment. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="userId"/> is null. </exception>
-        public IssueCommentContractProperties(string text, string userId)
+        public IssueCommentContractProperties(string text, ResourceIdentifier userId)
         {
             Argument.AssertNotNull(text, nameof(text));
             Argument.AssertNotNull(userId, nameof(userId));
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="createdOn"> Date and time when the comment was created. </param>
         /// <param name="userId"> A resource identifier for the user who left the comment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IssueCommentContractProperties(string text, DateTimeOffset? createdOn, string userId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IssueCommentContractProperties(string text, DateTimeOffset? createdOn, ResourceIdentifier userId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Text = text;
             CreatedOn = createdOn;
@@ -53,6 +54,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> A resource identifier for the user who left the comment. </summary>
         [WirePath("userId")]
-        public string UserId { get; set; }
+        public ResourceIdentifier UserId { get; set; }
     }
 }

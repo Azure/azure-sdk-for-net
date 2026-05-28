@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RecipientsContractProperties"/>. </summary>
-        internal RecipientsContractProperties()
+        public RecipientsContractProperties()
         {
             Emails = new ChangeTrackingList<string>();
             Users = new ChangeTrackingList<string>();

@@ -130,10 +130,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PublicIpAddressId))
+            if (Optional.IsDefined(PublicIPAddressId))
             {
                 writer.WritePropertyName("publicIpAddressId"u8);
-                writer.WriteStringValue(PublicIpAddressId);
+                writer.WriteStringValue(PublicIPAddressId);
             }
             if (Optional.IsDefined(VirtualNetworkConfiguration))
             {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             IList<string> zones = default;
             IReadOnlyList<IPAddress> publicIPAddresses = default;
             IReadOnlyList<IPAddress> privateIPAddresses = default;
-            string publicIpAddressId = default;
+            ResourceIdentifier publicIPAddressId = default;
             VirtualNetworkConfiguration virtualNetworkConfiguration = default;
             Uri gatewayRegionalUri = default;
             ApiManagementNatGatewayState? natGatewayState = default;
@@ -307,7 +307,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (prop.NameEquals("publicIpAddressId"u8))
                 {
-                    publicIpAddressId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    publicIPAddressId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("virtualNetworkConfiguration"u8))
@@ -387,7 +391,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 zones ?? new ChangeTrackingList<string>(),
                 publicIPAddresses ?? new ChangeTrackingList<IPAddress>(),
                 privateIPAddresses ?? new ChangeTrackingList<IPAddress>(),
-                publicIpAddressId,
+                publicIPAddressId,
                 virtualNetworkConfiguration,
                 gatewayRegionalUri,
                 natGatewayState,

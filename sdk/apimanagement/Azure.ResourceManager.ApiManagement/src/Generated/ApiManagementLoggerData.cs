@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Azure Resource Id of a log target (either Azure Event Hub resource or Azure Application Insights resource). </summary>
         [WirePath("properties.resourceId")]
-        public string ResourceId
+        public ResourceIdentifier ResourceId
         {
             get
             {

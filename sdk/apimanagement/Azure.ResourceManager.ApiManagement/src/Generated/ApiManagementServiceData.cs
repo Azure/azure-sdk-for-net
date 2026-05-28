@@ -16,18 +16,18 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary> A single API Management service resource in List or Get response. </summary>
-    public partial class ApiManagementServiceResourceData : TrackedResourceData
+    public partial class ApiManagementServiceData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ApiManagementServiceResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementServiceData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="publisherEmail"> Publisher email. </param>
         /// <param name="publisherName"> Publisher name. </param>
         /// <param name="sku"> SKU properties of the API Management service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherEmail"/>, <paramref name="publisherName"/> or <paramref name="sku"/> is null. </exception>
-        public ApiManagementServiceResourceData(AzureLocation location, string publisherEmail, string publisherName, ApiManagementServiceSkuProperties sku) : base(location)
+        public ApiManagementServiceData(AzureLocation location, string publisherEmail, string publisherName, ApiManagementServiceSkuProperties sku) : base(location)
         {
             Argument.AssertNotNull(publisherEmail, nameof(publisherEmail));
             Argument.AssertNotNull(publisherName, nameof(publisherName));
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ApiManagement
             Zones = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApiManagementServiceResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementServiceData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="identity"> Managed service identity of the Api Management service. </param>
         /// <param name="eTag"> ETag of the resource. </param>
         /// <param name="zones"> The availability zones. </param>
-        internal ApiManagementServiceResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ApiManagementServiceProperties properties, ApiManagementServiceSkuProperties sku, ApiManagementServiceIdentity identity, ETag? eTag, IList<string> zones) : base(id, name, resourceType, systemData, tags, location)
+        internal ApiManagementServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ApiManagementServiceProperties properties, ApiManagementServiceSkuProperties sku, ManagedServiceIdentity identity, ETag? eTag, IList<string> zones) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Managed service identity of the Api Management service. </summary>
         [WirePath("identity")]
-        public ApiManagementServiceIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> ETag of the resource. </summary>
         [WirePath("etag")]

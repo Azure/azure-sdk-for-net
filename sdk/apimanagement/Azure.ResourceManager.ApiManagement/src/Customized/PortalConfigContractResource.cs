@@ -15,26 +15,9 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class PortalConfigContractResource
     {
-        /// <summary>
-        /// Back-compat overload that accepts an <see cref="ETag"/> for the If-Match header. Delegates to the string overload.
-        /// </summary>
-        /// <param name="ifMatch"> ETag of the entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="data"> The data to update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<Response<PortalConfigContractResource>> UpdateAsync(ETag ifMatch, PortalConfigContractData data, CancellationToken cancellationToken = default)
-            => await UpdateAsync(ifMatch.ToString(), data, cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// Back-compat overload that accepts an <see cref="ETag"/> for the If-Match header. Delegates to the string overload.
-        /// </summary>
-        /// <param name="ifMatch"> ETag of the entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="data"> The data to update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response<PortalConfigContractResource> Update(ETag ifMatch, PortalConfigContractData data, CancellationToken cancellationToken = default)
-            => Update(ifMatch.ToString(), data, cancellationToken);
-
+        // TODO: Remove manual implementation once https://github.com/Azure/azure-sdk-for-net/issues/59089
+        // is fixed in the MPG generator. The generator currently emits broken Response<bool> code for
+        // HEAD operations annotated with @responseAsBool (extra 'accept' parameter + CS0472 + IL2026/IL3050).
         /// <summary>
         /// Gets the entity state (ETag) version of the resource. Returns <c>true</c> when the resource exists.
         /// </summary>
@@ -53,6 +36,9 @@ namespace Azure.ResourceManager.ApiManagement
             catch (Exception e) { scope.Failed(e); throw; }
         }
 
+        // TODO: Remove manual implementation once https://github.com/Azure/azure-sdk-for-net/issues/59089
+        // is fixed in the MPG generator. The generator currently emits broken Response<bool> code for
+        // HEAD operations annotated with @responseAsBool (extra 'accept' parameter + CS0472 + IL2026/IL3050).
         /// <summary>
         /// Gets the entity state (ETag) version of the resource. Returns <c>true</c> when the resource exists.
         /// </summary>
@@ -70,7 +56,5 @@ namespace Azure.ResourceManager.ApiManagement
             }
             catch (Exception e) { scope.Failed(e); throw; }
         }
-
     }
 }
-

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> A resource identifier for the API the issue was created for. </summary>
         [WirePath("properties.apiId")]
-        public string ApiId
+        public ResourceIdentifier ApiId
         {
             get
             {
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> A resource identifier for the user created the issue. </summary>
         [WirePath("properties.userId")]
-        public string UserId
+        public ResourceIdentifier UserId
         {
             get
             {

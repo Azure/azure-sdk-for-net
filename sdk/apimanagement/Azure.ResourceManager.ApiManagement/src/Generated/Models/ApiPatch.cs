@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Absolute URL of the backend service implementing this API. </summary>
         [WirePath("properties.serviceUrl")]
-        public string ServiceUri
+        public Uri ServiceUri
         {
             get
             {

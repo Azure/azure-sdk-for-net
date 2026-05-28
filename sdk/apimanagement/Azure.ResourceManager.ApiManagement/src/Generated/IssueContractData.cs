@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> A resource identifier for the API the issue was created for. </summary>
         [WirePath("properties.apiId")]
-        public string ApiId
+        public ResourceIdentifier ApiId
         {
             get
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> A resource identifier for the user created the issue. </summary>
         [WirePath("properties.userId")]
-        public string UserId
+        public ResourceIdentifier UserId
         {
             get
             {

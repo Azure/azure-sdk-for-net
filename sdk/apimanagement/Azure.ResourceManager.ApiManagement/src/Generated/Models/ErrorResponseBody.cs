@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ErrorResponseBody"/>. </summary>
-        internal ErrorResponseBody()
+        public ErrorResponseBody()
         {
             Details = new ChangeTrackingList<ErrorFieldContract>();
         }
@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response. </summary>
         [WirePath("code")]
-        public string Code { get; }
+        public string Code { get; set; }
 
         /// <summary> Human-readable representation of the error. </summary>
         [WirePath("message")]
-        public string Message { get; }
+        public string Message { get; set; }
 
         /// <summary> The list of invalid fields send in request, in case of validation error. </summary>
         [WirePath("details")]

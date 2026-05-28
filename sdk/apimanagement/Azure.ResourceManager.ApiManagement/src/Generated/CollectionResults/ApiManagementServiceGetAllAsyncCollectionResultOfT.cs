@@ -15,7 +15,7 @@ using Azure.ResourceManager.ApiManagement.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    internal partial class ApiManagementServiceGetAllAsyncCollectionResultOfT : AsyncPageable<ApiManagementServiceResourceData>
+    internal partial class ApiManagementServiceGetAllAsyncCollectionResultOfT : AsyncPageable<ApiManagementServiceData>
     {
         private readonly ApiManagementService _client;
         private readonly Guid _subscriptionId;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ApiManagementServiceGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<ApiManagementServiceResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<ApiManagementServiceData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ApiManagement
                     yield break;
                 }
                 ApiManagementServiceListResult result = ApiManagementServiceListResult.FromResponse(response);
-                yield return Page<ApiManagementServiceResourceData>.FromValues((IReadOnlyList<ApiManagementServiceResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<ApiManagementServiceData>.FromValues((IReadOnlyList<ApiManagementServiceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {

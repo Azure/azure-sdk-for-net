@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ApiManagementGatewayResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string gatewayName, ApiManagementGatewayResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ApiManagementGatewayResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string gatewayName, ApiManagementGatewayData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
             Argument.AssertNotNull(data, nameof(data));
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiGatewayRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, gatewayName, ApiManagementGatewayResourceData.ToRequestContent(data), context);
+                HttpMessage message = _apiGatewayRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, gatewayName, ApiManagementGatewayData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ApiManagementArmOperation<ApiManagementGatewayResource> operation = new ApiManagementArmOperation<ApiManagementGatewayResource>(
                     new ApiManagementGatewayResourceOperationSource(Client),
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ApiManagementGatewayResource> CreateOrUpdate(WaitUntil waitUntil, string gatewayName, ApiManagementGatewayResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ApiManagementGatewayResource> CreateOrUpdate(WaitUntil waitUntil, string gatewayName, ApiManagementGatewayData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
             Argument.AssertNotNull(data, nameof(data));
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiGatewayRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, gatewayName, ApiManagementGatewayResourceData.ToRequestContent(data), context);
+                HttpMessage message = _apiGatewayRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, gatewayName, ApiManagementGatewayData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ApiManagementArmOperation<ApiManagementGatewayResource> operation = new ApiManagementArmOperation<ApiManagementGatewayResource>(
                     new ApiManagementGatewayResourceOperationSource(Client),
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.ApiManagement
                 };
                 HttpMessage message = _apiGatewayRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, gatewayName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ApiManagementGatewayResourceData> response = Response.FromValue(ApiManagementGatewayResourceData.FromResponse(result), result);
+                Response<ApiManagementGatewayData> response = Response.FromValue(ApiManagementGatewayData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.ApiManagement
                 };
                 HttpMessage message = _apiGatewayRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, gatewayName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ApiManagementGatewayResourceData> response = Response.FromValue(ApiManagementGatewayResourceData.FromResponse(result), result);
+                Response<ApiManagementGatewayData> response = Response.FromValue(ApiManagementGatewayData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiManagementGatewayResourceData, ApiManagementGatewayResource>(new ApiGatewayGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiManagementGatewayData, ApiManagementGatewayResource>(new ApiGatewayGetByResourceGroupAsyncCollectionResultOfT(
                 _apiGatewayRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiManagementGatewayResourceData, ApiManagementGatewayResource>(new ApiGatewayGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<ApiManagementGatewayData, ApiManagementGatewayResource>(new ApiGatewayGetByResourceGroupCollectionResultOfT(
                 _apiGatewayRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -379,14 +379,14 @@ namespace Azure.ResourceManager.ApiManagement
                 HttpMessage message = _apiGatewayRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, gatewayName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ApiManagementGatewayResourceData> response = default;
+                Response<ApiManagementGatewayData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ApiManagementGatewayResourceData.FromResponse(result), result);
+                        response = Response.FromValue(ApiManagementGatewayData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ApiManagementGatewayResourceData)null, result);
+                        response = Response.FromValue((ApiManagementGatewayData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -436,14 +436,14 @@ namespace Azure.ResourceManager.ApiManagement
                 HttpMessage message = _apiGatewayRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, gatewayName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ApiManagementGatewayResourceData> response = default;
+                Response<ApiManagementGatewayData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ApiManagementGatewayResourceData.FromResponse(result), result);
+                        response = Response.FromValue(ApiManagementGatewayData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ApiManagementGatewayResourceData)null, result);
+                        response = Response.FromValue((ApiManagementGatewayData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -493,14 +493,14 @@ namespace Azure.ResourceManager.ApiManagement
                 HttpMessage message = _apiGatewayRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, gatewayName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ApiManagementGatewayResourceData> response = default;
+                Response<ApiManagementGatewayData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ApiManagementGatewayResourceData.FromResponse(result), result);
+                        response = Response.FromValue(ApiManagementGatewayData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ApiManagementGatewayResourceData)null, result);
+                        response = Response.FromValue((ApiManagementGatewayData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -554,14 +554,14 @@ namespace Azure.ResourceManager.ApiManagement
                 HttpMessage message = _apiGatewayRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, gatewayName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ApiManagementGatewayResourceData> response = default;
+                Response<ApiManagementGatewayData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ApiManagementGatewayResourceData.FromResponse(result), result);
+                        response = Response.FromValue(ApiManagementGatewayData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ApiManagementGatewayResourceData)null, result);
+                        response = Response.FromValue((ApiManagementGatewayData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="isBuffered"> Whether records are buffered in the logger before publishing. Default is assumed to be true. </param>
         /// <param name="resourceId"> Azure Resource Id of a log target (either Azure Event Hub resource or Azure Application Insights resource). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LoggerContractProperties(LoggerType loggerType, string description, IDictionary<string, string> credentials, bool? isBuffered, string resourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LoggerContractProperties(LoggerType loggerType, string description, IDictionary<string, string> credentials, bool? isBuffered, ResourceIdentifier resourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LoggerType = loggerType;
             Description = description;
@@ -66,6 +67,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Azure Resource Id of a log target (either Azure Event Hub resource or Azure Application Insights resource). </summary>
         [WirePath("resourceId")]
-        public string ResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
     }
 }

@@ -8,20 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using Azure;
 using Azure.ResourceManager.ApiManagement;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Parameter supplied to Update Api Management Service. </summary>
-    public partial class ApiManagementServiceResourcePatch : ApimResource
+    public partial class ApiManagementServicePatch : ApimResource
     {
-        /// <summary> Initializes a new instance of <see cref="ApiManagementServiceResourcePatch"/>. </summary>
-        public ApiManagementServiceResourcePatch()
+        /// <summary> Initializes a new instance of <see cref="ApiManagementServicePatch"/>. </summary>
+        public ApiManagementServicePatch()
         {
             Zones = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApiManagementServiceResourcePatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementServicePatch"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type for API Management resource is set to Microsoft.ApiManagement. </param>
@@ -32,7 +34,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="identity"> Managed service identity of the Api Management service. </param>
         /// <param name="eTag"> ETag of the resource. </param>
         /// <param name="zones"> A list of availability zones denoting where the resource needs to come from. </param>
-        internal ApiManagementServiceResourcePatch(string id, string name, string @type, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApiManagementServiceUpdateProperties properties, ApiManagementServiceSkuProperties sku, ApiManagementServiceIdentity identity, string eTag, IList<string> zones) : base(id, name, @type, tags, additionalBinaryDataProperties)
+        internal ApiManagementServicePatch(string id, string name, string @type, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApiManagementServiceUpdateProperties properties, ApiManagementServiceSkuProperties sku, ManagedServiceIdentity identity, ETag? eTag, IList<string> zones) : base(id, name, @type, tags, additionalBinaryDataProperties)
         {
             Properties = properties;
             Sku = sku;
@@ -51,11 +53,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Managed service identity of the Api Management service. </summary>
         [WirePath("identity")]
-        public ApiManagementServiceIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> ETag of the resource. </summary>
         [WirePath("etag")]
-        public string ETag { get; }
+        public ETag? ETag { get; }
 
         /// <summary> A list of availability zones denoting where the resource needs to come from. </summary>
         [WirePath("zones")]

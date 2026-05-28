@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementPrivateEndpointConnectionData"/>. </summary>
-        internal ApiManagementPrivateEndpointConnectionData()
+        public ApiManagementPrivateEndpointConnectionData()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Resource properties. </summary>
         [WirePath("properties")]
-        internal PrivateEndpointConnectionProperties Properties { get; }
+        internal PrivateEndpointConnectionProperties Properties { get; set; }
 
         /// <summary> The group ids for the private endpoint resource. </summary>
         [WirePath("properties.groupIds")]
@@ -47,7 +47,11 @@ namespace Azure.ResourceManager.ApiManagement
         {
             get
             {
-                return Properties is null ? default : Properties.GroupIds;
+                if (Properties is null)
+                {
+                    Properties = new PrivateEndpointConnectionProperties();
+                }
+                return Properties.GroupIds;
             }
         }
 
@@ -58,6 +62,14 @@ namespace Azure.ResourceManager.ApiManagement
             get
             {
                 return Properties is null ? default : Properties.PrivateLinkServiceConnectionState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateEndpointConnectionProperties();
+                }
+                Properties.PrivateLinkServiceConnectionState = value;
             }
         }
 

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PolicyDescriptionContractData"/>. </summary>
-        internal PolicyDescriptionContractData()
+        public PolicyDescriptionContractData()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Policy description contract properties. </summary>
         [WirePath("properties")]
-        internal PolicyDescriptionContractProperties Properties { get; }
+        internal PolicyDescriptionContractProperties Properties { get; set; }
 
         /// <summary> Policy description. </summary>
         [WirePath("properties.description")]

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementWorkspaceLinksListResult"/>. </summary>
         /// <param name="value"> Result of the List API Management WorkspaceLinks operation. </param>
-        internal ApiManagementWorkspaceLinksListResult(IEnumerable<ApiManagementWorkspaceLinksResourceData> value)
+        internal ApiManagementWorkspaceLinksListResult(IEnumerable<ApiManagementWorkspaceLinksData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="value"> Result of the List API Management WorkspaceLinks operation. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of API Management services. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementWorkspaceLinksListResult(IList<ApiManagementWorkspaceLinksResourceData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApiManagementWorkspaceLinksListResult(IList<ApiManagementWorkspaceLinksData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Result of the List API Management WorkspaceLinks operation. </summary>
         [WirePath("value")]
-        public IList<ApiManagementWorkspaceLinksResourceData> Value { get; }
+        public IList<ApiManagementWorkspaceLinksData> Value { get; }
 
         /// <summary> Link to the next set of results. Not empty if Value contains incomplete list of API Management services. </summary>
         [WirePath("nextLink")]

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ErrorFieldContract"/>. </summary>
-        internal ErrorFieldContract()
+        public ErrorFieldContract()
         {
         }
 
@@ -37,14 +37,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Property level error code. </summary>
         [WirePath("code")]
-        public string Code { get; }
+        public string Code { get; set; }
 
         /// <summary> Human-readable representation of property-level error. </summary>
         [WirePath("message")]
-        public string Message { get; }
+        public string Message { get; set; }
 
         /// <summary> Property name. </summary>
         [WirePath("target")]
-        public string Target { get; }
+        public string Target { get; set; }
     }
 }

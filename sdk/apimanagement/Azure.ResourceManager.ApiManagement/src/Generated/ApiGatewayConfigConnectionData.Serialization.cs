@@ -18,68 +18,68 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary> A single API Management gateway resource in List or Get response. </summary>
-    public partial class ApiManagementGatewayConfigConnectionResourceData : ResourceData, IJsonModel<ApiManagementGatewayConfigConnectionResourceData>
+    public partial class ApiGatewayConfigConnectionData : ResourceData, IJsonModel<ApiGatewayConfigConnectionData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementGatewayConfigConnectionResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiGatewayConfigConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeApiManagementGatewayConfigConnectionResourceData(document.RootElement, options);
+                        return DeserializeApiGatewayConfigConnectionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementGatewayConfigConnectionResourceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiGatewayConfigConnectionData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementGatewayConfigConnectionResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiGatewayConfigConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementGatewayConfigConnectionResourceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiGatewayConfigConnectionData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ApiManagementGatewayConfigConnectionResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ApiGatewayConfigConnectionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApiManagementGatewayConfigConnectionResourceData IPersistableModel<ApiManagementGatewayConfigConnectionResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ApiManagementGatewayConfigConnectionResourceData)PersistableModelCreateCore(data, options);
+        ApiGatewayConfigConnectionData IPersistableModel<ApiGatewayConfigConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ApiGatewayConfigConnectionData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ApiManagementGatewayConfigConnectionResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ApiGatewayConfigConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="apiManagementGatewayConfigConnectionResourceData"> The <see cref="ApiManagementGatewayConfigConnectionResourceData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ApiManagementGatewayConfigConnectionResourceData apiManagementGatewayConfigConnectionResourceData)
+        /// <param name="apiGatewayConfigConnectionData"> The <see cref="ApiGatewayConfigConnectionData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ApiGatewayConfigConnectionData apiGatewayConfigConnectionData)
         {
-            if (apiManagementGatewayConfigConnectionResourceData == null)
+            if (apiGatewayConfigConnectionData == null)
             {
                 return null;
             }
-            return RequestContent.Create(apiManagementGatewayConfigConnectionResourceData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(apiGatewayConfigConnectionData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ApiManagementGatewayConfigConnectionResourceData"/> from. </param>
-        internal static ApiManagementGatewayConfigConnectionResourceData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ApiGatewayConfigConnectionData"/> from. </param>
+        internal static ApiGatewayConfigConnectionData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeApiManagementGatewayConfigConnectionResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeApiGatewayConfigConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ApiManagementGatewayConfigConnectionResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ApiGatewayConfigConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementGatewayConfigConnectionResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiGatewayConfigConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementGatewayConfigConnectionResourceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiGatewayConfigConnectionData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
@@ -107,24 +107,24 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApiManagementGatewayConfigConnectionResourceData IJsonModel<ApiManagementGatewayConfigConnectionResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ApiManagementGatewayConfigConnectionResourceData)JsonModelCreateCore(ref reader, options);
+        ApiGatewayConfigConnectionData IJsonModel<ApiGatewayConfigConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ApiGatewayConfigConnectionData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementGatewayConfigConnectionResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiGatewayConfigConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementGatewayConfigConnectionResourceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiGatewayConfigConnectionData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeApiManagementGatewayConfigConnectionResourceData(document.RootElement, options);
+            return DeserializeApiGatewayConfigConnectionData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ApiManagementGatewayConfigConnectionResourceData DeserializeApiManagementGatewayConfigConnectionResourceData(JsonElement element, ModelReaderWriterOptions options)
+        internal static ApiGatewayConfigConnectionData DeserializeApiGatewayConfigConnectionData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ApiManagement
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ApiManagementGatewayConfigConnectionResourceData(
+            return new ApiGatewayConfigConnectionData(
                 id,
                 name,
                 resourceType,

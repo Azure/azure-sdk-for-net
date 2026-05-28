@@ -8,43 +8,29 @@
 using System;
 using System.Collections.Generic;
 using Azure;
-using Azure.Core;
-using Azure.ResourceManager.ApiManagement.Models;
-using Azure.ResourceManager.Models;
+using Azure.ResourceManager.ApiManagement;
 
-namespace Azure.ResourceManager.ApiManagement
+namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> A single API Management gateway resource in List or Get response. </summary>
-    public partial class ApiManagementGatewayResourceData : TrackedResourceData
+    /// <summary> Parameter supplied to Update API Management gateway. </summary>
+    public partial class ApiGatewayPatch : ApimResource
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayResourceData"/>. </summary>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="sku"> SKU properties of the API Management gateway. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
-        public ApiManagementGatewayResourceData(AzureLocation location, ApiManagementGatewaySkuProperties sku) : base(location)
+        /// <summary> Initializes a new instance of <see cref="ApiGatewayPatch"/>. </summary>
+        public ApiGatewayPatch()
         {
-            Argument.AssertNotNull(sku, nameof(sku));
-
-            Sku = sku;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayResourceData"/>. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <summary> Initializes a new instance of <see cref="ApiGatewayPatch"/>. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type for API Management resource is set to Microsoft.ApiManagement. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the API Management gateway. </param>
         /// <param name="sku"> SKU properties of the API Management gateway. </param>
         /// <param name="eTag"> ETag of the resource. </param>
-        internal ApiManagementGatewayResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ApiManagementGatewayProperties properties, ApiManagementGatewaySkuProperties sku, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
+        internal ApiGatewayPatch(string id, string name, string @type, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApiManagementGatewayUpdateProperties properties, ApiManagementGatewaySkuPropertiesForPatch sku, ETag? eTag) : base(id, name, @type, tags, additionalBinaryDataProperties)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Sku = sku;
             ETag = eTag;
@@ -52,11 +38,11 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Properties of the API Management gateway. </summary>
         [WirePath("properties")]
-        internal ApiManagementGatewayProperties Properties { get; set; }
+        internal ApiManagementGatewayUpdateProperties Properties { get; set; }
 
         /// <summary> SKU properties of the API Management gateway. </summary>
         [WirePath("sku")]
-        public ApiManagementGatewaySkuProperties Sku { get; set; }
+        public ApiManagementGatewaySkuPropertiesForPatch Sku { get; set; }
 
         /// <summary> ETag of the resource. </summary>
         [WirePath("etag")]
@@ -104,7 +90,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 if (Properties is null)
                 {
-                    Properties = new ApiManagementGatewayProperties();
+                    Properties = new ApiManagementGatewayUpdateProperties();
                 }
                 Properties.VirtualNetworkType = value;
             }
@@ -132,7 +118,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 if (Properties is null)
                 {
-                    Properties = new ApiManagementGatewayProperties();
+                    Properties = new ApiManagementGatewayUpdateProperties();
                 }
                 Properties.BackendSubnetId = value;
             }

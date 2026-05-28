@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            string serviceId = default;
+            ResourceIdentifier serviceId = default;
             DateTimeOffset? scheduledPurgeOn = default;
             DateTimeOffset? deletedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -139,7 +140,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 if (prop.NameEquals("serviceId"u8))
                 {
-                    serviceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    serviceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("scheduledPurgeDate"u8))

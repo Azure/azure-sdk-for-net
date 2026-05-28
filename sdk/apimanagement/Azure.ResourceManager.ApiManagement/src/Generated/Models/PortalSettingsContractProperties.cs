@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PortalSettingsContractProperties"/>. </summary>
-        internal PortalSettingsContractProperties()
+        public PortalSettingsContractProperties()
         {
         }
 
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="enabled"> Redirect Anonymous users to the Sign-In page. </param>
         /// <param name="termsOfService"> Terms of service contract properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PortalSettingsContractProperties(string uri, string validationKey, SubscriptionsDelegationSettingsProperties subscriptions, RegistrationDelegationSettingsProperties userRegistration, bool? enabled, TermsOfServiceProperties termsOfService, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PortalSettingsContractProperties(Uri uri, string validationKey, SubscriptionsDelegationSettingsProperties subscriptions, RegistrationDelegationSettingsProperties userRegistration, bool? enabled, TermsOfServiceProperties termsOfService, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Uri = uri;
             ValidationKey = validationKey;
@@ -43,27 +43,27 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> A delegation Url. </summary>
         [WirePath("url")]
-        public string Uri { get; }
+        public Uri Uri { get; set; }
 
         /// <summary> A base64-encoded validation key to validate, that a request is coming from Azure API Management. </summary>
         [WirePath("validationKey")]
-        public string ValidationKey { get; }
+        public string ValidationKey { get; set; }
 
         /// <summary> Subscriptions delegation settings. </summary>
         [WirePath("subscriptions")]
-        internal SubscriptionsDelegationSettingsProperties Subscriptions { get; }
+        internal SubscriptionsDelegationSettingsProperties Subscriptions { get; set; }
 
         /// <summary> User registration delegation settings. </summary>
         [WirePath("userRegistration")]
-        internal RegistrationDelegationSettingsProperties UserRegistration { get; }
+        internal RegistrationDelegationSettingsProperties UserRegistration { get; set; }
 
         /// <summary> Redirect Anonymous users to the Sign-In page. </summary>
         [WirePath("enabled")]
-        public bool? Enabled { get; }
+        public bool? Enabled { get; set; }
 
         /// <summary> Terms of service contract properties. </summary>
         [WirePath("termsOfService")]
-        public TermsOfServiceProperties TermsOfService { get; }
+        public TermsOfServiceProperties TermsOfService { get; set; }
 
         /// <summary> Enable or disable delegation for subscriptions. </summary>
         [WirePath("subscriptions.enabled")]
@@ -72,6 +72,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             get
             {
                 return Subscriptions is null ? default : Subscriptions.Enabled;
+            }
+            set
+            {
+                if (Subscriptions is null)
+                {
+                    Subscriptions = new SubscriptionsDelegationSettingsProperties();
+                }
+                Subscriptions.Enabled = value;
             }
         }
 
@@ -82,6 +90,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             get
             {
                 return UserRegistration is null ? default : UserRegistration.Enabled;
+            }
+            set
+            {
+                if (UserRegistration is null)
+                {
+                    UserRegistration = new RegistrationDelegationSettingsProperties();
+                }
+                UserRegistration.Enabled = value;
             }
         }
     }

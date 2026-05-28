@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RecipientEmailContract"/>. </summary>
-        internal RecipientEmailContract()
+        public RecipientEmailContract()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Recipient Email contract properties. </summary>
         [WirePath("properties")]
-        internal RecipientEmailContractProperties Properties { get; }
+        internal RecipientEmailContractProperties Properties { get; set; }
 
         /// <summary> User Email subscribed to notification. </summary>
         [WirePath("properties.email")]
@@ -48,6 +48,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             get
             {
                 return Properties is null ? default : Properties.Email;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RecipientEmailContractProperties();
+                }
+                Properties.Email = value;
             }
         }
     }

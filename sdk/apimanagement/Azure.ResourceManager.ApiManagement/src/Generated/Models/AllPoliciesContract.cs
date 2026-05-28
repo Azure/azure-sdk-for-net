@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AllPoliciesContract"/>. </summary>
-        internal AllPoliciesContract()
+        public AllPoliciesContract()
         {
         }
 
@@ -39,15 +39,23 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Properties of the All Policies. </summary>
         [WirePath("properties")]
-        internal AllPoliciesContractProperties Properties { get; }
+        internal AllPoliciesContractProperties Properties { get; set; }
 
         /// <summary> Policy Identifier. </summary>
         [WirePath("properties.referencePolicyId")]
-        public string ReferencePolicyId
+        public ResourceIdentifier ReferencePolicyId
         {
             get
             {
                 return Properties is null ? default : Properties.ReferencePolicyId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AllPoliciesContractProperties();
+                }
+                Properties.ReferencePolicyId = value;
             }
         }
 
@@ -58,6 +66,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             get
             {
                 return Properties is null ? default : Properties.ComplianceState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AllPoliciesContractProperties();
+                }
+                Properties.ComplianceState = value;
             }
         }
     }

@@ -214,12 +214,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="force"> If true removes all references to the schema before deleting it. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, string ifMatch, bool? force = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, ETag ifMatch, bool? force = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
-
             using DiagnosticScope scope = _workspaceApiSchemaClientDiagnostics.CreateScope("ServiceWorkspaceApiSchemaResource.Delete");
             scope.Start();
             try
@@ -271,12 +267,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="force"> If true removes all references to the schema before deleting it. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, string ifMatch, bool? force = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, ETag ifMatch, bool? force = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
-
             using DiagnosticScope scope = _workspaceApiSchemaClientDiagnostics.CreateScope("ServiceWorkspaceApiSchemaResource.Delete");
             scope.Start();
             try

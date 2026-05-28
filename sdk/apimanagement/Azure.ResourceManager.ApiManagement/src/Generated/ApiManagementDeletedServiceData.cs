@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementDeletedServiceData"/>. </summary>
-        internal ApiManagementDeletedServiceData()
+        public ApiManagementDeletedServiceData()
         {
         }
 
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Deleted API Management Service details. </summary>
         [WirePath("properties")]
-        internal DeletedServiceContractProperties Properties { get; }
+        internal DeletedServiceContractProperties Properties { get; set; }
 
         /// <summary> API Management Service Master Location. </summary>
         [WirePath("location")]
@@ -49,11 +49,19 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Fully-qualified API Management Service Resource ID. </summary>
         [WirePath("properties.serviceId")]
-        public string ServiceId
+        public ResourceIdentifier ServiceId
         {
             get
             {
                 return Properties is null ? default : Properties.ServiceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DeletedServiceContractProperties();
+                }
+                Properties.ServiceId = value;
             }
         }
 
@@ -65,6 +73,14 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 return Properties is null ? default : Properties.ScheduledPurgeOn;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DeletedServiceContractProperties();
+                }
+                Properties.ScheduledPurgeOn = value;
+            }
         }
 
         /// <summary> UTC Timestamp when the service was soft-deleted. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </summary>
@@ -74,6 +90,14 @@ namespace Azure.ResourceManager.ApiManagement
             get
             {
                 return Properties is null ? default : Properties.DeletedOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DeletedServiceContractProperties();
+                }
+                Properties.DeletedOn = value;
             }
         }
     }

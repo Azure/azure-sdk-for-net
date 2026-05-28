@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PortalSettingsContractData"/>. </summary>
-        internal PortalSettingsContractData()
+        public PortalSettingsContractData()
         {
         }
 
@@ -39,15 +39,23 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Portal Settings contract properties. </summary>
         [WirePath("properties")]
-        internal PortalSettingsContractProperties Properties { get; }
+        internal PortalSettingsContractProperties Properties { get; set; }
 
         /// <summary> A delegation Url. </summary>
         [WirePath("properties.url")]
-        public string Uri
+        public Uri Uri
         {
             get
             {
                 return Properties is null ? default : Properties.Uri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PortalSettingsContractProperties();
+                }
+                Properties.Uri = value;
             }
         }
 
@@ -59,6 +67,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return Properties is null ? default : Properties.ValidationKey;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PortalSettingsContractProperties();
+                }
+                Properties.ValidationKey = value;
+            }
         }
 
         /// <summary> Redirect Anonymous users to the Sign-In page. </summary>
@@ -68,6 +84,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             get
             {
                 return Properties is null ? default : Properties.Enabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PortalSettingsContractProperties();
+                }
+                Properties.Enabled = value;
             }
         }
 
@@ -79,6 +103,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return Properties is null ? default : Properties.TermsOfService;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PortalSettingsContractProperties();
+                }
+                Properties.TermsOfService = value;
+            }
         }
 
         /// <summary> Enable or disable delegation for subscriptions. </summary>
@@ -89,6 +121,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return Properties is null ? default : Properties.SubscriptionsEnabled;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PortalSettingsContractProperties();
+                }
+                Properties.SubscriptionsEnabled = value;
+            }
         }
 
         /// <summary> Enable or disable delegation for user registration. </summary>
@@ -98,6 +138,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             get
             {
                 return Properties is null ? default : Properties.UserRegistrationEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PortalSettingsContractProperties();
+                }
+                Properties.UserRegistrationEnabled = value;
             }
         }
     }

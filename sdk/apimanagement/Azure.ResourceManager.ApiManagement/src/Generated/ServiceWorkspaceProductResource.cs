@@ -217,11 +217,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="patch"> Update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ServiceWorkspaceProductResource>> UpdateAsync(string ifMatch, ApiManagementProductPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<ServiceWorkspaceProductResource>> UpdateAsync(ETag ifMatch, ApiManagementProductPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _workspaceProductClientDiagnostics.CreateScope("ServiceWorkspaceProductResource.Update");
@@ -272,11 +270,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="patch"> Update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ServiceWorkspaceProductResource> Update(string ifMatch, ApiManagementProductPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<ServiceWorkspaceProductResource> Update(ETag ifMatch, ApiManagementProductPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _workspaceProductClientDiagnostics.CreateScope("ServiceWorkspaceProductResource.Update");
@@ -328,12 +324,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="deleteSubscriptions"> Delete existing subscriptions associated with the product or not. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, string ifMatch, bool? deleteSubscriptions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, ETag ifMatch, bool? deleteSubscriptions = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
-
             using DiagnosticScope scope = _workspaceProductClientDiagnostics.CreateScope("ServiceWorkspaceProductResource.Delete");
             scope.Start();
             try
@@ -385,12 +377,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="deleteSubscriptions"> Delete existing subscriptions associated with the product or not. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, string ifMatch, bool? deleteSubscriptions = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, ETag ifMatch, bool? deleteSubscriptions = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
-
             using DiagnosticScope scope = _workspaceProductClientDiagnostics.CreateScope("ServiceWorkspaceProductResource.Delete");
             scope.Start();
             try

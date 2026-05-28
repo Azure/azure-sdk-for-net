@@ -15,7 +15,7 @@ using Azure.ResourceManager.ApiManagement.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    internal partial class ApiGatewayGetAllAsyncCollectionResultOfT : AsyncPageable<ApiManagementGatewayResourceData>
+    internal partial class ApiGatewayGetAllAsyncCollectionResultOfT : AsyncPageable<ApiManagementGatewayData>
     {
         private readonly ApiGateway _client;
         private readonly Guid _subscriptionId;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ApiGatewayGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<ApiManagementGatewayResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<ApiManagementGatewayData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ApiManagement
                     yield break;
                 }
                 ApiManagementGatewayListResult result = ApiManagementGatewayListResult.FromResponse(response);
-                yield return Page<ApiManagementGatewayResourceData>.FromValues((IReadOnlyList<ApiManagementGatewayResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<ApiManagementGatewayData>.FromValues((IReadOnlyList<ApiManagementGatewayData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {

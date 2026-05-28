@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OperationResultContractProperties"/>. </summary>
-        internal OperationResultContractProperties()
+        public OperationResultContractProperties()
         {
             ActionLog = new ChangeTrackingList<OperationResultLogItemContract>();
         }
@@ -46,27 +46,27 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Operation result identifier. </summary>
         [WirePath("id")]
-        public string OperationResultIdentifier { get; }
+        public string OperationResultIdentifier { get; set; }
 
         /// <summary> Status of an async operation. </summary>
         [WirePath("status")]
-        public AsyncOperationStatus? Status { get; }
+        public AsyncOperationStatus? Status { get; set; }
 
         /// <summary> Start time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("started")]
-        public DateTimeOffset? Started { get; }
+        public DateTimeOffset? Started { get; set; }
 
         /// <summary> Last update time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("updated")]
-        public DateTimeOffset? Updated { get; }
+        public DateTimeOffset? Updated { get; set; }
 
         /// <summary> Optional result info. </summary>
         [WirePath("resultInfo")]
-        public string ResultInfo { get; }
+        public string ResultInfo { get; set; }
 
         /// <summary> Error Body Contract. </summary>
         [WirePath("error")]
-        public ErrorResponseBody Error { get; }
+        public ErrorResponseBody Error { get; set; }
 
         /// <summary> This property if only provided as part of the TenantConfiguration_Validate operation. It contains the log the entities which will be updated/created/deleted as part of the TenantConfiguration_Deploy operation. </summary>
         [WirePath("actionLog")]

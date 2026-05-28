@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="tenantId"> The Tenant Id. </param>
         /// <param name="objectId"> The Object Id. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AuthorizationAccessPolicyContractProperties(IList<string> appIds, string tenantId, string objectId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AuthorizationAccessPolicyContractProperties(IList<string> appIds, Guid? tenantId, string objectId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AppIds = appIds;
             TenantId = tenantId;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> The Tenant Id. </summary>
         [WirePath("tenantId")]
-        public string TenantId { get; set; }
+        public Guid? TenantId { get; set; }
 
         /// <summary> The Object Id. </summary>
         [WirePath("objectId")]

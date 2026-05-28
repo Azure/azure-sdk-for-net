@@ -19,8 +19,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Initializes a new instance of <see cref="NotificationContractProperties"/>. </summary>
         /// <param name="title"> Title of the Notification. </param>
-        internal NotificationContractProperties(string title)
+        /// <exception cref="ArgumentNullException"> <paramref name="title"/> is null. </exception>
+        public NotificationContractProperties(string title)
         {
+            Argument.AssertNotNull(title, nameof(title));
+
             Title = title;
         }
 
@@ -39,14 +42,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Title of the Notification. </summary>
         [WirePath("title")]
-        public string Title { get; }
+        public string Title { get; set; }
 
         /// <summary> Description of the Notification. </summary>
         [WirePath("description")]
-        public string Description { get; }
+        public string Description { get; set; }
 
         /// <summary> Recipient Parameter values. </summary>
         [WirePath("recipients")]
-        public RecipientsContractProperties Recipients { get; }
+        public RecipientsContractProperties Recipients { get; set; }
     }
 }

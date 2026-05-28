@@ -15,6 +15,9 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ApiManagementPortalRevisionResource
     {
+        // TODO: Remove manual implementation once https://github.com/Azure/azure-sdk-for-net/issues/59089
+        // is fixed in the MPG generator. The generator currently emits broken Response<bool> code for
+        // HEAD operations annotated with @responseAsBool (extra 'accept' parameter + CS0472 + IL2026/IL3050).
         /// <summary>
         /// Gets the entity state (ETag) version of the resource. Returns <c>true</c> when the resource exists.
         /// </summary>
@@ -33,6 +36,9 @@ namespace Azure.ResourceManager.ApiManagement
             catch (Exception e) { scope.Failed(e); throw; }
         }
 
+        // TODO: Remove manual implementation once https://github.com/Azure/azure-sdk-for-net/issues/59089
+        // is fixed in the MPG generator. The generator currently emits broken Response<bool> code for
+        // HEAD operations annotated with @responseAsBool (extra 'accept' parameter + CS0472 + IL2026/IL3050).
         /// <summary>
         /// Gets the entity state (ETag) version of the resource. Returns <c>true</c> when the resource exists.
         /// </summary>
@@ -50,7 +56,5 @@ namespace Azure.ResourceManager.ApiManagement
             }
             catch (Exception e) { scope.Failed(e); throw; }
         }
-
     }
 }
-

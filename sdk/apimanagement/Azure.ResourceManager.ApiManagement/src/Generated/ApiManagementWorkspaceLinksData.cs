@@ -15,19 +15,19 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary> A single API Management WorkspaceLinks in List or Get response. </summary>
-    public partial class ApiManagementWorkspaceLinksResourceData : ResourceData
+    public partial class ApiManagementWorkspaceLinksData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ApiManagementWorkspaceLinksResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementWorkspaceLinksData"/>. </summary>
         /// <param name="properties"> Properties of the API Management WorkspaceLinks. </param>
-        internal ApiManagementWorkspaceLinksResourceData(ApiManagementWorkspaceLinksProperties properties)
+        internal ApiManagementWorkspaceLinksData(ApiManagementWorkspaceLinksProperties properties)
         {
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApiManagementWorkspaceLinksResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementWorkspaceLinksData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the API Management WorkspaceLinks. </param>
         /// <param name="eTag"> ETag of the resource. </param>
-        internal ApiManagementWorkspaceLinksResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApiManagementWorkspaceLinksProperties properties, ETag? eTag) : base(id, name, resourceType, systemData)
+        internal ApiManagementWorkspaceLinksData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApiManagementWorkspaceLinksProperties properties, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> The Tenant Id. </summary>
         [WirePath("properties.tenantId")]
-        public string TenantId
+        public Guid? TenantId
         {
             get
             {

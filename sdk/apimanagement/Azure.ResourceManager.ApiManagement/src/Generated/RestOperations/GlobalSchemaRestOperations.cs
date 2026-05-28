@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ApiManagement
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string serviceName, string schemaId, string ifMatch, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string serviceName, string schemaId, ETag ifMatch, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ApiManagement
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
-            request.Headers.SetValue("If-Match", ifMatch);
+            request.Headers.SetValue("If-Match", TypeFormatters.ConvertToString(ifMatch));
             return message;
         }
 

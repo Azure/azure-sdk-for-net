@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 throw new FormatException($"The model {nameof(VirtualNetworkConfiguration)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Vnetid))
+            if (options.Format != "W" && Optional.IsDefined(VnetId))
             {
                 writer.WritePropertyName("vnetid"u8);
-                writer.WriteStringValue(Vnetid);
+                writer.WriteStringValue(VnetId.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(Subnetname))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            string vnetid = default;
+            Guid? vnetId = default;
             string subnetname = default;
             ResourceIdentifier subnetResourceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -140,7 +140,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 if (prop.NameEquals("vnetid"u8))
                 {
-                    vnetid = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    vnetId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("subnetname"u8))
@@ -162,7 +166,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VirtualNetworkConfiguration(vnetid, subnetname, subnetResourceId, additionalBinaryDataProperties);
+            return new VirtualNetworkConfiguration(vnetId, subnetname, subnetResourceId, additionalBinaryDataProperties);
         }
     }
 }

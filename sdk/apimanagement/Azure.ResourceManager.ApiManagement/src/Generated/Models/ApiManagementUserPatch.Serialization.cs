@@ -15,61 +15,61 @@ using Azure.ResourceManager.ApiManagement;
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> User update parameters. </summary>
-    public partial class UserContractPatch : IJsonModel<UserContractPatch>
+    public partial class ApiManagementUserPatch : IJsonModel<ApiManagementUserPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual UserContractPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ApiManagementUserPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UserContractPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementUserPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeUserContractPatch(document.RootElement, options);
+                        return DeserializeApiManagementUserPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UserContractPatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementUserPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UserContractPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementUserPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(UserContractPatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementUserPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<UserContractPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ApiManagementUserPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        UserContractPatch IPersistableModel<UserContractPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ApiManagementUserPatch IPersistableModel<ApiManagementUserPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<UserContractPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ApiManagementUserPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="userContractPatch"> The <see cref="UserContractPatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(UserContractPatch userContractPatch)
+        /// <param name="apiManagementUserPatch"> The <see cref="ApiManagementUserPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ApiManagementUserPatch apiManagementUserPatch)
         {
-            if (userContractPatch == null)
+            if (apiManagementUserPatch == null)
             {
                 return null;
             }
-            return RequestContent.Create(userContractPatch, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(apiManagementUserPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<UserContractPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ApiManagementUserPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UserContractPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementUserPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserContractPatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementUserPatch)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Properties))
             {
@@ -109,24 +109,24 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        UserContractPatch IJsonModel<UserContractPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ApiManagementUserPatch IJsonModel<ApiManagementUserPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual UserContractPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ApiManagementUserPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UserContractPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementUserPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserContractPatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementUserPatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUserContractPatch(document.RootElement, options);
+            return DeserializeApiManagementUserPatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UserContractPatch DeserializeUserContractPatch(JsonElement element, ModelReaderWriterOptions options)
+        internal static ApiManagementUserPatch DeserializeApiManagementUserPatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UserContractPatch(properties, additionalBinaryDataProperties);
+            return new ApiManagementUserPatch(properties, additionalBinaryDataProperties);
         }
     }
 }

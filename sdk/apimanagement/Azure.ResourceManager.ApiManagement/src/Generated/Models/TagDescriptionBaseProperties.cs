@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="externalDocsUri"> Absolute URL of external resources describing the tag. </param>
         /// <param name="externalDocsDescription"> Description of the external resources describing the tag. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TagDescriptionBaseProperties(string description, string externalDocsUri, string externalDocsDescription, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TagDescriptionBaseProperties(string description, Uri externalDocsUri, string externalDocsDescription, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             ExternalDocsUri = externalDocsUri;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Absolute URL of external resources describing the tag. </summary>
         [WirePath("externalDocsUrl")]
-        public string ExternalDocsUri { get; set; }
+        public Uri ExternalDocsUri { get; set; }
 
         /// <summary> Description of the external resources describing the tag. </summary>
         [WirePath("externalDocsDescription")]

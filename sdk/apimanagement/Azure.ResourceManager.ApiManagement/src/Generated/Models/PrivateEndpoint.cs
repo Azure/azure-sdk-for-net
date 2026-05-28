@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PrivateEndpoint"/>. </summary>
-        internal PrivateEndpoint()
+        public PrivateEndpoint()
         {
         }
 

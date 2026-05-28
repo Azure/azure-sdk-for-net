@@ -18,10 +18,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary> A single API Management WorkspaceLinks in List or Get response. </summary>
-    public partial class ApiManagementWorkspaceLinksResourceData : ResourceData, IJsonModel<ApiManagementWorkspaceLinksResourceData>
+    public partial class ApiManagementWorkspaceLinksData : ResourceData, IJsonModel<ApiManagementWorkspaceLinksData>
     {
-        /// <summary> Initializes a new instance of <see cref="ApiManagementWorkspaceLinksResourceData"/> for deserialization. </summary>
-        internal ApiManagementWorkspaceLinksResourceData()
+        /// <summary> Initializes a new instance of <see cref="ApiManagementWorkspaceLinksData"/> for deserialization. </summary>
+        internal ApiManagementWorkspaceLinksData()
         {
         }
 
@@ -29,52 +29,52 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementWorkspaceLinksResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementWorkspaceLinksData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeApiManagementWorkspaceLinksResourceData(document.RootElement, options);
+                        return DeserializeApiManagementWorkspaceLinksData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementWorkspaceLinksResourceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementWorkspaceLinksData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementWorkspaceLinksResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementWorkspaceLinksData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementWorkspaceLinksResourceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementWorkspaceLinksData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ApiManagementWorkspaceLinksResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ApiManagementWorkspaceLinksData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApiManagementWorkspaceLinksResourceData IPersistableModel<ApiManagementWorkspaceLinksResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ApiManagementWorkspaceLinksResourceData)PersistableModelCreateCore(data, options);
+        ApiManagementWorkspaceLinksData IPersistableModel<ApiManagementWorkspaceLinksData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ApiManagementWorkspaceLinksData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ApiManagementWorkspaceLinksResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ApiManagementWorkspaceLinksData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ApiManagementWorkspaceLinksResourceData"/> from. </param>
-        internal static ApiManagementWorkspaceLinksResourceData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ApiManagementWorkspaceLinksData"/> from. </param>
+        internal static ApiManagementWorkspaceLinksData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeApiManagementWorkspaceLinksResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeApiManagementWorkspaceLinksData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ApiManagementWorkspaceLinksResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ApiManagementWorkspaceLinksData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementWorkspaceLinksResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementWorkspaceLinksData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementWorkspaceLinksResourceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementWorkspaceLinksData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
@@ -102,24 +102,24 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApiManagementWorkspaceLinksResourceData IJsonModel<ApiManagementWorkspaceLinksResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ApiManagementWorkspaceLinksResourceData)JsonModelCreateCore(ref reader, options);
+        ApiManagementWorkspaceLinksData IJsonModel<ApiManagementWorkspaceLinksData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ApiManagementWorkspaceLinksData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementWorkspaceLinksResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementWorkspaceLinksData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementWorkspaceLinksResourceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementWorkspaceLinksData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeApiManagementWorkspaceLinksResourceData(document.RootElement, options);
+            return DeserializeApiManagementWorkspaceLinksData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ApiManagementWorkspaceLinksResourceData DeserializeApiManagementWorkspaceLinksResourceData(JsonElement element, ModelReaderWriterOptions options)
+        internal static ApiManagementWorkspaceLinksData DeserializeApiManagementWorkspaceLinksData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.ApiManagement
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ApiManagementWorkspaceLinksResourceData(
+            return new ApiManagementWorkspaceLinksData(
                 id,
                 name,
                 resourceType,

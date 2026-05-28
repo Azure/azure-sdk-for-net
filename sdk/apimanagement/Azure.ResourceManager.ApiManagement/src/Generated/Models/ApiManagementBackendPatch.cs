@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Runtime Url of the Backend. </summary>
         [WirePath("properties.url")]
-        public string Uri
+        public Uri Uri
         {
             get
             {

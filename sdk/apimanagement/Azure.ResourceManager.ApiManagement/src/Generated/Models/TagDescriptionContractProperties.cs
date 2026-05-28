@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tagId"> Identifier of the tag in the form of /tags/{tagId}. </param>
         /// <param name="displayName"> Tag name. </param>
-        internal TagDescriptionContractProperties(string description, string externalDocsUri, string externalDocsDescription, IDictionary<string, BinaryData> additionalBinaryDataProperties, string tagId, string displayName) : base(description, externalDocsUri, externalDocsDescription, additionalBinaryDataProperties)
+        internal TagDescriptionContractProperties(string description, Uri externalDocsUri, string externalDocsDescription, IDictionary<string, BinaryData> additionalBinaryDataProperties, string tagId, string displayName) : base(description, externalDocsUri, externalDocsDescription, additionalBinaryDataProperties)
         {
             TagId = tagId;
             DisplayName = displayName;

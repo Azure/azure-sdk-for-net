@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Gets the Id. </summary>
         [WirePath("privateEndpoint.id")]
-        public string PrivateEndpointId
+        public ResourceIdentifier PrivateEndpointId
         {
             get
             {

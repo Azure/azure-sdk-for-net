@@ -20,8 +20,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        internal PrivateEndpointConnectionProperties(ApiManagementPrivateLinkServiceConnectionState privateLinkServiceConnectionState)
+        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkServiceConnectionState"/> is null. </exception>
+        public PrivateEndpointConnectionProperties(ApiManagementPrivateLinkServiceConnectionState privateLinkServiceConnectionState)
         {
+            Argument.AssertNotNull(privateLinkServiceConnectionState, nameof(privateLinkServiceConnectionState));
+
             GroupIds = new ChangeTrackingList<string>();
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
         }
@@ -47,11 +50,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> The private endpoint resource. </summary>
         [WirePath("privateEndpoint")]
-        internal PrivateEndpoint PrivateEndpoint { get; }
+        internal PrivateEndpoint PrivateEndpoint { get; set; }
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
         [WirePath("privateLinkServiceConnectionState")]
-        public ApiManagementPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; }
+        public ApiManagementPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
 
         /// <summary> The provisioning state of the private endpoint connection resource. </summary>
         [WirePath("provisioningState")]

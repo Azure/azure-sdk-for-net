@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AllPoliciesContractProperties"/>. </summary>
-        internal AllPoliciesContractProperties()
+        public AllPoliciesContractProperties()
         {
         }
 
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="referencePolicyId"> Policy Identifier. </param>
         /// <param name="complianceState"> Policy Restriction Compliance State. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AllPoliciesContractProperties(string referencePolicyId, PolicyComplianceState? complianceState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AllPoliciesContractProperties(ResourceIdentifier referencePolicyId, PolicyComplianceState? complianceState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ReferencePolicyId = referencePolicyId;
             ComplianceState = complianceState;
@@ -35,10 +36,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Policy Identifier. </summary>
         [WirePath("referencePolicyId")]
-        public string ReferencePolicyId { get; }
+        public ResourceIdentifier ReferencePolicyId { get; set; }
 
         /// <summary> Policy Restriction Compliance State. </summary>
         [WirePath("complianceState")]
-        public PolicyComplianceState? ComplianceState { get; }
+        public PolicyComplianceState? ComplianceState { get; set; }
     }
 }

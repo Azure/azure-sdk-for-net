@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary></summary>
-    public partial class ApiManagementGatewayConfigConnectionResource : IJsonModel<ApiManagementGatewayConfigConnectionResourceData>
+    public partial class ApiManagementGatewayConfigConnectionResource : IJsonModel<ApiGatewayConfigConnectionData>
     {
-        private static IJsonModel<ApiManagementGatewayConfigConnectionResourceData> s_dataDeserializationInstance;
+        private static IJsonModel<ApiGatewayConfigConnectionData> s_dataDeserializationInstance;
 
-        private static IJsonModel<ApiManagementGatewayConfigConnectionResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ApiManagementGatewayConfigConnectionResourceData();
+        private static IJsonModel<ApiGatewayConfigConnectionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ApiGatewayConfigConnectionData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ApiManagementGatewayConfigConnectionResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementGatewayConfigConnectionResourceData>)Data).Write(writer, options);
+        void IJsonModel<ApiGatewayConfigConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiGatewayConfigConnectionData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApiManagementGatewayConfigConnectionResourceData IJsonModel<ApiManagementGatewayConfigConnectionResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        ApiGatewayConfigConnectionData IJsonModel<ApiGatewayConfigConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ApiManagementGatewayConfigConnectionResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiManagementGatewayConfigConnectionResourceData>(Data, options, AzureResourceManagerApiManagementContext.Default);
+        BinaryData IPersistableModel<ApiGatewayConfigConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiGatewayConfigConnectionData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApiManagementGatewayConfigConnectionResourceData IPersistableModel<ApiManagementGatewayConfigConnectionResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementGatewayConfigConnectionResourceData>(data, options, AzureResourceManagerApiManagementContext.Default);
+        ApiGatewayConfigConnectionData IPersistableModel<ApiGatewayConfigConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiGatewayConfigConnectionData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ApiManagementGatewayConfigConnectionResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<ApiGatewayConfigConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

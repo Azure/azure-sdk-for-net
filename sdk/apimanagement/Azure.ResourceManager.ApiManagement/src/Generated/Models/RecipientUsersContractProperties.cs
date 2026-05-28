@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RecipientUsersContractProperties"/>. </summary>
-        internal RecipientUsersContractProperties()
+        public RecipientUsersContractProperties()
         {
         }
 
@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> API Management UserId subscribed to notification. </summary>
         [WirePath("userId")]
-        public string UserId { get; }
+        public string UserId { get; set; }
     }
 }

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="zones"> A list of availability zones denoting where the resource needs to come from. </param>
         /// <param name="publicIPAddresses"> Public Static Load Balanced IP addresses of the API Management service in the additional location. Available only for Basic, Standard, Premium and Isolated SKU. </param>
         /// <param name="privateIPAddresses"> Private Static Load Balanced IP addresses of the API Management service which is deployed in an Internal Virtual Network in a particular additional location. Available only for Basic, Standard, Premium and Isolated SKU. </param>
-        /// <param name="publicIpAddressId"> Public Standard SKU IP V4 based IP address to be associated with Virtual Network deployed service in the location. Supported only for Premium SKU being deployed in Virtual Network. </param>
+        /// <param name="publicIPAddressId"> Public Standard SKU IP V4 based IP address to be associated with Virtual Network deployed service in the location. Supported only for Premium SKU being deployed in Virtual Network. </param>
         /// <param name="virtualNetworkConfiguration"> Virtual network configuration for the location. </param>
         /// <param name="gatewayRegionalUri"> Gateway URL of the API Management service in the Region. </param>
         /// <param name="natGatewayState"> Property can be used to enable NAT Gateway for this API Management service. </param>
@@ -49,14 +49,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="disableGateway"> Property only valid for an Api Management service deployed in multiple locations. This can be used to disable the gateway in this additional location. </param>
         /// <param name="platformVersion"> Compute Platform Version running the service. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AdditionalLocation(AzureLocation location, ApiManagementServiceSkuProperties sku, IList<string> zones, IReadOnlyList<IPAddress> publicIPAddresses, IReadOnlyList<IPAddress> privateIPAddresses, string publicIpAddressId, VirtualNetworkConfiguration virtualNetworkConfiguration, Uri gatewayRegionalUri, ApiManagementNatGatewayState? natGatewayState, IReadOnlyList<string> outboundPublicIPAddresses, bool? disableGateway, PlatformVersion? platformVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AdditionalLocation(AzureLocation location, ApiManagementServiceSkuProperties sku, IList<string> zones, IReadOnlyList<IPAddress> publicIPAddresses, IReadOnlyList<IPAddress> privateIPAddresses, ResourceIdentifier publicIPAddressId, VirtualNetworkConfiguration virtualNetworkConfiguration, Uri gatewayRegionalUri, ApiManagementNatGatewayState? natGatewayState, IReadOnlyList<string> outboundPublicIPAddresses, bool? disableGateway, PlatformVersion? platformVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Location = location;
             Sku = sku;
             Zones = zones;
             PublicIPAddresses = publicIPAddresses;
             PrivateIPAddresses = privateIPAddresses;
-            PublicIpAddressId = publicIpAddressId;
+            PublicIPAddressId = publicIPAddressId;
             VirtualNetworkConfiguration = virtualNetworkConfiguration;
             GatewayRegionalUri = gatewayRegionalUri;
             NatGatewayState = natGatewayState;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Public Standard SKU IP V4 based IP address to be associated with Virtual Network deployed service in the location. Supported only for Premium SKU being deployed in Virtual Network. </summary>
         [WirePath("publicIpAddressId")]
-        public string PublicIpAddressId { get; set; }
+        public ResourceIdentifier PublicIPAddressId { get; set; }
 
         /// <summary> Virtual network configuration for the location. </summary>
         [WirePath("virtualNetworkConfiguration")]

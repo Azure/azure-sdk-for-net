@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ApiManagementServiceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string serviceName, ApiManagementServiceResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ApiManagementServiceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string serviceName, ApiManagementServiceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(data, nameof(data));
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiManagementServiceRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, ApiManagementServiceResourceData.ToRequestContent(data), context);
+                HttpMessage message = _apiManagementServiceRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, ApiManagementServiceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ApiManagementArmOperation<ApiManagementServiceResource> operation = new ApiManagementArmOperation<ApiManagementServiceResource>(
                     new ApiManagementServiceResourceOperationSource(Client),
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ApiManagementServiceResource> CreateOrUpdate(WaitUntil waitUntil, string serviceName, ApiManagementServiceResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ApiManagementServiceResource> CreateOrUpdate(WaitUntil waitUntil, string serviceName, ApiManagementServiceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(data, nameof(data));
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiManagementServiceRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, ApiManagementServiceResourceData.ToRequestContent(data), context);
+                HttpMessage message = _apiManagementServiceRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, ApiManagementServiceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ApiManagementArmOperation<ApiManagementServiceResource> operation = new ApiManagementArmOperation<ApiManagementServiceResource>(
                     new ApiManagementServiceResourceOperationSource(Client),
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ApiManagement
                 };
                 HttpMessage message = _apiManagementServiceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ApiManagementServiceResourceData> response = Response.FromValue(ApiManagementServiceResourceData.FromResponse(result), result);
+                Response<ApiManagementServiceData> response = Response.FromValue(ApiManagementServiceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.ApiManagement
                 };
                 HttpMessage message = _apiManagementServiceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ApiManagementServiceResourceData> response = Response.FromValue(ApiManagementServiceResourceData.FromResponse(result), result);
+                Response<ApiManagementServiceData> response = Response.FromValue(ApiManagementServiceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiManagementServiceResourceData, ApiManagementServiceResource>(new ApiManagementServiceGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiManagementServiceData, ApiManagementServiceResource>(new ApiManagementServiceGetByResourceGroupAsyncCollectionResultOfT(
                 _apiManagementServiceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiManagementServiceResourceData, ApiManagementServiceResource>(new ApiManagementServiceGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<ApiManagementServiceData, ApiManagementServiceResource>(new ApiManagementServiceGetByResourceGroupCollectionResultOfT(
                 _apiManagementServiceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -383,14 +383,14 @@ namespace Azure.ResourceManager.ApiManagement
                 HttpMessage message = _apiManagementServiceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ApiManagementServiceResourceData> response = default;
+                Response<ApiManagementServiceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ApiManagementServiceResourceData.FromResponse(result), result);
+                        response = Response.FromValue(ApiManagementServiceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ApiManagementServiceResourceData)null, result);
+                        response = Response.FromValue((ApiManagementServiceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -440,14 +440,14 @@ namespace Azure.ResourceManager.ApiManagement
                 HttpMessage message = _apiManagementServiceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ApiManagementServiceResourceData> response = default;
+                Response<ApiManagementServiceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ApiManagementServiceResourceData.FromResponse(result), result);
+                        response = Response.FromValue(ApiManagementServiceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ApiManagementServiceResourceData)null, result);
+                        response = Response.FromValue((ApiManagementServiceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -497,14 +497,14 @@ namespace Azure.ResourceManager.ApiManagement
                 HttpMessage message = _apiManagementServiceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ApiManagementServiceResourceData> response = default;
+                Response<ApiManagementServiceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ApiManagementServiceResourceData.FromResponse(result), result);
+                        response = Response.FromValue(ApiManagementServiceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ApiManagementServiceResourceData)null, result);
+                        response = Response.FromValue((ApiManagementServiceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -558,14 +558,14 @@ namespace Azure.ResourceManager.ApiManagement
                 HttpMessage message = _apiManagementServiceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ApiManagementServiceResourceData> response = default;
+                Response<ApiManagementServiceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ApiManagementServiceResourceData.FromResponse(result), result);
+                        response = Response.FromValue(ApiManagementServiceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ApiManagementServiceResourceData)null, result);
+                        response = Response.FromValue((ApiManagementServiceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

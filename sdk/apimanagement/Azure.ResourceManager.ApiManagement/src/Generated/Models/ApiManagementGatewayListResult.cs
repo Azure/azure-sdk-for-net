@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayListResult"/>. </summary>
         /// <param name="value"> Result of the List API Management gateway operation. </param>
-        internal ApiManagementGatewayListResult(IEnumerable<ApiManagementGatewayResourceData> value)
+        internal ApiManagementGatewayListResult(IEnumerable<ApiManagementGatewayData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="value"> Result of the List API Management gateway operation. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of API Management services. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementGatewayListResult(IList<ApiManagementGatewayResourceData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApiManagementGatewayListResult(IList<ApiManagementGatewayData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Result of the List API Management gateway operation. </summary>
         [WirePath("value")]
-        public IList<ApiManagementGatewayResourceData> Value { get; }
+        public IList<ApiManagementGatewayData> Value { get; }
 
         /// <summary> Link to the next set of results. Not empty if Value contains incomplete list of API Management services. </summary>
         [WirePath("nextLink")]

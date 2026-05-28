@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TenantConfigurationSyncStateContract"/>. </summary>
-        internal TenantConfigurationSyncStateContract()
+        public TenantConfigurationSyncStateContract()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Properties returned Tenant Configuration Sync State check. </summary>
         [WirePath("properties")]
-        internal TenantConfigurationSyncStateContractProperties Properties { get; }
+        internal TenantConfigurationSyncStateContractProperties Properties { get; set; }
 
         /// <summary> The name of Git branch. </summary>
         [WirePath("properties.branch")]
@@ -48,6 +48,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             get
             {
                 return Properties is null ? default : Properties.Branch;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TenantConfigurationSyncStateContractProperties();
+                }
+                Properties.Branch = value;
             }
         }
 
@@ -59,6 +67,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return Properties is null ? default : Properties.CommitId;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TenantConfigurationSyncStateContractProperties();
+                }
+                Properties.CommitId = value;
+            }
         }
 
         /// <summary> value indicating if last sync was save (true) or deploy (false) operation. </summary>
@@ -68,6 +84,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             get
             {
                 return Properties is null ? default : Properties.IsExport;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TenantConfigurationSyncStateContractProperties();
+                }
+                Properties.IsExport = value;
             }
         }
 
@@ -79,6 +103,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return Properties is null ? default : Properties.IsSynced;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TenantConfigurationSyncStateContractProperties();
+                }
+                Properties.IsSynced = value;
+            }
         }
 
         /// <summary> value indicating whether Git configuration access is enabled. </summary>
@@ -88,6 +120,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             get
             {
                 return Properties is null ? default : Properties.IsGitEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TenantConfigurationSyncStateContractProperties();
+                }
+                Properties.IsGitEnabled = value;
             }
         }
 
@@ -99,6 +139,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return Properties is null ? default : Properties.SyncOn;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TenantConfigurationSyncStateContractProperties();
+                }
+                Properties.SyncOn = value;
+            }
         }
 
         /// <summary> The date of the latest configuration change. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
@@ -109,6 +157,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return Properties is null ? default : Properties.ConfigurationChangeOn;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TenantConfigurationSyncStateContractProperties();
+                }
+                Properties.ConfigurationChangeOn = value;
+            }
         }
 
         /// <summary> Most recent tenant configuration operation identifier. </summary>
@@ -118,6 +174,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             get
             {
                 return Properties is null ? default : Properties.LastOperationId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TenantConfigurationSyncStateContractProperties();
+                }
+                Properties.LastOperationId = value;
             }
         }
     }

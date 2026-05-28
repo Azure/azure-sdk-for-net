@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkConfiguration"/>. </summary>
-        /// <param name="vnetid"> The virtual network ID. This is typically a GUID. Expect a null GUID by default. </param>
+        /// <param name="vnetId"> The virtual network ID. This is typically a GUID. Expect a null GUID by default. </param>
         /// <param name="subnetname"> The name of the subnet. </param>
         /// <param name="subnetResourceId"> The full resource ID of a subnet in a virtual network to deploy the API Management service in. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkConfiguration(string vnetid, string subnetname, ResourceIdentifier subnetResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualNetworkConfiguration(Guid? vnetId, string subnetname, ResourceIdentifier subnetResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Vnetid = vnetid;
+            VnetId = vnetId;
             Subnetname = subnetname;
             SubnetResourceId = subnetResourceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> The virtual network ID. This is typically a GUID. Expect a null GUID by default. </summary>
         [WirePath("vnetid")]
-        public string Vnetid { get; }
+        public Guid? VnetId { get; }
 
         /// <summary> The name of the subnet. </summary>
         [WirePath("subnetname")]

@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiManagementServiceResourceData, ApiManagementServiceResource>(new ApiManagementServiceGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiManagementServiceData, ApiManagementServiceResource>(new ApiManagementServiceGetAllAsyncCollectionResultOfT(
                 ApiManagementServiceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiManagementServiceResourceData, ApiManagementServiceResource>(new ApiManagementServiceGetAllCollectionResultOfT(
+            return new PageableWrapper<ApiManagementServiceData, ApiManagementServiceResource>(new ApiManagementServiceGetAllCollectionResultOfT(
                 ApiManagementServiceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiManagementGatewayResourceData, ApiManagementGatewayResource>(new ApiGatewayGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiManagementGatewayData, ApiManagementGatewayResource>(new ApiGatewayGetAllAsyncCollectionResultOfT(
                 ApiGatewayRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiManagementGatewayResourceData, ApiManagementGatewayResource>(new ApiGatewayGetAllCollectionResultOfT(
+            return new PageableWrapper<ApiManagementGatewayData, ApiManagementGatewayResource>(new ApiGatewayGetAllCollectionResultOfT(
                 ApiGatewayRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,

@@ -8,68 +8,71 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Parameter supplied to Update Api Management Service. </summary>
-    public partial class ApiManagementServiceResourcePatch : ApimResource, IJsonModel<ApiManagementServiceResourcePatch>
+    public partial class ApiManagementServicePatch : ApimResource, IJsonModel<ApiManagementServicePatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ApimResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementServiceResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementServicePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeApiManagementServiceResourcePatch(document.RootElement, options);
+                        return DeserializeApiManagementServicePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementServiceResourcePatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementServicePatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementServiceResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementServicePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementServiceResourcePatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementServicePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ApiManagementServiceResourcePatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ApiManagementServicePatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApiManagementServiceResourcePatch IPersistableModel<ApiManagementServiceResourcePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (ApiManagementServiceResourcePatch)PersistableModelCreateCore(data, options);
+        ApiManagementServicePatch IPersistableModel<ApiManagementServicePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (ApiManagementServicePatch)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ApiManagementServiceResourcePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ApiManagementServicePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="apiManagementServiceResourcePatch"> The <see cref="ApiManagementServiceResourcePatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ApiManagementServiceResourcePatch apiManagementServiceResourcePatch)
+        /// <param name="apiManagementServicePatch"> The <see cref="ApiManagementServicePatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ApiManagementServicePatch apiManagementServicePatch)
         {
-            if (apiManagementServiceResourcePatch == null)
+            if (apiManagementServicePatch == null)
             {
                 return null;
             }
-            return RequestContent.Create(apiManagementServiceResourcePatch, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(apiManagementServicePatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ApiManagementServiceResourcePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ApiManagementServicePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +83,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementServiceResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementServicePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementServiceResourcePatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementServicePatch)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -99,12 +102,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Zones))
             {
@@ -125,24 +128,24 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApiManagementServiceResourcePatch IJsonModel<ApiManagementServiceResourcePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ApiManagementServiceResourcePatch)JsonModelCreateCore(ref reader, options);
+        ApiManagementServicePatch IJsonModel<ApiManagementServicePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ApiManagementServicePatch)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ApimResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementServiceResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementServicePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementServiceResourcePatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementServicePatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeApiManagementServiceResourcePatch(document.RootElement, options);
+            return DeserializeApiManagementServicePatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ApiManagementServiceResourcePatch DeserializeApiManagementServiceResourcePatch(JsonElement element, ModelReaderWriterOptions options)
+        internal static ApiManagementServicePatch DeserializeApiManagementServicePatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -155,8 +158,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ApiManagementServiceUpdateProperties properties = default;
             ApiManagementServiceSkuProperties sku = default;
-            ApiManagementServiceIdentity identity = default;
-            string eTag = default;
+            ManagedServiceIdentity identity = default;
+            ETag? eTag = default;
             IList<string> zones = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -220,12 +223,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    identity = ApiManagementServiceIdentity.DeserializeApiManagementServiceIdentity(prop.Value, options);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerApiManagementContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("etag"u8))
                 {
-                    eTag = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("zones"u8))
@@ -254,7 +261,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ApiManagementServiceResourcePatch(
+            return new ApiManagementServicePatch(
                 id,
                 name,
                 @type,

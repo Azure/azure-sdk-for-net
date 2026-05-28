@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Gets the Id. </summary>
         [WirePath("properties.privateEndpoint.id")]
-        public string PrivateEndpointId
+        public ResourceIdentifier PrivateEndpointId
         {
             get
             {

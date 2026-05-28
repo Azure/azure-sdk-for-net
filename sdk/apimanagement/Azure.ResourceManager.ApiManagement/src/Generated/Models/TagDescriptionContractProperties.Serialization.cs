@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             string description = default;
-            string externalDocsUri = default;
+            Uri externalDocsUri = default;
             string externalDocsDescription = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string tagId = default;
@@ -127,7 +127,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (prop.NameEquals("externalDocsUrl"u8))
                 {
-                    externalDocsUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    externalDocsUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("externalDocsDescription"u8))

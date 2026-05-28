@@ -15,26 +15,9 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ServiceWorkspaceSchemaResource
     {
-        /// <summary>
-        /// Back-compat overload that accepts an <see cref="ETag"/> for the If-Match header. Delegates to the string overload.
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
-        /// <param name="ifMatch"> ETag of the entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, ETag ifMatch, CancellationToken cancellationToken = default)
-            => await DeleteAsync(waitUntil, ifMatch.ToString(), cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// Back-compat overload that accepts an <see cref="ETag"/> for the If-Match header. Delegates to the string overload.
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
-        /// <param name="ifMatch"> ETag of the entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation Delete(WaitUntil waitUntil, ETag ifMatch, CancellationToken cancellationToken = default)
-            => Delete(waitUntil, ifMatch.ToString(), cancellationToken);
-
+        // TODO: Remove manual implementation once https://github.com/Azure/azure-sdk-for-net/issues/59089
+        // is fixed in the MPG generator. The generator currently emits broken Response<bool> code for
+        // HEAD operations annotated with @responseAsBool (extra 'accept' parameter + CS0472 + IL2026/IL3050).
         /// <summary>
         /// Gets the entity state (ETag) version of the resource. Returns <c>true</c> when the resource exists.
         /// </summary>
@@ -53,6 +36,9 @@ namespace Azure.ResourceManager.ApiManagement
             catch (Exception e) { scope.Failed(e); throw; }
         }
 
+        // TODO: Remove manual implementation once https://github.com/Azure/azure-sdk-for-net/issues/59089
+        // is fixed in the MPG generator. The generator currently emits broken Response<bool> code for
+        // HEAD operations annotated with @responseAsBool (extra 'accept' parameter + CS0472 + IL2026/IL3050).
         /// <summary>
         /// Gets the entity state (ETag) version of the resource. Returns <c>true</c> when the resource exists.
         /// </summary>
@@ -70,7 +56,5 @@ namespace Azure.ResourceManager.ApiManagement
             }
             catch (Exception e) { scope.Failed(e); throw; }
         }
-
     }
 }
-

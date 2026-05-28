@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementNotificationData"/>. </summary>
-        internal ApiManagementNotificationData()
+        public ApiManagementNotificationData()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Notification entity contract properties. </summary>
         [WirePath("properties")]
-        internal NotificationContractProperties Properties { get; }
+        internal NotificationContractProperties Properties { get; set; }
 
         /// <summary> Title of the Notification. </summary>
         [WirePath("properties.title")]
@@ -48,6 +48,14 @@ namespace Azure.ResourceManager.ApiManagement
             get
             {
                 return Properties is null ? default : Properties.Title;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NotificationContractProperties();
+                }
+                Properties.Title = value;
             }
         }
 
@@ -59,6 +67,14 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 return Properties is null ? default : Properties.Description;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NotificationContractProperties();
+                }
+                Properties.Description = value;
+            }
         }
 
         /// <summary> Recipient Parameter values. </summary>
@@ -68,6 +84,14 @@ namespace Azure.ResourceManager.ApiManagement
             get
             {
                 return Properties is null ? default : Properties.Recipients;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NotificationContractProperties();
+                }
+                Properties.Recipients = value;
             }
         }
     }

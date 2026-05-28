@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
-                writer.WriteStringValue(TenantId);
+                writer.WriteStringValue(TenantId.Value);
             }
             if (Optional.IsDefined(ObjectId))
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             IList<string> appIds = default;
-            string tenantId = default;
+            Guid? tenantId = default;
             string objectId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -170,7 +170,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (prop.NameEquals("tenantId"u8))
                 {
-                    tenantId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tenantId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("objectId"u8))

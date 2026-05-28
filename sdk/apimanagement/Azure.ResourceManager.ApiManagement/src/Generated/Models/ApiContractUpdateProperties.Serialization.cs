@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(ServiceUri))
             {
                 writer.WritePropertyName("serviceUrl"u8);
-                writer.WriteStringValue(ServiceUri);
+                writer.WriteStringValue(ServiceUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Path))
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             McpProperties mcpProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string displayName = default;
-            string serviceUri = default;
+            Uri serviceUri = default;
             string path = default;
             IList<ApiOperationInvokableProtocol> protocols = default;
             foreach (var prop in element.EnumerateObject())
@@ -278,7 +278,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (prop.NameEquals("serviceUrl"u8))
                 {
-                    serviceUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    serviceUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("path"u8))

@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Absolute URL of external resources describing the tag. </summary>
         [WirePath("properties.externalDocsUrl")]
-        public string ExternalDocsUri
+        public Uri ExternalDocsUri
         {
             get
             {

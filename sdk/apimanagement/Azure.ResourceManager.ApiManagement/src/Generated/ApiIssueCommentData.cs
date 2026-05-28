@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> A resource identifier for the user who left the comment. </summary>
         [WirePath("properties.userId")]
-        public string UserId
+        public ResourceIdentifier UserId
         {
             get
             {

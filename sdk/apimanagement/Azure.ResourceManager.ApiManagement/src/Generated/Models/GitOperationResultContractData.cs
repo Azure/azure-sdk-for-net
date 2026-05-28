@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="GitOperationResultContractData"/>. </summary>
-        internal GitOperationResultContractData()
+        public GitOperationResultContractData()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Properties of the Operation Contract. </summary>
         [WirePath("properties")]
-        internal OperationResultContractProperties Properties { get; }
+        internal OperationResultContractProperties Properties { get; set; }
 
         /// <summary> Operation result identifier. </summary>
         [WirePath("properties.id")]
@@ -48,6 +48,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             get
             {
                 return Properties is null ? default : Properties.OperationResultIdentifier;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OperationResultContractProperties();
+                }
+                Properties.OperationResultIdentifier = value;
             }
         }
 
@@ -59,6 +67,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return Properties is null ? default : Properties.Status;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OperationResultContractProperties();
+                }
+                Properties.Status = value;
+            }
         }
 
         /// <summary> Start time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
@@ -68,6 +84,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             get
             {
                 return Properties is null ? default : Properties.Started;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OperationResultContractProperties();
+                }
+                Properties.Started = value;
             }
         }
 
@@ -79,6 +103,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return Properties is null ? default : Properties.Updated;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OperationResultContractProperties();
+                }
+                Properties.Updated = value;
+            }
         }
 
         /// <summary> Optional result info. </summary>
@@ -88,6 +120,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             get
             {
                 return Properties is null ? default : Properties.ResultInfo;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OperationResultContractProperties();
+                }
+                Properties.ResultInfo = value;
             }
         }
 
@@ -99,6 +139,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return Properties is null ? default : Properties.Error;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OperationResultContractProperties();
+                }
+                Properties.Error = value;
+            }
         }
 
         /// <summary> This property if only provided as part of the TenantConfiguration_Validate operation. It contains the log the entities which will be updated/created/deleted as part of the TenantConfiguration_Deploy operation. </summary>
@@ -107,7 +155,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
             get
             {
-                return Properties is null ? default : Properties.ActionLog;
+                if (Properties is null)
+                {
+                    Properties = new OperationResultContractProperties();
+                }
+                return Properties.ActionLog;
             }
         }
     }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementTenantSettingData"/>. </summary>
-        internal ApiManagementTenantSettingData()
+        public ApiManagementTenantSettingData()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> TenantSettings entity contract properties. </summary>
         [WirePath("properties")]
-        internal TenantSettingsContractProperties Properties { get; }
+        internal TenantSettingsContractProperties Properties { get; set; }
 
         /// <summary> Tenant settings. </summary>
         [WirePath("properties.settings")]
@@ -47,7 +47,11 @@ namespace Azure.ResourceManager.ApiManagement
         {
             get
             {
-                return Properties is null ? default : Properties.Settings;
+                if (Properties is null)
+                {
+                    Properties = new TenantSettingsContractProperties();
+                }
+                return Properties.Settings;
             }
         }
     }

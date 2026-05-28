@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="uri"> Runtime Url of the Backend. </param>
         /// <param name="protocol"> Backend communication protocol. </param>
-        internal BackendUpdateParameterProperties(string title, string description, string resourceId, BackendProperties properties, BackendCredentialsContract credentials, BackendProxyContract proxy, BackendTlsProperties tls, BackendCircuitBreaker circuitBreaker, string azureRegion, BackendBaseParametersPool pool, BackendType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string uri, BackendProtocol? protocol) : base(title, description, resourceId, properties, credentials, proxy, tls, circuitBreaker, azureRegion, pool, @type, additionalBinaryDataProperties)
+        internal BackendUpdateParameterProperties(string title, string description, string resourceId, BackendProperties properties, BackendCredentialsContract credentials, BackendProxyContract proxy, BackendTlsProperties tls, BackendCircuitBreaker circuitBreaker, string azureRegion, BackendBaseParametersPool pool, BackendType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri uri, BackendProtocol? protocol) : base(title, description, resourceId, properties, credentials, proxy, tls, circuitBreaker, azureRegion, pool, @type, additionalBinaryDataProperties)
         {
             Uri = uri;
             Protocol = protocol;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Runtime Url of the Backend. </summary>
         [WirePath("url")]
-        public string Uri { get; set; }
+        public Uri Uri { get; set; }
 
         /// <summary> Backend communication protocol. </summary>
         [WirePath("protocol")]

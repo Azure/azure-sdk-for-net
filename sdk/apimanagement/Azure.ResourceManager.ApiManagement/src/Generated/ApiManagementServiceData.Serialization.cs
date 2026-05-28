@@ -18,10 +18,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary> A single API Management service resource in List or Get response. </summary>
-    public partial class ApiManagementServiceResourceData : TrackedResourceData, IJsonModel<ApiManagementServiceResourceData>
+    public partial class ApiManagementServiceData : TrackedResourceData, IJsonModel<ApiManagementServiceData>
     {
-        /// <summary> Initializes a new instance of <see cref="ApiManagementServiceResourceData"/> for deserialization. </summary>
-        internal ApiManagementServiceResourceData()
+        /// <summary> Initializes a new instance of <see cref="ApiManagementServiceData"/> for deserialization. </summary>
+        internal ApiManagementServiceData()
         {
         }
 
@@ -29,62 +29,62 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementServiceResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementServiceData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeApiManagementServiceResourceData(document.RootElement, options);
+                        return DeserializeApiManagementServiceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementServiceResourceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementServiceData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementServiceResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementServiceData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementServiceResourceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementServiceData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ApiManagementServiceResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ApiManagementServiceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApiManagementServiceResourceData IPersistableModel<ApiManagementServiceResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ApiManagementServiceResourceData)PersistableModelCreateCore(data, options);
+        ApiManagementServiceData IPersistableModel<ApiManagementServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ApiManagementServiceData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ApiManagementServiceResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ApiManagementServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="apiManagementServiceResourceData"> The <see cref="ApiManagementServiceResourceData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ApiManagementServiceResourceData apiManagementServiceResourceData)
+        /// <param name="apiManagementServiceData"> The <see cref="ApiManagementServiceData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ApiManagementServiceData apiManagementServiceData)
         {
-            if (apiManagementServiceResourceData == null)
+            if (apiManagementServiceData == null)
             {
                 return null;
             }
-            return RequestContent.Create(apiManagementServiceResourceData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(apiManagementServiceData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ApiManagementServiceResourceData"/> from. </param>
-        internal static ApiManagementServiceResourceData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ApiManagementServiceData"/> from. </param>
+        internal static ApiManagementServiceData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeApiManagementServiceResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeApiManagementServiceData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ApiManagementServiceResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ApiManagementServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementServiceResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementServiceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementServiceResourceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementServiceData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
@@ -134,24 +134,24 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApiManagementServiceResourceData IJsonModel<ApiManagementServiceResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ApiManagementServiceResourceData)JsonModelCreateCore(ref reader, options);
+        ApiManagementServiceData IJsonModel<ApiManagementServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ApiManagementServiceData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementServiceResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementServiceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementServiceResourceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementServiceData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeApiManagementServiceResourceData(document.RootElement, options);
+            return DeserializeApiManagementServiceData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ApiManagementServiceResourceData DeserializeApiManagementServiceResourceData(JsonElement element, ModelReaderWriterOptions options)
+        internal static ApiManagementServiceData DeserializeApiManagementServiceData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ApiManagement
             AzureLocation location = default;
             ApiManagementServiceProperties properties = default;
             ApiManagementServiceSkuProperties sku = default;
-            ApiManagementServiceIdentity identity = default;
+            ManagedServiceIdentity identity = default;
             ETag? eTag = default;
             IList<string> zones = default;
             foreach (var prop in element.EnumerateObject())
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ApiManagement
                     {
                         continue;
                     }
-                    identity = ApiManagementServiceIdentity.DeserializeApiManagementServiceIdentity(prop.Value, options);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerApiManagementContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("etag"u8))
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.ApiManagement
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ApiManagementServiceResourceData(
+            return new ApiManagementServiceData(
                 id,
                 name,
                 resourceType,

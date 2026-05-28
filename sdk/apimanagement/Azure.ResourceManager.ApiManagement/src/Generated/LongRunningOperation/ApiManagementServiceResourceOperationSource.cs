@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement
         ApiManagementServiceResource IOperationSource<ApiManagementServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ApiManagementServiceResourceData data = ApiManagementServiceResourceData.DeserializeApiManagementServiceResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            ApiManagementServiceData data = ApiManagementServiceData.DeserializeApiManagementServiceData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ApiManagementServiceResource(_client, data);
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ApiManagement
         async ValueTask<ApiManagementServiceResource> IOperationSource<ApiManagementServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ApiManagementServiceResourceData data = ApiManagementServiceResourceData.DeserializeApiManagementServiceResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            ApiManagementServiceData data = ApiManagementServiceData.DeserializeApiManagementServiceData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ApiManagementServiceResource(_client, data);
         }
     }

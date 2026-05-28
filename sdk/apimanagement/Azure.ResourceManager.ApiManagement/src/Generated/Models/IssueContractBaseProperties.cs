@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="state"> Status of the issue. </param>
         /// <param name="apiId"> A resource identifier for the API the issue was created for. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IssueContractBaseProperties(DateTimeOffset? createdOn, IssueState? state, string apiId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IssueContractBaseProperties(DateTimeOffset? createdOn, IssueState? state, ResourceIdentifier apiId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CreatedOn = createdOn;
             State = state;
@@ -45,6 +46,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> A resource identifier for the API the issue was created for. </summary>
         [WirePath("apiId")]
-        public string ApiId { get; set; }
+        public ResourceIdentifier ApiId { get; set; }
     }
 }

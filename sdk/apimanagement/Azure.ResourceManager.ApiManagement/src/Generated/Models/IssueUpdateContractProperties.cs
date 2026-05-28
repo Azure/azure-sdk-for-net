@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="title"> The issue title. </param>
         /// <param name="description"> Text describing the issue. </param>
         /// <param name="userId"> A resource identifier for the user created the issue. </param>
-        internal IssueUpdateContractProperties(DateTimeOffset? createdOn, IssueState? state, string apiId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string title, string description, string userId) : base(createdOn, state, apiId, additionalBinaryDataProperties)
+        internal IssueUpdateContractProperties(DateTimeOffset? createdOn, IssueState? state, ResourceIdentifier apiId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string title, string description, ResourceIdentifier userId) : base(createdOn, state, apiId, additionalBinaryDataProperties)
         {
             Title = title;
             Description = description;
@@ -44,6 +45,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> A resource identifier for the user created the issue. </summary>
         [WirePath("userId")]
-        public string UserId { get; set; }
+        public ResourceIdentifier UserId { get; set; }
     }
 }

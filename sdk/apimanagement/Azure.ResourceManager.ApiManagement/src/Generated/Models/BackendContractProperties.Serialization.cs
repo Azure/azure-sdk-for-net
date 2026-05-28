@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
-                writer.WriteStringValue(Uri);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (Optional.IsDefined(Protocol))
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             BackendBaseParametersPool pool = default;
             BackendType? @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string uri = default;
+            Uri uri = default;
             BackendProtocol? protocol = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -213,7 +213,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (prop.NameEquals("url"u8))
                 {
-                    uri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    uri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("protocol"u8))

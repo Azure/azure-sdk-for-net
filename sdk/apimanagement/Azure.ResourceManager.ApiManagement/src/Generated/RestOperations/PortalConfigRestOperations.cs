@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ApiManagement
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string serviceName, string portalConfigId, string ifMatch, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string serviceName, string portalConfigId, ETag ifMatch, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.ApiManagement
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
-            request.Headers.SetValue("If-Match", ifMatch);
+            request.Headers.SetValue("If-Match", TypeFormatters.ConvertToString(ifMatch));
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateUpdateRequest(Guid subscriptionId, string resourceGroupName, string serviceName, string portalConfigId, string ifMatch, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateRequest(Guid subscriptionId, string resourceGroupName, string serviceName, string portalConfigId, ETag ifMatch, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ApiManagement
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Patch;
-            request.Headers.SetValue("If-Match", ifMatch);
+            request.Headers.SetValue("If-Match", TypeFormatters.ConvertToString(ifMatch));
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;

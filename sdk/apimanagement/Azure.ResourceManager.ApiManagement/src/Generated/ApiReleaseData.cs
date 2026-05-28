@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Identifier of the API the release belongs to. </summary>
         [WirePath("properties.apiId")]
-        public string ApiId
+        public ResourceIdentifier ApiId
         {
             get
             {
