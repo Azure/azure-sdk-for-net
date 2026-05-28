@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{location}/alerts/default/simulate. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/alerts/default/simulate. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{location}/alerts/default/simulate. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/alerts/default/simulate. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>

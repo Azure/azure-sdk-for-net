@@ -587,11 +587,11 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         }
 
         /// <summary> Gets a collection of ResourceGroupSecurityTasks in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <param name="location"> The location for the resource. </param>
+        /// <param name="ascLocation"> The ascLocation for the resource. </param>
         /// <returns> An object representing collection of ResourceGroupSecurityTasks and their operations over a ResourceGroupSecurityTaskResource. </returns>
-        public virtual ResourceGroupSecurityTaskCollection GetResourceGroupSecurityTasks(AzureLocation location)
+        public virtual ResourceGroupSecurityTaskCollection GetResourceGroupSecurityTasks(string ascLocation)
         {
-            return GetCachedClient(client => new ResourceGroupSecurityTaskCollection(client, Id, location));
+            return GetCachedClient(client => new ResourceGroupSecurityTaskCollection(client, Id, ascLocation));
         }
 
         /// <summary>
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{location}/tasks/{taskName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -611,17 +611,17 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location for the resource. </param>
+        /// <param name="ascLocation"> The ascLocation for the resource. </param>
         /// <param name="taskName"> Name of the task object, will be a GUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ResourceGroupSecurityTaskResource>> GetResourceGroupSecurityTaskAsync(AzureLocation location, string taskName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceGroupSecurityTaskResource>> GetResourceGroupSecurityTaskAsync(string ascLocation, string taskName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
 
-            return await GetResourceGroupSecurityTasks(location).GetAsync(taskName, cancellationToken).ConfigureAwait(false);
+            return await GetResourceGroupSecurityTasks(ascLocation).GetAsync(taskName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -629,7 +629,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{location}/tasks/{taskName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -641,17 +641,17 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location for the resource. </param>
+        /// <param name="ascLocation"> The ascLocation for the resource. </param>
         /// <param name="taskName"> Name of the task object, will be a GUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ResourceGroupSecurityTaskResource> GetResourceGroupSecurityTask(AzureLocation location, string taskName, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceGroupSecurityTaskResource> GetResourceGroupSecurityTask(string ascLocation, string taskName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
 
-            return GetResourceGroupSecurityTasks(location).Get(taskName, cancellationToken);
+            return GetResourceGroupSecurityTasks(ascLocation).Get(taskName, cancellationToken);
         }
 
         /// <summary> Gets a collection of IotSecuritySolutions in the <see cref="ResourceGroupResource"/>. </summary>

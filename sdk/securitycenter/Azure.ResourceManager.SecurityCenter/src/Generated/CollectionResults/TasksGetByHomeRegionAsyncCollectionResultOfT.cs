@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityCenter
     {
         private readonly Tasks _client;
         private readonly Guid _subscriptionId;
-        private readonly AzureLocation _location;
+        private readonly string _ascLocation;
         private readonly string _filter;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
@@ -27,15 +27,15 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of TasksGetByHomeRegionAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Tasks client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="filter"> OData filter. Optional. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public TasksGetByHomeRegionAsyncCollectionResultOfT(Tasks client, Guid subscriptionId, AzureLocation location, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public TasksGetByHomeRegionAsyncCollectionResultOfT(Tasks client, Guid subscriptionId, string ascLocation, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
-            _location = location;
+            _ascLocation = ascLocation;
             _filter = filter;
             _context = context;
             _diagnosticScope = diagnosticScope;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByHomeRegionRequest(nextLink, _subscriptionId, _location, _filter, _context) : _client.CreateGetByHomeRegionRequest(_subscriptionId, _location, _filter, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetByHomeRegionRequest(nextLink, _subscriptionId, _ascLocation, _filter, _context) : _client.CreateGetByHomeRegionRequest(_subscriptionId, _ascLocation, _filter, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

@@ -447,14 +447,14 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        internal HttpMessage CreateSimulateRequest(Guid subscriptionId, AzureLocation location, RequestContent content, RequestContext context)
+        internal HttpMessage CreateSimulateRequest(Guid subscriptionId, string ascLocation, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Security/locations/", false);
-            uri.AppendPath(location.ToString(), true);
+            uri.AppendPath(ascLocation, true);
             uri.AppendPath("/alerts/default/simulate", false);
             if (_apiVersion != null)
             {
