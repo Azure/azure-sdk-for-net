@@ -44,59 +44,17 @@ var client = new CallAutomationClient(endpoint, tokenCredential);
 
 ### WebSocket Authentication for Media Streaming and Transcription
 
-Call Automation provides `AcsWebSocketAuthenticator` to handle WebSocket authentication for media streaming, transcription, and other real-time scenarios. This gives you full control over the WebSocket while Azure Communication Services handles the authentication complexity.
+`AcsWebSocketAuthenticator` authenticates WebSocket connections to ACS media streaming and transcription endpoints. It sets the required auth headers on a `ClientWebSocket` before you call `ConnectAsync`.
 
-#### Basic WebSocket Authentication
 ```C#
-// Get authenticator from CallAutomationClient (recommended)
-var authenticator = callAutomationClient.GetWebSocketAuthenticator();
-var webSocket = new ClientWebSocket();
+var client = new CallAutomationClient(connectionString);
+var authenticator = client.GetWebSocketAuthenticator();
 
-// Configure WebSocket options as needed
-webSocket.Options.KeepAliveInterval = TimeSpan.FromSeconds(30);
-webSocket.Options.SetBuffer(4096, 4096);
+var ws = new ClientWebSocket();
+var streamUrl = new Uri(callConnectionProperties.MediaStreamingSubscription.StreamUrl);
 
-// Add authentication headers
-await authenticator.AuthenticateWebSocketAsync(webSocket, streamUrl);
-
-// Connect to authenticated WebSocket
-await webSocket.ConnectAsync(streamUrl, cancellationToken);
-
-// Use WebSocket for media streaming, transcription, etc.
-```
-
-#### Media Streaming WebSocket Example
-```C#
-var authenticator = callAutomationClient.GetWebSocketAuthenticator();
-var webSocket = new ClientWebSocket();
-
-// Configure for media streaming
-authenticator.ConfigureWebSocketOptions(webSocket, 
-    keepAliveInterval: TimeSpan.FromSeconds(30),
-    receiveBufferSize: 8192,
-    subProtocol: "audio-stream");
-
-// Add custom headers for your application
-authenticator.AddCustomHeader(webSocket, "X-App-Name", "MyMediaApp");
-authenticator.AddCustomHeader(webSocket, "X-Session-ID", sessionId);
-
-// Authenticate WebSocket
-await authenticator.AuthenticateWebSocketAsync(webSocket, mediaStreamUrl);
-
-// Connect and start streaming
-await webSocket.ConnectAsync(mediaStreamUrl, cancellationToken);
-
-while (webSocket.State == WebSocketState.Open)
-{
-    var buffer = new byte[1024];
-    var result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), cancellationToken);
-    
-    if (result.MessageType == WebSocketMessageType.Binary)
-    {
-        // Process audio streaming data
-        ProcessAudioData(buffer, result.Count);
-    }
-}
+await authenticator.AuthenticateWebSocketAsync(ws, streamUrl);
+await ws.ConnectAsync(streamUrl, CancellationToken.None);
 ```
 
 #### Alternative Authentication Methods

@@ -31,12 +31,9 @@
 - Added support for Post-Dial Tones in outbound call scenarios
   - `PostDialTones` property now available in `CreateCallOptions` and `CreateGroupCallOptions`
 
-### Breaking Changes
-- **BREAKING: Removed WebSocketConnectionHelper** - The `WebSocketConnectionHelper` class has been removed in favor of the new `AcsWebSocketAuthenticator` design:
-  - Removed `GetWebSocketConnectionHelper()` method from CallAutomationClient
-  - Removed `ConnectToAcsMediaStreamingWebsocketAsync()` and related methods
-  - **Migration**: Use `callAutomationClient.GetWebSocketAuthenticator()` and manage WebSocket connections directly
-  - See README and documentation for updated usage patterns
+### Other Changes
+- Added `AcsWebSocketAuthenticator` for authenticating WebSocket connections to ACS media streaming and transcription endpoints.
+  - Use `callAutomationClient.GetWebSocketAuthenticator()` to obtain an authenticator with HMAC or AAD credentials.
 
 ### Bugs Fixed
 - Media streaming with AudioFormat default Pcm24kMono is removed and changed to null if AudioFormat is not passed.
