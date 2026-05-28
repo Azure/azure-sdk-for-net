@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
@@ -217,12 +217,13 @@ namespace Azure.ResourceManager.Avs.Models
         public static WorkloadNetworkVmGroupData WorkloadNetworkVmGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, IEnumerable<string> members = null, WorkloadNetworkVmGroupStatus? status = null, WorkloadNetworkVmGroupProvisioningState? provisioningState = null, long? revision = null)
         {
             return new WorkloadNetworkVmGroupData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                null,
-                displayName is null && members is null ? default : new WorkloadNetworkVmGroupProperties(displayName, members.ToList(), status, provisioningState, revision, null));
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                properties: displayName is null && members is null ? default : new WorkloadNetworkVmGroupProperties(displayName, members.ToList(), status, provisioningState, revision, null),
+                additionalBinaryDataProperties: null
+            );
         }
     }
 }

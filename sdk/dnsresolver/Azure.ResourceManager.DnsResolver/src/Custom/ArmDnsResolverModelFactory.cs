@@ -28,12 +28,11 @@ namespace Azure.ResourceManager.DnsResolver.Models
         public static DnsForwardingRuleData DnsForwardingRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string domainName, IEnumerable<TargetDnsServer> targetDnsServers, IDictionary<string, string> metadata, DnsForwardingRuleState? dnsForwardingRuleState, DnsResolverProvisioningState? provisioningState)
         {
             return new DnsForwardingRuleData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                domainName is null && targetDnsServers is null && metadata is null && dnsForwardingRuleState is null && provisioningState is null
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                properties: domainName is null && targetDnsServers is null && metadata is null && dnsForwardingRuleState is null && provisioningState is null
                     ? default
                     : new ForwardingRuleProperties(
                         domainName,
@@ -42,7 +41,9 @@ namespace Azure.ResourceManager.DnsResolver.Models
                         dnsForwardingRuleState,
                         provisioningState,
                         null),
-                etag);
+                eTag: etag,
+                additionalBinaryDataProperties: null
+            );
         }
 
         /// <summary>
@@ -54,22 +55,23 @@ namespace Azure.ResourceManager.DnsResolver.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new DnsForwardingRulesetData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                dnsResolverOutboundEndpoints is null && provisioningState is null && resourceGuid is null
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                tags: tags,
+                location: location,
+                properties: dnsResolverOutboundEndpoints is null && provisioningState is null && resourceGuid is null
                     ? default
                     : new DnsForwardingRulesetProperties(
                         (dnsResolverOutboundEndpoints ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
                         provisioningState,
                         resourceGuid,
                         null),
-                name,
-                etag);
+                rulesetName: name,
+                eTag: etag,
+                additionalBinaryDataProperties: null
+            );
         }
 
         /// <summary>
@@ -88,15 +90,16 @@ namespace Azure.ResourceManager.DnsResolver.Models
         public static DnsForwardingRulesetVirtualNetworkLinkData DnsForwardingRulesetVirtualNetworkLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, ResourceIdentifier virtualNetworkId, IDictionary<string, string> metadata, DnsResolverProvisioningState? provisioningState)
         {
             return new DnsForwardingRulesetVirtualNetworkLinkData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                metadata is null && provisioningState is null && virtualNetworkId is null
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                properties: metadata is null && provisioningState is null && virtualNetworkId is null
                     ? default
                     : new VirtualNetworkLinkProperties(virtualNetworkId is null ? default : new SubResource(virtualNetworkId, null), metadata, provisioningState, null),
-                etag);
+                eTag: etag,
+                additionalBinaryDataProperties: null
+            );
         }
 
         /// <summary>
@@ -117,17 +120,18 @@ namespace Azure.ResourceManager.DnsResolver.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new DnsResolverData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                dnsResolverState is null && provisioningState is null && resourceGuid is null && virtualNetworkId is null
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                tags: tags,
+                location: location,
+                properties: dnsResolverState is null && provisioningState is null && resourceGuid is null && virtualNetworkId is null
                     ? default
                     : new DnsResolverProperties(virtualNetworkId is null ? default : new SubResource(virtualNetworkId, null), dnsResolverState, provisioningState, resourceGuid, null),
-                etag);
+                eTag: etag,
+                additionalBinaryDataProperties: null
+            );
         }
 
         /// <summary>
@@ -139,17 +143,18 @@ namespace Azure.ResourceManager.DnsResolver.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new DnsResolverDomainListData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                domains is null && domainsUri is null && provisioningState is null && resourceGuid is null
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                tags: tags,
+                location: location,
+                properties: domains is null && domainsUri is null && provisioningState is null && resourceGuid is null
                     ? default
                     : new DnsResolverDomainListProperties((domains ?? new ChangeTrackingList<string>()).ToList(), domainsUri, provisioningState, resourceGuid, null),
-                etag);
+                eTag: etag,
+                additionalBinaryDataProperties: null
+            );
         }
 
         /// <summary>
@@ -161,17 +166,18 @@ namespace Azure.ResourceManager.DnsResolver.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new DnsResolverInboundEndpointData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                ipConfigurations is null && provisioningState is null && resourceGuid is null
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                tags: tags,
+                location: location,
+                properties: ipConfigurations is null && provisioningState is null && resourceGuid is null
                     ? default
                     : new InboundEndpointProperties((ipConfigurations ?? new ChangeTrackingList<InboundEndpointIPConfiguration>()).ToList(), provisioningState, resourceGuid, null),
-                etag);
+                eTag: etag,
+                additionalBinaryDataProperties: null
+            );
         }
 
         /// <summary>
@@ -192,17 +198,18 @@ namespace Azure.ResourceManager.DnsResolver.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new DnsResolverOutboundEndpointData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                provisioningState is null && resourceGuid is null && subnetId is null
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                tags: tags,
+                location: location,
+                properties: provisioningState is null && resourceGuid is null && subnetId is null
                     ? default
                     : new OutboundEndpointProperties(subnetId is null ? default : new SubResource(subnetId, null), provisioningState, resourceGuid, null),
-                etag);
+                eTag: etag,
+                additionalBinaryDataProperties: null
+            );
         }
 
         /// <summary>
@@ -214,15 +221,16 @@ namespace Azure.ResourceManager.DnsResolver.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new DnsResolverPolicyData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                provisioningState is null && resourceGuid is null ? default : new DnsResolverPolicyProperties(provisioningState, resourceGuid, null),
-                etag);
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                tags: tags,
+                location: location,
+                properties: provisioningState is null && resourceGuid is null ? default : new DnsResolverPolicyProperties(provisioningState, resourceGuid, null),
+                eTag: etag,
+                additionalBinaryDataProperties: null
+            );
         }
 
         /// <summary>
@@ -243,15 +251,16 @@ namespace Azure.ResourceManager.DnsResolver.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new DnsResolverPolicyVirtualNetworkLinkData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                provisioningState is null && virtualNetworkId is null ? default : new DnsResolverPolicyVirtualNetworkLinkProperties(virtualNetworkId is null ? default : new SubResource(virtualNetworkId, null), provisioningState, null),
-                etag);
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                tags: tags,
+                location: location,
+                properties: provisioningState is null && virtualNetworkId is null ? default : new DnsResolverPolicyVirtualNetworkLinkProperties(virtualNetworkId is null ? default : new SubResource(virtualNetworkId, null), provisioningState, null),
+                eTag: etag,
+                additionalBinaryDataProperties: null
+            );
         }
 
         /// <summary>
@@ -263,14 +272,13 @@ namespace Azure.ResourceManager.DnsResolver.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new DnsSecurityRuleData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                new DnsSecurityRuleProperties(
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                tags: tags,
+                location: location,
+                properties: new DnsSecurityRuleProperties(
                     priority,
                     new DnsSecurityRuleAction(actionType, null),
                     (dnsResolverDomainLists ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
@@ -278,7 +286,9 @@ namespace Azure.ResourceManager.DnsResolver.Models
                     dnsSecurityRuleState,
                     provisioningState,
                     null),
-                etag);
+                eTag: etag,
+                additionalBinaryDataProperties: null
+            );
         }
     }
 }

@@ -28,21 +28,21 @@ namespace Azure.ResourceManager.Cdn.Models
         public static ProfileData ProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CdnSkuName? skuName, string kind, ProfileResourceState? resourceState, ProfileProvisioningState? provisioningState, Guid? frontDoorId, int? originResponseTimeoutSeconds)
         {
             return ProfileData(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                tags: tags,
-                location: location,
-                skuName: skuName,
-                kind: kind,
-                identity: default,
-                resourceState: resourceState,
-                provisioningState: provisioningState,
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                resourceState,
+                provisioningState,
                 extendedProperties: default,
-                frontDoorId: frontDoorId,
-                originResponseTimeoutSeconds: originResponseTimeoutSeconds,
-                logScrubbing: default);
+                frontDoorId,
+                originResponseTimeoutSeconds,
+                logScrubbing: default,
+                skuName,
+                kind,
+                identity: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Cdn.CdnWebApplicationFirewallPolicyData"/>. </summary>

@@ -33,7 +33,15 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AutoUpgradeProfileData AutoUpgradeProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, AutoUpgradeProfileProvisioningState? provisioningState, ResourceIdentifier updateStrategyId, ContainerServiceFleetUpgradeChannel? channel, AutoUpgradeNodeImageSelectionType? selectionType, bool? disabled, AutoUpgradeProfileStatus autoUpgradeProfileStatus)
         {
-            return new AutoUpgradeProfileData(id, name, resourceType, systemData, additionalBinaryDataProperties: null, new AutoUpgradeProfileProperties(provisioningState, updateStrategyId, channel, nodeImageSelection: default, disabled, autoUpgradeProfileStatus, targetKubernetesVersion: default, longTermSupport: default, additionalBinaryDataProperties: default), eTag);
+            return new AutoUpgradeProfileData(
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                properties: new AutoUpgradeProfileProperties(provisioningState, updateStrategyId, channel, nodeImageSelection: default, disabled, autoUpgradeProfileStatus, targetKubernetesVersion: default, longTermSupport: default, additionalBinaryDataProperties: default),
+                eTag: eTag,
+                additionalBinaryDataProperties: null
+            );
         }
     }
 }

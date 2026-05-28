@@ -64,12 +64,13 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static AgentPoolUpgradeProfileData AgentPoolUpgradeProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kubernetesVersion, ContainerServiceOSType osType, IEnumerable<AgentPoolUpgradeProfilePropertiesUpgradesItem> upgrades, string latestNodeImageVersion)
         {
             return new AgentPoolUpgradeProfileData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                new AgentPoolUpgradeProfileProperties(kubernetesVersion, osType, (upgrades ?? new List<AgentPoolUpgradeProfilePropertiesUpgradesItem>()).ToList(), new ChangeTrackingList<KubernetesVersionComponents>(), new ChangeTrackingList<AgentPoolRecentlyUsedVersion>(), latestNodeImageVersion, null));
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                properties: new AgentPoolUpgradeProfileProperties(kubernetesVersion, osType, (upgrades ?? new List<AgentPoolUpgradeProfilePropertiesUpgradesItem>()).ToList(), new ChangeTrackingList<KubernetesVersionComponents>(), new ChangeTrackingList<AgentPoolRecentlyUsedVersion>(), latestNodeImageVersion, null),
+                additionalBinaryDataProperties: null
+            );
         }
     }
 }

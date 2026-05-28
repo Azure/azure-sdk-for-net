@@ -201,13 +201,14 @@ namespace Azure.ResourceManager.Storage
                 }
             }
             return new ImmutabilityPolicyData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties,
-                properties,
-                eTag);
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                properties: properties,
+                eTag: eTag,
+                additionalBinaryDataProperties: additionalBinaryDataProperties
+            );
         }
     }
 }

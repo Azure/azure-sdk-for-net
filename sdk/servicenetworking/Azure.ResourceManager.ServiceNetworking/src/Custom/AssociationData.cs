@@ -103,7 +103,16 @@ namespace Azure.ResourceManager.ServiceNetworking
                     properties.SubnetId = SubnetId;
             }
 
-            return new TrafficControllerAssociationData(Id, Name, ResourceType, SystemData, _serializedAdditionalRawData, Tags, Location, properties);
+            return new TrafficControllerAssociationData(
+                id: Id,
+                name: Name,
+                resourceType: ResourceType,
+                systemData: SystemData,
+                tags: Tags,
+                location: Location,
+                properties: properties,
+                additionalBinaryDataProperties: _serializedAdditionalRawData
+            );
         }
 
         /// <summary> Association Type. </summary>

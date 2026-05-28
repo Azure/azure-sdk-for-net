@@ -171,17 +171,18 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 foreach (var item in privateEndpointConnections)
                 {
                     var model = new MySqlFlexibleServersPrivateEndpointConnectionData(
-                        item.Id,
-                        item.Name,
-                        item.ResourceType,
-                        item.SystemData,
-                        null,
-                        new PrivateEndpointConnectionProperties(
+                        id: item.Id,
+                        name: item.Name,
+                        resourceType: item.ResourceType,
+                        systemData: item.SystemData,
+                        properties: new PrivateEndpointConnectionProperties(
                             item.GroupIds == null ? new ChangeTrackingList<string>() : item.GroupIds,
                             new PrivateEndpoint(item.PrivateEndpointId, null),
                             item.ConnectionState,
                             item.ProvisioningState,
-                            null));
+                            null),
+                        additionalBinaryDataProperties: null
+                    );
                     serverPrivateEndpointConnections.Add(model);
                 }
             }

@@ -173,14 +173,15 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         public static TrafficControllerAssociationData TrafficControllerAssociationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, TrafficControllerAssociationType? associationType = null, ResourceIdentifier subnetId = null, ServiceNetworkingProvisioningState? provisioningState = null)
         {
             return new TrafficControllerAssociationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                associationType is null && provisioningState is null && subnetId is null ? null : new AssociationProperties(associationType.Value, new AssociationSubnet(subnetId, null), provisioningState, null));
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                tags: tags,
+                location: location,
+                properties: associationType is null && provisioningState is null && subnetId is null ? null : new AssociationProperties(associationType.Value, new AssociationSubnet(subnetId, null), provisioningState, null),
+                additionalBinaryDataProperties: null
+            );
         }
     }
 #pragma warning restore 0618

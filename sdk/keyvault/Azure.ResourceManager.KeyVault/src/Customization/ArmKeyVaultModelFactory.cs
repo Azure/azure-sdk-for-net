@@ -122,16 +122,17 @@ namespace Azure.ResourceManager.KeyVault.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new ManagedHsmData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                properties,
-                sku,
-                identity);
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                tags: tags,
+                location: location,
+                properties: properties,
+                sku: sku,
+                identity: identity,
+                additionalBinaryDataProperties: null
+            );
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.KeyVaultAccessPolicyParameters"/>. </summary>
@@ -173,20 +174,21 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static ManagedHsmPrivateLinkResourceData ManagedHsmPrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default, ManagedHsmSku sku = default, ManagedServiceIdentity identity = default)
         {
             return new ManagedHsmPrivateLinkResourceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                null,
-                tags,
-                location,
-                new MhsmPrivateLinkResourceProperties(
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                tags: tags,
+                location: location,
+                properties: new MhsmPrivateLinkResourceProperties(
                     groupId,
                     requiredMembers.ToList(),
                     requiredZoneNames.ToList(),
                     null),
-                sku,
-                identity);
+                sku: sku,
+                identity: identity,
+                additionalBinaryDataProperties: null
+            );
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedHsmPrivateEndpointConnectionItemData"/>. </summary>
@@ -236,17 +238,18 @@ namespace Azure.ResourceManager.KeyVault.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new ManagedHsmPrivateEndpointConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                privateLinkServiceConnectionState is null && provisioningState is null && privateEndpointId is null ? default : new ManagedHsmPrivateEndpointConnectionProperties(new ManagedHsmPrivateEndpoint(privateEndpointId, null), privateLinkServiceConnectionState, provisioningState, null),
-                sku,
-                identity,
-                etag);
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                tags: tags,
+                location: location,
+                properties: privateLinkServiceConnectionState is null && provisioningState is null && privateEndpointId is null ? default : new ManagedHsmPrivateEndpointConnectionProperties(new ManagedHsmPrivateEndpoint(privateEndpointId, null), privateLinkServiceConnectionState, provisioningState, null),
+                sku: sku,
+                identity: identity,
+                eTag: etag,
+                additionalBinaryDataProperties: null
+            );
         }
 
         /// <summary> Initializes a new instance of <see cref="KeyVault.ManagedHsmData"/>. </summary>

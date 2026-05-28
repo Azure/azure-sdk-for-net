@@ -32,19 +32,20 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public static ServiceBusPrivateEndpointConnectionData ServiceBusPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier privateEndpointId = default, ServiceBusPrivateLinkServiceConnectionState connectionState = default, ServiceBusPrivateEndpointConnectionProvisioningState? provisioningState = default, AzureLocation? location = default)
         {
             return new ServiceBusPrivateEndpointConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                privateEndpointId is null && connectionState is null && provisioningState is null
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                properties: privateEndpointId is null && connectionState is null && provisioningState is null
                     ? default
                     : new PrivateEndpointConnectionProperties(
                         new PrivateEndpoint(privateEndpointId, null),
                         connectionState,
                         provisioningState,
                         null),
-                location);
+                location: location,
+                additionalBinaryDataProperties: null
+            );
         }
 
         /// <param name="id"> The id. </param>
@@ -70,14 +71,13 @@ namespace Azure.ResourceManager.ServiceBus.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new ServiceBusNamespacePatch(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                provisioningState is null && status is null && createdOn is null && updatedOn is null && serviceBusEndpoint is null && metricId is null && encryption is null && privateEndpointConnections is null && disableLocalAuth is null && alternateName is null
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                tags: tags,
+                location: location,
+                properties: provisioningState is null && status is null && createdOn is null && updatedOn is null && serviceBusEndpoint is null && metricId is null && encryption is null && privateEndpointConnections is null && disableLocalAuth is null && alternateName is null
                     ? default
                     : new SBNamespaceUpdateProperties(
                         provisioningState,
@@ -91,8 +91,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
                         disableLocalAuth,
                         alternateName,
                         null),
-                sku,
-                identity);
+                sku: sku,
+                identity: identity,
+                additionalBinaryDataProperties: null
+            );
         }
     }
 }
