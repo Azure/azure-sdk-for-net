@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable
+
 using System;
 using System.ComponentModel;
 using System.Threading;
@@ -16,9 +18,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     // The new API version changed action operation return types from generic result types
     // (StateUpdateCommonPostActionResult) to operation-specific types. The generated methods were renamed
     // via operationId directives (adding synonym-based renaming), and these shims preserve the
-    // original v1.1.2 method signatures. Removing them would drop the old method names/return types.
+    // original v1.1.2 method signatures.
     public partial class NetworkFabricAccessControlListResource
     {
+        // The generated patch shape is NetworkFabricAccessControlListPatchContent because the TypeSpec patch hierarchy
+        // changed back to the Swagger-compatible TagsUpdate base. Keep overloads that accept the shipped patch type.
+
         /// <summary> Update certain properties of the Access Control List resource. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
         /// <param name="patch"> Access Control Lists patch resource definition. </param>
@@ -35,21 +40,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 RequestContext context = new RequestContext
                 {
-            CancellationToken = cancellationToken
-        };
+                    CancellationToken = cancellationToken
+                };
                 HttpMessage message = _accessControlListsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkFabricAccessControlListPatchContent.ToRequestContent(patch.ToContent()), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<NetworkFabricAccessControlListResource> operation = new ManagedNetworkFabricArmOperation<NetworkFabricAccessControlListResource>(
-            new NetworkFabricAccessControlListOperationSource(Client),
-            _accessControlListsClientDiagnostics,
-            Pipeline,
-            message.Request,
-            response,
-            OperationFinalStateVia.Location);
+                    new NetworkFabricAccessControlListOperationSource(Client),
+                    _accessControlListsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
-            await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-        }
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -75,21 +80,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 RequestContext context = new RequestContext
                 {
-            CancellationToken = cancellationToken
-        };
+                    CancellationToken = cancellationToken
+                };
                 HttpMessage message = _accessControlListsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkFabricAccessControlListPatchContent.ToRequestContent(patch.ToContent()), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<NetworkFabricAccessControlListResource> operation = new ManagedNetworkFabricArmOperation<NetworkFabricAccessControlListResource>(
-            new NetworkFabricAccessControlListOperationSource(Client),
-            _accessControlListsClientDiagnostics,
-            Pipeline,
-            message.Request,
-            response,
-            OperationFinalStateVia.Location);
+                    new NetworkFabricAccessControlListOperationSource(Client),
+                    _accessControlListsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
-            operation.WaitForCompletion(cancellationToken);
-        }
+                    operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -98,77 +103,29 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 throw;
             }
         }
+        // 1. The service API version changed action operation response models from the shipped
+        //    StateUpdateCommonPostActionResult to operation-specific result models.
+        // 2. We keep obsolete overloads with the shipped Update* method names and return types, delegating
+        //    to the generated Set* methods and adapting their operation values back to the old result type.
+        // 3. Without this custom code, only the generated Set* methods with operation-specific result types
+        //    would exist, removing the shipped Update* API surface.
 
-        /// <summary> Backward-compatible shim for UpdateAdministrativeState. Preserves the previous SDK signature while calling the current REST action. </summary>
+        /// <summary> Backward-compatible shim for UpdateAdministrativeState. Use SetAdministrativeState instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use SetAdministrativeStateAsync instead.")]
         public virtual async Task<ArmOperation<StateUpdateCommonPostActionResult>> UpdateAdministrativeStateAsync(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using DiagnosticScope scope = _accessControlListsClientDiagnostics.CreateScope("NetworkFabricAccessControlListResource.UpdateAdministrativeState");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-            CancellationToken = cancellationToken
-        };
-                HttpMessage message = _accessControlListsRestClient.CreateSetAdministrativeStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UpdateAdministrativeStateContent.ToRequestContent(content), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult> operation = new ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult>(
-            new UpdateAdministrativeStateResultOperationSource(),
-            _accessControlListsClientDiagnostics,
-            Pipeline,
-            message.Request,
-            response,
-            OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-            await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-        }
-                return new CompatArmOperation<UpdateAdministrativeStateResult, StateUpdateCommonPostActionResult>(operation, r => new StateUpdateCommonPostActionResult(r.Error, null, null));
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            ArmOperation<UpdateAdministrativeStateResult> operation = await SetAdministrativeStateAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
+            return new CompatArmOperation<UpdateAdministrativeStateResult, StateUpdateCommonPostActionResult>(operation, r => new StateUpdateCommonPostActionResult(r.Error, null, null));
         }
 
-        /// <summary> Backward-compatible shim for UpdateAdministrativeState. Preserves the previous SDK signature while calling the current REST action. </summary>
+        /// <summary> Backward-compatible shim for UpdateAdministrativeState. Use SetAdministrativeState instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use SetAdministrativeState instead.")]
         public virtual ArmOperation<StateUpdateCommonPostActionResult> UpdateAdministrativeState(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using DiagnosticScope scope = _accessControlListsClientDiagnostics.CreateScope("NetworkFabricAccessControlListResource.UpdateAdministrativeState");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-            CancellationToken = cancellationToken
-        };
-                HttpMessage message = _accessControlListsRestClient.CreateSetAdministrativeStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UpdateAdministrativeStateContent.ToRequestContent(content), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult> operation = new ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult>(
-            new UpdateAdministrativeStateResultOperationSource(),
-            _accessControlListsClientDiagnostics,
-            Pipeline,
-            message.Request,
-            response,
-            OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-            operation.WaitForCompletion(cancellationToken);
-        }
-                return new CompatArmOperation<UpdateAdministrativeStateResult, StateUpdateCommonPostActionResult>(operation, r => new StateUpdateCommonPostActionResult(r.Error, null, null));
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            ArmOperation<UpdateAdministrativeStateResult> operation = SetAdministrativeState(waitUntil, content, cancellationToken);
+            return new CompatArmOperation<UpdateAdministrativeStateResult, StateUpdateCommonPostActionResult>(operation, r => new StateUpdateCommonPostActionResult(r.Error, null, null));
         }
     }
 }

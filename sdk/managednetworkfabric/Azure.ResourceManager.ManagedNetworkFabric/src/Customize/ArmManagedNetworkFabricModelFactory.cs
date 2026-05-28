@@ -100,7 +100,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         {
             ipPrefixValues ??= new ChangeTrackingList<string>();
             ipGroupNames ??= new ChangeTrackingList<string>();
-
             return new IPMatchCondition(type, prefixType, ipPrefixValues.ToList(), ipGroupNames.ToList(), additionalBinaryDataProperties: null);
         }
 
@@ -129,7 +128,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static NetworkFabricControllerData NetworkFabricControllerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, IEnumerable<ExpressRouteConnectionInformation> infrastructureExpressRouteConnections = default, IEnumerable<ExpressRouteConnectionInformation> workloadExpressRouteConnections = default, NetworkFabricControllerServices infrastructureServices = default, NetworkFabricControllerServices workloadServices = default, ManagedResourceGroupConfiguration managedResourceGroupConfiguration = default, IEnumerable<ResourceIdentifier> networkFabricIds = default, IsWorkloadManagementNetworkEnabled? isWorkloadManagementNetworkEnabled = default, IEnumerable<ResourceIdentifier> tenantInternetGatewayIds = default, string ipv4AddressSpace = default, string ipv6AddressSpace = default, NetworkFabricControllerSKU? nfcSku = default, NetworkFabricProvisioningState? provisioningState = default, string lastOperationDetails = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
-
             return new NetworkFabricControllerData(
                 id,
                 name,
@@ -171,7 +169,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static TerminalServerConfiguration TerminalServerConfiguration(string username = default, string password = default, string serialNumber = default, string primaryIpv4Prefix = default, string primaryIpv6Prefix = default, string secondaryIpv4Prefix = default, string secondaryIpv6Prefix = default, ResourceIdentifier networkDeviceId = default, IEnumerable<NetworkFabricSecretRotationStatus> secretRotationStatus = default)
         {
             secretRotationStatus ??= new ChangeTrackingList<NetworkFabricSecretRotationStatus>();
-
             return new TerminalServerConfiguration(username, password, serialNumber, additionalBinaryDataProperties: null, primaryIpv4Prefix, primaryIpv6Prefix, secondaryIpv4Prefix, secondaryIpv6Prefix, networkDeviceId, secretRotationStatus.ToList());
         }
 

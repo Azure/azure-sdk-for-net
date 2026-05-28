@@ -429,11 +429,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="content"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<StateUpdateCommonPostActionResult>> UpdateAdministrativeStateAsync(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<UpdateAdministrativeStateResult>> SetAdministrativeStateAsync(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _externalNetworksClientDiagnostics.CreateScope("NetworkFabricExternalNetworkResource.UpdateAdministrativeState");
+            using DiagnosticScope scope = _externalNetworksClientDiagnostics.CreateScope("NetworkFabricExternalNetworkResource.SetAdministrativeState");
             scope.Start();
             try
             {
@@ -441,10 +441,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _externalNetworksRestClient.CreateUpdateAdministrativeStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, UpdateAdministrativeStateContent.ToRequestContent(content), context);
+                HttpMessage message = _externalNetworksRestClient.CreateSetAdministrativeStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, UpdateAdministrativeStateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ManagedNetworkFabricArmOperation<StateUpdateCommonPostActionResult> operation = new ManagedNetworkFabricArmOperation<StateUpdateCommonPostActionResult>(
-                    new StateUpdateCommonPostActionResultOperationSource(),
+                ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult> operation = new ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult>(
+                    new UpdateAdministrativeStateResultOperationSource(),
                     _externalNetworksClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -488,11 +488,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="content"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<StateUpdateCommonPostActionResult> UpdateAdministrativeState(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<UpdateAdministrativeStateResult> SetAdministrativeState(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _externalNetworksClientDiagnostics.CreateScope("NetworkFabricExternalNetworkResource.UpdateAdministrativeState");
+            using DiagnosticScope scope = _externalNetworksClientDiagnostics.CreateScope("NetworkFabricExternalNetworkResource.SetAdministrativeState");
             scope.Start();
             try
             {
@@ -500,10 +500,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _externalNetworksRestClient.CreateUpdateAdministrativeStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, UpdateAdministrativeStateContent.ToRequestContent(content), context);
+                HttpMessage message = _externalNetworksRestClient.CreateSetAdministrativeStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, UpdateAdministrativeStateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ManagedNetworkFabricArmOperation<StateUpdateCommonPostActionResult> operation = new ManagedNetworkFabricArmOperation<StateUpdateCommonPostActionResult>(
-                    new StateUpdateCommonPostActionResultOperationSource(),
+                ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult> operation = new ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult>(
+                    new UpdateAdministrativeStateResultOperationSource(),
                     _externalNetworksClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -665,11 +665,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="content"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<StateUpdateCommonPostActionResult>> UpdateStaticRouteBfdAdministrativeStateAsync(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<UpdateAdministrativeStateResult>> SetStaticRouteBfdAdministrativeStateAsync(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _externalNetworksClientDiagnostics.CreateScope("NetworkFabricExternalNetworkResource.UpdateStaticRouteBfdAdministrativeState");
+            using DiagnosticScope scope = _externalNetworksClientDiagnostics.CreateScope("NetworkFabricExternalNetworkResource.SetStaticRouteBfdAdministrativeState");
             scope.Start();
             try
             {
@@ -677,10 +677,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _externalNetworksRestClient.CreateUpdateStaticRouteBfdAdministrativeStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, UpdateAdministrativeStateContent.ToRequestContent(content), context);
+                HttpMessage message = _externalNetworksRestClient.CreateSetStaticRouteBfdAdministrativeStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, UpdateAdministrativeStateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ManagedNetworkFabricArmOperation<StateUpdateCommonPostActionResult> operation = new ManagedNetworkFabricArmOperation<StateUpdateCommonPostActionResult>(
-                    new StateUpdateCommonPostActionResultOperationSource(),
+                ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult> operation = new ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult>(
+                    new UpdateAdministrativeStateResultOperationSource(),
                     _externalNetworksClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -724,11 +724,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="content"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<StateUpdateCommonPostActionResult> UpdateStaticRouteBfdAdministrativeState(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<UpdateAdministrativeStateResult> SetStaticRouteBfdAdministrativeState(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _externalNetworksClientDiagnostics.CreateScope("NetworkFabricExternalNetworkResource.UpdateStaticRouteBfdAdministrativeState");
+            using DiagnosticScope scope = _externalNetworksClientDiagnostics.CreateScope("NetworkFabricExternalNetworkResource.SetStaticRouteBfdAdministrativeState");
             scope.Start();
             try
             {
@@ -736,10 +736,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _externalNetworksRestClient.CreateUpdateStaticRouteBfdAdministrativeStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, UpdateAdministrativeStateContent.ToRequestContent(content), context);
+                HttpMessage message = _externalNetworksRestClient.CreateSetStaticRouteBfdAdministrativeStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, UpdateAdministrativeStateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ManagedNetworkFabricArmOperation<StateUpdateCommonPostActionResult> operation = new ManagedNetworkFabricArmOperation<StateUpdateCommonPostActionResult>(
-                    new StateUpdateCommonPostActionResultOperationSource(),
+                ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult> operation = new ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult>(
+                    new UpdateAdministrativeStateResultOperationSource(),
                     _externalNetworksClientDiagnostics,
                     Pipeline,
                     message.Request,

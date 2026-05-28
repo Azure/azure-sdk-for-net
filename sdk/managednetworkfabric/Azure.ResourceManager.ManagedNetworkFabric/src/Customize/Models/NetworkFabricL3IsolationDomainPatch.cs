@@ -4,11 +4,17 @@
 #nullable disable
 
 using System;
-using System.ComponentModel;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
+    // 1. The TypeSpec patch model now keeps the Swagger-compatible TagsUpdate base and the generated
+    //    C# patch shape is renamed to NetworkFabricL3IsolationDomainPatchContent.
+    // 2. We keep this obsolete compatibility type with the shipped NetworkFabricL3IsolationDomainPatch name and original
+    //    NetworkRackPatch inheritance, then adapt it to the generated content type at operation boundaries.
+    // 3. Without this custom code, the public NetworkFabricL3IsolationDomainPatch type and Update overloads that accept it would be
+    //    removed or would have the wrong base type, breaking existing callers.
     /// <summary> The L3 Isolation Domain patch resource definition. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     [Obsolete("This compatibility type is obsolete and will be removed in a future version. Use NetworkFabricL3IsolationDomainPatchContent instead.")]
