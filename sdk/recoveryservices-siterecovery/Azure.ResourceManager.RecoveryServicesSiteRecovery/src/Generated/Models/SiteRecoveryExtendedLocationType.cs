@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public readonly partial struct SiteRecoveryExtendedLocationType : IEquatable<SiteRecoveryExtendedLocationType>
     {
         private readonly string _value;
+        /// <summary> EdgeZone. </summary>
+        private const string EdgeZoneValue = "EdgeZone";
 
         /// <summary> Initializes a new instance of <see cref="SiteRecoveryExtendedLocationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SiteRecoveryExtendedLocationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EdgeZoneValue = "EdgeZone";
+            _value = value;
+        }
 
         /// <summary> EdgeZone. </summary>
         public static SiteRecoveryExtendedLocationType EdgeZone { get; } = new SiteRecoveryExtendedLocationType(EdgeZoneValue);
+
         /// <summary> Determines if two <see cref="SiteRecoveryExtendedLocationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SiteRecoveryExtendedLocationType left, SiteRecoveryExtendedLocationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SiteRecoveryExtendedLocationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SiteRecoveryExtendedLocationType left, SiteRecoveryExtendedLocationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SiteRecoveryExtendedLocationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SiteRecoveryExtendedLocationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SiteRecoveryExtendedLocationType(string value) => new SiteRecoveryExtendedLocationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SiteRecoveryExtendedLocationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SiteRecoveryExtendedLocationType?(string value) => value == null ? null : new SiteRecoveryExtendedLocationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SiteRecoveryExtendedLocationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SiteRecoveryExtendedLocationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

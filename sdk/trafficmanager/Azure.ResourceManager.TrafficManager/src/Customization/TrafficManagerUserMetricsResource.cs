@@ -4,39 +4,18 @@
 #nullable disable
 
 using System;
-using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.TrafficManager.Models;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.TrafficManager
 {
-    [CodeGenType("TrafficManagerUserMetricResource")]
     public partial class TrafficManagerUserMetricsResource
     {
-        /// <summary> Backward-compatible CreateOrUpdate. </summary>
-        /// <param name="waitUntil"> Completion option. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
-        public virtual ArmOperation<TrafficManagerUserMetricsResource> CreateOrUpdate(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            return Update(waitUntil, cancellationToken);
-        }
-
-        /// <summary> Backward-compatible CreateOrUpdateAsync. </summary>
-        /// <param name="waitUntil"> Completion option. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
-        public virtual async Task<ArmOperation<TrafficManagerUserMetricsResource>> CreateOrUpdateAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            return await UpdateAsync(waitUntil, cancellationToken).ConfigureAwait(false);
-        }
-
+        // The generator emits delete methods with ArmOperation<TrafficManagerDeleteOperationResult>.
+        // Keep these custom methods to preserve the existing non-generic ArmOperation public API.
         /// <summary> Delete a subscription-level key used for Real User Metrics collection. </summary>
         /// <param name="waitUntil"> Completion option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

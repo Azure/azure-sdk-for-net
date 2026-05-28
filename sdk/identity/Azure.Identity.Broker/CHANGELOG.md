@@ -1,6 +1,6 @@
 # Release History
 
-## 1.7.0-beta.1 (Unreleased)
+## 1.8.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.7.0 (2026-05-26)
+
+### Features Added
+
+- Added `BrokerCredentialResolver` and `AddBrokerCredentialResolver()` extensions for config- and DI-based resolution of `BrokerCredential` and `VisualStudioCodeCredential` sources. (Experimental, `SCME0002`.)
 
 ## 1.6.0 (2026-04-14)
 

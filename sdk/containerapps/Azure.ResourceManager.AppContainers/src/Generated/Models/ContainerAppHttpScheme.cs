@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.AppContainers.Models
     public readonly partial struct ContainerAppHttpScheme : IEquatable<ContainerAppHttpScheme>
     {
         private readonly string _value;
+        /// <summary> HTTP. </summary>
+        private const string HttpValue = "HTTP";
+        /// <summary> HTTPS. </summary>
+        private const string HttpsValue = "HTTPS";
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppHttpScheme"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerAppHttpScheme(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string HttpValue = "HTTP";
-        private const string HttpsValue = "HTTPS";
+            _value = value;
+        }
 
         /// <summary> HTTP. </summary>
         public static ContainerAppHttpScheme Http { get; } = new ContainerAppHttpScheme(HttpValue);
+
         /// <summary> HTTPS. </summary>
         public static ContainerAppHttpScheme Https { get; } = new ContainerAppHttpScheme(HttpsValue);
+
         /// <summary> Determines if two <see cref="ContainerAppHttpScheme"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerAppHttpScheme left, ContainerAppHttpScheme right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerAppHttpScheme"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerAppHttpScheme left, ContainerAppHttpScheme right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerAppHttpScheme"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerAppHttpScheme"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerAppHttpScheme(string value) => new ContainerAppHttpScheme(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContainerAppHttpScheme"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerAppHttpScheme?(string value) => value == null ? null : new ContainerAppHttpScheme(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerAppHttpScheme other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerAppHttpScheme other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

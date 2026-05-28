@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                writer.WriteObjectValue(Identity, options);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Annotation))
@@ -72,6 +77,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(IdentitySelector))
+            {
+                writer.WritePropertyName("identitySelector"u8);
+                writer.WriteObjectValue(IdentitySelector, options);
+            }
+            if (Optional.IsDefined(GlobalNetworkTapRuleActions))
+            {
+                writer.WritePropertyName("globalNetworkTapRuleActions"u8);
+                writer.WriteObjectValue(GlobalNetworkTapRuleActions, options);
+            }
             writer.WriteEndObject();
         }
 
@@ -95,16 +110,28 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
+            NetworkFabricManagedServiceIdentityPatch identity = default;
             IDictionary<string, string> tags = default;
             string annotation = default;
             NetworkFabricConfigurationType? configurationType = default;
             Uri tapRulesUrl = default;
             IList<NetworkTapRuleMatchConfiguration> matchConfigurations = default;
             IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = default;
+            NetworkFabricIdentitySelectorPatch identitySelector = default;
+            GlobalNetworkTapRuleActionPatchProperties globalNetworkTapRuleActions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = NetworkFabricManagedServiceIdentityPatch.DeserializeNetworkFabricManagedServiceIdentityPatch(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -179,6 +206,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             dynamicMatchConfigurations = array;
                             continue;
                         }
+                        if (property0.NameEquals("identitySelector"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            identitySelector = NetworkFabricIdentitySelectorPatch.DeserializeNetworkFabricIdentitySelectorPatch(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("globalNetworkTapRuleActions"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            globalNetworkTapRuleActions = GlobalNetworkTapRuleActionPatchProperties.DeserializeGlobalNetworkTapRuleActionPatchProperties(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -191,11 +236,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkTapRulePatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
+                identity,
                 annotation,
                 configurationType,
                 tapRulesUrl,
                 matchConfigurations ?? new ChangeTrackingList<NetworkTapRuleMatchConfiguration>(),
-                dynamicMatchConfigurations ?? new ChangeTrackingList<CommonDynamicMatchConfiguration>());
+                dynamicMatchConfigurations ?? new ChangeTrackingList<CommonDynamicMatchConfiguration>(),
+                identitySelector,
+                globalNetworkTapRuleActions);
         }
 
         BinaryData IPersistableModel<NetworkTapRulePatch>.Write(ModelReaderWriterOptions options)
