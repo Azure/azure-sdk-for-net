@@ -67,24 +67,6 @@ namespace Azure.ResourceManager.ContainerService.Models
         [WirePath("defaultDomain")]
         public ManagedClusterIngressDefaultDomainProfile DefaultDomain { get; set; }
 
-        /// <summary> Whether to enable Istio as a Gateway API implementation for managed ingress with App Routing. </summary>
-        [WirePath("gatewayAPIImplementations.appRoutingIstio.mode")]
-        public GatewayApiIstioMode? GatewayAPIImplementationsIstioMode
-        {
-            get
-            {
-                return GatewayAPIImplementations is null ? default : GatewayAPIImplementations.IstioMode;
-            }
-            set
-            {
-                if (GatewayAPIImplementations is null)
-                {
-                    GatewayAPIImplementations = new ManagedClusterWebAppRoutingGatewayAPIImplementations();
-                }
-                GatewayAPIImplementations.IstioMode = value;
-            }
-        }
-
         /// <summary> Ingress type for the default NginxIngressController custom resource. </summary>
         [WirePath("nginx.defaultIngressControllerType")]
         public NginxIngressControllerType? NginxDefaultIngressControllerType

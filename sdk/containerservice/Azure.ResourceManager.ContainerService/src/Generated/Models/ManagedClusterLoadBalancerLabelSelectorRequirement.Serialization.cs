@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             string key = default;
-            Operator? @operator = default;
+            ManagedClusterLoadBalancerLabelSelectorOperator? @operator = default;
             IList<string> values = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    @operator = new Operator(prop.Value.GetString());
+                    @operator = new ManagedClusterLoadBalancerLabelSelectorOperator(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("values"u8))

@@ -1860,7 +1860,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static Azure.ResourceManager.ContainerService.Models.ManagedClusterJwtAuthenticatorProperties ManagedClusterJwtAuthenticatorProperties(Azure.ResourceManager.ContainerService.Models.ManagedClusterJwtAuthenticatorProvisioningState? provisioningState = default(Azure.ResourceManager.ContainerService.Models.ManagedClusterJwtAuthenticatorProvisioningState?), Azure.ResourceManager.ContainerService.Models.ManagedClusterJwtAuthenticatorIssuer issuer = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerService.Models.ManagedClusterJwtAuthenticatorValidationRule> claimValidationRules = null, Azure.ResourceManager.ContainerService.Models.ManagedClusterJwtAuthenticatorClaimMappings claimMappings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerService.Models.ManagedClusterJwtAuthenticatorValidationRule> userValidationRules = null) { throw null; }
         public static Azure.ResourceManager.ContainerService.ManagedClusterLoadBalancerData ManagedClusterLoadBalancerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string primaryAgentPoolName = null, bool? isServicePlacementAllowed = default(bool?), Azure.ResourceManager.ContainerService.Models.ManagedClusterLoadBalancerLabelSelector serviceLabelSelector = null, Azure.ResourceManager.ContainerService.Models.ManagedClusterLoadBalancerLabelSelector serviceNamespaceSelector = null, Azure.ResourceManager.ContainerService.Models.ManagedClusterLoadBalancerLabelSelector nodeSelector = null, string provisioningState = null) { throw null; }
         public static Azure.ResourceManager.ContainerService.Models.ManagedClusterLoadBalancerLabelSelector ManagedClusterLoadBalancerLabelSelector(System.Collections.Generic.IEnumerable<string> matchLabels = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerService.Models.ManagedClusterLoadBalancerLabelSelectorRequirement> matchExpressions = null) { throw null; }
-        public static Azure.ResourceManager.ContainerService.Models.ManagedClusterLoadBalancerLabelSelectorRequirement ManagedClusterLoadBalancerLabelSelectorRequirement(string key = null, Azure.ResourceManager.ContainerService.Models.Operator? @operator = default(Azure.ResourceManager.ContainerService.Models.Operator?), System.Collections.Generic.IEnumerable<string> values = null) { throw null; }
+        public static Azure.ResourceManager.ContainerService.Models.ManagedClusterLoadBalancerLabelSelectorRequirement ManagedClusterLoadBalancerLabelSelectorRequirement(string key = null, Azure.ResourceManager.ContainerService.Models.ManagedClusterLoadBalancerLabelSelectorOperator? @operator = default(Azure.ResourceManager.ContainerService.Models.ManagedClusterLoadBalancerLabelSelectorOperator?), System.Collections.Generic.IEnumerable<string> values = null) { throw null; }
         public static Azure.ResourceManager.ContainerService.ManagedClusterMeshMembershipData ManagedClusterMeshMembershipData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ContainerService.Models.ManagedClusterMeshMembershipProperties properties = null, string managedBy = null, Azure.ETag? eTag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.ContainerService.Models.ManagedClusterMeshMembershipProperties ManagedClusterMeshMembershipProperties(Azure.ResourceManager.ContainerService.Models.MeshMembershipProvisioningState? provisioningState = default(Azure.ResourceManager.ContainerService.Models.MeshMembershipProvisioningState?), Azure.ResourceManager.ContainerService.Models.MeshMembershipPrivateConnectProfile privateConnectProfile = null, Azure.Core.ResourceIdentifier managedMeshId = null) { throw null; }
         public static Azure.ResourceManager.ContainerService.ManagedClusterNamespaceData ManagedClusterNamespaceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ContainerService.Models.ManagedClusterNamespaceProperties properties = null, Azure.ETag? eTag = default(Azure.ETag?)) { throw null; }
@@ -4360,7 +4360,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         public ManagedClusterIngressProfileWebAppRouting() { }
         public Azure.ResourceManager.ContainerService.Models.ManagedClusterIngressDefaultDomainProfile DefaultDomain { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> DnsZoneResourceIds { get { throw null; } }
-        public Azure.ResourceManager.ContainerService.Models.GatewayApiIstioMode? GatewayAPIImplementationsIstioMode { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerService.Models.GatewayApiIstioMode? GatewayApiImplementationsIstioMode { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerService.Models.ContainerServiceUserAssignedIdentity Identity { get { throw null; } }
         public bool? IsEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerService.Models.NginxIngressControllerType? NginxDefaultIngressControllerType { get { throw null; } set { } }
@@ -4524,11 +4524,30 @@ namespace Azure.ResourceManager.ContainerService.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterLoadBalancerLabelSelector>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterLoadBalancerLabelSelector>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ManagedClusterLoadBalancerLabelSelectorOperator : System.IEquatable<Azure.ResourceManager.ContainerService.Models.ManagedClusterLoadBalancerLabelSelectorOperator>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ManagedClusterLoadBalancerLabelSelectorOperator(string value) { throw null; }
+        public static Azure.ResourceManager.ContainerService.Models.ManagedClusterLoadBalancerLabelSelectorOperator DoesNotExist { get { throw null; } }
+        public static Azure.ResourceManager.ContainerService.Models.ManagedClusterLoadBalancerLabelSelectorOperator Exists { get { throw null; } }
+        public static Azure.ResourceManager.ContainerService.Models.ManagedClusterLoadBalancerLabelSelectorOperator In { get { throw null; } }
+        public static Azure.ResourceManager.ContainerService.Models.ManagedClusterLoadBalancerLabelSelectorOperator NotIn { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ContainerService.Models.ManagedClusterLoadBalancerLabelSelectorOperator other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerService.Models.ManagedClusterLoadBalancerLabelSelectorOperator left, Azure.ResourceManager.ContainerService.Models.ManagedClusterLoadBalancerLabelSelectorOperator right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerService.Models.ManagedClusterLoadBalancerLabelSelectorOperator (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerService.Models.ManagedClusterLoadBalancerLabelSelectorOperator? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerService.Models.ManagedClusterLoadBalancerLabelSelectorOperator left, Azure.ResourceManager.ContainerService.Models.ManagedClusterLoadBalancerLabelSelectorOperator right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class ManagedClusterLoadBalancerLabelSelectorRequirement : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterLoadBalancerLabelSelectorRequirement>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterLoadBalancerLabelSelectorRequirement>
     {
         public ManagedClusterLoadBalancerLabelSelectorRequirement() { }
         public string Key { get { throw null; } set { } }
-        public Azure.ResourceManager.ContainerService.Models.Operator? Operator { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerService.Models.ManagedClusterLoadBalancerLabelSelectorOperator? Operator { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Values { get { throw null; } }
         protected virtual Azure.ResourceManager.ContainerService.Models.ManagedClusterLoadBalancerLabelSelectorRequirement JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -5507,25 +5526,6 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static implicit operator Azure.ResourceManager.ContainerService.Models.NodeProvisioningMode (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerService.Models.NodeProvisioningMode? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ContainerService.Models.NodeProvisioningMode left, Azure.ResourceManager.ContainerService.Models.NodeProvisioningMode right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Operator : System.IEquatable<Azure.ResourceManager.ContainerService.Models.Operator>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Operator(string value) { throw null; }
-        public static Azure.ResourceManager.ContainerService.Models.Operator DoesNotExist { get { throw null; } }
-        public static Azure.ResourceManager.ContainerService.Models.Operator Exists { get { throw null; } }
-        public static Azure.ResourceManager.ContainerService.Models.Operator In { get { throw null; } }
-        public static Azure.ResourceManager.ContainerService.Models.Operator NotIn { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ContainerService.Models.Operator other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ContainerService.Models.Operator left, Azure.ResourceManager.ContainerService.Models.Operator right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ContainerService.Models.Operator (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ContainerService.Models.Operator? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ContainerService.Models.Operator left, Azure.ResourceManager.ContainerService.Models.Operator right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
