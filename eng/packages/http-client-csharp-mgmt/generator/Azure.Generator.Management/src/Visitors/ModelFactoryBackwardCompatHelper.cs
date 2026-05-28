@@ -35,17 +35,15 @@ namespace Azure.Generator.Management.Visitors
 
                 var updatedBodyStatements = new List<MethodBodyStatement>();
                 var bodyUpdated = false;
-                IReadOnlyList<ParameterProvider>? matchedMethodParameters = null;
                 foreach (var statement in method.BodyStatements)
                 {
                     // Primary factory methods are created before later visitors may reset/reorder model constructors.
                     // Rebuild direct constructor calls from the method signature so the public factory parameters
                     // keep flowing into the final constructor slots.
                     if (statement is ExpressionStatement { Expression: KeywordExpression { Expression: NewInstanceExpression newInstanceExpression } }
-                        && TryRebuildNewInstanceFromMethodSignature(method, newInstanceExpression, out var updatedArguments, out var matchedParameters))
+                        && TryRebuildNewInstanceFromMethodSignature(method, newInstanceExpression, out var updatedArguments))
                     {
                         updatedBodyStatements.Add(Return(New.Instance(newInstanceExpression.Type!, updatedArguments)));
-                        matchedMethodParameters = matchedParameters;
                         bodyUpdated = true;
                     }
                     else
@@ -54,9 +52,9 @@ namespace Azure.Generator.Management.Visitors
                     }
                 }
 
-                if (bodyUpdated && matchedMethodParameters is not null)
+                if (bodyUpdated)
                 {
-                    method.Update(signature: RemoveUnusedParameters(method.Signature, matchedMethodParameters), bodyStatements: updatedBodyStatements);
+                    method.Update(signature: method.Signature, bodyStatements: updatedBodyStatements);
                 }
             }
         }
@@ -169,11 +167,9 @@ namespace Azure.Generator.Management.Visitors
         private static bool TryRebuildNewInstanceFromMethodSignature(
             MethodProvider method,
             NewInstanceExpression newInstanceExpression,
-            [NotNullWhen(true)] out IReadOnlyList<ValueExpression>? updatedArguments,
-            [NotNullWhen(true)] out IReadOnlyList<ParameterProvider>? matchedParameters)
+            [NotNullWhen(true)] out IReadOnlyList<ValueExpression>? updatedArguments)
         {
             updatedArguments = null;
-            matchedParameters = null;
             if (newInstanceExpression.Type is null || !TryGetModelProvider(newInstanceExpression.Type, out var modelProvider))
             {
                 return false;
@@ -189,14 +185,12 @@ namespace Azure.Generator.Management.Visitors
             }
 
             var arguments = new List<ValueExpression>(constructorParameters.Count);
-            var matched = new List<ParameterProvider>();
             var changed = constructorParameters.Count != newInstanceExpression.Parameters.Count;
             foreach (var constructorParameter in constructorParameters)
             {
                 if (TryBuildCompatibilityArgument(method, constructorParameter, new HashSet<string>(StringComparer.OrdinalIgnoreCase), out var argument))
                 {
                     arguments.Add(argument.Argument);
-                    matched.AddRange(argument.MatchedParameters);
                     var index = arguments.Count - 1;
                     if (!changed && !ReferenceEquals(argument.Argument, newInstanceExpression.Parameters[index]))
                     {
@@ -213,9 +207,7 @@ namespace Azure.Generator.Management.Visitors
                     }
                 }
             }
-
             updatedArguments = changed ? arguments : null;
-            matchedParameters = changed ? matched : null;
             return changed;
         }
 
@@ -283,25 +275,6 @@ namespace Azure.Generator.Management.Visitors
                 signature.GenericParameterConstraints,
                 signature.ExplicitInterface,
                 signature.NonDocumentComment);
-        }
-
-        private static MethodSignature RemoveUnusedParameters(MethodSignature signature, IReadOnlyList<ParameterProvider> matchedParameters)
-        {
-            var parameters = signature.Parameters.Where(parameter => matchedParameters.Any(matched => ReferenceEquals(matched, parameter))).ToArray();
-            return parameters.Length == signature.Parameters.Count
-                ? signature
-                : new MethodSignature(
-                    signature.Name,
-                    signature.Description,
-                    signature.Modifiers,
-                    signature.ReturnType,
-                    signature.ReturnDescription,
-                    parameters,
-                    signature.Attributes,
-                    signature.GenericArguments,
-                    signature.GenericParameterConstraints,
-                    signature.ExplicitInterface,
-                    signature.NonDocumentComment);
         }
 
         /// <summary>

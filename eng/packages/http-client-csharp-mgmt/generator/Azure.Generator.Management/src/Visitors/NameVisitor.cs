@@ -64,6 +64,12 @@ internal class NameVisitor : ScmLibraryVisitor
             return null;
         }
 
+        type = base.PreVisitModel(model, type);
+        if (type is null)
+        {
+            return null;
+        }
+
         if (TryTransformUrlToUri(type.Name, out var newName))
         {
             type.Update(name: newName);
@@ -88,7 +94,7 @@ internal class NameVisitor : ScmLibraryVisitor
                 newName = $"{enclosingResourceName}CreateOrUpdateContent";
                 type.Update(name: newName);
             }
-            else if (inputLibrary.ShouldRenameResourceUpdateModel(model))
+            else if (inputLibrary.ShouldRenameResourceUpdateModel(model) || IsUpdatePayloadName(type) || HasPreviousPatchContract(type, enclosingResourceName))
             {
                 // PATCH-only payload names are part of the public SDK surface. Centralize the compatibility
                 // decision in ManagementInputLibrary so this visitor does not rely on service-specific names.
@@ -96,8 +102,14 @@ internal class NameVisitor : ScmLibraryVisitor
                 type.Update(name: newName);
             }
         }
-        return base.PreVisitModel(model, type);
+        return type;
     }
+
+    private static bool HasPreviousPatchContract(TypeProvider type, string enclosingResourceName)
+        => string.Equals(type.LastContractView?.Name, $"{enclosingResourceName}Patch", StringComparison.Ordinal);
+
+    private static bool IsUpdatePayloadName(TypeProvider type)
+        => type.Name.EndsWith("Update", StringComparison.Ordinal);
 
     protected override PropertyProvider? PreVisitProperty(InputProperty property, PropertyProvider? propertyProvider)
     {

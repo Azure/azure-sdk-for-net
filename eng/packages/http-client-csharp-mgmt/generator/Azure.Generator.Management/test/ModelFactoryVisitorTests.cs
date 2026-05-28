@@ -205,13 +205,14 @@ namespace Azure.Generator.Mgmt.Tests
             var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
             var idParameter = new ParameterProvider("id", $"", typeof(string));
             var nameParameter = new ParameterProvider("name", $"", typeof(string));
+            var legacyParameter = new ParameterProvider("legacyValue", $"", typeof(string));
             var signature = new MethodSignature(
                 "TestModel",
                 $"Creates a test model.",
                 MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
                 model.Type,
                 $"A test model.",
-                [idParameter, nameParameter]);
+                [idParameter, nameParameter, legacyParameter]);
             var method = new MethodProvider(
                 signature,
                 Return(new NewInstanceExpression(model.Type, [nameParameter, idParameter])),
@@ -221,6 +222,7 @@ namespace Azure.Generator.Mgmt.Tests
             Management.Visitors.ModelFactoryBackwardCompatHelper.FixModelFactoryConstructorCalls(modelFactory.Methods);
 
             var rendered = new TypeProviderWriter(modelFactory).Write().Content;
+            Assert.That(rendered, Does.Contain("string legacyValue"));
             Assert.That(rendered, Does.Contain("return new global::Samples.Models.TestModel(id, name, default);"));
         }
 

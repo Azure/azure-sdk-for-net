@@ -308,7 +308,7 @@ namespace Azure.Generator.Management
         // update shapes are a special compatibility case: previous GA SDKs exposed them as {Resource}Patch
         // even when the underlying TypeSpec model had an operation-specific client name.
         internal bool ShouldRenameResourceUpdateModel(InputModelType model)
-            => !ClientNameOverriddenModels.Contains(model) || InheritsFromArmResource(model);
+            => !ClientNameOverriddenModels.Contains(model) || InheritsFromArmResource(model) || IsUpdatePayloadClientName(model);
 
         /// <summary> Gets the ARM provider schema containing all resource metadata and non-resource methods. </summary>
         public ArmProviderSchema ArmProviderSchema => _providerSchema ??= BuildArmProviderSchema();
@@ -332,7 +332,10 @@ namespace Azure.Generator.Management
                             bool isAlsoUsedInCreate = IsModelUsedInCreateOperation(metadata, updateModel);
                             if (tempMap.TryGetValue(updateModelKey, out var existing))
                             {
-                                tempMap[updateModelKey] = (existing.ResourceName, existing.Count + 1, existing.IsAlsoUsedInCreate || isAlsoUsedInCreate);
+                                var resourceCount = string.Equals(existing.ResourceName, metadata.ResourceName, StringComparison.Ordinal)
+                                    ? existing.Count
+                                    : existing.Count + 1;
+                                tempMap[updateModelKey] = (existing.ResourceName, resourceCount, existing.IsAlsoUsedInCreate || isAlsoUsedInCreate);
                             }
                             else
                             {
@@ -347,7 +350,8 @@ namespace Azure.Generator.Management
                 }
             }
 
-            // Only keep update models that are used in exactly one resource (count == 1)
+            // Only keep update models that are used by exactly one resource (count == 1). The same
+            // resource can have multiple PATCH methods/API versions using the same model.
             return tempMap
                 .Where(kvp => kvp.Value.Count == 1)
                 .ToDictionary(kvp => kvp.Key, kvp => (kvp.Value.ResourceName, kvp.Value.IsAlsoUsedInCreate));
@@ -373,9 +377,9 @@ namespace Azure.Generator.Management
             => string.Equals(GetModelIdentityKey(left), GetModelIdentityKey(right), StringComparison.Ordinal);
 
         private static string GetModelIdentityKey(InputModelType model)
-            => !string.IsNullOrEmpty(model.CrossLanguageDefinitionId)
-                ? model.CrossLanguageDefinitionId
-                : $"{model.Namespace}.{model.Name}";
+            => !string.IsNullOrEmpty(model.Namespace)
+                ? $"{model.Namespace}.{model.Name}"
+                : model.CrossLanguageDefinitionId;
 
         private static bool InheritsFromArmResource(InputModelType model)
         {
@@ -391,6 +395,9 @@ namespace Azure.Generator.Management
 
             return false;
         }
+
+        private static bool IsUpdatePayloadClientName(InputModelType model)
+            => model.Name.EndsWith("Update", StringComparison.Ordinal);
 
         private IReadOnlyDictionary<InputServiceMethod, InputClient> ConstructMethodClientMap()
         {
