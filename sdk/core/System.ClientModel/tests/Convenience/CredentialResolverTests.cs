@@ -111,14 +111,15 @@ public class CredentialResolverTests
 
         var resolver = new ScopedRecordingResolver("Anything", "x");
 
-        // GetOrTryResolve(IConfigurationSection, CredentialResolver, Func<...>) —
-        // the third param is required (non-nullable) so callers honor the resolver's
-        // chain-aware contract. Pass an explicit no-op since this test bypasses
-        // the engine and has no chain.
+        // GetOrTryResolve(IConfigurationSection, CredentialResolver, Func<...>, string chainKey) —
+        // the third and fourth params are required so callers honor the
+        // resolver's chain-aware contract and the cache's chain-discriminator
+        // contract. Pass an explicit no-op resolveChild and an empty chainKey
+        // since this test bypasses the engine and has no chain.
         Func<IConfigurationSection, AuthenticationTokenProvider?> noChain = static _ => null;
         var result = getOrTryResolve.Invoke(
             null,
-            new object?[] { null, resolver, noChain });
+            new object?[] { null, resolver, noChain, string.Empty });
 
         Assert.That(result, Is.Null);
         Assert.That(resolver.WasCalled, Is.False, "resolver must not run when the merged section is null");
@@ -1394,6 +1395,177 @@ public class CredentialResolverTests
             "resolveChild should have walked the chain and matched the child resolver.");
     }
 
+    [Test]
+    public void Engine_ChainCache_DifferentDownstream_ProducesDistinctEntries()
+    {
+        // Scenario from PR review: chain-owning resolver reused across two
+        // calls with the same parent section but different downstream resolvers
+        // for the inner section. The cache must NOT return the first call's
+        // wrapped provider for the second call — the second call's downstream
+        // resolver would otherwise be silently bypassed.
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["Cred:CredentialSource"] = "MyChain",
+            ["Cred:Inner:CredentialSource"] = "FooCred",
+            ["Cred:Inner:Bar"] = "false",
+        });
+
+        var chainOwner = new ChainWrapperResolver("MyChain", section => section.GetSection("Inner"));
+        var fooRespectsBar = new FooCredResolver("FooCred", respectsBar: true);
+        var fooIgnoresBar = new FooCredResolver("FooCred", respectsBar: false);
+
+        CredentialSettings? first = config.GetCredentialSettings(
+            "Cred", chainOwner, fooRespectsBar);
+        Assert.That(((ChainWrapperProvider)first!.TokenProvider!).Inner, Is.InstanceOf<FooTokenProvider>());
+        Assert.That(((FooTokenProvider)((ChainWrapperProvider)first.TokenProvider!).Inner!).RespectsBar, Is.True);
+
+        CredentialSettings? second = config.GetCredentialSettings(
+            "Cred", chainOwner, fooIgnoresBar);
+
+        Assert.That(second?.TokenProvider, Is.Not.SameAs(first.TokenProvider),
+            "Chain-aware result must NOT be served from cache when the downstream chain composition changed.");
+        Assert.That(((FooTokenProvider)((ChainWrapperProvider)second!.TokenProvider!).Inner!).RespectsBar, Is.False,
+            "Second call's inner provider must come from fooIgnoresBar — proves the new chain was actually walked.");
+    }
+
+    [Test]
+    public void Engine_ChainCache_SameDownstream_ReturnsCachedEntry()
+    {
+        // Same parent section + same chain composition = cache hit. Pins the
+        // happy path: chain-aware cache entries are reusable when nothing
+        // about the chain changes.
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["Cred:CredentialSource"] = "MyChain",
+            ["Cred:Inner:CredentialSource"] = "FooCred",
+        });
+
+        var chainOwner = new ChainWrapperResolver("MyChain", section => section.GetSection("Inner"));
+        var foo = new FooCredResolver("FooCred", respectsBar: true);
+
+        CredentialSettings? first = config.GetCredentialSettings("Cred", chainOwner, foo);
+        CredentialSettings? second = config.GetCredentialSettings("Cred", chainOwner, foo);
+
+        Assert.That(second?.TokenProvider, Is.SameAs(first?.TokenProvider),
+            "Same (section, resolver, chain composition) should hit the chain-specific cache slot.");
+    }
+
+    [Test]
+    public void Engine_NonChainCache_SharedAcrossDifferentChainCompositions()
+    {
+        // Non-chain-aware resolver: its TryResolve never invokes resolveChild,
+        // so its output is chain-independent. The cache stores it under the
+        // shared slot (chainKey=null) so subsequent calls with the same
+        // (section, resolver) but different chain compositions still hit.
+        // This pins the "1 entry for non-chains, N for chains" property.
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["Cred:CredentialSource"] = "Simple",
+        });
+
+        var simple = new ScopedRecordingResolver("Simple", "simple-provider");
+        var neverMatches = new ScopedRecordingResolver("Other", "other");
+        var alsoNeverMatches = new ScopedRecordingResolver("Yet-Another", "yet-another");
+
+        CredentialSettings? first = config.GetCredentialSettings("Cred", simple, neverMatches);
+        CredentialSettings? second = config.GetCredentialSettings("Cred", simple, alsoNeverMatches);
+
+        Assert.That(second?.TokenProvider, Is.SameAs(first?.TokenProvider),
+            "Non-chain-aware resolver output must be shared across different chain compositions (shared cache slot).");
+    }
+
+    [Test]
+    public void Engine_ChainCache_RespectsResolverOrderInChainKey()
+    {
+        // Two chains containing the same resolver instances but in different
+        // order produce distinct cache entries — the resolver order affects
+        // which resolver actually claims a given inner section, so it must
+        // affect the chain key.
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["Cred:CredentialSource"] = "MyChain",
+            ["Cred:Inner:CredentialSource"] = "FooCred",
+        });
+
+        var chainOwner = new ChainWrapperResolver("MyChain", section => section.GetSection("Inner"));
+        var fooA = new FooCredResolver("FooCred", respectsBar: true);
+        var fooB = new FooCredResolver("FooCred", respectsBar: false);
+
+        // Order: [chainOwner, fooA, fooB] — fooA wins for inner (first match).
+        CredentialSettings? first = config.GetCredentialSettings(
+            "Cred", chainOwner, fooA, fooB);
+        // Order: [chainOwner, fooB, fooA] — fooB wins for inner.
+        CredentialSettings? second = config.GetCredentialSettings(
+            "Cred", chainOwner, fooB, fooA);
+
+        Assert.That(second?.TokenProvider, Is.Not.SameAs(first?.TokenProvider),
+            "Different resolver order can change which downstream resolver wins — must produce a distinct cache entry.");
+        Assert.That(((FooTokenProvider)((ChainWrapperProvider)first!.TokenProvider!).Inner!).RespectsBar, Is.True,
+            "First call: fooA (respectsBar:true) wins the inner.");
+        Assert.That(((FooTokenProvider)((ChainWrapperProvider)second!.TokenProvider!).Inner!).RespectsBar, Is.False,
+            "Second call: fooB (respectsBar:false) wins the inner.");
+    }
+
+    [Test]
+    public void Engine_ChainCache_DistinctParentInstances_DoNotShareCache()
+    {
+        // Two different chainOwner instances of the same type must produce
+        // distinct cache entries even with identical downstream chain — the
+        // cache key uses resolver reference identity, not type identity, so
+        // resolver instance state cannot leak across instances.
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["Cred:CredentialSource"] = "MyChain",
+            ["Cred:Inner:CredentialSource"] = "FooCred",
+        });
+
+        var chainOwnerA = new ChainWrapperResolver("MyChain", section => section.GetSection("Inner"));
+        var chainOwnerB = new ChainWrapperResolver("MyChain", section => section.GetSection("Inner"));
+        var foo = new FooCredResolver("FooCred", respectsBar: true);
+
+        CredentialSettings? a = config.GetCredentialSettings("Cred", chainOwnerA, foo);
+        CredentialSettings? b = config.GetCredentialSettings("Cred", chainOwnerB, foo);
+
+        Assert.That(b?.TokenProvider, Is.Not.SameAs(a?.TokenProvider),
+            "Distinct resolver instances must get distinct cache entries even when types and downstream chain match.");
+    }
+
+    [Test]
+    public void Engine_ChainCache_ConditionalChainUse_ChoosesSlotPerSection()
+    {
+        // A resolver that calls resolveChild for some sections and not others
+        // must land its results in the appropriate slot per section: chain-
+        // specific when resolveChild was used, shared when it wasn't. Two
+        // calls with the same resolver against a non-chain section share
+        // their cached entry even across different chain compositions, while
+        // the same resolver against a chain section gets distinct entries
+        // per chain.
+        IConfigurationRoot config = BuildConfig(new Dictionary<string, string?>
+        {
+            ["Plain:CredentialSource"] = "Conditional",
+            ["WithChild:CredentialSource"] = "Conditional",
+            ["WithChild:Child:CredentialSource"] = "FooCred",
+        });
+
+        var conditional = new ConditionalChainResolver("Conditional", "Child");
+        var fooA = new FooCredResolver("FooCred", respectsBar: true);
+        var fooB = new FooCredResolver("FooCred", respectsBar: false);
+
+        // Plain section (no child subsection) → resolveChild never called →
+        // shared slot. Same instance across different chain compositions.
+        CredentialSettings? plain1 = config.GetCredentialSettings("Plain", conditional, fooA);
+        CredentialSettings? plain2 = config.GetCredentialSettings("Plain", conditional, fooB);
+        Assert.That(plain2?.TokenProvider, Is.SameAs(plain1?.TokenProvider),
+            "Plain section: resolveChild not called → shared slot → same instance across chains.");
+
+        // WithChild section → resolveChild called → chain-specific slot.
+        // Different chain compositions → different entries.
+        CredentialSettings? chain1 = config.GetCredentialSettings("WithChild", conditional, fooA);
+        CredentialSettings? chain2 = config.GetCredentialSettings("WithChild", conditional, fooB);
+        Assert.That(chain2?.TokenProvider, Is.Not.SameAs(chain1?.TokenProvider),
+            "WithChild section: resolveChild called → chain-specific slot → different entries per chain.");
+    }
+
     private sealed class CapturingChainAwareResolver : CredentialResolver
     {
         private readonly string _matchSource;
@@ -1471,6 +1643,143 @@ public class CredentialResolverTests
             provider = new StubTokenProvider("parent");
             return true;
         }
+    }
+
+    // Chain-owning resolver that wraps the resolved child provider in a
+    // ChainWrapperProvider so tests can observe which inner provider was
+    // used. Models real chain-owning resolvers (e.g., AzureCredentialResolver
+    // for ChainedTokenCredential) that assemble their output from
+    // downstream provider instances.
+    // Resolver that conditionally invokes resolveChild based on whether the
+    // section has a named child subsection. Pins the conditional-chain-use
+    // scenario where the same resolver routes through both cache slots
+    // depending on the input section.
+    private sealed class ConditionalChainResolver : CredentialResolver
+    {
+        private readonly string _matchSource;
+        private readonly string _childKey;
+
+        public ConditionalChainResolver(string matchSource, string childKey)
+        {
+            _matchSource = matchSource;
+            _childKey = childKey;
+        }
+
+        public override bool TryResolve(IConfigurationSection credentialSection, [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
+        {
+            provider = null;
+            return false;
+        }
+
+        public override bool TryResolve(
+            IConfigurationSection credentialSection,
+            Func<IConfigurationSection, AuthenticationTokenProvider?> resolveChild,
+            [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
+        {
+            string? source = credentialSection["CredentialSource"];
+            if (!string.Equals(source, _matchSource, StringComparison.OrdinalIgnoreCase))
+            {
+                provider = null;
+                return false;
+            }
+
+            IConfigurationSection child = credentialSection.GetSection(_childKey);
+            if (child.Exists())
+            {
+                AuthenticationTokenProvider? inner = resolveChild(child);
+                provider = new ChainWrapperProvider(inner);
+            }
+            else
+            {
+                // Resolve produced a chain-independent provider — resolveChild
+                // was NOT called, so the cache should park us in the shared slot.
+                provider = new StubTokenProvider("conditional-no-child");
+            }
+            return true;
+        }
+    }
+
+    private sealed class ChainWrapperResolver : CredentialResolver
+    {
+        private readonly string _matchSource;
+        private readonly Func<IConfigurationSection, IConfigurationSection> _selectChild;
+
+        public ChainWrapperResolver(
+            string matchSource,
+            Func<IConfigurationSection, IConfigurationSection> selectChild)
+        {
+            _matchSource = matchSource;
+            _selectChild = selectChild;
+        }
+
+        public override bool TryResolve(IConfigurationSection credentialSection, [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
+        {
+            provider = null;
+            return false;
+        }
+
+        public override bool TryResolve(
+            IConfigurationSection credentialSection,
+            Func<IConfigurationSection, AuthenticationTokenProvider?> resolveChild,
+            [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
+        {
+            string? source = credentialSection["CredentialSource"];
+            if (!string.Equals(source, _matchSource, StringComparison.OrdinalIgnoreCase))
+            {
+                provider = null;
+                return false;
+            }
+
+            IConfigurationSection child = _selectChild(credentialSection);
+            AuthenticationTokenProvider? childProvider = resolveChild(child);
+            provider = new ChainWrapperProvider(childProvider);
+            return true;
+        }
+    }
+
+    private sealed class ChainWrapperProvider : AuthenticationTokenProvider
+    {
+        public ChainWrapperProvider(AuthenticationTokenProvider? inner) => Inner = inner;
+        public AuthenticationTokenProvider? Inner { get; }
+        public override GetTokenOptions? CreateTokenOptions(IReadOnlyDictionary<string, object> properties) => null;
+        public override AuthenticationToken GetToken(GetTokenOptions options, Threading.CancellationToken cancellationToken) => default!;
+        public override Threading.Tasks.ValueTask<AuthenticationToken> GetTokenAsync(GetTokenOptions options, Threading.CancellationToken cancellationToken) => default!;
+    }
+
+    // Two distinct FooCredResolver instances (respectsBar:true / :false)
+    // model the chain-swap scenario: same source name claimed by different
+    // resolver instances that produce semantically different providers.
+    private sealed class FooCredResolver : CredentialResolver
+    {
+        private readonly string _matchSource;
+        private readonly bool _respectsBar;
+
+        public FooCredResolver(string matchSource, bool respectsBar)
+        {
+            _matchSource = matchSource;
+            _respectsBar = respectsBar;
+        }
+
+        public override bool TryResolve(IConfigurationSection credentialSection, [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
+        {
+            string? source = credentialSection["CredentialSource"];
+            if (!string.Equals(source, _matchSource, StringComparison.OrdinalIgnoreCase))
+            {
+                provider = null;
+                return false;
+            }
+            provider = new FooTokenProvider(_respectsBar);
+            return true;
+        }
+    }
+
+    private sealed class FooTokenProvider : AuthenticationTokenProvider
+    {
+        public FooTokenProvider(bool respectsBar) => RespectsBar = respectsBar;
+        public bool RespectsBar { get; }
+        public override GetTokenOptions? CreateTokenOptions(IReadOnlyDictionary<string, object> properties) => null;
+        public override AuthenticationToken GetToken(GetTokenOptions options, Threading.CancellationToken cancellationToken) => default!;
+        public override Threading.Tasks.ValueTask<AuthenticationToken> GetTokenAsync(GetTokenOptions options, Threading.CancellationToken cancellationToken) => default!;
     }
 
     // Enumerable that throws if GetEnumerator() is called more than once.

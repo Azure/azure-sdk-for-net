@@ -46,10 +46,18 @@ internal static class CredentialCache
     /// overload so chain-owning resolvers can recurse without re-implementing
     /// engine logic. Required — callers without a chain pass a no-op
     /// (<c>static _ =&gt; null</c>) to honor the resolver's non-null contract.</param>
+    /// <param name="chainKey">Stable identifier for the active resolver chain
+    /// composition. Used as a discriminator when the resolver actually invokes
+    /// <paramref name="resolveChild"/> during <c>TryResolve</c> — the produced
+    /// provider then depends on the chain, so it must be cached per chain.
+    /// Resolvers that do not invoke <paramref name="resolveChild"/> get a
+    /// single shared cache entry (chain-independent), preserving cross-chain
+    /// sharing for the common non-chain case.</param>
     public static CredentialSettings? GetOrTryResolve(
         IConfigurationSection mergedSection,
         CredentialResolver resolver,
-        Func<IConfigurationSection, AuthenticationTokenProvider?> resolveChild)
+        Func<IConfigurationSection, AuthenticationTokenProvider?> resolveChild,
+        string chainKey)
     {
         string sectionKey = CredentialSectionHasher.ComputeKey(mergedSection);
         if (sectionKey.Length == 0)
@@ -66,17 +74,38 @@ internal static class CredentialCache
         // Reference-identity hash bypasses any user GetHashCode override on
         // the resolver and gives a stable identifier for the lifetime of the
         // resolver object.
-        string key = sectionKey + "::" + RuntimeHelpers.GetHashCode(resolver).ToString(Globalization.CultureInfo.InvariantCulture);
+        string resolverPart = sectionKey + "::" + RuntimeHelpers.GetHashCode(resolver).ToString(Globalization.CultureInfo.InvariantCulture);
+        string sharedKey = resolverPart;
+        string chainSpecificKey = resolverPart + "::" + chainKey;
 
-        if (s_cache.TryGetValue(key, out CredentialSettings? existing))
+        // Lookup order:
+        //   1. Shared slot — populated when a prior resolve completed without
+        //      invoking resolveChild. The cached provider is chain-independent
+        //      and safe to share across every chain composition.
+        //   2. Chain-specific slot — populated when a prior resolve DID invoke
+        //      resolveChild. Only valid for this exact chain composition.
+        if (s_cache.TryGetValue(sharedKey, out CredentialSettings? existing) ||
+            s_cache.TryGetValue(chainSpecificKey, out existing))
         {
             return existing;
         }
 
+        // Track whether the resolver consumes downstream chain results during
+        // this invocation. Wrap the engine-supplied resolveChild with a thin
+        // delegate that sets a local flag before forwarding; the flag drives
+        // which slot the result goes into below.
+        bool usedChild = false;
+        Func<IConfigurationSection, AuthenticationTokenProvider?> trackedResolveChild = section =>
+        {
+            usedChild = true;
+            return resolveChild(section);
+        };
+
         // Always invoke the chain-aware overload. Resolvers that don't override
         // it inherit the default implementation, which forwards to the legacy
-        // (section, out provider) overload.
-        if (!resolver.TryResolve(mergedSection, resolveChild, out AuthenticationTokenProvider? provider) || provider is null)
+        // (section, out provider) overload — and never touches resolveChild, so
+        // usedChild stays false and the result lands in the shared slot.
+        if (!resolver.TryResolve(mergedSection, trackedResolveChild, out AuthenticationTokenProvider? provider) || provider is null)
         {
             return null;
         }
@@ -98,7 +127,12 @@ internal static class CredentialCache
             return created;
         }
 
-        return s_cache.GetOrAdd(key, created);
+        // Slot selection: chain-independent results go to the shared slot
+        // (cross-chain reuse for the common case). Chain-dependent results
+        // go to the chain-specific slot so a future call with a different
+        // downstream chain re-resolves through the new chain.
+        string storeKey = usedChild ? chainSpecificKey : sharedKey;
+        return s_cache.GetOrAdd(storeKey, created);
     }
 
     /// <summary>
