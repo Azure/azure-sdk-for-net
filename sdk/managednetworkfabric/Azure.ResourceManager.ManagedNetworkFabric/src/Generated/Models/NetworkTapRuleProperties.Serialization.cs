@@ -17,6 +17,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Network Tap Rule Properties defines the resource properties. </summary>
     internal partial class NetworkTapRuleProperties : IJsonModel<NetworkTapRuleProperties>
     {
+        /// <summary> Initializes a new instance of <see cref="NetworkTapRuleProperties"/> for deserialization. </summary>
+        internal NetworkTapRuleProperties()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual NetworkTapRuleProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -80,11 +85,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
-            if (Optional.IsDefined(ConfigurationType))
-            {
-                writer.WritePropertyName("configurationType"u8);
-                writer.WriteStringValue(ConfigurationType.Value.ToString());
-            }
+            writer.WritePropertyName("configurationType"u8);
+            writer.WriteStringValue(ConfigurationType.ToString());
             if (Optional.IsDefined(TapRulesUri))
             {
                 writer.WritePropertyName("tapRulesUrl"u8);
@@ -228,7 +230,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             string annotation = default;
-            NetworkFabricConfigurationType? configurationType = default;
+            NetworkFabricConfigurationType configurationType = default;
             Uri tapRulesUri = default;
             NetworkFabricIdentitySelector identitySelector = default;
             IList<NetworkTapRuleMatchConfiguration> matchConfigurations = default;
@@ -253,10 +255,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (prop.NameEquals("configurationType"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     configurationType = new NetworkFabricConfigurationType(prop.Value.GetString());
                     continue;
                 }

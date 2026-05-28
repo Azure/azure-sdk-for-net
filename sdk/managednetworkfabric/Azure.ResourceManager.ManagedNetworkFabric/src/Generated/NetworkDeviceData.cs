@@ -22,9 +22,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         /// <summary> Initializes a new instance of <see cref="NetworkDeviceData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        public NetworkDeviceData(AzureLocation location) : base(location)
+        /// <param name="serialNumber"> Serial number of the device. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serialNumber"/> is null. </exception>
+        public NetworkDeviceData(AzureLocation location, string serialNumber) : base(location)
         {
+            Argument.AssertNotNull(serialNumber, nameof(serialNumber));
 
+            Properties = new NetworkDeviceProperties(serialNumber);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkDeviceData"/>. </summary>

@@ -19,8 +19,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AccessControlListProperties"/>. </summary>
-        public AccessControlListProperties()
+        /// <param name="configurationType"> Input method to configure Access Control List. </param>
+        public AccessControlListProperties(NetworkFabricConfigurationType configurationType)
         {
+            ConfigurationType = configurationType;
             MatchConfigurations = new ChangeTrackingList<AccessControlListMatchConfiguration>();
             DynamicMatchConfigurations = new ChangeTrackingList<CommonDynamicMatchConfiguration>();
             NetworkFabricIds = new ChangeTrackingList<ResourceIdentifier>();
@@ -45,7 +47,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AccessControlListProperties(string annotation, NetworkFabricConfigurationType? configurationType, Uri aclsUri, CommunityActionType? defaultAction, IList<AccessControlListMatchConfiguration> matchConfigurations, IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, DateTimeOffset? lastSyncedOn, NetworkFabricAclType? aclType, NetworkFabricDeviceRole? deviceRole, GlobalAccessControlListActionProperties globalAccessControlListActions, LastOperationProperties lastOperation, IReadOnlyList<ResourceIdentifier> networkFabricIds, IList<ControlPlaneAclProperties> controlPlaneAclConfiguration, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AccessControlListProperties(string annotation, NetworkFabricConfigurationType configurationType, Uri aclsUri, CommunityActionType? defaultAction, IList<AccessControlListMatchConfiguration> matchConfigurations, IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, DateTimeOffset? lastSyncedOn, NetworkFabricAclType? aclType, NetworkFabricDeviceRole? deviceRole, GlobalAccessControlListActionProperties globalAccessControlListActions, LastOperationProperties lastOperation, IReadOnlyList<ResourceIdentifier> networkFabricIds, IList<ControlPlaneAclProperties> controlPlaneAclConfiguration, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Annotation = annotation;
             ConfigurationType = configurationType;
@@ -70,7 +72,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public string Annotation { get; set; }
 
         /// <summary> Input method to configure Access Control List. </summary>
-        public NetworkFabricConfigurationType? ConfigurationType { get; set; }
+        public NetworkFabricConfigurationType ConfigurationType { get; set; }
 
         /// <summary> Access Control List file URL. </summary>
         public Uri AclsUri { get; set; }

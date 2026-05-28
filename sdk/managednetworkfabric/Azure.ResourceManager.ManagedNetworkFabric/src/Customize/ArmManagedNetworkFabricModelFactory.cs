@@ -15,15 +15,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    // These factory overloads preserve the model factory signatures shipped before the TypeSpec migration.
-    // If the suppressions are removed, the generator emits overloads with incompatible required parameters
-    // or Ipv4/Ipv6 parameter casing, which either breaks ApiCompat or conflicts with the custom overloads.
-    [CodeGenSuppress("NetworkToNetworkInterconnectOptionBLayer3Configuration", typeof(string), typeof(string), typeof(string), typeof(string), typeof(long?), typeof(int?), typeof(long?))]
-    [CodeGenSuppress("NetworkFabricAccessControlListData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(IDictionary<string, string>), typeof(AzureLocation), typeof(string), typeof(NetworkFabricConfigurationType?), typeof(Uri), typeof(CommunityActionType?), typeof(IEnumerable<AccessControlListMatchConfiguration>), typeof(IEnumerable<CommonDynamicMatchConfiguration>), typeof(DateTimeOffset?), typeof(NetworkFabricConfigurationState?), typeof(NetworkFabricProvisioningState?), typeof(NetworkFabricAdministrativeState?))]
-    [CodeGenSuppress("NetworkFabricAccessControlListData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(IDictionary<string, string>), typeof(AzureLocation), typeof(string), typeof(NetworkFabricConfigurationType?), typeof(Uri), typeof(IEnumerable<AccessControlListMatchConfiguration>), typeof(IEnumerable<CommonDynamicMatchConfiguration>), typeof(DateTimeOffset?), typeof(NetworkFabricConfigurationState?), typeof(NetworkFabricProvisioningState?), typeof(NetworkFabricAdministrativeState?))]
-    [CodeGenSuppress("NetworkFabricControllerData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(IDictionary<string, string>), typeof(AzureLocation), typeof(string), typeof(IEnumerable<ExpressRouteConnectionInformation>), typeof(IEnumerable<ExpressRouteConnectionInformation>), typeof(NetworkFabricControllerServices), typeof(NetworkFabricControllerServices), typeof(ManagedResourceGroupConfiguration), typeof(IEnumerable<ResourceIdentifier>), typeof(IsWorkloadManagementNetworkEnabled?), typeof(IEnumerable<ResourceIdentifier>), typeof(string), typeof(string), typeof(NetworkFabricControllerSKU?), typeof(NetworkFabricProvisioningState?), typeof(string), typeof(ManagedServiceIdentity))]
-    [CodeGenSuppress("TerminalServerConfiguration", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(ResourceIdentifier), typeof(IEnumerable<NetworkFabricSecretRotationStatus>))]
-    [CodeGenSuppress("TerminalServerConfiguration", typeof(string), typeof(string), typeof(string), typeof(ResourceIdentifier), typeof(string), typeof(string), typeof(string), typeof(string))]
     public static partial class ArmManagedNetworkFabricModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="Models.NetworkToNetworkInterconnectOptionBLayer3Configuration"/>. </summary>
@@ -198,6 +189,130 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static TerminalServerConfiguration TerminalServerConfiguration(string username, string password, string serialNumber, ResourceIdentifier networkDeviceId, string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix)
         {
             return TerminalServerConfiguration(username: username, password: password, serialNumber: serialNumber, primaryIpv4Prefix: primaryIPv4Prefix, primaryIpv6Prefix: primaryIPv6Prefix, secondaryIpv4Prefix: secondaryIPv4Prefix, secondaryIpv6Prefix: secondaryIPv6Prefix, networkDeviceId: networkDeviceId, secretRotationStatus: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkDeviceInterfaceData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkDeviceInterfaceData NetworkDeviceInterfaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string annotation, string physicalIdentifier, string connectedTo, NetworkDeviceInterfaceType? interfaceType, System.Net.IPAddress ipv4Address, string ipv6Address, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
+        {
+            return new NetworkDeviceInterfaceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                new NetworkInterfaceProperties(annotation, null, physicalIdentifier, connectedTo, interfaceType, ipv4Address, ipv6Address, default, default, default, default, provisioningState, administrativeState, default),
+                identity: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkFabricData NetworkFabricData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, string networkFabricSku, string fabricVersion, IEnumerable<string> routerIds, ResourceIdentifier networkFabricControllerId, int? rackCount, int serverCountPerRack, string ipv4Prefix, string ipv6Prefix, long fabricAsn, TerminalServerConfiguration terminalServerConfiguration, ManagementNetworkConfigurationProperties managementNetworkConfiguration, IEnumerable<string> racks, IEnumerable<string> l2IsolationDomains, IEnumerable<string> l3IsolationDomains, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
+        {
+            return new NetworkFabricData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                new NetworkFabricProperties(
+                    annotation,
+                    null,
+                    networkFabricSku,
+                    fabricVersion,
+                    (routerIds ?? new ChangeTrackingList<string>()).ToList(),
+                    default,
+                    default,
+                    networkFabricControllerId,
+                    rackCount,
+                    serverCountPerRack,
+                    ipv4Prefix,
+                    ipv6Prefix,
+                    fabricAsn,
+                    terminalServerConfiguration,
+                    managementNetworkConfiguration,
+                    (racks ?? new ChangeTrackingList<string>()).ToList(),
+                    (l2IsolationDomains ?? new ChangeTrackingList<string>()).ToList(),
+                    (l3IsolationDomains ?? new ChangeTrackingList<string>()).ToList(),
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    configurationState,
+                    provisioningState,
+                    administrativeState,
+                    default),
+                identity: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricInternetGatewayRuleData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkFabricInternetGatewayRuleData NetworkFabricInternetGatewayRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, InternetGatewayRules ruleProperties, NetworkFabricProvisioningState? provisioningState, IEnumerable<ResourceIdentifier> internetGatewayIds)
+        {
+            return new NetworkFabricInternetGatewayRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                new InternetGatewayRuleProperties(annotation, null, ruleProperties, default, provisioningState, (internetGatewayIds ?? new ChangeTrackingList<ResourceIdentifier>()).Select(id => id?.ToString()).ToList()));
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricL2IsolationDomainData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkFabricL2IsolationDomainData NetworkFabricL2IsolationDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, ResourceIdentifier networkFabricId, int vlanId, int? mtu, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
+        {
+            return new NetworkFabricL2IsolationDomainData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                new L2IsolationDomainProperties(annotation, null, networkFabricId, vlanId, mtu, default, default, default, configurationState, provisioningState, administrativeState),
+                identity: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkRackData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkRackData NetworkRackData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, NetworkRackType? networkRackType, ResourceIdentifier networkFabricId, IEnumerable<ResourceIdentifier> networkDevices, NetworkFabricProvisioningState? provisioningState)
+        {
+            return new NetworkRackData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                new NetworkRackProperties(annotation, null, networkRackType, networkFabricId, (networkDevices ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default, provisioningState, default));
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkTapData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkTapData NetworkTapData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, ResourceIdentifier networkPacketBrokerId, ResourceIdentifier sourceTapRuleId, IEnumerable<NetworkTapPropertiesDestinationsItem> destinations, NetworkTapPollingType? pollingType, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
+        {
+            return new NetworkTapData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                new NetworkTapProperties(annotation, null, networkPacketBrokerId, sourceTapRuleId, default, (destinations ?? new ChangeTrackingList<NetworkTapPropertiesDestinationsItem>()).ToList(), pollingType, default, configurationState, provisioningState, administrativeState),
+                identity: default);
         }
     }
 }

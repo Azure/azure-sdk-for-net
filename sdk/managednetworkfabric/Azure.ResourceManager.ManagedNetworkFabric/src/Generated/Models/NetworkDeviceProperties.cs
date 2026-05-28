@@ -20,8 +20,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkDeviceProperties"/>. </summary>
-        public NetworkDeviceProperties()
+        /// <param name="serialNumber"> Serial number of the device. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serialNumber"/> is null. </exception>
+        public NetworkDeviceProperties(string serialNumber)
         {
+            Argument.AssertNotNull(serialNumber, nameof(serialNumber));
+
+            SerialNumber = serialNumber;
             SecretRotationStatus = new ChangeTrackingList<NetworkFabricSecretRotationStatus>();
             CertificateRotationStatus = new ChangeTrackingList<NetworkFabricCertificateRotationStatus>();
         }

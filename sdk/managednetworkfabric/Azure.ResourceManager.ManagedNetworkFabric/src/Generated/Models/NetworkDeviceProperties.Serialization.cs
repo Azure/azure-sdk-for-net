@@ -18,6 +18,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Network Device Properties defines the properties of the resource. </summary>
     internal partial class NetworkDeviceProperties : IJsonModel<NetworkDeviceProperties>
     {
+        /// <summary> Initializes a new instance of <see cref="NetworkDeviceProperties"/> for deserialization. </summary>
+        internal NetworkDeviceProperties()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual NetworkDeviceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -86,11 +91,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (Optional.IsDefined(SerialNumber))
-            {
-                writer.WritePropertyName("serialNumber"u8);
-                writer.WriteStringValue(SerialNumber);
-            }
+            writer.WritePropertyName("serialNumber"u8);
+            writer.WriteStringValue(SerialNumber);
             if (Optional.IsDefined(IdentitySelector))
             {
                 writer.WritePropertyName("identitySelector"u8);
