@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The Network Bootstrap Device Patch Parameters defines the patch parameters of the resource. </summary>
-    public partial class NetworkBootstrapDevicePatch : TagsUpdate
+    public partial class NetworkBootstrapDevicePatch : ManagedNetworkFabricResourcePatch
     {
         /// <summary> Initializes a new instance of <see cref="NetworkBootstrapDevicePatch"/>. </summary>
         public NetworkBootstrapDevicePatch()

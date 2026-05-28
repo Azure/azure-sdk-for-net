@@ -211,12 +211,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> IP Prefix properties to update. </param>
+        /// <param name="content"> IP Prefix properties to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<NetworkFabricIPPrefixResource>> UpdateAsync(WaitUntil waitUntil, NetworkFabricIPPrefixPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<NetworkFabricIPPrefixResource>> UpdateAsync(WaitUntil waitUntil, NetworkFabricIPPrefixPatchContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _ipPrefixesClientDiagnostics.CreateScope("NetworkFabricIPPrefixResource.Update");
             scope.Start();
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ipPrefixesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkFabricIPPrefixPatch.ToRequestContent(patch), context);
+                HttpMessage message = _ipPrefixesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkFabricIPPrefixPatchContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<NetworkFabricIPPrefixResource> operation = new ManagedNetworkFabricArmOperation<NetworkFabricIPPrefixResource>(
                     new NetworkFabricIPPrefixOperationSource(Client),
@@ -270,12 +270,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> IP Prefix properties to update. </param>
+        /// <param name="content"> IP Prefix properties to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<NetworkFabricIPPrefixResource> Update(WaitUntil waitUntil, NetworkFabricIPPrefixPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<NetworkFabricIPPrefixResource> Update(WaitUntil waitUntil, NetworkFabricIPPrefixPatchContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _ipPrefixesClientDiagnostics.CreateScope("NetworkFabricIPPrefixResource.Update");
             scope.Start();
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ipPrefixesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkFabricIPPrefixPatch.ToRequestContent(patch), context);
+                HttpMessage message = _ipPrefixesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkFabricIPPrefixPatchContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<NetworkFabricIPPrefixResource> operation = new ManagedNetworkFabricArmOperation<NetworkFabricIPPrefixResource>(
                     new NetworkFabricIPPrefixOperationSource(Client),
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 else
                 {
                     NetworkFabricIPPrefixData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    NetworkFabricIPPrefixPatch patch = new NetworkFabricIPPrefixPatch();
+                    NetworkFabricIPPrefixPatchContent patch = new NetworkFabricIPPrefixPatchContent();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 else
                 {
                     NetworkFabricIPPrefixData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    NetworkFabricIPPrefixPatch patch = new NetworkFabricIPPrefixPatch();
+                    NetworkFabricIPPrefixPatchContent patch = new NetworkFabricIPPrefixPatchContent();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 else
                 {
                     NetworkFabricIPPrefixData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    NetworkFabricIPPrefixPatch patch = new NetworkFabricIPPrefixPatch();
+                    NetworkFabricIPPrefixPatchContent patch = new NetworkFabricIPPrefixPatchContent();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<NetworkFabricIPPrefixResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -574,7 +574,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 else
                 {
                     NetworkFabricIPPrefixData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    NetworkFabricIPPrefixPatch patch = new NetworkFabricIPPrefixPatch();
+                    NetworkFabricIPPrefixPatchContent patch = new NetworkFabricIPPrefixPatchContent();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<NetworkFabricIPPrefixResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 else
                 {
                     NetworkFabricIPPrefixData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    NetworkFabricIPPrefixPatch patch = new NetworkFabricIPPrefixPatch();
+                    NetworkFabricIPPrefixPatchContent patch = new NetworkFabricIPPrefixPatchContent();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -662,7 +662,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 else
                 {
                     NetworkFabricIPPrefixData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    NetworkFabricIPPrefixPatch patch = new NetworkFabricIPPrefixPatch();
+                    NetworkFabricIPPrefixPatchContent patch = new NetworkFabricIPPrefixPatchContent();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="patch"> Access Control Lists patch resource definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use UpdateAsync(WaitUntil, NetworkFabricAccessControlListPatchContent, CancellationToken) instead.")]
         public virtual async Task<ArmOperation<NetworkFabricAccessControlListResource>> UpdateAsync(WaitUntil waitUntil, NetworkFabricAccessControlListPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
@@ -34,21 +35,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 RequestContext context = new RequestContext
                 {
-                    CancellationToken = cancellationToken
-                };
+            CancellationToken = cancellationToken
+        };
                 HttpMessage message = _accessControlListsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkFabricAccessControlListPatchContent.ToRequestContent(patch.ToContent()), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<NetworkFabricAccessControlListResource> operation = new ManagedNetworkFabricArmOperation<NetworkFabricAccessControlListResource>(
-                    new NetworkFabricAccessControlListOperationSource(Client),
-                    _accessControlListsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+            new NetworkFabricAccessControlListOperationSource(Client),
+            _accessControlListsClientDiagnostics,
+            Pipeline,
+            message.Request,
+            response,
+            OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
+            await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+        }
                 return operation;
             }
             catch (Exception e)
@@ -63,6 +64,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="patch"> Access Control Lists patch resource definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use Update(WaitUntil, NetworkFabricAccessControlListPatchContent, CancellationToken) instead.")]
         public virtual ArmOperation<NetworkFabricAccessControlListResource> Update(WaitUntil waitUntil, NetworkFabricAccessControlListPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
@@ -73,21 +75,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 RequestContext context = new RequestContext
                 {
-                    CancellationToken = cancellationToken
-                };
+            CancellationToken = cancellationToken
+        };
                 HttpMessage message = _accessControlListsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkFabricAccessControlListPatchContent.ToRequestContent(patch.ToContent()), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<NetworkFabricAccessControlListResource> operation = new ManagedNetworkFabricArmOperation<NetworkFabricAccessControlListResource>(
-                    new NetworkFabricAccessControlListOperationSource(Client),
-                    _accessControlListsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+            new NetworkFabricAccessControlListOperationSource(Client),
+            _accessControlListsClientDiagnostics,
+            Pipeline,
+            message.Request,
+            response,
+            OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    operation.WaitForCompletion(cancellationToken);
-                }
+            operation.WaitForCompletion(cancellationToken);
+        }
                 return operation;
             }
             catch (Exception e)
@@ -109,21 +111,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 RequestContext context = new RequestContext
                 {
-                    CancellationToken = cancellationToken
-                };
+            CancellationToken = cancellationToken
+        };
                 HttpMessage message = _accessControlListsRestClient.CreateSetAdministrativeStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UpdateAdministrativeStateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult> operation = new ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult>(
-                    new UpdateAdministrativeStateResultOperationSource(),
-                    _accessControlListsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+            new UpdateAdministrativeStateResultOperationSource(),
+            _accessControlListsClientDiagnostics,
+            Pipeline,
+            message.Request,
+            response,
+            OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
+            await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+        }
                 return new CompatArmOperation<UpdateAdministrativeStateResult, StateUpdateCommonPostActionResult>(operation, r => new StateUpdateCommonPostActionResult(r.Error, null, null));
             }
             catch (Exception e)
@@ -145,21 +147,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 RequestContext context = new RequestContext
                 {
-                    CancellationToken = cancellationToken
-                };
+            CancellationToken = cancellationToken
+        };
                 HttpMessage message = _accessControlListsRestClient.CreateSetAdministrativeStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UpdateAdministrativeStateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult> operation = new ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult>(
-                    new UpdateAdministrativeStateResultOperationSource(),
-                    _accessControlListsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+            new UpdateAdministrativeStateResultOperationSource(),
+            _accessControlListsClientDiagnostics,
+            Pipeline,
+            message.Request,
+            response,
+            OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    operation.WaitForCompletion(cancellationToken);
-                }
+            operation.WaitForCompletion(cancellationToken);
+        }
                 return new CompatArmOperation<UpdateAdministrativeStateResult, StateUpdateCommonPostActionResult>(operation, r => new StateUpdateCommonPostActionResult(r.Error, null, null));
             }
             catch (Exception e)

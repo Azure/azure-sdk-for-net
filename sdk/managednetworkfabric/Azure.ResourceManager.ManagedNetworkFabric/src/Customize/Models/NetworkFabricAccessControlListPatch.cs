@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -12,6 +13,8 @@ using Azure.Core;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The Access Control Lists patch resource definition. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This compatibility type is obsolete and will be removed in a future version. Use NetworkFabricAccessControlListPatchContent instead.")]
     public partial class NetworkFabricAccessControlListPatch : NetworkRackPatch, IJsonModel<NetworkFabricAccessControlListPatch>
     {
         /// <summary> Initializes a new instance of <see cref="NetworkFabricAccessControlListPatch"/>. </summary>

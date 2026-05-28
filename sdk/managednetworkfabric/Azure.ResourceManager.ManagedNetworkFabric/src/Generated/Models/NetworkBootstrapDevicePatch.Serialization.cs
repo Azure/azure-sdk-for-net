@@ -15,11 +15,11 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The Network Bootstrap Device Patch Parameters defines the patch parameters of the resource. </summary>
-    public partial class NetworkBootstrapDevicePatch : TagsUpdate, IJsonModel<NetworkBootstrapDevicePatch>
+    public partial class NetworkBootstrapDevicePatch : ManagedNetworkFabricResourcePatch, IJsonModel<NetworkBootstrapDevicePatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override TagsUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ManagedNetworkFabricResourcePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<NetworkBootstrapDevicePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override TagsUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ManagedNetworkFabricResourcePatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<NetworkBootstrapDevicePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

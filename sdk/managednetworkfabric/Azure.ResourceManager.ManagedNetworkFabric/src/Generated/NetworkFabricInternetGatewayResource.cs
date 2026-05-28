@@ -211,12 +211,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> API to update certain properties of the InternetGateway resource.. </param>
+        /// <param name="content"> API to update certain properties of the InternetGateway resource.. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<NetworkFabricInternetGatewayResource>> UpdateAsync(WaitUntil waitUntil, NetworkFabricInternetGatewayPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<NetworkFabricInternetGatewayResource>> UpdateAsync(WaitUntil waitUntil, NetworkFabricInternetGatewayPatchContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _internetGatewaysClientDiagnostics.CreateScope("NetworkFabricInternetGatewayResource.Update");
             scope.Start();
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _internetGatewaysRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkFabricInternetGatewayPatch.ToRequestContent(patch), context);
+                HttpMessage message = _internetGatewaysRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkFabricInternetGatewayPatchContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<NetworkFabricInternetGatewayResource> operation = new ManagedNetworkFabricArmOperation<NetworkFabricInternetGatewayResource>(
                     new NetworkFabricInternetGatewayOperationSource(Client),
@@ -270,12 +270,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> API to update certain properties of the InternetGateway resource.. </param>
+        /// <param name="content"> API to update certain properties of the InternetGateway resource.. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<NetworkFabricInternetGatewayResource> Update(WaitUntil waitUntil, NetworkFabricInternetGatewayPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<NetworkFabricInternetGatewayResource> Update(WaitUntil waitUntil, NetworkFabricInternetGatewayPatchContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _internetGatewaysClientDiagnostics.CreateScope("NetworkFabricInternetGatewayResource.Update");
             scope.Start();
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _internetGatewaysRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkFabricInternetGatewayPatch.ToRequestContent(patch), context);
+                HttpMessage message = _internetGatewaysRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkFabricInternetGatewayPatchContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<NetworkFabricInternetGatewayResource> operation = new ManagedNetworkFabricArmOperation<NetworkFabricInternetGatewayResource>(
                     new NetworkFabricInternetGatewayOperationSource(Client),
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 else
                 {
                     NetworkFabricInternetGatewayData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    NetworkFabricInternetGatewayPatch patch = new NetworkFabricInternetGatewayPatch();
+                    NetworkFabricInternetGatewayPatchContent patch = new NetworkFabricInternetGatewayPatchContent();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 else
                 {
                     NetworkFabricInternetGatewayData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    NetworkFabricInternetGatewayPatch patch = new NetworkFabricInternetGatewayPatch();
+                    NetworkFabricInternetGatewayPatchContent patch = new NetworkFabricInternetGatewayPatchContent();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 else
                 {
                     NetworkFabricInternetGatewayData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    NetworkFabricInternetGatewayPatch patch = new NetworkFabricInternetGatewayPatch();
+                    NetworkFabricInternetGatewayPatchContent patch = new NetworkFabricInternetGatewayPatchContent();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<NetworkFabricInternetGatewayResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -574,7 +574,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 else
                 {
                     NetworkFabricInternetGatewayData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    NetworkFabricInternetGatewayPatch patch = new NetworkFabricInternetGatewayPatch();
+                    NetworkFabricInternetGatewayPatchContent patch = new NetworkFabricInternetGatewayPatchContent();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<NetworkFabricInternetGatewayResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 else
                 {
                     NetworkFabricInternetGatewayData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    NetworkFabricInternetGatewayPatch patch = new NetworkFabricInternetGatewayPatch();
+                    NetworkFabricInternetGatewayPatchContent patch = new NetworkFabricInternetGatewayPatchContent();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -662,7 +662,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 else
                 {
                     NetworkFabricInternetGatewayData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    NetworkFabricInternetGatewayPatch patch = new NetworkFabricInternetGatewayPatch();
+                    NetworkFabricInternetGatewayPatchContent patch = new NetworkFabricInternetGatewayPatchContent();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

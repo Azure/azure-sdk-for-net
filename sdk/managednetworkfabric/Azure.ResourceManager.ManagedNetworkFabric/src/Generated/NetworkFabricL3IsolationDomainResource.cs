@@ -211,12 +211,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> API to update certain properties of the L3 Isolation Domain resource. </param>
+        /// <param name="content"> API to update certain properties of the L3 Isolation Domain resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<NetworkFabricL3IsolationDomainResource>> UpdateAsync(WaitUntil waitUntil, NetworkFabricL3IsolationDomainPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<NetworkFabricL3IsolationDomainResource>> UpdateAsync(WaitUntil waitUntil, NetworkFabricL3IsolationDomainPatchContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _l3IsolationDomainsClientDiagnostics.CreateScope("NetworkFabricL3IsolationDomainResource.Update");
             scope.Start();
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _l3IsolationDomainsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkFabricL3IsolationDomainPatch.ToRequestContent(patch), context);
+                HttpMessage message = _l3IsolationDomainsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkFabricL3IsolationDomainPatchContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<NetworkFabricL3IsolationDomainResource> operation = new ManagedNetworkFabricArmOperation<NetworkFabricL3IsolationDomainResource>(
                     new NetworkFabricL3IsolationDomainOperationSource(Client),
@@ -270,12 +270,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> API to update certain properties of the L3 Isolation Domain resource. </param>
+        /// <param name="content"> API to update certain properties of the L3 Isolation Domain resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<NetworkFabricL3IsolationDomainResource> Update(WaitUntil waitUntil, NetworkFabricL3IsolationDomainPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<NetworkFabricL3IsolationDomainResource> Update(WaitUntil waitUntil, NetworkFabricL3IsolationDomainPatchContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _l3IsolationDomainsClientDiagnostics.CreateScope("NetworkFabricL3IsolationDomainResource.Update");
             scope.Start();
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _l3IsolationDomainsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkFabricL3IsolationDomainPatch.ToRequestContent(patch), context);
+                HttpMessage message = _l3IsolationDomainsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkFabricL3IsolationDomainPatchContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<NetworkFabricL3IsolationDomainResource> operation = new ManagedNetworkFabricArmOperation<NetworkFabricL3IsolationDomainResource>(
                     new NetworkFabricL3IsolationDomainOperationSource(Client),
@@ -774,7 +774,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 else
                 {
                     NetworkFabricL3IsolationDomainData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    NetworkFabricL3IsolationDomainPatch patch = new NetworkFabricL3IsolationDomainPatch();
+                    NetworkFabricL3IsolationDomainPatchContent patch = new NetworkFabricL3IsolationDomainPatchContent();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -822,7 +822,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 else
                 {
                     NetworkFabricL3IsolationDomainData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    NetworkFabricL3IsolationDomainPatch patch = new NetworkFabricL3IsolationDomainPatch();
+                    NetworkFabricL3IsolationDomainPatchContent patch = new NetworkFabricL3IsolationDomainPatchContent();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -869,7 +869,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 else
                 {
                     NetworkFabricL3IsolationDomainData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    NetworkFabricL3IsolationDomainPatch patch = new NetworkFabricL3IsolationDomainPatch();
+                    NetworkFabricL3IsolationDomainPatchContent patch = new NetworkFabricL3IsolationDomainPatchContent();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<NetworkFabricL3IsolationDomainResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -912,7 +912,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 else
                 {
                     NetworkFabricL3IsolationDomainData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    NetworkFabricL3IsolationDomainPatch patch = new NetworkFabricL3IsolationDomainPatch();
+                    NetworkFabricL3IsolationDomainPatchContent patch = new NetworkFabricL3IsolationDomainPatchContent();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<NetworkFabricL3IsolationDomainResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -954,7 +954,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 else
                 {
                     NetworkFabricL3IsolationDomainData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    NetworkFabricL3IsolationDomainPatch patch = new NetworkFabricL3IsolationDomainPatch();
+                    NetworkFabricL3IsolationDomainPatchContent patch = new NetworkFabricL3IsolationDomainPatchContent();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -1000,7 +1000,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 else
                 {
                     NetworkFabricL3IsolationDomainData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    NetworkFabricL3IsolationDomainPatch patch = new NetworkFabricL3IsolationDomainPatch();
+                    NetworkFabricL3IsolationDomainPatchContent patch = new NetworkFabricL3IsolationDomainPatchContent();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

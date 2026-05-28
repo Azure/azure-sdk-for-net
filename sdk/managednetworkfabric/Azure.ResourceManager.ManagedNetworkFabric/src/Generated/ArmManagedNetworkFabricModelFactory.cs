@@ -351,12 +351,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Base tracked resource type for PATCH updates. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.TagsUpdate"/> instance for mocking. </returns>
-        public static TagsUpdate TagsUpdate(IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Models.ManagedNetworkFabricResourcePatch"/> instance for mocking. </returns>
+        public static ManagedNetworkFabricResourcePatch ManagedNetworkFabricResourcePatch(IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new TagsUpdate(tags, additionalBinaryDataProperties: null);
+            return new ManagedNetworkFabricResourcePatch(tags, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Update administrative state on list of resources. </summary>
@@ -487,12 +487,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> The Internet Gateway Rules patch resource definition. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.NetworkFabricInternetGatewayRulePatch"/> instance for mocking. </returns>
-        public static NetworkFabricInternetGatewayRulePatch NetworkFabricInternetGatewayRulePatch(IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Models.NetworkFabricInternetGatewayRulePatchContent"/> instance for mocking. </returns>
+        public static NetworkFabricInternetGatewayRulePatchContent NetworkFabricInternetGatewayRulePatchContent(IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new NetworkFabricInternetGatewayRulePatch(tags, additionalBinaryDataProperties: null);
+            return new NetworkFabricInternetGatewayRulePatchContent(tags, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Network Rack patch resource definition. </summary>
@@ -548,12 +548,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <param name="tags"> Resource tags. </param>
         /// <param name="internetGatewayRuleId"> ARM Resource ID of the Internet Gateway Rule. </param>
-        /// <returns> A new <see cref="Models.NetworkFabricInternetGatewayPatch"/> instance for mocking. </returns>
-        public static NetworkFabricInternetGatewayPatch NetworkFabricInternetGatewayPatch(IDictionary<string, string> tags = default, ResourceIdentifier internetGatewayRuleId = default)
+        /// <returns> A new <see cref="Models.NetworkFabricInternetGatewayPatchContent"/> instance for mocking. </returns>
+        public static NetworkFabricInternetGatewayPatchContent NetworkFabricInternetGatewayPatchContent(IDictionary<string, string> tags = default, ResourceIdentifier internetGatewayRuleId = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new NetworkFabricInternetGatewayPatch(tags, additionalBinaryDataProperties: null, internetGatewayRuleId is null ? default : new InternetGatewayPatchProperties(internetGatewayRuleId, null));
+            return new NetworkFabricInternetGatewayPatchContent(tags, additionalBinaryDataProperties: null, internetGatewayRuleId is null ? default : new InternetGatewayPatchProperties(internetGatewayRuleId, null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -609,12 +609,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <param name="tags"> Resource tags. </param>
         /// <param name="ipCommunityRules"> List of IP Community Rules. </param>
-        /// <returns> A new <see cref="Models.NetworkFabricIPCommunityPatch"/> instance for mocking. </returns>
-        public static NetworkFabricIPCommunityPatch NetworkFabricIPCommunityPatch(IDictionary<string, string> tags = default, IEnumerable<IPCommunityRule> ipCommunityRules = default)
+        /// <returns> A new <see cref="Models.NetworkFabricIPCommunityPatchContent"/> instance for mocking. </returns>
+        public static NetworkFabricIPCommunityPatchContent NetworkFabricIPCommunityPatchContent(IDictionary<string, string> tags = default, IEnumerable<IPCommunityRule> ipCommunityRules = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new NetworkFabricIPCommunityPatch(tags, additionalBinaryDataProperties: null, ipCommunityRules is null ? default : new IpCommunityPatchableProperties((ipCommunityRules ?? new ChangeTrackingList<IPCommunityRule>()).ToList(), null));
+            return new NetworkFabricIPCommunityPatchContent(tags, additionalBinaryDataProperties: null, ipCommunityRules is null ? default : new IpCommunityPatchableProperties((ipCommunityRules ?? new ChangeTrackingList<IPCommunityRule>()).ToList(), null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -669,12 +669,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="ipExtendedCommunityRules"> List of IP Extended Community Rules. </param>
-        /// <returns> A new <see cref="Models.NetworkFabricIPExtendedCommunityPatch"/> instance for mocking. </returns>
-        public static NetworkFabricIPExtendedCommunityPatch NetworkFabricIPExtendedCommunityPatch(IDictionary<string, string> tags = default, string annotation = default, IEnumerable<IPExtendedCommunityRule> ipExtendedCommunityRules = default)
+        /// <returns> A new <see cref="Models.NetworkFabricIPExtendedCommunityPatchContent"/> instance for mocking. </returns>
+        public static NetworkFabricIPExtendedCommunityPatchContent NetworkFabricIPExtendedCommunityPatchContent(IDictionary<string, string> tags = default, string annotation = default, IEnumerable<IPExtendedCommunityRule> ipExtendedCommunityRules = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new NetworkFabricIPExtendedCommunityPatch(tags, additionalBinaryDataProperties: null, annotation is null && ipExtendedCommunityRules is null ? default : new IpExtendedCommunityPatchProperties(annotation, (ipExtendedCommunityRules ?? new ChangeTrackingList<IPExtendedCommunityRule>()).ToList(), null));
+            return new NetworkFabricIPExtendedCommunityPatchContent(tags, additionalBinaryDataProperties: null, annotation is null && ipExtendedCommunityRules is null ? default : new IpExtendedCommunityPatchProperties(annotation, (ipExtendedCommunityRules ?? new ChangeTrackingList<IPExtendedCommunityRule>()).ToList(), null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -717,12 +717,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="ipPrefixRules"> The list of IP Prefix Rules. </param>
-        /// <returns> A new <see cref="Models.NetworkFabricIPPrefixPatch"/> instance for mocking. </returns>
-        public static NetworkFabricIPPrefixPatch NetworkFabricIPPrefixPatch(IDictionary<string, string> tags = default, string annotation = default, IEnumerable<IPPrefixRule> ipPrefixRules = default)
+        /// <returns> A new <see cref="Models.NetworkFabricIPPrefixPatchContent"/> instance for mocking. </returns>
+        public static NetworkFabricIPPrefixPatchContent NetworkFabricIPPrefixPatchContent(IDictionary<string, string> tags = default, string annotation = default, IEnumerable<IPPrefixRule> ipPrefixRules = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new NetworkFabricIPPrefixPatch(tags, additionalBinaryDataProperties: null, annotation is null && ipPrefixRules is null ? default : new IpPrefixPatchProperties(annotation, (ipPrefixRules ?? new ChangeTrackingList<IPPrefixRule>()).ToList(), null));
+            return new NetworkFabricIPPrefixPatchContent(tags, additionalBinaryDataProperties: null, annotation is null && ipPrefixRules is null ? default : new IpPrefixPatchProperties(annotation, (ipPrefixRules ?? new ChangeTrackingList<IPPrefixRule>()).ToList(), null));
         }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
@@ -828,12 +828,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="staticRouteExportRoutePolicy"> Array of ARM Resource ID of the RoutePolicies. </param>
         /// <param name="exportPolicies"> Export Policy for the BGP Monitoring Protocol (BMP) Configuration. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="Models.NetworkFabricL3IsolationDomainPatch"/> instance for mocking. </returns>
-        public static NetworkFabricL3IsolationDomainPatch NetworkFabricL3IsolationDomainPatch(IDictionary<string, string> tags = default, string annotation = default, RedistributeConnectedSubnet? redistributeConnectedSubnets = default, RedistributeStaticRoute? redistributeStaticRoutes = default, AggregateRouteConfiguration aggregateRouteConfiguration = default, ConnectedSubnetRoutePolicy connectedSubnetRoutePolicy = default, RoutePrefixLimitPatchProperties v4RoutePrefixLimit = default, RoutePrefixLimitPatchProperties v6RoutePrefixLimit = default, L3ExportRoutePolicyPatch staticRouteExportRoutePolicy = default, IEnumerable<BmpExportPolicy> exportPolicies = default, NetworkFabricManagedServiceIdentityPatch identity = default)
+        /// <returns> A new <see cref="Models.NetworkFabricL3IsolationDomainPatchContent"/> instance for mocking. </returns>
+        public static NetworkFabricL3IsolationDomainPatchContent NetworkFabricL3IsolationDomainPatchContent(IDictionary<string, string> tags = default, string annotation = default, RedistributeConnectedSubnet? redistributeConnectedSubnets = default, RedistributeStaticRoute? redistributeStaticRoutes = default, AggregateRouteConfiguration aggregateRouteConfiguration = default, ConnectedSubnetRoutePolicy connectedSubnetRoutePolicy = default, RoutePrefixLimitPatchProperties v4RoutePrefixLimit = default, RoutePrefixLimitPatchProperties v6RoutePrefixLimit = default, L3ExportRoutePolicyPatch staticRouteExportRoutePolicy = default, IEnumerable<BmpExportPolicy> exportPolicies = default, NetworkFabricManagedServiceIdentityPatch identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new NetworkFabricL3IsolationDomainPatch(tags, additionalBinaryDataProperties: null, annotation is null && redistributeConnectedSubnets is null && redistributeStaticRoutes is null && aggregateRouteConfiguration is null && connectedSubnetRoutePolicy is null && v4RoutePrefixLimit is null && v6RoutePrefixLimit is null && staticRouteExportRoutePolicy is null && exportPolicies is null ? default : new L3IsolationDomainPatchProperties(
+            return new NetworkFabricL3IsolationDomainPatchContent(tags, additionalBinaryDataProperties: null, annotation is null && redistributeConnectedSubnets is null && redistributeStaticRoutes is null && aggregateRouteConfiguration is null && connectedSubnetRoutePolicy is null && v4RoutePrefixLimit is null && v6RoutePrefixLimit is null && staticRouteExportRoutePolicy is null && exportPolicies is null ? default : new L3IsolationDomainPatchProperties(
                 annotation,
                 redistributeConnectedSubnets,
                 redistributeStaticRoutes,
@@ -1388,12 +1388,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="destination"> An array of destination IPv4 Addresses or IPv6 Addresses. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="Models.NetworkFabricNeighborGroupPatch"/> instance for mocking. </returns>
-        public static NetworkFabricNeighborGroupPatch NetworkFabricNeighborGroupPatch(IDictionary<string, string> tags = default, string annotation = default, NeighborGroupDestination destination = default, NetworkFabricManagedServiceIdentityPatch identity = default)
+        /// <returns> A new <see cref="Models.NetworkFabricNeighborGroupPatchContent"/> instance for mocking. </returns>
+        public static NetworkFabricNeighborGroupPatchContent NetworkFabricNeighborGroupPatchContent(IDictionary<string, string> tags = default, string annotation = default, NeighborGroupDestination destination = default, NetworkFabricManagedServiceIdentityPatch identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new NetworkFabricNeighborGroupPatch(tags, additionalBinaryDataProperties: null, annotation is null && destination is null ? default : new NeighborGroupPatchProperties(annotation, destination, null), identity);
+            return new NetworkFabricNeighborGroupPatchContent(tags, additionalBinaryDataProperties: null, annotation is null && destination is null ? default : new NeighborGroupPatchProperties(annotation, destination, null), identity);
         }
 
         /// <summary> Response for Neighbor Group Resync operation. </summary>
@@ -1583,12 +1583,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="serialNumber"> Serial number of the device. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </param>
         /// <param name="identitySelector"> The selection of the managed identity to use with this storage account. The identity type must be either system assigned or user assigned. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="Models.NetworkDevicePatch"/> instance for mocking. </returns>
-        public static NetworkDevicePatch NetworkDevicePatch(IDictionary<string, string> tags = default, string annotation = default, string hostName = default, string serialNumber = default, NetworkFabricIdentitySelectorPatch identitySelector = default, NetworkFabricManagedServiceIdentityPatch identity = default)
+        /// <returns> A new <see cref="Models.NetworkDevicePatchContent"/> instance for mocking. </returns>
+        public static NetworkDevicePatchContent NetworkDevicePatchContent(IDictionary<string, string> tags = default, string annotation = default, string hostName = default, string serialNumber = default, NetworkFabricIdentitySelectorPatch identitySelector = default, NetworkFabricManagedServiceIdentityPatch identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new NetworkDevicePatch(tags, additionalBinaryDataProperties: null, annotation is null && hostName is null && serialNumber is null && identitySelector is null ? default : new NetworkDevicePatchParametersProperties(annotation, hostName, serialNumber, identitySelector, null), identity);
+            return new NetworkDevicePatchContent(tags, additionalBinaryDataProperties: null, annotation is null && hostName is null && serialNumber is null && identitySelector is null ? default : new NetworkDevicePatchParametersProperties(annotation, hostName, serialNumber, identitySelector, null), identity);
         }
 
         /// <summary> Update the administrative state on list of resources. </summary>
@@ -1746,12 +1746,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="infrastructureExpressRouteConnections"> As part of an update, the Infrastructure ExpressRoute CircuitID should be provided to create and Provision a NFC. This Express route is dedicated for Infrastructure services. (This is a Mandatory attribute). </param>
         /// <param name="workloadExpressRouteConnections"> As part of an update, the workload ExpressRoute CircuitID should be provided to create and Provision a NFC. This Express route is dedicated for Workload services. (This is a Mandatory attribute). </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="Models.NetworkFabricControllerPatch"/> instance for mocking. </returns>
-        public static NetworkFabricControllerPatch NetworkFabricControllerPatch(IDictionary<string, string> tags = default, IEnumerable<ExpressRouteConnectionInformation> infrastructureExpressRouteConnections = default, IEnumerable<ExpressRouteConnectionInformation> workloadExpressRouteConnections = default, NetworkFabricManagedServiceIdentityPatch identity = default)
+        /// <returns> A new <see cref="Models.NetworkFabricControllerPatchContent"/> instance for mocking. </returns>
+        public static NetworkFabricControllerPatchContent NetworkFabricControllerPatchContent(IDictionary<string, string> tags = default, IEnumerable<ExpressRouteConnectionInformation> infrastructureExpressRouteConnections = default, IEnumerable<ExpressRouteConnectionInformation> workloadExpressRouteConnections = default, NetworkFabricManagedServiceIdentityPatch identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new NetworkFabricControllerPatch(tags, additionalBinaryDataProperties: null, infrastructureExpressRouteConnections is null && workloadExpressRouteConnections is null ? default : new NetworkFabricControllerPatchProperties((infrastructureExpressRouteConnections ?? new ChangeTrackingList<ExpressRouteConnectionInformation>()).ToList(), (workloadExpressRouteConnections ?? new ChangeTrackingList<ExpressRouteConnectionInformation>()).ToList(), null), identity);
+            return new NetworkFabricControllerPatchContent(tags, additionalBinaryDataProperties: null, infrastructureExpressRouteConnections is null && workloadExpressRouteConnections is null ? default : new NetworkFabricControllerPatchProperties((infrastructureExpressRouteConnections ?? new ChangeTrackingList<ExpressRouteConnectionInformation>()).ToList(), (workloadExpressRouteConnections ?? new ChangeTrackingList<ExpressRouteConnectionInformation>()).ToList(), null), identity);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1853,12 +1853,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="authorizedTransceiver"> Authorized transciever configuration for NetworkFabric. </param>
         /// <param name="qosConfigurationState"> QoS configuration state. Default is Disabled. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="Models.NetworkFabricPatch"/> instance for mocking. </returns>
-        public static NetworkFabricPatch NetworkFabricPatch(IDictionary<string, string> tags = default, string annotation = default, int? rackCount = default, int? serverCountPerRack = default, string iPv4Prefix = default, string iPv6Prefix = default, long? fabricAsn = default, NetworkFabricPatchablePropertiesTerminalServerConfiguration terminalServerConfiguration = default, ManagementNetworkConfigurationPatchableProperties managementNetworkConfiguration = default, StorageAccountPatchConfiguration storageAccountConfiguration = default, int? hardwareAlertThreshold = default, IEnumerable<ResourceIdentifier> controlPlaneAcls = default, IEnumerable<ResourceIdentifier> trustedIPPrefixes = default, UniqueRouteDistinguisherPatchProperties uniqueRdConfiguration = default, IEnumerable<NetworkFabricFeatureFlag> featureFlags = default, AuthorizedTransceiverPatchProperties authorizedTransceiver = default, NetworkFabricQosConfigurationState? qosConfigurationState = default, NetworkFabricManagedServiceIdentityPatch identity = default)
+        /// <returns> A new <see cref="Models.NetworkFabricPatchContent"/> instance for mocking. </returns>
+        public static NetworkFabricPatchContent NetworkFabricPatchContent(IDictionary<string, string> tags = default, string annotation = default, int? rackCount = default, int? serverCountPerRack = default, string iPv4Prefix = default, string iPv6Prefix = default, long? fabricAsn = default, NetworkFabricPatchablePropertiesTerminalServerConfiguration terminalServerConfiguration = default, ManagementNetworkConfigurationPatchableProperties managementNetworkConfiguration = default, StorageAccountPatchConfiguration storageAccountConfiguration = default, int? hardwareAlertThreshold = default, IEnumerable<ResourceIdentifier> controlPlaneAcls = default, IEnumerable<ResourceIdentifier> trustedIPPrefixes = default, UniqueRouteDistinguisherPatchProperties uniqueRdConfiguration = default, IEnumerable<NetworkFabricFeatureFlag> featureFlags = default, AuthorizedTransceiverPatchProperties authorizedTransceiver = default, NetworkFabricQosConfigurationState? qosConfigurationState = default, NetworkFabricManagedServiceIdentityPatch identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new NetworkFabricPatch(tags, additionalBinaryDataProperties: null, annotation is null && rackCount is null && serverCountPerRack is null && iPv4Prefix is null && iPv6Prefix is null && fabricAsn is null && terminalServerConfiguration is null && managementNetworkConfiguration is null && storageAccountConfiguration is null && hardwareAlertThreshold is null && controlPlaneAcls is null && trustedIPPrefixes is null && uniqueRdConfiguration is null && featureFlags is null && authorizedTransceiver is null && qosConfigurationState is null ? default : new NetworkFabricPatchProperties(
+            return new NetworkFabricPatchContent(tags, additionalBinaryDataProperties: null, annotation is null && rackCount is null && serverCountPerRack is null && iPv4Prefix is null && iPv6Prefix is null && fabricAsn is null && terminalServerConfiguration is null && managementNetworkConfiguration is null && storageAccountConfiguration is null && hardwareAlertThreshold is null && controlPlaneAcls is null && trustedIPPrefixes is null && uniqueRdConfiguration is null && featureFlags is null && authorizedTransceiver is null && qosConfigurationState is null ? default : new NetworkFabricPatchProperties(
                 annotation,
                 rackCount,
                 serverCountPerRack,
@@ -2319,12 +2319,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> The NetworkPacketBroker patch resource definition. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="Models.NetworkPacketBrokerPatch"/> instance for mocking. </returns>
-        public static NetworkPacketBrokerPatch NetworkPacketBrokerPatch(IDictionary<string, string> tags = default, NetworkFabricManagedServiceIdentityPatch identity = default)
+        /// <returns> A new <see cref="Models.NetworkPacketBrokerPatchContent"/> instance for mocking. </returns>
+        public static NetworkPacketBrokerPatchContent NetworkPacketBrokerPatchContent(IDictionary<string, string> tags = default, NetworkFabricManagedServiceIdentityPatch identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new NetworkPacketBrokerPatch(tags, additionalBinaryDataProperties: null, identity);
+            return new NetworkPacketBrokerPatchContent(tags, additionalBinaryDataProperties: null, identity);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -2434,12 +2434,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="identitySelector"> The selection of the managed identity to use with this storage account. The identity type must be either system assigned or user assigned. </param>
         /// <param name="globalNetworkTapRuleActions"> Global network tap rule actions. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="Models.NetworkTapRulePatch"/> instance for mocking. </returns>
-        public static NetworkTapRulePatch NetworkTapRulePatch(IDictionary<string, string> tags = default, string annotation = default, NetworkFabricConfigurationType? configurationType = default, Uri tapRulesUri = default, IEnumerable<NetworkTapRuleMatchConfiguration> matchConfigurations = default, IEnumerable<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = default, NetworkFabricIdentitySelectorPatch identitySelector = default, GlobalNetworkTapRuleActionPatchProperties globalNetworkTapRuleActions = default, NetworkFabricManagedServiceIdentityPatch identity = default)
+        /// <returns> A new <see cref="Models.NetworkTapRulePatchContent"/> instance for mocking. </returns>
+        public static NetworkTapRulePatchContent NetworkTapRulePatchContent(IDictionary<string, string> tags = default, string annotation = default, NetworkFabricConfigurationType? configurationType = default, Uri tapRulesUri = default, IEnumerable<NetworkTapRuleMatchConfiguration> matchConfigurations = default, IEnumerable<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = default, NetworkFabricIdentitySelectorPatch identitySelector = default, GlobalNetworkTapRuleActionPatchProperties globalNetworkTapRuleActions = default, NetworkFabricManagedServiceIdentityPatch identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new NetworkTapRulePatch(tags, additionalBinaryDataProperties: null, annotation is null && configurationType is null && tapRulesUri is null && matchConfigurations is null && dynamicMatchConfigurations is null && identitySelector is null && globalNetworkTapRuleActions is null ? default : new NetworkTapRulePatchProperties(
+            return new NetworkTapRulePatchContent(tags, additionalBinaryDataProperties: null, annotation is null && configurationType is null && tapRulesUri is null && matchConfigurations is null && dynamicMatchConfigurations is null && identitySelector is null && globalNetworkTapRuleActions is null ? default : new NetworkTapRulePatchProperties(
                 annotation,
                 configurationType,
                 tapRulesUri,
@@ -2539,12 +2539,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="defaultAction"> Default action that needs to be applied when no condition is matched. Example: Permit | Deny. </param>
         /// <param name="statements"> Route Policy statements. </param>
-        /// <returns> A new <see cref="Models.NetworkFabricRoutePolicyPatch"/> instance for mocking. </returns>
-        public static NetworkFabricRoutePolicyPatch NetworkFabricRoutePolicyPatch(IDictionary<string, string> tags = default, CommunityActionType? defaultAction = default, IEnumerable<RoutePolicyStatementProperties> statements = default)
+        /// <returns> A new <see cref="Models.NetworkFabricRoutePolicyPatchContent"/> instance for mocking. </returns>
+        public static NetworkFabricRoutePolicyPatchContent NetworkFabricRoutePolicyPatchContent(IDictionary<string, string> tags = default, CommunityActionType? defaultAction = default, IEnumerable<RoutePolicyStatementProperties> statements = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new NetworkFabricRoutePolicyPatch(tags, additionalBinaryDataProperties: null, defaultAction is null && statements is null ? default : new RoutePolicyPatchableProperties(defaultAction, (statements ?? new ChangeTrackingList<RoutePolicyStatementProperties>()).ToList(), null));
+            return new NetworkFabricRoutePolicyPatchContent(tags, additionalBinaryDataProperties: null, defaultAction is null && statements is null ? default : new RoutePolicyPatchableProperties(defaultAction, (statements ?? new ChangeTrackingList<RoutePolicyStatementProperties>()).ToList(), null));
         }
 
         /// <param name="stationConfigurationState"> Enabling a station. Either True/False. </param>

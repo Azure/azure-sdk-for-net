@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The Access Control Lists patch resource definition. </summary>
-    public partial class NetworkFabricAccessControlListPatchContent : TagsUpdate
+    public partial class NetworkFabricAccessControlListPatchContent : ManagedNetworkFabricResourcePatch
     {
         /// <summary> Initializes a new instance of <see cref="NetworkFabricAccessControlListPatchContent"/>. </summary>
         public NetworkFabricAccessControlListPatchContent()
