@@ -21,6 +21,8 @@ namespace Azure.Communication.CallAutomation
             string callConnectionId = default;
             string serverCallId = default;
             string correlationId = default;
+            string operationContext = default;
+            ResultInformation resultInformation = default;
             string recordingId = default;
             RecordingState state = default;
             DateTimeOffset? startDateTime = default;
@@ -40,6 +42,20 @@ namespace Azure.Communication.CallAutomation
                 if (property.NameEquals("correlationId"u8))
                 {
                     correlationId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("operationContext"u8))
+                {
+                    operationContext = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("resultInformation"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
                     continue;
                 }
                 if (property.NameEquals("recordingId"u8))
@@ -79,6 +95,8 @@ namespace Azure.Communication.CallAutomation
                 callConnectionId,
                 serverCallId,
                 correlationId,
+                operationContext,
+                resultInformation,
                 recordingId,
                 state,
                 startDateTime,

@@ -21,15 +21,19 @@ namespace Azure.Communication.CallAutomation
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. </param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="resultInformation"></param>
         /// <param name="recordingId"> The call recording id. </param>
         /// <param name="state"></param>
         /// <param name="startDateTime"> The time of the recording started. </param>
         /// <param name="recordingKind"></param>
-        internal RecordingStateChanged(string callConnectionId, string serverCallId, string correlationId, string recordingId, RecordingState state, DateTimeOffset? startDateTime, RecordingKind? recordingKind)
+        internal RecordingStateChanged(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, string recordingId, RecordingState state, DateTimeOffset? startDateTime, RecordingKind? recordingKind)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
             CorrelationId = correlationId;
+            OperationContext = operationContext;
+            ResultInformation = resultInformation;
             RecordingId = recordingId;
             State = state;
             StartDateTime = startDateTime;

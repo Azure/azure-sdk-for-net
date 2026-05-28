@@ -15,7 +15,9 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Reason code.
         /// </summary>
-        public MediaEventReasonCode ReasonCode { get; internal set; }
+        public MediaEventReasonCode ReasonCode => ResultInformation != null
+            ? new MediaEventReasonCode(ResultInformation.SubCode.ToString())
+            : default;
 
         /// <summary> Initializes a new instance of <see cref="PlayCompleted"/>. </summary>
         /// <param name="operationContext"></param>
@@ -30,7 +32,6 @@ namespace Azure.Communication.CallAutomation
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
             CorrelationId = correlationId;
-            ReasonCode = new MediaEventReasonCode(resultInformation.SubCode.ToString());
         }
 
         /// <summary>

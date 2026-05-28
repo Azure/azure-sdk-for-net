@@ -142,7 +142,7 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.PlayCanceled"/> instance for mocking. </returns>
         public static PlayCanceled PlayCanceled(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
-            return new PlayCanceled(callConnectionId, serverCallId, correlationId, operationContext);
+            return new PlayCanceled(operationContext, resultInformation, callConnectionId, serverCallId, correlationId);
         }
 
         /// <summary> Initializes a new instance of RecognizeCanceled. </summary>
@@ -154,7 +154,7 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.RecognizeCanceled"/> instance for mocking. </returns>
         public static RecognizeCanceled RecognizeCanceled(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
-            return new RecognizeCanceled(callConnectionId, serverCallId, correlationId, operationContext);
+            return new RecognizeCanceled(operationContext, resultInformation, callConnectionId, serverCallId, correlationId);
         }
 
         /// <summary> Initializes a new instance of RecognizeFailed. </summary>
