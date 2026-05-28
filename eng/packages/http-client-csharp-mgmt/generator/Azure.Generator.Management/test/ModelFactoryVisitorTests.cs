@@ -270,7 +270,7 @@ namespace Azure.Generator.Mgmt.Tests
             var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
             var id = new VariableExpression(typeof(string), "id");
             var name = new VariableExpression(typeof(string), "name");
-            var staleName = new VariableExpression(typeof(string), "name0");
+            var staleNameDeclaration = Declare("name0", typeof(string), Default, out var staleName);
             var method = new MethodProvider(
                 new MethodSignature(
                     "DeserializeTestModel",
@@ -279,14 +279,21 @@ namespace Azure.Generator.Mgmt.Tests
                     model.Type,
                     null,
                     []),
-                Return(new NewInstanceExpression(model.Type, [id, name, staleName])),
+                MethodBodyStatement.Empty,
                 modelFactory);
+            method.Update(
+                signature: method.Signature,
+                bodyStatements: new MethodBodyStatement[]
+                {
+                    staleNameDeclaration,
+                    Return(new NewInstanceExpression(model.Type, [id, name, staleName]))
+                });
             modelFactory.Update(methods: [method]);
 
             Management.Visitors.ModelFactoryBackwardCompatHelper.FixConstructorCalls(modelFactory.Methods);
 
             var rendered = new TypeProviderWriter(modelFactory).Write().Content;
-            Assert.That(rendered, Does.Contain("global::System.GC.KeepAlive(name0);"));
+            Assert.That(rendered, Does.Not.Contain("name0"));
             Assert.That(rendered, Does.Contain("return new global::Samples.Models.TestModel(id, name, default);"));
         }
 

@@ -72,6 +72,7 @@ namespace Azure.Generator.Management.Visitors
 
                 var updatedBodyStatements = new List<MethodBodyStatement>();
                 var bodyUpdated = false;
+                var unusedLocalVariables = new HashSet<VariableExpression>();
                 foreach (var statement in method.BodyStatements)
                 {
                     if (statement is ExpressionStatement { Expression: KeywordExpression { Expression: NewInstanceExpression newInstanceExpression } }
@@ -79,7 +80,10 @@ namespace Azure.Generator.Management.Visitors
                     {
                         foreach (var unusedArgument in unusedArguments)
                         {
-                            updatedBodyStatements.Add(Static(typeof(GC)).Invoke(nameof(GC.KeepAlive), unusedArgument).Terminate());
+                            if (unusedArgument is VariableExpression unusedVariable)
+                            {
+                                unusedLocalVariables.Add(unusedVariable);
+                            }
                         }
                         updatedBodyStatements.Add(Return(New.Instance(newInstanceExpression.Type!, updatedArguments)));
                         bodyUpdated = true;
@@ -92,6 +96,10 @@ namespace Azure.Generator.Management.Visitors
 
                 if (bodyUpdated)
                 {
+                    if (unusedLocalVariables.Count > 0)
+                    {
+                        updatedBodyStatements.RemoveAll(statement => IsUnusedLocalDeclaration(statement, unusedLocalVariables));
+                    }
                     method.Update(signature: method.Signature, bodyStatements: updatedBodyStatements);
                 }
             }
@@ -523,6 +531,10 @@ namespace Azure.Generator.Management.Visitors
                 ExpressionStatement { Expression: var expression } => ReferencesParameter(expression, parameter),
                 _ => false
             };
+
+        private static bool IsUnusedLocalDeclaration(MethodBodyStatement statement, IReadOnlySet<VariableExpression> unusedLocalVariables)
+            => statement is ExpressionStatement { Expression: AssignmentExpression { Variable: DeclarationExpression declaration } }
+                && unusedLocalVariables.Contains(declaration.Variable);
 
         private static bool TryRebuildNewInstanceFromNamedArguments(
             NewInstanceExpression newInstanceExpression,
