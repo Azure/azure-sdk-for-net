@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Azure.Generator.Management.Models;
+using Azure.Generator.Management.Primitives;
 using Microsoft.TypeSpec.Generator.Input;
 
 namespace Azure.Generator.Management
@@ -29,7 +30,7 @@ namespace Azure.Generator.Management
         private ArmProviderSchema? _providerSchema;
         private IReadOnlyDictionary<string, InputModelType>? _modelsByCrossLanguageDefinitionId;
 
-        private IReadOnlyDictionary<InputModelType, (string ResourceName, bool IsAlsoUsedInCreate)>? _resourceUpdateModelToResourceNameMap;
+        private IReadOnlyDictionary<string, (string ResourceName, bool IsAlsoUsedInCreate)>? _resourceUpdateModelToResourceNameMap;
 
         internal IReadOnlyDictionary<string, InputModelType> ModelsByCrossLanguageDefinitionId => _modelsByCrossLanguageDefinitionId ??= BuildModelsByCrossLanguageDefinitionId();
 
@@ -301,14 +302,20 @@ namespace Azure.Generator.Management
 
         private IReadOnlyDictionary<InputServiceMethod, InputClient> InputMethodClientMap => _intMethodClientMap ??= ConstructMethodClientMap();
 
-        private IReadOnlyDictionary<InputModelType, (string ResourceName, bool IsAlsoUsedInCreate)> ResourceUpdateModelToResourceNameMap => _resourceUpdateModelToResourceNameMap ??= BuildResourceUpdateModelToResourceNameMap();
+        private IReadOnlyDictionary<string, (string ResourceName, bool IsAlsoUsedInCreate)> ResourceUpdateModelToResourceNameMap => _resourceUpdateModelToResourceNameMap ??= BuildResourceUpdateModelToResourceNameMap();
+
+        // User-supplied @@clientName is normally respected for PATCH-only payloads, but resource-derived
+        // update shapes are a special compatibility case: previous GA SDKs exposed them as {Resource}Patch
+        // even when the underlying TypeSpec model had an operation-specific client name.
+        internal bool ShouldRenameResourceUpdateModel(InputModelType model)
+            => !ClientNameOverriddenModels.Contains(model) || InheritsFromArmResource(model);
 
         /// <summary> Gets the ARM provider schema containing all resource metadata and non-resource methods. </summary>
         public ArmProviderSchema ArmProviderSchema => _providerSchema ??= BuildArmProviderSchema();
 
-        private IReadOnlyDictionary<InputModelType, (string ResourceName, bool IsAlsoUsedInCreate)> BuildResourceUpdateModelToResourceNameMap()
+        private IReadOnlyDictionary<string, (string ResourceName, bool IsAlsoUsedInCreate)> BuildResourceUpdateModelToResourceNameMap()
         {
-            Dictionary<InputModelType, (string ResourceName, int Count, bool IsAlsoUsedInCreate)> tempMap = new();
+            Dictionary<string, (string ResourceName, int Count, bool IsAlsoUsedInCreate)> tempMap = new(StringComparer.Ordinal);
 
             foreach (var metadata in ResourceMetadatas)
             {
@@ -317,16 +324,22 @@ namespace Azure.Generator.Management
                 {
                     foreach (var parameter in patchMethod.Parameters)
                     {
-                        if (parameter.Location == InputRequestLocation.Body && parameter.Type is InputModelType updateModel && updateModel != metadata.ResourceModel)
+                        if (parameter.Location == InputRequestLocation.Body && parameter.Type is InputModelType updateModel && !HasSameModelIdentity(updateModel, metadata.ResourceModel))
                         {
+                            // Use the semantic model key because the PATCH operation body and the model visitor
+                            // can receive distinct InputModelType instances for the same TypeSpec declaration.
+                            var updateModelKey = GetModelIdentityKey(updateModel);
                             bool isAlsoUsedInCreate = IsModelUsedInCreateOperation(metadata, updateModel);
-                            if (tempMap.TryGetValue(updateModel, out var existing))
+                            if (tempMap.TryGetValue(updateModelKey, out var existing))
                             {
-                                tempMap[updateModel] = (existing.ResourceName, existing.Count + 1, existing.IsAlsoUsedInCreate || isAlsoUsedInCreate);
+                                tempMap[updateModelKey] = (existing.ResourceName, existing.Count + 1, existing.IsAlsoUsedInCreate || isAlsoUsedInCreate);
                             }
                             else
                             {
-                                tempMap[updateModel] = (metadata.ResourceModel.Name, 1, isAlsoUsedInCreate);
+                                // Use ARM metadata.ResourceName rather than the raw model name. Some services
+                                // customize resource model names, while the previous SDK patch type was based on
+                                // the resource name that owns the PATCH operation.
+                                tempMap[updateModelKey] = (metadata.ResourceName, 1, isAlsoUsedInCreate);
                             }
                             break;
                         }
@@ -347,12 +360,35 @@ namespace Azure.Generator.Management
             {
                 foreach (var parameter in createMethod.Parameters)
                 {
-                    if (parameter.Location == InputRequestLocation.Body && parameter.Type == model)
+                    if (parameter.Location == InputRequestLocation.Body && parameter.Type is InputModelType createModel && HasSameModelIdentity(createModel, model))
                     {
                         return true;
                     }
                 }
             }
+            return false;
+        }
+
+        private static bool HasSameModelIdentity(InputModelType left, InputModelType right)
+            => string.Equals(GetModelIdentityKey(left), GetModelIdentityKey(right), StringComparison.Ordinal);
+
+        private static string GetModelIdentityKey(InputModelType model)
+            => !string.IsNullOrEmpty(model.CrossLanguageDefinitionId)
+                ? model.CrossLanguageDefinitionId
+                : $"{model.Namespace}.{model.Name}";
+
+        private static bool InheritsFromArmResource(InputModelType model)
+        {
+            // Operation-specific ARM update payloads may be modeled as derived resources. Treating that shape as
+            // resource-derived avoids depending on service-specific suffixes such as "Fragment".
+            for (var baseModel = model.BaseModel; baseModel != null; baseModel = baseModel.BaseModel)
+            {
+                if (string.Equals(baseModel.CrossLanguageDefinitionId, KnownManagementTypes.ArmResourceId, StringComparison.Ordinal))
+                {
+                    return true;
+                }
+            }
+
             return false;
         }
 
@@ -432,7 +468,7 @@ namespace Azure.Generator.Management
 
         internal bool TryFindEnclosingResourceNameForResourceUpdateModel(InputModelType model, [NotNullWhen(true)] out string? resourceName, out bool isAlsoUsedInCreate)
         {
-            if (ResourceUpdateModelToResourceNameMap.TryGetValue(model, out var entry))
+            if (ResourceUpdateModelToResourceNameMap.TryGetValue(GetModelIdentityKey(model), out var entry))
             {
                 resourceName = entry.ResourceName;
                 isAlsoUsedInCreate = entry.IsAlsoUsedInCreate;

@@ -50,9 +50,10 @@ namespace Azure.Generator.Management
         {
             if (provider is ModelFactoryProvider modelFactory)
             {
-                // Model factory back-compat overloads can be synthesized from LastContractView
-                // after normal visitors run. Repair them here so the final methods being written
-                // preserve arguments that were moved into flattened model properties.
+                // Run model-factory repairs at write time, after all visitors have finalized model constructor
+                // shape/order and after LastContractView has synthesized any hidden compatibility overloads.
+                // This keeps both current factory bodies and EBV overloads aligned with the final constructors.
+                ModelFactoryBackwardCompatHelper.FixModelFactoryConstructorCalls(modelFactory.Methods);
                 ModelFactoryBackwardCompatHelper.FixModelFactoryBackwardCompatOverloads(modelFactory.Methods);
             }
 

@@ -28,7 +28,12 @@ namespace Azure.Generator.Management.Providers
         public ResourceDataModelProvider(InputModelType inputModel)
             : base(inputModel)
         {
+            InputModel = inputModel;
         }
+
+        // Preserve the original input model so later visitors can distinguish output-only resource data
+        // from input-capable request models after the provider has been converted to a C# type.
+        internal InputModelType InputModel { get; }
 
         protected override string BuildName()
         {

@@ -88,8 +88,10 @@ internal class NameVisitor : ScmLibraryVisitor
                 newName = $"{enclosingResourceName}CreateOrUpdateContent";
                 type.Update(name: newName);
             }
-            else if (!inputLibrary.ClientNameOverriddenModels.Contains(model))
+            else if (inputLibrary.ShouldRenameResourceUpdateModel(model))
             {
+                // PATCH-only payload names are part of the public SDK surface. Centralize the compatibility
+                // decision in ManagementInputLibrary so this visitor does not rely on service-specific names.
                 newName = $"{enclosingResourceName}Patch";
                 type.Update(name: newName);
             }

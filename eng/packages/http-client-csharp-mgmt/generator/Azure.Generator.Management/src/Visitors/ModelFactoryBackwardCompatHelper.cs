@@ -18,12 +18,47 @@ using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 namespace Azure.Generator.Management.Visitors
 {
     /// <summary>
-    /// Repairs hidden model factory compatibility overloads after flattening changes the current model factory shape.
+    /// Repairs model factory constructor calls after visitors change the current model shape.
     /// Used from <see cref="ManagementClientGenerator.GetWriter(TypeProvider)"/> because some compatibility overloads are
     /// synthesized from LastContractView after normal visitors have finished.
     /// </summary>
     internal static class ModelFactoryBackwardCompatHelper
     {
+        internal static void FixModelFactoryConstructorCalls(IReadOnlyList<MethodProvider> methods)
+        {
+            foreach (var method in methods)
+            {
+                if (IsBackwardCompatMethod(method) || method.BodyStatements is null)
+                {
+                    continue;
+                }
+
+                var updatedBodyStatements = new List<MethodBodyStatement>();
+                var bodyUpdated = false;
+                foreach (var statement in method.BodyStatements)
+                {
+                    // Primary factory methods are created before later visitors may reset/reorder model constructors.
+                    // Rebuild direct constructor calls from the method signature so the public factory parameters
+                    // keep flowing into the final constructor slots.
+                    if (statement is ExpressionStatement { Expression: KeywordExpression { Expression: NewInstanceExpression newInstanceExpression } }
+                        && TryRebuildNewInstanceFromMethodSignature(method, newInstanceExpression, out var updatedArguments))
+                    {
+                        updatedBodyStatements.Add(Return(New.Instance(newInstanceExpression.Type!, updatedArguments)));
+                        bodyUpdated = true;
+                    }
+                    else
+                    {
+                        updatedBodyStatements.Add(statement);
+                    }
+                }
+
+                if (bodyUpdated)
+                {
+                    method.Update(signature: method.Signature, bodyStatements: updatedBodyStatements);
+                }
+            }
+        }
+
         /// <summary>
         /// Updates hidden compatibility overload bodies so old parameters still flow into the current flattened model shape.
         /// Input is the complete model factory method list; output is in-place method body updates for repairable overloads.
@@ -83,6 +118,54 @@ namespace Azure.Generator.Management.Visitors
                     method.Update(signature: method.Signature, bodyStatements: updatedBodyStatements);
                 }
             }
+        }
+
+        private static bool TryRebuildNewInstanceFromMethodSignature(
+            MethodProvider method,
+            NewInstanceExpression newInstanceExpression,
+            [NotNullWhen(true)] out IReadOnlyList<ValueExpression>? updatedArguments)
+        {
+            updatedArguments = null;
+            if (newInstanceExpression.Type is null || !TryGetModelProvider(newInstanceExpression.Type, out var modelProvider))
+            {
+                return false;
+            }
+
+            var constructorParameters = modelProvider.FullConstructor.Signature.Parameters;
+            if (constructorParameters.Count == newInstanceExpression.Parameters.Count
+                && HasNamedArgumentMismatchingFullConstructor(newInstanceExpression.Parameters, constructorParameters))
+            {
+                // Named arguments targeting a different constructor shape usually mean custom code is involved.
+                // Leave those calls untouched rather than guessing and potentially corrupting custom factories.
+                return false;
+            }
+
+            var arguments = new List<ValueExpression>(constructorParameters.Count);
+            var changed = constructorParameters.Count != newInstanceExpression.Parameters.Count;
+            foreach (var constructorParameter in constructorParameters)
+            {
+                if (TryBuildCompatibilityArgument(method, constructorParameter, new HashSet<string>(StringComparer.OrdinalIgnoreCase), out var argument))
+                {
+                    arguments.Add(argument.Argument);
+                    var index = arguments.Count - 1;
+                    if (!changed && !ReferenceEquals(argument.Argument, newInstanceExpression.Parameters[index]))
+                    {
+                        changed = true;
+                    }
+                }
+                else
+                {
+                    arguments.Add(constructorParameter.DefaultValue ?? Default);
+                    var index = arguments.Count - 1;
+                    if (!changed && !IsDefaultExpression(newInstanceExpression.Parameters[index]))
+                    {
+                        changed = true;
+                    }
+                }
+            }
+
+            updatedArguments = changed ? arguments : null;
+            return changed;
         }
 
         /// <summary>

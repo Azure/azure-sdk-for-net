@@ -4,8 +4,10 @@
 using Azure.Generator.Management.Providers;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -14,6 +16,20 @@ namespace Azure.Generator.Management.Visitors;
 
 internal class ResourceVisitor : ScmLibraryVisitor
 {
+    protected override PropertyProvider? PreVisitProperty(InputProperty inputProperty, PropertyProvider? propertyProvider)
+    {
+        if (propertyProvider?.EnclosingType is ResourceDataModelProvider { InputModel: var inputModel }
+            && !inputModel.Usage.HasFlag(InputModelTypeUsage.Input)
+            && propertyProvider.Type.IsList)
+        {
+            // Output-only resource data models represent service responses. Keep list properties read-only in
+            // the public API for GA compatibility, even when the TypeSpec property itself is not marked readonly.
+            propertyProvider.Update(type: new CSharpType(typeof(IReadOnlyList<>), propertyProvider.Type.Arguments));
+        }
+
+        return base.PreVisitProperty(inputProperty, propertyProvider);
+    }
+
     // Re-assert the namespace and fix serialization providers' file paths after Azure.Generator's
     // NamespaceVisitor (which runs in VisitType) has had a chance to override them.
     protected override TypeProvider? VisitType(TypeProvider type)

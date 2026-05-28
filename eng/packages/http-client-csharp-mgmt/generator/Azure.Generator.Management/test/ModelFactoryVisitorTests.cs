@@ -4,6 +4,7 @@
 using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Tests.TestHelpers;
 using Microsoft.TypeSpec.Generator;
+using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -11,6 +12,7 @@ using Microsoft.TypeSpec.Generator.Statements;
 using NUnit.Framework;
 using System;
 using System.Reflection;
+using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Mgmt.Tests
 {
@@ -184,6 +186,42 @@ namespace Azure.Generator.Mgmt.Tests
             visitType!.Invoke(new Management.Visitors.ModelFactoryVisitor(), [modelFactory]);
 
             Assert.That(modelFactory.Methods, Is.Empty);
+        }
+
+        [Test]
+        public void RebuildsPrimaryFactoryBodyFromCurrentConstructor()
+        {
+            var inputModel = InputFactory.Model(
+                "TestModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties:
+                [
+                    InputFactory.Property("id", InputPrimitiveType.String),
+                    InputFactory.Property("name", InputPrimitiveType.String),
+                ]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel]);
+            var model = plugin.Object.TypeFactory.CreateModel(inputModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var idParameter = new ParameterProvider("id", $"", typeof(string));
+            var nameParameter = new ParameterProvider("name", $"", typeof(string));
+            var signature = new MethodSignature(
+                "TestModel",
+                $"Creates a test model.",
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                model.Type,
+                $"A test model.",
+                [idParameter, nameParameter]);
+            var method = new MethodProvider(
+                signature,
+                Return(new NewInstanceExpression(model.Type, [nameParameter, idParameter])),
+                modelFactory);
+            modelFactory.Update(methods: [method]);
+
+            Management.Visitors.ModelFactoryBackwardCompatHelper.FixModelFactoryConstructorCalls(modelFactory.Methods);
+
+            var rendered = new TypeProviderWriter(modelFactory).Write().Content;
+            Assert.That(rendered, Does.Contain("return new global::Samples.Models.TestModel(id, name, default);"));
         }
 
         private static void SetLastContractView(TypeProvider typeProvider, TypeProvider lastContractView)
