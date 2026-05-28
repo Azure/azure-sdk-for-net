@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Global Access Control List actions patch properties. </summary>
-    internal partial class GlobalAccessControlListActionPatchProperties
+    public partial class GlobalAccessControlListActionPatchProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

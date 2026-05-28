@@ -298,12 +298,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="deviceRole"> Device Role. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="globalAccessControlListActionsEnableCount"> Configuration to enable or disable ACL action count. </param>
-        /// <returns> A new <see cref="Models.NetworkFabricAccessControlListPatch"/> instance for mocking. </returns>
-        public static NetworkFabricAccessControlListPatch NetworkFabricAccessControlListPatch(IDictionary<string, string> tags = default, NetworkFabricConfigurationType? configurationType = default, Uri aclsUri = default, CommunityActionType? defaultAction = default, IEnumerable<AccessControlListMatchConfiguration> matchConfigurations = default, IEnumerable<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = default, IEnumerable<ControlPlaneAclPatchProperties> controlPlaneAclConfiguration = default, NetworkFabricAclType? aclType = default, NetworkFabricDeviceRole? deviceRole = default, string annotation = default, NetworkFabricBooleanValue? globalAccessControlListActionsEnableCount = default)
+        /// <returns> A new <see cref="Models.NetworkFabricAccessControlListPatchContent"/> instance for mocking. </returns>
+        public static NetworkFabricAccessControlListPatchContent NetworkFabricAccessControlListPatchContent(IDictionary<string, string> tags = default, NetworkFabricConfigurationType? configurationType = default, Uri aclsUri = default, CommunityActionType? defaultAction = default, IEnumerable<AccessControlListMatchConfiguration> matchConfigurations = default, IEnumerable<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = default, IEnumerable<ControlPlaneAclPatchProperties> controlPlaneAclConfiguration = default, NetworkFabricAclType? aclType = default, NetworkFabricDeviceRole? deviceRole = default, string annotation = default, NetworkFabricBooleanValue? globalAccessControlListActionsEnableCount = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new NetworkFabricAccessControlListPatch(tags, additionalBinaryDataProperties: null, configurationType is null && aclsUri is null && defaultAction is null && matchConfigurations is null && dynamicMatchConfigurations is null && controlPlaneAclConfiguration is null && aclType is null && deviceRole is null && annotation is null && globalAccessControlListActionsEnableCount is null ? default : new AccessControlListPatchProperties(
+            return new NetworkFabricAccessControlListPatchContent(tags, additionalBinaryDataProperties: null, configurationType is null && aclsUri is null && defaultAction is null && matchConfigurations is null && dynamicMatchConfigurations is null && controlPlaneAclConfiguration is null && aclType is null && deviceRole is null && annotation is null && globalAccessControlListActionsEnableCount is null ? default : new AccessControlListPatchProperties(
                 configurationType,
                 aclsUri,
                 defaultAction,
@@ -349,14 +349,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Network Rack patch resource definition. </summary>
+        /// <summary> Base tracked resource type for PATCH updates. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.NetworkRackPatch"/> instance for mocking. </returns>
-        public static NetworkRackPatch NetworkRackPatch(IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Models.TagsUpdate"/> instance for mocking. </returns>
+        public static TagsUpdate TagsUpdate(IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new NetworkRackPatch(tags, additionalBinaryDataProperties: null);
+            return new TagsUpdate(tags, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Update administrative state on list of resources. </summary>
@@ -378,6 +378,48 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             resourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
             return new UpdateAdministrativeStateOnResources(resourceIds.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Update Administrative State Response. </summary>
+        /// <param name="id"> Fully qualified ID for the async operation. </param>
+        /// <param name="name"> Name of the async operation. </param>
+        /// <param name="status"> Operation status. </param>
+        /// <param name="percentComplete"> Percent of the operation that is complete. </param>
+        /// <param name="startOn"> The start time of the operation. </param>
+        /// <param name="endOn"> The end time of the operation. </param>
+        /// <param name="operations"> The operations list. </param>
+        /// <param name="error"> If present, details of the operation error. </param>
+        /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
+        /// <param name="properties"> Response properties in case of successful administrative state update. </param>
+        /// <returns> A new <see cref="Models.UpdateAdministrativeStateResult"/> instance for mocking. </returns>
+        public static UpdateAdministrativeStateResult UpdateAdministrativeStateResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<OperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default, UpdateAdministrativeStateResponseProperties properties = default)
+        {
+            operations ??= new ChangeTrackingList<OperationStatusResult>();
+
+            return new UpdateAdministrativeStateResult(
+                id,
+                name,
+                status,
+                percentComplete,
+                startOn,
+                endOn,
+                operations.ToList(),
+                error,
+                resourceId,
+                properties,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Update Administrative State Response Properties. </summary>
+        /// <param name="successfulResources"> List of ARM Resource IDs for which the given action applied successfully. </param>
+        /// <param name="failedResources"> List of ARM Resource IDs for which the given action failed to apply. </param>
+        /// <returns> A new <see cref="Models.UpdateAdministrativeStateResponseProperties"/> instance for mocking. </returns>
+        public static UpdateAdministrativeStateResponseProperties UpdateAdministrativeStateResponseProperties(IEnumerable<ResourceIdentifier> successfulResources = default, IEnumerable<ResourceIdentifier> failedResources = default)
+        {
+            successfulResources ??= new ChangeTrackingList<ResourceIdentifier>();
+            failedResources ??= new ChangeTrackingList<ResourceIdentifier>();
+
+            return new UpdateAdministrativeStateResponseProperties(successfulResources.ToList(), failedResources.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Common response for the state updates. </summary>
@@ -451,6 +493,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new NetworkFabricInternetGatewayRulePatch(tags, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Network Rack patch resource definition. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.NetworkRackPatch"/> instance for mocking. </returns>
+        public static NetworkRackPatch NetworkRackPatch(IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new NetworkRackPatch(tags, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -2571,16 +2623,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 exportPolicies is null ? default : new BmpExportPolicyPatchProperties((exportPolicies ?? new ChangeTrackingList<BmpExportPolicy>()).ToList(), null),
                 monitoredAddressFamilies.ToList(),
                 additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Base tracked resource type for PATCH updates. </summary>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.TagsUpdate"/> instance for mocking. </returns>
-        public static TagsUpdate TagsUpdate(IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new TagsUpdate(tags, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

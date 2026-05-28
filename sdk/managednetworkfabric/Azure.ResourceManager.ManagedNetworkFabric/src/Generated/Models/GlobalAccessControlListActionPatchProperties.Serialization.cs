@@ -14,7 +14,7 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Global Access Control List actions patch properties. </summary>
-    internal partial class GlobalAccessControlListActionPatchProperties : IJsonModel<GlobalAccessControlListActionPatchProperties>
+    public partial class GlobalAccessControlListActionPatchProperties : IJsonModel<GlobalAccessControlListActionPatchProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
