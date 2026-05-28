@@ -45,7 +45,7 @@ internal static class CredentialCache
     /// chain-aware <see cref="CredentialResolver.TryResolve(IConfigurationSection, Func{IConfigurationSection, AuthenticationTokenProvider?}, out AuthenticationTokenProvider?)"/>
     /// overload so chain-owning resolvers can recurse without re-implementing
     /// engine logic. Required — callers without a chain pass a no-op
-    /// (<c>static _ =&gt; null</c>) to honor the resolver's non-null contract.</param>
+    /// (<c><![CDATA[static _ => null]]></c>) to honor the resolver's non-null contract.</param>
     /// <param name="chainKey">Stable identifier for the active resolver chain
     /// composition. Used as a discriminator when the resolver actually invokes
     /// <paramref name="resolveChild"/> during <c>TryResolve</c> — the produced
