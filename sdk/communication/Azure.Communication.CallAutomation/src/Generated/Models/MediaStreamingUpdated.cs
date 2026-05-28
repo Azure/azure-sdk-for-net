@@ -7,24 +7,26 @@
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The MediaStreamingStopped. </summary>
-    public partial class MediaStreamingStopped
+    /// <summary> The MediaStreamingUpdated. </summary>
+    public partial class MediaStreamingUpdated
     {
-        /// <summary> Initializes a new instance of <see cref="MediaStreamingStopped"/>. </summary>
-        internal MediaStreamingStopped()
+        /// <summary> Initializes a new instance of <see cref="MediaStreamingUpdated"/>. </summary>
+        internal MediaStreamingUpdated()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MediaStreamingStopped"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaStreamingUpdated"/>. </summary>
         /// <param name="mediaStreamingUpdate"></param>
+        /// <param name="streamUrl"> Gets the URL of the media stream associated with this instance. </param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
         /// <param name="resultInformation"></param>
-        internal MediaStreamingStopped(MediaStreamingUpdate mediaStreamingUpdate, string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation)
+        internal MediaStreamingUpdated(MediaStreamingUpdate mediaStreamingUpdate, string streamUrl, string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation)
         {
             MediaStreamingUpdate = mediaStreamingUpdate;
+            StreamUrl = streamUrl;
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
             CorrelationId = correlationId;
@@ -34,5 +36,7 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Gets the media streaming update. </summary>
         public MediaStreamingUpdate MediaStreamingUpdate { get; }
+        /// <summary> Gets the URL of the media stream associated with this instance. </summary>
+        public string StreamUrl { get; }
     }
 }

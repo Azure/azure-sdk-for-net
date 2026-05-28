@@ -39,5 +39,11 @@ namespace Azure.Communication.CallAutomation
         public string OperationCallbackUri { get; set; }
         /// <summary> The value to identify context of the operation. </summary>
         public string OperationContext { get; set; }
+        /// <summary>
+        /// Optional CNAME override for the dialog connection host. When provided and the
+        /// AcsDialogEnableCallerCnameOverride feature flag is enabled, bypasses ECS-based
+        /// CNAME resolution for ACS calls. Only applies to PowerVirtualAgents dialog type.
+        /// </summary>
+        public string DialogCnameOverride { get; set; }
     }
 }

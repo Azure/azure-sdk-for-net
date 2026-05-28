@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The Tone. </summary>
+    /// <summary> Represents DTMF (Dual-tone multi-frequency) tones used in telephony signaling. </summary>
     public readonly partial struct DtmfTone : IEquatable<DtmfTone>
     {
         private readonly string _value;
@@ -38,6 +38,7 @@ namespace Azure.Communication.CallAutomation
         private const string DValue = "d";
         private const string PoundValue = "pound";
         private const string AsteriskValue = "asterisk";
+        private const string CommaValue = "comma";
 
         /// <summary> zero. </summary>
         public static DtmfTone Zero { get; } = new DtmfTone(ZeroValue);
@@ -71,6 +72,8 @@ namespace Azure.Communication.CallAutomation
         public static DtmfTone Pound { get; } = new DtmfTone(PoundValue);
         /// <summary> asterisk. </summary>
         public static DtmfTone Asterisk { get; } = new DtmfTone(AsteriskValue);
+        /// <summary> comma. </summary>
+        public static DtmfTone Comma { get; } = new DtmfTone(CommaValue);
         /// <summary> Determines if two <see cref="DtmfTone"/> values are the same. </summary>
         public static bool operator ==(DtmfTone left, DtmfTone right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DtmfTone"/> values are not the same. </summary>

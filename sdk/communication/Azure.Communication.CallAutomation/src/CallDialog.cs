@@ -110,7 +110,8 @@ namespace Azure.Communication.CallAutomation
             StartDialogRequestInternal startDialogRequestInternal = new StartDialogRequestInternal(startDialog.Dialog)
             {
                 OperationCallbackUri = startDialog.OperationCallbackUri,
-                OperationContext = startDialog.OperationContext == default ? Guid.NewGuid().ToString() : startDialog.OperationContext
+                OperationContext = startDialog.OperationContext == default ? Guid.NewGuid().ToString() : startDialog.OperationContext,
+                DialogCnameOverride = startDialog.DialogCnameOverride,
             };
             return startDialogRequestInternal;
         }
