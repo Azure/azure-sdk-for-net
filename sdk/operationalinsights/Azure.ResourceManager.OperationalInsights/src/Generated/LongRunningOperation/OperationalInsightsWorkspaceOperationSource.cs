@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    internal class OperationalInsightsWorkspaceOperationSource : IOperationSource<OperationalInsightsWorkspaceResource>
+    /// <summary></summary>
+    internal partial class OperationalInsightsWorkspaceOperationSource : IOperationSource<OperationalInsightsWorkspaceResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal OperationalInsightsWorkspaceOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         OperationalInsightsWorkspaceResource IOperationSource<OperationalInsightsWorkspaceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<OperationalInsightsWorkspaceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOperationalInsightsContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            OperationalInsightsWorkspaceData data = OperationalInsightsWorkspaceData.DeserializeOperationalInsightsWorkspaceData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new OperationalInsightsWorkspaceResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<OperationalInsightsWorkspaceResource> IOperationSource<OperationalInsightsWorkspaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<OperationalInsightsWorkspaceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOperationalInsightsContext.Default);
-            return await Task.FromResult(new OperationalInsightsWorkspaceResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            OperationalInsightsWorkspaceData data = OperationalInsightsWorkspaceData.DeserializeOperationalInsightsWorkspaceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new OperationalInsightsWorkspaceResource(_client, data);
         }
     }
 }

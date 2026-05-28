@@ -13,133 +13,209 @@ using Azure.ResourceManager.OperationalInsights.Models;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    /// <summary>
-    /// A class representing the OperationalInsightsCluster data model.
-    /// The top level Log Analytics cluster resource container.
-    /// </summary>
+    /// <summary> The top level Log Analytics cluster resource container. </summary>
     public partial class OperationalInsightsClusterData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsClusterData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public OperationalInsightsClusterData(AzureLocation location) : base(location)
         {
-            AssociatedWorkspaces = new ChangeTrackingList<OperationalInsightsClusterAssociatedWorkspace>();
         }
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsClusterData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="identity"> Resource's identity. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Log Analytics cluster properties. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="sku"> The sku properties. </param>
-        /// <param name="clusterId"> The ID associated with the cluster. </param>
-        /// <param name="provisioningState"> The provisioning state of the cluster. </param>
-        /// <param name="isDoubleEncryptionEnabled"> Configures whether cluster will use double encryption. This Property can not be modified after cluster creation. Default value is 'true'. </param>
-        /// <param name="isAvailabilityZonesEnabled"> Sets whether the cluster will support availability zones. This can be set as true only in regions where Azure Data Explorer support Availability Zones. This Property can not be modified after cluster creation. Default value is 'true' if region supports Availability Zones. </param>
-        /// <param name="billingType"> The cluster's billing type. </param>
-        /// <param name="keyVaultProperties"> The associated key properties. </param>
-        /// <param name="lastModifiedOn"> The last time the cluster was updated. </param>
-        /// <param name="createdOn"> The cluster creation time. </param>
-        /// <param name="associatedWorkspaces"> The list of Log Analytics workspaces associated with the cluster. </param>
-        /// <param name="capacityReservationProperties"> Additional properties for capacity reservation. </param>
-        /// <param name="replication"> Cluster's replication properties. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OperationalInsightsClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, OperationalInsightsClusterSku sku, Guid? clusterId, OperationalInsightsClusterEntityStatus? provisioningState, bool? isDoubleEncryptionEnabled, bool? isAvailabilityZonesEnabled, OperationalInsightsBillingType? billingType, OperationalInsightsKeyVaultProperties keyVaultProperties, DateTimeOffset? lastModifiedOn, DateTimeOffset? createdOn, IList<OperationalInsightsClusterAssociatedWorkspace> associatedWorkspaces, OperationalInsightsCapacityReservationProperties capacityReservationProperties, OperationalInsightsClusterReplicationProperties replication, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal OperationalInsightsClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ClusterProperties properties, ManagedServiceIdentity identity, OperationalInsightsClusterSku sku) : base(id, name, resourceType, systemData, tags, location)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Identity = identity;
             Sku = sku;
-            ClusterId = clusterId;
-            ProvisioningState = provisioningState;
-            IsDoubleEncryptionEnabled = isDoubleEncryptionEnabled;
-            IsAvailabilityZonesEnabled = isAvailabilityZonesEnabled;
-            BillingType = billingType;
-            KeyVaultProperties = keyVaultProperties;
-            LastModifiedOn = lastModifiedOn;
-            CreatedOn = createdOn;
-            AssociatedWorkspaces = associatedWorkspaces;
-            CapacityReservationProperties = capacityReservationProperties;
-            Replication = replication;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OperationalInsightsClusterData"/> for deserialization. </summary>
-        internal OperationalInsightsClusterData()
-        {
-        }
+        /// <summary> Log Analytics cluster properties. </summary>
+        [WirePath("properties")]
+        internal ClusterProperties Properties { get; set; }
 
-        /// <summary> Resource's identity. </summary>
+        /// <summary> The managed service identities assigned to this resource. </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> The sku properties. </summary>
         [WirePath("sku")]
         public OperationalInsightsClusterSku Sku { get; set; }
+
         /// <summary> The ID associated with the cluster. </summary>
         [WirePath("properties.clusterId")]
-        public Guid? ClusterId { get; }
+        public string ClusterId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClusterId;
+            }
+        }
+
         /// <summary> The provisioning state of the cluster. </summary>
         [WirePath("properties.provisioningState")]
-        public OperationalInsightsClusterEntityStatus? ProvisioningState { get; }
+        public OperationalInsightsClusterEntityStatus? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Configures whether cluster will use double encryption. This Property can not be modified after cluster creation. Default value is 'true'. </summary>
         [WirePath("properties.isDoubleEncryptionEnabled")]
-        public bool? IsDoubleEncryptionEnabled { get; set; }
+        public bool? IsDoubleEncryptionEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsDoubleEncryptionEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                Properties.IsDoubleEncryptionEnabled = value;
+            }
+        }
+
         /// <summary> Sets whether the cluster will support availability zones. This can be set as true only in regions where Azure Data Explorer support Availability Zones. This Property can not be modified after cluster creation. Default value is 'true' if region supports Availability Zones. </summary>
         [WirePath("properties.isAvailabilityZonesEnabled")]
-        public bool? IsAvailabilityZonesEnabled { get; set; }
+        public bool? IsAvailabilityZonesEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsAvailabilityZonesEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                Properties.IsAvailabilityZonesEnabled = value;
+            }
+        }
+
         /// <summary> The cluster's billing type. </summary>
         [WirePath("properties.billingType")]
-        public OperationalInsightsBillingType? BillingType { get; set; }
+        public OperationalInsightsBillingType? BillingType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BillingType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                Properties.BillingType = value;
+            }
+        }
+
         /// <summary> The associated key properties. </summary>
         [WirePath("properties.keyVaultProperties")]
-        public OperationalInsightsKeyVaultProperties KeyVaultProperties { get; set; }
+        public OperationalInsightsKeyVaultProperties KeyVaultProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.KeyVaultProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                Properties.KeyVaultProperties = value;
+            }
+        }
+
         /// <summary> The last time the cluster was updated. </summary>
         [WirePath("properties.lastModifiedDate")]
-        public DateTimeOffset? LastModifiedOn { get; }
+        public DateTimeOffset? LastModifiedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastModifiedOn;
+            }
+        }
+
         /// <summary> The cluster creation time. </summary>
         [WirePath("properties.createdDate")]
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
         /// <summary> The list of Log Analytics workspaces associated with the cluster. </summary>
         [WirePath("properties.associatedWorkspaces")]
-        public IList<OperationalInsightsClusterAssociatedWorkspace> AssociatedWorkspaces { get; }
+        public IList<OperationalInsightsClusterAssociatedWorkspace> AssociatedWorkspaces
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                return Properties.AssociatedWorkspaces;
+            }
+        }
+
         /// <summary> Additional properties for capacity reservation. </summary>
         [WirePath("properties.capacityReservationProperties")]
-        public OperationalInsightsCapacityReservationProperties CapacityReservationProperties { get; set; }
+        public OperationalInsightsCapacityReservationProperties CapacityReservationProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CapacityReservationProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                Properties.CapacityReservationProperties = value;
+            }
+        }
+
         /// <summary> Cluster's replication properties. </summary>
         [WirePath("properties.replication")]
-        public OperationalInsightsClusterReplicationProperties Replication { get; set; }
+        public OperationalInsightsClusterReplicationProperties Replication
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Replication;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                Properties.Replication = value;
+            }
+        }
     }
 }

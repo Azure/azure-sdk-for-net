@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     /// <summary> The list of Log Analytics workspaces associated with the cluster. </summary>
     public partial class OperationalInsightsClusterAssociatedWorkspace
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsClusterAssociatedWorkspace"/>. </summary>
         public OperationalInsightsClusterAssociatedWorkspace()
@@ -55,28 +27,31 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="workspaceId"> Associated workspace immutable id. </param>
         /// <param name="workspaceName"> Associated workspace resource name. </param>
         /// <param name="resourceId"> Associated workspace arm resource id, in the form of: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}. </param>
-        /// <param name="associatedOn"> The time of workspace association. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OperationalInsightsClusterAssociatedWorkspace(Guid? workspaceId, string workspaceName, ResourceIdentifier resourceId, DateTimeOffset? associatedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="associateOn"> The time of workspace association. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal OperationalInsightsClusterAssociatedWorkspace(Guid? workspaceId, string workspaceName, ResourceIdentifier resourceId, DateTimeOffset? associateOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             WorkspaceId = workspaceId;
             WorkspaceName = workspaceName;
             ResourceId = resourceId;
-            AssociatedOn = associatedOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            AssociateOn = associateOn;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Associated workspace immutable id. </summary>
         [WirePath("workspaceId")]
         public Guid? WorkspaceId { get; }
+
         /// <summary> Associated workspace resource name. </summary>
         [WirePath("workspaceName")]
         public string WorkspaceName { get; }
+
         /// <summary> Associated workspace arm resource id, in the form of: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}. </summary>
         [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; }
+
         /// <summary> The time of workspace association. </summary>
         [WirePath("associateDate")]
-        public DateTimeOffset? AssociatedOn { get; }
+        public DateTimeOffset? AssociateOn { get; }
     }
 }

@@ -7,64 +7,53 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.OperationalInsights.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
     /// <summary>
-    /// A Class representing an OperationalInsightsWorkspace along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="OperationalInsightsWorkspaceResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetOperationalInsightsWorkspaceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetOperationalInsightsWorkspace method.
+    /// A class representing a OperationalInsightsWorkspace along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="OperationalInsightsWorkspaceResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetOperationalInsightsWorkspaces method.
     /// </summary>
     public partial class OperationalInsightsWorkspaceResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="OperationalInsightsWorkspaceResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="workspaceName"> The workspaceName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _operationalInsightsWorkspaceWorkspacesClientDiagnostics;
-        private readonly WorkspacesRestOperations _operationalInsightsWorkspaceWorkspacesRestClient;
-        private readonly ClientDiagnostics _availableServiceTiersClientDiagnostics;
-        private readonly AvailableServiceTiersRestOperations _availableServiceTiersRestClient;
-        private readonly ClientDiagnostics _gatewaysClientDiagnostics;
-        private readonly GatewaysRestOperations _gatewaysRestClient;
+        private readonly ClientDiagnostics _workspacesClientDiagnostics;
+        private readonly Workspaces _workspacesRestClient;
         private readonly ClientDiagnostics _intelligencePacksClientDiagnostics;
-        private readonly IntelligencePacksRestOperations _intelligencePacksRestClient;
-        private readonly ClientDiagnostics _managementGroupsClientDiagnostics;
-        private readonly ManagementGroupsRestOperations _managementGroupsRestClient;
-        private readonly ClientDiagnostics _schemaClientDiagnostics;
-        private readonly SchemaRestOperations _schemaRestClient;
-        private readonly ClientDiagnostics _sharedKeysClientDiagnostics;
-        private readonly SharedKeysRestOperations _sharedKeysRestClient;
-        private readonly ClientDiagnostics _usagesClientDiagnostics;
-        private readonly UsagesRestOperations _usagesRestClient;
+        private readonly IntelligencePacks _intelligencePacksRestClient;
+        private readonly ClientDiagnostics _gatewaysClientDiagnostics;
+        private readonly Gateways _gatewaysRestClient;
         private readonly ClientDiagnostics _workspacePurgeClientDiagnostics;
-        private readonly WorkspacePurgeRestOperations _workspacePurgeRestClient;
+        private readonly WorkspacePurge _workspacePurgeRestClient;
+        private readonly ClientDiagnostics _sharedKeysClientDiagnostics;
+        private readonly SharedKeys _sharedKeysRestClient;
+        private readonly ClientDiagnostics _availableServiceTiersClientDiagnostics;
+        private readonly AvailableServiceTiers _availableServiceTiersRestClient;
+        private readonly ClientDiagnostics _managementGroupsClientDiagnostics;
+        private readonly ManagementGroups _managementGroupsRestClient;
+        private readonly ClientDiagnostics _schemaClientDiagnostics;
+        private readonly Schema _schemaRestClient;
+        private readonly ClientDiagnostics _usagesClientDiagnostics;
+        private readonly Usages _usagesRestClient;
         private readonly OperationalInsightsWorkspaceData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.OperationalInsights/workspaces";
 
-        /// <summary> Initializes a new instance of the <see cref="OperationalInsightsWorkspaceResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of OperationalInsightsWorkspaceResource for mocking. </summary>
         protected OperationalInsightsWorkspaceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="OperationalInsightsWorkspaceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsWorkspaceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal OperationalInsightsWorkspaceResource(ArmClient client, OperationalInsightsWorkspaceData data) : this(client, data.Id)
@@ -73,566 +62,108 @@ namespace Azure.ResourceManager.OperationalInsights
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="OperationalInsightsWorkspaceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsWorkspaceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal OperationalInsightsWorkspaceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _operationalInsightsWorkspaceWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string operationalInsightsWorkspaceWorkspacesApiVersion);
-            _operationalInsightsWorkspaceWorkspacesRestClient = new WorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, operationalInsightsWorkspaceWorkspacesApiVersion);
-            _availableServiceTiersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _availableServiceTiersRestClient = new AvailableServiceTiersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _gatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _gatewaysRestClient = new GatewaysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _intelligencePacksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _intelligencePacksRestClient = new IntelligencePacksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _managementGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _managementGroupsRestClient = new ManagementGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _schemaClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _schemaRestClient = new SchemaRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _sharedKeysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _sharedKeysRestClient = new SharedKeysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _usagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _usagesRestClient = new UsagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _workspacePurgeClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _workspacePurgeRestClient = new WorkspacePurgeRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string operationalInsightsWorkspaceApiVersion);
+            _workspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", ResourceType.Namespace, Diagnostics);
+            _workspacesRestClient = new Workspaces(_workspacesClientDiagnostics, Pipeline, Endpoint, operationalInsightsWorkspaceApiVersion ?? "2025-07-01");
+            _intelligencePacksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", ResourceType.Namespace, Diagnostics);
+            _intelligencePacksRestClient = new IntelligencePacks(_intelligencePacksClientDiagnostics, Pipeline, Endpoint, operationalInsightsWorkspaceApiVersion ?? "2025-07-01");
+            _gatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", ResourceType.Namespace, Diagnostics);
+            _gatewaysRestClient = new Gateways(_gatewaysClientDiagnostics, Pipeline, Endpoint, operationalInsightsWorkspaceApiVersion ?? "2025-07-01");
+            _workspacePurgeClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", ResourceType.Namespace, Diagnostics);
+            _workspacePurgeRestClient = new WorkspacePurge(_workspacePurgeClientDiagnostics, Pipeline, Endpoint, operationalInsightsWorkspaceApiVersion ?? "2025-07-01");
+            _sharedKeysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", ResourceType.Namespace, Diagnostics);
+            _sharedKeysRestClient = new SharedKeys(_sharedKeysClientDiagnostics, Pipeline, Endpoint, operationalInsightsWorkspaceApiVersion ?? "2025-07-01");
+            _availableServiceTiersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", ResourceType.Namespace, Diagnostics);
+            _availableServiceTiersRestClient = new AvailableServiceTiers(_availableServiceTiersClientDiagnostics, Pipeline, Endpoint, operationalInsightsWorkspaceApiVersion ?? "2025-07-01");
+            _managementGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", ResourceType.Namespace, Diagnostics);
+            _managementGroupsRestClient = new ManagementGroups(_managementGroupsClientDiagnostics, Pipeline, Endpoint, operationalInsightsWorkspaceApiVersion ?? "2025-07-01");
+            _schemaClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", ResourceType.Namespace, Diagnostics);
+            _schemaRestClient = new Schema(_schemaClientDiagnostics, Pipeline, Endpoint, operationalInsightsWorkspaceApiVersion ?? "2025-07-01");
+            _usagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", ResourceType.Namespace, Diagnostics);
+            _usagesRestClient = new Usages(_usagesClientDiagnostics, Pipeline, Endpoint, operationalInsightsWorkspaceApiVersion ?? "2025-07-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual OperationalInsightsWorkspaceData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of OperationalInsightsDataExportResources in the OperationalInsightsWorkspace. </summary>
-        /// <returns> An object representing collection of OperationalInsightsDataExportResources and their operations over a OperationalInsightsDataExportResource. </returns>
-        public virtual OperationalInsightsDataExportCollection GetOperationalInsightsDataExports()
-        {
-            return GetCachedClient(client => new OperationalInsightsDataExportCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a data export instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/dataExports/{dataExportName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataExports_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OperationalInsightsDataExportResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="dataExportName"> The data export rule name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataExportName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dataExportName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<OperationalInsightsDataExportResource>> GetOperationalInsightsDataExportAsync(string dataExportName, CancellationToken cancellationToken = default)
-        {
-            return await GetOperationalInsightsDataExports().GetAsync(dataExportName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a data export instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/dataExports/{dataExportName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataExports_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OperationalInsightsDataExportResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="dataExportName"> The data export rule name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataExportName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dataExportName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<OperationalInsightsDataExportResource> GetOperationalInsightsDataExport(string dataExportName, CancellationToken cancellationToken = default)
-        {
-            return GetOperationalInsightsDataExports().Get(dataExportName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of OperationalInsightsDataSourceResources in the OperationalInsightsWorkspace. </summary>
-        /// <returns> An object representing collection of OperationalInsightsDataSourceResources and their operations over a OperationalInsightsDataSourceResource. </returns>
-        public virtual OperationalInsightsDataSourceCollection GetOperationalInsightsDataSources()
-        {
-            return GetCachedClient(client => new OperationalInsightsDataSourceCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a datasource instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/dataSources/{dataSourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataSources_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OperationalInsightsDataSourceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="dataSourceName"> Name of the datasource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataSourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dataSourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<OperationalInsightsDataSourceResource>> GetOperationalInsightsDataSourceAsync(string dataSourceName, CancellationToken cancellationToken = default)
-        {
-            return await GetOperationalInsightsDataSources().GetAsync(dataSourceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a datasource instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/dataSources/{dataSourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataSources_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OperationalInsightsDataSourceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="dataSourceName"> Name of the datasource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataSourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dataSourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<OperationalInsightsDataSourceResource> GetOperationalInsightsDataSource(string dataSourceName, CancellationToken cancellationToken = default)
-        {
-            return GetOperationalInsightsDataSources().Get(dataSourceName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of OperationalInsightsLinkedServiceResources in the OperationalInsightsWorkspace. </summary>
-        /// <returns> An object representing collection of OperationalInsightsLinkedServiceResources and their operations over a OperationalInsightsLinkedServiceResource. </returns>
-        public virtual OperationalInsightsLinkedServiceCollection GetOperationalInsightsLinkedServices()
-        {
-            return GetCachedClient(client => new OperationalInsightsLinkedServiceCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a linked service instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/linkedServices/{linkedServiceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LinkedServices_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OperationalInsightsLinkedServiceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="linkedServiceName"> Name of the linked service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="linkedServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<OperationalInsightsLinkedServiceResource>> GetOperationalInsightsLinkedServiceAsync(string linkedServiceName, CancellationToken cancellationToken = default)
-        {
-            return await GetOperationalInsightsLinkedServices().GetAsync(linkedServiceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a linked service instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/linkedServices/{linkedServiceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LinkedServices_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OperationalInsightsLinkedServiceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="linkedServiceName"> Name of the linked service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="linkedServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<OperationalInsightsLinkedServiceResource> GetOperationalInsightsLinkedService(string linkedServiceName, CancellationToken cancellationToken = default)
-        {
-            return GetOperationalInsightsLinkedServices().Get(linkedServiceName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of OperationalInsightsLinkedStorageAccountsResources in the OperationalInsightsWorkspace. </summary>
-        /// <returns> An object representing collection of OperationalInsightsLinkedStorageAccountsResources and their operations over a OperationalInsightsLinkedStorageAccountsResource. </returns>
-        public virtual OperationalInsightsLinkedStorageAccountsCollection GetAllOperationalInsightsLinkedStorageAccounts()
-        {
-            return GetCachedClient(client => new OperationalInsightsLinkedStorageAccountsCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets all linked storage account of a specific data source type associated with the specified workspace.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/linkedStorageAccounts/{dataSourceType}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LinkedStorageAccounts_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OperationalInsightsLinkedStorageAccountsResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="dataSourceType"> Linked storage accounts type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<OperationalInsightsLinkedStorageAccountsResource>> GetOperationalInsightsLinkedStorageAccountsAsync(OperationalInsightsDataSourceType dataSourceType, CancellationToken cancellationToken = default)
-        {
-            return await GetAllOperationalInsightsLinkedStorageAccounts().GetAsync(dataSourceType, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets all linked storage account of a specific data source type associated with the specified workspace.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/linkedStorageAccounts/{dataSourceType}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LinkedStorageAccounts_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OperationalInsightsLinkedStorageAccountsResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="dataSourceType"> Linked storage accounts type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<OperationalInsightsLinkedStorageAccountsResource> GetOperationalInsightsLinkedStorageAccounts(OperationalInsightsDataSourceType dataSourceType, CancellationToken cancellationToken = default)
-        {
-            return GetAllOperationalInsightsLinkedStorageAccounts().Get(dataSourceType, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of OperationalInsightsSavedSearchResources in the OperationalInsightsWorkspace. </summary>
-        /// <returns> An object representing collection of OperationalInsightsSavedSearchResources and their operations over a OperationalInsightsSavedSearchResource. </returns>
-        public virtual OperationalInsightsSavedSearchCollection GetOperationalInsightsSavedSearches()
-        {
-            return GetCachedClient(client => new OperationalInsightsSavedSearchCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the specified saved search for a given workspace.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/savedSearches/{savedSearchId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SavedSearches_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OperationalInsightsSavedSearchResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="savedSearchId"> The id of the saved search. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="savedSearchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="savedSearchId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<OperationalInsightsSavedSearchResource>> GetOperationalInsightsSavedSearchAsync(string savedSearchId, CancellationToken cancellationToken = default)
-        {
-            return await GetOperationalInsightsSavedSearches().GetAsync(savedSearchId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the specified saved search for a given workspace.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/savedSearches/{savedSearchId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SavedSearches_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OperationalInsightsSavedSearchResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="savedSearchId"> The id of the saved search. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="savedSearchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="savedSearchId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<OperationalInsightsSavedSearchResource> GetOperationalInsightsSavedSearch(string savedSearchId, CancellationToken cancellationToken = default)
-        {
-            return GetOperationalInsightsSavedSearches().Get(savedSearchId, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of StorageInsightResources in the OperationalInsightsWorkspace. </summary>
-        /// <returns> An object representing collection of StorageInsightResources and their operations over a StorageInsightResource. </returns>
-        public virtual StorageInsightCollection GetStorageInsights()
-        {
-            return GetCachedClient(client => new StorageInsightCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a storage insight instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/storageInsightConfigs/{storageInsightName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageInsightConfigs_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageInsightResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="storageInsightName"> Name of the storageInsightsConfigs resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageInsightName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="storageInsightName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<StorageInsightResource>> GetStorageInsightAsync(string storageInsightName, CancellationToken cancellationToken = default)
-        {
-            return await GetStorageInsights().GetAsync(storageInsightName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a storage insight instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/storageInsightConfigs/{storageInsightName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageInsightConfigs_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageInsightResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="storageInsightName"> Name of the storageInsightsConfigs resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageInsightName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="storageInsightName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<StorageInsightResource> GetStorageInsight(string storageInsightName, CancellationToken cancellationToken = default)
-        {
-            return GetStorageInsights().Get(storageInsightName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of OperationalInsightsTableResources in the OperationalInsightsWorkspace. </summary>
-        /// <returns> An object representing collection of OperationalInsightsTableResources and their operations over a OperationalInsightsTableResource. </returns>
-        public virtual OperationalInsightsTableCollection GetOperationalInsightsTables()
-        {
-            return GetCachedClient(client => new OperationalInsightsTableCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a Log Analytics workspace table.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/tables/{tableName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Tables_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OperationalInsightsTableResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tableName"> The name of the table. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<OperationalInsightsTableResource>> GetOperationalInsightsTableAsync(string tableName, CancellationToken cancellationToken = default)
-        {
-            return await GetOperationalInsightsTables().GetAsync(tableName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a Log Analytics workspace table.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/tables/{tableName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Tables_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OperationalInsightsTableResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tableName"> The name of the table. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<OperationalInsightsTableResource> GetOperationalInsightsTable(string tableName, CancellationToken cancellationToken = default)
-        {
-            return GetOperationalInsightsTables().Get(tableName, cancellationToken);
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets a workspace instance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OperationalInsightsWorkspaceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="OperationalInsightsWorkspaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<OperationalInsightsWorkspaceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _operationalInsightsWorkspaceWorkspacesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.Get");
+            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.Get");
             scope.Start();
             try
             {
-                var response = await _operationalInsightsWorkspaceWorkspacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<OperationalInsightsWorkspaceData> response = Response.FromValue(OperationalInsightsWorkspaceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new OperationalInsightsWorkspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -646,120 +177,42 @@ namespace Azure.ResourceManager.OperationalInsights
         /// Gets a workspace instance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OperationalInsightsWorkspaceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="OperationalInsightsWorkspaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<OperationalInsightsWorkspaceResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _operationalInsightsWorkspaceWorkspacesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.Get");
+            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.Get");
             scope.Start();
             try
             {
-                var response = _operationalInsightsWorkspaceWorkspacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<OperationalInsightsWorkspaceData> response = Response.FromValue(OperationalInsightsWorkspaceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new OperationalInsightsWorkspaceResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes a workspace resource. To recover the workspace, create it again with the same name, in the same subscription, resource group and location. The name is kept for 14 days and cannot be used for another workspace. To remove the workspace completely and release the name, use the force flag.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OperationalInsightsWorkspaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="force"> Deletes the workspace without the recovery option. A workspace that was deleted with this flag cannot be recovered. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, bool? force = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _operationalInsightsWorkspaceWorkspacesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _operationalInsightsWorkspaceWorkspacesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force, cancellationToken).ConfigureAwait(false);
-                var operation = new OperationalInsightsArmOperation(_operationalInsightsWorkspaceWorkspacesClientDiagnostics, Pipeline, _operationalInsightsWorkspaceWorkspacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes a workspace resource. To recover the workspace, create it again with the same name, in the same subscription, resource group and location. The name is kept for 14 days and cannot be used for another workspace. To remove the workspace completely and release the name, use the force flag.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OperationalInsightsWorkspaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="force"> Deletes the workspace without the recovery option. A workspace that was deleted with this flag cannot be recovered. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, bool? force = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _operationalInsightsWorkspaceWorkspacesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = _operationalInsightsWorkspaceWorkspacesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force, cancellationToken);
-                var operation = new OperationalInsightsArmOperation(_operationalInsightsWorkspaceWorkspacesClientDiagnostics, Pipeline, _operationalInsightsWorkspaceWorkspacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {
@@ -772,20 +225,20 @@ namespace Azure.ResourceManager.OperationalInsights
         /// Updates a workspace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OperationalInsightsWorkspaceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="OperationalInsightsWorkspaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -796,11 +249,21 @@ namespace Azure.ResourceManager.OperationalInsights
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _operationalInsightsWorkspaceWorkspacesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.Update");
+            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.Update");
             scope.Start();
             try
             {
-                var response = await _operationalInsightsWorkspaceWorkspacesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, OperationalInsightsWorkspacePatch.ToRequestContent(patch), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<OperationalInsightsWorkspaceData> response = Response.FromValue(OperationalInsightsWorkspaceData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new OperationalInsightsWorkspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -814,20 +277,20 @@ namespace Azure.ResourceManager.OperationalInsights
         /// Updates a workspace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OperationalInsightsWorkspaceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="OperationalInsightsWorkspaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -838,11 +301,21 @@ namespace Azure.ResourceManager.OperationalInsights
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _operationalInsightsWorkspaceWorkspacesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.Update");
+            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.Update");
             scope.Start();
             try
             {
-                var response = _operationalInsightsWorkspaceWorkspacesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, OperationalInsightsWorkspacePatch.ToRequestContent(patch), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<OperationalInsightsWorkspaceData> response = Response.FromValue(OperationalInsightsWorkspaceData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new OperationalInsightsWorkspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -853,81 +326,149 @@ namespace Azure.ResourceManager.OperationalInsights
         }
 
         /// <summary>
-        /// Gets the available service tiers for the workspace.
+        /// Deletes a workspace resource. To recover the workspace, create it again with the same name, in the same subscription, resource group and location. The name is kept for 14 days and cannot be used for another workspace. To remove the workspace completely and release the name, use the force flag.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/availableServiceTiers</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AvailableServiceTiers_ListByWorkspace</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="OperationalInsightsWorkspaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="force"> Deletes the workspace without the recovery option. A workspace that was deleted with this flag cannot be recovered. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OperationalInsightsAvailableServiceTier"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OperationalInsightsAvailableServiceTier> GetAvailableServiceTiersAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, bool? force = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _availableServiceTiersRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => OperationalInsightsAvailableServiceTier.DeserializeOperationalInsightsAvailableServiceTier(e), _availableServiceTiersClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetAvailableServiceTiers", "", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the available service tiers for the workspace.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/availableServiceTiers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AvailableServiceTiers_ListByWorkspace</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OperationalInsightsAvailableServiceTier"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OperationalInsightsAvailableServiceTier> GetAvailableServiceTiers(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _availableServiceTiersRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => OperationalInsightsAvailableServiceTier.DeserializeOperationalInsightsAvailableServiceTier(e), _availableServiceTiersClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetAvailableServiceTiers", "", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Delete a Log Analytics gateway.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/gateways/{gatewayId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Gateways_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="gatewayId"> The Log Analytics gateway Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeleteGatewayAsync(Guid gatewayId, CancellationToken cancellationToken = default)
-        {
-            using var scope = _gatewaysClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.DeleteGateway");
+            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.Delete");
             scope.Start();
             try
             {
-                var response = await _gatewaysRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gatewayId, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, force, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                OperationalInsightsArmOperation operation = new OperationalInsightsArmOperation(_workspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes a workspace resource. To recover the workspace, create it again with the same name, in the same subscription, resource group and location. The name is kept for 14 days and cannot be used for another workspace. To remove the workspace completely and release the name, use the force flag.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="OperationalInsightsWorkspaceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="force"> Deletes the workspace without the recovery option. A workspace that was deleted with this flag cannot be recovered. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, bool? force = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, force, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                OperationalInsightsArmOperation operation = new OperationalInsightsArmOperation(_workspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a network security perimeter configuration.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/networkSecurityPerimeterConfigurations/{networkSecurityPerimeterConfigurationName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkSecurityPerimeterConfigurations_GetNSP. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="OperationalInsightsWorkspaceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkSecurityPerimeterConfigurationName"> The name for a network security perimeter configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<NetworkSecurityPerimeterConfiguration>> GetNSPAsync(string networkSecurityPerimeterConfigurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkSecurityPerimeterConfigurationName, nameof(networkSecurityPerimeterConfigurationName));
+
+            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.GetNSP");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspacesRestClient.CreateGetNSPRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NetworkSecurityPerimeterConfiguration> response = Response.FromValue(NetworkSecurityPerimeterConfiguration.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -938,31 +479,281 @@ namespace Azure.ResourceManager.OperationalInsights
         }
 
         /// <summary>
-        /// Delete a Log Analytics gateway.
+        /// Gets a network security perimeter configuration.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/gateways/{gatewayId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/networkSecurityPerimeterConfigurations/{networkSecurityPerimeterConfigurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Gateways_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkSecurityPerimeterConfigurations_GetNSP. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="OperationalInsightsWorkspaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="gatewayId"> The Log Analytics gateway Id. </param>
+        /// <param name="networkSecurityPerimeterConfigurationName"> The name for a network security perimeter configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response DeleteGateway(Guid gatewayId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<NetworkSecurityPerimeterConfiguration> GetNSP(string networkSecurityPerimeterConfigurationName, CancellationToken cancellationToken = default)
         {
-            using var scope = _gatewaysClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.DeleteGateway");
+            Argument.AssertNotNullOrEmpty(networkSecurityPerimeterConfigurationName, nameof(networkSecurityPerimeterConfigurationName));
+
+            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.GetNSP");
             scope.Start();
             try
             {
-                var response = _gatewaysRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gatewayId, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspacesRestClient.CreateGetNSPRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NetworkSecurityPerimeterConfiguration> response = Response.FromValue(NetworkSecurityPerimeterConfiguration.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a list of NSP configurations for specified workspace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/networkSecurityPerimeterConfigurations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkSecurityPerimeterConfigurations_ListNSP. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="OperationalInsightsWorkspaceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NetworkSecurityPerimeterConfiguration"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkSecurityPerimeterConfiguration> GetNSPAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new WorkspacesGetNSPAsyncCollectionResultOfT(
+                _workspacesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "OperationalInsightsWorkspaceResource.GetNSP");
+        }
+
+        /// <summary>
+        /// Gets a list of NSP configurations for specified workspace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/networkSecurityPerimeterConfigurations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkSecurityPerimeterConfigurations_ListNSP. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="OperationalInsightsWorkspaceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NetworkSecurityPerimeterConfiguration"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkSecurityPerimeterConfiguration> GetNSP(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new WorkspacesGetNSPCollectionResultOfT(
+                _workspacesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "OperationalInsightsWorkspaceResource.GetNSP");
+        }
+
+        /// <summary>
+        /// Reconcile network security perimeter configuration for Workspace resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/networkSecurityPerimeterConfigurations/{networkSecurityPerimeterConfigurationName}/reconcile. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkSecurityPerimeterConfigurations_ReconcileNSP. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="OperationalInsightsWorkspaceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="networkSecurityPerimeterConfigurationName"> The name for a network security perimeter configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation> ReconcileNSPAsync(WaitUntil waitUntil, string networkSecurityPerimeterConfigurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkSecurityPerimeterConfigurationName, nameof(networkSecurityPerimeterConfigurationName));
+
+            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.ReconcileNSP");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspacesRestClient.CreateReconcileNSPRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                OperationalInsightsArmOperation operation = new OperationalInsightsArmOperation(_workspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Reconcile network security perimeter configuration for Workspace resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/networkSecurityPerimeterConfigurations/{networkSecurityPerimeterConfigurationName}/reconcile. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkSecurityPerimeterConfigurations_ReconcileNSP. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="OperationalInsightsWorkspaceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="networkSecurityPerimeterConfigurationName"> The name for a network security perimeter configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation ReconcileNSP(WaitUntil waitUntil, string networkSecurityPerimeterConfigurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkSecurityPerimeterConfigurationName, nameof(networkSecurityPerimeterConfigurationName));
+
+            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.ReconcileNSP");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspacesRestClient.CreateReconcileNSPRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                OperationalInsightsArmOperation operation = new OperationalInsightsArmOperation(_workspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Disables an intelligence pack for a given workspace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/intelligencePacks/{intelligencePackName}/Disable. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_Disable. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="OperationalInsightsWorkspaceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="intelligencePackName"> The name of the intelligence pack. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="intelligencePackName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="intelligencePackName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> DisableAsync(string intelligencePackName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(intelligencePackName, nameof(intelligencePackName));
+
+            using DiagnosticScope scope = _intelligencePacksClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.Disable");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _intelligencePacksRestClient.CreateDisableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, intelligencePackName, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -976,71 +767,41 @@ namespace Azure.ResourceManager.OperationalInsights
         /// Disables an intelligence pack for a given workspace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/intelligencePacks/{intelligencePackName}/Disable</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/intelligencePacks/{intelligencePackName}/Disable. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IntelligencePacks_Disable</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_Disable. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="OperationalInsightsWorkspaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="intelligencePackName"> The name of the intelligence pack to be disabled. </param>
+        /// <param name="intelligencePackName"> The name of the intelligence pack. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="intelligencePackName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="intelligencePackName"/> is null. </exception>
-        public virtual async Task<Response> DisableIntelligencePackAsync(string intelligencePackName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="intelligencePackName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response Disable(string intelligencePackName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(intelligencePackName, nameof(intelligencePackName));
 
-            using var scope = _intelligencePacksClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.DisableIntelligencePack");
+            using DiagnosticScope scope = _intelligencePacksClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.Disable");
             scope.Start();
             try
             {
-                var response = await _intelligencePacksRestClient.DisableAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, intelligencePackName, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Disables an intelligence pack for a given workspace.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/intelligencePacks/{intelligencePackName}/Disable</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IntelligencePacks_Disable</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="intelligencePackName"> The name of the intelligence pack to be disabled. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="intelligencePackName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="intelligencePackName"/> is null. </exception>
-        public virtual Response DisableIntelligencePack(string intelligencePackName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(intelligencePackName, nameof(intelligencePackName));
-
-            using var scope = _intelligencePacksClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.DisableIntelligencePack");
-            scope.Start();
-            try
-            {
-                var response = _intelligencePacksRestClient.Disable(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, intelligencePackName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _intelligencePacksRestClient.CreateDisableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, intelligencePackName, context);
+                Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
             catch (Exception e)
@@ -1054,32 +815,41 @@ namespace Azure.ResourceManager.OperationalInsights
         /// Enables an intelligence pack for a given workspace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/intelligencePacks/{intelligencePackName}/Enable</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/intelligencePacks/{intelligencePackName}/Enable. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IntelligencePacks_Enable</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_Enable. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="OperationalInsightsWorkspaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="intelligencePackName"> The name of the intelligence pack to be enabled. </param>
+        /// <param name="intelligencePackName"> The name of the intelligence pack. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="intelligencePackName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="intelligencePackName"/> is null. </exception>
-        public virtual async Task<Response> EnableIntelligencePackAsync(string intelligencePackName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="intelligencePackName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> EnableAsync(string intelligencePackName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(intelligencePackName, nameof(intelligencePackName));
 
-            using var scope = _intelligencePacksClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.EnableIntelligencePack");
+            using DiagnosticScope scope = _intelligencePacksClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.Enable");
             scope.Start();
             try
             {
-                var response = await _intelligencePacksRestClient.EnableAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, intelligencePackName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _intelligencePacksRestClient.CreateEnableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, intelligencePackName, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1093,32 +863,439 @@ namespace Azure.ResourceManager.OperationalInsights
         /// Enables an intelligence pack for a given workspace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/intelligencePacks/{intelligencePackName}/Enable</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/intelligencePacks/{intelligencePackName}/Enable. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IntelligencePacks_Enable</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_Enable. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="OperationalInsightsWorkspaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="intelligencePackName"> The name of the intelligence pack to be enabled. </param>
+        /// <param name="intelligencePackName"> The name of the intelligence pack. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="intelligencePackName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="intelligencePackName"/> is null. </exception>
-        public virtual Response EnableIntelligencePack(string intelligencePackName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="intelligencePackName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response Enable(string intelligencePackName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(intelligencePackName, nameof(intelligencePackName));
 
-            using var scope = _intelligencePacksClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.EnableIntelligencePack");
+            using DiagnosticScope scope = _intelligencePacksClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.Enable");
             scope.Start();
             try
             {
-                var response = _intelligencePacksRestClient.Enable(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, intelligencePackName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _intelligencePacksRestClient.CreateEnableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, intelligencePackName, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deactivates failover for the specified workspace.
+        /// The failback operation is asynchronous and can take up to 30 minutes to complete. The status of the operation can be checked using the operationId returned in the response.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/failback. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_Failback. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="OperationalInsightsWorkspaceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> FailbackAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.Failback");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspacesRestClient.CreateFailbackRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                OperationalInsightsArmOperation operation = new OperationalInsightsArmOperation(_workspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deactivates failover for the specified workspace.
+        /// The failback operation is asynchronous and can take up to 30 minutes to complete. The status of the operation can be checked using the operationId returned in the response.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/failback. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_Failback. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="OperationalInsightsWorkspaceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Failback(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.Failback");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspacesRestClient.CreateFailbackRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                OperationalInsightsArmOperation operation = new OperationalInsightsArmOperation(_workspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a Log Analytics gateway.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/gateways/{gatewayId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_GatewaysDelete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="OperationalInsightsWorkspaceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="gatewayId"> The Log Analytics gateway Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="gatewayId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> DeleteAsync(string gatewayId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(gatewayId, nameof(gatewayId));
+
+            using DiagnosticScope scope = _gatewaysClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _gatewaysRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, gatewayId, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a Log Analytics gateway.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/gateways/{gatewayId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_GatewaysDelete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="OperationalInsightsWorkspaceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="gatewayId"> The Log Analytics gateway Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="gatewayId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response Delete(string gatewayId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(gatewayId, nameof(gatewayId));
+
+            using DiagnosticScope scope = _gatewaysClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _gatewaysRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, gatewayId, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets status of an ongoing purge operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/operations/{purgeId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_GetPurgeStatus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="OperationalInsightsWorkspaceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="purgeId"> In a purge status request, this is the Id of the operation the status of which is returned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="purgeId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="purgeId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<OperationalInsightsWorkspacePurgeStatusResult>> GetPurgeStatusAsync(string purgeId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(purgeId, nameof(purgeId));
+
+            using DiagnosticScope scope = _workspacePurgeClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.GetPurgeStatus");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspacePurgeRestClient.CreateGetPurgeStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, purgeId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<OperationalInsightsWorkspacePurgeStatusResult> response = Response.FromValue(OperationalInsightsWorkspacePurgeStatusResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets status of an ongoing purge operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/operations/{purgeId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_GetPurgeStatus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="OperationalInsightsWorkspaceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="purgeId"> In a purge status request, this is the Id of the operation the status of which is returned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="purgeId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="purgeId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<OperationalInsightsWorkspacePurgeStatusResult> GetPurgeStatus(string purgeId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(purgeId, nameof(purgeId));
+
+            using DiagnosticScope scope = _workspacePurgeClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.GetPurgeStatus");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspacePurgeRestClient.CreateGetPurgeStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, purgeId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<OperationalInsightsWorkspacePurgeStatusResult> response = Response.FromValue(OperationalInsightsWorkspacePurgeStatusResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the shared keys for a workspace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/sharedKeys. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_GetSharedKeys. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="OperationalInsightsWorkspaceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<OperationalInsightsWorkspaceSharedKeys>> GetSharedKeysAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _sharedKeysClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.GetSharedKeys");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sharedKeysRestClient.CreateGetSharedKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<OperationalInsightsWorkspaceSharedKeys> response = Response.FromValue(OperationalInsightsWorkspaceSharedKeys.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the shared keys for a workspace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/sharedKeys. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_GetSharedKeys. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="OperationalInsightsWorkspaceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<OperationalInsightsWorkspaceSharedKeys> GetSharedKeys(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _sharedKeysClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.GetSharedKeys");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sharedKeysRestClient.CreateGetSharedKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<OperationalInsightsWorkspaceSharedKeys> response = Response.FromValue(OperationalInsightsWorkspaceSharedKeys.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -1132,41 +1309,58 @@ namespace Azure.ResourceManager.OperationalInsights
         /// Lists all the intelligence packs possible and whether they are enabled or disabled for a given workspace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/intelligencePacks</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/intelligencePacks. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IntelligencePacks_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_IntelligencePacksList. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="OperationalInsightsWorkspaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OperationalInsightsIntelligencePack"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="OperationalInsightsIntelligencePack"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OperationalInsightsIntelligencePack> GetIntelligencePacksAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _intelligencePacksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => OperationalInsightsIntelligencePack.DeserializeOperationalInsightsIntelligencePack(e), _intelligencePacksClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetIntelligencePacks", "", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new MicrosoftOperationalInsightsWorkspacesIntelligencePacksListAsyncCollectionResultOfT(
+                _intelligencePacksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "OperationalInsightsWorkspaceResource.GetIntelligencePacks");
         }
 
         /// <summary>
         /// Lists all the intelligence packs possible and whether they are enabled or disabled for a given workspace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/intelligencePacks</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/intelligencePacks. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IntelligencePacks_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_IntelligencePacksList. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="OperationalInsightsWorkspaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1174,49 +1368,151 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> A collection of <see cref="OperationalInsightsIntelligencePack"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OperationalInsightsIntelligencePack> GetIntelligencePacks(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _intelligencePacksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => OperationalInsightsIntelligencePack.DeserializeOperationalInsightsIntelligencePack(e), _intelligencePacksClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetIntelligencePacks", "", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new MicrosoftOperationalInsightsWorkspacesIntelligencePacksListCollectionResultOfT(
+                _intelligencePacksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "OperationalInsightsWorkspaceResource.GetIntelligencePacks");
         }
 
         /// <summary>
-        /// Gets a list of management groups connected to a workspace.
+        /// Gets the available service tiers for the workspace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/managementGroups</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/availableServiceTiers. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagementGroups_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_ListByWorkspace. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="OperationalInsightsWorkspaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OperationalInsightsManagementGroup"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OperationalInsightsManagementGroup> GetManagementGroupsAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="OperationalInsightsAvailableServiceTier"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<OperationalInsightsAvailableServiceTier> GetAvailableServiceTiersAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => OperationalInsightsManagementGroup.DeserializeOperationalInsightsManagementGroup(e), _managementGroupsClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetManagementGroups", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new MicrosoftOperationalInsightsWorkspacesListByWorkspaceAsyncCollectionResultOfT(
+                _availableServiceTiersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "OperationalInsightsWorkspaceResource.GetAvailableServiceTiers");
+        }
+
+        /// <summary>
+        /// Gets the available service tiers for the workspace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/availableServiceTiers. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_ListByWorkspace. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="OperationalInsightsWorkspaceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="OperationalInsightsAvailableServiceTier"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<OperationalInsightsAvailableServiceTier> GetAvailableServiceTiers(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new MicrosoftOperationalInsightsWorkspacesListByWorkspaceCollectionResultOfT(
+                _availableServiceTiersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "OperationalInsightsWorkspaceResource.GetAvailableServiceTiers");
         }
 
         /// <summary>
         /// Gets a list of management groups connected to a workspace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/managementGroups</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/managementGroups. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagementGroups_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_ManagementGroupsList. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="OperationalInsightsWorkspaceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="OperationalInsightsManagementGroup"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<OperationalInsightsManagementGroup> GetManagementGroupsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ManagementGroupsGetManagementGroupsAsyncCollectionResultOfT(
+                _managementGroupsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "OperationalInsightsWorkspaceResource.GetManagementGroups");
+        }
+
+        /// <summary>
+        /// Gets a list of management groups connected to a workspace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/managementGroups. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_ManagementGroupsList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="OperationalInsightsWorkspaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1224,263 +1520,39 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> A collection of <see cref="OperationalInsightsManagementGroup"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OperationalInsightsManagementGroup> GetManagementGroups(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => OperationalInsightsManagementGroup.DeserializeOperationalInsightsManagementGroup(e), _managementGroupsClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetManagementGroups", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the schema for a given workspace.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/schema</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Schema_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OperationalInsightsSearchSchemaValue"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OperationalInsightsSearchSchemaValue> GetSchemasAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _schemaRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => OperationalInsightsSearchSchemaValue.DeserializeOperationalInsightsSearchSchemaValue(e), _schemaClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetSchemas", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the schema for a given workspace.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/schema</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Schema_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OperationalInsightsSearchSchemaValue"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OperationalInsightsSearchSchemaValue> GetSchemas(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _schemaRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => OperationalInsightsSearchSchemaValue.DeserializeOperationalInsightsSearchSchemaValue(e), _schemaClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetSchemas", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the shared keys for a workspace.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/sharedKeys</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SharedKeys_GetSharedKeys</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<OperationalInsightsWorkspaceSharedKeys>> GetSharedKeysAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _sharedKeysClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.GetSharedKeys");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                var response = await _sharedKeysRestClient.GetSharedKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the shared keys for a workspace.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/sharedKeys</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SharedKeys_GetSharedKeys</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<OperationalInsightsWorkspaceSharedKeys> GetSharedKeys(CancellationToken cancellationToken = default)
-        {
-            using var scope = _sharedKeysClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.GetSharedKeys");
-            scope.Start();
-            try
-            {
-                var response = _sharedKeysRestClient.GetSharedKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Regenerates the shared keys for a Log Analytics Workspace. These keys are used to connect Microsoft Operational Insights agents to the workspace.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/regenerateSharedKey</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SharedKeys_Regenerate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<OperationalInsightsWorkspaceSharedKeys>> RegenerateSharedKeyAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _sharedKeysClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.RegenerateSharedKey");
-            scope.Start();
-            try
-            {
-                var response = await _sharedKeysRestClient.RegenerateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Regenerates the shared keys for a Log Analytics Workspace. These keys are used to connect Microsoft Operational Insights agents to the workspace.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/regenerateSharedKey</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SharedKeys_Regenerate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<OperationalInsightsWorkspaceSharedKeys> RegenerateSharedKey(CancellationToken cancellationToken = default)
-        {
-            using var scope = _sharedKeysClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.RegenerateSharedKey");
-            scope.Start();
-            try
-            {
-                var response = _sharedKeysRestClient.Regenerate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets a list of usage metrics for a workspace.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/usages</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Usages_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OperationalInsightsUsageMetric"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OperationalInsightsUsageMetric> GetUsagesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _usagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => OperationalInsightsUsageMetric.DeserializeOperationalInsightsUsageMetric(e), _usagesClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetUsages", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of usage metrics for a workspace.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/usages</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Usages_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OperationalInsightsUsageMetric"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OperationalInsightsUsageMetric> GetUsages(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _usagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => OperationalInsightsUsageMetric.DeserializeOperationalInsightsUsageMetric(e), _usagesClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetUsages", "value", null, cancellationToken);
+                CancellationToken = cancellationToken
+            };
+            return new ManagementGroupsGetManagementGroupsCollectionResultOfT(
+                _managementGroupsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "OperationalInsightsWorkspaceResource.GetManagementGroups");
         }
 
         /// <summary>
         /// Purges data in an Log Analytics workspace by a set of user-defined filters.
-        ///
         /// In order to manage system resources, purge requests are throttled at 50 requests per hour. You should batch the execution of purge requests by sending a single command whose predicate includes all user identities that require purging. Use the in operator to specify multiple identities. You should run the query prior to using for a purge request to verify that the results are expected.
         /// Log Analytics only supports purge operations required for compliance with GDPR. The Log Analytics product team reserves the right to reject requests for purge operations that are not for the purpose of GDPR compliance. In the event of a dispute, please create a support ticket
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/purge</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/purge. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspacePurge_Purge</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_Purge. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="OperationalInsightsWorkspaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1491,11 +1563,21 @@ namespace Azure.ResourceManager.OperationalInsights
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _workspacePurgeClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.Purge");
+            using DiagnosticScope scope = _workspacePurgeClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.Purge");
             scope.Start();
             try
             {
-                var response = await _workspacePurgeRestClient.PurgeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspacePurgeRestClient.CreatePurgeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, OperationalInsightsWorkspacePurgeContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<OperationalInsightsWorkspacePurgeResult> response = Response.FromValue(OperationalInsightsWorkspacePurgeResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -1507,21 +1589,24 @@ namespace Azure.ResourceManager.OperationalInsights
 
         /// <summary>
         /// Purges data in an Log Analytics workspace by a set of user-defined filters.
-        ///
         /// In order to manage system resources, purge requests are throttled at 50 requests per hour. You should batch the execution of purge requests by sending a single command whose predicate includes all user identities that require purging. Use the in operator to specify multiple identities. You should run the query prior to using for a purge request to verify that the results are expected.
         /// Log Analytics only supports purge operations required for compliance with GDPR. The Log Analytics product team reserves the right to reject requests for purge operations that are not for the purpose of GDPR compliance. In the event of a dispute, please create a support ticket
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/purge</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/purge. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspacePurge_Purge</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_Purge. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="OperationalInsightsWorkspaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1532,11 +1617,21 @@ namespace Azure.ResourceManager.OperationalInsights
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _workspacePurgeClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.Purge");
+            using DiagnosticScope scope = _workspacePurgeClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.Purge");
             scope.Start();
             try
             {
-                var response = _workspacePurgeRestClient.Purge(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspacePurgeRestClient.CreatePurgeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, OperationalInsightsWorkspacePurgeContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<OperationalInsightsWorkspacePurgeResult> response = Response.FromValue(OperationalInsightsWorkspacePurgeResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -1547,35 +1642,44 @@ namespace Azure.ResourceManager.OperationalInsights
         }
 
         /// <summary>
-        /// Gets status of an ongoing purge operation.
+        /// Regenerates the shared keys for a Log Analytics Workspace. These keys are used to connect Microsoft Operational Insights agents to the workspace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/operations/{purgeId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/regenerateSharedKey. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspacePurge_GetPurgeStatus</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_Regenerate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="OperationalInsightsWorkspaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="purgeId"> In a purge status request, this is the Id of the operation the status of which is returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="purgeId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="purgeId"/> is null. </exception>
-        public virtual async Task<Response<OperationalInsightsWorkspacePurgeStatusResult>> GetPurgeStatusAsync(string purgeId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OperationalInsightsWorkspaceSharedKeys>> RegenerateAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(purgeId, nameof(purgeId));
-
-            using var scope = _workspacePurgeClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.GetPurgeStatus");
+            using DiagnosticScope scope = _sharedKeysClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.Regenerate");
             scope.Start();
             try
             {
-                var response = await _workspacePurgeRestClient.GetPurgeStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, purgeId, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sharedKeysRestClient.CreateRegenerateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<OperationalInsightsWorkspaceSharedKeys> response = Response.FromValue(OperationalInsightsWorkspaceSharedKeys.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -1586,35 +1690,44 @@ namespace Azure.ResourceManager.OperationalInsights
         }
 
         /// <summary>
-        /// Gets status of an ongoing purge operation.
+        /// Regenerates the shared keys for a Log Analytics Workspace. These keys are used to connect Microsoft Operational Insights agents to the workspace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/operations/{purgeId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/regenerateSharedKey. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspacePurge_GetPurgeStatus</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_Regenerate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="OperationalInsightsWorkspaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="purgeId"> In a purge status request, this is the Id of the operation the status of which is returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="purgeId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="purgeId"/> is null. </exception>
-        public virtual Response<OperationalInsightsWorkspacePurgeStatusResult> GetPurgeStatus(string purgeId, CancellationToken cancellationToken = default)
+        public virtual Response<OperationalInsightsWorkspaceSharedKeys> Regenerate(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(purgeId, nameof(purgeId));
-
-            using var scope = _workspacePurgeClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.GetPurgeStatus");
+            using DiagnosticScope scope = _sharedKeysClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.Regenerate");
             scope.Start();
             try
             {
-                var response = _workspacePurgeRestClient.GetPurgeStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, purgeId, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sharedKeysRestClient.CreateRegenerateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<OperationalInsightsWorkspaceSharedKeys> response = Response.FromValue(OperationalInsightsWorkspaceSharedKeys.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -1625,114 +1738,158 @@ namespace Azure.ResourceManager.OperationalInsights
         }
 
         /// <summary>
-        /// Deactivates failover for the specified workspace.
-        ///
-        /// The failback operation is asynchronous and can take up to 30 minutes to complete. The status of the operation can be checked using the operationId returned in the response.
+        /// Gets the schema for a given workspace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/failback</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/schema. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_Failback</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_SchemaGet. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OperationalInsightsWorkspaceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="OperationalInsightsWorkspaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> FailbackAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="OperationalInsightsSearchSchemaValue"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<OperationalInsightsSearchSchemaValue> GetSchemasAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _operationalInsightsWorkspaceWorkspacesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.Failback");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                var response = await _operationalInsightsWorkspaceWorkspacesRestClient.FailbackAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new OperationalInsightsArmOperation(_operationalInsightsWorkspaceWorkspacesClientDiagnostics, Pipeline, _operationalInsightsWorkspaceWorkspacesRestClient.CreateFailbackRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new SchemaGetSchemasAsyncCollectionResultOfT(
+                _schemaRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "OperationalInsightsWorkspaceResource.GetSchemas");
         }
 
         /// <summary>
-        /// Deactivates failover for the specified workspace.
-        ///
-        /// The failback operation is asynchronous and can take up to 30 minutes to complete. The status of the operation can be checked using the operationId returned in the response.
+        /// Gets the schema for a given workspace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/failback</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/schema. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_Failback</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_SchemaGet. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OperationalInsightsWorkspaceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="OperationalInsightsWorkspaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Failback(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="OperationalInsightsSearchSchemaValue"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<OperationalInsightsSearchSchemaValue> GetSchemas(CancellationToken cancellationToken = default)
         {
-            using var scope = _operationalInsightsWorkspaceWorkspacesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.Failback");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                var response = _operationalInsightsWorkspaceWorkspacesRestClient.Failback(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new OperationalInsightsArmOperation(_operationalInsightsWorkspaceWorkspacesClientDiagnostics, Pipeline, _operationalInsightsWorkspaceWorkspacesRestClient.CreateFailbackRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new SchemaGetSchemasCollectionResultOfT(
+                _schemaRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "OperationalInsightsWorkspaceResource.GetSchemas");
         }
 
         /// <summary>
-        /// Add a tag to the current resource.
+        /// Gets a list of usage metrics for a workspace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/usages. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_UsagesList. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OperationalInsightsWorkspaceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="OperationalInsightsWorkspaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="OperationalInsightsUsageMetric"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<OperationalInsightsUsageMetric> GetUsagesAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new UsagesGetUsagesAsyncCollectionResultOfT(
+                _usagesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "OperationalInsightsWorkspaceResource.GetUsages");
+        }
+
+        /// <summary>
+        /// Gets a list of usage metrics for a workspace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/usages. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_UsagesList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="OperationalInsightsWorkspaceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="OperationalInsightsUsageMetric"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<OperationalInsightsUsageMetric> GetUsages(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new UsagesGetUsagesCollectionResultOfT(
+                _usagesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "OperationalInsightsWorkspaceResource.GetUsages");
+        }
+
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1742,29 +1899,35 @@ namespace Azure.ResourceManager.OperationalInsights
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _operationalInsightsWorkspaceWorkspacesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.AddTag");
+            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _operationalInsightsWorkspaceWorkspacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new OperationalInsightsWorkspaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<OperationalInsightsWorkspaceData> response = Response.FromValue(OperationalInsightsWorkspaceData.FromResponse(result), result);
+                    return Response.FromValue(new OperationalInsightsWorkspaceResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new OperationalInsightsWorkspacePatch();
-                    foreach (var tag in current.Tags)
+                    OperationalInsightsWorkspaceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    OperationalInsightsWorkspacePatch patch = new OperationalInsightsWorkspacePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<OperationalInsightsWorkspaceResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1774,27 +1937,7 @@ namespace Azure.ResourceManager.OperationalInsights
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OperationalInsightsWorkspaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1804,29 +1947,35 @@ namespace Azure.ResourceManager.OperationalInsights
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _operationalInsightsWorkspaceWorkspacesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.AddTag");
+            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _operationalInsightsWorkspaceWorkspacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new OperationalInsightsWorkspaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<OperationalInsightsWorkspaceData> response = Response.FromValue(OperationalInsightsWorkspaceData.FromResponse(result), result);
+                    return Response.FromValue(new OperationalInsightsWorkspaceResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new OperationalInsightsWorkspacePatch();
-                    foreach (var tag in current.Tags)
+                    OperationalInsightsWorkspaceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    OperationalInsightsWorkspacePatch patch = new OperationalInsightsWorkspacePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<OperationalInsightsWorkspaceResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1836,54 +1985,40 @@ namespace Azure.ResourceManager.OperationalInsights
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OperationalInsightsWorkspaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<OperationalInsightsWorkspaceResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _operationalInsightsWorkspaceWorkspacesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.SetTags");
+            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _operationalInsightsWorkspaceWorkspacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new OperationalInsightsWorkspaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<OperationalInsightsWorkspaceData> response = Response.FromValue(OperationalInsightsWorkspaceData.FromResponse(result), result);
+                    return Response.FromValue(new OperationalInsightsWorkspaceResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new OperationalInsightsWorkspacePatch();
+                    OperationalInsightsWorkspaceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    OperationalInsightsWorkspacePatch patch = new OperationalInsightsWorkspacePatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<OperationalInsightsWorkspaceResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1893,54 +2028,40 @@ namespace Azure.ResourceManager.OperationalInsights
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OperationalInsightsWorkspaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<OperationalInsightsWorkspaceResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _operationalInsightsWorkspaceWorkspacesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.SetTags");
+            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _operationalInsightsWorkspaceWorkspacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new OperationalInsightsWorkspaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<OperationalInsightsWorkspaceData> response = Response.FromValue(OperationalInsightsWorkspaceData.FromResponse(result), result);
+                    return Response.FromValue(new OperationalInsightsWorkspaceResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new OperationalInsightsWorkspacePatch();
+                    OperationalInsightsWorkspaceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    OperationalInsightsWorkspacePatch patch = new OperationalInsightsWorkspacePatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<OperationalInsightsWorkspaceResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1950,27 +2071,7 @@ namespace Azure.ResourceManager.OperationalInsights
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OperationalInsightsWorkspaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -1978,29 +2079,35 @@ namespace Azure.ResourceManager.OperationalInsights
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _operationalInsightsWorkspaceWorkspacesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.RemoveTag");
+            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _operationalInsightsWorkspaceWorkspacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new OperationalInsightsWorkspaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<OperationalInsightsWorkspaceData> response = Response.FromValue(OperationalInsightsWorkspaceData.FromResponse(result), result);
+                    return Response.FromValue(new OperationalInsightsWorkspaceResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new OperationalInsightsWorkspacePatch();
-                    foreach (var tag in current.Tags)
+                    OperationalInsightsWorkspaceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    OperationalInsightsWorkspacePatch patch = new OperationalInsightsWorkspacePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<OperationalInsightsWorkspaceResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -2010,27 +2117,7 @@ namespace Azure.ResourceManager.OperationalInsights
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OperationalInsightsWorkspaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -2038,29 +2125,35 @@ namespace Azure.ResourceManager.OperationalInsights
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _operationalInsightsWorkspaceWorkspacesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.RemoveTag");
+            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _operationalInsightsWorkspaceWorkspacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new OperationalInsightsWorkspaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<OperationalInsightsWorkspaceData> response = Response.FromValue(OperationalInsightsWorkspaceData.FromResponse(result), result);
+                    return Response.FromValue(new OperationalInsightsWorkspaceResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new OperationalInsightsWorkspacePatch();
-                    foreach (var tag in current.Tags)
+                    OperationalInsightsWorkspaceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    OperationalInsightsWorkspacePatch patch = new OperationalInsightsWorkspacePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<OperationalInsightsWorkspaceResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -2068,6 +2161,262 @@ namespace Azure.ResourceManager.OperationalInsights
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of OperationalInsightsDataExports in the <see cref="OperationalInsightsWorkspaceResource"/>. </summary>
+        /// <returns> An object representing collection of OperationalInsightsDataExports and their operations over a OperationalInsightsDataExportResource. </returns>
+        public virtual OperationalInsightsDataExportCollection GetOperationalInsightsDataExports()
+        {
+            return GetCachedClient(client => new OperationalInsightsDataExportCollection(client, Id));
+        }
+
+        /// <summary> Gets a data export instance. </summary>
+        /// <param name="dataExportName"> The data export rule name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataExportName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataExportName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<OperationalInsightsDataExportResource>> GetOperationalInsightsDataExportAsync(string dataExportName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dataExportName, nameof(dataExportName));
+
+            return await GetOperationalInsightsDataExports().GetAsync(dataExportName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a data export instance. </summary>
+        /// <param name="dataExportName"> The data export rule name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataExportName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataExportName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<OperationalInsightsDataExportResource> GetOperationalInsightsDataExport(string dataExportName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dataExportName, nameof(dataExportName));
+
+            return GetOperationalInsightsDataExports().Get(dataExportName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of OperationalInsightsDataSources in the <see cref="OperationalInsightsWorkspaceResource"/>. </summary>
+        /// <returns> An object representing collection of OperationalInsightsDataSources and their operations over a OperationalInsightsDataSourceResource. </returns>
+        public virtual OperationalInsightsDataSourceCollection GetOperationalInsightsDataSources()
+        {
+            return GetCachedClient(client => new OperationalInsightsDataSourceCollection(client, Id));
+        }
+
+        /// <summary> Gets a datasource instance. </summary>
+        /// <param name="dataSourceName"> Name of the datasource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataSourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataSourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<OperationalInsightsDataSourceResource>> GetOperationalInsightsDataSourceAsync(string dataSourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dataSourceName, nameof(dataSourceName));
+
+            return await GetOperationalInsightsDataSources().GetAsync(dataSourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a datasource instance. </summary>
+        /// <param name="dataSourceName"> Name of the datasource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataSourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataSourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<OperationalInsightsDataSourceResource> GetOperationalInsightsDataSource(string dataSourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dataSourceName, nameof(dataSourceName));
+
+            return GetOperationalInsightsDataSources().Get(dataSourceName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of OperationalInsightsLinkedServices in the <see cref="OperationalInsightsWorkspaceResource"/>. </summary>
+        /// <returns> An object representing collection of OperationalInsightsLinkedServices and their operations over a OperationalInsightsLinkedServiceResource. </returns>
+        public virtual OperationalInsightsLinkedServiceCollection GetOperationalInsightsLinkedServices()
+        {
+            return GetCachedClient(client => new OperationalInsightsLinkedServiceCollection(client, Id));
+        }
+
+        /// <summary> Gets a linked service instance. </summary>
+        /// <param name="linkedServiceName"> Name of the linked service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkedServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<OperationalInsightsLinkedServiceResource>> GetOperationalInsightsLinkedServiceAsync(string linkedServiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(linkedServiceName, nameof(linkedServiceName));
+
+            return await GetOperationalInsightsLinkedServices().GetAsync(linkedServiceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a linked service instance. </summary>
+        /// <param name="linkedServiceName"> Name of the linked service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkedServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<OperationalInsightsLinkedServiceResource> GetOperationalInsightsLinkedService(string linkedServiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(linkedServiceName, nameof(linkedServiceName));
+
+            return GetOperationalInsightsLinkedServices().Get(linkedServiceName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of OperationalInsightsSavedSearches in the <see cref="OperationalInsightsWorkspaceResource"/>. </summary>
+        /// <returns> An object representing collection of OperationalInsightsSavedSearches and their operations over a OperationalInsightsSavedSearchResource. </returns>
+        public virtual OperationalInsightsSavedSearchCollection GetOperationalInsightsSavedSearches()
+        {
+            return GetCachedClient(client => new OperationalInsightsSavedSearchCollection(client, Id));
+        }
+
+        /// <summary> Gets the specified saved search for a given workspace. </summary>
+        /// <param name="savedSearchId"> The id of the saved search. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="savedSearchId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="savedSearchId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<OperationalInsightsSavedSearchResource>> GetOperationalInsightsSavedSearchAsync(string savedSearchId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(savedSearchId, nameof(savedSearchId));
+
+            return await GetOperationalInsightsSavedSearches().GetAsync(savedSearchId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets the specified saved search for a given workspace. </summary>
+        /// <param name="savedSearchId"> The id of the saved search. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="savedSearchId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="savedSearchId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<OperationalInsightsSavedSearchResource> GetOperationalInsightsSavedSearch(string savedSearchId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(savedSearchId, nameof(savedSearchId));
+
+            return GetOperationalInsightsSavedSearches().Get(savedSearchId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of OperationalInsightsTables in the <see cref="OperationalInsightsWorkspaceResource"/>. </summary>
+        /// <returns> An object representing collection of OperationalInsightsTables and their operations over a OperationalInsightsTableResource. </returns>
+        public virtual OperationalInsightsTableCollection GetOperationalInsightsTables()
+        {
+            return GetCachedClient(client => new OperationalInsightsTableCollection(client, Id));
+        }
+
+        /// <summary> Gets a Log Analytics workspace table. </summary>
+        /// <param name="tableName"> The name of the table. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<OperationalInsightsTableResource>> GetOperationalInsightsTableAsync(string tableName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
+
+            return await GetOperationalInsightsTables().GetAsync(tableName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a Log Analytics workspace table. </summary>
+        /// <param name="tableName"> The name of the table. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<OperationalInsightsTableResource> GetOperationalInsightsTable(string tableName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
+
+            return GetOperationalInsightsTables().Get(tableName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of OperationalInsightsLinkedStorageAccounts in the <see cref="OperationalInsightsWorkspaceResource"/>. </summary>
+        /// <returns> An object representing collection of OperationalInsightsLinkedStorageAccounts and their operations over a OperationalInsightsLinkedStorageAccountsResource. </returns>
+        public virtual OperationalInsightsLinkedStorageAccountsCollection GetAllOperationalInsightsLinkedStorageAccounts()
+        {
+            return GetCachedClient(client => new OperationalInsightsLinkedStorageAccountsCollection(client, Id));
+        }
+
+        /// <summary> Gets all linked storage account of a specific data source type associated with the specified workspace. </summary>
+        /// <param name="dataSourceType"> Linked storage accounts type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<OperationalInsightsLinkedStorageAccountsResource>> GetOperationalInsightsLinkedStorageAccountsAsync(OperationalInsightsDataSourceType dataSourceType, CancellationToken cancellationToken = default)
+        {
+            return await GetAllOperationalInsightsLinkedStorageAccounts().GetAsync(dataSourceType, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets all linked storage account of a specific data source type associated with the specified workspace. </summary>
+        /// <param name="dataSourceType"> Linked storage accounts type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<OperationalInsightsLinkedStorageAccountsResource> GetOperationalInsightsLinkedStorageAccounts(OperationalInsightsDataSourceType dataSourceType, CancellationToken cancellationToken = default)
+        {
+            return GetAllOperationalInsightsLinkedStorageAccounts().Get(dataSourceType, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of StorageInsights in the <see cref="OperationalInsightsWorkspaceResource"/>. </summary>
+        /// <returns> An object representing collection of StorageInsights and their operations over a StorageInsightResource. </returns>
+        public virtual StorageInsightCollection GetStorageInsights()
+        {
+            return GetCachedClient(client => new StorageInsightCollection(client, Id));
+        }
+
+        /// <summary> Gets a storage insight instance. </summary>
+        /// <param name="storageInsightName"> Name of the storageInsightsConfigs resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageInsightName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageInsightName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<StorageInsightResource>> GetStorageInsightAsync(string storageInsightName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(storageInsightName, nameof(storageInsightName));
+
+            return await GetStorageInsights().GetAsync(storageInsightName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a storage insight instance. </summary>
+        /// <param name="storageInsightName"> Name of the storageInsightsConfigs resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageInsightName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageInsightName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<StorageInsightResource> GetStorageInsight(string storageInsightName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(storageInsightName, nameof(storageInsightName));
+
+            return GetStorageInsights().Get(storageInsightName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SummaryLogs in the <see cref="OperationalInsightsWorkspaceResource"/>. </summary>
+        /// <returns> An object representing collection of SummaryLogs and their operations over a SummaryLogsResource. </returns>
+        public virtual SummaryLogsCollection GetAllSummaryLogs()
+        {
+            return GetCachedClient(client => new SummaryLogsCollection(client, Id));
+        }
+
+        /// <summary> Gets Log Analytics workspace Summary rules. </summary>
+        /// <param name="summaryLogsName"> The name of the summary logs. Must not contain '/'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="summaryLogsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="summaryLogsName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SummaryLogsResource>> GetSummaryLogsAsync(string summaryLogsName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(summaryLogsName, nameof(summaryLogsName));
+
+            return await GetAllSummaryLogs().GetAsync(summaryLogsName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets Log Analytics workspace Summary rules. </summary>
+        /// <param name="summaryLogsName"> The name of the summary logs. Must not contain '/'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="summaryLogsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="summaryLogsName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SummaryLogsResource> GetSummaryLogs(string summaryLogsName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(summaryLogsName, nameof(summaryLogsName));
+
+            return GetAllSummaryLogs().Get(summaryLogsName, cancellationToken);
         }
     }
 }

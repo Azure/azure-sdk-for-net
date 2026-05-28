@@ -8,49 +8,51 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.OperationalInsights;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.OperationalInsights.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableOperationalInsightsResourceGroupResource : ArmResource
     {
-        private ClientDiagnostics _logAnalyticsQueryPackQueryPacksClientDiagnostics;
-        private QueryPacksRestOperations _logAnalyticsQueryPackQueryPacksRestClient;
-        private ClientDiagnostics _operationalInsightsWorkspaceWorkspacesClientDiagnostics;
-        private WorkspacesRestOperations _operationalInsightsWorkspaceWorkspacesRestClient;
+        private ClientDiagnostics _workspacesClientDiagnostics;
+        private Workspaces _workspacesRestClient;
+        private ClientDiagnostics _queryPacksClientDiagnostics;
+        private QueryPacks _queryPacksRestClient;
         private ClientDiagnostics _deletedWorkspacesClientDiagnostics;
-        private DeletedWorkspacesRestOperations _deletedWorkspacesRestClient;
+        private DeletedWorkspaces _deletedWorkspacesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableOperationalInsightsResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableOperationalInsightsResourceGroupResource for mocking. </summary>
         protected MockableOperationalInsightsResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableOperationalInsightsResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableOperationalInsightsResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableOperationalInsightsResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics LogAnalyticsQueryPackQueryPacksClientDiagnostics => _logAnalyticsQueryPackQueryPacksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", LogAnalyticsQueryPackResource.ResourceType.Namespace, Diagnostics);
-        private QueryPacksRestOperations LogAnalyticsQueryPackQueryPacksRestClient => _logAnalyticsQueryPackQueryPacksRestClient ??= new QueryPacksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(LogAnalyticsQueryPackResource.ResourceType));
-        private ClientDiagnostics OperationalInsightsWorkspaceWorkspacesClientDiagnostics => _operationalInsightsWorkspaceWorkspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", OperationalInsightsWorkspaceResource.ResourceType.Namespace, Diagnostics);
-        private WorkspacesRestOperations OperationalInsightsWorkspaceWorkspacesRestClient => _operationalInsightsWorkspaceWorkspacesRestClient ??= new WorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(OperationalInsightsWorkspaceResource.ResourceType));
-        private ClientDiagnostics DeletedWorkspacesClientDiagnostics => _deletedWorkspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private DeletedWorkspacesRestOperations DeletedWorkspacesRestClient => _deletedWorkspacesRestClient ??= new DeletedWorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics WorkspacesClientDiagnostics => _workspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OperationalInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private Workspaces WorkspacesRestClient => _workspacesRestClient ??= new Workspaces(WorkspacesClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
 
-        /// <summary> Gets a collection of OperationalInsightsClusterResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of OperationalInsightsClusterResources and their operations over a OperationalInsightsClusterResource. </returns>
+        private ClientDiagnostics QueryPacksClientDiagnostics => _queryPacksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OperationalInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private QueryPacks QueryPacksRestClient => _queryPacksRestClient ??= new QueryPacks(QueryPacksClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics DeletedWorkspacesClientDiagnostics => _deletedWorkspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OperationalInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private DeletedWorkspaces DeletedWorkspacesRestClient => _deletedWorkspacesRestClient ??= new DeletedWorkspaces(DeletedWorkspacesClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        /// <summary> Gets a collection of OperationalInsightsClusters in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of OperationalInsightsClusters and their operations over a OperationalInsightsClusterResource. </returns>
         public virtual OperationalInsightsClusterCollection GetOperationalInsightsClusters()
         {
             return GetCachedClient(client => new OperationalInsightsClusterCollection(client, Id));
@@ -60,20 +62,16 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// Gets a Log Analytics cluster instance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/clusters/{clusterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/clusters/{clusterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OperationalInsightsClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -84,6 +82,8 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<OperationalInsightsClusterResource>> GetOperationalInsightsClusterAsync(string clusterName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+
             return await GetOperationalInsightsClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -91,20 +91,16 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// Gets a Log Analytics cluster instance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/clusters/{clusterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/clusters/{clusterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OperationalInsightsClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -115,80 +111,13 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         [ForwardsClientCalls]
         public virtual Response<OperationalInsightsClusterResource> GetOperationalInsightsCluster(string clusterName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+
             return GetOperationalInsightsClusters().Get(clusterName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of LogAnalyticsQueryPackResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of LogAnalyticsQueryPackResources and their operations over a LogAnalyticsQueryPackResource. </returns>
-        public virtual LogAnalyticsQueryPackCollection GetLogAnalyticsQueryPacks()
-        {
-            return GetCachedClient(client => new LogAnalyticsQueryPackCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Returns a Log Analytics QueryPack.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/queryPacks/{queryPackName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>QueryPacks_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LogAnalyticsQueryPackResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="queryPackName"> The name of the Log Analytics QueryPack resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queryPackName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="queryPackName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<LogAnalyticsQueryPackResource>> GetLogAnalyticsQueryPackAsync(string queryPackName, CancellationToken cancellationToken = default)
-        {
-            return await GetLogAnalyticsQueryPacks().GetAsync(queryPackName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns a Log Analytics QueryPack.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/queryPacks/{queryPackName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>QueryPacks_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LogAnalyticsQueryPackResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="queryPackName"> The name of the Log Analytics QueryPack resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queryPackName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="queryPackName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<LogAnalyticsQueryPackResource> GetLogAnalyticsQueryPack(string queryPackName, CancellationToken cancellationToken = default)
-        {
-            return GetLogAnalyticsQueryPacks().Get(queryPackName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of OperationalInsightsWorkspaceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of OperationalInsightsWorkspaceResources and their operations over a OperationalInsightsWorkspaceResource. </returns>
+        /// <summary> Gets a collection of OperationalInsightsWorkspaces in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of OperationalInsightsWorkspaces and their operations over a OperationalInsightsWorkspaceResource. </returns>
         public virtual OperationalInsightsWorkspaceCollection GetOperationalInsightsWorkspaces()
         {
             return GetCachedClient(client => new OperationalInsightsWorkspaceCollection(client, Id));
@@ -198,20 +127,16 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// Gets a workspace instance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OperationalInsightsWorkspaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -222,6 +147,8 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<OperationalInsightsWorkspaceResource>> GetOperationalInsightsWorkspaceAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+
             return await GetOperationalInsightsWorkspaces().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -229,20 +156,16 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// Gets a workspace instance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OperationalInsightsWorkspaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -253,134 +176,120 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         [ForwardsClientCalls]
         public virtual Response<OperationalInsightsWorkspaceResource> GetOperationalInsightsWorkspace(string workspaceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+
             return GetOperationalInsightsWorkspaces().Get(workspaceName, cancellationToken);
         }
 
-        /// <summary>
-        /// Creates a Log Analytics QueryPack. Note: You cannot specify a different value for InstrumentationKey nor AppId in the Put operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/queryPacks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>QueryPacks_CreateOrUpdateWithoutName</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LogAnalyticsQueryPackResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="data"> Properties that need to be specified to create or update a Log Analytics QueryPack. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<LogAnalyticsQueryPackResource>> CreateOrUpdateWithoutNameQueryPackAsync(LogAnalyticsQueryPackData data, CancellationToken cancellationToken = default)
+        /// <summary> Gets a collection of LogAnalyticsQueryPacks in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of LogAnalyticsQueryPacks and their operations over a LogAnalyticsQueryPackResource. </returns>
+        public virtual LogAnalyticsQueryPackCollection GetLogAnalyticsQueryPacks()
         {
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var scope = LogAnalyticsQueryPackQueryPacksClientDiagnostics.CreateScope("MockableOperationalInsightsResourceGroupResource.CreateOrUpdateWithoutNameQueryPack");
-            scope.Start();
-            try
-            {
-                var response = await LogAnalyticsQueryPackQueryPacksRestClient.CreateOrUpdateWithoutNameAsync(Id.SubscriptionId, Id.ResourceGroupName, data, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new LogAnalyticsQueryPackResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return GetCachedClient(client => new LogAnalyticsQueryPackCollection(client, Id));
         }
 
         /// <summary>
-        /// Creates a Log Analytics QueryPack. Note: You cannot specify a different value for InstrumentationKey nor AppId in the Put operation.
+        /// Returns a Log Analytics QueryPack.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/queryPacks</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/queryPacks/{queryPackName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>QueryPacks_CreateOrUpdateWithoutName</description>
+        /// <term> Operation Id. </term>
+        /// <description> LogAnalyticsQueryPacks_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LogAnalyticsQueryPackResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="data"> Properties that need to be specified to create or update a Log Analytics QueryPack. </param>
+        /// <param name="queryPackName"> The name of the Log Analytics QueryPack resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<LogAnalyticsQueryPackResource> CreateOrUpdateWithoutNameQueryPack(LogAnalyticsQueryPackData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="queryPackName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="queryPackName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<LogAnalyticsQueryPackResource>> GetLogAnalyticsQueryPackAsync(string queryPackName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNullOrEmpty(queryPackName, nameof(queryPackName));
 
-            using var scope = LogAnalyticsQueryPackQueryPacksClientDiagnostics.CreateScope("MockableOperationalInsightsResourceGroupResource.CreateOrUpdateWithoutNameQueryPack");
-            scope.Start();
-            try
-            {
-                var response = LogAnalyticsQueryPackQueryPacksRestClient.CreateOrUpdateWithoutName(Id.SubscriptionId, Id.ResourceGroupName, data, cancellationToken);
-                return Response.FromValue(new LogAnalyticsQueryPackResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return await GetLogAnalyticsQueryPacks().GetAsync(queryPackName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns a Log Analytics QueryPack.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/queryPacks/{queryPackName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LogAnalyticsQueryPacks_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="queryPackName"> The name of the Log Analytics QueryPack resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="queryPackName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="queryPackName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<LogAnalyticsQueryPackResource> GetLogAnalyticsQueryPack(string queryPackName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(queryPackName, nameof(queryPackName));
+
+            return GetLogAnalyticsQueryPacks().Get(queryPackName, cancellationToken);
         }
 
         /// <summary>
         /// Activates failover for the specified workspace.
-        ///
         /// The specified replication location must match the location of the enabled replication for this workspace. The failover operation is asynchronous and can take up to 30 minutes to complete. The status of the operation can be checked using the operationId returned in the response.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/locations/{location}/workspaces/{workspaceName}/failover</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/locations/{location}/workspaces/{workspaceName}/failover. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_Failover</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspacesOperationGroup_Failover. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OperationalInsightsWorkspaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The location name. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        public virtual async Task<ArmOperation> FailoverWorkspaceAsync(WaitUntil waitUntil, AzureLocation location, string workspaceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="workspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation> FailoverAsync(WaitUntil waitUntil, string location, string workspaceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var scope = OperationalInsightsWorkspaceWorkspacesClientDiagnostics.CreateScope("MockableOperationalInsightsResourceGroupResource.FailoverWorkspace");
+            using DiagnosticScope scope = WorkspacesClientDiagnostics.CreateScope("MockableOperationalInsightsResourceGroupResource.Failover");
             scope.Start();
             try
             {
-                var response = await OperationalInsightsWorkspaceWorkspacesRestClient.FailoverAsync(Id.SubscriptionId, Id.ResourceGroupName, location, workspaceName, cancellationToken).ConfigureAwait(false);
-                var operation = new OperationalInsightsArmOperation(OperationalInsightsWorkspaceWorkspacesClientDiagnostics, Pipeline, OperationalInsightsWorkspaceWorkspacesRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, location, workspaceName).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = WorkspacesRestClient.CreateFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, workspaceName, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                OperationalInsightsArmOperation operation = new OperationalInsightsArmOperation(WorkspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -392,46 +301,145 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
 
         /// <summary>
         /// Activates failover for the specified workspace.
-        ///
         /// The specified replication location must match the location of the enabled replication for this workspace. The failover operation is asynchronous and can take up to 30 minutes to complete. The status of the operation can be checked using the operationId returned in the response.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/locations/{location}/workspaces/{workspaceName}/failover</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/locations/{location}/workspaces/{workspaceName}/failover. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_Failover</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspacesOperationGroup_Failover. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OperationalInsightsWorkspaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The location name. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        public virtual ArmOperation FailoverWorkspace(WaitUntil waitUntil, AzureLocation location, string workspaceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="workspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation Failover(WaitUntil waitUntil, string location, string workspaceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var scope = OperationalInsightsWorkspaceWorkspacesClientDiagnostics.CreateScope("MockableOperationalInsightsResourceGroupResource.FailoverWorkspace");
+            using DiagnosticScope scope = WorkspacesClientDiagnostics.CreateScope("MockableOperationalInsightsResourceGroupResource.Failover");
             scope.Start();
             try
             {
-                var response = OperationalInsightsWorkspaceWorkspacesRestClient.Failover(Id.SubscriptionId, Id.ResourceGroupName, location, workspaceName, cancellationToken);
-                var operation = new OperationalInsightsArmOperation(OperationalInsightsWorkspaceWorkspacesClientDiagnostics, Pipeline, OperationalInsightsWorkspaceWorkspacesRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, location, workspaceName).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = WorkspacesRestClient.CreateFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, workspaceName, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                OperationalInsightsArmOperation operation = new OperationalInsightsArmOperation(WorkspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates a Log Analytics QueryPack. Note: You cannot specify a different value for InstrumentationKey nor AppId in the Put operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/queryPacks. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> QueryPacksOperationGroup_CreateOrUpdateWithoutName. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="data"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<Response<LogAnalyticsQueryPackResource>> CreateOrUpdateWithoutNameAsync(LogAnalyticsQueryPackData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using DiagnosticScope scope = QueryPacksClientDiagnostics.CreateScope("MockableOperationalInsightsResourceGroupResource.CreateOrUpdateWithoutName");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = QueryPacksRestClient.CreateCreateOrUpdateWithoutNameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, LogAnalyticsQueryPackData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<LogAnalyticsQueryPackData> response = Response.FromValue(LogAnalyticsQueryPackData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new LogAnalyticsQueryPackResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates a Log Analytics QueryPack. Note: You cannot specify a different value for InstrumentationKey nor AppId in the Put operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/queryPacks. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> QueryPacksOperationGroup_CreateOrUpdateWithoutName. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="data"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<LogAnalyticsQueryPackResource> CreateOrUpdateWithoutName(LogAnalyticsQueryPackData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using DiagnosticScope scope = QueryPacksClientDiagnostics.CreateScope("MockableOperationalInsightsResourceGroupResource.CreateOrUpdateWithoutName");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = QueryPacksRestClient.CreateCreateOrUpdateWithoutNameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, LogAnalyticsQueryPackData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<LogAnalyticsQueryPackData> response = Response.FromValue(LogAnalyticsQueryPackData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new LogAnalyticsQueryPackResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -444,50 +452,56 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// Gets recently deleted workspaces in a resource group, available for recovery.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/deletedWorkspaces</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/deletedWorkspaces. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeletedWorkspaces_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> DeletedWorkspacesOperationGroup_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OperationalInsightsWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OperationalInsightsWorkspaceResource> GetDeletedWorkspacesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DeletedWorkspacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new OperationalInsightsWorkspaceResource(Client, OperationalInsightsWorkspaceData.DeserializeOperationalInsightsWorkspaceData(e)), DeletedWorkspacesClientDiagnostics, Pipeline, "MockableOperationalInsightsResourceGroupResource.GetDeletedWorkspaces", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets recently deleted workspaces in a resource group, available for recovery.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/deletedWorkspaces</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeletedWorkspaces_ListByResourceGroup</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OperationalInsightsWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OperationalInsightsWorkspaceResource> GetDeletedWorkspaces(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<OperationalInsightsWorkspaceResource> GetByResourceGroupAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DeletedWorkspacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new OperationalInsightsWorkspaceResource(Client, OperationalInsightsWorkspaceData.DeserializeOperationalInsightsWorkspaceData(e)), DeletedWorkspacesClientDiagnostics, Pipeline, "MockableOperationalInsightsResourceGroupResource.GetDeletedWorkspaces", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<OperationalInsightsWorkspaceData, OperationalInsightsWorkspaceResource>(new DeletedWorkspacesGetByResourceGroupAsyncCollectionResultOfT(DeletedWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MockableOperationalInsightsResourceGroupResource.GetByResourceGroup"), data => new OperationalInsightsWorkspaceResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets recently deleted workspaces in a resource group, available for recovery.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/deletedWorkspaces. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DeletedWorkspacesOperationGroup_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="OperationalInsightsWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<OperationalInsightsWorkspaceResource> GetByResourceGroup(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<OperationalInsightsWorkspaceData, OperationalInsightsWorkspaceResource>(new DeletedWorkspacesGetByResourceGroupCollectionResultOfT(DeletedWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MockableOperationalInsightsResourceGroupResource.GetByResourceGroup"), data => new OperationalInsightsWorkspaceResource(Client, data));
         }
     }
 }

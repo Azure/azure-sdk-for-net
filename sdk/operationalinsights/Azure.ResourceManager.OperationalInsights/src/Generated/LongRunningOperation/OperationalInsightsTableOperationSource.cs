@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    internal class OperationalInsightsTableOperationSource : IOperationSource<OperationalInsightsTableResource>
+    /// <summary></summary>
+    internal partial class OperationalInsightsTableOperationSource : IOperationSource<OperationalInsightsTableResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal OperationalInsightsTableOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         OperationalInsightsTableResource IOperationSource<OperationalInsightsTableResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<OperationalInsightsTableData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOperationalInsightsContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            OperationalInsightsTableData data = OperationalInsightsTableData.DeserializeOperationalInsightsTableData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new OperationalInsightsTableResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<OperationalInsightsTableResource> IOperationSource<OperationalInsightsTableResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<OperationalInsightsTableData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOperationalInsightsContext.Default);
-            return await Task.FromResult(new OperationalInsightsTableResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            OperationalInsightsTableData data = OperationalInsightsTableData.DeserializeOperationalInsightsTableData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new OperationalInsightsTableResource(_client, data);
         }
     }
 }

@@ -13,43 +13,11 @@ using Azure.ResourceManager.OperationalInsights.Models;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    /// <summary>
-    /// A class representing the OperationalInsightsTable data model.
-    /// Workspace data table definition.
-    /// </summary>
+    /// <summary> Workspace data table definition. </summary>
     public partial class OperationalInsightsTableData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsTableData"/>. </summary>
         public OperationalInsightsTableData()
@@ -57,75 +25,188 @@ namespace Azure.ResourceManager.OperationalInsights
         }
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsTableData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="retentionInDays"> The table retention in days, between 4 and 730. Setting this property to -1 will default to the workspace retention. </param>
-        /// <param name="totalRetentionInDays"> The table total retention in days, between 4 and 4383. Setting this property to -1 will default to table retention. </param>
-        /// <param name="archiveRetentionInDays"> The table data archive retention in days. Calculated as (totalRetentionInDays-retentionInDays). </param>
-        /// <param name="searchResults"> Parameters of the search job that initiated this table. </param>
-        /// <param name="restoredLogs"> Parameters of the restore operation that initiated this table. </param>
-        /// <param name="resultStatistics"> Search job execution statistics. </param>
-        /// <param name="plan"> Instruct the system how to handle and charge the logs ingested to this table. </param>
-        /// <param name="lastPlanModifiedDate"> The timestamp that table plan was last modified (UTC). </param>
-        /// <param name="schema"> Table schema. </param>
-        /// <param name="provisioningState"> Table's current provisioning state. If set to 'updating', indicates a resource lock due to ongoing operation, forbidding any update to the table until the ongoing operation is concluded. </param>
-        /// <param name="isRetentionInDaysAsDefault"> True - Value originates from workspace retention in days, False - Customer specific. </param>
-        /// <param name="isTotalRetentionInDaysAsDefault"> True - Value originates from retention in days, False - Customer specific. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OperationalInsightsTableData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? retentionInDays, int? totalRetentionInDays, int? archiveRetentionInDays, OperationalInsightsTableSearchResults searchResults, OperationalInsightsTableRestoredLogs restoredLogs, OperationalInsightsTableResultStatistics resultStatistics, OperationalInsightsTablePlan? plan, string lastPlanModifiedDate, OperationalInsightsSchema schema, OperationalInsightsTableProvisioningState? provisioningState, bool? isRetentionInDaysAsDefault, bool? isTotalRetentionInDaysAsDefault, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Table's properties. </param>
+        internal OperationalInsightsTableData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, TableProperties properties) : base(id, name, resourceType, systemData)
         {
-            RetentionInDays = retentionInDays;
-            TotalRetentionInDays = totalRetentionInDays;
-            ArchiveRetentionInDays = archiveRetentionInDays;
-            SearchResults = searchResults;
-            RestoredLogs = restoredLogs;
-            ResultStatistics = resultStatistics;
-            Plan = plan;
-            LastPlanModifiedDate = lastPlanModifiedDate;
-            Schema = schema;
-            ProvisioningState = provisioningState;
-            IsRetentionInDaysAsDefault = isRetentionInDaysAsDefault;
-            IsTotalRetentionInDaysAsDefault = isTotalRetentionInDaysAsDefault;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> The table retention in days, between 4 and 730. Setting this property to -1 will default to the workspace retention. </summary>
+        /// <summary> Table's properties. </summary>
+        [WirePath("properties")]
+        internal TableProperties Properties { get; set; }
+
+        /// <summary> In Analytics table: the tables analytics retention in days, between 4 and 730. Setting this property to -1 will default to the workspace retention. In Basic and Auxiliary table: read only property. </summary>
         [WirePath("properties.retentionInDays")]
-        public int? RetentionInDays { get; set; }
-        /// <summary> The table total retention in days, between 4 and 4383. Setting this property to -1 will default to table retention. </summary>
+        public int? RetentionInDays
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RetentionInDays;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TableProperties();
+                }
+                Properties.RetentionInDays = value;
+            }
+        }
+
+        /// <summary> The table total retention in days, between 4 and 4383. Setting this property to -1 will default to retentionInDays. </summary>
         [WirePath("properties.totalRetentionInDays")]
-        public int? TotalRetentionInDays { get; set; }
-        /// <summary> The table data archive retention in days. Calculated as (totalRetentionInDays-retentionInDays). </summary>
+        public int? TotalRetentionInDays
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TotalRetentionInDays;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TableProperties();
+                }
+                Properties.TotalRetentionInDays = value;
+            }
+        }
+
+        /// <summary> The tables long-term retention in days. Calculated as (totalRetentionInDays-retentionInDays). </summary>
         [WirePath("properties.archiveRetentionInDays")]
-        public int? ArchiveRetentionInDays { get; }
+        public int? ArchiveRetentionInDays
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ArchiveRetentionInDays;
+            }
+        }
+
         /// <summary> Parameters of the search job that initiated this table. </summary>
         [WirePath("properties.searchResults")]
-        public OperationalInsightsTableSearchResults SearchResults { get; set; }
+        public OperationalInsightsTableSearchResults SearchResults
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SearchResults;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TableProperties();
+                }
+                Properties.SearchResults = value;
+            }
+        }
+
         /// <summary> Parameters of the restore operation that initiated this table. </summary>
         [WirePath("properties.restoredLogs")]
-        public OperationalInsightsTableRestoredLogs RestoredLogs { get; set; }
+        public OperationalInsightsTableRestoredLogs RestoredLogs
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RestoredLogs;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TableProperties();
+                }
+                Properties.RestoredLogs = value;
+            }
+        }
+
         /// <summary> Search job execution statistics. </summary>
         [WirePath("properties.resultStatistics")]
-        public OperationalInsightsTableResultStatistics ResultStatistics { get; }
+        public OperationalInsightsTableResultStatistics ResultStatistics
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResultStatistics;
+            }
+        }
+
         /// <summary> Instruct the system how to handle and charge the logs ingested to this table. </summary>
         [WirePath("properties.plan")]
-        public OperationalInsightsTablePlan? Plan { get; set; }
+        public OperationalInsightsTablePlan? Plan
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Plan;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TableProperties();
+                }
+                Properties.Plan = value;
+            }
+        }
+
         /// <summary> The timestamp that table plan was last modified (UTC). </summary>
         [WirePath("properties.lastPlanModifiedDate")]
-        public string LastPlanModifiedDate { get; }
+        public string LastPlanModifiedDate
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastPlanModifiedDate;
+            }
+        }
+
         /// <summary> Table schema. </summary>
         [WirePath("properties.schema")]
-        public OperationalInsightsSchema Schema { get; set; }
+        public OperationalInsightsSchema Schema
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Schema;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TableProperties();
+                }
+                Properties.Schema = value;
+            }
+        }
+
         /// <summary> Table's current provisioning state. If set to 'updating', indicates a resource lock due to ongoing operation, forbidding any update to the table until the ongoing operation is concluded. </summary>
         [WirePath("properties.provisioningState")]
-        public OperationalInsightsTableProvisioningState? ProvisioningState { get; }
+        public OperationalInsightsTableProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> True - Value originates from workspace retention in days, False - Customer specific. </summary>
         [WirePath("properties.retentionInDaysAsDefault")]
-        public bool? IsRetentionInDaysAsDefault { get; }
+        public bool? IsRetentionInDaysAsDefault
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsRetentionInDaysAsDefault;
+            }
+        }
+
         /// <summary> True - Value originates from retention in days, False - Customer specific. </summary>
         [WirePath("properties.totalRetentionInDaysAsDefault")]
-        public bool? IsTotalRetentionInDaysAsDefault { get; }
+        public bool? IsTotalRetentionInDaysAsDefault
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsTotalRetentionInDaysAsDefault;
+            }
+        }
     }
 }

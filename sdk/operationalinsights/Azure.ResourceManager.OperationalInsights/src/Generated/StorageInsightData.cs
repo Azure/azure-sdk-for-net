@@ -7,98 +7,108 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.OperationalInsights.Models;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    /// <summary>
-    /// A class representing the StorageInsight data model.
-    /// The top level storage insight resource container.
-    /// </summary>
+    /// <summary> The top level storage insight resource container. </summary>
     public partial class StorageInsightData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StorageInsightData"/>. </summary>
         public StorageInsightData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            Containers = new ChangeTrackingList<string>();
-            Tables = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageInsightData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> The ETag of the storage insight. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Storage insight properties. </param>
+        /// <param name="eTag"> The ETag of the storage insight. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="containers"> The names of the blob containers that the workspace should read. </param>
-        /// <param name="tables"> The names of the Azure tables that the workspace should read. </param>
-        /// <param name="storageAccount"> The storage account connection details. </param>
-        /// <param name="status"> The status of the storage insight. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageInsightData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> tags, IList<string> containers, IList<string> tables, OperationalInsightsStorageAccount storageAccount, StorageInsightStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal StorageInsightData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, StorageInsightProperties properties, ETag? eTag, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
-            ETag = etag;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            ETag = eTag;
             Tags = tags;
-            Containers = containers;
-            Tables = tables;
-            StorageAccount = storageAccount;
-            Status = status;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
+
+        /// <summary> Storage insight properties. </summary>
+        [WirePath("properties")]
+        internal StorageInsightProperties Properties { get; set; }
 
         /// <summary> The ETag of the storage insight. </summary>
         [WirePath("eTag")]
         public ETag? ETag { get; set; }
+
         /// <summary> Resource tags. </summary>
         [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
+
         /// <summary> The names of the blob containers that the workspace should read. </summary>
         [WirePath("properties.containers")]
-        public IList<string> Containers { get; }
+        public IList<string> Containers
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageInsightProperties();
+                }
+                return Properties.Containers;
+            }
+        }
+
         /// <summary> The names of the Azure tables that the workspace should read. </summary>
         [WirePath("properties.tables")]
-        public IList<string> Tables { get; }
+        public IList<string> Tables
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageInsightProperties();
+                }
+                return Properties.Tables;
+            }
+        }
+
         /// <summary> The storage account connection details. </summary>
         [WirePath("properties.storageAccount")]
-        public OperationalInsightsStorageAccount StorageAccount { get; set; }
+        public OperationalInsightsStorageAccount StorageAccount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StorageAccount;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageInsightProperties();
+                }
+                Properties.StorageAccount = value;
+            }
+        }
+
         /// <summary> The status of the storage insight. </summary>
         [WirePath("properties.status")]
-        public StorageInsightStatus Status { get; }
+        public StorageInsightStatus Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+        }
     }
 }

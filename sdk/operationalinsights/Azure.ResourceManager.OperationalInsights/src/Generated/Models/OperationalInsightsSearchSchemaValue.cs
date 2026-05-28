@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     /// <summary> Value object for schema results. </summary>
     public partial class OperationalInsightsSearchSchemaValue
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsSearchSchemaValue"/>. </summary>
         /// <param name="indexed"> The boolean that indicates the field is searchable as free text. </param>
@@ -60,47 +32,48 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsSearchSchemaValue"/>. </summary>
         /// <param name="name"> The name of the schema. </param>
         /// <param name="displayName"> The display name of the schema. </param>
-        /// <param name="searchSchemaValueType"> The type. </param>
+        /// <param name="type"> The type. </param>
         /// <param name="indexed"> The boolean that indicates the field is searchable as free text. </param>
         /// <param name="stored"> The boolean that indicates whether or not the field is stored. </param>
         /// <param name="facet"> The boolean that indicates whether or not the field is a facet. </param>
         /// <param name="ownerType"> The array of workflows containing the field. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OperationalInsightsSearchSchemaValue(string name, string displayName, string searchSchemaValueType, bool indexed, bool stored, bool facet, IReadOnlyList<string> ownerType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal OperationalInsightsSearchSchemaValue(string name, string displayName, string @type, bool indexed, bool stored, bool facet, IReadOnlyList<string> ownerType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             DisplayName = displayName;
-            SearchSchemaValueType = searchSchemaValueType;
+            Type = @type;
             Indexed = indexed;
             Stored = stored;
             Facet = facet;
             OwnerType = ownerType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OperationalInsightsSearchSchemaValue"/> for deserialization. </summary>
-        internal OperationalInsightsSearchSchemaValue()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the schema. </summary>
         [WirePath("name")]
         public string Name { get; }
+
         /// <summary> The display name of the schema. </summary>
         [WirePath("displayName")]
         public string DisplayName { get; }
+
         /// <summary> The type. </summary>
         [WirePath("type")]
-        public string SearchSchemaValueType { get; }
+        public string Type { get; }
+
         /// <summary> The boolean that indicates the field is searchable as free text. </summary>
         [WirePath("indexed")]
         public bool Indexed { get; }
+
         /// <summary> The boolean that indicates whether or not the field is stored. </summary>
         [WirePath("stored")]
         public bool Stored { get; }
+
         /// <summary> The boolean that indicates whether or not the field is a facet. </summary>
         [WirePath("facet")]
         public bool Facet { get; }
+
         /// <summary> The array of workflows containing the field. </summary>
         [WirePath("ownerType")]
         public IReadOnlyList<string> OwnerType { get; }

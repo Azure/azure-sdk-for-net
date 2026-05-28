@@ -13,100 +13,164 @@ using Azure.ResourceManager.OperationalInsights.Models;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    /// <summary>
-    /// A class representing the OperationalInsightsDataExport data model.
-    /// The top level data export resource container.
-    /// </summary>
+    /// <summary> The top level data export resource container. </summary>
     public partial class OperationalInsightsDataExportData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsDataExportData"/>. </summary>
         public OperationalInsightsDataExportData()
         {
-            TableNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsDataExportData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="dataExportId"> The data export rule ID. </param>
-        /// <param name="tableNames"> An array of tables to export, for example: [“Heartbeat, SecurityEvent”]. </param>
-        /// <param name="isEnabled"> Active when enabled. </param>
-        /// <param name="createdOn"> The latest data export rule modification time. </param>
-        /// <param name="lastModifiedOn"> Date and time when the export was last modified. </param>
-        /// <param name="resourceId"> The destination resource ID. This can be copied from the Properties entry of the destination resource in Azure. </param>
-        /// <param name="destinationType"> The type of the destination resource. </param>
-        /// <param name="eventHubName"> Optional. Allows to define an Event Hub name. Not applicable when destination is Storage Account. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OperationalInsightsDataExportData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? dataExportId, IList<string> tableNames, bool? isEnabled, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, ResourceIdentifier resourceId, OperationalInsightsDataExportDestinationType? destinationType, string eventHubName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> data export properties. </param>
+        internal OperationalInsightsDataExportData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataExportProperties properties) : base(id, name, resourceType, systemData)
         {
-            DataExportId = dataExportId;
-            TableNames = tableNames;
-            IsEnabled = isEnabled;
-            CreatedOn = createdOn;
-            LastModifiedOn = lastModifiedOn;
-            ResourceId = resourceId;
-            DestinationType = destinationType;
-            EventHubName = eventHubName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
+
+        /// <summary> data export properties. </summary>
+        [WirePath("properties")]
+        internal DataExportProperties Properties { get; set; }
 
         /// <summary> The data export rule ID. </summary>
         [WirePath("properties.dataExportId")]
-        public Guid? DataExportId { get; set; }
+        public Guid? DataExportId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DataExportId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DataExportProperties();
+                }
+                Properties.DataExportId = value;
+            }
+        }
+
         /// <summary> An array of tables to export, for example: [“Heartbeat, SecurityEvent”]. </summary>
         [WirePath("properties.tableNames")]
-        public IList<string> TableNames { get; }
+        public IList<string> TableNames
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DataExportProperties();
+                }
+                return Properties.TableNames;
+            }
+        }
+
         /// <summary> Active when enabled. </summary>
         [WirePath("properties.enable")]
-        public bool? IsEnabled { get; set; }
+        public bool? IsEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DataExportProperties();
+                }
+                Properties.IsEnabled = value;
+            }
+        }
+
         /// <summary> The latest data export rule modification time. </summary>
         [WirePath("properties.createdDate")]
-        public DateTimeOffset? CreatedOn { get; set; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DataExportProperties();
+                }
+                Properties.CreatedOn = value;
+            }
+        }
+
         /// <summary> Date and time when the export was last modified. </summary>
         [WirePath("properties.lastModifiedDate")]
-        public DateTimeOffset? LastModifiedOn { get; set; }
+        public DateTimeOffset? LastModifiedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastModifiedOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DataExportProperties();
+                }
+                Properties.LastModifiedOn = value;
+            }
+        }
+
         /// <summary> The destination resource ID. This can be copied from the Properties entry of the destination resource in Azure. </summary>
-        [WirePath("properties.resourceId")]
-        public ResourceIdentifier ResourceId { get; set; }
+        [WirePath("properties.destination.resourceId")]
+        public ResourceIdentifier ResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DataExportProperties();
+                }
+                Properties.ResourceId = value;
+            }
+        }
+
         /// <summary> The type of the destination resource. </summary>
-        [WirePath("properties.type")]
-        public OperationalInsightsDataExportDestinationType? DestinationType { get; }
+        [WirePath("properties.destination.type")]
+        public OperationalInsightsDataExportDestinationType? DestinationType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DestinationType;
+            }
+        }
+
         /// <summary> Optional. Allows to define an Event Hub name. Not applicable when destination is Storage Account. </summary>
-        [WirePath("properties.eventHubName")]
-        public string EventHubName { get; set; }
+        [WirePath("properties.destination.metaData.eventHubName")]
+        public string EventHubName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EventHubName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DataExportProperties();
+                }
+                Properties.EventHubName = value;
+            }
+        }
     }
 }

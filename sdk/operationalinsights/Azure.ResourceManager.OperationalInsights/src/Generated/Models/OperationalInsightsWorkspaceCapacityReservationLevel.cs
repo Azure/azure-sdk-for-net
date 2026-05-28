@@ -7,30 +7,30 @@
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    /// <summary> The capacity reservation level in GB for this workspace, when CapacityReservation sku is selected. </summary>
+    /// <summary></summary>
     public enum OperationalInsightsWorkspaceCapacityReservationLevel
     {
-        /// <summary> 100. </summary>
-        OneHundred = 100,
-        /// <summary> 200. </summary>
-        TwoHundred = 200,
-        /// <summary> 300. </summary>
-        ThreeHundred = 300,
-        /// <summary> 400. </summary>
-        FourHundred = 400,
-        /// <summary> 500. </summary>
-        FiveHundred = 500,
-        /// <summary> 1000. </summary>
-        TenHundred = 1000,
-        /// <summary> 2000. </summary>
-        TwoThousand = 2000,
-        /// <summary> 5000. </summary>
-        FiveThousand = 5000,
-        /// <summary> 10000. </summary>
-        TenThousand = 10000,
-        /// <summary> 25000. </summary>
-        TwentyFiveThousand = 25000,
-        /// <summary> 50000. </summary>
-        FiftyThousand = 50000
+        /// <summary> OneHundred. </summary>
+        OneHundred,
+        /// <summary> TwoHundred. </summary>
+        TwoHundred,
+        /// <summary> ThreeHundred. </summary>
+        ThreeHundred,
+        /// <summary> FourHundred. </summary>
+        FourHundred,
+        /// <summary> FiveHundred. </summary>
+        FiveHundred,
+        /// <summary> TenHundred. </summary>
+        TenHundred,
+        /// <summary> TwoThousand. </summary>
+        TwoThousand,
+        /// <summary> FiveThousand. </summary>
+        FiveThousand,
+        /// <summary> TenThousand. </summary>
+        TenThousand,
+        /// <summary> TwentyFiveThousand. </summary>
+        TwentyFiveThousand,
+        /// <summary> FiftyThousand. </summary>
+        FiftyThousand
     }
 }

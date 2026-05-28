@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    internal class OperationalInsightsLinkedServiceOperationSource : IOperationSource<OperationalInsightsLinkedServiceResource>
+    /// <summary></summary>
+    internal partial class OperationalInsightsLinkedServiceOperationSource : IOperationSource<OperationalInsightsLinkedServiceResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal OperationalInsightsLinkedServiceOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         OperationalInsightsLinkedServiceResource IOperationSource<OperationalInsightsLinkedServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<OperationalInsightsLinkedServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOperationalInsightsContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            OperationalInsightsLinkedServiceData data = OperationalInsightsLinkedServiceData.DeserializeOperationalInsightsLinkedServiceData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new OperationalInsightsLinkedServiceResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<OperationalInsightsLinkedServiceResource> IOperationSource<OperationalInsightsLinkedServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<OperationalInsightsLinkedServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOperationalInsightsContext.Default);
-            return await Task.FromResult(new OperationalInsightsLinkedServiceResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            OperationalInsightsLinkedServiceData data = OperationalInsightsLinkedServiceData.DeserializeOperationalInsightsLinkedServiceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new OperationalInsightsLinkedServiceResource(_client, data);
         }
     }
 }

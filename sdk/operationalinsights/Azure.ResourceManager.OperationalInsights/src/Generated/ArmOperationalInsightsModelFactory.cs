@@ -9,15 +9,716 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmOperationalInsightsModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsAvailableServiceTier"/>. </summary>
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="clusterId"> The ID associated with the cluster. </param>
+        /// <param name="provisioningState"> The provisioning state of the cluster. </param>
+        /// <param name="isDoubleEncryptionEnabled"> Configures whether cluster will use double encryption. This Property can not be modified after cluster creation. Default value is 'true'. </param>
+        /// <param name="isAvailabilityZonesEnabled"> Sets whether the cluster will support availability zones. This can be set as true only in regions where Azure Data Explorer support Availability Zones. This Property can not be modified after cluster creation. Default value is 'true' if region supports Availability Zones. </param>
+        /// <param name="billingType"> The cluster's billing type. </param>
+        /// <param name="keyVaultProperties"> The associated key properties. </param>
+        /// <param name="lastModifiedOn"> The last time the cluster was updated. </param>
+        /// <param name="createdOn"> The cluster creation time. </param>
+        /// <param name="associatedWorkspaces"> The list of Log Analytics workspaces associated with the cluster. </param>
+        /// <param name="capacityReservationProperties"> Additional properties for capacity reservation. </param>
+        /// <param name="replication"> Cluster's replication properties. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="sku"> The sku properties. </param>
+        /// <returns> A new <see cref="OperationalInsights.OperationalInsightsClusterData"/> instance for mocking. </returns>
+        public static OperationalInsightsClusterData OperationalInsightsClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string clusterId = default, OperationalInsightsClusterEntityStatus? provisioningState = default, bool? isDoubleEncryptionEnabled = default, bool? isAvailabilityZonesEnabled = default, OperationalInsightsBillingType? billingType = default, OperationalInsightsKeyVaultProperties keyVaultProperties = default, DateTimeOffset? lastModifiedOn = default, DateTimeOffset? createdOn = default, IEnumerable<OperationalInsightsClusterAssociatedWorkspace> associatedWorkspaces = default, OperationalInsightsCapacityReservationProperties capacityReservationProperties = default, OperationalInsightsClusterReplicationProperties replication = default, ManagedServiceIdentity identity = default, OperationalInsightsClusterSku sku = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new OperationalInsightsClusterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                clusterId is null && provisioningState is null && isDoubleEncryptionEnabled is null && isAvailabilityZonesEnabled is null && billingType is null && keyVaultProperties is null && lastModifiedOn is null && createdOn is null && associatedWorkspaces is null && capacityReservationProperties is null && replication is null ? default : new ClusterProperties(
+                    clusterId,
+                    provisioningState,
+                    isDoubleEncryptionEnabled,
+                    isAvailabilityZonesEnabled,
+                    billingType,
+                    keyVaultProperties,
+                    lastModifiedOn,
+                    createdOn,
+                    (associatedWorkspaces ?? new ChangeTrackingList<OperationalInsightsClusterAssociatedWorkspace>()).ToList(),
+                    capacityReservationProperties,
+                    replication,
+                    null),
+                identity,
+                sku);
+        }
+
+        /// <param name="workspaceId"> Associated workspace immutable id. </param>
+        /// <param name="workspaceName"> Associated workspace resource name. </param>
+        /// <param name="resourceId"> Associated workspace arm resource id, in the form of: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}. </param>
+        /// <param name="associatedOn"> The time of workspace association. </param>
+        /// <returns> A new <see cref="Models.OperationalInsightsClusterAssociatedWorkspace"/> instance for mocking. </returns>
+        public static OperationalInsightsClusterAssociatedWorkspace OperationalInsightsClusterAssociatedWorkspace(Guid? workspaceId = default, string workspaceName = default, ResourceIdentifier resourceId = default, DateTimeOffset? associatedOn = default)
+        {
+            return new OperationalInsightsClusterAssociatedWorkspace(workspaceId, workspaceName, resourceId, associatedOn, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The Capacity Reservation properties. </summary>
+        /// <param name="lastSkuUpdatedOn"> The last time Sku was updated. </param>
+        /// <param name="minCapacity"> Minimum CapacityReservation value in Gigabytes. </param>
+        /// <returns> A new <see cref="Models.OperationalInsightsCapacityReservationProperties"/> instance for mocking. </returns>
+        public static OperationalInsightsCapacityReservationProperties OperationalInsightsCapacityReservationProperties(DateTimeOffset? lastSkuUpdatedOn = default, long? minCapacity = default)
+        {
+            return new OperationalInsightsCapacityReservationProperties(lastSkuUpdatedOn, minCapacity, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Cluster replication properties. </summary>
+        /// <param name="location"> The secondary location of the replication. If replication is being enabled, enabled must be provided. </param>
+        /// <param name="isReplicationEnabled"> Specifies whether the replication is enabled or not. When true the cluster is replicate to the specified location. </param>
+        /// <param name="isAvailabilityZonesEnabled"> Should enable AvailabilityZones for the given replicated cluster. </param>
+        /// <param name="provisioningState"> The provisioning state of the cluster replication. </param>
+        /// <param name="createdOn"> The cluster's replication creation time. </param>
+        /// <param name="lastModifiedOn"> The last time the cluster's replication was updated. </param>
+        /// <returns> A new <see cref="Models.OperationalInsightsClusterReplicationProperties"/> instance for mocking. </returns>
+        public static OperationalInsightsClusterReplicationProperties OperationalInsightsClusterReplicationProperties(AzureLocation? location = default, bool? isReplicationEnabled = default, bool? isAvailabilityZonesEnabled = default, OperationalInsightsClusterReplicationState? provisioningState = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastModifiedOn = default)
+        {
+            return new OperationalInsightsClusterReplicationProperties(
+                location,
+                isReplicationEnabled,
+                isAvailabilityZonesEnabled,
+                provisioningState,
+                createdOn,
+                lastModifiedOn,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="keyVaultProperties"> The associated key properties. </param>
+        /// <param name="billingType"> The cluster's billing type. </param>
+        /// <param name="identity"> Resource's identity. </param>
+        /// <param name="sku"> The sku properties. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.OperationalInsightsClusterPatch"/> instance for mocking. </returns>
+        public static OperationalInsightsClusterPatch OperationalInsightsClusterPatch(OperationalInsightsKeyVaultProperties keyVaultProperties = default, OperationalInsightsBillingType? billingType = default, ManagedServiceIdentity identity = default, OperationalInsightsClusterSku sku = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new OperationalInsightsClusterPatch(keyVaultProperties is null && billingType is null ? default : new ClusterPatchProperties(keyVaultProperties, billingType, null), identity, sku, tags, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="dataExportId"> The data export rule ID. </param>
+        /// <param name="tableNames"> An array of tables to export, for example: [“Heartbeat, SecurityEvent”]. </param>
+        /// <param name="isEnabled"> Active when enabled. </param>
+        /// <param name="createdOn"> The latest data export rule modification time. </param>
+        /// <param name="lastModifiedOn"> Date and time when the export was last modified. </param>
+        /// <param name="resourceId"> The destination resource ID. This can be copied from the Properties entry of the destination resource in Azure. </param>
+        /// <param name="destinationType"> The type of the destination resource. </param>
+        /// <param name="eventHubName"> Optional. Allows to define an Event Hub name. Not applicable when destination is Storage Account. </param>
+        /// <returns> A new <see cref="OperationalInsights.OperationalInsightsDataExportData"/> instance for mocking. </returns>
+        public static OperationalInsightsDataExportData OperationalInsightsDataExportData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Guid? dataExportId = default, IEnumerable<string> tableNames = default, bool? isEnabled = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastModifiedOn = default, ResourceIdentifier resourceId = default, OperationalInsightsDataExportDestinationType? destinationType = default, string eventHubName = default)
+        {
+            return new OperationalInsightsDataExportData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                dataExportId is null && tableNames is null && isEnabled is null && createdOn is null && lastModifiedOn is null && resourceId is null && destinationType is null && eventHubName is null ? default : new DataExportProperties(
+                    dataExportId,
+                    (tableNames ?? new ChangeTrackingList<string>()).ToList(),
+                    new Destination(resourceId, destinationType, new DestinationMetaData(eventHubName, null), null),
+                    isEnabled,
+                    createdOn,
+                    lastModifiedOn,
+                    null));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="provisioningState"> The provisioning state of the workspace. </param>
+        /// <param name="customerId"> This is a read-only property. Represents the ID associated with the workspace. </param>
+        /// <param name="sku"> The SKU of the workspace. </param>
+        /// <param name="retentionInDays"> The workspace data retention in days. Allowed values are per pricing plan. See pricing tiers documentation for details. </param>
+        /// <param name="workspaceCapping"> The daily volume cap for ingestion. </param>
+        /// <param name="createdOn"> Workspace creation date. </param>
+        /// <param name="modifiedOn"> Workspace modification date. </param>
+        /// <param name="publicNetworkAccessForIngestion"> The network access type for accessing Log Analytics ingestion. </param>
+        /// <param name="publicNetworkAccessForQuery"> The network access type for accessing Log Analytics query. </param>
+        /// <param name="forceCmkForQuery"> Indicates whether customer managed storage is mandatory for query management. </param>
+        /// <param name="privateLinkScopedResources"> List of linked private link scope resources. </param>
+        /// <param name="features"> Workspace features. </param>
+        /// <param name="defaultDataCollectionRuleResourceId"> The resource ID of the default Data Collection Rule to use for this workspace. Expected format is - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dcrName}. </param>
+        /// <param name="replication"> workspace replication properties. </param>
+        /// <param name="failover"> workspace failover properties. </param>
+        /// <param name="identity"> The identity of the resource. </param>
+        /// <param name="eTag"> The etag of the workspace. </param>
+        /// <returns> A new <see cref="OperationalInsights.OperationalInsightsWorkspaceData"/> instance for mocking. </returns>
+        public static OperationalInsightsWorkspaceData OperationalInsightsWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, OperationalInsightsWorkspaceEntityStatus? provisioningState = default, string customerId = default, OperationalInsightsWorkspaceSku sku = default, int? retentionInDays = default, OperationalInsightsWorkspaceCapping workspaceCapping = default, DateTimeOffset? createdOn = default, DateTimeOffset? modifiedOn = default, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion = default, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForQuery = default, bool? forceCmkForQuery = default, IEnumerable<OperationalInsightsPrivateLinkScopedResourceInfo> privateLinkScopedResources = default, OperationalInsightsWorkspaceFeatures features = default, string defaultDataCollectionRuleResourceId = default, OperationalInsightsWorkspaceReplicationProperties replication = default, OperationalInsightsWorkspaceFailoverProperties failover = default, ManagedServiceIdentity identity = default, ETag? eTag = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new OperationalInsightsWorkspaceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                provisioningState is null && customerId is null && sku is null && retentionInDays is null && workspaceCapping is null && createdOn is null && modifiedOn is null && publicNetworkAccessForIngestion is null && publicNetworkAccessForQuery is null && forceCmkForQuery is null && privateLinkScopedResources is null && features is null && defaultDataCollectionRuleResourceId is null && replication is null && failover is null ? default : new WorkspaceProperties(
+                    provisioningState,
+                    customerId,
+                    sku,
+                    retentionInDays,
+                    workspaceCapping,
+                    createdOn,
+                    modifiedOn,
+                    publicNetworkAccessForIngestion,
+                    publicNetworkAccessForQuery,
+                    forceCmkForQuery,
+                    (privateLinkScopedResources ?? new ChangeTrackingList<OperationalInsightsPrivateLinkScopedResourceInfo>()).ToList(),
+                    features,
+                    defaultDataCollectionRuleResourceId,
+                    replication,
+                    failover,
+                    null),
+                identity,
+                eTag);
+        }
+
+        /// <summary> The SKU (tier) of a workspace. </summary>
+        /// <param name="name"> The name of the SKU. </param>
+        /// <param name="capacityReservationLevel"> The capacity reservation level in GB for this workspace, when CapacityReservation sku is selected. </param>
+        /// <param name="lastSkuUpdatedOn"> The last time when the sku was updated. </param>
+        /// <returns> A new <see cref="Models.OperationalInsightsWorkspaceSku"/> instance for mocking. </returns>
+        public static OperationalInsightsWorkspaceSku OperationalInsightsWorkspaceSku(OperationalInsightsWorkspaceSkuName name = default, OperationalInsightsWorkspaceCapacityReservationLevel? capacityReservationLevel = default, DateTimeOffset? lastSkuUpdatedOn = default)
+        {
+            return new OperationalInsightsWorkspaceSku(name, capacityReservationLevel, lastSkuUpdatedOn, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The daily volume cap for ingestion. </summary>
+        /// <param name="dailyQuotaInGB"> The workspace daily quota for ingestion. </param>
+        /// <param name="quotaNextResetTime"> The time when the quota will be rest. </param>
+        /// <param name="dataIngestionStatus"> The status of data ingestion for this workspace. </param>
+        /// <returns> A new <see cref="Models.OperationalInsightsWorkspaceCapping"/> instance for mocking. </returns>
+        public static OperationalInsightsWorkspaceCapping OperationalInsightsWorkspaceCapping(double? dailyQuotaInGB = default, string quotaNextResetTime = default, OperationalInsightsDataIngestionStatus? dataIngestionStatus = default)
+        {
+            return new OperationalInsightsWorkspaceCapping(dailyQuotaInGB, quotaNextResetTime, dataIngestionStatus, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The private link scope resource reference. </summary>
+        /// <param name="resourceId"> The full resource Id of the private link scope resource. </param>
+        /// <param name="scopeId"> The private link scope unique Identifier. </param>
+        /// <returns> A new <see cref="Models.OperationalInsightsPrivateLinkScopedResourceInfo"/> instance for mocking. </returns>
+        public static OperationalInsightsPrivateLinkScopedResourceInfo OperationalInsightsPrivateLinkScopedResourceInfo(ResourceIdentifier resourceId = default, string scopeId = default)
+        {
+            return new OperationalInsightsPrivateLinkScopedResourceInfo(resourceId, scopeId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Workspace features. </summary>
+        /// <param name="isDataExportEnabled"> Flag that indicate if data should be exported. </param>
+        /// <param name="immediatePurgeDataOn30Days"> Flag that describes if we want to remove the data after 30 days. </param>
+        /// <param name="isLogAccessUsingOnlyResourcePermissionsEnabled"> Flag that indicate which permission to use - resource or workspace or both. </param>
+        /// <param name="clusterResourceId"> Dedicated LA cluster resourceId that is linked to the workspaces. </param>
+        /// <param name="isLocalAuthDisabled"> Disable Non-AAD based Auth. </param>
+        /// <param name="isUnifiedSentinelBillingOnly"> An indication if the specify workspace is limited to sentinel's unified billing model only. </param>
+        /// <param name="associations"> List of associations for the workspace. Indicates if the workspace is associated with any of the following experiences: MDC, Sentinel, SentinelGraph, etc. </param>
+        /// <param name="additionalProperties"></param>
+        /// <returns> A new <see cref="Models.OperationalInsightsWorkspaceFeatures"/> instance for mocking. </returns>
+        public static OperationalInsightsWorkspaceFeatures OperationalInsightsWorkspaceFeatures(bool? isDataExportEnabled = default, bool? immediatePurgeDataOn30Days = default, bool? isLogAccessUsingOnlyResourcePermissionsEnabled = default, ResourceIdentifier clusterResourceId = default, bool? isLocalAuthDisabled = default, bool? isUnifiedSentinelBillingOnly = default, IEnumerable<string> associations = default, IDictionary<string, BinaryData> additionalProperties = default)
+        {
+            associations ??= new ChangeTrackingList<string>();
+            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new OperationalInsightsWorkspaceFeatures(
+                isDataExportEnabled,
+                immediatePurgeDataOn30Days,
+                isLogAccessUsingOnlyResourcePermissionsEnabled,
+                clusterResourceId,
+                isLocalAuthDisabled,
+                isUnifiedSentinelBillingOnly,
+                associations.ToList(),
+                additionalProperties);
+        }
+
+        /// <summary> Workspace replication properties. </summary>
+        /// <param name="location"> The location of the replication. </param>
+        /// <param name="isReplicationEnabled"> Specifies whether the replication is enabled or not. When true, workspace configuration and data is replicated to the specified location. If replication is been enabled, location must be provided. </param>
+        /// <param name="provisioningState"> The provisioning state of the replication. </param>
+        /// <param name="createdOn"> The last time when the replication was enabled. </param>
+        /// <param name="lastModifiedOn"> The last time when the replication was updated. </param>
+        /// <returns> A new <see cref="Models.OperationalInsightsWorkspaceReplicationProperties"/> instance for mocking. </returns>
+        public static OperationalInsightsWorkspaceReplicationProperties OperationalInsightsWorkspaceReplicationProperties(AzureLocation? location = default, bool? isReplicationEnabled = default, OperationalInsightsWorkspaceReplicationState? provisioningState = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastModifiedOn = default)
+        {
+            return new OperationalInsightsWorkspaceReplicationProperties(
+                location,
+                isReplicationEnabled,
+                provisioningState,
+                createdOn,
+                lastModifiedOn,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The failover state of the replication. </summary>
+        /// <param name="state"> The failover state of the replication. </param>
+        /// <param name="lastModifiedOn"> The last time when the failover state was updated. </param>
+        /// <returns> A new <see cref="Models.OperationalInsightsWorkspaceFailoverProperties"/> instance for mocking. </returns>
+        public static OperationalInsightsWorkspaceFailoverProperties OperationalInsightsWorkspaceFailoverProperties(OperationalInsightsWorkspaceFailoverState? state = default, DateTimeOffset? lastModifiedOn = default)
+        {
+            return new OperationalInsightsWorkspaceFailoverProperties(state, lastModifiedOn, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="eTag"> Resource Etag. </param>
+        /// <param name="provisioningState"> The provisioning state of the workspace. </param>
+        /// <param name="customerId"> This is a read-only property. Represents the ID associated with the workspace. </param>
+        /// <param name="sku"> The SKU of the workspace. </param>
+        /// <param name="retentionInDays"> The workspace data retention in days. Allowed values are per pricing plan. See pricing tiers documentation for details. </param>
+        /// <param name="workspaceCapping"> The daily volume cap for ingestion. </param>
+        /// <param name="createdOn"> Workspace creation date. </param>
+        /// <param name="modifiedOn"> Workspace modification date. </param>
+        /// <param name="publicNetworkAccessForIngestion"> The network access type for accessing Log Analytics ingestion. </param>
+        /// <param name="publicNetworkAccessForQuery"> The network access type for accessing Log Analytics query. </param>
+        /// <param name="forceCmkForQuery"> Indicates whether customer managed storage is mandatory for query management. </param>
+        /// <param name="privateLinkScopedResources"> List of linked private link scope resources. </param>
+        /// <param name="features"> Workspace features. </param>
+        /// <param name="defaultDataCollectionRuleResourceId"> The resource ID of the default Data Collection Rule to use for this workspace. Expected format is - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dcrName}. </param>
+        /// <param name="replication"> workspace replication properties. </param>
+        /// <param name="failover"> workspace failover properties. </param>
+        /// <param name="identity"> The identity of the resource. </param>
+        /// <param name="tags"> Resource tags. Optional. </param>
+        /// <returns> A new <see cref="Models.OperationalInsightsWorkspacePatch"/> instance for mocking. </returns>
+        public static OperationalInsightsWorkspacePatch OperationalInsightsWorkspacePatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string eTag = default, OperationalInsightsWorkspaceEntityStatus? provisioningState = default, string customerId = default, OperationalInsightsWorkspaceSku sku = default, int? retentionInDays = default, OperationalInsightsWorkspaceCapping workspaceCapping = default, DateTimeOffset? createdOn = default, DateTimeOffset? modifiedOn = default, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion = default, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForQuery = default, bool? forceCmkForQuery = default, IEnumerable<OperationalInsightsPrivateLinkScopedResourceInfo> privateLinkScopedResources = default, OperationalInsightsWorkspaceFeatures features = default, string defaultDataCollectionRuleResourceId = default, OperationalInsightsWorkspaceReplicationProperties replication = default, OperationalInsightsWorkspaceFailoverProperties failover = default, ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new OperationalInsightsWorkspacePatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                eTag,
+                provisioningState is null && customerId is null && sku is null && retentionInDays is null && workspaceCapping is null && createdOn is null && modifiedOn is null && publicNetworkAccessForIngestion is null && publicNetworkAccessForQuery is null && forceCmkForQuery is null && privateLinkScopedResources is null && features is null && defaultDataCollectionRuleResourceId is null && replication is null && failover is null ? default : new WorkspaceProperties(
+                    provisioningState,
+                    customerId,
+                    sku,
+                    retentionInDays,
+                    workspaceCapping,
+                    createdOn,
+                    modifiedOn,
+                    publicNetworkAccessForIngestion,
+                    publicNetworkAccessForQuery,
+                    forceCmkForQuery,
+                    (privateLinkScopedResources ?? new ChangeTrackingList<OperationalInsightsPrivateLinkScopedResourceInfo>()).ToList(),
+                    features,
+                    defaultDataCollectionRuleResourceId,
+                    replication,
+                    failover,
+                    null),
+                identity,
+                tags);
+        }
+
+        /// <summary> Entity Resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="eTag"> Resource Etag. </param>
+        /// <returns> A new <see cref="Models.AzureEntityResource"/> instance for mocking. </returns>
+        public static AzureEntityResource AzureEntityResource(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string eTag = default)
+        {
+            return new AzureEntityResource(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                eTag);
+        }
+
+        /// <summary> Network security perimeter (NSP) configuration resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"></param>
+        /// <returns> A new <see cref="Models.NetworkSecurityPerimeterConfiguration"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeterConfiguration NetworkSecurityPerimeterConfiguration(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NetworkSecurityPerimeterConfigurationProperties properties = default)
+        {
+            return new NetworkSecurityPerimeterConfiguration(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> Network security configuration properties. </summary>
+        /// <param name="provisioningState"></param>
+        /// <param name="provisioningIssues"> List of provisioning issues, if any. </param>
+        /// <param name="networkSecurityPerimeter"></param>
+        /// <param name="resourceAssociation"></param>
+        /// <param name="profile"></param>
+        /// <returns> A new <see cref="Models.NetworkSecurityPerimeterConfigurationProperties"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeterConfigurationProperties NetworkSecurityPerimeterConfigurationProperties(NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = default, IEnumerable<ProvisioningIssue> provisioningIssues = default, NetworkSecurityPerimeter networkSecurityPerimeter = default, ResourceAssociation resourceAssociation = default, NetworkSecurityProfile profile = default)
+        {
+            provisioningIssues ??= new ChangeTrackingList<ProvisioningIssue>();
+
+            return new NetworkSecurityPerimeterConfigurationProperties(
+                provisioningState,
+                provisioningIssues.ToList(),
+                networkSecurityPerimeter,
+                resourceAssociation,
+                profile,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Describes a provisioning issue for a network security perimeter configuration. </summary>
+        /// <param name="name"> Name of the issue. </param>
+        /// <param name="properties"></param>
+        /// <returns> A new <see cref="Models.ProvisioningIssue"/> instance for mocking. </returns>
+        public static ProvisioningIssue ProvisioningIssue(string name = default, ProvisioningIssueProperties properties = default)
+        {
+            return new ProvisioningIssue(name, properties, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Details of a provisioning issue for a network security perimeter (NSP) configuration. Resource providers should generate separate provisioning issue elements for each separate issue detected, and include a meaningful and distinctive description, as well as any appropriate suggestedResourceIds and suggestedAccessRules. </summary>
+        /// <param name="issueType"> Type of issue. </param>
+        /// <param name="severity"> Severity of the issue. </param>
+        /// <param name="description"> Description of the issue. </param>
+        /// <param name="suggestedResourceIds"> Fully qualified resource IDs of suggested resources that can be associated to the network security perimeter (NSP) to remediate the issue. </param>
+        /// <param name="suggestedAccessRules"> Access rules that can be added to the network security profile (NSP) to remediate the issue. </param>
+        /// <returns> A new <see cref="Models.ProvisioningIssueProperties"/> instance for mocking. </returns>
+        public static ProvisioningIssueProperties ProvisioningIssueProperties(IssueType? issueType = default, Severity? severity = default, string description = default, IEnumerable<ResourceIdentifier> suggestedResourceIds = default, IEnumerable<AccessRule> suggestedAccessRules = default)
+        {
+            suggestedResourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
+            suggestedAccessRules ??= new ChangeTrackingList<AccessRule>();
+
+            return new ProvisioningIssueProperties(
+                issueType,
+                severity,
+                description,
+                suggestedResourceIds.ToList(),
+                suggestedAccessRules.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Access rule in a network security perimeter configuration profile. </summary>
+        /// <param name="name"> Name of the access rule. </param>
+        /// <param name="properties"></param>
+        /// <returns> A new <see cref="Models.AccessRule"/> instance for mocking. </returns>
+        public static AccessRule AccessRule(string name = default, AccessRuleProperties properties = default)
+        {
+            return new AccessRule(name, properties, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Properties of Access Rule. </summary>
+        /// <param name="direction"></param>
+        /// <param name="addressPrefixes"> Address prefixes in the CIDR format for inbound rules. </param>
+        /// <param name="subscriptions"> Subscriptions for inbound rules. </param>
+        /// <param name="networkSecurityPerimeters"> Network security perimeters for inbound rules. </param>
+        /// <param name="fullyQualifiedDomainNames"> Fully qualified domain names (FQDN) for outbound rules. </param>
+        /// <param name="emailAddresses"> Email addresses for outbound rules. </param>
+        /// <param name="phoneNumbers"> Phone numbers for outbound rules. </param>
+        /// <returns> A new <see cref="Models.AccessRuleProperties"/> instance for mocking. </returns>
+        public static AccessRuleProperties AccessRuleProperties(AccessRuleDirection? direction = default, IEnumerable<string> addressPrefixes = default, IEnumerable<AccessRulePropertiesSubscription> subscriptions = default, IEnumerable<NetworkSecurityPerimeter> networkSecurityPerimeters = default, IEnumerable<string> fullyQualifiedDomainNames = default, IEnumerable<string> emailAddresses = default, IEnumerable<string> phoneNumbers = default)
+        {
+            addressPrefixes ??= new ChangeTrackingList<string>();
+            subscriptions ??= new ChangeTrackingList<AccessRulePropertiesSubscription>();
+            networkSecurityPerimeters ??= new ChangeTrackingList<NetworkSecurityPerimeter>();
+            fullyQualifiedDomainNames ??= new ChangeTrackingList<string>();
+            emailAddresses ??= new ChangeTrackingList<string>();
+            phoneNumbers ??= new ChangeTrackingList<string>();
+
+            return new AccessRuleProperties(
+                direction,
+                addressPrefixes.ToList(),
+                subscriptions.ToList(),
+                networkSecurityPerimeters.ToList(),
+                fullyQualifiedDomainNames.ToList(),
+                emailAddresses.ToList(),
+                phoneNumbers.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The AccessRulePropertiesSubscription. </summary>
+        /// <param name="id"> The fully qualified Azure resource ID of the subscription e.g. ('/subscriptions/00000000-0000-0000-0000-000000000000'). </param>
+        /// <returns> A new <see cref="Models.AccessRulePropertiesSubscription"/> instance for mocking. </returns>
+        public static AccessRulePropertiesSubscription AccessRulePropertiesSubscription(ResourceIdentifier id = default)
+        {
+            return new AccessRulePropertiesSubscription(id, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Information about a network security perimeter (NSP). </summary>
+        /// <param name="id"> Fully qualified Azure resource ID of the NSP resource. </param>
+        /// <param name="perimeterGuid"> Universal unique ID (UUID) of the network security perimeter. </param>
+        /// <param name="location"> Location of the network security perimeter. </param>
+        /// <returns> A new <see cref="Models.NetworkSecurityPerimeter"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeter NetworkSecurityPerimeter(ResourceIdentifier id = default, Guid? perimeterGuid = default, string location = default)
+        {
+            return new NetworkSecurityPerimeter(id, perimeterGuid, location, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Information about resource association. </summary>
+        /// <param name="name"> Name of the resource association. </param>
+        /// <param name="accessMode"></param>
+        /// <returns> A new <see cref="Models.ResourceAssociation"/> instance for mocking. </returns>
+        public static ResourceAssociation ResourceAssociation(string name = default, ResourceAssociationAccessMode? accessMode = default)
+        {
+            return new ResourceAssociation(name, accessMode, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Network security perimeter configuration profile. </summary>
+        /// <param name="name"> Name of the profile. </param>
+        /// <param name="accessRulesVersion"> Current access rules version. </param>
+        /// <param name="accessRules"> List of Access Rules. </param>
+        /// <param name="diagnosticSettingsVersion"> Current diagnostic settings version. </param>
+        /// <param name="enabledLogCategories"> List of log categories that are enabled. </param>
+        /// <returns> A new <see cref="Models.NetworkSecurityProfile"/> instance for mocking. </returns>
+        public static NetworkSecurityProfile NetworkSecurityProfile(string name = default, int? accessRulesVersion = default, IEnumerable<AccessRule> accessRules = default, int? diagnosticSettingsVersion = default, IEnumerable<string> enabledLogCategories = default)
+        {
+            accessRules ??= new ChangeTrackingList<AccessRule>();
+            enabledLogCategories ??= new ChangeTrackingList<string>();
+
+            return new NetworkSecurityProfile(
+                name,
+                accessRulesVersion,
+                accessRules.ToList(),
+                diagnosticSettingsVersion,
+                enabledLogCategories.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The data source properties in raw json format, each kind of data source have it's own schema. </param>
+        /// <param name="etag"> The ETag of the data source. </param>
+        /// <param name="kind"> The kind of the DataSource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="OperationalInsights.OperationalInsightsDataSourceData"/> instance for mocking. </returns>
+        public static OperationalInsightsDataSourceData OperationalInsightsDataSourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BinaryData properties = default, ETag? etag = default, OperationalInsightsDataSourceKind kind = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new OperationalInsightsDataSourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties,
+                etag,
+                kind,
+                tags);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="category"> The category of the saved search. This helps the user to find a saved search faster. </param>
+        /// <param name="displayName"> Saved search display name. </param>
+        /// <param name="query"> The query expression for the saved search. </param>
+        /// <param name="functionAlias"> The function alias if query serves as a function. </param>
+        /// <param name="functionParameters"> The optional function parameters if query serves as a function. Value should be in the following format: 'param-name1:type1 = default_value1, param-name2:type2 = default_value2'. For more examples and proper syntax please refer to https://docs.microsoft.com/en-us/azure/kusto/query/functions/user-defined-functions. </param>
+        /// <param name="version"> The version number of the query language. The current version is 2 and is the default. </param>
+        /// <param name="tags"> The tags attached to the saved search. </param>
+        /// <param name="eTag"> The ETag of the saved search. To override an existing saved search, use "*" or specify the current Etag. </param>
+        /// <returns> A new <see cref="OperationalInsights.OperationalInsightsSavedSearchData"/> instance for mocking. </returns>
+        public static OperationalInsightsSavedSearchData OperationalInsightsSavedSearchData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string category = default, string displayName = default, string query = default, string functionAlias = default, string functionParameters = default, long? version = default, IEnumerable<OperationalInsightsTag> tags = default, ETag? eTag = default)
+        {
+            return new OperationalInsightsSavedSearchData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                new SavedSearchProperties(
+                    category,
+                    displayName,
+                    query,
+                    functionAlias,
+                    functionParameters,
+                    version,
+                    (tags ?? new ChangeTrackingList<OperationalInsightsTag>()).ToList(),
+                    null),
+                eTag);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="retentionInDays"> In Analytics table: the tables analytics retention in days, between 4 and 730. Setting this property to -1 will default to the workspace retention. In Basic and Auxiliary table: read only property. </param>
+        /// <param name="totalRetentionInDays"> The table total retention in days, between 4 and 4383. Setting this property to -1 will default to retentionInDays. </param>
+        /// <param name="archiveRetentionInDays"> The tables long-term retention in days. Calculated as (totalRetentionInDays-retentionInDays). </param>
+        /// <param name="searchResults"> Parameters of the search job that initiated this table. </param>
+        /// <param name="restoredLogs"> Parameters of the restore operation that initiated this table. </param>
+        /// <param name="resultStatistics"> Search job execution statistics. </param>
+        /// <param name="plan"> Instruct the system how to handle and charge the logs ingested to this table. </param>
+        /// <param name="lastPlanModifiedDate"> The timestamp that table plan was last modified (UTC). </param>
+        /// <param name="schema"> Table schema. </param>
+        /// <param name="provisioningState"> Table's current provisioning state. If set to 'updating', indicates a resource lock due to ongoing operation, forbidding any update to the table until the ongoing operation is concluded. </param>
+        /// <param name="isRetentionInDaysAsDefault"> True - Value originates from workspace retention in days, False - Customer specific. </param>
+        /// <param name="isTotalRetentionInDaysAsDefault"> True - Value originates from retention in days, False - Customer specific. </param>
+        /// <returns> A new <see cref="OperationalInsights.OperationalInsightsTableData"/> instance for mocking. </returns>
+        public static OperationalInsightsTableData OperationalInsightsTableData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? retentionInDays = default, int? totalRetentionInDays = default, int? archiveRetentionInDays = default, OperationalInsightsTableSearchResults searchResults = default, OperationalInsightsTableRestoredLogs restoredLogs = default, OperationalInsightsTableResultStatistics resultStatistics = default, OperationalInsightsTablePlan? plan = default, string lastPlanModifiedDate = default, OperationalInsightsSchema schema = default, OperationalInsightsTableProvisioningState? provisioningState = default, bool? isRetentionInDaysAsDefault = default, bool? isTotalRetentionInDaysAsDefault = default)
+        {
+            return new OperationalInsightsTableData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                retentionInDays is null && totalRetentionInDays is null && archiveRetentionInDays is null && searchResults is null && restoredLogs is null && resultStatistics is null && plan is null && lastPlanModifiedDate is null && schema is null && provisioningState is null && isRetentionInDaysAsDefault is null && isTotalRetentionInDaysAsDefault is null ? default : new TableProperties(
+                    retentionInDays,
+                    totalRetentionInDays,
+                    archiveRetentionInDays,
+                    searchResults,
+                    restoredLogs,
+                    resultStatistics,
+                    plan,
+                    lastPlanModifiedDate,
+                    schema,
+                    provisioningState,
+                    isRetentionInDaysAsDefault,
+                    isTotalRetentionInDaysAsDefault,
+                    null));
+        }
+
+        /// <summary> Parameters of the search job that initiated this table. </summary>
+        /// <param name="query"> Search job query. </param>
+        /// <param name="description"> Search job Description. </param>
+        /// <param name="limit"> Limit the search job to return up to specified number of rows. </param>
+        /// <param name="startSearchOn"> The timestamp to start the search from (UTC). </param>
+        /// <param name="endSearchOn"> The timestamp to end the search by (UTC). </param>
+        /// <param name="sourceTable"> The table used in the search job. </param>
+        /// <param name="azureAsyncOperationId"> Search results table async operation id. </param>
+        /// <returns> A new <see cref="Models.OperationalInsightsTableSearchResults"/> instance for mocking. </returns>
+        public static OperationalInsightsTableSearchResults OperationalInsightsTableSearchResults(string query = default, string description = default, int? limit = default, DateTimeOffset? startSearchOn = default, DateTimeOffset? endSearchOn = default, string sourceTable = default, Guid? azureAsyncOperationId = default)
+        {
+            return new OperationalInsightsTableSearchResults(
+                query,
+                description,
+                limit,
+                startSearchOn,
+                endSearchOn,
+                sourceTable,
+                azureAsyncOperationId,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Restore parameters. </summary>
+        /// <param name="startRestoreOn"> The timestamp to start the restore from (UTC). </param>
+        /// <param name="endRestoreOn"> The timestamp to end the restore by (UTC). </param>
+        /// <param name="sourceTable"> The table to restore data from. </param>
+        /// <param name="azureAsyncOperationId"> Search results table async operation id. </param>
+        /// <returns> A new <see cref="Models.OperationalInsightsTableRestoredLogs"/> instance for mocking. </returns>
+        public static OperationalInsightsTableRestoredLogs OperationalInsightsTableRestoredLogs(DateTimeOffset? startRestoreOn = default, DateTimeOffset? endRestoreOn = default, string sourceTable = default, Guid? azureAsyncOperationId = default)
+        {
+            return new OperationalInsightsTableRestoredLogs(startRestoreOn, endRestoreOn, sourceTable, azureAsyncOperationId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Search job execution statistics. </summary>
+        /// <param name="progress"> Search job completion percentage. </param>
+        /// <param name="ingestedRecords"> The number of rows that were returned by the search job. </param>
+        /// <param name="scannedGB"> Search job: Amount of scanned data. </param>
+        /// <returns> A new <see cref="Models.OperationalInsightsTableResultStatistics"/> instance for mocking. </returns>
+        public static OperationalInsightsTableResultStatistics OperationalInsightsTableResultStatistics(float? progress = default, int? ingestedRecords = default, float? scannedGB = default)
+        {
+            return new OperationalInsightsTableResultStatistics(progress, ingestedRecords, scannedGB, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Table's schema. </summary>
+        /// <param name="name"> Table name. </param>
+        /// <param name="displayName"> Table display name. </param>
+        /// <param name="description"> Table description. </param>
+        /// <param name="columns"> A list of table custom columns. </param>
+        /// <param name="standardColumns"> A list of table standard columns. </param>
+        /// <param name="categories"> Table category. </param>
+        /// <param name="labels"> Table labels. </param>
+        /// <param name="source"> Table's creator. </param>
+        /// <param name="tableType"> Table's creator. </param>
+        /// <param name="tableSubType"> The subtype describes what APIs can be used to interact with the table, and what features are available against it. </param>
+        /// <param name="solutions"> List of solutions the table is affiliated with. </param>
+        /// <returns> A new <see cref="Models.OperationalInsightsSchema"/> instance for mocking. </returns>
+        public static OperationalInsightsSchema OperationalInsightsSchema(string name = default, string displayName = default, string description = default, IEnumerable<OperationalInsightsColumn> columns = default, IEnumerable<OperationalInsightsColumn> standardColumns = default, IEnumerable<string> categories = default, IEnumerable<string> labels = default, OperationalInsightsTableCreator? source = default, OperationalInsightsTableType? tableType = default, OperationalInsightsTableSubType? tableSubType = default, IEnumerable<string> solutions = default)
+        {
+            columns ??= new ChangeTrackingList<OperationalInsightsColumn>();
+            standardColumns ??= new ChangeTrackingList<OperationalInsightsColumn>();
+            categories ??= new ChangeTrackingList<string>();
+            labels ??= new ChangeTrackingList<string>();
+            solutions ??= new ChangeTrackingList<string>();
+
+            return new OperationalInsightsSchema(
+                name,
+                displayName,
+                description,
+                columns.ToList(),
+                standardColumns.ToList(),
+                categories.ToList(),
+                labels.ToList(),
+                source,
+                tableType,
+                tableSubType,
+                solutions.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Table column. </summary>
+        /// <param name="name"> Column name. </param>
+        /// <param name="columnType"> Column data type. </param>
+        /// <param name="dataTypeHint"> Column data type logical hint. </param>
+        /// <param name="displayName"> Column display name. </param>
+        /// <param name="description"> Column description. </param>
+        /// <param name="isDefaultDisplay"> Is displayed by default. </param>
+        /// <param name="isHidden"> Is column hidden. </param>
+        /// <returns> A new <see cref="Models.OperationalInsightsColumn"/> instance for mocking. </returns>
+        public static OperationalInsightsColumn OperationalInsightsColumn(string name = default, OperationalInsightsColumnType? columnType = default, OperationalInsightsColumnDataTypeHint? dataTypeHint = default, string displayName = default, string description = default, bool? isDefaultDisplay = default, bool? isHidden = default)
+        {
+            return new OperationalInsightsColumn(
+                name,
+                columnType,
+                dataTypeHint,
+                displayName,
+                description,
+                isDefaultDisplay,
+                isHidden,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Service Tier details. </summary>
         /// <param name="serviceTier"> The name of the Service Tier. </param>
         /// <param name="isEnabled"> True if the Service Tier is enabled for the workspace. </param>
         /// <param name="minimumRetention"> The minimum retention for the Service Tier, in days. </param>
@@ -26,7 +727,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="capacityReservationLevel"> The capacity reservation level in GB per day. Returned for the Capacity Reservation Service Tier. </param>
         /// <param name="lastSkuUpdatedOn"> Time when the sku was last updated for the workspace. Returned for the Capacity Reservation Service Tier. </param>
         /// <returns> A new <see cref="Models.OperationalInsightsAvailableServiceTier"/> instance for mocking. </returns>
-        public static OperationalInsightsAvailableServiceTier OperationalInsightsAvailableServiceTier(OperationalInsightsSkuName? serviceTier = null, bool? isEnabled = null, long? minimumRetention = null, long? maximumRetention = null, long? defaultRetention = null, long? capacityReservationLevel = null, DateTimeOffset? lastSkuUpdatedOn = null)
+        public static OperationalInsightsAvailableServiceTier OperationalInsightsAvailableServiceTier(OperationalInsightsSkuName? serviceTier = default, bool? isEnabled = default, long? minimumRetention = default, long? maximumRetention = default, long? defaultRetention = default, long? capacityReservationLevel = default, DateTimeOffset? lastSkuUpdatedOn = default)
         {
             return new OperationalInsightsAvailableServiceTier(
                 serviceTier,
@@ -36,7 +737,386 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 defaultRetention,
                 capacityReservationLevel,
                 lastSkuUpdatedOn,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Intelligence Pack containing a string name and boolean indicating if it's enabled. </summary>
+        /// <param name="name"> The name of the intelligence pack. </param>
+        /// <param name="isEnabled"> The enabled boolean for the intelligence pack. </param>
+        /// <param name="displayName"> The display name of the intelligence pack. </param>
+        /// <returns> A new <see cref="Models.OperationalInsightsIntelligencePack"/> instance for mocking. </returns>
+        public static OperationalInsightsIntelligencePack OperationalInsightsIntelligencePack(string name = default, bool? isEnabled = default, string displayName = default)
+        {
+            return new OperationalInsightsIntelligencePack(name, isEnabled, displayName, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="serverCount"> The number of servers connected to the management group. </param>
+        /// <param name="isGateway"> Gets or sets a value indicating whether the management group is a gateway. </param>
+        /// <param name="name"> The name of the management group. </param>
+        /// <param name="id"> The unique ID of the management group. </param>
+        /// <param name="createdOn"> The datetime that the management group was created. </param>
+        /// <param name="dataReceivedOn"> The last datetime that the management group received data. </param>
+        /// <param name="version"> The version of System Center that is managing the management group. </param>
+        /// <param name="sku"> The SKU of System Center that is managing the management group. </param>
+        /// <returns> A new <see cref="Models.OperationalInsightsManagementGroup"/> instance for mocking. </returns>
+        public static OperationalInsightsManagementGroup OperationalInsightsManagementGroup(int? serverCount = default, bool? isGateway = default, string name = default, string id = default, DateTimeOffset? createdOn = default, DateTimeOffset? dataReceivedOn = default, string version = default, string sku = default)
+        {
+            return new OperationalInsightsManagementGroup(serverCount is null && isGateway is null && name is null && id is null && createdOn is null && dataReceivedOn is null && version is null && sku is null ? default : new ManagementGroupProperties(
+                serverCount,
+                isGateway,
+                name,
+                id,
+                createdOn,
+                dataReceivedOn,
+                version,
+                sku,
+                null), additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="name"> The name of the schema. </param>
+        /// <param name="displayName"> The display name of the schema. </param>
+        /// <param name="searchSchemaValueType"> The type. </param>
+        /// <param name="indexed"> The boolean that indicates the field is searchable as free text. </param>
+        /// <param name="stored"> The boolean that indicates whether or not the field is stored. </param>
+        /// <param name="facet"> The boolean that indicates whether or not the field is a facet. </param>
+        /// <param name="ownerType"> The array of workflows containing the field. </param>
+        /// <returns> A new <see cref="Models.OperationalInsightsSearchSchemaValue"/> instance for mocking. </returns>
+        public static OperationalInsightsSearchSchemaValue OperationalInsightsSearchSchemaValue(string name = default, string displayName = default, string searchSchemaValueType = default, bool indexed = default, bool stored = default, bool facet = default, IEnumerable<string> ownerType = default)
+        {
+            ownerType ??= new ChangeTrackingList<string>();
+
+            return new OperationalInsightsSearchSchemaValue(
+                name,
+                displayName,
+                searchSchemaValueType,
+                indexed,
+                stored,
+                facet,
+                ownerType.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The shared keys for a workspace. </summary>
+        /// <param name="primarySharedKey"> The primary shared key of a workspace. </param>
+        /// <param name="secondarySharedKey"> The secondary shared key of a workspace. </param>
+        /// <returns> A new <see cref="Models.OperationalInsightsWorkspaceSharedKeys"/> instance for mocking. </returns>
+        public static OperationalInsightsWorkspaceSharedKeys OperationalInsightsWorkspaceSharedKeys(string primarySharedKey = default, string secondarySharedKey = default)
+        {
+            return new OperationalInsightsWorkspaceSharedKeys(primarySharedKey, secondarySharedKey, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A metric describing the usage of a resource. </summary>
+        /// <param name="name"> The name of the metric. </param>
+        /// <param name="unit"> The units used for the metric. </param>
+        /// <param name="currentValue"> The current value of the metric. </param>
+        /// <param name="limit"> The quota limit for the metric. </param>
+        /// <param name="nextResetOn"> The time that the metric's value will reset. </param>
+        /// <param name="quotaPeriod"> The quota period that determines the length of time between value resets. </param>
+        /// <returns> A new <see cref="Models.OperationalInsightsUsageMetric"/> instance for mocking. </returns>
+        public static OperationalInsightsUsageMetric OperationalInsightsUsageMetric(OperationalInsightsMetricName name = default, string unit = default, double? currentValue = default, double? limit = default, DateTimeOffset? nextResetOn = default, string quotaPeriod = default)
+        {
+            return new OperationalInsightsUsageMetric(
+                name,
+                unit,
+                currentValue,
+                limit,
+                nextResetOn,
+                quotaPeriod,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The name of a metric. </summary>
+        /// <param name="value"> The system name of the metric. </param>
+        /// <param name="localizedValue"> The localized name of the metric. </param>
+        /// <returns> A new <see cref="Models.OperationalInsightsMetricName"/> instance for mocking. </returns>
+        public static OperationalInsightsMetricName OperationalInsightsMetricName(string value = default, string localizedValue = default)
+        {
+            return new OperationalInsightsMetricName(value, localizedValue, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Describes the body of a purge request for an App Insights Workspace. </summary>
+        /// <param name="table"> Table from which to purge data. </param>
+        /// <param name="filters"> The set of columns and filters (queries) to run over them to purge the resulting data. </param>
+        /// <returns> A new <see cref="Models.OperationalInsightsWorkspacePurgeContent"/> instance for mocking. </returns>
+        public static OperationalInsightsWorkspacePurgeContent OperationalInsightsWorkspacePurgeContent(string table = default, IEnumerable<OperationalInsightsWorkspacePurgeFilter> filters = default)
+        {
+            filters ??= new ChangeTrackingList<OperationalInsightsWorkspacePurgeFilter>();
+
+            return new OperationalInsightsWorkspacePurgeContent(table, filters.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Response containing operationId for a specific purge action. </summary>
+        /// <param name="operationStringId"> Id to use when querying for status for a particular purge operation. </param>
+        /// <returns> A new <see cref="Models.OperationalInsightsWorkspacePurgeResult"/> instance for mocking. </returns>
+        public static OperationalInsightsWorkspacePurgeResult OperationalInsightsWorkspacePurgeResult(string operationStringId = default)
+        {
+            return new OperationalInsightsWorkspacePurgeResult(operationStringId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Response containing status for a specific purge operation. </summary>
+        /// <param name="status"> Status of the operation represented by the requested Id. </param>
+        /// <returns> A new <see cref="Models.OperationalInsightsWorkspacePurgeStatusResult"/> instance for mocking. </returns>
+        public static OperationalInsightsWorkspacePurgeStatusResult OperationalInsightsWorkspacePurgeStatusResult(OperationalInsightsWorkspacePurgeState status = default)
+        {
+            return new OperationalInsightsWorkspacePurgeStatusResult(status, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="dataSourceType"> Linked storage accounts type. </param>
+        /// <param name="storageAccountIds"> Linked storage accounts resources ids. </param>
+        /// <returns> A new <see cref="OperationalInsights.OperationalInsightsLinkedStorageAccountsData"/> instance for mocking. </returns>
+        public static OperationalInsightsLinkedStorageAccountsData OperationalInsightsLinkedStorageAccountsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OperationalInsightsDataSourceType? dataSourceType = default, IEnumerable<ResourceIdentifier> storageAccountIds = default)
+        {
+            return new OperationalInsightsLinkedStorageAccountsData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                new LinkedStorageAccountsProperties(dataSourceType, (storageAccountIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), null));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="applicationId"> The unique ID of your application. This field cannot be changed. </param>
+        /// <param name="displayName"> Unique display name for your query within the Query Pack. </param>
+        /// <param name="createdOn"> Creation Date for the Log Analytics Query, in ISO 8601 format. </param>
+        /// <param name="modifiedOn"> Last modified date of the Log Analytics Query, in ISO 8601 format. </param>
+        /// <param name="author"> Object Id of user creating the query. </param>
+        /// <param name="description"> Description of the query. </param>
+        /// <param name="body"> Body of the query. </param>
+        /// <param name="related"> The related metadata items for the function. </param>
+        /// <param name="tags"> Tags associated with the query. </param>
+        /// <param name="properties"> Additional properties that can be set for the query. </param>
+        /// <returns> A new <see cref="OperationalInsights.LogAnalyticsQueryData"/> instance for mocking. </returns>
+        public static LogAnalyticsQueryData LogAnalyticsQueryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Guid? applicationId = default, string displayName = default, DateTimeOffset? createdOn = default, DateTimeOffset? modifiedOn = default, string author = default, string description = default, string body = default, LogAnalyticsQueryRelatedMetadata related = default, IDictionary<string, IList<string>> tags = default, BinaryData properties = default)
+        {
+            return new LogAnalyticsQueryData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                applicationId is null && displayName is null && createdOn is null && modifiedOn is null && author is null && description is null && body is null && related is null && tags is null && properties is null ? default : new LogAnalyticsQueryPackQueryProperties(
+                    applicationId,
+                    displayName,
+                    createdOn,
+                    modifiedOn,
+                    author,
+                    description,
+                    body,
+                    related,
+                    tags,
+                    properties,
+                    null));
+        }
+
+        /// <summary> The related metadata items for the function. </summary>
+        /// <param name="categories"> The related categories for the function. </param>
+        /// <param name="resourceTypes"> The related resource types for the function. </param>
+        /// <param name="solutions"> The related Log Analytics solutions for the function. </param>
+        /// <returns> A new <see cref="Models.LogAnalyticsQueryRelatedMetadata"/> instance for mocking. </returns>
+        public static LogAnalyticsQueryRelatedMetadata LogAnalyticsQueryRelatedMetadata(IEnumerable<string> categories = default, IEnumerable<string> resourceTypes = default, IEnumerable<string> solutions = default)
+        {
+            categories ??= new ChangeTrackingList<string>();
+            resourceTypes ??= new ChangeTrackingList<string>();
+            solutions ??= new ChangeTrackingList<string>();
+
+            return new LogAnalyticsQueryRelatedMetadata(categories.ToList(), resourceTypes.ToList(), solutions.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Properties that define an Log Analytics QueryPack-Query search properties. </summary>
+        /// <param name="related"> The related metadata items for the function. </param>
+        /// <param name="tags"> Tags associated with the query. </param>
+        /// <returns> A new <see cref="Models.LogAnalyticsQuerySearchProperties"/> instance for mocking. </returns>
+        public static LogAnalyticsQuerySearchProperties LogAnalyticsQuerySearchProperties(LogAnalyticsQuerySearchRelatedMetadata related = default, IDictionary<string, IList<string>> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, IList<string>>();
+
+            return new LogAnalyticsQuerySearchProperties(related, tags, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The related metadata items for the function. </summary>
+        /// <param name="categories"> The related categories for the function. </param>
+        /// <param name="resourceTypes"> The related resource types for the function. </param>
+        /// <param name="solutions"> The related Log Analytics solutions for the function. </param>
+        /// <returns> A new <see cref="Models.LogAnalyticsQuerySearchRelatedMetadata"/> instance for mocking. </returns>
+        public static LogAnalyticsQuerySearchRelatedMetadata LogAnalyticsQuerySearchRelatedMetadata(IEnumerable<string> categories = default, IEnumerable<string> resourceTypes = default, IEnumerable<string> solutions = default)
+        {
+            categories ??= new ChangeTrackingList<string>();
+            resourceTypes ??= new ChangeTrackingList<string>();
+            solutions ??= new ChangeTrackingList<string>();
+
+            return new LogAnalyticsQuerySearchRelatedMetadata(categories.ToList(), resourceTypes.ToList(), solutions.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="queryPackId"> The unique ID of your application. This field cannot be changed. </param>
+        /// <param name="timeCreated"> Creation Date for the Log Analytics QueryPack, in ISO 8601 format. </param>
+        /// <param name="timeModified"> Last modified date of the Log Analytics QueryPack, in ISO 8601 format. </param>
+        /// <param name="provisioningState"> Current state of this QueryPack: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Succeeded, Deploying, Canceled, and Failed. </param>
+        /// <returns> A new <see cref="OperationalInsights.LogAnalyticsQueryPackData"/> instance for mocking. </returns>
+        public static LogAnalyticsQueryPackData LogAnalyticsQueryPackData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string queryPackId = default, DateTimeOffset? timeCreated = default, DateTimeOffset? timeModified = default, string provisioningState = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new LogAnalyticsQueryPackData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                new LogAnalyticsQueryPackProperties(queryPackId, timeCreated, timeModified, provisioningState, null));
+        }
+
+        /// <summary> A container holding only the Tags for a resource, allowing the user to update the tags on a QueryPack instance. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.LogAnalyticsQueryPackPatch"/> instance for mocking. </returns>
+        public static LogAnalyticsQueryPackPatch LogAnalyticsQueryPackPatch(IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new LogAnalyticsQueryPackPatch(tags, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="containers"> The names of the blob containers that the workspace should read. </param>
+        /// <param name="tables"> The names of the Azure tables that the workspace should read. </param>
+        /// <param name="storageAccount"> The storage account connection details. </param>
+        /// <param name="status"> The status of the storage insight. </param>
+        /// <param name="eTag"> The ETag of the storage insight. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="OperationalInsights.StorageInsightData"/> instance for mocking. </returns>
+        public static StorageInsightData StorageInsightData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> containers = default, IEnumerable<string> tables = default, OperationalInsightsStorageAccount storageAccount = default, StorageInsightStatus status = default, ETag? eTag = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new StorageInsightData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                containers is null && tables is null && storageAccount is null && status is null ? default : new StorageInsightProperties((containers ?? new ChangeTrackingList<string>()).ToList(), (tables ?? new ChangeTrackingList<string>()).ToList(), storageAccount, status, null),
+                eTag,
+                tags);
+        }
+
+        /// <summary> The status of the storage insight. </summary>
+        /// <param name="state"> The state of the storage insight connection to the workspace. </param>
+        /// <param name="description"> Description of the state of the storage insight. </param>
+        /// <returns> A new <see cref="Models.StorageInsightStatus"/> instance for mocking. </returns>
+        public static StorageInsightStatus StorageInsightStatus(StorageInsightState state = default, string description = default)
+        {
+            return new StorageInsightStatus(state, description, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="ruleType"> SummaryRules rule type: User. </param>
+        /// <param name="displayName"> The display name of the Summary rule. </param>
+        /// <param name="description"> The description of the Summary rule. </param>
+        /// <param name="isActive"> Indicates if Summary rule is active. If not, Summary rule execution stops. </param>
+        /// <param name="statusCode"> Indicates the reason for rule deactivation. </param>
+        /// <param name="provisioningState"> Summary rule is in provisioning state. If set to 'updating' or 'deleting', indicates a resource lock due to an ongoing operation, preventing any update to the Summary rule until the operation is complete. </param>
+        /// <param name="ruleDefinition"> Rule definition parameters. </param>
+        /// <returns> A new <see cref="OperationalInsights.SummaryLogsData"/> instance for mocking. </returns>
+        public static SummaryLogsData SummaryLogsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RuleTypeEnum? ruleType = default, string displayName = default, string description = default, bool? isActive = default, StatusCodeEnum? statusCode = default, ProvisioningStateEnum? provisioningState = default, OperationalInsightsSummaryRule ruleDefinition = default)
+        {
+            return new SummaryLogsData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                ruleType is null && displayName is null && description is null && isActive is null && statusCode is null && provisioningState is null && ruleDefinition is null ? default : new SummaryLogsProperties(
+                    ruleType,
+                    displayName,
+                    description,
+                    isActive,
+                    statusCode,
+                    provisioningState,
+                    ruleDefinition,
+                    null));
+        }
+
+        /// <param name="id"> The operation Id. </param>
+        /// <param name="name"> The operation name. </param>
+        /// <param name="startTime"> The start time of the operation. </param>
+        /// <param name="endTime"> The end time of the operation. </param>
+        /// <param name="status"> The status of the operation. </param>
+        /// <param name="error"> The error object. </param>
+        /// <returns> A new <see cref="Models.OperationStatus"/> instance for mocking. </returns>
+        public static OperationStatus OperationStatus(string id = default, string name = default, string startTime = default, string endTime = default, string status = default, ResponseError error = default)
+        {
+            return new OperationStatus(
+                id,
+                name,
+                startTime,
+                endTime,
+                status,
+                error is null ? default : new ErrorResponse(error, null),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OperationalInsights.OperationalInsightsTableData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="retentionInDays"> The table retention in days, between 4 and 730. Setting this property to -1 will default to the workspace retention. </param>
+        /// <param name="totalRetentionInDays"> The table total retention in days, between 4 and 2555. Setting this property to -1 will default to table retention. </param>
+        /// <param name="archiveRetentionInDays"> The table data archive retention in days. Calculated as (totalRetentionInDays-retentionInDays). </param>
+        /// <param name="searchResults"> Parameters of the search job that initiated this table. </param>
+        /// <param name="restoredLogs"> Parameters of the restore operation that initiated this table. </param>
+        /// <param name="resultStatistics"> Search job execution statistics. </param>
+        /// <param name="plan"> Instruct the system how to handle and charge the logs ingested to this table. </param>
+        /// <param name="lastPlanModifiedDate"> The timestamp that table plan was last modified (UTC). </param>
+        /// <param name="schema"> Table schema. </param>
+        /// <param name="provisioningState"> Table's current provisioning state. If set to 'updating', indicates a resource lock due to ongoing operation, forbidding any update to the table until the ongoing operation is concluded. </param>
+        /// <param name="retentionInDaysAsDefault"> True - Value originates from workspace retention in days, False - Customer specific. </param>
+        /// <param name="totalRetentionInDaysAsDefault"> True - Value originates from retention in days, False - Customer specific. </param>
+        /// <returns> A new <see cref="OperationalInsights.OperationalInsightsTableData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static OperationalInsightsTableData OperationalInsightsTableData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? retentionInDays, int? totalRetentionInDays, int? archiveRetentionInDays, OperationalInsightsTableSearchResults searchResults, OperationalInsightsTableRestoredLogs restoredLogs, OperationalInsightsTableResultStatistics resultStatistics, OperationalInsightsTablePlan? plan, string lastPlanModifiedDate, OperationalInsightsSchema schema, OperationalInsightsTableProvisioningState? provisioningState, RetentionInDaysAsDefaultState? retentionInDaysAsDefault, TotalRetentionInDaysAsDefaultState? totalRetentionInDaysAsDefault)
+        {
+            return new OperationalInsightsTableData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                retentionInDays is null && totalRetentionInDays is null && archiveRetentionInDays is null && searchResults is null && restoredLogs is null && resultStatistics is null && plan is null && lastPlanModifiedDate is null && schema is null && provisioningState is null ? default : new TableProperties(
+                    retentionInDays,
+                    totalRetentionInDays,
+                    archiveRetentionInDays,
+                    searchResults,
+                    restoredLogs,
+                    resultStatistics,
+                    plan,
+                    lastPlanModifiedDate,
+                    schema,
+                    provisioningState,
+                    default,
+                    default,
+                    default));
         }
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsights.OperationalInsightsClusterData"/>. </summary>
@@ -60,142 +1140,34 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="capacityReservationProperties"> Additional properties for capacity reservation. </param>
         /// <param name="replication"> Cluster's replication properties. </param>
         /// <returns> A new <see cref="OperationalInsights.OperationalInsightsClusterData"/> instance for mocking. </returns>
-        public static OperationalInsightsClusterData OperationalInsightsClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, OperationalInsightsClusterSku sku = null, Guid? clusterId = null, OperationalInsightsClusterEntityStatus? provisioningState = null, bool? isDoubleEncryptionEnabled = null, bool? isAvailabilityZonesEnabled = null, OperationalInsightsBillingType? billingType = null, OperationalInsightsKeyVaultProperties keyVaultProperties = null, DateTimeOffset? lastModifiedOn = null, DateTimeOffset? createdOn = null, IEnumerable<OperationalInsightsClusterAssociatedWorkspace> associatedWorkspaces = null, OperationalInsightsCapacityReservationProperties capacityReservationProperties = null, OperationalInsightsClusterReplicationProperties replication = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static OperationalInsightsClusterData OperationalInsightsClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, OperationalInsightsClusterSku sku, Guid? clusterId, OperationalInsightsClusterEntityStatus? provisioningState, bool? isDoubleEncryptionEnabled, bool? isAvailabilityZonesEnabled, OperationalInsightsBillingType? billingType, OperationalInsightsKeyVaultProperties keyVaultProperties, DateTimeOffset? lastModifiedOn, DateTimeOffset? createdOn, IEnumerable<OperationalInsightsClusterAssociatedWorkspace> associatedWorkspaces, OperationalInsightsCapacityReservationProperties capacityReservationProperties, OperationalInsightsClusterReplicationProperties replication)
         {
-            tags ??= new Dictionary<string, string>();
-            associatedWorkspaces ??= new List<OperationalInsightsClusterAssociatedWorkspace>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new OperationalInsightsClusterData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 tags,
                 location,
+                provisioningState is null && isDoubleEncryptionEnabled is null && isAvailabilityZonesEnabled is null && billingType is null && keyVaultProperties is null && lastModifiedOn is null && createdOn is null && associatedWorkspaces is null && capacityReservationProperties is null && replication is null ? default : new ClusterProperties(
+                    default,
+                    provisioningState,
+                    isDoubleEncryptionEnabled,
+                    isAvailabilityZonesEnabled,
+                    billingType,
+                    keyVaultProperties,
+                    lastModifiedOn,
+                    createdOn,
+                    (associatedWorkspaces ?? new ChangeTrackingList<OperationalInsightsClusterAssociatedWorkspace>()).ToList(),
+                    capacityReservationProperties,
+                    replication,
+                    default),
                 identity,
-                sku,
-                clusterId,
-                provisioningState,
-                isDoubleEncryptionEnabled,
-                isAvailabilityZonesEnabled,
-                billingType,
-                keyVaultProperties,
-                lastModifiedOn,
-                createdOn,
-                associatedWorkspaces?.ToList(),
-                capacityReservationProperties,
-                replication,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsClusterAssociatedWorkspace"/>. </summary>
-        /// <param name="workspaceId"> Associated workspace immutable id. </param>
-        /// <param name="workspaceName"> Associated workspace resource name. </param>
-        /// <param name="resourceId"> Associated workspace arm resource id, in the form of: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}. </param>
-        /// <param name="associatedOn"> The time of workspace association. </param>
-        /// <returns> A new <see cref="Models.OperationalInsightsClusterAssociatedWorkspace"/> instance for mocking. </returns>
-        public static OperationalInsightsClusterAssociatedWorkspace OperationalInsightsClusterAssociatedWorkspace(Guid? workspaceId = null, string workspaceName = null, ResourceIdentifier resourceId = null, DateTimeOffset? associatedOn = null)
-        {
-            return new OperationalInsightsClusterAssociatedWorkspace(workspaceId, workspaceName, resourceId, associatedOn, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsCapacityReservationProperties"/>. </summary>
-        /// <param name="lastSkuUpdatedOn"> The last time Sku was updated. </param>
-        /// <param name="minCapacity"> Minimum CapacityReservation value in Gigabytes. </param>
-        /// <returns> A new <see cref="Models.OperationalInsightsCapacityReservationProperties"/> instance for mocking. </returns>
-        public static OperationalInsightsCapacityReservationProperties OperationalInsightsCapacityReservationProperties(DateTimeOffset? lastSkuUpdatedOn = null, long? minCapacity = null)
-        {
-            return new OperationalInsightsCapacityReservationProperties(lastSkuUpdatedOn, minCapacity, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsClusterReplicationProperties"/>. </summary>
-        /// <param name="location"> The secondary location of the replication. If replication is being enabled, enabled must be provided. </param>
-        /// <param name="isReplicationEnabled"> Specifies whether the replication is enabled or not. When true the cluster is replicate to the specified location. </param>
-        /// <param name="isAvailabilityZonesEnabled"> Should enable AvailabilityZones for the given replicated cluster. </param>
-        /// <param name="provisioningState"> The provisioning state of the cluster replication. </param>
-        /// <param name="createdOn"> The cluster's replication creation time. </param>
-        /// <param name="lastModifiedOn"> The last time the cluster's replication was updated. </param>
-        /// <returns> A new <see cref="Models.OperationalInsightsClusterReplicationProperties"/> instance for mocking. </returns>
-        public static OperationalInsightsClusterReplicationProperties OperationalInsightsClusterReplicationProperties(AzureLocation? location = null, bool? isReplicationEnabled = null, bool? isAvailabilityZonesEnabled = null, OperationalInsightsClusterReplicationState? provisioningState = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null)
-        {
-            return new OperationalInsightsClusterReplicationProperties(
-                location,
-                isReplicationEnabled,
-                isAvailabilityZonesEnabled,
-                provisioningState,
-                createdOn,
-                lastModifiedOn,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OperationalInsights.OperationalInsightsDataExportData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="dataExportId"> The data export rule ID. </param>
-        /// <param name="tableNames"> An array of tables to export, for example: [“Heartbeat, SecurityEvent”]. </param>
-        /// <param name="isEnabled"> Active when enabled. </param>
-        /// <param name="createdOn"> The latest data export rule modification time. </param>
-        /// <param name="lastModifiedOn"> Date and time when the export was last modified. </param>
-        /// <param name="resourceId"> The destination resource ID. This can be copied from the Properties entry of the destination resource in Azure. </param>
-        /// <param name="destinationType"> The type of the destination resource. </param>
-        /// <param name="eventHubName"> Optional. Allows to define an Event Hub name. Not applicable when destination is Storage Account. </param>
-        /// <returns> A new <see cref="OperationalInsights.OperationalInsightsDataExportData"/> instance for mocking. </returns>
-        public static OperationalInsightsDataExportData OperationalInsightsDataExportData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? dataExportId = null, IEnumerable<string> tableNames = null, bool? isEnabled = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, ResourceIdentifier resourceId = null, OperationalInsightsDataExportDestinationType? destinationType = null, string eventHubName = null)
-        {
-            tableNames ??= new List<string>();
-
-            return new OperationalInsightsDataExportData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                dataExportId,
-                tableNames?.ToList(),
-                isEnabled,
-                createdOn,
-                lastModifiedOn,
-                resourceId,
-                destinationType,
-                eventHubName,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OperationalInsights.OperationalInsightsDataSourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The data source properties in raw json format, each kind of data source have it's own schema. </param>
-        /// <param name="etag"> The ETag of the data source. </param>
-        /// <param name="kind"> The kind of the DataSource. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="OperationalInsights.OperationalInsightsDataSourceData"/> instance for mocking. </returns>
-        public static OperationalInsightsDataSourceData OperationalInsightsDataSourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, BinaryData properties = null, ETag? etag = null, OperationalInsightsDataSourceKind kind = default, IDictionary<string, string> tags = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new OperationalInsightsDataSourceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                etag,
-                kind,
-                tags,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsIntelligencePack"/>. </summary>
-        /// <param name="name"> The name of the intelligence pack. </param>
-        /// <param name="isEnabled"> The enabled boolean for the intelligence pack. </param>
-        /// <param name="displayName"> The display name of the intelligence pack. </param>
-        /// <returns> A new <see cref="Models.OperationalInsightsIntelligencePack"/> instance for mocking. </returns>
-        public static OperationalInsightsIntelligencePack OperationalInsightsIntelligencePack(string name = null, bool? isEnabled = null, string displayName = null)
-        {
-            return new OperationalInsightsIntelligencePack(name, isEnabled, displayName, serializedAdditionalRawData: null);
+                sku);
         }
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsights.OperationalInsightsLinkedServiceData"/>. </summary>
@@ -208,104 +1180,18 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="writeAccessResourceId"> The resource id of the resource that will be linked to the workspace. This should be used for linking resources which require write access. </param>
         /// <param name="provisioningState"> The provisioning state of the linked service. </param>
         /// <returns> A new <see cref="OperationalInsights.OperationalInsightsLinkedServiceData"/> instance for mocking. </returns>
-        public static OperationalInsightsLinkedServiceData OperationalInsightsLinkedServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, ResourceIdentifier resourceId = null, ResourceIdentifier writeAccessResourceId = null, OperationalInsightsLinkedServiceEntityStatus? provisioningState = null)
+        public static OperationalInsightsLinkedServiceData OperationalInsightsLinkedServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, ResourceIdentifier resourceId = default, ResourceIdentifier writeAccessResourceId = default, OperationalInsightsLinkedServiceEntityStatus? provisioningState = default)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new OperationalInsightsLinkedServiceData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                tags,
-                resourceId,
-                writeAccessResourceId,
-                provisioningState,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OperationalInsights.OperationalInsightsLinkedStorageAccountsData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="dataSourceType"> Linked storage accounts type. </param>
-        /// <param name="storageAccountIds"> Linked storage accounts resources ids. </param>
-        /// <returns> A new <see cref="OperationalInsights.OperationalInsightsLinkedStorageAccountsData"/> instance for mocking. </returns>
-        public static OperationalInsightsLinkedStorageAccountsData OperationalInsightsLinkedStorageAccountsData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, OperationalInsightsDataSourceType? dataSourceType = null, IEnumerable<ResourceIdentifier> storageAccountIds = null)
-        {
-            storageAccountIds ??= new List<ResourceIdentifier>();
-
-            return new OperationalInsightsLinkedStorageAccountsData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                dataSourceType,
-                storageAccountIds?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsManagementGroup"/>. </summary>
-        /// <param name="serverCount"> The number of servers connected to the management group. </param>
-        /// <param name="isGateway"> Gets or sets a value indicating whether the management group is a gateway. </param>
-        /// <param name="name"> The name of the management group. </param>
-        /// <param name="id"> The unique ID of the management group. </param>
-        /// <param name="createdOn"> The datetime that the management group was created. </param>
-        /// <param name="dataReceivedOn"> The last datetime that the management group received data. </param>
-        /// <param name="version"> The version of System Center that is managing the management group. </param>
-        /// <param name="sku"> The SKU of System Center that is managing the management group. </param>
-        /// <returns> A new <see cref="Models.OperationalInsightsManagementGroup"/> instance for mocking. </returns>
-        public static OperationalInsightsManagementGroup OperationalInsightsManagementGroup(int? serverCount = null, bool? isGateway = null, string name = null, string id = null, DateTimeOffset? createdOn = null, DateTimeOffset? dataReceivedOn = null, string version = null, string sku = null)
-        {
-            return new OperationalInsightsManagementGroup(
-                serverCount,
-                isGateway,
-                name,
-                id,
-                createdOn,
-                dataReceivedOn,
-                version,
-                sku,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OperationalInsights.LogAnalyticsQueryData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="applicationId"> The unique ID of your application. This field cannot be changed. </param>
-        /// <param name="displayName"> Unique display name for your query within the Query Pack. </param>
-        /// <param name="createdOn"> Creation Date for the Log Analytics Query, in ISO 8601 format. </param>
-        /// <param name="modifiedOn"> Last modified date of the Log Analytics Query, in ISO 8601 format. </param>
-        /// <param name="author"> Object Id of user creating the query. </param>
-        /// <param name="description"> Description of the query. </param>
-        /// <param name="body"> Body of the query. </param>
-        /// <param name="related"> The related metadata items for the function. </param>
-        /// <param name="tags"> Tags associated with the query. </param>
-        /// <param name="properties"> Additional properties that can be set for the query. </param>
-        /// <returns> A new <see cref="OperationalInsights.LogAnalyticsQueryData"/> instance for mocking. </returns>
-        public static LogAnalyticsQueryData LogAnalyticsQueryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? applicationId = null, string displayName = null, DateTimeOffset? createdOn = null, DateTimeOffset? modifiedOn = null, string author = null, string description = null, string body = null, LogAnalyticsQueryRelatedMetadata related = null, IDictionary<string, IList<string>> tags = null, BinaryData properties = null)
-        {
-            tags ??= new Dictionary<string, IList<string>>();
-
-            return new LogAnalyticsQueryData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                applicationId,
-                displayName,
-                createdOn,
-                modifiedOn,
-                author,
-                description,
-                body,
-                related,
-                tags,
-                properties,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                default,
+                tags);
         }
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsights.LogAnalyticsQueryPackData"/>. </summary>
@@ -320,22 +1206,20 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="modifiedOn"> Last modified date of the Log Analytics QueryPack, in ISO 8601 format. </param>
         /// <param name="provisioningState"> Current state of this QueryPack: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Succeeded, Deploying, Canceled, and Failed. </param>
         /// <returns> A new <see cref="OperationalInsights.LogAnalyticsQueryPackData"/> instance for mocking. </returns>
-        public static LogAnalyticsQueryPackData LogAnalyticsQueryPackData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, Guid? queryPackId = null, DateTimeOffset? createdOn = null, DateTimeOffset? modifiedOn = null, string provisioningState = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static LogAnalyticsQueryPackData LogAnalyticsQueryPackData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Guid? queryPackId, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, string provisioningState)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new LogAnalyticsQueryPackData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 tags,
                 location,
-                queryPackId,
-                createdOn,
-                modifiedOn,
-                provisioningState,
-                serializedAdditionalRawData: null);
+                provisioningState is null ? default : new LogAnalyticsQueryPackProperties(default, default, default, provisioningState, default));
         }
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsights.OperationalInsightsSavedSearchData"/>. </summary>
@@ -352,57 +1236,26 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="version"> The version number of the query language. The current version is 2 and is the default. </param>
         /// <param name="tags"> The tags attached to the saved search. </param>
         /// <returns> A new <see cref="OperationalInsights.OperationalInsightsSavedSearchData"/> instance for mocking. </returns>
-        public static OperationalInsightsSavedSearchData OperationalInsightsSavedSearchData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string category = null, string displayName = null, string query = null, string functionAlias = null, string functionParameters = null, long? version = null, IEnumerable<OperationalInsightsTag> tags = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static OperationalInsightsSavedSearchData OperationalInsightsSavedSearchData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string category, string displayName, string query, string functionAlias, string functionParameters, long? version, IEnumerable<OperationalInsightsTag> tags)
         {
-            tags ??= new List<OperationalInsightsTag>();
 
             return new OperationalInsightsSavedSearchData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                etag,
-                category,
-                displayName,
-                query,
-                functionAlias,
-                functionParameters,
-                version,
-                tags?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsSearchSchemaValue"/>. </summary>
-        /// <param name="name"> The name of the schema. </param>
-        /// <param name="displayName"> The display name of the schema. </param>
-        /// <param name="searchSchemaValueType"> The type. </param>
-        /// <param name="indexed"> The boolean that indicates the field is searchable as free text. </param>
-        /// <param name="stored"> The boolean that indicates whether or not the field is stored. </param>
-        /// <param name="facet"> The boolean that indicates whether or not the field is a facet. </param>
-        /// <param name="ownerType"> The array of workflows containing the field. </param>
-        /// <returns> A new <see cref="Models.OperationalInsightsSearchSchemaValue"/> instance for mocking. </returns>
-        public static OperationalInsightsSearchSchemaValue OperationalInsightsSearchSchemaValue(string name = null, string displayName = null, string searchSchemaValueType = null, bool indexed = default, bool stored = default, bool facet = default, IEnumerable<string> ownerType = null)
-        {
-            ownerType ??= new List<string>();
-
-            return new OperationalInsightsSearchSchemaValue(
-                name,
-                displayName,
-                searchSchemaValueType,
-                indexed,
-                stored,
-                facet,
-                ownerType?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsWorkspaceSharedKeys"/>. </summary>
-        /// <param name="primarySharedKey"> The primary shared key of a workspace. </param>
-        /// <param name="secondarySharedKey"> The secondary shared key of a workspace. </param>
-        /// <returns> A new <see cref="Models.OperationalInsightsWorkspaceSharedKeys"/> instance for mocking. </returns>
-        public static OperationalInsightsWorkspaceSharedKeys OperationalInsightsWorkspaceSharedKeys(string primarySharedKey = null, string secondarySharedKey = null)
-        {
-            return new OperationalInsightsWorkspaceSharedKeys(primarySharedKey, secondarySharedKey, serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                category is null && displayName is null && query is null && functionAlias is null && functionParameters is null && version is null && tags is null ? default : new SavedSearchProperties(
+                    category,
+                    displayName,
+                    query,
+                    functionAlias,
+                    functionParameters,
+                    version,
+                    (tags ?? new ChangeTrackingList<OperationalInsightsTag>()).ToList(),
+                    default),
+                etag);
         }
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsights.StorageInsightData"/>. </summary>
@@ -417,219 +1270,20 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="storageAccount"> The storage account connection details. </param>
         /// <param name="status"> The status of the storage insight. </param>
         /// <returns> A new <see cref="OperationalInsights.StorageInsightData"/> instance for mocking. </returns>
-        public static StorageInsightData StorageInsightData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, IDictionary<string, string> tags = null, IEnumerable<string> containers = null, IEnumerable<string> tables = null, OperationalInsightsStorageAccount storageAccount = null, StorageInsightStatus status = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static StorageInsightData StorageInsightData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> tags, IEnumerable<string> containers, IEnumerable<string> tables, OperationalInsightsStorageAccount storageAccount, StorageInsightStatus status)
         {
-            tags ??= new Dictionary<string, string>();
-            containers ??= new List<string>();
-            tables ??= new List<string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new StorageInsightData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
+                containers is null && tables is null && storageAccount is null && status is null ? default : new StorageInsightProperties((containers ?? new ChangeTrackingList<string>()).ToList(), (tables ?? new ChangeTrackingList<string>()).ToList(), storageAccount, status, default),
                 etag,
-                tags,
-                containers?.ToList(),
-                tables?.ToList(),
-                storageAccount,
-                status,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.StorageInsightStatus"/>. </summary>
-        /// <param name="state"> The state of the storage insight connection to the workspace. </param>
-        /// <param name="description"> Description of the state of the storage insight. </param>
-        /// <returns> A new <see cref="Models.StorageInsightStatus"/> instance for mocking. </returns>
-        public static StorageInsightStatus StorageInsightStatus(StorageInsightState state = default, string description = null)
-        {
-            return new StorageInsightStatus(state, description, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OperationalInsights.OperationalInsightsTableData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="retentionInDays"> The table retention in days, between 4 and 730. Setting this property to -1 will default to the workspace retention. </param>
-        /// <param name="totalRetentionInDays"> The table total retention in days, between 4 and 4383. Setting this property to -1 will default to table retention. </param>
-        /// <param name="archiveRetentionInDays"> The table data archive retention in days. Calculated as (totalRetentionInDays-retentionInDays). </param>
-        /// <param name="searchResults"> Parameters of the search job that initiated this table. </param>
-        /// <param name="restoredLogs"> Parameters of the restore operation that initiated this table. </param>
-        /// <param name="resultStatistics"> Search job execution statistics. </param>
-        /// <param name="plan"> Instruct the system how to handle and charge the logs ingested to this table. </param>
-        /// <param name="lastPlanModifiedDate"> The timestamp that table plan was last modified (UTC). </param>
-        /// <param name="schema"> Table schema. </param>
-        /// <param name="provisioningState"> Table's current provisioning state. If set to 'updating', indicates a resource lock due to ongoing operation, forbidding any update to the table until the ongoing operation is concluded. </param>
-        /// <param name="isRetentionInDaysAsDefault"> True - Value originates from workspace retention in days, False - Customer specific. </param>
-        /// <param name="isTotalRetentionInDaysAsDefault"> True - Value originates from retention in days, False - Customer specific. </param>
-        /// <returns> A new <see cref="OperationalInsights.OperationalInsightsTableData"/> instance for mocking. </returns>
-        public static OperationalInsightsTableData OperationalInsightsTableData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? retentionInDays = null, int? totalRetentionInDays = null, int? archiveRetentionInDays = null, OperationalInsightsTableSearchResults searchResults = null, OperationalInsightsTableRestoredLogs restoredLogs = null, OperationalInsightsTableResultStatistics resultStatistics = null, OperationalInsightsTablePlan? plan = null, string lastPlanModifiedDate = null, OperationalInsightsSchema schema = null, OperationalInsightsTableProvisioningState? provisioningState = null, bool? isRetentionInDaysAsDefault = null, bool? isTotalRetentionInDaysAsDefault = null)
-        {
-            return new OperationalInsightsTableData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                retentionInDays,
-                totalRetentionInDays,
-                archiveRetentionInDays,
-                searchResults,
-                restoredLogs,
-                resultStatistics,
-                plan,
-                lastPlanModifiedDate,
-                schema,
-                provisioningState,
-                isRetentionInDaysAsDefault,
-                isTotalRetentionInDaysAsDefault,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsTableSearchResults"/>. </summary>
-        /// <param name="query"> Search job query. </param>
-        /// <param name="description"> Search job Description. </param>
-        /// <param name="limit"> Limit the search job to return up to specified number of rows. </param>
-        /// <param name="startSearchOn"> The timestamp to start the search from (UTC). </param>
-        /// <param name="endSearchOn"> The timestamp to end the search by (UTC). </param>
-        /// <param name="sourceTable"> The table used in the search job. </param>
-        /// <param name="azureAsyncOperationId"> Search results table async operation id. </param>
-        /// <returns> A new <see cref="Models.OperationalInsightsTableSearchResults"/> instance for mocking. </returns>
-        public static OperationalInsightsTableSearchResults OperationalInsightsTableSearchResults(string query = null, string description = null, int? limit = null, DateTimeOffset? startSearchOn = null, DateTimeOffset? endSearchOn = null, string sourceTable = null, Guid? azureAsyncOperationId = null)
-        {
-            return new OperationalInsightsTableSearchResults(
-                query,
-                description,
-                limit,
-                startSearchOn,
-                endSearchOn,
-                sourceTable,
-                azureAsyncOperationId,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsTableRestoredLogs"/>. </summary>
-        /// <param name="startRestoreOn"> The timestamp to start the restore from (UTC). </param>
-        /// <param name="endRestoreOn"> The timestamp to end the restore by (UTC). </param>
-        /// <param name="sourceTable"> The table to restore data from. </param>
-        /// <param name="azureAsyncOperationId"> Search results table async operation id. </param>
-        /// <returns> A new <see cref="Models.OperationalInsightsTableRestoredLogs"/> instance for mocking. </returns>
-        public static OperationalInsightsTableRestoredLogs OperationalInsightsTableRestoredLogs(DateTimeOffset? startRestoreOn = null, DateTimeOffset? endRestoreOn = null, string sourceTable = null, Guid? azureAsyncOperationId = null)
-        {
-            return new OperationalInsightsTableRestoredLogs(startRestoreOn, endRestoreOn, sourceTable, azureAsyncOperationId, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsTableResultStatistics"/>. </summary>
-        /// <param name="progress"> Search job completion percentage. </param>
-        /// <param name="ingestedRecords"> The number of rows that were returned by the search job. </param>
-        /// <param name="scannedGB"> Search job: Amount of scanned data. </param>
-        /// <returns> A new <see cref="Models.OperationalInsightsTableResultStatistics"/> instance for mocking. </returns>
-        public static OperationalInsightsTableResultStatistics OperationalInsightsTableResultStatistics(float? progress = null, int? ingestedRecords = null, float? scannedGB = null)
-        {
-            return new OperationalInsightsTableResultStatistics(progress, ingestedRecords, scannedGB, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsSchema"/>. </summary>
-        /// <param name="name"> Table name. </param>
-        /// <param name="displayName"> Table display name. </param>
-        /// <param name="description"> Table description. </param>
-        /// <param name="columns"> A list of table custom columns. </param>
-        /// <param name="standardColumns"> A list of table standard columns. </param>
-        /// <param name="categories"> Table category. </param>
-        /// <param name="labels"> Table labels. </param>
-        /// <param name="source"> Table's creator. </param>
-        /// <param name="tableType"> Table's creator. </param>
-        /// <param name="tableSubType"> The subtype describes what APIs can be used to interact with the table, and what features are available against it. </param>
-        /// <param name="solutions"> List of solutions the table is affiliated with. </param>
-        /// <returns> A new <see cref="Models.OperationalInsightsSchema"/> instance for mocking. </returns>
-        public static OperationalInsightsSchema OperationalInsightsSchema(string name = null, string displayName = null, string description = null, IEnumerable<OperationalInsightsColumn> columns = null, IEnumerable<OperationalInsightsColumn> standardColumns = null, IEnumerable<string> categories = null, IEnumerable<string> labels = null, OperationalInsightsTableCreator? source = null, OperationalInsightsTableType? tableType = null, OperationalInsightsTableSubType? tableSubType = null, IEnumerable<string> solutions = null)
-        {
-            columns ??= new List<OperationalInsightsColumn>();
-            standardColumns ??= new List<OperationalInsightsColumn>();
-            categories ??= new List<string>();
-            labels ??= new List<string>();
-            solutions ??= new List<string>();
-
-            return new OperationalInsightsSchema(
-                name,
-                displayName,
-                description,
-                columns?.ToList(),
-                standardColumns?.ToList(),
-                categories?.ToList(),
-                labels?.ToList(),
-                source,
-                tableType,
-                tableSubType,
-                solutions?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsColumn"/>. </summary>
-        /// <param name="name"> Column name. </param>
-        /// <param name="columnType"> Column data type. </param>
-        /// <param name="dataTypeHint"> Column data type logical hint. </param>
-        /// <param name="displayName"> Column display name. </param>
-        /// <param name="description"> Column description. </param>
-        /// <param name="isDefaultDisplay"> Is displayed by default. </param>
-        /// <param name="isHidden"> Is column hidden. </param>
-        /// <returns> A new <see cref="Models.OperationalInsightsColumn"/> instance for mocking. </returns>
-        public static OperationalInsightsColumn OperationalInsightsColumn(string name = null, OperationalInsightsColumnType? columnType = null, OperationalInsightsColumnDataTypeHint? dataTypeHint = null, string displayName = null, string description = null, bool? isDefaultDisplay = null, bool? isHidden = null)
-        {
-            return new OperationalInsightsColumn(
-                name,
-                columnType,
-                dataTypeHint,
-                displayName,
-                description,
-                isDefaultDisplay,
-                isHidden,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsUsageMetric"/>. </summary>
-        /// <param name="name"> The name of the metric. </param>
-        /// <param name="unit"> The units used for the metric. </param>
-        /// <param name="currentValue"> The current value of the metric. </param>
-        /// <param name="limit"> The quota limit for the metric. </param>
-        /// <param name="nextResetOn"> The time that the metric's value will reset. </param>
-        /// <param name="quotaPeriod"> The quota period that determines the length of time between value resets. </param>
-        /// <returns> A new <see cref="Models.OperationalInsightsUsageMetric"/> instance for mocking. </returns>
-        public static OperationalInsightsUsageMetric OperationalInsightsUsageMetric(OperationalInsightsMetricName name = null, string unit = null, double? currentValue = null, double? limit = null, DateTimeOffset? nextResetOn = null, string quotaPeriod = null)
-        {
-            return new OperationalInsightsUsageMetric(
-                name,
-                unit,
-                currentValue,
-                limit,
-                nextResetOn,
-                quotaPeriod,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsMetricName"/>. </summary>
-        /// <param name="value"> The system name of the metric. </param>
-        /// <param name="localizedValue"> The localized name of the metric. </param>
-        /// <returns> A new <see cref="Models.OperationalInsightsMetricName"/> instance for mocking. </returns>
-        public static OperationalInsightsMetricName OperationalInsightsMetricName(string value = null, string localizedValue = null)
-        {
-            return new OperationalInsightsMetricName(value, localizedValue, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsWorkspacePurgeResult"/>. </summary>
-        /// <param name="operationStringId"> Id to use when querying for status for a particular purge operation. </param>
-        /// <returns> A new <see cref="Models.OperationalInsightsWorkspacePurgeResult"/> instance for mocking. </returns>
-        public static OperationalInsightsWorkspacePurgeResult OperationalInsightsWorkspacePurgeResult(string operationStringId = null)
-        {
-            return new OperationalInsightsWorkspacePurgeResult(operationStringId, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsWorkspacePurgeStatusResult"/>. </summary>
-        /// <param name="status"> Status of the operation represented by the requested Id. </param>
-        /// <returns> A new <see cref="Models.OperationalInsightsWorkspacePurgeStatusResult"/> instance for mocking. </returns>
-        public static OperationalInsightsWorkspacePurgeStatusResult OperationalInsightsWorkspacePurgeStatusResult(OperationalInsightsWorkspacePurgeState status = default)
-        {
-            return new OperationalInsightsWorkspacePurgeStatusResult(status, serializedAdditionalRawData: null);
+                tags);
         }
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsights.OperationalInsightsWorkspaceData"/>. </summary>
@@ -657,65 +1311,38 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="replication"> workspace replication properties. </param>
         /// <param name="failover"> workspace failover properties. </param>
         /// <returns> A new <see cref="OperationalInsights.OperationalInsightsWorkspaceData"/> instance for mocking. </returns>
-        public static OperationalInsightsWorkspaceData OperationalInsightsWorkspaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, ETag? etag = null, OperationalInsightsWorkspaceEntityStatus? provisioningState = null, Guid? customerId = null, OperationalInsightsWorkspaceSku sku = null, int? retentionInDays = null, OperationalInsightsWorkspaceCapping workspaceCapping = null, DateTimeOffset? createdOn = null, DateTimeOffset? modifiedOn = null, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion = null, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForQuery = null, bool? forceCmkForQuery = null, IEnumerable<OperationalInsightsPrivateLinkScopedResourceInfo> privateLinkScopedResources = null, OperationalInsightsWorkspaceFeatures features = null, ResourceIdentifier defaultDataCollectionRuleResourceId = null, OperationalInsightsWorkspaceReplicationProperties replication = null, OperationalInsightsWorkspaceFailoverProperties failover = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static OperationalInsightsWorkspaceData OperationalInsightsWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ETag? etag, OperationalInsightsWorkspaceEntityStatus? provisioningState, Guid? customerId, OperationalInsightsWorkspaceSku sku, int? retentionInDays, OperationalInsightsWorkspaceCapping workspaceCapping, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForQuery, bool? forceCmkForQuery, IEnumerable<OperationalInsightsPrivateLinkScopedResourceInfo> privateLinkScopedResources, OperationalInsightsWorkspaceFeatures features, ResourceIdentifier defaultDataCollectionRuleResourceId, OperationalInsightsWorkspaceReplicationProperties replication, OperationalInsightsWorkspaceFailoverProperties failover)
         {
-            tags ??= new Dictionary<string, string>();
-            privateLinkScopedResources ??= new List<OperationalInsightsPrivateLinkScopedResourceInfo>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new OperationalInsightsWorkspaceData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 tags,
                 location,
+                provisioningState is null && sku is null && retentionInDays is null && workspaceCapping is null && createdOn is null && modifiedOn is null && publicNetworkAccessForIngestion is null && publicNetworkAccessForQuery is null && forceCmkForQuery is null && privateLinkScopedResources is null && features is null && replication is null && failover is null ? default : new WorkspaceProperties(
+                    provisioningState,
+                    default,
+                    sku,
+                    retentionInDays,
+                    workspaceCapping,
+                    createdOn,
+                    modifiedOn,
+                    publicNetworkAccessForIngestion,
+                    publicNetworkAccessForQuery,
+                    forceCmkForQuery,
+                    (privateLinkScopedResources ?? new ChangeTrackingList<OperationalInsightsPrivateLinkScopedResourceInfo>()).ToList(),
+                    features,
+                    default,
+                    replication,
+                    failover,
+                    default),
                 identity,
-                etag,
-                provisioningState,
-                customerId,
-                sku,
-                retentionInDays,
-                workspaceCapping,
-                createdOn,
-                modifiedOn,
-                publicNetworkAccessForIngestion,
-                publicNetworkAccessForQuery,
-                forceCmkForQuery,
-                privateLinkScopedResources?.ToList(),
-                features,
-                defaultDataCollectionRuleResourceId,
-                replication,
-                failover,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsWorkspaceSku"/>. </summary>
-        /// <param name="name"> The name of the SKU. </param>
-        /// <param name="capacityReservationLevel"> The capacity reservation level in GB for this workspace, when CapacityReservation sku is selected. </param>
-        /// <param name="lastSkuUpdatedOn"> The last time when the sku was updated. </param>
-        /// <returns> A new <see cref="Models.OperationalInsightsWorkspaceSku"/> instance for mocking. </returns>
-        public static OperationalInsightsWorkspaceSku OperationalInsightsWorkspaceSku(OperationalInsightsWorkspaceSkuName name = default, OperationalInsightsWorkspaceCapacityReservationLevel? capacityReservationLevel = null, DateTimeOffset? lastSkuUpdatedOn = null)
-        {
-            return new OperationalInsightsWorkspaceSku(name, capacityReservationLevel, lastSkuUpdatedOn, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsWorkspaceCapping"/>. </summary>
-        /// <param name="dailyQuotaInGB"> The workspace daily quota for ingestion. </param>
-        /// <param name="quotaNextResetTime"> The time when the quota will be rest. </param>
-        /// <param name="dataIngestionStatus"> The status of data ingestion for this workspace. </param>
-        /// <returns> A new <see cref="Models.OperationalInsightsWorkspaceCapping"/> instance for mocking. </returns>
-        public static OperationalInsightsWorkspaceCapping OperationalInsightsWorkspaceCapping(double? dailyQuotaInGB = null, string quotaNextResetTime = null, OperationalInsightsDataIngestionStatus? dataIngestionStatus = null)
-        {
-            return new OperationalInsightsWorkspaceCapping(dailyQuotaInGB, quotaNextResetTime, dataIngestionStatus, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsPrivateLinkScopedResourceInfo"/>. </summary>
-        /// <param name="resourceId"> The full resource Id of the private link scope resource. </param>
-        /// <param name="scopeId"> The private link scope unique Identifier. </param>
-        /// <returns> A new <see cref="Models.OperationalInsightsPrivateLinkScopedResourceInfo"/> instance for mocking. </returns>
-        public static OperationalInsightsPrivateLinkScopedResourceInfo OperationalInsightsPrivateLinkScopedResourceInfo(ResourceIdentifier resourceId = null, string scopeId = null)
-        {
-            return new OperationalInsightsPrivateLinkScopedResourceInfo(resourceId, scopeId, serializedAdditionalRawData: null);
+                etag);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsWorkspaceFeatures"/>. </summary>
@@ -727,45 +1354,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="isUnifiedSentinelBillingOnly"> An indication if the specify workspace is limited to sentinel's unified billing model only. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.OperationalInsightsWorkspaceFeatures"/> instance for mocking. </returns>
-        public static OperationalInsightsWorkspaceFeatures OperationalInsightsWorkspaceFeatures(bool? isDataExportEnabled = null, bool? immediatePurgeDataOn30Days = null, bool? isLogAccessUsingOnlyResourcePermissionsEnabled = null, ResourceIdentifier clusterResourceId = null, bool? isLocalAuthDisabled = null, bool? isUnifiedSentinelBillingOnly = null, IDictionary<string, BinaryData> additionalProperties = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static OperationalInsightsWorkspaceFeatures OperationalInsightsWorkspaceFeatures(bool? isDataExportEnabled, bool? immediatePurgeDataOn30Days, bool? isLogAccessUsingOnlyResourcePermissionsEnabled, ResourceIdentifier clusterResourceId, bool? isLocalAuthDisabled, bool? isUnifiedSentinelBillingOnly, IDictionary<string, BinaryData> additionalProperties)
         {
-            additionalProperties ??= new Dictionary<string, BinaryData>();
-
-            return new OperationalInsightsWorkspaceFeatures(
-                isDataExportEnabled,
-                immediatePurgeDataOn30Days,
-                isLogAccessUsingOnlyResourcePermissionsEnabled,
-                clusterResourceId,
-                isLocalAuthDisabled,
-                isUnifiedSentinelBillingOnly,
-                additionalProperties);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsWorkspaceReplicationProperties"/>. </summary>
-        /// <param name="location"> The location of the replication. </param>
-        /// <param name="isReplicationEnabled"> Specifies whether the replication is enabled or not. When true, workspace configuration and data is replicated to the specified location. If replication is been enabled, location must be provided. </param>
-        /// <param name="provisioningState"> The provisioning state of the replication. </param>
-        /// <param name="createdOn"> The last time when the replication was enabled. </param>
-        /// <param name="lastModifiedOn"> The last time when the replication was updated. </param>
-        /// <returns> A new <see cref="Models.OperationalInsightsWorkspaceReplicationProperties"/> instance for mocking. </returns>
-        public static OperationalInsightsWorkspaceReplicationProperties OperationalInsightsWorkspaceReplicationProperties(AzureLocation? location = null, bool? isReplicationEnabled = null, OperationalInsightsWorkspaceReplicationState? provisioningState = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null)
-        {
-            return new OperationalInsightsWorkspaceReplicationProperties(
-                location,
-                isReplicationEnabled,
-                provisioningState,
-                createdOn,
-                lastModifiedOn,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsWorkspaceFailoverProperties"/>. </summary>
-        /// <param name="state"> The failover state of the replication. </param>
-        /// <param name="lastModifiedOn"> The last time when the failover state was updated. </param>
-        /// <returns> A new <see cref="Models.OperationalInsightsWorkspaceFailoverProperties"/> instance for mocking. </returns>
-        public static OperationalInsightsWorkspaceFailoverProperties OperationalInsightsWorkspaceFailoverProperties(OperationalInsightsWorkspaceFailoverState? state = null, DateTimeOffset? lastModifiedOn = null)
-        {
-            return new OperationalInsightsWorkspaceFailoverProperties(state, lastModifiedOn, serializedAdditionalRawData: null);
+            return OperationalInsightsWorkspaceFeatures(isDataExportEnabled: isDataExportEnabled, immediatePurgeDataOn30Days: immediatePurgeDataOn30Days, isLogAccessUsingOnlyResourcePermissionsEnabled: isLogAccessUsingOnlyResourcePermissionsEnabled, clusterResourceId: clusterResourceId, isLocalAuthDisabled: isLocalAuthDisabled, isUnifiedSentinelBillingOnly: isUnifiedSentinelBillingOnly, associations: default, additionalProperties: additionalProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsWorkspacePatch"/>. </summary>
@@ -792,38 +1384,40 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="failover"> workspace failover properties. </param>
         /// <param name="etag"> Resource Etag. </param>
         /// <returns> A new <see cref="Models.OperationalInsightsWorkspacePatch"/> instance for mocking. </returns>
-        public static OperationalInsightsWorkspacePatch OperationalInsightsWorkspacePatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedServiceIdentity identity = null, IDictionary<string, string> tags = null, OperationalInsightsWorkspaceEntityStatus? provisioningState = null, Guid? customerId = null, OperationalInsightsWorkspaceSku sku = null, int? retentionInDays = null, OperationalInsightsWorkspaceCapping workspaceCapping = null, DateTimeOffset? createdOn = null, DateTimeOffset? modifiedOn = null, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion = null, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForQuery = null, bool? forceCmkForQuery = null, IEnumerable<OperationalInsightsPrivateLinkScopedResourceInfo> privateLinkScopedResources = null, OperationalInsightsWorkspaceFeatures features = null, ResourceIdentifier defaultDataCollectionRuleResourceId = null, OperationalInsightsWorkspaceReplicationProperties replication = null, OperationalInsightsWorkspaceFailoverProperties failover = null, ETag? etag = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static OperationalInsightsWorkspacePatch OperationalInsightsWorkspacePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, IDictionary<string, string> tags, OperationalInsightsWorkspaceEntityStatus? provisioningState, Guid? customerId, OperationalInsightsWorkspaceSku sku, int? retentionInDays, OperationalInsightsWorkspaceCapping workspaceCapping, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForQuery, bool? forceCmkForQuery, IEnumerable<OperationalInsightsPrivateLinkScopedResourceInfo> privateLinkScopedResources, OperationalInsightsWorkspaceFeatures features, ResourceIdentifier defaultDataCollectionRuleResourceId, OperationalInsightsWorkspaceReplicationProperties replication, OperationalInsightsWorkspaceFailoverProperties failover, ETag? etag)
         {
-            tags ??= new Dictionary<string, string>();
-            privateLinkScopedResources ??= new List<OperationalInsightsPrivateLinkScopedResourceInfo>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new OperationalInsightsWorkspacePatch(
                 id,
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
+                default,
+                provisioningState is null && sku is null && retentionInDays is null && workspaceCapping is null && createdOn is null && modifiedOn is null && publicNetworkAccessForIngestion is null && publicNetworkAccessForQuery is null && forceCmkForQuery is null && privateLinkScopedResources is null && features is null && replication is null && failover is null ? default : new WorkspaceProperties(
+                    provisioningState,
+                    default,
+                    sku,
+                    retentionInDays,
+                    workspaceCapping,
+                    createdOn,
+                    modifiedOn,
+                    publicNetworkAccessForIngestion,
+                    publicNetworkAccessForQuery,
+                    forceCmkForQuery,
+                    (privateLinkScopedResources ?? new ChangeTrackingList<OperationalInsightsPrivateLinkScopedResourceInfo>()).ToList(),
+                    features,
+                    default,
+                    replication,
+                    failover,
+                    default),
                 identity,
-                tags,
-                provisioningState,
-                customerId,
-                sku,
-                retentionInDays,
-                workspaceCapping,
-                createdOn,
-                modifiedOn,
-                publicNetworkAccessForIngestion,
-                publicNetworkAccessForQuery,
-                forceCmkForQuery,
-                privateLinkScopedResources?.ToList(),
-                features,
-                defaultDataCollectionRuleResourceId,
-                replication,
-                failover,
-                etag,
-                serializedAdditionalRawData: null);
+                tags);
         }
 
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.OperationalInsights.OperationalInsightsClusterData" />. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsights.OperationalInsightsClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -842,14 +1436,45 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="createdOn"> The cluster creation time. </param>
         /// <param name="associatedWorkspaces"> The list of Log Analytics workspaces associated with the cluster. </param>
         /// <param name="capacityReservationProperties"> Additional properties for capacity reservation. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.OperationalInsights.OperationalInsightsClusterData" /> instance for mocking. </returns>
+        /// <returns> A new <see cref="OperationalInsights.OperationalInsightsClusterData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static OperationalInsightsClusterData OperationalInsightsClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, OperationalInsightsClusterSku sku, Guid? clusterId, OperationalInsightsClusterEntityStatus? provisioningState, bool? isDoubleEncryptionEnabled, bool? isAvailabilityZonesEnabled, OperationalInsightsBillingType? billingType, OperationalInsightsKeyVaultProperties keyVaultProperties, DateTimeOffset? lastModifiedOn, DateTimeOffset? createdOn, IEnumerable<OperationalInsightsClusterAssociatedWorkspace> associatedWorkspaces, OperationalInsightsCapacityReservationProperties capacityReservationProperties)
         {
-            return OperationalInsightsClusterData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, identity: identity, sku: sku, clusterId: clusterId, provisioningState: provisioningState, isDoubleEncryptionEnabled: isDoubleEncryptionEnabled, isAvailabilityZonesEnabled: isAvailabilityZonesEnabled, billingType: billingType, keyVaultProperties: keyVaultProperties, lastModifiedOn: lastModifiedOn, createdOn: createdOn, associatedWorkspaces: associatedWorkspaces, capacityReservationProperties: capacityReservationProperties, replication: default);
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new OperationalInsightsClusterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                provisioningState is null && isDoubleEncryptionEnabled is null && isAvailabilityZonesEnabled is null && billingType is null && keyVaultProperties is null && lastModifiedOn is null && createdOn is null && associatedWorkspaces is null && capacityReservationProperties is null && isAvailabilityZonesEnabled is null && createdOn is null && lastModifiedOn is null ? default : new ClusterProperties(
+                    default,
+                    provisioningState,
+                    isDoubleEncryptionEnabled,
+                    isAvailabilityZonesEnabled,
+                    billingType,
+                    keyVaultProperties,
+                    lastModifiedOn,
+                    createdOn,
+                    (associatedWorkspaces ?? new ChangeTrackingList<OperationalInsightsClusterAssociatedWorkspace>()).ToList(),
+                    capacityReservationProperties,
+                    new OperationalInsightsClusterReplicationProperties(
+                        default,
+                        default,
+                        isAvailabilityZonesEnabled,
+                        default,
+                        createdOn,
+                        lastModifiedOn,
+                        default),
+                    default),
+                identity,
+                sku);
         }
 
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.OperationalInsights.OperationalInsightsWorkspaceData" />. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsights.OperationalInsightsWorkspaceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -871,14 +1496,48 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="privateLinkScopedResources"> List of linked private link scope resources. </param>
         /// <param name="features"> Workspace features. </param>
         /// <param name="defaultDataCollectionRuleResourceId"> The resource ID of the default Data Collection Rule to use for this workspace. Expected format is - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dcrName}. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.OperationalInsights.OperationalInsightsWorkspaceData" /> instance for mocking. </returns>
+        /// <returns> A new <see cref="OperationalInsights.OperationalInsightsWorkspaceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static OperationalInsightsWorkspaceData OperationalInsightsWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ETag? etag, OperationalInsightsWorkspaceEntityStatus? provisioningState, Guid? customerId, OperationalInsightsWorkspaceSku sku, int? retentionInDays, OperationalInsightsWorkspaceCapping workspaceCapping, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForQuery, bool? forceCmkForQuery, IEnumerable<OperationalInsightsPrivateLinkScopedResourceInfo> privateLinkScopedResources, OperationalInsightsWorkspaceFeatures features, ResourceIdentifier defaultDataCollectionRuleResourceId)
         {
-            return OperationalInsightsWorkspaceData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, identity: identity, etag: etag, provisioningState: provisioningState, customerId: customerId, sku: sku, retentionInDays: retentionInDays, workspaceCapping: workspaceCapping, createdOn: createdOn, modifiedOn: modifiedOn, publicNetworkAccessForIngestion: publicNetworkAccessForIngestion, publicNetworkAccessForQuery: publicNetworkAccessForQuery, forceCmkForQuery: forceCmkForQuery, privateLinkScopedResources: privateLinkScopedResources, features: features, defaultDataCollectionRuleResourceId: defaultDataCollectionRuleResourceId, replication: default, failover: default);
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new OperationalInsightsWorkspaceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                provisioningState is null && sku is null && retentionInDays is null && workspaceCapping is null && createdOn is null && modifiedOn is null && publicNetworkAccessForIngestion is null && publicNetworkAccessForQuery is null && forceCmkForQuery is null && privateLinkScopedResources is null && features is null && createdOn is null ? default : new WorkspaceProperties(
+                    provisioningState,
+                    default,
+                    sku,
+                    retentionInDays,
+                    workspaceCapping,
+                    createdOn,
+                    modifiedOn,
+                    publicNetworkAccessForIngestion,
+                    publicNetworkAccessForQuery,
+                    forceCmkForQuery,
+                    (privateLinkScopedResources ?? new ChangeTrackingList<OperationalInsightsPrivateLinkScopedResourceInfo>()).ToList(),
+                    features,
+                    default,
+                    new OperationalInsightsWorkspaceReplicationProperties(
+                        default,
+                        default,
+                        default,
+                        createdOn,
+                        default,
+                        default),
+                    default,
+                    default),
+                identity,
+                etag);
         }
 
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePatch" />. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsWorkspacePatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -899,11 +1558,44 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="features"> Workspace features. </param>
         /// <param name="defaultDataCollectionRuleResourceId"> The resource ID of the default Data Collection Rule to use for this workspace. Expected format is - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dcrName}. </param>
         /// <param name="etag"> Resource Etag. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePatch" /> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.OperationalInsightsWorkspacePatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static OperationalInsightsWorkspacePatch OperationalInsightsWorkspacePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, IDictionary<string, string> tags, OperationalInsightsWorkspaceEntityStatus? provisioningState, Guid? customerId, OperationalInsightsWorkspaceSku sku, int? retentionInDays, OperationalInsightsWorkspaceCapping workspaceCapping, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForQuery, bool? forceCmkForQuery, IEnumerable<OperationalInsightsPrivateLinkScopedResourceInfo> privateLinkScopedResources, OperationalInsightsWorkspaceFeatures features, ResourceIdentifier defaultDataCollectionRuleResourceId, ETag? etag)
         {
-            return OperationalInsightsWorkspacePatch(id: id, name: name, resourceType: resourceType, systemData: systemData, identity: identity, tags: tags, provisioningState: provisioningState, customerId: customerId, sku: sku, retentionInDays: retentionInDays, workspaceCapping: workspaceCapping, createdOn: createdOn, modifiedOn: modifiedOn, publicNetworkAccessForIngestion: publicNetworkAccessForIngestion, publicNetworkAccessForQuery: publicNetworkAccessForQuery, forceCmkForQuery: forceCmkForQuery, privateLinkScopedResources: privateLinkScopedResources, features: features, defaultDataCollectionRuleResourceId: defaultDataCollectionRuleResourceId, replication: default, failover: default, etag: etag);
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new OperationalInsightsWorkspacePatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                default,
+                provisioningState is null && sku is null && retentionInDays is null && workspaceCapping is null && createdOn is null && modifiedOn is null && publicNetworkAccessForIngestion is null && publicNetworkAccessForQuery is null && forceCmkForQuery is null && privateLinkScopedResources is null && features is null && createdOn is null ? default : new WorkspaceProperties(
+                    provisioningState,
+                    default,
+                    sku,
+                    retentionInDays,
+                    workspaceCapping,
+                    createdOn,
+                    modifiedOn,
+                    publicNetworkAccessForIngestion,
+                    publicNetworkAccessForQuery,
+                    forceCmkForQuery,
+                    (privateLinkScopedResources ?? new ChangeTrackingList<OperationalInsightsPrivateLinkScopedResourceInfo>()).ToList(),
+                    features,
+                    default,
+                    new OperationalInsightsWorkspaceReplicationProperties(
+                        default,
+                        default,
+                        default,
+                        createdOn,
+                        default,
+                        default),
+                    default,
+                    default),
+                identity,
+                tags);
         }
     }
 }
