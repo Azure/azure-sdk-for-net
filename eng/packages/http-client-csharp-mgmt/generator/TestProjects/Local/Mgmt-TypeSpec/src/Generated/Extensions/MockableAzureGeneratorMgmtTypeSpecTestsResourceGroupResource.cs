@@ -187,14 +187,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="FooSettingsResource"/>. </description>
+        /// <description> <see cref="FooConfigurationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <returns> Returns a <see cref="FooSettingsResource"/> object. </returns>
-        public virtual FooSettingsResource GetFooSettings()
+        /// <returns> Returns a <see cref="FooConfigurationResource"/> object. </returns>
+        public virtual FooConfigurationResource GetFooConfiguration()
         {
-            return new FooSettingsResource(Client, Id.AppendProviderResource("MgmtTypeSpec", "FooSettings", "default"));
+            return new FooConfigurationResource(Client, Id.AppendProviderResource("MgmtTypeSpec", "FooSettings", "default"));
         }
 
         /// <summary> Gets a collection of Bazs in the <see cref="ResourceGroupResource"/>. </summary>

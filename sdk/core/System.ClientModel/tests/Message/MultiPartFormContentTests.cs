@@ -23,9 +23,6 @@ namespace System.ClientModel.Tests.Message;
 
 internal class MultiPartFormContentTests : SyncAsyncTestBase
 {
-    private const string BoundaryAlphabet = "0123456789=ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz";
-    private const int BoundaryLength = 70;
-
     private string _testDirectory = null!;
 
     public MultiPartFormContentTests(bool isAsync) : base(isAsync)
@@ -54,7 +51,8 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
         using MultiPartFormContent content = new();
 
         string boundary = GetBoundary(content);
-        Assert.AreEqual(BoundaryLength, boundary.Length);
+        Assert.IsTrue(Guid.TryParseExact(boundary, "D", out _),
+            $"Expected default boundary to be a GUID in 'D' format, but got '{boundary}'.");
         StringAssert.StartsWith("multipart/form-data", content.MediaType);
     }
 
@@ -70,17 +68,22 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
     }
 
     [Test]
-    public void Ctor_Default_BoundaryUsesDocumentedAlphabet()
+    public void Ctor_Default_BoundaryUsesRfc2046Chars()
     {
+        const string Rfc2046BoundaryChars = "0123456789ABCDEFabcdefghijklmnopqrstuvwxyzGHIJKLMNOPQRSTUVWXYZ'()+_,-./:=? ";
         for (int i = 0; i < 16; i++)
         {
             using MultiPartFormContent content = new();
             string boundary = GetBoundary(content);
+            Assert.IsTrue(boundary.Length >= 1 && boundary.Length <= 70,
+                $"Boundary length {boundary.Length} outside RFC 2046 1-70 char range.");
+            Assert.AreNotEqual(' ', boundary[boundary.Length - 1],
+                "Boundary must not end with SPACE per RFC 2046.");
             foreach (char c in boundary)
             {
                 Assert.IsTrue(
-                    BoundaryAlphabet.IndexOf(c) >= 0,
-                    $"Boundary character '{c}' not in documented alphabet.");
+                    Rfc2046BoundaryChars.IndexOf(c) >= 0,
+                    $"Boundary character '{c}' not in RFC 2046 bchars alphabet.");
             }
         }
     }
@@ -118,45 +121,10 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
         HashSet<string> unique = new();
         foreach (string boundary in boundaries)
         {
-            Assert.AreEqual(BoundaryLength, boundary.Length);
-            foreach (char c in boundary)
-            {
-                Assert.IsTrue(
-                    BoundaryAlphabet.IndexOf(c) >= 0,
-                    $"Boundary character '{c}' not in documented alphabet.");
-            }
+            Assert.IsTrue(Guid.TryParseExact(boundary, "D", out _),
+                $"Expected default boundary to be a GUID in 'D' format, but got '{boundary}'.");
             Assert.IsTrue(unique.Add(boundary), $"Duplicate boundary generated under concurrency: {boundary}");
         }
-    }
-
-    [Test]
-    public void Ctor_Boundary_UsesProvidedValue()
-    {
-        const string boundary = "my-boundary-12345";
-        using MultiPartFormContent content = new(boundary);
-
-        Assert.AreEqual(boundary, GetBoundary(content));
-    }
-
-    [Test]
-    public void Ctor_Boundary_PopulatesMediaType()
-    {
-        using MultiPartFormContent content = new("abc");
-
-        StringAssert.StartsWith("multipart/form-data", content.MediaType);
-        StringAssert.Contains("abc", content.MediaType);
-    }
-
-    [Test]
-    public void Ctor_Boundary_Throws_WhenNull()
-    {
-        Assert.Throws<ArgumentNullException>(() => new MultiPartFormContent(null!));
-    }
-
-    [Test]
-    public void Ctor_Boundary_Throws_WhenEmpty()
-    {
-        Assert.Throws<ArgumentException>(() => new MultiPartFormContent(string.Empty));
     }
 
     [Test]
@@ -279,6 +247,16 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
     }
 
     [Test]
+    public void Add_Model_Full_Throws_WhenMediaTypeEmpty()
+    {
+        using MultiPartFormContent content = new();
+        MockPersistableModel model = new(1, "v");
+
+        Assert.Throws<ArgumentException>(
+            () => content.Add("m", model, EmptyTestContext.Instance, ModelReaderWriterOptions.Json, mediaType: string.Empty));
+    }
+
+    [Test]
     public async Task Add_Model_DefaultsToApplicationJson()
     {
         using MultiPartFormContent content = new();
@@ -290,34 +268,6 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
         Assert.AreEqual("model", part.Name);
         Assert.AreEqual("application/json", part.ContentType?.MediaType);
         Assert.AreEqual(model.SerializedValue, Encoding.UTF8.GetString(part.Body));
-    }
-
-    [Test]
-    public async Task Add_Model_HonorsCustomMediaType()
-    {
-        using MultiPartFormContent content = new();
-        MockPersistableModel model = new(1, "x");
-        content.Add("m", model, context: null, options: null, mediaType: "application/x-custom");
-
-        ParsedPart part = (await ParseAsync(content)).Parts.Single();
-
-        Assert.AreEqual("application/x-custom", part.ContentType?.MediaType);
-    }
-
-    [Test]
-    public async Task Add_Model_Convenience_MatchesFullOverloadDefaults()
-    {
-        using MultiPartFormContent convenience = new("boundary-x");
-        using MultiPartFormContent full = new("boundary-x");
-        MockPersistableModel model = new(7, "v");
-
-        convenience.Add("m", model);
-        full.Add("m", model, context: null, options: null, mediaType: "application/json");
-
-        byte[] convenienceBytes = await WriteToBytesAsync(convenience);
-        byte[] fullBytes = await WriteToBytesAsync(full);
-
-        Assert.AreEqual(fullBytes, convenienceBytes);
     }
 
     [Test]
@@ -455,10 +405,10 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
     }
 
     [Test]
-    public async Task Add_String_DefaultsToApplicationJson_AndJsonEncodesValue()
+    public async Task Add_String_ApplicationJson_JsonEncodesValue()
     {
         using MultiPartFormContent content = new();
-        content.Add("greeting", "hello \"world\"");
+        content.Add("greeting", "hello \"world\"", "application/json");
 
         ParsedPart part = (await ParseAsync(content)).Parts.Single();
 
@@ -498,15 +448,27 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
 
         ParsedPart part = (await ParseAsync(content)).Parts.Single();
 
-        Assert.AreEqual("application/json", part.ContentType?.MediaType);
-        Assert.AreEqual("\"\"", Encoding.UTF8.GetString(part.Body));
+        Assert.AreEqual("text/plain", part.ContentType?.MediaType);
+        Assert.AreEqual(string.Empty, Encoding.UTF8.GetString(part.Body));
     }
 
     [Test]
-    public async Task Add_Int_DefaultsToJson()
+    public async Task Add_Int_DefaultsToTextPlain()
     {
         using MultiPartFormContent content = new();
         content.Add("n", 42);
+
+        ParsedPart part = (await ParseAsync(content)).Parts.Single();
+
+        Assert.AreEqual("text/plain", part.ContentType?.MediaType);
+        Assert.AreEqual("42", Encoding.UTF8.GetString(part.Body));
+    }
+
+    [Test]
+    public async Task Add_Int_ApplicationJson_JsonEncodesValue()
+    {
+        using MultiPartFormContent content = new();
+        content.Add("n", 42, mediaType: "application/json");
 
         ParsedPart part = (await ParseAsync(content)).Parts.Single();
 
@@ -527,10 +489,22 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
     }
 
     [Test]
-    public async Task Add_Long_DefaultsToJson()
+    public async Task Add_Long_DefaultsToTextPlain()
     {
         using MultiPartFormContent content = new();
         content.Add("n", long.MaxValue);
+
+        ParsedPart part = (await ParseAsync(content)).Parts.Single();
+
+        Assert.AreEqual("text/plain", part.ContentType?.MediaType);
+        Assert.AreEqual("9223372036854775807", Encoding.UTF8.GetString(part.Body));
+    }
+
+    [Test]
+    public async Task Add_Long_ApplicationJson_JsonEncodesValue()
+    {
+        using MultiPartFormContent content = new();
+        content.Add("n", long.MaxValue, mediaType: "application/json");
 
         ParsedPart part = (await ParseAsync(content)).Parts.Single();
 
@@ -539,10 +513,22 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
     }
 
     [Test]
-    public async Task Add_Float_DefaultsToJson()
+    public async Task Add_Float_DefaultsToTextPlain()
     {
         using MultiPartFormContent content = new();
         content.Add("n", 1.5f);
+
+        ParsedPart part = (await ParseAsync(content)).Parts.Single();
+
+        Assert.AreEqual("text/plain", part.ContentType?.MediaType);
+        Assert.AreEqual(1.5f, float.Parse(Encoding.UTF8.GetString(part.Body), CultureInfo.InvariantCulture));
+    }
+
+    [Test]
+    public async Task Add_Float_ApplicationJson_JsonEncodesValue()
+    {
+        using MultiPartFormContent content = new();
+        content.Add("n", 1.5f, mediaType: "application/json");
 
         ParsedPart part = (await ParseAsync(content)).Parts.Single();
 
@@ -551,10 +537,22 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
     }
 
     [Test]
-    public async Task Add_Double_DefaultsToJson()
+    public async Task Add_Double_DefaultsToTextPlain()
     {
         using MultiPartFormContent content = new();
         content.Add("n", 2.5d);
+
+        ParsedPart part = (await ParseAsync(content)).Parts.Single();
+
+        Assert.AreEqual("text/plain", part.ContentType?.MediaType);
+        Assert.AreEqual("2.5", Encoding.UTF8.GetString(part.Body));
+    }
+
+    [Test]
+    public async Task Add_Double_ApplicationJson_JsonEncodesValue()
+    {
+        using MultiPartFormContent content = new();
+        content.Add("n", 2.5d, mediaType: "application/json");
 
         ParsedPart part = (await ParseAsync(content)).Parts.Single();
 
@@ -598,15 +596,219 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
     }
 
     [Test]
-    public async Task Add_Decimal_DefaultsToJson()
+    public async Task Add_Decimal_DefaultsToTextPlain()
     {
         using MultiPartFormContent content = new();
         content.Add("n", 0.1m);
 
         ParsedPart part = (await ParseAsync(content)).Parts.Single();
 
+        Assert.AreEqual("text/plain", part.ContentType?.MediaType);
+        Assert.AreEqual("0.1", Encoding.UTF8.GetString(part.Body));
+    }
+
+    [Test]
+    public async Task Add_Decimal_ApplicationJson_JsonEncodesValue()
+    {
+        using MultiPartFormContent content = new();
+        content.Add("n", 0.1m, mediaType: "application/json");
+
+        ParsedPart part = (await ParseAsync(content)).Parts.Single();
+
         Assert.AreEqual("application/json", part.ContentType?.MediaType);
         Assert.AreEqual("0.1", Encoding.UTF8.GetString(part.Body));
+    }
+
+    [Test]
+    public async Task Add_Bool_DefaultsToTextPlain()
+    {
+        using MultiPartFormContent content = new();
+        content.Add("n", true);
+
+        ParsedPart part = (await ParseAsync(content)).Parts.Single();
+
+        Assert.AreEqual("text/plain", part.ContentType?.MediaType);
+        Assert.AreEqual("true", Encoding.UTF8.GetString(part.Body));
+    }
+
+    [Test]
+    public async Task Add_Bool_ApplicationJson_JsonEncodesValue()
+    {
+        using MultiPartFormContent content = new();
+        content.Add("n", false, mediaType: "application/json");
+
+        ParsedPart part = (await ParseAsync(content)).Parts.Single();
+
+        Assert.AreEqual("application/json", part.ContentType?.MediaType);
+        Assert.AreEqual("false", Encoding.UTF8.GetString(part.Body));
+    }
+
+    [Test]
+    public async Task Add_Byte_DefaultsToTextPlain()
+    {
+        using MultiPartFormContent content = new();
+        content.Add("n", (byte)200);
+
+        ParsedPart part = (await ParseAsync(content)).Parts.Single();
+
+        Assert.AreEqual("text/plain", part.ContentType?.MediaType);
+        Assert.AreEqual("200", Encoding.UTF8.GetString(part.Body));
+    }
+
+    [Test]
+    public async Task Add_Byte_ApplicationJson_JsonEncodesValue()
+    {
+        using MultiPartFormContent content = new();
+        content.Add("n", (byte)200, mediaType: "application/json");
+
+        ParsedPart part = (await ParseAsync(content)).Parts.Single();
+
+        Assert.AreEqual("application/json", part.ContentType?.MediaType);
+        Assert.AreEqual("200", Encoding.UTF8.GetString(part.Body));
+    }
+
+    [Test]
+    public async Task Add_SByte_DefaultsToTextPlain()
+    {
+        using MultiPartFormContent content = new();
+        content.Add("n", (sbyte)-100);
+
+        ParsedPart part = (await ParseAsync(content)).Parts.Single();
+
+        Assert.AreEqual("text/plain", part.ContentType?.MediaType);
+        Assert.AreEqual("-100", Encoding.UTF8.GetString(part.Body));
+    }
+
+    [Test]
+    public async Task Add_SByte_ApplicationJson_JsonEncodesValue()
+    {
+        using MultiPartFormContent content = new();
+        content.Add("n", (sbyte)-100, mediaType: "application/json");
+
+        ParsedPart part = (await ParseAsync(content)).Parts.Single();
+
+        Assert.AreEqual("application/json", part.ContentType?.MediaType);
+        Assert.AreEqual("-100", Encoding.UTF8.GetString(part.Body));
+    }
+
+    [Test]
+    public async Task Add_Char_DefaultsToTextPlain()
+    {
+        using MultiPartFormContent content = new();
+        content.Add("n", 'A');
+
+        ParsedPart part = (await ParseAsync(content)).Parts.Single();
+
+        Assert.AreEqual("text/plain", part.ContentType?.MediaType);
+        Assert.AreEqual("A", Encoding.UTF8.GetString(part.Body));
+    }
+
+    [Test]
+    public async Task Add_Char_ApplicationJson_JsonEncodesValue()
+    {
+        using MultiPartFormContent content = new();
+        content.Add("n", 'A', mediaType: "application/json");
+
+        ParsedPart part = (await ParseAsync(content)).Parts.Single();
+
+        Assert.AreEqual("application/json", part.ContentType?.MediaType);
+        Assert.AreEqual("\"A\"", Encoding.UTF8.GetString(part.Body));
+    }
+
+    [Test]
+    public async Task Add_Short_DefaultsToTextPlain()
+    {
+        using MultiPartFormContent content = new();
+        content.Add("n", (short)-32000);
+
+        ParsedPart part = (await ParseAsync(content)).Parts.Single();
+
+        Assert.AreEqual("text/plain", part.ContentType?.MediaType);
+        Assert.AreEqual("-32000", Encoding.UTF8.GetString(part.Body));
+    }
+
+    [Test]
+    public async Task Add_Short_ApplicationJson_JsonEncodesValue()
+    {
+        using MultiPartFormContent content = new();
+        content.Add("n", (short)-32000, mediaType: "application/json");
+
+        ParsedPart part = (await ParseAsync(content)).Parts.Single();
+
+        Assert.AreEqual("application/json", part.ContentType?.MediaType);
+        Assert.AreEqual("-32000", Encoding.UTF8.GetString(part.Body));
+    }
+
+    [Test]
+    public async Task Add_UShort_DefaultsToTextPlain()
+    {
+        using MultiPartFormContent content = new();
+        content.Add("n", (ushort)60000);
+
+        ParsedPart part = (await ParseAsync(content)).Parts.Single();
+
+        Assert.AreEqual("text/plain", part.ContentType?.MediaType);
+        Assert.AreEqual("60000", Encoding.UTF8.GetString(part.Body));
+    }
+
+    [Test]
+    public async Task Add_UShort_ApplicationJson_JsonEncodesValue()
+    {
+        using MultiPartFormContent content = new();
+        content.Add("n", (ushort)60000, mediaType: "application/json");
+
+        ParsedPart part = (await ParseAsync(content)).Parts.Single();
+
+        Assert.AreEqual("application/json", part.ContentType?.MediaType);
+        Assert.AreEqual("60000", Encoding.UTF8.GetString(part.Body));
+    }
+
+    [Test]
+    public async Task Add_UInt_DefaultsToTextPlain()
+    {
+        using MultiPartFormContent content = new();
+        content.Add("n", 4000000000u);
+
+        ParsedPart part = (await ParseAsync(content)).Parts.Single();
+
+        Assert.AreEqual("text/plain", part.ContentType?.MediaType);
+        Assert.AreEqual("4000000000", Encoding.UTF8.GetString(part.Body));
+    }
+
+    [Test]
+    public async Task Add_UInt_ApplicationJson_JsonEncodesValue()
+    {
+        using MultiPartFormContent content = new();
+        content.Add("n", 4000000000u, mediaType: "application/json");
+
+        ParsedPart part = (await ParseAsync(content)).Parts.Single();
+
+        Assert.AreEqual("application/json", part.ContentType?.MediaType);
+        Assert.AreEqual("4000000000", Encoding.UTF8.GetString(part.Body));
+    }
+
+    [Test]
+    public async Task Add_ULong_DefaultsToTextPlain()
+    {
+        using MultiPartFormContent content = new();
+        content.Add("n", ulong.MaxValue);
+
+        ParsedPart part = (await ParseAsync(content)).Parts.Single();
+
+        Assert.AreEqual("text/plain", part.ContentType?.MediaType);
+        Assert.AreEqual("18446744073709551615", Encoding.UTF8.GetString(part.Body));
+    }
+
+    [Test]
+    public async Task Add_ULong_ApplicationJson_JsonEncodesValue()
+    {
+        using MultiPartFormContent content = new();
+        content.Add("n", ulong.MaxValue, mediaType: "application/json");
+
+        ParsedPart part = (await ParseAsync(content)).Parts.Single();
+
+        Assert.AreEqual("application/json", part.ContentType?.MediaType);
+        Assert.AreEqual("18446744073709551615", Encoding.UTF8.GetString(part.Body));
     }
 
     [Test]
@@ -627,8 +829,16 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
     {
         using MultiPartFormContent content = new();
 
+        Assert.Throws(expected, () => content.Add(name!, true));
+        Assert.Throws(expected, () => content.Add(name!, (byte)1));
+        Assert.Throws(expected, () => content.Add(name!, (sbyte)1));
+        Assert.Throws(expected, () => content.Add(name!, 'a'));
+        Assert.Throws(expected, () => content.Add(name!, (short)1));
+        Assert.Throws(expected, () => content.Add(name!, (ushort)1));
         Assert.Throws(expected, () => content.Add(name!, 1));
+        Assert.Throws(expected, () => content.Add(name!, 1u));
         Assert.Throws(expected, () => content.Add(name!, 1L));
+        Assert.Throws(expected, () => content.Add(name!, 1uL));
         Assert.Throws(expected, () => content.Add(name!, 1f));
         Assert.Throws(expected, () => content.Add(name!, 1d));
         Assert.Throws(expected, () => content.Add(name!, 1m));
@@ -701,7 +911,7 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
         using FileBinaryContent file2 = new(path2, "image/jpeg");
         using FileBinaryContent file3 = new(BinaryData.FromBytes(bytes3), "application/octet-stream");
 
-        using MultiPartFormContent content = new("boundary-files");
+        using MultiPartFormContent content = new();
         foreach (FileBinaryContent file in new[] { file1, file2, file3 })
         {
             content.Add("files", file);
@@ -738,7 +948,7 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
             new(3, "third"),
         };
 
-        using MultiPartFormContent content = new("boundary-models");
+        using MultiPartFormContent content = new();
         foreach (MockPersistableModel model in models)
         {
             content.Add("items", model);
@@ -769,7 +979,7 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
             new() { Id = 3, Name = "third" },
         };
 
-        using MultiPartFormContent content = new("boundary-list");
+        using MultiPartFormContent content = new();
         content.Add("items", list);
 
         ParsedPart part = (await ParseAsync(content)).Parts.Single();
@@ -800,7 +1010,7 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
         MockPersistableModel modelA = new(10, "a");
         MockPersistableModel modelB = new(20, "b");
 
-        using MultiPartFormContent content = new("boundary-mixed");
+        using MultiPartFormContent content = new();
         content.Add("files", fileA);
         content.Add("models", modelA);
         content.Add("files", fileB);
@@ -823,20 +1033,21 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
     [Test]
     public async Task WriteTo_BodyUsesBoundaryFromMediaType()
     {
-        using MultiPartFormContent content = new("custom-boundary");
+        using MultiPartFormContent content = new();
         content.Add("k", "v", "text/plain");
 
+        string boundary = GetBoundary(content);
         byte[] bytes = await WriteToBytesAsync(content);
         string body = Encoding.UTF8.GetString(bytes);
 
-        StringAssert.StartsWith("--custom-boundary\r\n", body);
-        StringAssert.EndsWith("--custom-boundary--\r\n", body);
+        StringAssert.StartsWith($"--{boundary}\r\n", body);
+        StringAssert.EndsWith($"--{boundary}--\r\n", body);
     }
 
     [Test]
     public async Task WriteTo_CanBeCalledMultipleTimes()
     {
-        using MultiPartFormContent content = new("boundary-x");
+        using MultiPartFormContent content = new();
         content.Add("k", "value", "text/plain");
         content.Add("n", 7);
 
@@ -852,7 +1063,7 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
         // Buffered (BinaryData-backed) file part.
         byte[] bytes = CreateBytes(64);
 
-        using MultiPartFormContent content = new("boundary-x");
+        using MultiPartFormContent content = new();
         using FileBinaryContent file = new(BinaryData.FromBytes(bytes), "application/octet-stream");
         content.Add("file", file);
 
@@ -868,7 +1079,7 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
         byte[] bytes = CreateBytes(128);
         string path = CreateTempFile(bytes);
 
-        using MultiPartFormContent content = new("boundary-x");
+        using MultiPartFormContent content = new();
         using FileBinaryContent file = new(path);
         content.Add("file", file);
 
@@ -882,8 +1093,8 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
     public async Task WriteTo_EmittedPartIsValidJson()
     {
         using MultiPartFormContent content = new();
-        content.Add("greeting", "hi");
-        content.Add("count", 3);
+        content.Add("greeting", "hi", "application/json");
+        content.Add("count", 3, mediaType: "application/json");
 
         ParsedMultipart parsed = await ParseAsync(content);
 
@@ -900,7 +1111,7 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
     [Test]
     public async Task TryComputeLength_MatchesWrittenByteCount()
     {
-        using MultiPartFormContent content = new("boundary-x");
+        using MultiPartFormContent content = new();
         content.Add("k", "value", "text/plain");
         content.Add("n", 12345);
 
@@ -912,7 +1123,7 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
     [Test]
     public void TryComputeLength_Empty_ReturnsTrue()
     {
-        using MultiPartFormContent content = new("boundary-x");
+        using MultiPartFormContent content = new();
 
         Assert.IsTrue(content.TryComputeLength(out long length));
         Assert.GreaterOrEqual(length, 0);
@@ -983,15 +1194,12 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
         Assert.Throws<ObjectDisposedException>(() => _ = source.Length);
     }
 
-    [TestCase("test-boundary-1234")]
-    [TestCase(null)]
-    public async Task EndToEnd_AllAddOverloads_ProducesExpectedPayload(string? explicitBoundary)
+    [Test]
+    public async Task EndToEnd_AllAddOverloads_ProducesExpectedPayload()
     {
         // Exercise every public Add overload, then validate the entire
         // serialized payload byte-for-byte (per-part headers, per-part body,
-        // structural skeleton, and total length). Runs once with a
-        // caller-supplied boundary and once with the randomly-generated
-        // default boundary.
+        // structural skeleton, and total length).
         byte[] fileBytes = CreateBytes(64, seed: 1);
         string filePath = CreateTempFile(fileBytes);
         byte[] binaryDataBytes = CreateBytes(32, seed: 2);
@@ -1000,34 +1208,25 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
         byte[] modelBytes = Encoding.UTF8.GetBytes(model.SerializedValue);
 
         using FileBinaryContent file = new(filePath, "image/png");
-        using MultiPartFormContent content = explicitBoundary is null
-            ? new MultiPartFormContent()
-            : new MultiPartFormContent(explicitBoundary);
+        using MultiPartFormContent content = new();
 
-        // Resolve the actual boundary used (random when not supplied).
         string boundary = GetBoundary(content);
-        if (explicitBoundary is not null)
-        {
-            Assert.AreEqual(explicitBoundary, boundary);
-        }
-        else
-        {
-            Assert.AreEqual(BoundaryLength, boundary.Length);
-        }
+        Assert.IsTrue(Guid.TryParseExact(boundary, "D", out _),
+            $"Expected default boundary to be a GUID in 'D' format, but got '{boundary}'.");
 
         content.Add("filePart", file);
-        content.Add("modelFull", model, context: null, options: null, mediaType: "application/json");
+        content.Add("modelFull", model, EmptyTestContext.Instance, ModelReaderWriterOptions.Json, mediaType: "application/json");
         content.Add("modelConv", model);
         content.Add("blob", BinaryData.FromBytes(binaryDataBytes).WithMediaType("application/x-binary"));
         content.Add("bytesDefault", rawBytes);
         content.Add("bytesCustom", rawBytes, "image/jpeg");
-        content.Add("textJson", "json-string");
-        content.Add("textPlain", "plain-string", "text/plain");
+        content.Add("textJson", "json-string", "application/json");
+        content.Add("textPlain", "plain-string");
         content.Add("intPart", 123);
         content.Add("longPart", 4567890123L);
-        content.Add("floatPart", 1.5f, "text/plain");
-        content.Add("doublePart", 2.5d, "text/plain");
-        content.Add("decimalPart", 3.5m, "text/plain");
+        content.Add("floatPart", 1.5f);
+        content.Add("doublePart", 2.5d);
+        content.Add("decimalPart", 3.5m);
 
         ParsedMultipart parsed = await ParseAsync(content);
 
@@ -1042,8 +1241,8 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
         AssertPart(parsed.Parts[5], "bytesCustom", "image/jpeg", rawBytes);
         AssertPart(parsed.Parts[6], "textJson", "application/json", Encoding.UTF8.GetBytes("\"json-string\""));
         AssertPart(parsed.Parts[7], "textPlain", "text/plain", Encoding.UTF8.GetBytes("plain-string"));
-        AssertPart(parsed.Parts[8], "intPart", "application/json", Encoding.UTF8.GetBytes("123"));
-        AssertPart(parsed.Parts[9], "longPart", "application/json", Encoding.UTF8.GetBytes("4567890123"));
+        AssertPart(parsed.Parts[8], "intPart", "text/plain", Encoding.UTF8.GetBytes("123"));
+        AssertPart(parsed.Parts[9], "longPart", "text/plain", Encoding.UTF8.GetBytes("4567890123"));
         AssertPart(parsed.Parts[10], "floatPart", "text/plain", Encoding.UTF8.GetBytes("1.5"));
         AssertPart(parsed.Parts[11], "doublePart", "text/plain", Encoding.UTF8.GetBytes("2.5"));
         AssertPart(parsed.Parts[12], "decimalPart", "text/plain", Encoding.UTF8.GetBytes("3.5"));
@@ -1071,7 +1270,7 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
         byte[] bytes = CreateBytes(32);
         BinaryData data = BinaryData.FromBytes(bytes).WithMediaType("application/x-binary");
 
-        using MultiPartFormContent content = new("boundary-x");
+        using MultiPartFormContent content = new();
         content.Add("blob", data);
 
         StringAssert.StartsWith("multipart/form-data", content.MediaType);
@@ -1085,7 +1284,7 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
         byte[] bytes = CreateBytes(32);
         BinaryData data = BinaryData.FromBytes(bytes).WithMediaType("application/x-binary");
 
-        using MultiPartFormContent content = new("boundary-x");
+        using MultiPartFormContent content = new();
         content.Add("blob", data);
 
         MemoryStream stream = new();
@@ -1094,7 +1293,7 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
         Assert.IsTrue(content.TryComputeLength(out long length));
         Assert.AreEqual(length, stream.Position);
 
-        ParsedPart part = ParseParts(stream.ToArray(), "boundary-x").Single();
+        ParsedPart part = ParseParts(stream.ToArray(), GetBoundary(content)).Single();
         Assert.AreEqual("application/x-binary", part.ContentType?.MediaType);
         Assert.AreEqual(bytes, part.Body);
     }
@@ -1104,7 +1303,7 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
     {
         MockPersistableModel model = new(404, "abcde");
 
-        using MultiPartFormContent content = new("boundary-x");
+        using MultiPartFormContent content = new();
         content.Add("model", model);
 
         Assert.IsTrue(content.TryComputeLength(out long length));
@@ -1116,7 +1315,7 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
     {
         MockPersistableModel model = new(404, "abcde");
 
-        using MultiPartFormContent content = new("boundary-x");
+        using MultiPartFormContent content = new();
         content.Add("model", model);
 
         MemoryStream stream = new();
@@ -1125,7 +1324,7 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
         Assert.IsTrue(content.TryComputeLength(out long length));
         Assert.AreEqual(length, stream.Position);
 
-        ParsedPart part = ParseParts(stream.ToArray(), "boundary-x").Single();
+        ParsedPart part = ParseParts(stream.ToArray(), GetBoundary(content)).Single();
         Assert.AreEqual("application/json", part.ContentType?.MediaType);
         Assert.AreEqual(model.SerializedValue, Encoding.UTF8.GetString(part.Body));
     }
@@ -1135,7 +1334,7 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
     {
         byte[] bytes = CreateBytes(48);
 
-        using MultiPartFormContent content = new("boundary-x");
+        using MultiPartFormContent content = new();
         content.Add("blob", bytes);
 
         Assert.IsTrue(content.TryComputeLength(out long length));
@@ -1147,7 +1346,7 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
     {
         byte[] bytes = CreateBytes(48);
 
-        using MultiPartFormContent content = new("boundary-x");
+        using MultiPartFormContent content = new();
         content.Add("blob", bytes);
 
         MemoryStream stream = new();
@@ -1156,7 +1355,7 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
         Assert.IsTrue(content.TryComputeLength(out long length));
         Assert.AreEqual(length, stream.Position);
 
-        ParsedPart part = ParseParts(stream.ToArray(), "boundary-x").Single();
+        ParsedPart part = ParseParts(stream.ToArray(), GetBoundary(content)).Single();
         Assert.AreEqual("application/octet-stream", part.ContentType?.MediaType);
         Assert.AreEqual(bytes, part.Body);
     }
@@ -1164,7 +1363,7 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
     [Test]
     public void CanGetLengthFromStringPart()
     {
-        using MultiPartFormContent content = new("boundary-x");
+        using MultiPartFormContent content = new();
         content.Add("greeting", "hello");
 
         Assert.IsTrue(content.TryComputeLength(out long length));
@@ -1174,7 +1373,7 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
     [Test]
     public async Task CanWriteToStreamFromStringPart()
     {
-        using MultiPartFormContent content = new("boundary-x");
+        using MultiPartFormContent content = new();
         content.Add("greeting", "hello", "text/plain");
 
         MemoryStream stream = new();
@@ -1183,7 +1382,7 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
         Assert.IsTrue(content.TryComputeLength(out long length));
         Assert.AreEqual(length, stream.Position);
 
-        ParsedPart part = ParseParts(stream.ToArray(), "boundary-x").Single();
+        ParsedPart part = ParseParts(stream.ToArray(), GetBoundary(content)).Single();
         Assert.AreEqual("text/plain", part.ContentType?.MediaType);
         Assert.AreEqual("hello", Encoding.UTF8.GetString(part.Body));
     }
@@ -1191,7 +1390,7 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
     [Test]
     public void CanGetLengthFromIntPart()
     {
-        using MultiPartFormContent content = new("boundary-x");
+        using MultiPartFormContent content = new();
         content.Add("n", 42);
 
         Assert.IsTrue(content.TryComputeLength(out long length));
@@ -1201,7 +1400,7 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
     [Test]
     public async Task CanWriteToStreamFromIntPart()
     {
-        using MultiPartFormContent content = new("boundary-x");
+        using MultiPartFormContent content = new();
         content.Add("n", 42);
 
         MemoryStream stream = new();
@@ -1210,8 +1409,8 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
         Assert.IsTrue(content.TryComputeLength(out long length));
         Assert.AreEqual(length, stream.Position);
 
-        ParsedPart part = ParseParts(stream.ToArray(), "boundary-x").Single();
-        Assert.AreEqual("application/json", part.ContentType?.MediaType);
+        ParsedPart part = ParseParts(stream.ToArray(), GetBoundary(content)).Single();
+        Assert.AreEqual("text/plain", part.ContentType?.MediaType);
         Assert.AreEqual("42", Encoding.UTF8.GetString(part.Body));
     }
 
@@ -1221,7 +1420,7 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
         byte[] bytes = CreateBytes(128);
         string path = CreateTempFile(bytes);
 
-        using MultiPartFormContent content = new("boundary-x");
+        using MultiPartFormContent content = new();
         using FileBinaryContent file = new(path, "image/png");
         content.Add("upload", file);
 
@@ -1235,7 +1434,7 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
         byte[] bytes = CreateBytes(128);
         string path = CreateTempFile(bytes);
 
-        using MultiPartFormContent content = new("boundary-x");
+        using MultiPartFormContent content = new();
         using FileBinaryContent file = new(path, "image/png");
         content.Add("upload", file);
 
@@ -1245,7 +1444,7 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
         Assert.IsTrue(content.TryComputeLength(out long length));
         Assert.AreEqual(length, stream.Position);
 
-        ParsedPart part = ParseParts(stream.ToArray(), "boundary-x").Single();
+        ParsedPart part = ParseParts(stream.ToArray(), GetBoundary(content)).Single();
         Assert.AreEqual("image/png", part.ContentType?.MediaType);
         Assert.AreEqual(Path.GetFileName(path), part.FileName);
         Assert.AreEqual(bytes, part.Body);
@@ -1258,7 +1457,7 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
         // TFM. The underlying BCL MultipartContent does not throw for
         // fully-buffered parts on the sync path, and on netstandard2.0 the
         // token cannot be passed to the BCL at all.
-        using MultiPartFormContent content = new("boundary-x");
+        using MultiPartFormContent content = new();
         content.Add("k", "value", "text/plain");
 
         using MemoryStream destination = new();
@@ -1271,7 +1470,7 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
     [Test]
     public void MultiPartFormContentWriteToAsyncCanBeCancelled()
     {
-        using MultiPartFormContent content = new("boundary-x");
+        using MultiPartFormContent content = new();
         content.Add("k", "value", "text/plain");
 
         using MemoryStream destination = new();
@@ -1299,7 +1498,7 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
         string binaryHash = Sha256(binaryBytes);
 
         using FileBinaryContent file = new(filePath, "application/octet-stream");
-        using MultiPartFormContent content = new("boundary-large");
+        using MultiPartFormContent content = new();
         content.Add("file", file);
         content.Add("blob", BinaryData.FromBytes(binaryBytes).WithMediaType("application/x-binary"));
         content.Add("bytes", rawBytes);
@@ -1312,7 +1511,8 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
 
         Assert.AreEqual(length, destination.Position);
 
-        ParsedMultipart parsed = new("boundary-large", ParseParts(destination.ToArray(), "boundary-large"));
+        string boundary = GetBoundary(content);
+        ParsedMultipart parsed = new(boundary, ParseParts(destination.ToArray(), boundary));
         Assert.AreEqual(3, parsed.Parts.Count);
 
         Assert.AreEqual("file", parsed.Parts[0].Name);
@@ -1562,6 +1762,13 @@ internal class MultiPartFormContentTests : SyncAsyncTestBase
             }
             return BinaryData.FromBytes(stream.ToArray());
         }
+    }
+
+    private sealed class EmptyTestContext : ModelReaderWriterContext
+    {
+        public static readonly EmptyTestContext Instance = new();
+
+        private EmptyTestContext() { }
     }
 }
 

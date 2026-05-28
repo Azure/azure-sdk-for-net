@@ -24761,7 +24761,7 @@
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "singletonResourceName": "default",
-                "resourceName": "FooSettings",
+                "resourceName": "FooConfiguration",
                 "nameConstraints": {
                   "pattern": "^[a-zA-Z0-9-]{3,24}$"
                 },
@@ -27331,7 +27331,7 @@
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/eventGridTopics/{topicName}",
-                "resourceName": "EventGridTopicEventGridPrivateEndpointConnection",
+                "resourceName": "EventGridTopicPrivateEndpointConnection",
                 "nameConstraints": {
                   "pattern": "^[a-zA-Z0-9-]{3,24}$"
                 },
@@ -27390,7 +27390,7 @@
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/eventGridDomains/{domainName}",
-                "resourceName": "EventGridDomainEventGridPrivateEndpointConnection",
+                "resourceName": "EventGridDomainPrivateEndpointConnection",
                 "nameConstraints": {
                   "pattern": "^[a-zA-Z0-9-]{3,24}$"
                 },
@@ -32881,6 +32881,14 @@
                   {
                     "name": "Azure.ResourceManager.@armResourceRead",
                     "arguments": {}
+                  },
+                  {
+                    "name": "Azure.ClientGenerator.Core.@clientOption",
+                    "arguments": {
+                      "name": "resource-name",
+                      "value": "FooConfiguration",
+                      "scope": "csharp"
+                    }
                   }
                 ],
                 "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
@@ -90402,7 +90410,19 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "MgmtTypeSpec.EventGridPrivateEndpointConnections.get",
-                "decorators": [],
+                "decorators": [
+                  {
+                    "name": "Azure.ClientGenerator.Core.@clientOption",
+                    "arguments": {
+                      "name": "resource-name",
+                      "value": {
+                        "eventGridTopics": "EventGridTopicPrivateEndpointConnection",
+                        "eventGridDomains": "EventGridDomainPrivateEndpointConnection"
+                      },
+                      "scope": "csharp"
+                    }
+                  }
+                ],
                 "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
               },
               "parameters": [
