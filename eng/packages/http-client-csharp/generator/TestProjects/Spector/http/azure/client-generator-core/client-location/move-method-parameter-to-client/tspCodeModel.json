@@ -6,7 +6,7 @@
     {
       "$id": "1",
       "kind": "constant",
-      "name": "GetBlobAccept",
+      "name": "getBlobContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -17,8 +17,7 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     }
   ],
   "models": [
@@ -35,7 +34,6 @@
           "name": "Blob"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "4",
@@ -60,8 +58,7 @@
               "name": "id"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "6",
@@ -86,8 +83,7 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "8",
@@ -112,8 +108,7 @@
               "name": "size"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "10",
@@ -138,8 +133,7 @@
               "name": "path"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     }
@@ -149,7 +143,6 @@
       "$id": "12",
       "kind": "client",
       "name": "MoveMethodParameterToClient",
-      "isExactName": false,
       "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveMethodParameterToClient",
       "doc": "Test for @clientLocation decorator - moving operations between clients",
       "methods": [],
@@ -182,8 +175,7 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveMethodParameterToClient.endpoint",
-          "isExactName": false
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveMethodParameterToClient.endpoint"
         },
         {
           "$id": "16",
@@ -204,8 +196,7 @@
           "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveMethodParameterToClient..anonymous.storageAccount",
           "readOnly": false,
           "access": "public",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         }
       ],
       "initializedBy": 1,
@@ -217,20 +208,17 @@
           "$id": "18",
           "kind": "client",
           "name": "BlobOperations",
-          "isExactName": false,
           "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveMethodParameterToClient",
           "methods": [
             {
               "$id": "19",
               "kind": "basic",
               "name": "getBlob",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "20",
                 "name": "getBlob",
-                "isExactName": false,
                 "resourceName": "BlobOperations",
                 "accessibility": "public",
                 "parameters": [
@@ -257,8 +245,7 @@
                       {
                         "$ref": "16"
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "23",
@@ -299,11 +286,9 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveMethodParameterToClient.BlobOperations.getBlob.container",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "27",
@@ -344,11 +329,9 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveMethodParameterToClient.BlobOperations.getBlob.blob",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "31",
@@ -381,11 +364,9 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveMethodParameterToClient.BlobOperations.getBlob.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -400,12 +381,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -469,8 +445,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveMethodParameterToClient.BlobOperations.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveMethodParameterToClient.BlobOperations.endpoint"
             },
             {
               "$ref": "16"

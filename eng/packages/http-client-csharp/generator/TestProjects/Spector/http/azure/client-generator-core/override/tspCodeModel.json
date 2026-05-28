@@ -13,7 +13,6 @@
       "usage": "Input",
       "decorators": [],
       "serializationOptions": {},
-      "isExactName": false,
       "properties": [
         {
           "$id": "2",
@@ -33,8 +32,7 @@
           "decorators": [],
           "crossLanguageDefinitionId": "Customization.GroupParametersOptions.param1",
           "serializationOptions": {},
-          "isHttpMetadata": true,
-          "isExactName": false
+          "isHttpMetadata": true
         },
         {
           "$id": "4",
@@ -54,8 +52,7 @@
           "decorators": [],
           "crossLanguageDefinitionId": "Customization.GroupParametersOptions.param2",
           "serializationOptions": {},
-          "isHttpMetadata": true,
-          "isExactName": false
+          "isHttpMetadata": true
         }
       ]
     }
@@ -65,7 +62,6 @@
       "$id": "6",
       "kind": "client",
       "name": "OverrideClient",
-      "isExactName": false,
       "namespace": "_Specs_.Azure.ClientGenerator.Core.Override",
       "doc": "Test scenarios for client override behavior.",
       "methods": [],
@@ -98,8 +94,7 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Override.endpoint",
-          "isExactName": false
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Override.endpoint"
         }
       ],
       "initializedBy": 1,
@@ -111,20 +106,17 @@
           "$id": "10",
           "kind": "client",
           "name": "ReorderParameters",
-          "isExactName": false,
           "namespace": "_Specs_.Azure.ClientGenerator.Core.Override",
           "methods": [
             {
               "$id": "11",
               "kind": "basic",
               "name": "reorder",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "12",
                 "name": "reorder",
-                "isExactName": false,
                 "resourceName": "ReorderParameters",
                 "accessibility": "public",
                 "parameters": [
@@ -170,11 +162,9 @@
                         "crossLanguageDefinitionId": "Customization..anonymous.param2",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "17",
@@ -218,11 +208,9 @@
                         "crossLanguageDefinitionId": "Customization..anonymous.param1",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -231,8 +219,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "GET",
@@ -289,8 +276,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Override.ReorderParameters.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Override.ReorderParameters.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -306,20 +292,17 @@
           "$id": "24",
           "kind": "client",
           "name": "GroupParameters",
-          "isExactName": false,
           "namespace": "_Specs_.Azure.ClientGenerator.Core.Override",
           "methods": [
             {
               "$id": "25",
               "kind": "basic",
               "name": "group",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "26",
                 "name": "group",
-                "isExactName": false,
                 "resourceName": "GroupParameters",
                 "accessibility": "public",
                 "parameters": [
@@ -358,8 +341,7 @@
                         "crossLanguageDefinitionId": "Customization..anonymous.options",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       },
                       {
                         "$id": "30",
@@ -376,11 +358,9 @@
                         "crossLanguageDefinitionId": "Customization.GroupParametersOptions.param1",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "31",
@@ -420,11 +400,9 @@
                         "crossLanguageDefinitionId": "Customization.GroupParametersOptions.param2",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -433,8 +411,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "GET",
@@ -488,8 +465,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Override.GroupParameters.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Override.GroupParameters.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -505,20 +481,17 @@
           "$id": "37",
           "kind": "client",
           "name": "RequireOptionalParameter",
-          "isExactName": false,
           "namespace": "_Specs_.Azure.ClientGenerator.Core.Override",
           "methods": [
             {
               "$id": "38",
               "kind": "basic",
               "name": "requireOptional",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "39",
                 "name": "requireOptional",
-                "isExactName": false,
                 "resourceName": "RequireOptionalParameter",
                 "accessibility": "public",
                 "parameters": [
@@ -564,11 +537,9 @@
                         "crossLanguageDefinitionId": "Customization..anonymous.param1",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "44",
@@ -612,11 +583,9 @@
                         "crossLanguageDefinitionId": "Customization..anonymous.param2",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -625,8 +594,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "GET",
@@ -683,8 +651,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Override.RequireOptionalParameter.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Override.RequireOptionalParameter.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -700,20 +667,17 @@
           "$id": "51",
           "kind": "client",
           "name": "RemoveOptionalParameter",
-          "isExactName": false,
           "namespace": "_Specs_.Azure.ClientGenerator.Core.Override",
           "methods": [
             {
               "$id": "52",
               "kind": "basic",
               "name": "removeOptional",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "53",
                 "name": "removeOptional",
-                "isExactName": false,
                 "resourceName": "RemoveOptionalParameter",
                 "accessibility": "public",
                 "parameters": [
@@ -759,11 +723,9 @@
                         "crossLanguageDefinitionId": "Customization..anonymous.param1",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "58",
@@ -804,11 +766,9 @@
                         "crossLanguageDefinitionId": "Customization..anonymous.param2",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "62",
@@ -828,8 +788,7 @@
                     "scope": "Method",
                     "decorators": [],
                     "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Override.RemoveOptionalParameter.removeOptional.param3",
-                    "readOnly": false,
-                    "isExactName": false
+                    "readOnly": false
                   },
                   {
                     "$id": "64",
@@ -849,8 +808,7 @@
                     "scope": "Method",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Override.RemoveOptionalParameter.removeOptional.param4",
-                    "isExactName": false
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Override.RemoveOptionalParameter.removeOptional.param4"
                   }
                 ],
                 "responses": [
@@ -859,8 +817,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "GET",
@@ -917,8 +874,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Override.RemoveOptionalParameter.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Override.RemoveOptionalParameter.endpoint"
             }
           ],
           "initializedBy": 0,

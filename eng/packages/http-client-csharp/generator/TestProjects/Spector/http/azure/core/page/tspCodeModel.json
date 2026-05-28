@@ -29,8 +29,7 @@
             "$ref": "1"
           },
           "doc": "The first enum value.",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         },
         {
           "$id": "4",
@@ -44,8 +43,7 @@
             "$ref": "1"
           },
           "doc": "The second enum value.",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         }
       ],
       "namespace": "_Specs_.Azure.Core.Page",
@@ -53,8 +51,7 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "Input",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "5",
@@ -81,8 +78,7 @@
             "$ref": "5"
           },
           "doc": "The version 2022-12-01-preview.",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         }
       ],
       "namespace": "_Specs_.Azure.Core.Page",
@@ -90,15 +86,14 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "ApiVersionEnum",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     }
   ],
   "constants": [
     {
       "$id": "8",
       "kind": "constant",
-      "name": "ListWithPageAccept",
+      "name": "listWithPageContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -109,13 +104,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "10",
       "kind": "constant",
-      "name": "ListWithPageAccept1",
+      "name": "listWithParametersContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -126,13 +120,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "12",
       "kind": "constant",
-      "name": "ListWithPageAccept2",
+      "name": "listWithParametersContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -143,13 +136,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "14",
       "kind": "constant",
-      "name": "ListWithPageAccept3",
+      "name": "listWithCustomPageModelContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -160,13 +152,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "16",
       "kind": "constant",
-      "name": "ListWithPageAccept4",
+      "name": "withParameterizedNextLinkContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -177,13 +168,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "18",
       "kind": "constant",
-      "name": "ListWithPageAccept5",
+      "name": "withRelativeNextLinkContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -194,13 +184,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "20",
       "kind": "constant",
-      "name": "ListWithPageAccept6",
+      "name": "listFirstItemContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -211,13 +200,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "22",
       "kind": "constant",
-      "name": "ListWithPageAccept7",
+      "name": "listSecondItemContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -228,8 +216,7 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     }
   ],
   "models": [
@@ -247,7 +234,6 @@
           "name": "Page"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "25",
@@ -273,7 +259,6 @@
                   "name": "User"
                 }
               },
-              "isExactName": false,
               "properties": [
                 {
                   "$id": "28",
@@ -299,8 +284,7 @@
                       "name": "id"
                     }
                   },
-                  "isHttpMetadata": false,
-                  "isExactName": false
+                  "isHttpMetadata": false
                 },
                 {
                   "$id": "30",
@@ -326,8 +310,7 @@
                       "name": "name"
                     }
                   },
-                  "isHttpMetadata": false,
-                  "isExactName": false
+                  "isHttpMetadata": false
                 },
                 {
                   "$id": "32",
@@ -353,7 +336,6 @@
                           "name": "UserOrder"
                         }
                       },
-                      "isExactName": false,
                       "properties": [
                         {
                           "$id": "35",
@@ -379,8 +361,7 @@
                               "name": "id"
                             }
                           },
-                          "isHttpMetadata": false,
-                          "isExactName": false
+                          "isHttpMetadata": false
                         },
                         {
                           "$id": "37",
@@ -406,8 +387,7 @@
                               "name": "userId"
                             }
                           },
-                          "isHttpMetadata": false,
-                          "isExactName": false
+                          "isHttpMetadata": false
                         },
                         {
                           "$id": "39",
@@ -433,8 +413,7 @@
                               "name": "detail"
                             }
                           },
-                          "isHttpMetadata": false,
-                          "isExactName": false
+                          "isHttpMetadata": false
                         }
                       ]
                     },
@@ -452,8 +431,7 @@
                       "name": "orders"
                     }
                   },
-                  "isHttpMetadata": false,
-                  "isExactName": false
+                  "isHttpMetadata": false
                 },
                 {
                   "$id": "41",
@@ -486,8 +464,7 @@
                       "name": "etag"
                     }
                   },
-                  "isHttpMetadata": false,
-                  "isExactName": false
+                  "isHttpMetadata": false
                 }
               ]
             },
@@ -505,8 +482,7 @@
               "name": "value"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "44",
@@ -539,8 +515,7 @@
               "name": "nextLink"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -564,7 +539,6 @@
           "name": "ErrorResponse"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "48",
@@ -586,7 +560,6 @@
                 "name": "Error"
               }
             },
-            "isExactName": false,
             "properties": [
               {
                 "$id": "50",
@@ -612,8 +585,7 @@
                     "name": "code"
                   }
                 },
-                "isHttpMetadata": false,
-                "isExactName": false
+                "isHttpMetadata": false
               },
               {
                 "$id": "52",
@@ -639,8 +611,7 @@
                     "name": "message"
                   }
                 },
-                "isHttpMetadata": false,
-                "isExactName": false
+                "isHttpMetadata": false
               },
               {
                 "$id": "54",
@@ -666,8 +637,7 @@
                     "name": "target"
                   }
                 },
-                "isHttpMetadata": false,
-                "isExactName": false
+                "isHttpMetadata": false
               },
               {
                 "$id": "56",
@@ -696,8 +666,7 @@
                     "name": "details"
                   }
                 },
-                "isHttpMetadata": false,
-                "isExactName": false
+                "isHttpMetadata": false
               },
               {
                 "$id": "58",
@@ -719,7 +688,6 @@
                       "name": "InnerError"
                     }
                   },
-                  "isExactName": false,
                   "properties": [
                     {
                       "$id": "60",
@@ -745,8 +713,7 @@
                           "name": "code"
                         }
                       },
-                      "isHttpMetadata": false,
-                      "isExactName": false
+                      "isHttpMetadata": false
                     },
                     {
                       "$id": "62",
@@ -768,8 +735,7 @@
                           "name": "innererror"
                         }
                       },
-                      "isHttpMetadata": false,
-                      "isExactName": false
+                      "isHttpMetadata": false
                     }
                   ]
                 },
@@ -784,8 +750,7 @@
                     "name": "innererror"
                   }
                 },
-                "isHttpMetadata": false,
-                "isExactName": false
+                "isHttpMetadata": false
               }
             ]
           },
@@ -800,8 +765,7 @@
               "name": "error"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "63",
@@ -827,8 +791,7 @@
               "name": "errorCode"
             }
           },
-          "isHttpMetadata": true,
-          "isExactName": false
+          "isHttpMetadata": true
         }
       ]
     },
@@ -852,7 +815,6 @@
           "name": "ListItemInputBody"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "66",
@@ -878,8 +840,7 @@
               "name": "inputName"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -896,7 +857,6 @@
           "name": "CustomPageModel"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "69",
@@ -918,8 +878,7 @@
               "name": "items"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "70",
@@ -945,8 +904,7 @@
               "name": "nextLink"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -963,7 +921,6 @@
           "name": "ParameterizedNextLinkPagingResult"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "73",
@@ -984,8 +941,7 @@
               "name": "values"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "74",
@@ -1017,8 +973,7 @@
               "name": "nextLink"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -1036,7 +991,6 @@
           "name": "Page"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "78",
@@ -1062,7 +1016,6 @@
                   "name": "FirstItem"
                 }
               },
-              "isExactName": false,
               "properties": [
                 {
                   "$id": "81",
@@ -1088,8 +1041,7 @@
                       "name": "id"
                     }
                   },
-                  "isHttpMetadata": false,
-                  "isExactName": false
+                  "isHttpMetadata": false
                 }
               ]
             },
@@ -1107,8 +1059,7 @@
               "name": "value"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "83",
@@ -1141,8 +1092,7 @@
               "name": "nextLink"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -1163,7 +1113,6 @@
           "name": "Page"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "87",
@@ -1189,7 +1138,6 @@
                   "name": "SecondItem"
                 }
               },
-              "isExactName": false,
               "properties": [
                 {
                   "$id": "90",
@@ -1215,8 +1163,7 @@
                       "name": "name"
                     }
                   },
-                  "isHttpMetadata": false,
-                  "isExactName": false
+                  "isHttpMetadata": false
                 }
               ]
             },
@@ -1234,8 +1181,7 @@
               "name": "value"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "92",
@@ -1268,8 +1214,7 @@
               "name": "nextLink"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -1282,7 +1227,6 @@
       "$id": "95",
       "kind": "client",
       "name": "PageClient",
-      "isExactName": false,
       "namespace": "_Specs_.Azure.Core.Page",
       "doc": "Illustrates bodies templated with Azure Core with paging support",
       "methods": [
@@ -1290,7 +1234,6 @@
           "$id": "96",
           "kind": "paging",
           "name": "listWithPage",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [
             "2022-12-01-preview"
@@ -1299,7 +1242,6 @@
           "operation": {
             "$id": "97",
             "name": "listWithPage",
-            "isExactName": false,
             "resourceName": "Page",
             "doc": "List with Azure.Core.Page<>.",
             "accessibility": "public",
@@ -1363,11 +1305,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.listWithPage.apiVersion",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "104",
@@ -1400,11 +1340,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.listWithPage.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               }
             ],
             "responses": [
@@ -1419,12 +1357,7 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ],
-                "serializationOptions": {
-                  "json": {
-                    "name": ""
-                  }
-                }
+                ]
               }
             ],
             "httpMethod": "GET",
@@ -1471,7 +1404,6 @@
           "$id": "106",
           "kind": "paging",
           "name": "listWithParameters",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [
             "2022-12-01-preview"
@@ -1480,7 +1412,6 @@
           "operation": {
             "$id": "107",
             "name": "listWithParameters",
-            "isExactName": false,
             "resourceName": "Page",
             "doc": "List with extensible enum parameter Azure.Core.Page<>.",
             "accessibility": "public",
@@ -1518,8 +1449,7 @@
                   {
                     "$ref": "101"
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "111",
@@ -1554,11 +1484,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.listWithParameters.another",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "113",
@@ -1593,11 +1521,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.listWithParameters.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "115",
@@ -1630,11 +1556,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.listWithParameters.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "117",
@@ -1672,16 +1596,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.listWithParameters.bodyInput",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false,
-                "serializationOptions": {
-                  "json": {
-                    "name": "bodyInput"
-                  }
-                }
+                ]
               }
             ],
             "responses": [
@@ -1696,12 +1613,7 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ],
-                "serializationOptions": {
-                  "json": {
-                    "name": ""
-                  }
-                }
+                ]
               }
             ],
             "httpMethod": "POST",
@@ -1760,7 +1672,6 @@
           "$id": "119",
           "kind": "paging",
           "name": "listWithCustomPageModel",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [
             "2022-12-01-preview"
@@ -1769,7 +1680,6 @@
           "operation": {
             "$id": "120",
             "name": "listWithCustomPageModel",
-            "isExactName": false,
             "resourceName": "Page",
             "doc": "List with custom page model.",
             "accessibility": "public",
@@ -1807,8 +1717,7 @@
                   {
                     "$ref": "101"
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "124",
@@ -1841,11 +1750,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.listWithCustomPageModel.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               }
             ],
             "responses": [
@@ -1860,12 +1767,7 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ],
-                "serializationOptions": {
-                  "json": {
-                    "name": ""
-                  }
-                }
+                ]
               }
             ],
             "httpMethod": "GET",
@@ -1912,7 +1814,6 @@
           "$id": "126",
           "kind": "paging",
           "name": "withParameterizedNextLink",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [
             "2022-12-01-preview"
@@ -1921,7 +1822,6 @@
           "operation": {
             "$id": "127",
             "name": "withParameterizedNextLink",
-            "isExactName": false,
             "resourceName": "Page",
             "doc": "List with parameterized next link that re-injects parameters.",
             "accessibility": "public",
@@ -1965,11 +1865,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.withParameterizedNextLink.includePending",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "132",
@@ -2010,11 +1908,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.withParameterizedNextLink.select",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "136",
@@ -2047,11 +1943,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.withParameterizedNextLink.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               }
             ],
             "responses": [
@@ -2066,12 +1960,7 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ],
-                "serializationOptions": {
-                  "json": {
-                    "name": ""
-                  }
-                }
+                ]
               }
             ],
             "httpMethod": "GET",
@@ -2129,7 +2018,6 @@
           "$id": "138",
           "kind": "paging",
           "name": "withRelativeNextLink",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [
             "2022-12-01-preview"
@@ -2138,7 +2026,6 @@
           "operation": {
             "$id": "139",
             "name": "withRelativeNextLink",
-            "isExactName": false,
             "resourceName": "Page",
             "doc": "List with relative nextLink URL that requires endpoint resolution.",
             "accessibility": "public",
@@ -2174,11 +2061,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.withRelativeNextLink.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               }
             ],
             "responses": [
@@ -2193,12 +2078,7 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ],
-                "serializationOptions": {
-                  "json": {
-                    "name": ""
-                  }
-                }
+                ]
               }
             ],
             "httpMethod": "GET",
@@ -2271,8 +2151,7 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.endpoint",
-          "isExactName": false
+          "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.endpoint"
         },
         {
           "$ref": "101"
@@ -2289,14 +2168,12 @@
           "$id": "145",
           "kind": "client",
           "name": "TwoModelsAsPageItem",
-          "isExactName": false,
           "namespace": "_Specs_.Azure.Core.Page",
           "methods": [
             {
               "$id": "146",
               "kind": "paging",
               "name": "listFirstItem",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [
                 "2022-12-01-preview"
@@ -2305,7 +2182,6 @@
               "operation": {
                 "$id": "147",
                 "name": "listFirstItem",
-                "isExactName": false,
                 "resourceName": "TwoModelsAsPageItem",
                 "doc": "Two operations with two different page item types should be successfully generated. Should generate model for FirstItem.",
                 "accessibility": "public",
@@ -2343,8 +2219,7 @@
                       {
                         "$ref": "101"
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "151",
@@ -2377,11 +2252,9 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.TwoModelsAsPageItem.listFirstItem.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -2396,12 +2269,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -2448,7 +2316,6 @@
               "$id": "153",
               "kind": "paging",
               "name": "listSecondItem",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [
                 "2022-12-01-preview"
@@ -2457,7 +2324,6 @@
               "operation": {
                 "$id": "154",
                 "name": "listSecondItem",
-                "isExactName": false,
                 "resourceName": "TwoModelsAsPageItem",
                 "doc": "Two operations with two different page item types should be successfully generated. Should generate model for SecondItem.",
                 "accessibility": "public",
@@ -2495,8 +2361,7 @@
                       {
                         "$ref": "101"
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "158",
@@ -2529,11 +2394,9 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.TwoModelsAsPageItem.listSecondItem.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -2548,12 +2411,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -2626,8 +2484,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.TwoModelsAsPageItem.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.TwoModelsAsPageItem.endpoint"
             },
             {
               "$ref": "101"

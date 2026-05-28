@@ -29,8 +29,7 @@
             "$ref": "1"
           },
           "doc": "The version 2022-12-01-preview.",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         }
       ],
       "namespace": "_Specs_.Azure.Core.Basic",
@@ -38,8 +37,7 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "ApiVersionEnum",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     }
   ],
   "constants": [
@@ -57,8 +55,7 @@
         "decorators": []
       },
       "value": "application/merge-patch+json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "6",
@@ -74,13 +71,12 @@
         "decorators": []
       },
       "value": "application/merge-patch+json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "8",
       "kind": "constant",
-      "name": "CreateOrUpdateAccept",
+      "name": "createOrUpdateContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -91,13 +87,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "10",
       "kind": "constant",
-      "name": "CreateOrUpdateAccept1",
+      "name": "createOrReplaceContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -108,13 +103,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "12",
       "kind": "constant",
-      "name": "CreateOrUpdateAccept2",
+      "name": "createOrReplaceContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -125,13 +119,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "14",
       "kind": "constant",
-      "name": "CreateOrUpdateAccept3",
+      "name": "getContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -142,13 +135,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "16",
       "kind": "constant",
-      "name": "CreateOrUpdateAccept4",
+      "name": "listContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -159,13 +151,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "18",
       "kind": "constant",
-      "name": "CreateOrUpdateAccept5",
+      "name": "exportContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -176,13 +167,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "20",
       "kind": "constant",
-      "name": "CreateOrUpdateAccept6",
+      "name": "exportAllUsersContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -193,8 +183,7 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     }
   ],
   "models": [
@@ -212,7 +201,6 @@
           "name": "User"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "23",
@@ -238,8 +226,7 @@
               "name": "id"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "25",
@@ -265,8 +252,7 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "27",
@@ -292,7 +278,6 @@
                   "name": "UserOrder"
                 }
               },
-              "isExactName": false,
               "properties": [
                 {
                   "$id": "30",
@@ -318,8 +303,7 @@
                       "name": "id"
                     }
                   },
-                  "isHttpMetadata": false,
-                  "isExactName": false
+                  "isHttpMetadata": false
                 },
                 {
                   "$id": "32",
@@ -345,8 +329,7 @@
                       "name": "userId"
                     }
                   },
-                  "isHttpMetadata": false,
-                  "isExactName": false
+                  "isHttpMetadata": false
                 },
                 {
                   "$id": "34",
@@ -372,8 +355,7 @@
                       "name": "detail"
                     }
                   },
-                  "isHttpMetadata": false,
-                  "isExactName": false
+                  "isHttpMetadata": false
                 }
               ]
             },
@@ -391,8 +373,7 @@
               "name": "orders"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "36",
@@ -425,8 +406,7 @@
               "name": "etag"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -447,7 +427,6 @@
           "name": "ErrorResponse"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "40",
@@ -469,7 +448,6 @@
                 "name": "Error"
               }
             },
-            "isExactName": false,
             "properties": [
               {
                 "$id": "42",
@@ -495,8 +473,7 @@
                     "name": "code"
                   }
                 },
-                "isHttpMetadata": false,
-                "isExactName": false
+                "isHttpMetadata": false
               },
               {
                 "$id": "44",
@@ -522,8 +499,7 @@
                     "name": "message"
                   }
                 },
-                "isHttpMetadata": false,
-                "isExactName": false
+                "isHttpMetadata": false
               },
               {
                 "$id": "46",
@@ -549,8 +525,7 @@
                     "name": "target"
                   }
                 },
-                "isHttpMetadata": false,
-                "isExactName": false
+                "isHttpMetadata": false
               },
               {
                 "$id": "48",
@@ -579,8 +554,7 @@
                     "name": "details"
                   }
                 },
-                "isHttpMetadata": false,
-                "isExactName": false
+                "isHttpMetadata": false
               },
               {
                 "$id": "50",
@@ -602,7 +576,6 @@
                       "name": "InnerError"
                     }
                   },
-                  "isExactName": false,
                   "properties": [
                     {
                       "$id": "52",
@@ -628,8 +601,7 @@
                           "name": "code"
                         }
                       },
-                      "isHttpMetadata": false,
-                      "isExactName": false
+                      "isHttpMetadata": false
                     },
                     {
                       "$id": "54",
@@ -651,8 +623,7 @@
                           "name": "innererror"
                         }
                       },
-                      "isHttpMetadata": false,
-                      "isExactName": false
+                      "isHttpMetadata": false
                     }
                   ]
                 },
@@ -667,8 +638,7 @@
                     "name": "innererror"
                   }
                 },
-                "isHttpMetadata": false,
-                "isExactName": false
+                "isHttpMetadata": false
               }
             ]
           },
@@ -683,8 +653,7 @@
               "name": "error"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "55",
@@ -710,8 +679,7 @@
               "name": "errorCode"
             }
           },
-          "isHttpMetadata": true,
-          "isExactName": false
+          "isHttpMetadata": true
         }
       ]
     },
@@ -735,7 +703,6 @@
           "name": "CustomPage"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "58",
@@ -764,8 +731,7 @@
               "name": "value"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "60",
@@ -798,8 +764,7 @@
               "name": "nextLink"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -816,7 +781,6 @@
           "name": "UserList"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "64",
@@ -837,8 +801,7 @@
               "name": "users"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     }
@@ -848,7 +811,6 @@
       "$id": "65",
       "kind": "client",
       "name": "BasicClient",
-      "isExactName": false,
       "namespace": "_Specs_.Azure.Core.Basic",
       "doc": "Illustrates bodies templated with Azure Core",
       "methods": [
@@ -856,7 +818,6 @@
           "$id": "66",
           "kind": "basic",
           "name": "createOrUpdate",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [
             "2022-12-01-preview"
@@ -866,7 +827,6 @@
           "operation": {
             "$id": "67",
             "name": "createOrUpdate",
-            "isExactName": false,
             "resourceName": "User",
             "summary": "Adds a user or updates a user's fields.",
             "doc": "Creates or updates a User",
@@ -931,11 +891,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.createOrUpdate.apiVersion",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "74",
@@ -981,11 +939,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.createOrUpdate.id",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "78",
@@ -1020,11 +976,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.createOrUpdate.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "80",
@@ -1057,11 +1011,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.createOrUpdate.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "82",
@@ -1099,16 +1051,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.createOrUpdate.resource",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false,
-                "serializationOptions": {
-                  "json": {
-                    "name": "resource"
-                  }
-                }
+                ]
               }
             ],
             "responses": [
@@ -1123,12 +1068,7 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ],
-                "serializationOptions": {
-                  "json": {
-                    "name": ""
-                  }
-                }
+                ]
               },
               {
                 "statusCodes": [
@@ -1141,12 +1081,7 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ],
-                "serializationOptions": {
-                  "json": {
-                    "name": ""
-                  }
-                }
+                ]
               }
             ],
             "httpMethod": "PATCH",
@@ -1190,7 +1125,6 @@
           "$id": "84",
           "kind": "basic",
           "name": "createOrReplace",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [
             "2022-12-01-preview"
@@ -1200,7 +1134,6 @@
           "operation": {
             "$id": "85",
             "name": "createOrReplace",
-            "isExactName": false,
             "resourceName": "User",
             "summary": "Adds a user or replaces a user's fields.",
             "doc": "Creates or replaces a User",
@@ -1239,8 +1172,7 @@
                   {
                     "$ref": "71"
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "89",
@@ -1286,11 +1218,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.createOrReplace.id",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "93",
@@ -1325,11 +1255,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.createOrReplace.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "95",
@@ -1362,11 +1290,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.createOrReplace.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "97",
@@ -1404,16 +1330,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.createOrReplace.resource",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false,
-                "serializationOptions": {
-                  "json": {
-                    "name": "resource"
-                  }
-                }
+                ]
               }
             ],
             "responses": [
@@ -1428,12 +1347,7 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ],
-                "serializationOptions": {
-                  "json": {
-                    "name": ""
-                  }
-                }
+                ]
               },
               {
                 "statusCodes": [
@@ -1446,12 +1360,7 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ],
-                "serializationOptions": {
-                  "json": {
-                    "name": ""
-                  }
-                }
+                ]
               }
             ],
             "httpMethod": "PUT",
@@ -1495,7 +1404,6 @@
           "$id": "99",
           "kind": "basic",
           "name": "get",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [
             "2022-12-01-preview"
@@ -1505,7 +1413,6 @@
           "operation": {
             "$id": "100",
             "name": "get",
-            "isExactName": false,
             "resourceName": "User",
             "summary": "Gets a user.",
             "doc": "Gets a User",
@@ -1544,8 +1451,7 @@
                   {
                     "$ref": "71"
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "104",
@@ -1591,11 +1497,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.get.id",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "108",
@@ -1628,11 +1532,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.get.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               }
             ],
             "responses": [
@@ -1647,12 +1549,7 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ],
-                "serializationOptions": {
-                  "json": {
-                    "name": ""
-                  }
-                }
+                ]
               }
             ],
             "httpMethod": "GET",
@@ -1687,7 +1584,6 @@
           "$id": "110",
           "kind": "paging",
           "name": "list",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [
             "2022-12-01-preview"
@@ -1697,7 +1593,6 @@
           "operation": {
             "$id": "111",
             "name": "list",
-            "isExactName": false,
             "resourceName": "User",
             "summary": "Lists all users.",
             "doc": "Lists all Users",
@@ -1736,8 +1631,7 @@
                   {
                     "$ref": "71"
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "115",
@@ -1780,11 +1674,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.list.top",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "119",
@@ -1827,11 +1719,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.list.skip",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "123",
@@ -1874,11 +1764,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.list.maxpagesize",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "127",
@@ -1924,11 +1812,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.list.orderby",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "131",
@@ -1971,11 +1857,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.list.filter",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "135",
@@ -2010,11 +1894,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.list.select",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "137",
@@ -2049,11 +1931,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.list.expand",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "139",
@@ -2086,11 +1966,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.list.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               }
             ],
             "responses": [
@@ -2105,12 +1983,7 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ],
-                "serializationOptions": {
-                  "json": {
-                    "name": ""
-                  }
-                }
+                ]
               }
             ],
             "httpMethod": "GET",
@@ -2180,7 +2053,6 @@
           "$id": "141",
           "kind": "basic",
           "name": "delete",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [
             "2022-12-01-preview"
@@ -2190,7 +2062,6 @@
           "operation": {
             "$id": "142",
             "name": "delete",
-            "isExactName": false,
             "resourceName": "User",
             "summary": "Deletes a user.",
             "doc": "Deletes a User",
@@ -2229,8 +2100,7 @@
                   {
                     "$ref": "71"
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "146",
@@ -2276,11 +2146,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.delete.id",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               }
             ],
             "responses": [
@@ -2289,8 +2157,7 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false,
-                "serializationOptions": {}
+                "isErrorResponse": false
               }
             ],
             "httpMethod": "DELETE",
@@ -2318,7 +2185,6 @@
           "$id": "150",
           "kind": "basic",
           "name": "export",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [
             "2022-12-01-preview"
@@ -2328,7 +2194,6 @@
           "operation": {
             "$id": "151",
             "name": "export",
-            "isExactName": false,
             "resourceName": "Basic",
             "summary": "Exports a user.",
             "doc": "Exports a User",
@@ -2367,8 +2232,7 @@
                   {
                     "$ref": "71"
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "155",
@@ -2414,11 +2278,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.export.id",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "159",
@@ -2461,11 +2323,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.export.format",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "163",
@@ -2498,11 +2358,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.export.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               }
             ],
             "responses": [
@@ -2517,12 +2375,7 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ],
-                "serializationOptions": {
-                  "json": {
-                    "name": ""
-                  }
-                }
+                ]
               }
             ],
             "httpMethod": "POST",
@@ -2560,7 +2413,6 @@
           "$id": "165",
           "kind": "basic",
           "name": "exportAllUsers",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [
             "2022-12-01-preview"
@@ -2570,7 +2422,6 @@
           "operation": {
             "$id": "166",
             "name": "exportAllUsers",
-            "isExactName": false,
             "resourceName": "Basic",
             "summary": "Exports all users.",
             "doc": "Exports all users",
@@ -2609,8 +2460,7 @@
                   {
                     "$ref": "71"
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "170",
@@ -2653,11 +2503,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.exportAllUsers.format",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "174",
@@ -2690,11 +2538,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.exportAllUsers.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               }
             ],
             "responses": [
@@ -2709,12 +2555,7 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ],
-                "serializationOptions": {
-                  "json": {
-                    "name": ""
-                  }
-                }
+                ]
               }
             ],
             "httpMethod": "POST",
@@ -2775,8 +2616,7 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.endpoint",
-          "isExactName": false
+          "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.endpoint"
         },
         {
           "$ref": "71"

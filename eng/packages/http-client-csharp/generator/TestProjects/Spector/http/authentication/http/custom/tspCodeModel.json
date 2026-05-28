@@ -17,7 +17,6 @@
           "name": "InvalidAuth"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "2",
@@ -42,8 +41,7 @@
               "name": "error"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     }
@@ -53,7 +51,6 @@
       "$id": "4",
       "kind": "client",
       "name": "CustomClient",
-      "isExactName": false,
       "namespace": "Authentication.Http.Custom",
       "doc": "Illustrates clients generated with generic HTTP auth.",
       "methods": [
@@ -61,14 +58,12 @@
           "$id": "5",
           "kind": "basic",
           "name": "valid",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "doc": "Check whether client is authenticated",
           "operation": {
             "$id": "6",
             "name": "valid",
-            "isExactName": false,
             "resourceName": "Custom",
             "doc": "Check whether client is authenticated",
             "accessibility": "public",
@@ -79,8 +74,7 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false,
-                "serializationOptions": {}
+                "isErrorResponse": false
               }
             ],
             "httpMethod": "GET",
@@ -104,14 +98,12 @@
           "$id": "7",
           "kind": "basic",
           "name": "invalid",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "doc": "Check whether client is authenticated.",
           "operation": {
             "$id": "8",
             "name": "invalid",
-            "isExactName": false,
             "resourceName": "Custom",
             "doc": "Check whether client is authenticated.",
             "accessibility": "public",
@@ -122,8 +114,7 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false,
-                "serializationOptions": {}
+                "isErrorResponse": false
               }
             ],
             "httpMethod": "GET",
@@ -173,8 +164,7 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Authentication.Http.Custom.endpoint",
-          "isExactName": false
+          "crossLanguageDefinitionId": "Authentication.Http.Custom.endpoint"
         }
       ],
       "initializedBy": 1,

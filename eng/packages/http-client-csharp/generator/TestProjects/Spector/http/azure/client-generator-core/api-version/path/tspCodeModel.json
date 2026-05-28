@@ -29,8 +29,7 @@
             "$ref": "1"
           },
           "doc": "Api version 2025-01-01.",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         }
       ],
       "namespace": "Client.AlternateApiVersion.Service.Path",
@@ -38,8 +37,7 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "ApiVersionEnum",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     }
   ],
   "constants": [],
@@ -49,14 +47,12 @@
       "$id": "4",
       "kind": "client",
       "name": "PathClient",
-      "isExactName": false,
       "namespace": "Client.AlternateApiVersion.Service.Path",
       "methods": [
         {
           "$id": "5",
           "kind": "basic",
           "name": "pathApiVersion",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [
             "2025-01-01"
@@ -65,7 +61,6 @@
           "operation": {
             "$id": "6",
             "name": "pathApiVersion",
-            "isExactName": false,
             "resourceName": "Path",
             "doc": "Path api version parameter.",
             "accessibility": "public",
@@ -130,11 +125,9 @@
                     "crossLanguageDefinitionId": "Client.AlternateApiVersion.Service.Path.pathApiVersion.version",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               }
             ],
             "responses": [
@@ -143,8 +136,7 @@
                   200
                 ],
                 "headers": [],
-                "isErrorResponse": false,
-                "serializationOptions": {}
+                "isErrorResponse": false
               }
             ],
             "httpMethod": "POST",
@@ -194,8 +186,7 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Client.AlternateApiVersion.Service.Path.endpoint",
-          "isExactName": false
+          "crossLanguageDefinitionId": "Client.AlternateApiVersion.Service.Path.endpoint"
         },
         {
           "$ref": "10"

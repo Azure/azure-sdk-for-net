@@ -6,7 +6,7 @@
     {
       "$id": "1",
       "kind": "constant",
-      "name": "SimpleContentType",
+      "name": "simpleContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -17,13 +17,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "3",
       "kind": "constant",
-      "name": "SimpleContentType1",
+      "name": "simpleContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -34,8 +33,7 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     }
   ],
   "models": [
@@ -53,7 +51,6 @@
           "name": "User"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "6",
@@ -78,8 +75,7 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -96,7 +92,6 @@
           "name": ""
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "9",
@@ -121,8 +116,7 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     }
@@ -132,7 +126,6 @@
       "$id": "11",
       "kind": "client",
       "name": "BasicClient",
-      "isExactName": false,
       "namespace": "Parameters.Basic",
       "doc": "Test for basic parameters cases.",
       "methods": [],
@@ -165,8 +158,7 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Parameters.Basic.endpoint",
-          "isExactName": false
+          "crossLanguageDefinitionId": "Parameters.Basic.endpoint"
         }
       ],
       "initializedBy": 1,
@@ -178,20 +170,17 @@
           "$id": "15",
           "kind": "client",
           "name": "ExplicitBody",
-          "isExactName": false,
           "namespace": "Parameters.Basic.ExplicitBody",
           "methods": [
             {
               "$id": "16",
               "kind": "basic",
               "name": "simple",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "17",
                 "name": "simple",
-                "isExactName": false,
                 "resourceName": "ExplicitBody",
                 "accessibility": "public",
                 "parameters": [
@@ -228,11 +217,9 @@
                         "crossLanguageDefinitionId": "Parameters.Basic.ExplicitBody.simple.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "20",
@@ -268,16 +255,9 @@
                         "crossLanguageDefinitionId": "Parameters.Basic.ExplicitBody.simple.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -286,8 +266,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -347,8 +326,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Parameters.Basic.ExplicitBody.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Parameters.Basic.ExplicitBody.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -364,20 +342,17 @@
           "$id": "25",
           "kind": "client",
           "name": "ImplicitBody",
-          "isExactName": false,
           "namespace": "Parameters.Basic.ImplicitBody",
           "methods": [
             {
               "$id": "26",
               "kind": "basic",
               "name": "simple",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "27",
                 "name": "simple",
-                "isExactName": false,
                 "resourceName": "ImplicitBody",
                 "accessibility": "public",
                 "parameters": [
@@ -414,11 +389,9 @@
                         "crossLanguageDefinitionId": "Parameters.Basic.ImplicitBody.simple.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "30",
@@ -458,16 +431,9 @@
                         "crossLanguageDefinitionId": "Parameters.Basic.ImplicitBody.simple.name",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -476,8 +442,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -537,8 +502,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Parameters.Basic.ImplicitBody.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Parameters.Basic.ImplicitBody.endpoint"
             }
           ],
           "initializedBy": 0,

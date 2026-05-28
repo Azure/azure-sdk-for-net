@@ -6,7 +6,7 @@
     {
       "$id": "1",
       "kind": "constant",
-      "name": "ListAccept",
+      "name": "listContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -17,13 +17,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "3",
       "kind": "constant",
-      "name": "ListAccept1",
+      "name": "listByScopeContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -34,8 +33,7 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     }
   ],
   "models": [
@@ -52,7 +50,6 @@
           "name": "Resource"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "6",
@@ -77,8 +74,7 @@
               "name": "id"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "8",
@@ -103,8 +99,7 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "10",
@@ -129,8 +124,7 @@
               "name": "scope"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     }
@@ -140,7 +134,6 @@
       "$id": "12",
       "kind": "client",
       "name": "OverloadClient",
-      "isExactName": false,
       "namespace": "Client.Overload",
       "doc": "Test for overload operation in .NET.",
       "methods": [
@@ -148,13 +141,11 @@
           "$id": "13",
           "kind": "basic",
           "name": "list",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "14",
             "name": "list",
-            "isExactName": false,
             "resourceName": "Overload",
             "accessibility": "public",
             "parameters": [
@@ -189,11 +180,9 @@
                     "crossLanguageDefinitionId": "Client.Overload.list.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               }
             ],
             "responses": [
@@ -215,12 +204,7 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ],
-                "serializationOptions": {
-                  "json": {
-                    "name": ""
-                  }
-                }
+                ]
               }
             ],
             "httpMethod": "GET",
@@ -252,13 +236,11 @@
           "$id": "18",
           "kind": "basic",
           "name": "list",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "19",
             "name": "list",
-            "isExactName": false,
             "resourceName": "Overload",
             "accessibility": "public",
             "parameters": [
@@ -304,11 +286,9 @@
                     "crossLanguageDefinitionId": "Client.Overload.listByScope.scope",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "24",
@@ -341,11 +321,9 @@
                     "crossLanguageDefinitionId": "Client.Overload.listByScope.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               }
             ],
             "responses": [
@@ -360,12 +338,7 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ],
-                "serializationOptions": {
-                  "json": {
-                    "name": ""
-                  }
-                }
+                ]
               }
             ],
             "httpMethod": "GET",
@@ -426,8 +399,7 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Client.Overload.endpoint",
-          "isExactName": false
+          "crossLanguageDefinitionId": "Client.Overload.endpoint"
         }
       ],
       "initializedBy": 1,

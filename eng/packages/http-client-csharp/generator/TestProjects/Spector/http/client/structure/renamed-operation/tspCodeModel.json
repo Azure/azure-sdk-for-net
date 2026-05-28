@@ -26,8 +26,7 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         },
         {
           "$id": "4",
@@ -40,8 +39,7 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         },
         {
           "$id": "5",
@@ -54,8 +52,7 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         },
         {
           "$id": "6",
@@ -68,8 +65,7 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         },
         {
           "$id": "7",
@@ -82,16 +78,14 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         }
       ],
       "namespace": "Client.Structure.Service",
       "isFixed": true,
       "isFlags": false,
       "usage": "Input",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     }
   ],
   "constants": [],
@@ -101,20 +95,17 @@
       "$id": "8",
       "kind": "client",
       "name": "RenamedOperationClient",
-      "isExactName": false,
       "namespace": "Client.Structure.RenamedOperation",
       "methods": [
         {
           "$id": "9",
           "kind": "basic",
           "name": "renamedOne",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "10",
             "name": "renamedOne",
-            "isExactName": false,
             "resourceName": "RenamedOperation",
             "accessibility": "public",
             "parameters": [],
@@ -124,8 +115,7 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false,
-                "serializationOptions": {}
+                "isErrorResponse": false
               }
             ],
             "httpMethod": "POST",
@@ -149,13 +139,11 @@
           "$id": "11",
           "kind": "basic",
           "name": "renamedThree",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "12",
             "name": "renamedThree",
-            "isExactName": false,
             "resourceName": "RenamedOperation",
             "accessibility": "public",
             "parameters": [],
@@ -165,8 +153,7 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false,
-                "serializationOptions": {}
+                "isErrorResponse": false
               }
             ],
             "httpMethod": "POST",
@@ -190,13 +177,11 @@
           "$id": "13",
           "kind": "basic",
           "name": "renamedFive",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "14",
             "name": "renamedFive",
-            "isExactName": false,
             "resourceName": "RenamedOperation",
             "accessibility": "public",
             "parameters": [],
@@ -206,8 +191,7 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false,
-                "serializationOptions": {}
+                "isErrorResponse": false
               }
             ],
             "httpMethod": "POST",
@@ -248,8 +232,7 @@
           "serverUrlTemplate": "{endpoint}/client/structure/{client}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Client.Structure.RenamedOperation.endpoint",
-          "isExactName": false
+          "crossLanguageDefinitionId": "Client.Structure.RenamedOperation.endpoint"
         },
         {
           "$id": "17",
@@ -267,8 +250,7 @@
           "serverUrlTemplate": "{endpoint}/client/structure/{client}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Client.Structure.RenamedOperation.client",
-          "isExactName": false
+          "crossLanguageDefinitionId": "Client.Structure.RenamedOperation.client"
         }
       ],
       "initializedBy": 1,
@@ -280,20 +262,17 @@
           "$id": "18",
           "kind": "client",
           "name": "Group",
-          "isExactName": false,
           "namespace": "Client.Structure.RenamedOperation",
           "methods": [
             {
               "$id": "19",
               "kind": "basic",
               "name": "renamedTwo",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "20",
                 "name": "renamedTwo",
-                "isExactName": false,
                 "resourceName": "Group",
                 "accessibility": "public",
                 "parameters": [],
@@ -303,8 +282,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "POST",
@@ -328,13 +306,11 @@
               "$id": "21",
               "kind": "basic",
               "name": "renamedFour",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "22",
                 "name": "renamedFour",
-                "isExactName": false,
                 "resourceName": "Group",
                 "accessibility": "public",
                 "parameters": [],
@@ -344,8 +320,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "POST",
@@ -369,13 +344,11 @@
               "$id": "23",
               "kind": "basic",
               "name": "renamedSix",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "24",
                 "name": "renamedSix",
-                "isExactName": false,
                 "resourceName": "Group",
                 "accessibility": "public",
                 "parameters": [],
@@ -385,8 +358,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "POST",
@@ -427,8 +399,7 @@
               "serverUrlTemplate": "{endpoint}/client/structure/{client}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Structure.RenamedOperation.Group.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Client.Structure.RenamedOperation.Group.endpoint"
             },
             {
               "$id": "27",
@@ -446,8 +417,7 @@
               "serverUrlTemplate": "{endpoint}/client/structure/{client}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Structure.RenamedOperation.Group.client",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Client.Structure.RenamedOperation.Group.client"
             }
           ],
           "initializedBy": 0,

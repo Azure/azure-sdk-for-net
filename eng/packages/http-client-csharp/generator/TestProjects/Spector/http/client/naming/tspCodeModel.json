@@ -26,16 +26,14 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         }
       ],
       "namespace": "Client.Naming.UnionEnum",
       "isFixed": false,
       "isFlags": false,
       "usage": "Input,Json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "4",
@@ -61,8 +59,7 @@
           "enumType": {
             "$ref": "4"
           },
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         },
         {
           "$id": "7",
@@ -75,23 +72,21 @@
           "enumType": {
             "$ref": "4"
           },
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         }
       ],
       "namespace": "Client.Naming.UnionEnum",
       "isFixed": false,
       "isFlags": false,
       "usage": "Input,Json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     }
   ],
   "constants": [
     {
       "$id": "8",
       "kind": "constant",
-      "name": "UnionEnumNameRequestContentType",
+      "name": "clientContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -102,13 +97,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "10",
       "kind": "constant",
-      "name": "UnionEnumNameRequestContentType1",
+      "name": "languageContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -119,13 +113,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "12",
       "kind": "constant",
-      "name": "UnionEnumNameRequestContentType2",
+      "name": "compatibleWithEncodedNameContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -136,13 +129,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "14",
       "kind": "constant",
-      "name": "UnionEnumNameRequestContentType3",
+      "name": "clientContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -153,13 +145,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "16",
       "kind": "constant",
-      "name": "UnionEnumNameRequestContentType4",
+      "name": "languageContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -170,13 +161,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "18",
       "kind": "constant",
-      "name": "UnionEnumNameRequestContentType5",
+      "name": "UnionEnumNameRequestContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -187,13 +177,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "20",
       "kind": "constant",
-      "name": "UnionEnumNameRequestContentType6",
+      "name": "UnionEnumNameRequestContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -204,13 +193,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "22",
       "kind": "constant",
-      "name": "UnionEnumNameRequestContentType7",
+      "name": "UnionEnumNameRequestContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -221,13 +209,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "24",
       "kind": "constant",
-      "name": "UnionEnumNameRequestContentType8",
+      "name": "UnionEnumNameRequestContentType3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -238,8 +225,7 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     }
   ],
   "models": [
@@ -256,7 +242,6 @@
           "name": "ClientNameModel"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "27",
@@ -282,8 +267,7 @@
               "name": "defaultName"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -300,7 +284,6 @@
           "name": "LanguageClientNameModel"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "30",
@@ -326,8 +309,7 @@
               "name": "defaultName"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -344,7 +326,6 @@
           "name": "ClientNameAndJsonEncodedNameModel"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "33",
@@ -370,8 +351,7 @@
               "name": "wireName"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -388,7 +368,6 @@
           "name": "ModelWithClientClientName"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "36",
@@ -414,8 +393,7 @@
               "name": "defaultName"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -432,7 +410,6 @@
           "name": "ModelWithLanguageClientName"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "39",
@@ -458,8 +435,7 @@
               "name": "defaultName"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     }
@@ -469,7 +445,6 @@
       "$id": "41",
       "kind": "client",
       "name": "NamingClient",
-      "isExactName": false,
       "namespace": "Client.Naming",
       "doc": "Describe changing names of types in a client with `@clientName`",
       "methods": [
@@ -477,13 +452,11 @@
           "$id": "42",
           "kind": "basic",
           "name": "clientName",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "43",
             "name": "clientName",
-            "isExactName": false,
             "resourceName": "Naming",
             "accessibility": "public",
             "parameters": [],
@@ -493,8 +466,7 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false,
-                "serializationOptions": {}
+                "isErrorResponse": false
               }
             ],
             "httpMethod": "POST",
@@ -518,13 +490,11 @@
           "$id": "44",
           "kind": "basic",
           "name": "parameter",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "45",
             "name": "parameter",
-            "isExactName": false,
             "resourceName": "Naming",
             "accessibility": "public",
             "parameters": [
@@ -567,11 +537,9 @@
                     "crossLanguageDefinitionId": "Client.Naming.parameter.defaultName",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               }
             ],
             "responses": [
@@ -580,8 +548,7 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false,
-                "serializationOptions": {}
+                "isErrorResponse": false
               }
             ],
             "httpMethod": "POST",
@@ -635,8 +602,7 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Client.Naming.endpoint",
-          "isExactName": false
+          "crossLanguageDefinitionId": "Client.Naming.endpoint"
         }
       ],
       "initializedBy": 1,
@@ -648,20 +614,17 @@
           "$id": "53",
           "kind": "client",
           "name": "Property",
-          "isExactName": false,
           "namespace": "Client.Naming.Property",
           "methods": [
             {
               "$id": "54",
               "kind": "basic",
               "name": "client",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "55",
                 "name": "client",
-                "isExactName": false,
                 "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
@@ -698,11 +661,9 @@
                         "crossLanguageDefinitionId": "Client.Naming.Property.client.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "58",
@@ -738,16 +699,9 @@
                         "crossLanguageDefinitionId": "Client.Naming.Property.client.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -756,8 +710,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "POST",
@@ -791,13 +744,11 @@
               "$id": "60",
               "kind": "basic",
               "name": "language",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "61",
                 "name": "language",
-                "isExactName": false,
                 "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
@@ -834,11 +785,9 @@
                         "crossLanguageDefinitionId": "Client.Naming.Property.language.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "64",
@@ -874,16 +823,9 @@
                         "crossLanguageDefinitionId": "Client.Naming.Property.language.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -892,8 +834,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "POST",
@@ -927,13 +868,11 @@
               "$id": "66",
               "kind": "basic",
               "name": "compatibleWithEncodedName",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "67",
                 "name": "compatibleWithEncodedName",
-                "isExactName": false,
                 "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
@@ -970,11 +909,9 @@
                         "crossLanguageDefinitionId": "Client.Naming.Property.compatibleWithEncodedName.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "70",
@@ -1010,16 +947,9 @@
                         "crossLanguageDefinitionId": "Client.Naming.Property.compatibleWithEncodedName.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -1028,8 +958,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "POST",
@@ -1089,8 +1018,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Naming.Property.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Client.Naming.Property.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -1106,20 +1034,17 @@
           "$id": "75",
           "kind": "client",
           "name": "Header",
-          "isExactName": false,
           "namespace": "Client.Naming.Header",
           "methods": [
             {
               "$id": "76",
               "kind": "basic",
               "name": "request",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "77",
                 "name": "request",
-                "isExactName": false,
                 "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
@@ -1162,11 +1087,9 @@
                         "crossLanguageDefinitionId": "Client.Naming.Header.request.default-name",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -1175,8 +1098,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "POST",
@@ -1204,13 +1126,11 @@
               "$id": "82",
               "kind": "basic",
               "name": "response",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "83",
                 "name": "response",
-                "isExactName": false,
                 "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [],
@@ -1232,8 +1152,7 @@
                         }
                       }
                     ],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "GET",
@@ -1283,8 +1202,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Naming.Header.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Client.Naming.Header.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -1300,20 +1218,17 @@
           "$id": "88",
           "kind": "client",
           "name": "ModelClient",
-          "isExactName": false,
           "namespace": "Client.Naming.Model",
           "methods": [
             {
               "$id": "89",
               "kind": "basic",
               "name": "client",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "90",
                 "name": "client",
-                "isExactName": false,
                 "resourceName": "Model",
                 "accessibility": "public",
                 "parameters": [
@@ -1350,11 +1265,9 @@
                         "crossLanguageDefinitionId": "Client.Naming.Model.client.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "93",
@@ -1390,16 +1303,9 @@
                         "crossLanguageDefinitionId": "Client.Naming.Model.client.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -1408,8 +1314,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "POST",
@@ -1443,13 +1348,11 @@
               "$id": "95",
               "kind": "basic",
               "name": "language",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "96",
                 "name": "language",
-                "isExactName": false,
                 "resourceName": "Model",
                 "accessibility": "public",
                 "parameters": [
@@ -1486,11 +1389,9 @@
                         "crossLanguageDefinitionId": "Client.Naming.Model.language.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "99",
@@ -1526,16 +1427,9 @@
                         "crossLanguageDefinitionId": "Client.Naming.Model.language.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -1544,8 +1438,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "POST",
@@ -1605,8 +1498,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Naming.Model.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Client.Naming.Model.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -1622,20 +1514,17 @@
           "$id": "104",
           "kind": "client",
           "name": "UnionEnum",
-          "isExactName": false,
           "namespace": "Client.Naming.UnionEnum",
           "methods": [
             {
               "$id": "105",
               "kind": "basic",
               "name": "unionEnumName",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "106",
                 "name": "unionEnumName",
-                "isExactName": false,
                 "resourceName": "UnionEnum",
                 "accessibility": "public",
                 "parameters": [
@@ -1670,11 +1559,9 @@
                         "crossLanguageDefinitionId": "Client.Naming.UnionEnum.unionEnumName.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "109",
@@ -1710,16 +1597,9 @@
                         "crossLanguageDefinitionId": "Client.Naming.UnionEnum.unionEnumName.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -1728,8 +1608,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "POST",
@@ -1763,13 +1642,11 @@
               "$id": "111",
               "kind": "basic",
               "name": "unionEnumMemberName",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "112",
                 "name": "unionEnumMemberName",
-                "isExactName": false,
                 "resourceName": "UnionEnum",
                 "accessibility": "public",
                 "parameters": [
@@ -1804,11 +1681,9 @@
                         "crossLanguageDefinitionId": "Client.Naming.UnionEnum.unionEnumMemberName.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "115",
@@ -1844,16 +1719,9 @@
                         "crossLanguageDefinitionId": "Client.Naming.UnionEnum.unionEnumMemberName.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -1862,8 +1730,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "POST",
@@ -1923,8 +1790,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Naming.UnionEnum.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Client.Naming.UnionEnum.endpoint"
             }
           ],
           "initializedBy": 0,

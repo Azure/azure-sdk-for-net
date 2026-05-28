@@ -6,7 +6,7 @@
     {
       "$id": "1",
       "kind": "constant",
-      "name": "DefaultContentType",
+      "name": "defaultContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -17,13 +17,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "3",
       "kind": "constant",
-      "name": "DefaultContentType1",
+      "name": "defaultContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -34,13 +33,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "5",
       "kind": "constant",
-      "name": "DefaultContentType2",
+      "name": "iso8601ContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -51,13 +49,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "7",
       "kind": "constant",
-      "name": "DefaultContentType3",
+      "name": "iso8601ContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -68,13 +65,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "9",
       "kind": "constant",
-      "name": "DefaultContentType4",
+      "name": "int32SecondsContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -85,13 +81,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "11",
       "kind": "constant",
-      "name": "DefaultContentType5",
+      "name": "int32SecondsContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -102,13 +97,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "13",
       "kind": "constant",
-      "name": "DefaultContentType6",
+      "name": "floatSecondsContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -119,13 +113,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "15",
       "kind": "constant",
-      "name": "DefaultContentType7",
+      "name": "floatSecondsContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -136,13 +129,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "17",
       "kind": "constant",
-      "name": "DefaultContentType8",
+      "name": "float64SecondsContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -153,13 +145,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "19",
       "kind": "constant",
-      "name": "DefaultContentType9",
+      "name": "float64SecondsContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -170,13 +161,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "21",
       "kind": "constant",
-      "name": "DefaultContentType10",
+      "name": "int32MillisecondsContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -187,13 +177,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "23",
       "kind": "constant",
-      "name": "DefaultContentType11",
+      "name": "int32MillisecondsContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -204,13 +193,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "25",
       "kind": "constant",
-      "name": "DefaultContentType12",
+      "name": "floatMillisecondsContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -221,13 +209,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "27",
       "kind": "constant",
-      "name": "DefaultContentType13",
+      "name": "floatMillisecondsContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -238,13 +225,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "29",
       "kind": "constant",
-      "name": "DefaultContentType14",
+      "name": "float64MillisecondsContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -255,13 +241,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "31",
       "kind": "constant",
-      "name": "DefaultContentType15",
+      "name": "float64MillisecondsContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -272,13 +257,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "33",
       "kind": "constant",
-      "name": "DefaultContentType16",
+      "name": "floatSecondsArrayContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -289,13 +273,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "35",
       "kind": "constant",
-      "name": "DefaultContentType17",
+      "name": "floatSecondsArrayContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -306,13 +289,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "37",
       "kind": "constant",
-      "name": "DefaultContentType18",
+      "name": "floatMillisecondsArrayContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -323,13 +305,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "39",
       "kind": "constant",
-      "name": "DefaultContentType19",
+      "name": "floatMillisecondsArrayContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -340,13 +321,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "41",
       "kind": "constant",
-      "name": "DefaultContentType20",
+      "name": "int32SecondsLargerUnitContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -357,13 +337,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "43",
       "kind": "constant",
-      "name": "DefaultContentType21",
+      "name": "int32SecondsLargerUnitContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -374,13 +353,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "45",
       "kind": "constant",
-      "name": "DefaultContentType22",
+      "name": "floatSecondsLargerUnitContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -391,13 +369,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "47",
       "kind": "constant",
-      "name": "DefaultContentType23",
+      "name": "floatSecondsLargerUnitContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -408,13 +385,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "49",
       "kind": "constant",
-      "name": "DefaultContentType24",
+      "name": "int32MillisecondsLargerUnitContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -425,13 +401,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "51",
       "kind": "constant",
-      "name": "DefaultContentType25",
+      "name": "int32MillisecondsLargerUnitContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -442,13 +417,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "53",
       "kind": "constant",
-      "name": "DefaultContentType26",
+      "name": "floatMillisecondsLargerUnitContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -459,13 +433,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "55",
       "kind": "constant",
-      "name": "DefaultContentType27",
+      "name": "floatMillisecondsLargerUnitContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -476,8 +449,7 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     }
   ],
   "models": [
@@ -494,7 +466,6 @@
           "name": "DefaultDurationProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "58",
@@ -527,8 +498,7 @@
               "name": "value"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -545,7 +515,6 @@
           "name": "ISO8601DurationProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "62",
@@ -578,8 +547,7 @@
               "name": "value"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -596,7 +564,6 @@
           "name": "Int32SecondsDurationProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "66",
@@ -629,8 +596,7 @@
               "name": "value"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -647,7 +613,6 @@
           "name": "FloatSecondsDurationProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "70",
@@ -680,8 +645,7 @@
               "name": "value"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -698,7 +662,6 @@
           "name": "Float64SecondsDurationProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "74",
@@ -731,8 +694,7 @@
               "name": "value"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -749,7 +711,6 @@
           "name": "Int32MillisecondsDurationProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "78",
@@ -782,8 +743,7 @@
               "name": "value"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -800,7 +760,6 @@
           "name": "FloatMillisecondsDurationProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "82",
@@ -833,8 +792,7 @@
               "name": "value"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -851,7 +809,6 @@
           "name": "Float64MillisecondsDurationProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "86",
@@ -884,8 +841,7 @@
               "name": "value"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -902,7 +858,6 @@
           "name": "FloatSecondsDurationArrayProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "90",
@@ -957,8 +912,7 @@
               "name": "value"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -975,7 +929,6 @@
           "name": "FloatMillisecondsDurationArrayProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "97",
@@ -1030,8 +983,7 @@
               "name": "value"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -1048,7 +1000,6 @@
           "name": "Int32SecondsLargerUnitDurationProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "104",
@@ -1081,8 +1032,7 @@
               "name": "value"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -1099,7 +1049,6 @@
           "name": "FloatSecondsLargerUnitDurationProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "108",
@@ -1132,8 +1081,7 @@
               "name": "value"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -1150,7 +1098,6 @@
           "name": "Int32MillisecondsLargerUnitDurationProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "112",
@@ -1183,8 +1130,7 @@
               "name": "value"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -1201,7 +1147,6 @@
           "name": "FloatMillisecondsLargerUnitDurationProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "116",
@@ -1234,8 +1179,7 @@
               "name": "value"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     }
@@ -1245,7 +1189,6 @@
       "$id": "119",
       "kind": "client",
       "name": "DurationClient",
-      "isExactName": false,
       "namespace": "Encode.Duration",
       "doc": "Test for encode decorator on duration.",
       "methods": [],
@@ -1278,8 +1221,7 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Encode.Duration.endpoint",
-          "isExactName": false
+          "crossLanguageDefinitionId": "Encode.Duration.endpoint"
         }
       ],
       "initializedBy": 1,
@@ -1291,20 +1233,17 @@
           "$id": "123",
           "kind": "client",
           "name": "Query",
-          "isExactName": false,
           "namespace": "Encode.Duration.Query",
           "methods": [
             {
               "$id": "124",
               "kind": "basic",
               "name": "default",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "125",
                 "name": "default",
-                "isExactName": false,
                 "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
@@ -1363,11 +1302,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Query.default.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -1376,8 +1313,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "GET",
@@ -1405,13 +1341,11 @@
               "$id": "132",
               "kind": "basic",
               "name": "iso8601",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "133",
                 "name": "iso8601",
-                "isExactName": false,
                 "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
@@ -1470,11 +1404,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Query.iso8601.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -1483,8 +1415,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "GET",
@@ -1512,13 +1443,11 @@
               "$id": "140",
               "kind": "basic",
               "name": "int32Seconds",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "141",
                 "name": "int32Seconds",
-                "isExactName": false,
                 "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
@@ -1577,11 +1506,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Query.int32Seconds.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -1590,8 +1517,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "GET",
@@ -1619,13 +1545,11 @@
               "$id": "148",
               "kind": "basic",
               "name": "int32SecondsLargerUnit",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "149",
                 "name": "int32SecondsLargerUnit",
-                "isExactName": false,
                 "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
@@ -1684,11 +1608,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Query.int32SecondsLargerUnit.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -1697,8 +1619,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "GET",
@@ -1726,13 +1647,11 @@
               "$id": "156",
               "kind": "basic",
               "name": "floatSeconds",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "157",
                 "name": "floatSeconds",
-                "isExactName": false,
                 "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
@@ -1791,11 +1710,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Query.floatSeconds.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -1804,8 +1721,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "GET",
@@ -1833,13 +1749,11 @@
               "$id": "164",
               "kind": "basic",
               "name": "floatSecondsLargerUnit",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "165",
                 "name": "floatSecondsLargerUnit",
-                "isExactName": false,
                 "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
@@ -1898,11 +1812,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Query.floatSecondsLargerUnit.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -1911,8 +1823,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "GET",
@@ -1940,13 +1851,11 @@
               "$id": "172",
               "kind": "basic",
               "name": "float64Seconds",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "173",
                 "name": "float64Seconds",
-                "isExactName": false,
                 "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
@@ -2005,11 +1914,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Query.float64Seconds.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -2018,8 +1925,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "GET",
@@ -2047,13 +1953,11 @@
               "$id": "180",
               "kind": "basic",
               "name": "int32Milliseconds",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "181",
                 "name": "int32Milliseconds",
-                "isExactName": false,
                 "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
@@ -2112,11 +2016,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Query.int32Milliseconds.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -2125,8 +2027,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "GET",
@@ -2154,13 +2055,11 @@
               "$id": "188",
               "kind": "basic",
               "name": "int32MillisecondsLargerUnit",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "189",
                 "name": "int32MillisecondsLargerUnit",
-                "isExactName": false,
                 "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
@@ -2219,11 +2118,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Query.int32MillisecondsLargerUnit.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -2232,8 +2129,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "GET",
@@ -2261,13 +2157,11 @@
               "$id": "196",
               "kind": "basic",
               "name": "floatMilliseconds",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "197",
                 "name": "floatMilliseconds",
-                "isExactName": false,
                 "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
@@ -2326,11 +2220,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Query.floatMilliseconds.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -2339,8 +2231,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "GET",
@@ -2368,13 +2259,11 @@
               "$id": "204",
               "kind": "basic",
               "name": "floatMillisecondsLargerUnit",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "205",
                 "name": "floatMillisecondsLargerUnit",
-                "isExactName": false,
                 "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
@@ -2433,11 +2322,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Query.floatMillisecondsLargerUnit.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -2446,8 +2333,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "GET",
@@ -2475,13 +2361,11 @@
               "$id": "212",
               "kind": "basic",
               "name": "float64Milliseconds",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "213",
                 "name": "float64Milliseconds",
-                "isExactName": false,
                 "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
@@ -2540,11 +2424,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Query.float64Milliseconds.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -2553,8 +2435,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "GET",
@@ -2582,13 +2463,11 @@
               "$id": "220",
               "kind": "basic",
               "name": "int32SecondsArray",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "221",
                 "name": "int32SecondsArray",
-                "isExactName": false,
                 "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
@@ -2658,11 +2537,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Query.int32SecondsArray.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -2671,8 +2548,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "GET",
@@ -2700,13 +2576,11 @@
               "$id": "229",
               "kind": "basic",
               "name": "int32MillisecondsArray",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "230",
                 "name": "int32MillisecondsArray",
-                "isExactName": false,
                 "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
@@ -2776,11 +2650,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Query.int32MillisecondsArray.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -2789,8 +2661,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "GET",
@@ -2844,8 +2715,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Encode.Duration.Query.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Encode.Duration.Query.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -2861,20 +2731,17 @@
           "$id": "241",
           "kind": "client",
           "name": "Property",
-          "isExactName": false,
           "namespace": "Encode.Duration.Property",
           "methods": [
             {
               "$id": "242",
               "kind": "basic",
               "name": "default",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "243",
                 "name": "default",
-                "isExactName": false,
                 "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
@@ -2911,11 +2778,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Property.default.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "246",
@@ -2948,11 +2813,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Property.default.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "248",
@@ -2988,16 +2851,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Property.default.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -3012,12 +2868,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "POST",
@@ -3058,13 +2909,11 @@
               "$id": "250",
               "kind": "basic",
               "name": "iso8601",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "251",
                 "name": "iso8601",
-                "isExactName": false,
                 "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
@@ -3101,11 +2950,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Property.iso8601.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "254",
@@ -3138,11 +2985,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Property.iso8601.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "256",
@@ -3178,16 +3023,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Property.iso8601.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -3202,12 +3040,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "POST",
@@ -3248,13 +3081,11 @@
               "$id": "258",
               "kind": "basic",
               "name": "int32Seconds",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "259",
                 "name": "int32Seconds",
-                "isExactName": false,
                 "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
@@ -3291,11 +3122,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Property.int32Seconds.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "262",
@@ -3328,11 +3157,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Property.int32Seconds.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "264",
@@ -3368,16 +3195,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Property.int32Seconds.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -3392,12 +3212,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "POST",
@@ -3438,13 +3253,11 @@
               "$id": "266",
               "kind": "basic",
               "name": "floatSeconds",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "267",
                 "name": "floatSeconds",
-                "isExactName": false,
                 "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
@@ -3481,11 +3294,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Property.floatSeconds.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "270",
@@ -3518,11 +3329,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Property.floatSeconds.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "272",
@@ -3558,16 +3367,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Property.floatSeconds.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -3582,12 +3384,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "POST",
@@ -3628,13 +3425,11 @@
               "$id": "274",
               "kind": "basic",
               "name": "float64Seconds",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "275",
                 "name": "float64Seconds",
-                "isExactName": false,
                 "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
@@ -3671,11 +3466,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Property.float64Seconds.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "278",
@@ -3708,11 +3501,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Property.float64Seconds.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "280",
@@ -3748,16 +3539,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Property.float64Seconds.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -3772,12 +3556,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "POST",
@@ -3818,13 +3597,11 @@
               "$id": "282",
               "kind": "basic",
               "name": "int32Milliseconds",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "283",
                 "name": "int32Milliseconds",
-                "isExactName": false,
                 "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
@@ -3861,11 +3638,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Property.int32Milliseconds.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "286",
@@ -3898,11 +3673,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Property.int32Milliseconds.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "288",
@@ -3938,16 +3711,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Property.int32Milliseconds.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -3962,12 +3728,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "POST",
@@ -4008,13 +3769,11 @@
               "$id": "290",
               "kind": "basic",
               "name": "floatMilliseconds",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "291",
                 "name": "floatMilliseconds",
-                "isExactName": false,
                 "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
@@ -4051,11 +3810,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Property.floatMilliseconds.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "294",
@@ -4088,11 +3845,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Property.floatMilliseconds.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "296",
@@ -4128,16 +3883,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Property.floatMilliseconds.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -4152,12 +3900,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "POST",
@@ -4198,13 +3941,11 @@
               "$id": "298",
               "kind": "basic",
               "name": "float64Milliseconds",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "299",
                 "name": "float64Milliseconds",
-                "isExactName": false,
                 "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
@@ -4241,11 +3982,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Property.float64Milliseconds.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "302",
@@ -4278,11 +4017,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Property.float64Milliseconds.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "304",
@@ -4318,16 +4055,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Property.float64Milliseconds.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -4342,12 +4072,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "POST",
@@ -4388,13 +4113,11 @@
               "$id": "306",
               "kind": "basic",
               "name": "floatSecondsArray",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "307",
                 "name": "floatSecondsArray",
-                "isExactName": false,
                 "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
@@ -4431,11 +4154,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Property.floatSecondsArray.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "310",
@@ -4468,11 +4189,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Property.floatSecondsArray.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "312",
@@ -4508,16 +4227,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Property.floatSecondsArray.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -4532,12 +4244,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "POST",
@@ -4578,13 +4285,11 @@
               "$id": "314",
               "kind": "basic",
               "name": "floatMillisecondsArray",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "315",
                 "name": "floatMillisecondsArray",
-                "isExactName": false,
                 "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
@@ -4621,11 +4326,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Property.floatMillisecondsArray.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "318",
@@ -4658,11 +4361,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Property.floatMillisecondsArray.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "320",
@@ -4698,16 +4399,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Property.floatMillisecondsArray.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -4722,12 +4416,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "POST",
@@ -4768,13 +4457,11 @@
               "$id": "322",
               "kind": "basic",
               "name": "int32SecondsLargerUnit",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "323",
                 "name": "int32SecondsLargerUnit",
-                "isExactName": false,
                 "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
@@ -4811,11 +4498,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Property.int32SecondsLargerUnit.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "326",
@@ -4848,11 +4533,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Property.int32SecondsLargerUnit.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "328",
@@ -4888,16 +4571,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Property.int32SecondsLargerUnit.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -4912,12 +4588,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "POST",
@@ -4958,13 +4629,11 @@
               "$id": "330",
               "kind": "basic",
               "name": "floatSecondsLargerUnit",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "331",
                 "name": "floatSecondsLargerUnit",
-                "isExactName": false,
                 "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
@@ -5001,11 +4670,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Property.floatSecondsLargerUnit.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "334",
@@ -5038,11 +4705,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Property.floatSecondsLargerUnit.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "336",
@@ -5078,16 +4743,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Property.floatSecondsLargerUnit.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -5102,12 +4760,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "POST",
@@ -5148,13 +4801,11 @@
               "$id": "338",
               "kind": "basic",
               "name": "int32MillisecondsLargerUnit",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "339",
                 "name": "int32MillisecondsLargerUnit",
-                "isExactName": false,
                 "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
@@ -5191,11 +4842,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Property.int32MillisecondsLargerUnit.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "342",
@@ -5228,11 +4877,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Property.int32MillisecondsLargerUnit.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "344",
@@ -5268,16 +4915,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Property.int32MillisecondsLargerUnit.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -5292,12 +4932,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "POST",
@@ -5338,13 +4973,11 @@
               "$id": "346",
               "kind": "basic",
               "name": "floatMillisecondsLargerUnit",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "347",
                 "name": "floatMillisecondsLargerUnit",
-                "isExactName": false,
                 "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
@@ -5381,11 +5014,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Property.floatMillisecondsLargerUnit.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "350",
@@ -5418,11 +5049,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Property.floatMillisecondsLargerUnit.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "352",
@@ -5458,16 +5087,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Property.floatMillisecondsLargerUnit.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -5482,12 +5104,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "POST",
@@ -5554,8 +5171,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Encode.Duration.Property.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Encode.Duration.Property.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -5571,20 +5187,17 @@
           "$id": "357",
           "kind": "client",
           "name": "Header",
-          "isExactName": false,
           "namespace": "Encode.Duration.Header",
           "methods": [
             {
               "$id": "358",
               "kind": "basic",
               "name": "default",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "359",
                 "name": "default",
-                "isExactName": false,
                 "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
@@ -5643,11 +5256,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Header.default.duration",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -5656,8 +5267,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "GET",
@@ -5685,13 +5295,11 @@
               "$id": "366",
               "kind": "basic",
               "name": "iso8601",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "367",
                 "name": "iso8601",
-                "isExactName": false,
                 "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
@@ -5750,11 +5358,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Header.iso8601.duration",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -5763,8 +5369,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "GET",
@@ -5792,13 +5397,11 @@
               "$id": "374",
               "kind": "basic",
               "name": "iso8601Array",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "375",
                 "name": "iso8601Array",
-                "isExactName": false,
                 "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
@@ -5869,11 +5472,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Header.iso8601Array.duration",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -5882,8 +5483,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "GET",
@@ -5911,13 +5511,11 @@
               "$id": "383",
               "kind": "basic",
               "name": "int32Seconds",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "384",
                 "name": "int32Seconds",
-                "isExactName": false,
                 "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
@@ -5976,11 +5574,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Header.int32Seconds.duration",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -5989,8 +5585,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "GET",
@@ -6018,13 +5613,11 @@
               "$id": "391",
               "kind": "basic",
               "name": "int32SecondsLargerUnit",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "392",
                 "name": "int32SecondsLargerUnit",
-                "isExactName": false,
                 "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
@@ -6083,11 +5676,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Header.int32SecondsLargerUnit.duration",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -6096,8 +5687,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "GET",
@@ -6125,13 +5715,11 @@
               "$id": "399",
               "kind": "basic",
               "name": "floatSeconds",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "400",
                 "name": "floatSeconds",
-                "isExactName": false,
                 "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
@@ -6190,11 +5778,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Header.floatSeconds.duration",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -6203,8 +5789,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "GET",
@@ -6232,13 +5817,11 @@
               "$id": "407",
               "kind": "basic",
               "name": "floatSecondsLargerUnit",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "408",
                 "name": "floatSecondsLargerUnit",
-                "isExactName": false,
                 "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
@@ -6297,11 +5880,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Header.floatSecondsLargerUnit.duration",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -6310,8 +5891,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "GET",
@@ -6339,13 +5919,11 @@
               "$id": "415",
               "kind": "basic",
               "name": "float64Seconds",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "416",
                 "name": "float64Seconds",
-                "isExactName": false,
                 "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
@@ -6404,11 +5982,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Header.float64Seconds.duration",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -6417,8 +5993,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "GET",
@@ -6446,13 +6021,11 @@
               "$id": "423",
               "kind": "basic",
               "name": "int32Milliseconds",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "424",
                 "name": "int32Milliseconds",
-                "isExactName": false,
                 "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
@@ -6511,11 +6084,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Header.int32Milliseconds.duration",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -6524,8 +6095,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "GET",
@@ -6553,13 +6123,11 @@
               "$id": "431",
               "kind": "basic",
               "name": "int32MillisecondsLargerUnit",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "432",
                 "name": "int32MillisecondsLargerUnit",
-                "isExactName": false,
                 "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
@@ -6618,11 +6186,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Header.int32MillisecondsLargerUnit.duration",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -6631,8 +6197,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "GET",
@@ -6660,13 +6225,11 @@
               "$id": "439",
               "kind": "basic",
               "name": "floatMilliseconds",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "440",
                 "name": "floatMilliseconds",
-                "isExactName": false,
                 "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
@@ -6725,11 +6288,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Header.floatMilliseconds.duration",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -6738,8 +6299,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "GET",
@@ -6767,13 +6327,11 @@
               "$id": "447",
               "kind": "basic",
               "name": "floatMillisecondsLargerUnit",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "448",
                 "name": "floatMillisecondsLargerUnit",
-                "isExactName": false,
                 "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
@@ -6832,11 +6390,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Header.floatMillisecondsLargerUnit.duration",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -6845,8 +6401,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "GET",
@@ -6874,13 +6429,11 @@
               "$id": "455",
               "kind": "basic",
               "name": "float64Milliseconds",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "456",
                 "name": "float64Milliseconds",
-                "isExactName": false,
                 "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
@@ -6939,11 +6492,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Header.float64Milliseconds.duration",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -6952,8 +6503,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "GET",
@@ -6981,13 +6531,11 @@
               "$id": "463",
               "kind": "basic",
               "name": "int32MillisecondsArray",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "464",
                 "name": "int32MillisecondsArray",
-                "isExactName": false,
                 "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
@@ -7058,11 +6606,9 @@
                         "crossLanguageDefinitionId": "Encode.Duration.Header.int32MillisecondsArray.duration",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -7071,8 +6617,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "GET",
@@ -7126,8 +6671,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Encode.Duration.Header.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Encode.Duration.Header.endpoint"
             }
           ],
           "initializedBy": 0,

@@ -29,8 +29,7 @@
             "$ref": "1"
           },
           "doc": "The operation has not started.",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         },
         {
           "$id": "4",
@@ -44,8 +43,7 @@
             "$ref": "1"
           },
           "doc": "The operation is in progress.",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         },
         {
           "$id": "5",
@@ -59,8 +57,7 @@
             "$ref": "1"
           },
           "doc": "The operation has completed successfully.",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         },
         {
           "$id": "6",
@@ -74,8 +71,7 @@
             "$ref": "1"
           },
           "doc": "The operation has failed.",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         },
         {
           "$id": "7",
@@ -89,8 +85,7 @@
             "$ref": "1"
           },
           "doc": "The operation has been canceled by the user.",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         }
       ],
       "namespace": "Azure.Core.Foundations",
@@ -98,8 +93,7 @@
       "isFixed": false,
       "isFlags": false,
       "usage": "Json,LroInitial,LroPolling,LroFinalEnvelope",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "8",
@@ -126,8 +120,7 @@
             "$ref": "8"
           },
           "doc": "The 2022-12-01-preview version.",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         }
       ],
       "namespace": "_Specs_.Azure.Core.Lro.Rpc",
@@ -135,15 +128,14 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "ApiVersionEnum",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     }
   ],
   "constants": [
     {
       "$id": "11",
       "kind": "constant",
-      "name": "LongRunningRpcContentType",
+      "name": "longRunningRpcContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -154,13 +146,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "13",
       "kind": "constant",
-      "name": "LongRunningRpcContentType1",
+      "name": "longRunningRpcContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -171,13 +162,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "15",
       "kind": "constant",
-      "name": "LongRunningRpcContentType2",
+      "name": "longRunningRpcContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -188,13 +178,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "17",
       "kind": "constant",
-      "name": "LongRunningRpcContentType3",
+      "name": "longRunningRpcContentType3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -205,8 +194,7 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     }
   ],
   "models": [
@@ -224,7 +212,6 @@
           "name": "GenerationOptions"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "20",
@@ -250,8 +237,7 @@
               "name": "prompt"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -269,7 +255,6 @@
           "name": "ResourceOperationStatus"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "23",
@@ -295,8 +280,7 @@
               "name": "id"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "25",
@@ -318,8 +302,7 @@
               "name": "status"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "26",
@@ -341,7 +324,6 @@
                 "name": "Error"
               }
             },
-            "isExactName": false,
             "properties": [
               {
                 "$id": "28",
@@ -367,8 +349,7 @@
                     "name": "code"
                   }
                 },
-                "isHttpMetadata": false,
-                "isExactName": false
+                "isHttpMetadata": false
               },
               {
                 "$id": "30",
@@ -394,8 +375,7 @@
                     "name": "message"
                   }
                 },
-                "isHttpMetadata": false,
-                "isExactName": false
+                "isHttpMetadata": false
               },
               {
                 "$id": "32",
@@ -421,8 +401,7 @@
                     "name": "target"
                   }
                 },
-                "isHttpMetadata": false,
-                "isExactName": false
+                "isHttpMetadata": false
               },
               {
                 "$id": "34",
@@ -451,8 +430,7 @@
                     "name": "details"
                   }
                 },
-                "isHttpMetadata": false,
-                "isExactName": false
+                "isHttpMetadata": false
               },
               {
                 "$id": "36",
@@ -474,7 +452,6 @@
                       "name": "InnerError"
                     }
                   },
-                  "isExactName": false,
                   "properties": [
                     {
                       "$id": "38",
@@ -500,8 +477,7 @@
                           "name": "code"
                         }
                       },
-                      "isHttpMetadata": false,
-                      "isExactName": false
+                      "isHttpMetadata": false
                     },
                     {
                       "$id": "40",
@@ -523,8 +499,7 @@
                           "name": "innererror"
                         }
                       },
-                      "isHttpMetadata": false,
-                      "isExactName": false
+                      "isHttpMetadata": false
                     }
                   ]
                 },
@@ -539,8 +514,7 @@
                     "name": "innererror"
                   }
                 },
-                "isHttpMetadata": false,
-                "isExactName": false
+                "isHttpMetadata": false
               }
             ]
           },
@@ -555,8 +529,7 @@
               "name": "error"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "41",
@@ -578,7 +551,6 @@
                 "name": "GenerationResult"
               }
             },
-            "isExactName": false,
             "properties": [
               {
                 "$id": "43",
@@ -604,8 +576,7 @@
                     "name": "data"
                   }
                 },
-                "isHttpMetadata": false,
-                "isExactName": false
+                "isHttpMetadata": false
               }
             ]
           },
@@ -620,8 +591,7 @@
               "name": "result"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -648,7 +618,6 @@
           "name": "ErrorResponse"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "46",
@@ -670,8 +639,7 @@
               "name": "error"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "47",
@@ -697,8 +665,7 @@
               "name": "errorCode"
             }
           },
-          "isHttpMetadata": true,
-          "isExactName": false
+          "isHttpMetadata": true
         }
       ]
     },
@@ -716,7 +683,6 @@
           "name": "OperationStatus"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "50",
@@ -742,8 +708,7 @@
               "name": "id"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "52",
@@ -765,8 +730,7 @@
               "name": "status"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "53",
@@ -788,8 +752,7 @@
               "name": "error"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "54",
@@ -811,8 +774,7 @@
               "name": "result"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     }
@@ -822,7 +784,6 @@
       "$id": "55",
       "kind": "client",
       "name": "RpcClient",
-      "isExactName": false,
       "namespace": "_Specs_.Azure.Core.Lro.Rpc",
       "doc": "Illustrates bodies templated with Azure Core with long-running RPC operation",
       "methods": [
@@ -830,7 +791,6 @@
           "$id": "56",
           "kind": "lro",
           "name": "longRunningRpc",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [
             "2022-12-01-preview"
@@ -840,7 +800,6 @@
           "operation": {
             "$id": "57",
             "name": "longRunningRpc",
-            "isExactName": false,
             "resourceName": "Rpc",
             "summary": "Generate data.",
             "doc": "Generate data.",
@@ -905,11 +864,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Rpc.longRunningRpc.apiVersion",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "64",
@@ -944,11 +901,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Rpc.longRunningRpc.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "66",
@@ -981,11 +936,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Rpc.longRunningRpc.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "68",
@@ -1023,16 +976,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Rpc.longRunningRpc.body",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false,
-                "serializationOptions": {
-                  "json": {
-                    "name": "body"
-                  }
-                }
+                ]
               }
             ],
             "responses": [
@@ -1067,12 +1013,7 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ],
-                "serializationOptions": {
-                  "json": {
-                    "name": ""
-                  }
-                }
+                ]
               }
             ],
             "httpMethod": "POST",
@@ -1154,8 +1095,7 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Rpc.endpoint",
-          "isExactName": false
+          "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Rpc.endpoint"
         },
         {
           "$ref": "61"

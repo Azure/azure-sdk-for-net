@@ -4,9 +4,9 @@
     "AzureClients": {
       "type": "object",
       "properties": {
-        "NestedWithPathClient": {
+        "IndividuallyParentNestedWithPathClient": {
           "type": "object",
-          "description": "Configuration for NestedWithPathClient.",
+          "description": "Configuration for IndividuallyParentNestedWithPathClient.",
           "properties": {
             "Endpoint": {
               "type": "string",
@@ -24,9 +24,9 @@
             }
           }
         },
-        "NestedWithQueryClient": {
+        "IndividuallyParentNestedWithQueryClient": {
           "type": "object",
-          "description": "Configuration for NestedWithQueryClient.",
+          "description": "Configuration for IndividuallyParentNestedWithQueryClient.",
           "properties": {
             "Endpoint": {
               "type": "string",
@@ -44,9 +44,9 @@
             }
           }
         },
-        "NestedWithHeaderClient": {
+        "IndividuallyParentNestedWithHeaderClient": {
           "type": "object",
-          "description": "Configuration for NestedWithHeaderClient.",
+          "description": "Configuration for IndividuallyParentNestedWithHeaderClient.",
           "properties": {
             "Endpoint": {
               "type": "string",
@@ -64,9 +64,9 @@
             }
           }
         },
-        "NestedWithMultipleClient": {
+        "IndividuallyParentNestedWithMultipleClient": {
           "type": "object",
-          "description": "Configuration for NestedWithMultipleClient.",
+          "description": "Configuration for IndividuallyParentNestedWithMultipleClient.",
           "properties": {
             "Endpoint": {
               "type": "string",
@@ -87,9 +87,9 @@
             }
           }
         },
-        "NestedWithMixedClient": {
+        "IndividuallyParentNestedWithMixedClient": {
           "type": "object",
-          "description": "Configuration for NestedWithMixedClient.",
+          "description": "Configuration for IndividuallyParentNestedWithMixedClient.",
           "properties": {
             "Endpoint": {
               "type": "string",
@@ -107,9 +107,9 @@
             }
           }
         },
-        "NestedWithParamAliasClient": {
+        "IndividuallyParentNestedWithParamAliasClient": {
           "type": "object",
-          "description": "Configuration for NestedWithParamAliasClient.",
+          "description": "Configuration for IndividuallyParentNestedWithParamAliasClient.",
           "properties": {
             "Endpoint": {
               "type": "string",

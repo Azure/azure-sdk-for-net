@@ -26,8 +26,7 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         },
         {
           "$id": "4",
@@ -40,8 +39,7 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         },
         {
           "$id": "5",
@@ -54,16 +52,14 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         }
       ],
       "namespace": "Encode.Array",
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,Output,Json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "6",
@@ -89,8 +85,7 @@
           "enumType": {
             "$ref": "6"
           },
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         },
         {
           "$id": "9",
@@ -103,8 +98,7 @@
           "enumType": {
             "$ref": "6"
           },
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         },
         {
           "$id": "10",
@@ -117,23 +111,21 @@
           "enumType": {
             "$ref": "6"
           },
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         }
       ],
       "namespace": "Encode.Array",
       "isFixed": false,
       "isFlags": false,
       "usage": "Input,Output,Json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     }
   ],
   "constants": [
     {
       "$id": "11",
       "kind": "constant",
-      "name": "CommaDelimitedContentType",
+      "name": "commaDelimitedContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -144,13 +136,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "13",
       "kind": "constant",
-      "name": "CommaDelimitedContentType1",
+      "name": "commaDelimitedContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -161,13 +152,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "15",
       "kind": "constant",
-      "name": "CommaDelimitedContentType2",
+      "name": "spaceDelimitedContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -178,13 +168,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "17",
       "kind": "constant",
-      "name": "CommaDelimitedContentType3",
+      "name": "spaceDelimitedContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -195,13 +184,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "19",
       "kind": "constant",
-      "name": "CommaDelimitedContentType4",
+      "name": "pipeDelimitedContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -212,13 +200,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "21",
       "kind": "constant",
-      "name": "CommaDelimitedContentType5",
+      "name": "pipeDelimitedContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -229,13 +216,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "23",
       "kind": "constant",
-      "name": "CommaDelimitedContentType6",
+      "name": "newlineDelimitedContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -246,13 +232,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "25",
       "kind": "constant",
-      "name": "CommaDelimitedContentType7",
+      "name": "newlineDelimitedContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -263,13 +248,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "27",
       "kind": "constant",
-      "name": "CommaDelimitedContentType8",
+      "name": "enumCommaDelimitedContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -280,13 +264,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "29",
       "kind": "constant",
-      "name": "CommaDelimitedContentType9",
+      "name": "enumCommaDelimitedContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -297,13 +280,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "31",
       "kind": "constant",
-      "name": "CommaDelimitedContentType10",
+      "name": "enumSpaceDelimitedContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -314,13 +296,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "33",
       "kind": "constant",
-      "name": "CommaDelimitedContentType11",
+      "name": "enumSpaceDelimitedContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -331,13 +312,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "35",
       "kind": "constant",
-      "name": "CommaDelimitedContentType12",
+      "name": "enumPipeDelimitedContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -348,13 +328,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "37",
       "kind": "constant",
-      "name": "CommaDelimitedContentType13",
+      "name": "enumPipeDelimitedContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -365,13 +344,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "39",
       "kind": "constant",
-      "name": "CommaDelimitedContentType14",
+      "name": "enumNewlineDelimitedContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -382,13 +360,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "41",
       "kind": "constant",
-      "name": "CommaDelimitedContentType15",
+      "name": "enumNewlineDelimitedContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -399,13 +376,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "43",
       "kind": "constant",
-      "name": "CommaDelimitedContentType16",
+      "name": "extensibleEnumCommaDelimitedContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -416,13 +392,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "45",
       "kind": "constant",
-      "name": "CommaDelimitedContentType17",
+      "name": "extensibleEnumCommaDelimitedContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -433,13 +408,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "47",
       "kind": "constant",
-      "name": "CommaDelimitedContentType18",
+      "name": "extensibleEnumSpaceDelimitedContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -450,13 +424,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "49",
       "kind": "constant",
-      "name": "CommaDelimitedContentType19",
+      "name": "extensibleEnumSpaceDelimitedContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -467,13 +440,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "51",
       "kind": "constant",
-      "name": "CommaDelimitedContentType20",
+      "name": "extensibleEnumPipeDelimitedContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -484,13 +456,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "53",
       "kind": "constant",
-      "name": "CommaDelimitedContentType21",
+      "name": "extensibleEnumPipeDelimitedContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -501,13 +472,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "55",
       "kind": "constant",
-      "name": "CommaDelimitedContentType22",
+      "name": "extensibleEnumNewlineDelimitedContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -518,13 +488,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "57",
       "kind": "constant",
-      "name": "CommaDelimitedContentType23",
+      "name": "extensibleEnumNewlineDelimitedContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -535,8 +504,7 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     }
   ],
   "models": [
@@ -553,7 +521,6 @@
           "name": "CommaDelimitedArrayProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "60",
@@ -586,8 +553,7 @@
             }
           },
           "isHttpMetadata": false,
-          "encode": "commaDelimited",
-          "isExactName": false
+          "encode": "commaDelimited"
         }
       ]
     },
@@ -604,7 +570,6 @@
           "name": "SpaceDelimitedArrayProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "64",
@@ -626,8 +591,7 @@
             }
           },
           "isHttpMetadata": false,
-          "encode": "spaceDelimited",
-          "isExactName": false
+          "encode": "spaceDelimited"
         }
       ]
     },
@@ -644,7 +608,6 @@
           "name": "PipeDelimitedArrayProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "66",
@@ -666,8 +629,7 @@
             }
           },
           "isHttpMetadata": false,
-          "encode": "pipeDelimited",
-          "isExactName": false
+          "encode": "pipeDelimited"
         }
       ]
     },
@@ -684,7 +646,6 @@
           "name": "NewlineDelimitedArrayProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "68",
@@ -706,8 +667,7 @@
             }
           },
           "isHttpMetadata": false,
-          "encode": "newlineDelimited",
-          "isExactName": false
+          "encode": "newlineDelimited"
         }
       ]
     },
@@ -724,7 +684,6 @@
           "name": "CommaDelimitedEnumArrayProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "70",
@@ -753,8 +712,7 @@
             }
           },
           "isHttpMetadata": false,
-          "encode": "commaDelimited",
-          "isExactName": false
+          "encode": "commaDelimited"
         }
       ]
     },
@@ -771,7 +729,6 @@
           "name": "SpaceDelimitedEnumArrayProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "73",
@@ -793,8 +750,7 @@
             }
           },
           "isHttpMetadata": false,
-          "encode": "spaceDelimited",
-          "isExactName": false
+          "encode": "spaceDelimited"
         }
       ]
     },
@@ -811,7 +767,6 @@
           "name": "PipeDelimitedEnumArrayProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "75",
@@ -833,8 +788,7 @@
             }
           },
           "isHttpMetadata": false,
-          "encode": "pipeDelimited",
-          "isExactName": false
+          "encode": "pipeDelimited"
         }
       ]
     },
@@ -851,7 +805,6 @@
           "name": "NewlineDelimitedEnumArrayProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "77",
@@ -873,8 +826,7 @@
             }
           },
           "isHttpMetadata": false,
-          "encode": "newlineDelimited",
-          "isExactName": false
+          "encode": "newlineDelimited"
         }
       ]
     },
@@ -891,7 +843,6 @@
           "name": "CommaDelimitedExtensibleEnumArrayProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "79",
@@ -920,8 +871,7 @@
             }
           },
           "isHttpMetadata": false,
-          "encode": "commaDelimited",
-          "isExactName": false
+          "encode": "commaDelimited"
         }
       ]
     },
@@ -938,7 +888,6 @@
           "name": "SpaceDelimitedExtensibleEnumArrayProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "82",
@@ -960,8 +909,7 @@
             }
           },
           "isHttpMetadata": false,
-          "encode": "spaceDelimited",
-          "isExactName": false
+          "encode": "spaceDelimited"
         }
       ]
     },
@@ -978,7 +926,6 @@
           "name": "PipeDelimitedExtensibleEnumArrayProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "84",
@@ -1000,8 +947,7 @@
             }
           },
           "isHttpMetadata": false,
-          "encode": "pipeDelimited",
-          "isExactName": false
+          "encode": "pipeDelimited"
         }
       ]
     },
@@ -1018,7 +964,6 @@
           "name": "NewlineDelimitedExtensibleEnumArrayProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "86",
@@ -1040,8 +985,7 @@
             }
           },
           "isHttpMetadata": false,
-          "encode": "newlineDelimited",
-          "isExactName": false
+          "encode": "newlineDelimited"
         }
       ]
     }
@@ -1051,7 +995,6 @@
       "$id": "87",
       "kind": "client",
       "name": "ArrayClient",
-      "isExactName": false,
       "namespace": "Encode.Array",
       "doc": "Test for encode decorator on array.",
       "methods": [],
@@ -1084,8 +1027,7 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Encode.Array.endpoint",
-          "isExactName": false
+          "crossLanguageDefinitionId": "Encode.Array.endpoint"
         }
       ],
       "initializedBy": 1,
@@ -1097,20 +1039,17 @@
           "$id": "91",
           "kind": "client",
           "name": "Property",
-          "isExactName": false,
           "namespace": "Encode.Array.Property",
           "methods": [
             {
               "$id": "92",
               "kind": "basic",
               "name": "commaDelimited",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "93",
                 "name": "commaDelimited",
-                "isExactName": false,
                 "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
@@ -1147,11 +1086,9 @@
                         "crossLanguageDefinitionId": "Encode.Array.Property.commaDelimited.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "96",
@@ -1184,11 +1121,9 @@
                         "crossLanguageDefinitionId": "Encode.Array.Property.commaDelimited.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "98",
@@ -1224,16 +1159,9 @@
                         "crossLanguageDefinitionId": "Encode.Array.Property.commaDelimited.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -1248,12 +1176,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "POST",
@@ -1294,13 +1217,11 @@
               "$id": "100",
               "kind": "basic",
               "name": "spaceDelimited",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "101",
                 "name": "spaceDelimited",
-                "isExactName": false,
                 "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
@@ -1337,11 +1258,9 @@
                         "crossLanguageDefinitionId": "Encode.Array.Property.spaceDelimited.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "104",
@@ -1374,11 +1293,9 @@
                         "crossLanguageDefinitionId": "Encode.Array.Property.spaceDelimited.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "106",
@@ -1414,16 +1331,9 @@
                         "crossLanguageDefinitionId": "Encode.Array.Property.spaceDelimited.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -1438,12 +1348,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "POST",
@@ -1484,13 +1389,11 @@
               "$id": "108",
               "kind": "basic",
               "name": "pipeDelimited",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "109",
                 "name": "pipeDelimited",
-                "isExactName": false,
                 "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
@@ -1527,11 +1430,9 @@
                         "crossLanguageDefinitionId": "Encode.Array.Property.pipeDelimited.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "112",
@@ -1564,11 +1465,9 @@
                         "crossLanguageDefinitionId": "Encode.Array.Property.pipeDelimited.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "114",
@@ -1604,16 +1503,9 @@
                         "crossLanguageDefinitionId": "Encode.Array.Property.pipeDelimited.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -1628,12 +1520,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "POST",
@@ -1674,13 +1561,11 @@
               "$id": "116",
               "kind": "basic",
               "name": "newlineDelimited",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "117",
                 "name": "newlineDelimited",
-                "isExactName": false,
                 "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
@@ -1717,11 +1602,9 @@
                         "crossLanguageDefinitionId": "Encode.Array.Property.newlineDelimited.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "120",
@@ -1754,11 +1637,9 @@
                         "crossLanguageDefinitionId": "Encode.Array.Property.newlineDelimited.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "122",
@@ -1794,16 +1675,9 @@
                         "crossLanguageDefinitionId": "Encode.Array.Property.newlineDelimited.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -1818,12 +1692,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "POST",
@@ -1864,13 +1733,11 @@
               "$id": "124",
               "kind": "basic",
               "name": "enumCommaDelimited",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "125",
                 "name": "enumCommaDelimited",
-                "isExactName": false,
                 "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
@@ -1907,11 +1774,9 @@
                         "crossLanguageDefinitionId": "Encode.Array.Property.enumCommaDelimited.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "128",
@@ -1944,11 +1809,9 @@
                         "crossLanguageDefinitionId": "Encode.Array.Property.enumCommaDelimited.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "130",
@@ -1984,16 +1847,9 @@
                         "crossLanguageDefinitionId": "Encode.Array.Property.enumCommaDelimited.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -2008,12 +1864,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "POST",
@@ -2054,13 +1905,11 @@
               "$id": "132",
               "kind": "basic",
               "name": "enumSpaceDelimited",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "133",
                 "name": "enumSpaceDelimited",
-                "isExactName": false,
                 "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
@@ -2097,11 +1946,9 @@
                         "crossLanguageDefinitionId": "Encode.Array.Property.enumSpaceDelimited.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "136",
@@ -2134,11 +1981,9 @@
                         "crossLanguageDefinitionId": "Encode.Array.Property.enumSpaceDelimited.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "138",
@@ -2174,16 +2019,9 @@
                         "crossLanguageDefinitionId": "Encode.Array.Property.enumSpaceDelimited.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -2198,12 +2036,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "POST",
@@ -2244,13 +2077,11 @@
               "$id": "140",
               "kind": "basic",
               "name": "enumPipeDelimited",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "141",
                 "name": "enumPipeDelimited",
-                "isExactName": false,
                 "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
@@ -2287,11 +2118,9 @@
                         "crossLanguageDefinitionId": "Encode.Array.Property.enumPipeDelimited.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "144",
@@ -2324,11 +2153,9 @@
                         "crossLanguageDefinitionId": "Encode.Array.Property.enumPipeDelimited.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "146",
@@ -2364,16 +2191,9 @@
                         "crossLanguageDefinitionId": "Encode.Array.Property.enumPipeDelimited.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -2388,12 +2208,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "POST",
@@ -2434,13 +2249,11 @@
               "$id": "148",
               "kind": "basic",
               "name": "enumNewlineDelimited",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "149",
                 "name": "enumNewlineDelimited",
-                "isExactName": false,
                 "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
@@ -2477,11 +2290,9 @@
                         "crossLanguageDefinitionId": "Encode.Array.Property.enumNewlineDelimited.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "152",
@@ -2514,11 +2325,9 @@
                         "crossLanguageDefinitionId": "Encode.Array.Property.enumNewlineDelimited.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "154",
@@ -2554,16 +2363,9 @@
                         "crossLanguageDefinitionId": "Encode.Array.Property.enumNewlineDelimited.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -2578,12 +2380,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "POST",
@@ -2624,13 +2421,11 @@
               "$id": "156",
               "kind": "basic",
               "name": "extensibleEnumCommaDelimited",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "157",
                 "name": "extensibleEnumCommaDelimited",
-                "isExactName": false,
                 "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
@@ -2667,11 +2462,9 @@
                         "crossLanguageDefinitionId": "Encode.Array.Property.extensibleEnumCommaDelimited.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "160",
@@ -2704,11 +2497,9 @@
                         "crossLanguageDefinitionId": "Encode.Array.Property.extensibleEnumCommaDelimited.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "162",
@@ -2744,16 +2535,9 @@
                         "crossLanguageDefinitionId": "Encode.Array.Property.extensibleEnumCommaDelimited.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -2768,12 +2552,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "POST",
@@ -2814,13 +2593,11 @@
               "$id": "164",
               "kind": "basic",
               "name": "extensibleEnumSpaceDelimited",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "165",
                 "name": "extensibleEnumSpaceDelimited",
-                "isExactName": false,
                 "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
@@ -2857,11 +2634,9 @@
                         "crossLanguageDefinitionId": "Encode.Array.Property.extensibleEnumSpaceDelimited.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "168",
@@ -2894,11 +2669,9 @@
                         "crossLanguageDefinitionId": "Encode.Array.Property.extensibleEnumSpaceDelimited.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "170",
@@ -2934,16 +2707,9 @@
                         "crossLanguageDefinitionId": "Encode.Array.Property.extensibleEnumSpaceDelimited.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -2958,12 +2724,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "POST",
@@ -3004,13 +2765,11 @@
               "$id": "172",
               "kind": "basic",
               "name": "extensibleEnumPipeDelimited",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "173",
                 "name": "extensibleEnumPipeDelimited",
-                "isExactName": false,
                 "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
@@ -3047,11 +2806,9 @@
                         "crossLanguageDefinitionId": "Encode.Array.Property.extensibleEnumPipeDelimited.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "176",
@@ -3084,11 +2841,9 @@
                         "crossLanguageDefinitionId": "Encode.Array.Property.extensibleEnumPipeDelimited.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "178",
@@ -3124,16 +2879,9 @@
                         "crossLanguageDefinitionId": "Encode.Array.Property.extensibleEnumPipeDelimited.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -3148,12 +2896,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "POST",
@@ -3194,13 +2937,11 @@
               "$id": "180",
               "kind": "basic",
               "name": "extensibleEnumNewlineDelimited",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "181",
                 "name": "extensibleEnumNewlineDelimited",
-                "isExactName": false,
                 "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
@@ -3237,11 +2978,9 @@
                         "crossLanguageDefinitionId": "Encode.Array.Property.extensibleEnumNewlineDelimited.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "184",
@@ -3274,11 +3013,9 @@
                         "crossLanguageDefinitionId": "Encode.Array.Property.extensibleEnumNewlineDelimited.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "186",
@@ -3314,16 +3051,9 @@
                         "crossLanguageDefinitionId": "Encode.Array.Property.extensibleEnumNewlineDelimited.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -3338,12 +3068,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "POST",
@@ -3410,8 +3135,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Encode.Array.Property.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Encode.Array.Property.endpoint"
             }
           ],
           "initializedBy": 0,

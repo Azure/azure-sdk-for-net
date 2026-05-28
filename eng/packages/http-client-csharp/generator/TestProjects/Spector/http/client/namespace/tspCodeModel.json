@@ -26,23 +26,21 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         }
       ],
       "namespace": "client.clientnamespace.second.sub",
       "isFixed": false,
       "isFlags": false,
       "usage": "Output,Json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     }
   ],
   "constants": [
     {
       "$id": "4",
       "kind": "constant",
-      "name": "GetFirstAccept",
+      "name": "getFirstContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -53,13 +51,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "6",
       "kind": "constant",
-      "name": "GetFirstAccept1",
+      "name": "getSecondContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -70,8 +67,7 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     }
   ],
   "models": [
@@ -88,7 +84,6 @@
           "name": "FirstClientResult"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "9",
@@ -113,8 +108,7 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -131,7 +125,6 @@
           "name": "SecondClientResult"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "12",
@@ -152,8 +145,7 @@
               "name": "type"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     }
@@ -163,20 +155,17 @@
       "$id": "13",
       "kind": "client",
       "name": "ClientNamespaceFirstClient",
-      "isExactName": false,
       "namespace": "client.clientnamespace",
       "methods": [
         {
           "$id": "14",
           "kind": "basic",
           "name": "getFirst",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "15",
             "name": "getFirst",
-            "isExactName": false,
             "resourceName": "ClientNamespaceFirstClient",
             "accessibility": "public",
             "parameters": [
@@ -211,11 +200,9 @@
                     "crossLanguageDefinitionId": "ClientNameSpaceClient.ClientNamespaceFirstClient.getFirst.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               }
             ],
             "responses": [
@@ -230,12 +217,7 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ],
-                "serializationOptions": {
-                  "json": {
-                    "name": ""
-                  }
-                }
+                ]
               }
             ],
             "httpMethod": "GET",
@@ -293,8 +275,7 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "ClientNameSpaceClient.ClientNamespaceFirstClient.endpoint",
-          "isExactName": false
+          "crossLanguageDefinitionId": "ClientNameSpaceClient.ClientNamespaceFirstClient.endpoint"
         }
       ],
       "initializedBy": 1,
@@ -307,20 +288,17 @@
       "$id": "21",
       "kind": "client",
       "name": "ClientNamespaceSecondClient",
-      "isExactName": false,
       "namespace": "client.clientnamespace.second",
       "methods": [
         {
           "$id": "22",
           "kind": "basic",
           "name": "getSecond",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "23",
             "name": "getSecond",
-            "isExactName": false,
             "resourceName": "ClientNamespaceSecondClient",
             "accessibility": "public",
             "parameters": [
@@ -355,11 +333,9 @@
                     "crossLanguageDefinitionId": "ClientNameSpaceClient.ClientNamespaceSecondClient.getSecond.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               }
             ],
             "responses": [
@@ -374,12 +350,7 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ],
-                "serializationOptions": {
-                  "json": {
-                    "name": ""
-                  }
-                }
+                ]
               }
             ],
             "httpMethod": "GET",
@@ -437,8 +408,7 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "ClientNameSpaceClient.ClientNamespaceSecondClient.endpoint",
-          "isExactName": false
+          "crossLanguageDefinitionId": "ClientNameSpaceClient.ClientNamespaceSecondClient.endpoint"
         }
       ],
       "initializedBy": 1,

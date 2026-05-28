@@ -29,8 +29,7 @@
             "$ref": "1"
           },
           "doc": "The operation has not started.",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         },
         {
           "$id": "4",
@@ -44,8 +43,7 @@
             "$ref": "1"
           },
           "doc": "The operation is in progress.",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         },
         {
           "$id": "5",
@@ -59,8 +57,7 @@
             "$ref": "1"
           },
           "doc": "The operation has completed successfully.",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         },
         {
           "$id": "6",
@@ -74,8 +71,7 @@
             "$ref": "1"
           },
           "doc": "The operation has failed.",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         },
         {
           "$id": "7",
@@ -89,8 +85,7 @@
             "$ref": "1"
           },
           "doc": "The operation has been canceled by the user.",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         }
       ],
       "namespace": "Azure.Core.Foundations",
@@ -98,8 +93,7 @@
       "isFixed": false,
       "isFlags": false,
       "usage": "Json,LroInitial,LroPolling,LroFinalEnvelope",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "8",
@@ -126,8 +120,7 @@
             "$ref": "8"
           },
           "doc": "The 2022-12-01-preview version.",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         }
       ],
       "namespace": "_Specs_.Azure.Core.Lro.Standard",
@@ -135,15 +128,14 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "ApiVersionEnum",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     }
   ],
   "constants": [
     {
       "$id": "11",
       "kind": "constant",
-      "name": "CreateOrReplaceContentType",
+      "name": "createOrReplaceContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -154,13 +146,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "13",
       "kind": "constant",
-      "name": "CreateOrReplaceContentType1",
+      "name": "createOrReplaceContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -171,13 +162,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "15",
       "kind": "constant",
-      "name": "CreateOrReplaceContentType2",
+      "name": "createOrReplaceContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -188,13 +178,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "17",
       "kind": "constant",
-      "name": "CreateOrReplaceContentType3",
+      "name": "createOrReplaceContentType3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -205,13 +194,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "19",
       "kind": "constant",
-      "name": "CreateOrReplaceContentType4",
+      "name": "deleteContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -222,13 +210,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "21",
       "kind": "constant",
-      "name": "CreateOrReplaceContentType5",
+      "name": "deleteContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -239,13 +226,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "23",
       "kind": "constant",
-      "name": "CreateOrReplaceContentType6",
+      "name": "exportContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -256,13 +242,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "25",
       "kind": "constant",
-      "name": "CreateOrReplaceContentType7",
+      "name": "exportContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -273,8 +258,7 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     }
   ],
   "models": [
@@ -292,7 +276,6 @@
           "name": "User"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "28",
@@ -318,8 +301,7 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "30",
@@ -345,8 +327,7 @@
               "name": "role"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -364,7 +345,6 @@
           "name": "ErrorResponse"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "33",
@@ -386,7 +366,6 @@
                 "name": "Error"
               }
             },
-            "isExactName": false,
             "properties": [
               {
                 "$id": "35",
@@ -412,8 +391,7 @@
                     "name": "code"
                   }
                 },
-                "isHttpMetadata": false,
-                "isExactName": false
+                "isHttpMetadata": false
               },
               {
                 "$id": "37",
@@ -439,8 +417,7 @@
                     "name": "message"
                   }
                 },
-                "isHttpMetadata": false,
-                "isExactName": false
+                "isHttpMetadata": false
               },
               {
                 "$id": "39",
@@ -466,8 +443,7 @@
                     "name": "target"
                   }
                 },
-                "isHttpMetadata": false,
-                "isExactName": false
+                "isHttpMetadata": false
               },
               {
                 "$id": "41",
@@ -496,8 +472,7 @@
                     "name": "details"
                   }
                 },
-                "isHttpMetadata": false,
-                "isExactName": false
+                "isHttpMetadata": false
               },
               {
                 "$id": "43",
@@ -519,7 +494,6 @@
                       "name": "InnerError"
                     }
                   },
-                  "isExactName": false,
                   "properties": [
                     {
                       "$id": "45",
@@ -545,8 +519,7 @@
                           "name": "code"
                         }
                       },
-                      "isHttpMetadata": false,
-                      "isExactName": false
+                      "isHttpMetadata": false
                     },
                     {
                       "$id": "47",
@@ -568,8 +541,7 @@
                           "name": "innererror"
                         }
                       },
-                      "isHttpMetadata": false,
-                      "isExactName": false
+                      "isHttpMetadata": false
                     }
                   ]
                 },
@@ -584,8 +556,7 @@
                     "name": "innererror"
                   }
                 },
-                "isHttpMetadata": false,
-                "isExactName": false
+                "isHttpMetadata": false
               }
             ]
           },
@@ -600,8 +571,7 @@
               "name": "error"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "48",
@@ -627,8 +597,7 @@
               "name": "errorCode"
             }
           },
-          "isHttpMetadata": true,
-          "isExactName": false
+          "isHttpMetadata": true
         }
       ]
     },
@@ -652,7 +621,6 @@
           "name": "OperationStatus"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "51",
@@ -678,8 +646,7 @@
               "name": "id"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "53",
@@ -701,8 +668,7 @@
               "name": "status"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "54",
@@ -724,8 +690,7 @@
               "name": "error"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -743,7 +708,6 @@
           "name": "ResourceOperationStatus"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "56",
@@ -769,8 +733,7 @@
               "name": "id"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "58",
@@ -792,8 +755,7 @@
               "name": "status"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "59",
@@ -815,8 +777,7 @@
               "name": "error"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "60",
@@ -838,7 +799,6 @@
                 "name": "ExportedUser"
               }
             },
-            "isExactName": false,
             "properties": [
               {
                 "$id": "62",
@@ -864,8 +824,7 @@
                     "name": "name"
                   }
                 },
-                "isHttpMetadata": false,
-                "isExactName": false
+                "isHttpMetadata": false
               },
               {
                 "$id": "64",
@@ -891,8 +850,7 @@
                     "name": "resourceUri"
                   }
                 },
-                "isHttpMetadata": false,
-                "isExactName": false
+                "isHttpMetadata": false
               }
             ]
           },
@@ -907,8 +865,7 @@
               "name": "result"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -929,7 +886,6 @@
           "name": "OperationStatus"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "67",
@@ -955,8 +911,7 @@
               "name": "id"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "69",
@@ -978,8 +933,7 @@
               "name": "status"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "70",
@@ -1001,8 +955,7 @@
               "name": "error"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "71",
@@ -1024,8 +977,7 @@
               "name": "result"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     }
@@ -1035,7 +987,6 @@
       "$id": "72",
       "kind": "client",
       "name": "StandardClient",
-      "isExactName": false,
       "namespace": "_Specs_.Azure.Core.Lro.Standard",
       "doc": "Illustrates bodies templated with Azure Core with long-running operation",
       "methods": [
@@ -1043,7 +994,6 @@
           "$id": "73",
           "kind": "lro",
           "name": "createOrReplace",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [
             "2022-12-01-preview"
@@ -1053,7 +1003,6 @@
           "operation": {
             "$id": "74",
             "name": "createOrReplace",
-            "isExactName": false,
             "resourceName": "User",
             "summary": "Adds a user or replaces a user's fields.",
             "doc": "Creates or replaces a User",
@@ -1118,11 +1067,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Standard.createOrReplace.apiVersion",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "81",
@@ -1168,11 +1115,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Standard.createOrReplace.name",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "85",
@@ -1207,11 +1152,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Standard.createOrReplace.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "87",
@@ -1244,11 +1187,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Standard.createOrReplace.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "89",
@@ -1286,16 +1227,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Standard.createOrReplace.resource",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false,
-                "serializationOptions": {
-                  "json": {
-                    "name": "resource"
-                  }
-                }
+                ]
               }
             ],
             "responses": [
@@ -1330,12 +1264,7 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ],
-                "serializationOptions": {
-                  "json": {
-                    "name": ""
-                  }
-                }
+                ]
               },
               {
                 "statusCodes": [
@@ -1368,12 +1297,7 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ],
-                "serializationOptions": {
-                  "json": {
-                    "name": ""
-                  }
-                }
+                ]
               }
             ],
             "httpMethod": "PUT",
@@ -1428,7 +1352,6 @@
           "$id": "95",
           "kind": "lro",
           "name": "delete",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [
             "2022-12-01-preview"
@@ -1438,7 +1361,6 @@
           "operation": {
             "$id": "96",
             "name": "delete",
-            "isExactName": false,
             "resourceName": "User",
             "summary": "Deletes a user.",
             "doc": "Deletes a User",
@@ -1477,8 +1399,7 @@
                   {
                     "$ref": "78"
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "100",
@@ -1524,11 +1445,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Standard.delete.name",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "104",
@@ -1561,11 +1480,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Standard.delete.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               }
             ],
             "responses": [
@@ -1600,12 +1517,7 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ],
-                "serializationOptions": {
-                  "json": {
-                    "name": ""
-                  }
-                }
+                ]
               }
             ],
             "httpMethod": "DELETE",
@@ -1644,7 +1556,6 @@
           "$id": "108",
           "kind": "lro",
           "name": "export",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [
             "2022-12-01-preview"
@@ -1654,7 +1565,6 @@
           "operation": {
             "$id": "109",
             "name": "export",
-            "isExactName": false,
             "resourceName": "Standard",
             "summary": "Exports a user.",
             "doc": "Exports a User",
@@ -1693,8 +1603,7 @@
                   {
                     "$ref": "78"
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "113",
@@ -1740,11 +1649,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Standard.export.name",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "117",
@@ -1787,11 +1694,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Standard.export.format",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "121",
@@ -1824,11 +1729,9 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Standard.export.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               }
             ],
             "responses": [
@@ -1863,12 +1766,7 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ],
-                "serializationOptions": {
-                  "json": {
-                    "name": ""
-                  }
-                }
+                ]
               }
             ],
             "httpMethod": "POST",
@@ -1947,8 +1845,7 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Standard.endpoint",
-          "isExactName": false
+          "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Standard.endpoint"
         },
         {
           "$ref": "78"
