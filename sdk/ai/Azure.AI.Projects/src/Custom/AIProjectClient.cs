@@ -216,14 +216,23 @@ namespace Azure.AI.Projects
         public virtual AIProjectDeploymentsOperations Deployments { get => GetAIProjectDeploymentsOperationsClient(); }
         /// <summary> Gets the client for managing indexes. </summary>
         public virtual AIProjectIndexesOperations Indexes { get => GetAIProjectIndexesOperationsClient(); }
+        /// <summary> Gets the client for invoking Azure OpenAI operations scoped to this project. </summary>
         public virtual ProjectOpenAIClient ProjectOpenAIClient => GetCachedOpenAIClient();
+        /// <summary> Gets the client for administering agents in this project. </summary>
         public virtual AgentAdministrationClient AgentAdministrationClient => GetCachedAgentsClient();
+        /// <summary> Gets the client for managing memory stores. </summary>
         public virtual AIProjectMemoryStores MemoryStores => GetAIProjectMemoryStoresClient();
+        /// <summary> Gets the client for managing red team scans. </summary>
         public virtual RedTeams RedTeams => GetRedTeamsClient();
+        /// <summary> Gets the client for managing evaluation rules. </summary>
         public virtual EvaluationRules EvaluationRules => GetEvaluationRulesClient();
+        /// <summary> Gets the client for managing evaluation taxonomies. </summary>
         public virtual EvaluationTaxonomies EvaluationTaxonomies => GetEvaluationTaxonomiesClient();
+        /// <summary> Gets the client for managing project evaluators. </summary>
         public virtual ProjectEvaluators Evaluators => GetProjectEvaluatorsClient();
+        /// <summary> Gets the client for retrieving project insights. </summary>
         public virtual ProjectInsights Insights => GetProjectInsightsClient();
+        /// <summary> Gets the client for managing project schedules. </summary>
         public virtual ProjectSchedules Schedules => GetProjectSchedulesClient();
         public virtual AIProjectModels Models => GetAIProjectModelsClient();
         public virtual EvaluatorGenerationJobs EvaluatorGenerationJobs => GetEvaluatorGenerationJobsClient();

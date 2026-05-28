@@ -12,18 +12,6 @@
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <NoWarn>
-      $(NoWarn)
-      <!-- Acknowledge OpenAI experimental features -->
-      ;OPENAI001
-      <!-- Temporary suppression of XML doc requirement -->
-      ;CS1591
-      <!-- Allow experimental features -->
-      ;AAIP001
-    </NoWarn>
-  </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="Azure.Storage.Blobs" />

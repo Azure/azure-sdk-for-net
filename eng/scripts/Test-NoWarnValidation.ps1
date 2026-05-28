@@ -235,6 +235,46 @@ try {
 } finally { if (-not $KeepTemp) { Remove-Item -Recurse -Force $dir } }
 
 # ----------------------------------------------------------------------------
+# Scenario 7: allow-list entries are auto-injected into $(NoWarn) so the
+# project's csproj does not need to duplicate them. Confirm by emitting
+# $(NoWarn) from a target that depends on ReadAnalyzerAllowList.
+# ----------------------------------------------------------------------------
+$dir = New-ScenarioDir 'autoinject'
+try {
+  $skipFile = Join-Path $dir 'skip.txt'
+  Set-Content -Path $skipFile -Value '' -Encoding UTF8
+  $allowDir = Join-Path $dir 'allow'
+  New-Item -ItemType Directory -Force -Path $allowDir | Out-Null
+  $allowFile = Join-Path $allowDir 'TestAutoInject.txt'
+  Set-Content -Path $allowFile -Value "# justification`nnowarn:CA5555`n" -Encoding UTF8
+
+  # Add a probe target that runs after ReadAnalyzerAllowList and echoes $(NoWarn).
+  $probeXml = @'
+  <Target Name="ProbeNoWarn" DependsOnTargets="ReadAnalyzerAllowList">
+    <Message Importance="High" Text="NoWarnProbe:$(NoWarn)" />
+  </Target>
+'@
+  $proj = New-TestCsproj -Dir $dir -ProjectName 'TestAutoInject' `
+    -AllowListDir $allowDir `
+    -SkipListFile $skipFile `
+    -ExtraImportXml $probeXml
+
+  $output = & dotnet msbuild $proj '/t:ProbeNoWarn' '/nologo' '/v:m' 2>&1
+  $r = @{ ExitCode = $LASTEXITCODE; Output = ($output -join "`n") }
+  Assert-Scenario 'allow-listed nowarn:CODE is auto-injected into $(NoWarn)' {
+    param($x) $x.Output -match 'NoWarnProbe:[^\r\n]*\bCA5555\b'
+  } $r
+
+  # And confirm the validator does NOT flag the auto-injected code (since it came
+  # from the approved list, it shouldn't trigger AZSDK0002 even though it's now
+  # present in $(NoWarn)).
+  $rv = Invoke-Validator $proj
+  Assert-Scenario 'auto-injected allow-list code does not trigger AZSDK0002' {
+    param($x) $x.Output -notmatch 'error AZSDK0002'
+  } $rv
+} finally { if (-not $KeepTemp) { Remove-Item -Recurse -Force $dir } }
+
+# ----------------------------------------------------------------------------
 # Summary
 # ----------------------------------------------------------------------------
 Write-Host ''
