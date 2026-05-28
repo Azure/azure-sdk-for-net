@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
@@ -12,12 +13,10 @@ using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     // Backward compatibility shims for the TypeSpec migration. The generated model no longer includes
-    // the old constructor and cannot attach the shipped Obsolete attribute to IPv4Address. The generated
-    // TypePropertiesType is nullable because the service marks it optional, but the shipped SDK exposed a
-    // non-nullable property. Removing this file would break callers that use the old InternetGatewayType
-    // constructor, the IPV4Address alias, or the non-nullable TypePropertiesType property.
+    // the old constructor, and it cannot attach the shipped Obsolete attribute to IPv4Address or the
+    // old TypePropertiesType property name. Removing this file would break callers that use the old
+    // InternetGatewayType constructor, the IPV4Address alias, or the TypePropertiesType property.
     [CodeGenSuppress("IPv4Address")]
-    [CodeGenSuppress("TypePropertiesType")]
     public partial class NetworkFabricInternetGatewayData
     {
         /// <summary> Initializes a new instance of <see cref="NetworkFabricInternetGatewayData"/>. </summary>
@@ -31,6 +30,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> IPv4 Address of Internet Gateway. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("IPv4Address is deprecated, use IPV4Address instead")]
         public IPAddress IPv4Address => Properties?.IPv4Address;
 
@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public string IPV4Address => Properties?.IPv4Address?.ToString();
 
         /// <summary> Gateway Type of the resource. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is obsolete and will be removed in a future version. Use InternetGatewayType instead.")]
         public InternetGatewayType TypePropertiesType
         {
-            get => Properties?.TypePropertiesType ?? default;
+            get => Properties?.InternetGatewayType ?? default;
             set
             {
                 if (Properties is null)
@@ -48,7 +50,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     Properties = new InternetGatewayProperties();
                 }
 
-                Properties.TypePropertiesType = value;
+                Properties.InternetGatewayType = value;
             }
         }
     }

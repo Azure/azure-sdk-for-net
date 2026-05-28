@@ -101,10 +101,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (Optional.IsDefined(TypePropertiesType))
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(TypePropertiesType.Value.ToString());
+                writer.WriteStringValue(Type.Value.ToString());
             }
             if (Optional.IsDefined(InternetGatewayType))
             {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             ResourceIdentifier internetGatewayRuleId = default;
             IPAddress iPv4Address = default;
             int? port = default;
-            InternetGatewayType? typePropertiesType = default;
+            InternetGatewayType? @type = default;
             InternetGatewayType? internetGatewayType = default;
             ResourceIdentifier networkFabricControllerId = default;
             LastOperationProperties lastOperation = default;
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    typePropertiesType = new InternetGatewayType(prop.Value.GetString());
+                    @type = new InternetGatewayType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("internetGatewayType"u8))
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 internetGatewayRuleId,
                 iPv4Address,
                 port,
-                typePropertiesType,
+                @type,
                 internetGatewayType,
                 networkFabricControllerId,
                 lastOperation,

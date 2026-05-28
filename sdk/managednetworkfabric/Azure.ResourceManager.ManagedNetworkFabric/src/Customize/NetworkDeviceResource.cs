@@ -146,39 +146,39 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return new CompatArmOperation<OperationStatusResult, StateUpdateCommonPostActionResult>(operation, r => ToStateUpdateResult(r.Error));
         }
 
-        /// <summary> Backward-compatible shim for RefreshConfiguration. Use StartRefreshConfiguration instead for richer result type. </summary>
+        /// <summary> Backward-compatible shim for RefreshConfiguration. Use ReloadConfiguration instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use StartRefreshConfigurationAsync instead.")]
+        [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use ReloadConfigurationAsync instead.")]
         public virtual async Task<ArmOperation<StateUpdateCommonPostActionResult>> RefreshConfigurationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            ArmOperation<NetworkDeviceRefreshConfigurationResult> operation = await StartRefreshConfigurationAsync(waitUntil, cancellationToken).ConfigureAwait(false);
+            ArmOperation<NetworkDeviceRefreshConfigurationResult> operation = await ReloadConfigurationAsync(waitUntil, cancellationToken).ConfigureAwait(false);
             return new CompatArmOperation<NetworkDeviceRefreshConfigurationResult, StateUpdateCommonPostActionResult>(operation, r => ToStateUpdateResult(r.Error));
         }
 
-        /// <summary> Backward-compatible shim for RefreshConfiguration. Use StartRefreshConfiguration instead for richer result type. </summary>
+        /// <summary> Backward-compatible shim for RefreshConfiguration. Use ReloadConfiguration instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use StartRefreshConfiguration instead.")]
+        [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use ReloadConfiguration instead.")]
         public virtual ArmOperation<StateUpdateCommonPostActionResult> RefreshConfiguration(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            ArmOperation<NetworkDeviceRefreshConfigurationResult> operation = StartRefreshConfiguration(waitUntil, cancellationToken);
+            ArmOperation<NetworkDeviceRefreshConfigurationResult> operation = ReloadConfiguration(waitUntil, cancellationToken);
             return new CompatArmOperation<NetworkDeviceRefreshConfigurationResult, StateUpdateCommonPostActionResult>(operation, r => ToStateUpdateResult(r.Error));
         }
 
-        /// <summary> Backward-compatible shim for Upgrade. Use StartUpgrade instead for richer result type. </summary>
+        /// <summary> Backward-compatible shim for Upgrade. Use Upgrade overload with <see cref="NetworkDeviceUpgradeContent"/> instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use StartUpgradeAsync instead.")]
+        [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use UpgradeAsync(WaitUntil, NetworkDeviceUpgradeContent, CancellationToken) instead.")]
         public virtual async Task<ArmOperation<StateUpdateCommonPostActionResult>> UpgradeAsync(WaitUntil waitUntil, NetworkFabricUpdateVersionContent content, CancellationToken cancellationToken = default)
         {
-            ArmOperation<NetworkDeviceUpgradeResult> operation = await StartUpgradeAsync(waitUntil, ToNetworkDeviceUpgradeContent(content), cancellationToken).ConfigureAwait(false);
+            ArmOperation<NetworkDeviceUpgradeResult> operation = await UpgradeAsync(waitUntil, ToNetworkDeviceUpgradeContent(content), cancellationToken).ConfigureAwait(false);
             return new CompatArmOperation<NetworkDeviceUpgradeResult, StateUpdateCommonPostActionResult>(operation, r => ToStateUpdateResult(r.Error));
         }
 
-        /// <summary> Backward-compatible shim for Upgrade. Use StartUpgrade instead for richer result type. </summary>
+        /// <summary> Backward-compatible shim for Upgrade. Use Upgrade overload with <see cref="NetworkDeviceUpgradeContent"/> instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use StartUpgrade instead.")]
+        [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use Upgrade(WaitUntil, NetworkDeviceUpgradeContent, CancellationToken) instead.")]
         public virtual ArmOperation<StateUpdateCommonPostActionResult> Upgrade(WaitUntil waitUntil, NetworkFabricUpdateVersionContent content, CancellationToken cancellationToken = default)
         {
-            ArmOperation<NetworkDeviceUpgradeResult> operation = StartUpgrade(waitUntil, ToNetworkDeviceUpgradeContent(content), cancellationToken);
+            ArmOperation<NetworkDeviceUpgradeResult> operation = Upgrade(waitUntil, ToNetworkDeviceUpgradeContent(content), cancellationToken);
             return new CompatArmOperation<NetworkDeviceUpgradeResult, StateUpdateCommonPostActionResult>(operation, r => ToStateUpdateResult(r.Error));
         }
 
@@ -186,10 +186,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             => new StateUpdateCommonPostActionResult(error, additionalBinaryDataProperties: null, configurationState: null);
 
         private static NetworkDeviceUpgradeContent ToNetworkDeviceUpgradeContent(NetworkFabricUpdateVersionContent content)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return new NetworkDeviceUpgradeContent(content.Version, rwDeviceConfigUri: null, additionalBinaryDataProperties: null);
-        }
+            => new NetworkDeviceUpgradeContent(content.Version, rwDeviceConfigUri: null, additionalBinaryDataProperties: null);
     }
 }

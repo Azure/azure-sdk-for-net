@@ -4,7 +4,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
@@ -12,8 +11,8 @@ using Azure.ResourceManager.ManagedNetworkFabric.Models;
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     // Backward compatibility shim for the swagger upgrade from package-2023-06-15 to package-2025-07-15.
-    // The new API version added ipCommunityRules as a required constructor parameter. This preserves the
-    // old constructor signature from v1.1.2; removing it would break constructor compatibility.
+    // The new API version added ipCommunityRules as a required constructor parameter.
+    // This preserves the old constructor signature from v1.1.2 that only required location.
     public partial class NetworkFabricIPCommunityData
     {
         /// <summary> Initializes a new instance of <see cref="NetworkFabricIPCommunityData"/>. </summary>

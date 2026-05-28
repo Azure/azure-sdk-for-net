@@ -92,6 +92,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Gateway Type of the resource. </summary>
+        public InternetGatewayType? Type
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Type;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new InternetGatewayProperties();
+                }
+                Properties.Type = value;
+            }
+        }
+
+        /// <summary> Gateway Type of the resource. </summary>
         public InternetGatewayType? InternetGatewayType
         {
             get

@@ -12,8 +12,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     // Backward compatibility shim for the swagger upgrade from package-2023-06-15 to package-2025-07-15.
     // The new API version added ipPrefixRules as a required constructor parameter.
-    // This preserves the old constructor signature from v1.1.2 that only required location. Removing
-    // it would break callers that initialize the IP prefix rules after construction.
+    // This preserves the old constructor signature from v1.1.2 that only required location.
     public partial class NetworkFabricIPPrefixData
     {
         /// <summary> Initializes a new instance of <see cref="NetworkFabricIPPrefixData"/>. </summary>
