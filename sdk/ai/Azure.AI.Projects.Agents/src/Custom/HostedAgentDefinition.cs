@@ -37,10 +37,8 @@ public partial class HostedAgentDefinition
 
     private void SetContainerImageMayBe(string image)
     {
-        if (ContainerConfiguration != null)
-        {
-            ContainerConfiguration.Image = image;
-        }
+        ContainerConfiguration ??= new ContainerConfiguration();
+        ContainerConfiguration.Image = image;
     }
     /// <summary> [Deprecated] The container image for the hosted agent. This property was added fo backward compatibility only. Please use ContainerConfiguration.Image instead. </summary>
     public string Image { get => ContainerConfiguration?.Image; set => SetContainerImageMayBe(value); }

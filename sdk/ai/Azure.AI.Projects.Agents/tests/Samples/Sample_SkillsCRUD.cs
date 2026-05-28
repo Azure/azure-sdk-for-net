@@ -67,7 +67,7 @@ public class Sample_Skills_CRUD : SamplesBase
                 Replace <first> and <second> by the actual summation arguments.
             """
         );
-        SkillVersion simpleSkill = await skillsClient.CreateSkillVersionAsync(name: "simpleSkill", inlineContent: content);
+        SkillVersion simpleSkill = await skillsClient.CreateSkillVersionAsync(name: "simple-skill", inlineContent: content);
         Console.WriteLine($"Created skill {simpleSkill.Name}: {simpleSkill.Description}");
         #endregion
 
@@ -97,8 +97,8 @@ public class Sample_Skills_CRUD : SamplesBase
                 Replace <first> and <second> by the actual summation arguments.
             """
         );
-        SkillVersion newVersion = await skillsClient.CreateSkillVersionAsync(name: "simpleSkill", inlineContent: content);
-        skill = await skillsClient.UpdateSkillAsync(name: "simpleSkill", defaultVersion: newVersion.Version);
+        SkillVersion newVersion = await skillsClient.CreateSkillVersionAsync(name: "simple-skill", inlineContent: content);
+        skill = await skillsClient.UpdateSkillAsync(name: "simple-skill", defaultVersion: newVersion.Version);
         Console.WriteLine($"The skill {skill.Name} now has the following description: {skill.Description}");
         #endregion
 
@@ -148,7 +148,7 @@ public class Sample_Skills_CRUD : SamplesBase
                 Replace <first> and <second> by the actual summation arguments.
             """
         );
-        SkillVersion simpleSkill = skillsClient.CreateSkillVersion(name: "simpleSkill", inlineContent: content);
+        SkillVersion simpleSkill = skillsClient.CreateSkillVersion(name: "simple-skill", inlineContent: content);
         Console.WriteLine($"Created skill {simpleSkill.Name}: {simpleSkill.Description}");
         #endregion
 
@@ -178,8 +178,8 @@ public class Sample_Skills_CRUD : SamplesBase
                 Replace <first> and <second> by the actual summation arguments.
             """
         );
-        SkillVersion newVersion = skillsClient.CreateSkillVersion(name: "simpleSkill", inlineContent: content);
-        skill = skillsClient.UpdateSkill(name: "simpleSkill", defaultVersion: newVersion.Version);
+        SkillVersion newVersion = skillsClient.CreateSkillVersion(name: "simple-skill", inlineContent: content);
+        skill = skillsClient.UpdateSkill(name: "simple-skill", defaultVersion: newVersion.Version);
         Console.WriteLine($"The skill {skill.Name} now has the following description: {skill.Description}");
         #endregion
 

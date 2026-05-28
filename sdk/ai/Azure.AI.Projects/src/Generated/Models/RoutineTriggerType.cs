@@ -11,8 +11,10 @@ namespace Azure.AI.Projects
     public readonly partial struct RoutineTriggerType : IEquatable<RoutineTriggerType>
     {
         private readonly string _value;
-        /// <summary> A GitHub issue-opened trigger. </summary>
-        private const string GithubIssueOpenedValue = "github_issue_opened";
+        /// <summary> A custom event trigger. </summary>
+        private const string CustomValue = "custom";
+        /// <summary> A GitHub issue trigger. </summary>
+        private const string GithubIssueValue = "github_issue";
         /// <summary> A recurring cron-based trigger. </summary>
         private const string ScheduleValue = "schedule";
         /// <summary> A one-shot timer trigger. </summary>
@@ -28,8 +30,11 @@ namespace Azure.AI.Projects
             _value = value;
         }
 
-        /// <summary> A GitHub issue-opened trigger. </summary>
-        public static RoutineTriggerType GithubIssueOpened { get; } = new RoutineTriggerType(GithubIssueOpenedValue);
+        /// <summary> A custom event trigger. </summary>
+        public static RoutineTriggerType Custom { get; } = new RoutineTriggerType(CustomValue);
+
+        /// <summary> A GitHub issue trigger. </summary>
+        public static RoutineTriggerType GithubIssue { get; } = new RoutineTriggerType(GithubIssueValue);
 
         /// <summary> A recurring cron-based trigger. </summary>
         public static RoutineTriggerType Schedule { get; } = new RoutineTriggerType(ScheduleValue);

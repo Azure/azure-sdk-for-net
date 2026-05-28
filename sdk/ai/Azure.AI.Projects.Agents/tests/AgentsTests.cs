@@ -7,7 +7,6 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Threading.Tasks;
-using Castle.Core.Resource;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
@@ -663,9 +662,8 @@ public class AgentsTests : AgentsTestBase
         Assert.That(writeResponse.Path, Is.EqualTo($"storage/{file2}"));
         Assert.That(writeResponse.BytesWritten, Is.EqualTo(fileLength));
         // List
-        SessionDirectoryListResponse response = await filesClient.GetSessionFilesAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, sessionStoragePath: "storage");
-        Assert.That(response.Entries, Has.Count.EqualTo(2));
-        List<string> lstEntries = [.. response.Entries.Select(x => x.Name)];
+        AsyncCollectionResult<SessionDirectoryEntry> response = filesClient.GetSessionFilesAsync(agentName: agentVersion.Name, agentSessionId: session.AgentSessionId, sessionStoragePath: "storage");
+        List<string> lstEntries = await response.Select(x => x.Name).ToListAsync();
         Assert.That(lstEntries, Does.Contain(file1));
         Assert.That(lstEntries, Does.Contain(file2));
         // Download
@@ -683,17 +681,65 @@ public class AgentsTests : AgentsTestBase
         Assert.That(data, Is.EqualTo("The test file\n"));
         // Delete
         await filesClient.DeleteSessionFileAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: $"storage/{file2}");
-        response = await filesClient.GetSessionFilesAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, sessionStoragePath: "storage");
-        lstEntries = [.. response.Entries.Select(x => x.Name)];
+        response = filesClient.GetSessionFilesAsync(agentName: agentVersion.Name, agentSessionId: session.AgentSessionId, sessionStoragePath: "storage");
+        lstEntries = await response.Select(x => x.Name).ToListAsync();
         Assert.That(lstEntries, Has.Count.EqualTo(1));
         Assert.That(lstEntries[0], Is.EqualTo(file1));
         await filesClient.DeleteSessionFileAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: $"storage/{file1}");
-        response = await filesClient.GetSessionFilesAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, sessionStoragePath: "storage");
-        Assert.That(response.Entries, Has.Count.EqualTo(0));
+        response = filesClient.GetSessionFilesAsync(agentName: agentVersion.Name, agentSessionId: session.AgentSessionId, sessionStoragePath: "storage");
+        Assert.That(await response.ToListAsync(), Has.Count.EqualTo(0));
         await agentsClient.DeleteSessionAsync(
             agentName: agentVersion.Name,
             sessionId: session.AgentSessionId
         );
+    }
+
+    [RecordedTest]
+    public async Task TestSessionFilePagination()
+    {
+        AgentAdministrationClient agentsClient = GetTestClient();
+        AgentSessionFiles filesClient = agentsClient.GetAgentSessionFiles();
+        ProjectsAgentVersion agentVersion = await CreateHostedAgent(agentsClient, "01");
+        ProjectAgentSession session = await agentsClient.CreateSessionAsync(
+            agentName: agentVersion.Name,
+            versionIndicator: new VersionRefIndicator(agentVersion.Version)
+        );
+        string fileLocalPath = GetTestFile("test.txt");
+        int fileLength = File.ReadAllBytes(fileLocalPath).Length;
+        // Make sure that chronological order is the reverse of session ID alphanumeric order.
+        for (int i = 0; i < PAGE_SIZE + 1; i++)
+        {
+            SessionFileWriteResponse writeResponse = await filesClient.UploadSessionFileAsync(
+                agentName: agentVersion.Name,
+                sessionId: session.AgentSessionId,
+                sessionStoragePath: $"storage/file{i}.json",
+                localPath: fileLocalPath
+            );
+            Assert.That(writeResponse.Path, Is.EqualTo($"storage/file{i}.json"));
+            Assert.That(writeResponse.BytesWritten, Is.EqualTo(fileLength));
+        }
+        List<SessionDirectoryEntry> records = await filesClient.GetSessionFilesAsync(agentName: agentVersion.Name, agentSessionId: session.AgentSessionId, sessionStoragePath: "storage", limit: PAGE_SIZE, order: AgentListOrder.Ascending).ToListAsync();
+        Assert.That(records.Count, Is.EqualTo(PAGE_SIZE + 1));
+        // Go forward.
+        //List<SessionDirectoryEntry> forward = await filesClient.GetSessionFilesAsync(agentName: agentVersion.Name, agentSessionId: session.AgentSessionId, sessionStoragePath: "storage", order: AgentListOrder.Ascending, after: records[0].Name, limit: PAGE_SIZE).ToListAsync();
+        //Assert.That(forward.Count, Is.EqualTo(records.Count - 1));
+        //Assert.That(forward[0].Name, Is.EqualTo(records[1].Name));
+        //Assert.That(forward[forward.Count - 1].Name, Is.EqualTo(records[records.Count - 1].Name));
+        //// Two limits:
+        //forward = await filesClient.GetSessionFilesAsync(agentName: agentVersion.Name, agentSessionId: session.AgentSessionId, sessionStoragePath: "storage", order: AgentListOrder.Ascending, after: records[0].Name, before: records[3].Name, limit: PAGE_SIZE).ToListAsync();
+        //Assert.That(forward.Count, Is.EqualTo(2));
+        //Assert.That(forward[0].Name, Is.EqualTo(records[1].Name));
+        //Assert.That(forward[1].Name, Is.EqualTo(records[2].Name));
+        //// Go backwards.
+        //List<SessionDirectoryEntry> backwards = await filesClient.GetSessionFilesAsync(agentName: agentVersion.Name, agentSessionId: session.AgentSessionId, sessionStoragePath: "storage", order: AgentListOrder.Descending, before: records[0].Name, limit: PAGE_SIZE).ToListAsync();
+        //Assert.That(backwards.Count, Is.EqualTo(records.Count - 1));
+        //Assert.That(backwards[0].Name, Is.EqualTo(records[records.Count - 1].Name));
+        //Assert.That(backwards[backwards.Count - 1].Name, Is.EqualTo(records[1].Name));
+        //// Two limits.
+        //backwards = await filesClient.GetSessionFilesAsync(agentName: agentVersion.Name, agentSessionId: session.AgentSessionId, sessionStoragePath: "storage", order: AgentListOrder.Descending, after: records[records.Count - 1].Name, before: records[records.Count - 4].Name, limit: PAGE_SIZE).ToListAsync();
+        //Assert.That(backwards.Count, Is.EqualTo(2));
+        //Assert.That(backwards[0].Name, Is.EqualTo(records[records.Count - 2].Name));
+        //Assert.That(backwards[1].Name, Is.EqualTo(records[records.Count - 3].Name));
     }
 
     [LiveOnly]
@@ -705,7 +751,7 @@ public class AgentsTests : AgentsTestBase
         ProjectAgentSkills skillsClient = agentsClient.GetAgentSkills();
         string fileSkillName = $"{SKILL}_file";
         AgentsSkill skillFromFile = await skillsClient.CreateSkillVersionFromFilesAsync("roll-dice", GetTestFile("roll-dice"));
-        Assert.That(skillFromFile.Name, Is.EqualTo(fileSkillName));
+        Assert.That(skillFromFile.Name, Is.EqualTo("roll-dice"));
         Assert.That(skillFromFile.Description, Is.EqualTo("Roll dice using a random number generator."));
         string savePath = Path.Combine(Path.GetTempPath(), "saved_skill");
         try

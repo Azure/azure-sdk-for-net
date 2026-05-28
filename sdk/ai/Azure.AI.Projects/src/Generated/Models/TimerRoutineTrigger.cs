@@ -11,30 +11,20 @@ namespace Azure.AI.Projects
     public partial class TimerRoutineTrigger : RoutineTrigger
     {
         /// <summary> Initializes a new instance of <see cref="TimerRoutineTrigger"/>. </summary>
-        /// <param name="at"> A future timer expression. Supported values include an ISO-8601 timestamp with an explicit offset, a local timestamp paired with time_zone, or a positive duration from now. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="at"/> is null. </exception>
-        public TimerRoutineTrigger(string at) : base(RoutineTriggerType.Timer)
+        public TimerRoutineTrigger() : base(RoutineTriggerType.Timer)
         {
-            Argument.AssertNotNull(at, nameof(at));
-
-            At = at;
         }
 
         /// <summary> Initializes a new instance of <see cref="TimerRoutineTrigger"/>. </summary>
         /// <param name="type"> The trigger type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="at"> A future timer expression. Supported values include an ISO-8601 timestamp with an explicit offset, a local timestamp paired with time_zone, or a positive duration from now. </param>
-        /// <param name="timeZone"> An optional IANA or Windows time zone identifier when the timer uses a local timestamp. </param>
-        internal TimerRoutineTrigger(RoutineTriggerType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string at, string timeZone) : base(@type, additionalBinaryDataProperties)
+        /// <param name="at"> The UTC date and time at which the timer fires. </param>
+        internal TimerRoutineTrigger(RoutineTriggerType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? at) : base(@type, additionalBinaryDataProperties)
         {
             At = at;
-            TimeZone = timeZone;
         }
 
-        /// <summary> A future timer expression. Supported values include an ISO-8601 timestamp with an explicit offset, a local timestamp paired with time_zone, or a positive duration from now. </summary>
-        public string At { get; set; }
-
-        /// <summary> An optional IANA or Windows time zone identifier when the timer uses a local timestamp. </summary>
-        public string TimeZone { get; set; }
+        /// <summary> The UTC date and time at which the timer fires. </summary>
+        public DateTimeOffset? At { get; set; }
     }
 }

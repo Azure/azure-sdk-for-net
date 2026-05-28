@@ -5,6 +5,7 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
@@ -30,8 +31,10 @@ public partial class ProjectAgentSkills
     {
         Argument.AssertNotNullOrEmpty(directoryPath, nameof(directoryPath));
 
-        using BinaryContent content = BinaryContent.Create(FileHelper.CreateAndReadZipFileFromDirectory(directoryPath));
-        ClientResult result = CreateSkillVersionFromFiles(name, content, "application/zip", cancellationToken.ToRequestOptions());
+        BinaryData data = FileHelper.CreateAndReadZipFileFromDirectory(directoryPath);
+        using MultiPartFormDataBinaryContent content = new();
+        content.Add(data, name: name, filename: "name.zip");
+        ClientResult result = CreateSkillVersionFromFiles(name, content, content.ContentType, cancellationToken.ToRequestOptions());
         return ClientResult.FromValue((AgentsSkill)result, result.GetRawResponse());
     }
 
@@ -46,8 +49,10 @@ public partial class ProjectAgentSkills
     {
         Argument.AssertNotNullOrEmpty(directoryPath, nameof(directoryPath));
 
-        using BinaryContent content = BinaryContent.Create(FileHelper.CreateAndReadZipFileFromDirectory(directoryPath));
-        ClientResult result = await CreateSkillVersionFromFilesAsync(name, content, "application/zip", cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+        BinaryData data = FileHelper.CreateAndReadZipFileFromDirectory(directoryPath);
+        using MultiPartFormDataBinaryContent content = new();
+        content.Add(data, name: name, filename: "name.zip");
+        ClientResult result = await CreateSkillVersionFromFilesAsync(name, content, content.ContentType, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         return ClientResult.FromValue((AgentsSkill)result, result.GetRawResponse());
     }
 

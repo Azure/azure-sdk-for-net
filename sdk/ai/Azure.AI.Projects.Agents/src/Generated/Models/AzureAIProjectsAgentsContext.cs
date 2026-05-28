@@ -155,7 +155,6 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(PromotionInfo))]
     [ModelReaderWriterBuildable(typeof(ProtocolVersionRecord))]
     [ModelReaderWriterBuildable(typeof(SessionDirectoryEntry))]
-    [ModelReaderWriterBuildable(typeof(SessionDirectoryListResponse))]
     [ModelReaderWriterBuildable(typeof(SessionFileWriteResponse))]
     [ModelReaderWriterBuildable(typeof(SessionLogEvent))]
     [ModelReaderWriterBuildable(typeof(SharePointGroundingToolOptions))]
