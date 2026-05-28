@@ -12,7 +12,7 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> The scaling size of the control plane. Scaling sizes offer guaranteed capacity and predictable Kubernetes performance beyond standard tier defaults. Higher H sizes provide increased performance guarantees. See https://aka.ms/aks/hyperscale for performance metrics details for each size. </summary>
-    public readonly partial struct ControlPlaneScalingSize : IEquatable<ControlPlaneScalingSize>
+    public readonly partial struct ManagedClusterControlPlaneScalingSize : IEquatable<ManagedClusterControlPlaneScalingSize>
     {
         private readonly string _value;
         /// <summary> H2 is the smallest scaling size with guaranteed capacity and predictable performance beyond standard tier defaults. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> H8 scaling size provides increased guaranteed performance over H4. </summary>
         private const string H8Value = "H8";
 
-        /// <summary> Initializes a new instance of <see cref="ControlPlaneScalingSize"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterControlPlaneScalingSize"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ControlPlaneScalingSize(string value)
+        public ManagedClusterControlPlaneScalingSize(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> H2 is the smallest scaling size with guaranteed capacity and predictable performance beyond standard tier defaults. </summary>
-        public static ControlPlaneScalingSize H2 { get; } = new ControlPlaneScalingSize(H2Value);
+        public static ManagedClusterControlPlaneScalingSize H2 { get; } = new ManagedClusterControlPlaneScalingSize(H2Value);
 
         /// <summary> H4 scaling size provides increased guaranteed performance over H2. </summary>
-        public static ControlPlaneScalingSize H4 { get; } = new ControlPlaneScalingSize(H4Value);
+        public static ManagedClusterControlPlaneScalingSize H4 { get; } = new ManagedClusterControlPlaneScalingSize(H4Value);
 
         /// <summary> H8 scaling size provides increased guaranteed performance over H4. </summary>
-        public static ControlPlaneScalingSize H8 { get; } = new ControlPlaneScalingSize(H8Value);
+        public static ManagedClusterControlPlaneScalingSize H8 { get; } = new ManagedClusterControlPlaneScalingSize(H8Value);
 
-        /// <summary> Determines if two <see cref="ControlPlaneScalingSize"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ManagedClusterControlPlaneScalingSize"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ControlPlaneScalingSize left, ControlPlaneScalingSize right) => left.Equals(right);
+        public static bool operator ==(ManagedClusterControlPlaneScalingSize left, ManagedClusterControlPlaneScalingSize right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ControlPlaneScalingSize"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ManagedClusterControlPlaneScalingSize"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ControlPlaneScalingSize left, ControlPlaneScalingSize right) => !left.Equals(right);
+        public static bool operator !=(ManagedClusterControlPlaneScalingSize left, ManagedClusterControlPlaneScalingSize right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ControlPlaneScalingSize"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ManagedClusterControlPlaneScalingSize"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ControlPlaneScalingSize(string value) => new ControlPlaneScalingSize(value);
+        public static implicit operator ManagedClusterControlPlaneScalingSize(string value) => new ManagedClusterControlPlaneScalingSize(value);
 
-        /// <summary> Converts a string to a <see cref="ControlPlaneScalingSize"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ManagedClusterControlPlaneScalingSize"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ControlPlaneScalingSize?(string value) => value == null ? null : new ControlPlaneScalingSize(value);
+        public static implicit operator ManagedClusterControlPlaneScalingSize?(string value) => value == null ? null : new ManagedClusterControlPlaneScalingSize(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ControlPlaneScalingSize other && Equals(other);
+        public override bool Equals(object obj) => obj is ManagedClusterControlPlaneScalingSize other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ControlPlaneScalingSize other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ManagedClusterControlPlaneScalingSize other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

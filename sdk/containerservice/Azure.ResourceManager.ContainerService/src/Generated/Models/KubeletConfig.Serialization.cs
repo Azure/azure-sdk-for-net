@@ -208,8 +208,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             int? containerLogMaxFiles = default;
             int? podMaxPids = default;
             SeccompDefault? seccompDefault = default;
-            KubeReserved kubeReserved = default;
-            HardEvictionThreshold hardEvictionThreshold = default;
+            KubeletReservedResources kubeReserved = default;
+            KubeletHardEvictionThreshold hardEvictionThreshold = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    kubeReserved = KubeReserved.DeserializeKubeReserved(prop.Value, options);
+                    kubeReserved = KubeletReservedResources.DeserializeKubeletReservedResources(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("hardEvictionThreshold"u8))
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    hardEvictionThreshold = HardEvictionThreshold.DeserializeHardEvictionThreshold(prop.Value, options);
+                    hardEvictionThreshold = KubeletHardEvictionThreshold.DeserializeKubeletHardEvictionThreshold(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

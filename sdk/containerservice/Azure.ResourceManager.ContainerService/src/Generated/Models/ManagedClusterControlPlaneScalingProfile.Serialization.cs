@@ -123,13 +123,13 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            ControlPlaneScalingSize scalingSize = default;
+            ManagedClusterControlPlaneScalingSize scalingSize = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("scalingSize"u8))
                 {
-                    scalingSize = new ControlPlaneScalingSize(prop.Value.GetString());
+                    scalingSize = new ManagedClusterControlPlaneScalingSize(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

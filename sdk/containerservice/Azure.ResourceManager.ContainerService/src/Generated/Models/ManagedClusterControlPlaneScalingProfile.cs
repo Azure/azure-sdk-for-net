@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterControlPlaneScalingProfile"/>. </summary>
         /// <param name="scalingSize"> The scaling size of the control plane. Scaling sizes offer guaranteed capacity and predictable Kubernetes performance beyond standard tier defaults. Higher H sizes provide increased performance guarantees. See https://aka.ms/aks/hyperscale for performance metrics details for each size. </param>
-        public ManagedClusterControlPlaneScalingProfile(ControlPlaneScalingSize scalingSize)
+        public ManagedClusterControlPlaneScalingProfile(ManagedClusterControlPlaneScalingSize scalingSize)
         {
             ScalingSize = scalingSize;
         }
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of <see cref="ManagedClusterControlPlaneScalingProfile"/>. </summary>
         /// <param name="scalingSize"> The scaling size of the control plane. Scaling sizes offer guaranteed capacity and predictable Kubernetes performance beyond standard tier defaults. Higher H sizes provide increased performance guarantees. See https://aka.ms/aks/hyperscale for performance metrics details for each size. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterControlPlaneScalingProfile(ControlPlaneScalingSize scalingSize, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterControlPlaneScalingProfile(ManagedClusterControlPlaneScalingSize scalingSize, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ScalingSize = scalingSize;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -35,6 +35,6 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> The scaling size of the control plane. Scaling sizes offer guaranteed capacity and predictable Kubernetes performance beyond standard tier defaults. Higher H sizes provide increased performance guarantees. See https://aka.ms/aks/hyperscale for performance metrics details for each size. </summary>
         [WirePath("scalingSize")]
-        public ControlPlaneScalingSize ScalingSize { get; set; }
+        public ManagedClusterControlPlaneScalingSize ScalingSize { get; set; }
     }
 }

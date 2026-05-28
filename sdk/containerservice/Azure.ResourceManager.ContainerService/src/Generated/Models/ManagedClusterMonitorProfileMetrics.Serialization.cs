@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("kubeStateMetrics"u8);
                 writer.WriteObjectValue(KubeStateMetrics, options);
             }
-            if (Optional.IsDefined(ControlPlane))
+            if (Optional.IsDefined(IsControlPlane))
             {
                 writer.WritePropertyName("controlPlane"u8);
-                writer.WriteObjectValue(ControlPlane, options);
+                writer.WriteObjectValue(IsControlPlane, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             bool isEnabled = default;
             ManagedClusterMonitorProfileKubeStateMetrics kubeStateMetrics = default;
-            ManagedClusterAzureMonitorProfileMetricsControlPlane controlPlane = default;
+            ManagedClusterAzureMonitorProfileMetricsControlPlane isControlPlane = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    controlPlane = ManagedClusterAzureMonitorProfileMetricsControlPlane.DeserializeManagedClusterAzureMonitorProfileMetricsControlPlane(prop.Value, options);
+                    isControlPlane = ManagedClusterAzureMonitorProfileMetricsControlPlane.DeserializeManagedClusterAzureMonitorProfileMetricsControlPlane(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedClusterMonitorProfileMetrics(isEnabled, kubeStateMetrics, controlPlane, additionalBinaryDataProperties);
+            return new ManagedClusterMonitorProfileMetrics(isEnabled, kubeStateMetrics, isControlPlane, additionalBinaryDataProperties);
         }
     }
 }

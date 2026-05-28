@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> The scaling size of the control plane. Scaling sizes offer guaranteed capacity and predictable Kubernetes performance beyond standard tier defaults. Higher H sizes provide increased performance guarantees. See https://aka.ms/aks/hyperscale for performance metrics details for each size. </summary>
         [WirePath("controlPlaneScalingProfile.scalingSize")]
-        public ControlPlaneScalingSize? ScalingSize
+        public ManagedClusterControlPlaneScalingSize? ScalingSize
         {
             get
             {

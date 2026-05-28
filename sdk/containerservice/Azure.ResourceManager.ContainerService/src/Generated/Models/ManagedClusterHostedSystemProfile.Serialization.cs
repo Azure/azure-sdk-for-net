@@ -80,15 +80,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsHostedSystemAddonsEnabled.Value);
             }
-            if (Optional.IsDefined(SystemNodeSubnetID))
+            if (Optional.IsDefined(SystemNodeSubnetId))
             {
                 writer.WritePropertyName("systemNodeSubnetID"u8);
-                writer.WriteStringValue(SystemNodeSubnetID);
+                writer.WriteStringValue(SystemNodeSubnetId);
             }
-            if (Optional.IsDefined(NodeSubnetID))
+            if (Optional.IsDefined(NodeSubnetId))
             {
                 writer.WritePropertyName("nodeSubnetID"u8);
-                writer.WriteStringValue(NodeSubnetID);
+                writer.WriteStringValue(NodeSubnetId);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -133,8 +133,8 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             bool? isHostedSystemAddonsEnabled = default;
-            ResourceIdentifier systemNodeSubnetID = default;
-            ResourceIdentifier nodeSubnetID = default;
+            ResourceIdentifier systemNodeSubnetId = default;
+            ResourceIdentifier nodeSubnetId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    systemNodeSubnetID = new ResourceIdentifier(prop.Value.GetString());
+                    systemNodeSubnetId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("nodeSubnetID"u8))
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    nodeSubnetID = new ResourceIdentifier(prop.Value.GetString());
+                    nodeSubnetId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedClusterHostedSystemProfile(isHostedSystemAddonsEnabled, systemNodeSubnetID, nodeSubnetID, additionalBinaryDataProperties);
+            return new ManagedClusterHostedSystemProfile(isHostedSystemAddonsEnabled, systemNodeSubnetId, nodeSubnetId, additionalBinaryDataProperties);
         }
     }
 }
