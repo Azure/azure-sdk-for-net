@@ -11,13 +11,13 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
 
-namespace Service.MultipleServices.ServiceB._SubNamespace
+namespace Service.MultipleServices.ServiceB.SubNamespace
 {
-    public partial class SubNamespace
+    public partial class BSubNamespace
     {
-        protected SubNamespace() => throw null;
+        protected BSubNamespace() => throw null;
 
-        internal SubNamespace(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion) => throw null;
+        internal BSubNamespace(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

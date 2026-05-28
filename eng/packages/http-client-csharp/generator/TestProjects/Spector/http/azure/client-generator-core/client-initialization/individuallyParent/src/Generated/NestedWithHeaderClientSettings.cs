@@ -13,7 +13,7 @@ using Microsoft.Extensions.Configuration;
 namespace Specs.Azure.ClientGenerator.Core.ClientInitialization._IndividuallyParentClient
 {
     [Experimental("SCME0002")]
-    public partial class IndividuallyParentNestedWithHeaderClientSettings : ClientSettings
+    public partial class NestedWithHeaderClientSettings : ClientSettings
     {
         public Uri Endpoint
         {

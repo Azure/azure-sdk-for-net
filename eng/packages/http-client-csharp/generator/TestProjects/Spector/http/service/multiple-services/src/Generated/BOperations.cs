@@ -13,11 +13,11 @@ using Azure.Core.Pipeline;
 
 namespace Service.MultipleServices.ServiceB
 {
-    public partial class Operations
+    public partial class BOperations
     {
-        protected Operations() => throw null;
+        protected BOperations() => throw null;
 
-        internal Operations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion) => throw null;
+        internal BOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
