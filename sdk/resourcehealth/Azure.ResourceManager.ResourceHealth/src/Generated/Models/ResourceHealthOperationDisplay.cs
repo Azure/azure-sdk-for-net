@@ -11,23 +11,23 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
     /// <summary> Properties of the operation. </summary>
-    public partial class OperationDisplay
+    public partial class ResourceHealthOperationDisplay
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OperationDisplay"/>. </summary>
-        internal OperationDisplay()
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthOperationDisplay"/>. </summary>
+        internal ResourceHealthOperationDisplay()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="OperationDisplay"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthOperationDisplay"/>. </summary>
         /// <param name="provider"> Provider name. </param>
         /// <param name="resource"> Resource name. </param>
         /// <param name="operation"> Operation name. </param>
         /// <param name="description"> Description of the operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OperationDisplay(string provider, string resource, string operation, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceHealthOperationDisplay(string provider, string resource, string operation, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Provider = provider;
             Resource = resource;

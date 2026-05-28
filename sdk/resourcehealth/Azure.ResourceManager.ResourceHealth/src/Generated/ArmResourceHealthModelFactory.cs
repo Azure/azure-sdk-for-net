@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <param name="name"> Name of the operation. </param>
         /// <param name="display"> Properties of the operation. </param>
         /// <returns> A new <see cref="Models.ResourceHealthOperationInfo"/> instance for mocking. </returns>
-        public static ResourceHealthOperationInfo ResourceHealthOperationInfo(string name = default, OperationDisplay display = default)
+        public static ResourceHealthOperationInfo ResourceHealthOperationInfo(string name = default, ResourceHealthOperationDisplay display = default)
         {
             return new ResourceHealthOperationInfo(name, display, additionalBinaryDataProperties: null);
         }
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <param name="resource"> Resource name. </param>
         /// <param name="operation"> Operation name. </param>
         /// <param name="description"> Description of the operation. </param>
-        /// <returns> A new <see cref="Models.OperationDisplay"/> instance for mocking. </returns>
-        public static OperationDisplay OperationDisplay(string provider = default, string resource = default, string operation = default, string description = default)
+        /// <returns> A new <see cref="Models.ResourceHealthOperationDisplay"/> instance for mocking. </returns>
+        public static ResourceHealthOperationDisplay ResourceHealthOperationDisplay(string provider = default, string resource = default, string operation = default, string description = default)
         {
-            return new OperationDisplay(provider, resource, operation, description, additionalBinaryDataProperties: null);
+            return new ResourceHealthOperationDisplay(provider, resource, operation, description, additionalBinaryDataProperties: null);
         }
 
         /// <summary> availabilityStatus of a resource. </summary>
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <param name="billingId"> Billing identifier information. </param>
         /// <param name="additionalInformationMessage"> Additional information Message. </param>
         /// <returns> A new <see cref="ResourceHealth.ResourceHealthEventData"/> instance for mocking. </returns>
-        public static ResourceHealthEventData ResourceHealthEventData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceHealthEventTypeValue? eventType = default, EventSubTypeValues? eventSubType = default, ResourceHealthEventSourceValue? eventSource = default, ResourceHealthEventStatusValue? status = default, string title = default, string summary = default, string header = default, ResourceHealthEventInsightLevelValue? level = default, ResourceHealthEventLevelValue? eventLevel = default, bool? isEventSensitive = default, string externalIncidentId = default, string reason = default, ResourceHealthEventArticle article = default, IEnumerable<ResourceHealthEventLink> links = default, DateTimeOffset? impactStartOn = default, DateTimeOffset? impactMitigationOn = default, IEnumerable<ResourceHealthEventImpact> impact = default, ResourceHealthEventRecommendedActions recommendedActions = default, IEnumerable<ResourceHealthEventFaq> faqs = default, bool? isHirEvent = default, bool? isMicrosoftSupportEnabled = default, string description = default, bool? isPlatformInitiated = default, bool? isChatWithUsEnabled = default, int? priority = default, DateTimeOffset? lastUpdateOn = default, string hirStage = default, int? duration = default, string impactType = default, IEnumerable<string> eventTags = default, double? newRate = default, double? oldRate = default, string currencyType = default, string billingId = default, string additionalInformationMessage = default)
+        public static ResourceHealthEventData ResourceHealthEventData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceHealthEventTypeValue? eventType = default, ResourceHealthEventSubTypeValue? eventSubType = default, ResourceHealthEventSourceValue? eventSource = default, ResourceHealthEventStatusValue? status = default, string title = default, string summary = default, string header = default, ResourceHealthEventInsightLevelValue? level = default, ResourceHealthEventLevelValue? eventLevel = default, bool? isEventSensitive = default, string externalIncidentId = default, string reason = default, ResourceHealthEventArticle article = default, IEnumerable<ResourceHealthEventLink> links = default, DateTimeOffset? impactStartOn = default, DateTimeOffset? impactMitigationOn = default, IEnumerable<ResourceHealthEventImpact> impact = default, ResourceHealthEventRecommendedActions recommendedActions = default, IEnumerable<ResourceHealthEventFaq> faqs = default, bool? isHirEvent = default, bool? isMicrosoftSupportEnabled = default, string description = default, bool? isPlatformInitiated = default, bool? isChatWithUsEnabled = default, int? priority = default, DateTimeOffset? lastUpdateOn = default, string hirStage = default, int? duration = default, string impactType = default, IEnumerable<string> eventTags = default, double? newRate = default, double? oldRate = default, string currencyType = default, string billingId = default, string additionalInformationMessage = default)
         {
             return new ResourceHealthEventData(
                 id,
