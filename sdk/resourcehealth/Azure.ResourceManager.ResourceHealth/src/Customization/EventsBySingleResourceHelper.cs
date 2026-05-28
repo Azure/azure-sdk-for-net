@@ -23,7 +23,8 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             _scope = scope;
             _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceHealth", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _restClient = new Events(_clientDiagnostics, Pipeline, Endpoint, "2025-05-01");
+            TryGetApiVersion(ResourceHealthEventResource.ResourceType, out string resourceHealthEventApiVersion);
+            _restClient = new Events(_clientDiagnostics, Pipeline, Endpoint, resourceHealthEventApiVersion ?? ProviderConstants.DefaultApiVersion);
         }
 
         // Manually drives the generated REST requests because Azure.Core.Page<Event> under ArmProviderActionSync did not produce a generated CollectionResult/public pageable method;
