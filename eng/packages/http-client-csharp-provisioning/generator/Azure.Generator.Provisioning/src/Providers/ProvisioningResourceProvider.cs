@@ -53,7 +53,9 @@ namespace Azure.Generator.Provisioning.Providers
         };
 
         private readonly InputModelType _inputModel;
+        private readonly ProvisioningResourceProjection? _resourceProjection;
         private readonly ArmResourceMetadata? _resourceMetadata;
+        private readonly IReadOnlyList<string> _apiVersions;
         private readonly string? _defaultApiVersion;
         /// <summary>
         /// All collected properties for the resource, including flattened and inherited ones,
@@ -85,6 +87,11 @@ namespace Azure.Generator.Provisioning.Providers
         internal ArmResourceMetadata? ResourceMetadata => _resourceMetadata;
 
         /// <summary>
+        /// Gets the provisioning resource projection, if this is a base resource type.
+        /// </summary>
+        internal ProvisioningResourceProjection? ResourceProjection => _resourceProjection;
+
+        /// <summary>
         /// Gets the parent resource's CSharpType via the output library, or null for top-level resources.
         /// </summary>
         private CSharpType? ParentResourceType
@@ -109,13 +116,15 @@ namespace Azure.Generator.Provisioning.Providers
         /// <summary>
         /// Constructor for base resource types (with metadata from ARM provider schema).
         /// </summary>
-        public ProvisioningResourceProvider(InputModelType inputModel, ArmResourceMetadata metadata)
-            : base(inputModel)
+        public ProvisioningResourceProvider(ProvisioningResourceProjection projection)
+            : base(projection.ResourceModel)
         {
-            _inputModel = inputModel;
-            _resourceMetadata = metadata;
-            _defaultApiVersion = metadata.ApiVersions.Count > 0
-                ? metadata.ApiVersions.Last()
+            _inputModel = projection.ResourceModel;
+            _resourceProjection = projection;
+            _resourceMetadata = projection.PrimaryMetadata;
+            _apiVersions = projection.ApiVersions;
+            _defaultApiVersion = _apiVersions.Count > 0
+                ? _apiVersions.Last()
                 : null;
             _createBodyWritableProperties = BuildCreateBodyWritableProperties();
             _allProperties = CollectAllProperties();
@@ -129,7 +138,9 @@ namespace Azure.Generator.Provisioning.Providers
             : base(inputModel)
         {
             _inputModel = inputModel;
+            _resourceProjection = null;
             _resourceMetadata = null;
+            _apiVersions = [];
             _defaultApiVersion = null;
             _createBodyWritableProperties = [];
             _allProperties = CollectAllProperties();
@@ -321,9 +332,10 @@ namespace Azure.Generator.Provisioning.Providers
             if (_inputModel.DiscriminatorValue != null)
                 return [];
 
-            var apiVersions = _resourceMetadata?.ApiVersions;
-            if (apiVersions == null || apiVersions.Count == 0)
+            if (_apiVersions.Count == 0)
                 return [];
+
+            var apiVersions = _apiVersions;
 
             // When the current (default) API version is GA, exclude preview versions.
             // Preview versions are only included when the current version is itself a preview.
