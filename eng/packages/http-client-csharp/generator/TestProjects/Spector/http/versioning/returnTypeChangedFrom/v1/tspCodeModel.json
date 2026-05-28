@@ -29,7 +29,8 @@
             "$ref": "1"
           },
           "doc": "The version v1.",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         }
       ],
       "namespace": "Versioning.ReturnTypeChangedFrom",
@@ -37,7 +38,8 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,ApiVersionEnum",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "constants": [
@@ -55,7 +57,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "6",
@@ -71,7 +74,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "8",
@@ -87,7 +91,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "10",
@@ -103,7 +108,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [],
@@ -112,6 +118,7 @@
       "$id": "12",
       "kind": "client",
       "name": "ReturnTypeChangedFromClient",
+      "isExactName": false,
       "namespace": "Versioning.ReturnTypeChangedFrom",
       "doc": "Test for the `@returnTypeChangedFrom` decorator.",
       "methods": [
@@ -119,6 +126,7 @@
           "$id": "13",
           "kind": "basic",
           "name": "test",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [
             "v1"
@@ -126,6 +134,7 @@
           "operation": {
             "$id": "14",
             "name": "test",
+            "isExactName": false,
             "resourceName": "ReturnTypeChangedFrom",
             "accessibility": "public",
             "parameters": [
@@ -160,9 +169,11 @@
                     "crossLanguageDefinitionId": "Versioning.ReturnTypeChangedFrom.test.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "17",
@@ -195,9 +206,11 @@
                     "crossLanguageDefinitionId": "Versioning.ReturnTypeChangedFrom.test.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "19",
@@ -241,9 +254,11 @@
                     "crossLanguageDefinitionId": "Versioning.ReturnTypeChangedFrom.test.body",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
                 ],
+                "isExactName": false,
                 "serializationOptions": {
                   "json": {
                     "name": "body"
@@ -338,7 +353,8 @@
           "serverUrlTemplate": "{endpoint}/versioning/return-type-changed-from/api-version:{version}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Versioning.ReturnTypeChangedFrom.endpoint"
+          "crossLanguageDefinitionId": "Versioning.ReturnTypeChangedFrom.endpoint",
+          "isExactName": false
         },
         {
           "$id": "26",
@@ -365,7 +381,8 @@
           "serverUrlTemplate": "{endpoint}/versioning/return-type-changed-from/api-version:{version}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Versioning.ReturnTypeChangedFrom.version"
+          "crossLanguageDefinitionId": "Versioning.ReturnTypeChangedFrom.version",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,

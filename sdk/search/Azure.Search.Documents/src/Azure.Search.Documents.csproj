@@ -21,13 +21,6 @@
     <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 
-  <!-- Define AZURE_SEARCH_PREVIEW when the package version indicates a preview/beta release.
-       This enables preview-only API surface (ServiceVersion enum values, preview operations).
-       When the version has no pre-release suffix (GA), preview code is excluded at compile time. -->
-  <PropertyGroup Condition="$(Version.Contains('beta'))">
-    <DefineConstants>$(DefineConstants);AZURE_SEARCH_PREVIEW</DefineConstants>
-  </PropertyGroup>
-
   <!-- Pull in Shared Source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)AzureEventSource.cs" LinkBase="Shared" />
