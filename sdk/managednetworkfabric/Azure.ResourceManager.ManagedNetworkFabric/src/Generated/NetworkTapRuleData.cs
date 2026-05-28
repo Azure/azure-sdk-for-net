@@ -20,6 +20,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkTapRuleData"/>. </summary>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="configurationType"> Input method to configure Network Tap Rule. </param>
+        public NetworkTapRuleData(AzureLocation location, NetworkFabricConfigurationType configurationType) : base(location)
+        {
+
+            Properties = new NetworkTapRuleProperties(configurationType);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkTapRuleData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -129,6 +138,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     Properties = new NetworkTapRuleProperties();
                 }
                 return Properties.NetworkTapIds;
+            }
+        }
+
+        /// <summary> Polling interval in seconds. </summary>
+        public int? PollingIntervalInSecond
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PollingIntervalInSecond;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkTapRuleProperties();
+                }
+                Properties.PollingIntervalInSecond = value;
             }
         }
 

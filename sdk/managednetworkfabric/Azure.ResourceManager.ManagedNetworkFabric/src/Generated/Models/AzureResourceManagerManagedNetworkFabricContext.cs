@@ -373,6 +373,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     [ModelReaderWriterBuildable(typeof(UpdateAdministrativeStateResponseProperties))]
     [ModelReaderWriterBuildable(typeof(UpdateAdministrativeStateResult))]
     [ModelReaderWriterBuildable(typeof(UpdateDeviceAdministrativeStateContent))]
+    [ModelReaderWriterBuildable(typeof(UpgradeNetworkFabricProperties))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(ValidateConfigurationContent))]
     [ModelReaderWriterBuildable(typeof(ValidateConfigurationResult))]

@@ -5,17 +5,15 @@
 
 using System;
 using System.ComponentModel;
-using System.Globalization;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    // Backward compatibility shim for the TypeSpec migration. The generated constructor now requires
-    // configurationType because the service property is required. Removing this suppression would add a
-    // new public constructor, and removing the custom members would drop shipped flattened properties.
-    [CodeGenSuppress("NetworkTapRuleData", typeof(AzureLocation), typeof(NetworkFabricConfigurationType))]
+    // Backward compatibility shim for the TypeSpec migration. The generated constructor requires
+    // configurationType because the service property is required. This file preserves the shipped
+    // obsolete location-only constructor and flattened properties.
     public partial class NetworkTapRuleData
     {
         /// <summary> Initializes a new instance of <see cref="NetworkTapRuleData"/>. </summary>
@@ -48,19 +46,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public ResourceIdentifier NetworkTapId => Properties?.NetworkTapId is null ? default : new ResourceIdentifier(Properties.NetworkTapId);
 
         /// <summary> Polling interval in seconds. </summary>
-        [CodeGenMember("PollingIntervalInSeconds")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is obsolete and will be removed in a future version. Use PollingIntervalInSecond instead.")]
         public PollingIntervalInSecond? PollingIntervalInSeconds
         {
-            get => Properties?.PollingIntervalInSeconds;
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new NetworkTapRuleProperties();
-                }
-
-                Properties.PollingIntervalInSeconds = value;
-            }
+            get => PollingIntervalInSecond;
+            set => PollingIntervalInSecond = value;
         }
     }
 }

@@ -110,75 +110,75 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         // 3. Without this custom code, only the generated renamed methods with operation-specific result types
         //    would exist, removing the shipped API surface.
 
-        /// <summary> Backward-compatible shim for Deprovision. Use StartDeprovision instead for richer result type. </summary>
+        /// <summary> Backward-compatible shim for Deprovision. Use Deactivate instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use StartDeprovisionAsync instead.")]
+        [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use DeactivateAsync instead.")]
         public virtual async Task<ArmOperation<DeviceUpdateCommonPostActionResult>> DeprovisionAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            ArmOperation<OperationStatusResult> operation = await StartDeprovisionAsync(waitUntil, cancellationToken).ConfigureAwait(false);
+            ArmOperation<OperationStatusResult> operation = await DeactivateAsync(waitUntil, cancellationToken).ConfigureAwait(false);
             return new CompatArmOperation<OperationStatusResult, DeviceUpdateCommonPostActionResult>(operation, r => ToDeviceUpdateResult(r.Error));
         }
 
-        /// <summary> Backward-compatible shim for Deprovision. Use StartDeprovision instead for richer result type. </summary>
+        /// <summary> Backward-compatible shim for Deprovision. Use Deactivate instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use StartDeprovision instead.")]
+        [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use Deactivate instead.")]
         public virtual ArmOperation<DeviceUpdateCommonPostActionResult> Deprovision(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            ArmOperation<OperationStatusResult> operation = StartDeprovision(waitUntil, cancellationToken);
+            ArmOperation<OperationStatusResult> operation = Deactivate(waitUntil, cancellationToken);
             return new CompatArmOperation<OperationStatusResult, DeviceUpdateCommonPostActionResult>(operation, r => ToDeviceUpdateResult(r.Error));
         }
 
-        /// <summary> Backward-compatible shim for Provision. Use StartProvision instead for richer result type. </summary>
+        /// <summary> Backward-compatible shim for Provision. Use Activate instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use StartProvisionAsync instead.")]
+        [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use ActivateAsync instead.")]
         public virtual async Task<ArmOperation<DeviceUpdateCommonPostActionResult>> ProvisionAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            ArmOperation<OperationStatusResult> operation = await StartProvisionAsync(waitUntil, cancellationToken).ConfigureAwait(false);
+            ArmOperation<OperationStatusResult> operation = await ActivateAsync(waitUntil, cancellationToken).ConfigureAwait(false);
             return new CompatArmOperation<OperationStatusResult, DeviceUpdateCommonPostActionResult>(operation, r => ToDeviceUpdateResult(r.Error));
         }
 
-        /// <summary> Backward-compatible shim for Provision. Use StartProvision instead for richer result type. </summary>
+        /// <summary> Backward-compatible shim for Provision. Use Activate instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use StartProvision instead.")]
+        [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use Activate instead.")]
         public virtual ArmOperation<DeviceUpdateCommonPostActionResult> Provision(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            ArmOperation<OperationStatusResult> operation = StartProvision(waitUntil, cancellationToken);
+            ArmOperation<OperationStatusResult> operation = Activate(waitUntil, cancellationToken);
             return new CompatArmOperation<OperationStatusResult, DeviceUpdateCommonPostActionResult>(operation, r => ToDeviceUpdateResult(r.Error));
         }
 
-        /// <summary> Backward-compatible shim for RefreshConfiguration. Use StartRefreshConfiguration instead for richer result type. </summary>
+        /// <summary> Backward-compatible shim for RefreshConfiguration. Use ReloadConfiguration instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use StartRefreshConfigurationAsync instead.")]
+        [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use ReloadConfigurationAsync instead.")]
         public virtual async Task<ArmOperation<StateUpdateCommonPostActionResult>> RefreshConfigurationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            ArmOperation<OperationStatusResult> operation = await StartRefreshConfigurationAsync(waitUntil, cancellationToken).ConfigureAwait(false);
+            ArmOperation<OperationStatusResult> operation = await ReloadConfigurationAsync(waitUntil, cancellationToken).ConfigureAwait(false);
             return new CompatArmOperation<OperationStatusResult, StateUpdateCommonPostActionResult>(operation, r => ToStateUpdateResult(r.Error));
         }
 
-        /// <summary> Backward-compatible shim for RefreshConfiguration. Use StartRefreshConfiguration instead for richer result type. </summary>
+        /// <summary> Backward-compatible shim for RefreshConfiguration. Use ReloadConfiguration instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use StartRefreshConfiguration instead.")]
+        [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use ReloadConfiguration instead.")]
         public virtual ArmOperation<StateUpdateCommonPostActionResult> RefreshConfiguration(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            ArmOperation<OperationStatusResult> operation = StartRefreshConfiguration(waitUntil, cancellationToken);
+            ArmOperation<OperationStatusResult> operation = ReloadConfiguration(waitUntil, cancellationToken);
             return new CompatArmOperation<OperationStatusResult, StateUpdateCommonPostActionResult>(operation, r => ToStateUpdateResult(r.Error));
         }
 
-        /// <summary> Backward-compatible shim for GetTopology. Use GetTopologyDetails instead for richer result type. </summary>
+        /// <summary> Backward-compatible shim for GetTopology. Use RetrieveTopology instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use GetTopologyDetailsAsync instead.")]
+        [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use RetrieveTopologyAsync instead.")]
         public virtual async Task<ArmOperation<ValidateConfigurationResult>> GetTopologyAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            ArmOperation<NetworkFabricTopologyResult> operation = await GetTopologyDetailsAsync(waitUntil, cancellationToken).ConfigureAwait(false);
+            ArmOperation<NetworkFabricTopologyResult> operation = await RetrieveTopologyAsync(waitUntil, cancellationToken).ConfigureAwait(false);
             return new CompatArmOperation<NetworkFabricTopologyResult, ValidateConfigurationResult>(operation, r => ToValidateConfigurationResult(r.Error, r.GetTopologyResponseUri));
         }
 
-        /// <summary> Backward-compatible shim for GetTopology. Use GetTopologyDetails instead for richer result type. </summary>
+        /// <summary> Backward-compatible shim for GetTopology. Use RetrieveTopology instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use GetTopologyDetails instead.")]
+        [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use RetrieveTopology instead.")]
         public virtual ArmOperation<ValidateConfigurationResult> GetTopology(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            ArmOperation<NetworkFabricTopologyResult> operation = GetTopologyDetails(waitUntil, cancellationToken);
+            ArmOperation<NetworkFabricTopologyResult> operation = RetrieveTopology(waitUntil, cancellationToken);
             return new CompatArmOperation<NetworkFabricTopologyResult, ValidateConfigurationResult>(operation, r => ToValidateConfigurationResult(r.Error, r.GetTopologyResponseUri));
         }
 
@@ -218,22 +218,29 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return new CompatArmOperation<UpdateAdministrativeStateResult, StateUpdateCommonPostActionResult>(operation, r => ToStateUpdateResult(r.Error));
         }
 
-        /// <summary> Backward-compatible shim for Upgrade. Use StartUpgrade instead for richer result type. </summary>
+        /// <summary> Backward-compatible shim for Upgrade. Use Upgrade with UpgradeNetworkFabricProperties instead for richer request type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use StartUpgradeAsync instead.")]
+        [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use UpgradeAsync(WaitUntil, UpgradeNetworkFabricProperties, CancellationToken) instead.")]
         public virtual async Task<ArmOperation<StateUpdateCommonPostActionResult>> UpgradeAsync(WaitUntil waitUntil, NetworkFabricUpdateVersionContent content, CancellationToken cancellationToken = default)
         {
-            ArmOperation<OperationStatusResult> operation = await StartUpgradeAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
+            ArmOperation<OperationStatusResult> operation = await UpgradeAsync(waitUntil, ToUpgradeNetworkFabricProperties(content), cancellationToken).ConfigureAwait(false);
             return new CompatArmOperation<OperationStatusResult, StateUpdateCommonPostActionResult>(operation, r => ToStateUpdateResult(r.Error));
         }
 
-        /// <summary> Backward-compatible shim for Upgrade. Use StartUpgrade instead for richer result type. </summary>
+        /// <summary> Backward-compatible shim for Upgrade. Use Upgrade with UpgradeNetworkFabricProperties instead for richer request type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use StartUpgrade instead.")]
+        [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use Upgrade(WaitUntil, UpgradeNetworkFabricProperties, CancellationToken) instead.")]
         public virtual ArmOperation<StateUpdateCommonPostActionResult> Upgrade(WaitUntil waitUntil, NetworkFabricUpdateVersionContent content, CancellationToken cancellationToken = default)
         {
-            ArmOperation<OperationStatusResult> operation = StartUpgrade(waitUntil, content, cancellationToken);
+            ArmOperation<OperationStatusResult> operation = Upgrade(waitUntil, ToUpgradeNetworkFabricProperties(content), cancellationToken);
             return new CompatArmOperation<OperationStatusResult, StateUpdateCommonPostActionResult>(operation, r => ToStateUpdateResult(r.Error));
+        }
+
+        private static UpgradeNetworkFabricProperties ToUpgradeNetworkFabricProperties(NetworkFabricUpdateVersionContent content)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return new UpgradeNetworkFabricProperties(content.Version, additionalBinaryDataProperties: null, action: null);
         }
 
         private static StateUpdateCommonPostActionResult ToStateUpdateResult(ResponseError error)

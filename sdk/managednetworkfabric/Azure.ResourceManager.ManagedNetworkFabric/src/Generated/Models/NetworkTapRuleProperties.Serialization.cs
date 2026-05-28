@@ -137,10 +137,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PollingIntervalInSeconds))
+            if (Optional.IsDefined(PollingIntervalInSecond))
             {
                 writer.WritePropertyName("pollingIntervalInSeconds"u8);
-                writer.WriteNumberValue(PollingIntervalInSeconds.Value.ToSerialInt32());
+                writer.WriteNumberValue(PollingIntervalInSecond.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(LastSyncedOn))
             {
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = default;
             string networkTapId = default;
             IReadOnlyList<ResourceIdentifier> networkTapIds = default;
-            PollingIntervalInSecond? pollingIntervalInSeconds = default;
+            int? pollingIntervalInSecond = default;
             DateTimeOffset? lastSyncedOn = default;
             GlobalNetworkTapRuleActionProperties globalNetworkTapRuleActions = default;
             LastOperationProperties lastOperation = default;
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    pollingIntervalInSeconds = new PollingIntervalInSecond(prop.Value.GetInt32());
+                    pollingIntervalInSecond = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("lastSyncedTime"u8))
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 dynamicMatchConfigurations ?? new ChangeTrackingList<CommonDynamicMatchConfiguration>(),
                 networkTapId,
                 networkTapIds ?? new ChangeTrackingList<ResourceIdentifier>(),
-                pollingIntervalInSeconds,
+                pollingIntervalInSecond,
                 lastSyncedOn,
                 globalNetworkTapRuleActions,
                 lastOperation,
