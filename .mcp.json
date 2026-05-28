@@ -1,4 +1,5 @@
 {
+  "_comment": "Single source of truth for MCP server configuration. Read by both Copilot CLI (workspace .mcp.json) and VS Code 1.102+ via chat.mcp.discovery.enabled. Do not also add .vscode/mcp.json — it causes drift.",
   "mcpServers": {
     "azure-sdk-mcp": {
       "type": "stdio",
