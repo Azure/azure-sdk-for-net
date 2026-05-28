@@ -101,5 +101,30 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 throw;
             }
         }
+
+        // 1. The service API version changed the action operation response model from the shipped
+        //    DeviceUpdateCommonPostActionResult to an operation-specific result model.
+        // 2. We keep obsolete overloads with the shipped Update* method name and return type, delegating
+        //    to the generated Set* methods and adapting their operation values back to the old result type.
+        // 3. Without this custom code, only the generated Set* methods with operation-specific result types
+        //    would exist, removing the shipped Update* API surface.
+
+        /// <summary> Backward-compatible shim for UpdateAdministrativeState. Use SetAdministrativeState instead for richer result type. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use SetAdministrativeStateAsync instead.")]
+        public virtual async Task<ArmOperation<DeviceUpdateCommonPostActionResult>> UpdateAdministrativeStateAsync(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
+        {
+            ArmOperation<UpdateAdministrativeStateResult> operation = await SetAdministrativeStateAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
+            return new CompatArmOperation<UpdateAdministrativeStateResult, DeviceUpdateCommonPostActionResult>(operation, r => CompatArmOperationConversions.ToDeviceUpdateResult(r.Error));
+        }
+
+        /// <summary> Backward-compatible shim for UpdateAdministrativeState. Use SetAdministrativeState instead for richer result type. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use SetAdministrativeState instead.")]
+        public virtual ArmOperation<DeviceUpdateCommonPostActionResult> UpdateAdministrativeState(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
+        {
+            ArmOperation<UpdateAdministrativeStateResult> operation = SetAdministrativeState(waitUntil, content, cancellationToken);
+            return new CompatArmOperation<UpdateAdministrativeStateResult, DeviceUpdateCommonPostActionResult>(operation, r => CompatArmOperationConversions.ToDeviceUpdateResult(r.Error));
+        }
     }
 }

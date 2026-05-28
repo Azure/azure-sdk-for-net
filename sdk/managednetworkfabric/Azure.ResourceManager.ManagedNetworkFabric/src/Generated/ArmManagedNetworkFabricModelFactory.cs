@@ -736,20 +736,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkFabricManagedServiceIdentityPatch(identityType, userAssignedIdentities, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Common response for device updates. </summary>
-        /// <param name="error"> The error object. </param>
-        /// <param name="configurationState"> Gets the configuration state. </param>
-        /// <param name="successfulDevices"> List of ARM Resource IDs for which the given action applied successfully. </param>
-        /// <param name="failedDevices"> List of ARM Resource IDs for which the given action failed to apply. </param>
-        /// <returns> A new <see cref="Models.DeviceUpdateCommonPostActionResult"/> instance for mocking. </returns>
-        public static DeviceUpdateCommonPostActionResult DeviceUpdateCommonPostActionResult(ResponseError error = default, NetworkFabricConfigurationState? configurationState = default, IEnumerable<string> successfulDevices = default, IEnumerable<string> failedDevices = default)
-        {
-            successfulDevices ??= new ChangeTrackingList<string>();
-            failedDevices ??= new ChangeTrackingList<string>();
-
-            return new DeviceUpdateCommonPostActionResult(error, additionalBinaryDataProperties: null, configurationState, successfulDevices.ToList(), failedDevices.ToList());
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1054,6 +1040,45 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             nextHop ??= new ChangeTrackingList<string>();
 
             return new StaticRouteProperties(prefix, nextHop.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified ID for the async operation. </param>
+        /// <param name="name"> Name of the async operation. </param>
+        /// <param name="status"> Operation status. </param>
+        /// <param name="percentComplete"> Percent of the operation that is complete. </param>
+        /// <param name="startOn"> The start time of the operation. </param>
+        /// <param name="endOn"> The end time of the operation. </param>
+        /// <param name="operations"> The operations list. </param>
+        /// <param name="error"> If present, details of the operation error. </param>
+        /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
+        /// <param name="neighborAddressAdministrativeStatus"> NeighborAddress administrative status. </param>
+        /// <returns> A new <see cref="Models.InternalNetworkUpdateBgpAdministrativeStateResult"/> instance for mocking. </returns>
+        public static InternalNetworkUpdateBgpAdministrativeStateResult InternalNetworkUpdateBgpAdministrativeStateResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<OperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default, IEnumerable<NeighborAddressBgpAdministrativeStatus> neighborAddressAdministrativeStatus = default)
+        {
+            operations ??= new ChangeTrackingList<OperationStatusResult>();
+
+            return new InternalNetworkUpdateBgpAdministrativeStateResult(
+                id,
+                name,
+                status,
+                percentComplete,
+                startOn,
+                endOn,
+                operations.ToList(),
+                error,
+                resourceId,
+                neighborAddressAdministrativeStatus is null ? default : new InternalNetworkUpdateBgpAdministrativeStateResponseProperties((neighborAddressAdministrativeStatus ?? new ChangeTrackingList<NeighborAddressBgpAdministrativeStatus>()).ToList(), null),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Neighbor Address BGP Administrative Status. </summary>
+        /// <param name="neighborAddress"> NeighborAddress - Input should be either All or Specific Ipv4 Address or Specific Ipv6 Address. </param>
+        /// <param name="administrativeState"> BGP Administrative state. </param>
+        /// <param name="error"> Error message. </param>
+        /// <returns> A new <see cref="Models.NeighborAddressBgpAdministrativeStatus"/> instance for mocking. </returns>
+        public static NeighborAddressBgpAdministrativeStatus NeighborAddressBgpAdministrativeStatus(string neighborAddress = default, BgpAdministrativeState? administrativeState = default, string error = default)
+        {
+            return new NeighborAddressBgpAdministrativeStatus(neighborAddress, administrativeState, error, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified ID for the async operation. </param>
@@ -1591,6 +1616,34 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkDevicePatchContent(tags, additionalBinaryDataProperties: null, annotation is null && hostName is null && serialNumber is null && identitySelector is null ? default : new NetworkDevicePatchParametersProperties(annotation, hostName, serialNumber, identitySelector, null), identity);
         }
 
+        /// <summary> The current status of an refresh configuration async operation. </summary>
+        /// <param name="id"> Fully qualified ID for the async operation. </param>
+        /// <param name="name"> Name of the async operation. </param>
+        /// <param name="status"> Operation status. </param>
+        /// <param name="percentComplete"> Percent of the operation that is complete. </param>
+        /// <param name="startOn"> The start time of the operation. </param>
+        /// <param name="endOn"> The end time of the operation. </param>
+        /// <param name="operations"> The operations list. </param>
+        /// <param name="error"> If present, details of the operation error. </param>
+        /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
+        /// <returns> A new <see cref="Models.NetworkDeviceRefreshConfigurationResult"/> instance for mocking. </returns>
+        public static NetworkDeviceRefreshConfigurationResult NetworkDeviceRefreshConfigurationResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<OperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default)
+        {
+            operations ??= new ChangeTrackingList<OperationStatusResult>();
+
+            return new NetworkDeviceRefreshConfigurationResult(
+                id,
+                name,
+                status,
+                percentComplete,
+                startOn,
+                endOn,
+                operations.ToList(),
+                error,
+                resourceId,
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Update the administrative state on list of resources. </summary>
         /// <param name="resourceIds"> Network Fabrics or Network Rack resource Id. </param>
         /// <param name="state"> Administrative state. </param>
@@ -1600,6 +1653,62 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             resourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
             return new UpdateDeviceAdministrativeStateContent(resourceIds.ToList(), additionalBinaryDataProperties: null, state);
+        }
+
+        /// <summary> Network Device Administrative State Update Response. </summary>
+        /// <param name="id"> Fully qualified ID for the async operation. </param>
+        /// <param name="name"> Name of the async operation. </param>
+        /// <param name="status"> Operation status. </param>
+        /// <param name="percentComplete"> Percent of the operation that is complete. </param>
+        /// <param name="startOn"> The start time of the operation. </param>
+        /// <param name="endOn"> The end time of the operation. </param>
+        /// <param name="operations"> The operations list. </param>
+        /// <param name="error"> If present, details of the operation error. </param>
+        /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
+        /// <returns> A new <see cref="Models.NetworkDeviceUpdateAdministrativeStateResult"/> instance for mocking. </returns>
+        public static NetworkDeviceUpdateAdministrativeStateResult NetworkDeviceUpdateAdministrativeStateResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<OperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default)
+        {
+            operations ??= new ChangeTrackingList<OperationStatusResult>();
+
+            return new NetworkDeviceUpdateAdministrativeStateResult(
+                id,
+                name,
+                status,
+                percentComplete,
+                startOn,
+                endOn,
+                operations.ToList(),
+                error,
+                resourceId,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Network Device Upgrade Response. </summary>
+        /// <param name="id"> Fully qualified ID for the async operation. </param>
+        /// <param name="name"> Name of the async operation. </param>
+        /// <param name="status"> Operation status. </param>
+        /// <param name="percentComplete"> Percent of the operation that is complete. </param>
+        /// <param name="startOn"> The start time of the operation. </param>
+        /// <param name="endOn"> The end time of the operation. </param>
+        /// <param name="operations"> The operations list. </param>
+        /// <param name="error"> If present, details of the operation error. </param>
+        /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
+        /// <returns> A new <see cref="Models.NetworkDeviceUpgradeResult"/> instance for mocking. </returns>
+        public static NetworkDeviceUpgradeResult NetworkDeviceUpgradeResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<OperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default)
+        {
+            operations ??= new ChangeTrackingList<OperationStatusResult>();
+
+            return new NetworkDeviceUpgradeResult(
+                id,
+                name,
+                status,
+                percentComplete,
+                startOn,
+                endOn,
+                operations.ToList(),
+                error,
+                resourceId,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> The current status of an async operation. </summary>
@@ -1876,6 +1985,35 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 (featureFlags ?? new ChangeTrackingList<NetworkFabricFeatureFlag>()).ToList(),
                 authorizedTransceiver,
                 null), identity);
+        }
+
+        /// <param name="id"> Fully qualified ID for the async operation. </param>
+        /// <param name="name"> Name of the async operation. </param>
+        /// <param name="status"> Operation status. </param>
+        /// <param name="percentComplete"> Percent of the operation that is complete. </param>
+        /// <param name="startOn"> The start time of the operation. </param>
+        /// <param name="endOn"> The end time of the operation. </param>
+        /// <param name="operations"> The operations list. </param>
+        /// <param name="error"> If present, details of the operation error. </param>
+        /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
+        /// <param name="getTopologyResponseUri"> Topology JSON string. </param>
+        /// <returns> A new <see cref="Models.NetworkFabricTopologyResult"/> instance for mocking. </returns>
+        public static NetworkFabricTopologyResult NetworkFabricTopologyResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<OperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default, Uri getTopologyResponseUri = default)
+        {
+            operations ??= new ChangeTrackingList<OperationStatusResult>();
+
+            return new NetworkFabricTopologyResult(
+                id,
+                name,
+                status,
+                percentComplete,
+                startOn,
+                endOn,
+                operations.ToList(),
+                error,
+                resourceId,
+                getTopologyResponseUri is null ? default : new GetTopologyResponseProperties(getTopologyResponseUri, null),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Commit Batch Status Response. </summary>
@@ -2450,6 +2588,34 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 null), identity);
         }
 
+        /// <summary> Response for Network Tap Rule resync operation. </summary>
+        /// <param name="id"> Fully qualified ID for the async operation. </param>
+        /// <param name="name"> Name of the async operation. </param>
+        /// <param name="status"> Operation status. </param>
+        /// <param name="percentComplete"> Percent of the operation that is complete. </param>
+        /// <param name="startOn"> The start time of the operation. </param>
+        /// <param name="endOn"> The end time of the operation. </param>
+        /// <param name="operations"> The operations list. </param>
+        /// <param name="error"> If present, details of the operation error. </param>
+        /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
+        /// <returns> A new <see cref="Models.NetworkTapRuleResyncResult"/> instance for mocking. </returns>
+        public static NetworkTapRuleResyncResult NetworkTapRuleResyncResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<OperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default)
+        {
+            operations ??= new ChangeTrackingList<OperationStatusResult>();
+
+            return new NetworkTapRuleResyncResult(
+                id,
+                name,
+                status,
+                percentComplete,
+                startOn,
+                endOn,
+                operations.ToList(),
+                error,
+                resourceId,
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Isolation Domain Properties. </summary>
         /// <param name="encapsulation"> Type of encapsulation. </param>
         /// <param name="neighborGroupIds"> List of Neighbor Group IDs. </param>
@@ -2459,6 +2625,34 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             neighborGroupIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
             return new IsolationDomainProperties(encapsulation, neighborGroupIds.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Response for NetworkTap Resync operation. </summary>
+        /// <param name="id"> Fully qualified ID for the async operation. </param>
+        /// <param name="name"> Name of the async operation. </param>
+        /// <param name="status"> Operation status. </param>
+        /// <param name="percentComplete"> Percent of the operation that is complete. </param>
+        /// <param name="startOn"> The start time of the operation. </param>
+        /// <param name="endOn"> The end time of the operation. </param>
+        /// <param name="operations"> The operations list. </param>
+        /// <param name="error"> If present, details of the operation error. </param>
+        /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
+        /// <returns> A new <see cref="Models.NetworkTapResyncResult"/> instance for mocking. </returns>
+        public static NetworkTapResyncResult NetworkTapResyncResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<OperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default)
+        {
+            operations ??= new ChangeTrackingList<OperationStatusResult>();
+
+            return new NetworkTapResyncResult(
+                id,
+                name,
+                status,
+                percentComplete,
+                startOn,
+                endOn,
+                operations.ToList(),
+                error,
+                resourceId,
+                additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -2623,6 +2817,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 exportPolicies is null ? default : new BmpExportPolicyPatchProperties((exportPolicies ?? new ChangeTrackingList<BmpExportPolicy>()).ToList(), null),
                 monitoredAddressFamilies.ToList(),
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Common response for device updates. </summary>
+        /// <param name="error"> The error object. </param>
+        /// <param name="configurationState"> Gets the configuration state. </param>
+        /// <param name="successfulDevices"> List of ARM Resource IDs for which the given action applied successfully. </param>
+        /// <param name="failedDevices"> List of ARM Resource IDs for which the given action failed to apply. </param>
+        /// <returns> A new <see cref="Models.DeviceUpdateCommonPostActionResult"/> instance for mocking. </returns>
+        public static DeviceUpdateCommonPostActionResult DeviceUpdateCommonPostActionResult(ResponseError error = default, NetworkFabricConfigurationState? configurationState = default, IEnumerable<string> successfulDevices = default, IEnumerable<string> failedDevices = default)
+        {
+            successfulDevices ??= new ChangeTrackingList<string>();
+            failedDevices ??= new ChangeTrackingList<string>();
+
+            return new DeviceUpdateCommonPostActionResult(error, additionalBinaryDataProperties: null, configurationState, successfulDevices.ToList(), failedDevices.ToList());
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

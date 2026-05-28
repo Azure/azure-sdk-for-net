@@ -101,5 +101,30 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 throw;
             }
         }
+
+        // 1. The service API version changed the action operation response model from the shipped
+        //    StateUpdateCommonPostActionResult to an operation-specific result model.
+        // 2. We keep obsolete overloads with the shipped Resync method name and return type, delegating
+        //    to the generated StartResync methods and adapting their operation values back to the old result type.
+        // 3. Without this custom code, only the generated StartResync methods with operation-specific result types
+        //    would exist, removing the shipped Resync API surface.
+
+        /// <summary> Backward-compatible shim for Resync. Use StartResync instead for richer result type. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use StartResyncAsync instead.")]
+        public virtual async Task<ArmOperation<StateUpdateCommonPostActionResult>> ResyncAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            ArmOperation<NetworkTapRuleResyncResult> operation = await StartResyncAsync(waitUntil, cancellationToken).ConfigureAwait(false);
+            return new CompatArmOperation<NetworkTapRuleResyncResult, StateUpdateCommonPostActionResult>(operation, r => CompatArmOperationConversions.ToStateUpdateResult(r.Error));
+        }
+
+        /// <summary> Backward-compatible shim for Resync. Use StartResync instead for richer result type. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use StartResync instead.")]
+        public virtual ArmOperation<StateUpdateCommonPostActionResult> Resync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            ArmOperation<NetworkTapRuleResyncResult> operation = StartResync(waitUntil, cancellationToken);
+            return new CompatArmOperation<NetworkTapRuleResyncResult, StateUpdateCommonPostActionResult>(operation, r => CompatArmOperationConversions.ToStateUpdateResult(r.Error));
+        }
     }
 }
