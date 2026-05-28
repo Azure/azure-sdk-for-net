@@ -29,16 +29,14 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         }
       ],
       "namespace": "Versioning.RenamedFrom",
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,Output,Json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "4",
@@ -65,8 +63,7 @@
             "$ref": "4"
           },
           "doc": "The version v1.",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         },
         {
           "$id": "7",
@@ -80,8 +77,7 @@
             "$ref": "4"
           },
           "doc": "The version v2.",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         }
       ],
       "namespace": "Versioning.RenamedFrom",
@@ -89,15 +85,14 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,ApiVersionEnum",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     }
   ],
   "constants": [
     {
       "$id": "8",
       "kind": "constant",
-      "name": "NewOpContentType",
+      "name": "newOpContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -108,13 +103,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "10",
       "kind": "constant",
-      "name": "NewOpContentType1",
+      "name": "newOpContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -125,13 +119,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "12",
       "kind": "constant",
-      "name": "NewOpContentType2",
+      "name": "newOpInNewInterfaceContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -142,13 +135,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "14",
       "kind": "constant",
-      "name": "NewOpContentType3",
+      "name": "newOpInNewInterfaceContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -159,8 +151,7 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     }
   ],
   "models": [
@@ -177,7 +168,6 @@
           "name": "NewModel"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "17",
@@ -202,8 +192,7 @@
               "name": "newProp"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "19",
@@ -224,8 +213,7 @@
               "name": "enumProp"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "20",
@@ -260,8 +248,7 @@
               }
             ],
             "namespace": "Versioning.RenamedFrom",
-            "decorators": [],
-            "isExactName": false
+            "decorators": []
           },
           "optional": false,
           "readOnly": false,
@@ -274,8 +261,7 @@
               "name": "unionProp"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     }
@@ -285,7 +271,6 @@
       "$id": "25",
       "kind": "client",
       "name": "RenamedFromClient",
-      "isExactName": false,
       "namespace": "Versioning.RenamedFrom",
       "doc": "Test for the `@renamedFrom` decorator.",
       "methods": [
@@ -293,7 +278,6 @@
           "$id": "26",
           "kind": "basic",
           "name": "newOp",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [
             "v1",
@@ -302,7 +286,6 @@
           "operation": {
             "$id": "27",
             "name": "newOp",
-            "isExactName": false,
             "resourceName": "RenamedFrom",
             "accessibility": "public",
             "parameters": [
@@ -345,11 +328,9 @@
                     "crossLanguageDefinitionId": "Versioning.RenamedFrom.newOp.newQuery",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "32",
@@ -384,11 +365,9 @@
                     "crossLanguageDefinitionId": "Versioning.RenamedFrom.newOp.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "34",
@@ -421,11 +400,9 @@
                     "crossLanguageDefinitionId": "Versioning.RenamedFrom.newOp.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "36",
@@ -461,16 +438,9 @@
                     "crossLanguageDefinitionId": "Versioning.RenamedFrom.newOp.body",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false,
-                "serializationOptions": {
-                  "json": {
-                    "name": "body"
-                  }
-                }
+                ]
               }
             ],
             "responses": [
@@ -485,12 +455,7 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ],
-                "serializationOptions": {
-                  "json": {
-                    "name": ""
-                  }
-                }
+                ]
               }
             ],
             "httpMethod": "POST",
@@ -551,8 +516,7 @@
           "serverUrlTemplate": "{endpoint}/versioning/renamed-from/api-version:{version}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Versioning.RenamedFrom.endpoint",
-          "isExactName": false
+          "crossLanguageDefinitionId": "Versioning.RenamedFrom.endpoint"
         },
         {
           "$id": "40",
@@ -579,8 +543,7 @@
           "serverUrlTemplate": "{endpoint}/versioning/renamed-from/api-version:{version}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Versioning.RenamedFrom.version",
-          "isExactName": false
+          "crossLanguageDefinitionId": "Versioning.RenamedFrom.version"
         }
       ],
       "initializedBy": 1,
@@ -595,14 +558,12 @@
           "$id": "42",
           "kind": "client",
           "name": "NewInterface",
-          "isExactName": false,
           "namespace": "Versioning.RenamedFrom",
           "methods": [
             {
               "$id": "43",
               "kind": "basic",
               "name": "newOpInNewInterface",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [
                 "v1",
@@ -611,7 +572,6 @@
               "operation": {
                 "$id": "44",
                 "name": "newOpInNewInterface",
-                "isExactName": false,
                 "resourceName": "NewInterface",
                 "accessibility": "public",
                 "parameters": [
@@ -648,11 +608,9 @@
                         "crossLanguageDefinitionId": "Versioning.RenamedFrom.NewInterface.newOpInNewInterface.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "47",
@@ -685,11 +643,9 @@
                         "crossLanguageDefinitionId": "Versioning.RenamedFrom.NewInterface.newOpInNewInterface.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "49",
@@ -725,16 +681,9 @@
                         "crossLanguageDefinitionId": "Versioning.RenamedFrom.NewInterface.newOpInNewInterface.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -749,12 +698,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "POST",
@@ -812,8 +756,7 @@
               "serverUrlTemplate": "{endpoint}/versioning/renamed-from/api-version:{version}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Versioning.RenamedFrom.NewInterface.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Versioning.RenamedFrom.NewInterface.endpoint"
             },
             {
               "$id": "53",
@@ -840,8 +783,7 @@
               "serverUrlTemplate": "{endpoint}/versioning/renamed-from/api-version:{version}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Versioning.RenamedFrom.NewInterface.version",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Versioning.RenamedFrom.NewInterface.version"
             }
           ],
           "initializedBy": 0,

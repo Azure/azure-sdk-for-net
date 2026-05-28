@@ -30,8 +30,7 @@
             "$ref": "1"
           },
           "doc": "The version v1.",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         },
         {
           "$id": "4",
@@ -45,8 +44,7 @@
             "$ref": "1"
           },
           "doc": "The version v2.",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         }
       ],
       "namespace": "Versioning.MadeOptional",
@@ -54,15 +52,14 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,ApiVersionEnum",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     }
   ],
   "constants": [
     {
       "$id": "5",
       "kind": "constant",
-      "name": "TestContentType",
+      "name": "testContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -73,13 +70,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "7",
       "kind": "constant",
-      "name": "TestContentType1",
+      "name": "testContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -90,8 +86,7 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     }
   ],
   "models": [
@@ -108,7 +103,6 @@
           "name": "TestModel"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "10",
@@ -133,8 +127,7 @@
               "name": "prop"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "12",
@@ -159,8 +152,7 @@
               "name": "changedProp"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     }
@@ -170,7 +162,6 @@
       "$id": "14",
       "kind": "client",
       "name": "MadeOptionalClient",
-      "isExactName": false,
       "namespace": "Versioning.MadeOptional",
       "doc": "Test for the `@madeOptional` decorator.",
       "methods": [
@@ -178,7 +169,6 @@
           "$id": "15",
           "kind": "basic",
           "name": "test",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [
             "v1",
@@ -187,7 +177,6 @@
           "operation": {
             "$id": "16",
             "name": "test",
-            "isExactName": false,
             "resourceName": "MadeOptional",
             "accessibility": "public",
             "parameters": [
@@ -230,11 +219,9 @@
                     "crossLanguageDefinitionId": "Versioning.MadeOptional.test.param",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "21",
@@ -269,11 +256,9 @@
                     "crossLanguageDefinitionId": "Versioning.MadeOptional.test.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "23",
@@ -306,11 +291,9 @@
                     "crossLanguageDefinitionId": "Versioning.MadeOptional.test.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "25",
@@ -346,16 +329,9 @@
                     "crossLanguageDefinitionId": "Versioning.MadeOptional.test.body",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false,
-                "serializationOptions": {
-                  "json": {
-                    "name": "body"
-                  }
-                }
+                ]
               }
             ],
             "responses": [
@@ -370,12 +346,7 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ],
-                "serializationOptions": {
-                  "json": {
-                    "name": ""
-                  }
-                }
+                ]
               }
             ],
             "httpMethod": "POST",
@@ -436,8 +407,7 @@
           "serverUrlTemplate": "{endpoint}/versioning/made-optional/api-version:{version}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Versioning.MadeOptional.endpoint",
-          "isExactName": false
+          "crossLanguageDefinitionId": "Versioning.MadeOptional.endpoint"
         },
         {
           "$id": "29",
@@ -464,8 +434,7 @@
           "serverUrlTemplate": "{endpoint}/versioning/made-optional/api-version:{version}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Versioning.MadeOptional.version",
-          "isExactName": false
+          "crossLanguageDefinitionId": "Versioning.MadeOptional.version"
         }
       ],
       "initializedBy": 1,

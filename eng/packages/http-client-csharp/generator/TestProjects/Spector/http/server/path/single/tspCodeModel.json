@@ -9,7 +9,6 @@
       "$id": "1",
       "kind": "client",
       "name": "SingleClient",
-      "isExactName": false,
       "namespace": "Server.Path.Single",
       "doc": "Illustrates server with a single path parameter @server",
       "methods": [
@@ -17,13 +16,11 @@
           "$id": "2",
           "kind": "basic",
           "name": "myOp",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "3",
             "name": "myOp",
-            "isExactName": false,
             "resourceName": "Single",
             "accessibility": "public",
             "parameters": [],
@@ -33,8 +30,7 @@
                   200
                 ],
                 "headers": [],
-                "isErrorResponse": false,
-                "serializationOptions": {}
+                "isErrorResponse": false
               }
             ],
             "httpMethod": "HEAD",
@@ -75,8 +71,7 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Server.Path.Single.endpoint",
-          "isExactName": false
+          "crossLanguageDefinitionId": "Server.Path.Single.endpoint"
         }
       ],
       "initializedBy": 1,

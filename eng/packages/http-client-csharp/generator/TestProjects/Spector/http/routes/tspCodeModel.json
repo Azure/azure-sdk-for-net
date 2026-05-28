@@ -9,7 +9,6 @@
       "$id": "1",
       "kind": "client",
       "name": "RoutesClient",
-      "isExactName": false,
       "namespace": "Routes",
       "doc": "Define scenario in building the http route/uri",
       "methods": [
@@ -17,13 +16,11 @@
           "$id": "2",
           "kind": "basic",
           "name": "fixed",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "3",
             "name": "fixed",
-            "isExactName": false,
             "resourceName": "Routes",
             "accessibility": "public",
             "parameters": [],
@@ -33,8 +30,7 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false,
-                "serializationOptions": {}
+                "isErrorResponse": false
               }
             ],
             "httpMethod": "GET",
@@ -84,8 +80,7 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Routes.endpoint",
-          "isExactName": false
+          "crossLanguageDefinitionId": "Routes.endpoint"
         }
       ],
       "initializedBy": 1,
@@ -97,20 +92,17 @@
           "$id": "7",
           "kind": "client",
           "name": "PathParameters",
-          "isExactName": false,
           "namespace": "Routes.PathParameters",
           "methods": [
             {
               "$id": "8",
               "kind": "basic",
               "name": "templateOnly",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "9",
                 "name": "templateOnly",
-                "isExactName": false,
                 "resourceName": "PathParameters",
                 "accessibility": "public",
                 "parameters": [
@@ -156,11 +148,9 @@
                         "crossLanguageDefinitionId": "Routes.PathParameters.templateOnly.param",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -169,8 +159,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "GET",
@@ -198,13 +187,11 @@
               "$id": "14",
               "kind": "basic",
               "name": "explicit",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "15",
                 "name": "explicit",
-                "isExactName": false,
                 "resourceName": "PathParameters",
                 "accessibility": "public",
                 "parameters": [
@@ -250,11 +237,9 @@
                         "crossLanguageDefinitionId": "Routes.PathParameters.explicit.param",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -263,8 +248,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "GET",
@@ -292,13 +276,11 @@
               "$id": "20",
               "kind": "basic",
               "name": "annotationOnly",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "21",
                 "name": "annotationOnly",
-                "isExactName": false,
                 "resourceName": "PathParameters",
                 "accessibility": "public",
                 "parameters": [
@@ -344,11 +326,9 @@
                         "crossLanguageDefinitionId": "Routes.PathParameters.annotationOnly.param",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -357,8 +337,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "GET",
@@ -412,8 +391,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Routes.PathParameters.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Routes.PathParameters.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -428,20 +406,17 @@
               "$id": "29",
               "kind": "client",
               "name": "ReservedExpansion",
-              "isExactName": false,
               "namespace": "Routes.PathParameters.ReservedExpansion",
               "methods": [
                 {
                   "$id": "30",
                   "kind": "basic",
                   "name": "template",
-                  "isExactName": false,
                   "accessibility": "public",
                   "apiVersions": [],
                   "operation": {
                     "$id": "31",
                     "name": "template",
-                    "isExactName": false,
                     "resourceName": "ReservedExpansion",
                     "accessibility": "public",
                     "parameters": [
@@ -487,11 +462,9 @@
                             "crossLanguageDefinitionId": "Routes.PathParameters.ReservedExpansion.template.param",
                             "readOnly": false,
                             "access": "public",
-                            "decorators": [],
-                            "isExactName": false
+                            "decorators": []
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
                     ],
                     "responses": [
@@ -500,8 +473,7 @@
                           204
                         ],
                         "headers": [],
-                        "isErrorResponse": false,
-                        "serializationOptions": {}
+                        "isErrorResponse": false
                       }
                     ],
                     "httpMethod": "GET",
@@ -529,13 +501,11 @@
                   "$id": "36",
                   "kind": "basic",
                   "name": "annotation",
-                  "isExactName": false,
                   "accessibility": "public",
                   "apiVersions": [],
                   "operation": {
                     "$id": "37",
                     "name": "annotation",
-                    "isExactName": false,
                     "resourceName": "ReservedExpansion",
                     "accessibility": "public",
                     "parameters": [
@@ -581,11 +551,9 @@
                             "crossLanguageDefinitionId": "Routes.PathParameters.ReservedExpansion.annotation.param",
                             "readOnly": false,
                             "access": "public",
-                            "decorators": [],
-                            "isExactName": false
+                            "decorators": []
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
                     ],
                     "responses": [
@@ -594,8 +562,7 @@
                           204
                         ],
                         "headers": [],
-                        "isErrorResponse": false,
-                        "serializationOptions": {}
+                        "isErrorResponse": false
                       }
                     ],
                     "httpMethod": "GET",
@@ -649,8 +616,7 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Routes.PathParameters.ReservedExpansion.endpoint",
-                  "isExactName": false
+                  "crossLanguageDefinitionId": "Routes.PathParameters.ReservedExpansion.endpoint"
                 }
               ],
               "initializedBy": 0,
@@ -666,7 +632,6 @@
               "$id": "45",
               "kind": "client",
               "name": "SimpleExpansion",
-              "isExactName": false,
               "namespace": "Routes.PathParameters.SimpleExpansion",
               "methods": [],
               "parameters": [
@@ -698,8 +663,7 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Routes.PathParameters.SimpleExpansion.endpoint",
-                  "isExactName": false
+                  "crossLanguageDefinitionId": "Routes.PathParameters.SimpleExpansion.endpoint"
                 }
               ],
               "initializedBy": 0,
@@ -714,20 +678,17 @@
                   "$id": "49",
                   "kind": "client",
                   "name": "Standard",
-                  "isExactName": false,
                   "namespace": "Routes.PathParameters.SimpleExpansion.Standard",
                   "methods": [
                     {
                       "$id": "50",
                       "kind": "basic",
                       "name": "primitive",
-                      "isExactName": false,
                       "accessibility": "public",
                       "apiVersions": [],
                       "operation": {
                         "$id": "51",
                         "name": "primitive",
-                        "isExactName": false,
                         "resourceName": "Standard",
                         "accessibility": "public",
                         "parameters": [
@@ -773,11 +734,9 @@
                                 "crossLanguageDefinitionId": "Routes.PathParameters.SimpleExpansion.Standard.primitive.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": [],
-                                "isExactName": false
+                                "decorators": []
                               }
-                            ],
-                            "isExactName": false
+                            ]
                           }
                         ],
                         "responses": [
@@ -786,8 +745,7 @@
                               204
                             ],
                             "headers": [],
-                            "isErrorResponse": false,
-                            "serializationOptions": {}
+                            "isErrorResponse": false
                           }
                         ],
                         "httpMethod": "GET",
@@ -815,13 +773,11 @@
                       "$id": "56",
                       "kind": "basic",
                       "name": "array",
-                      "isExactName": false,
                       "accessibility": "public",
                       "apiVersions": [],
                       "operation": {
                         "$id": "57",
                         "name": "array",
-                        "isExactName": false,
                         "resourceName": "Standard",
                         "accessibility": "public",
                         "parameters": [
@@ -870,11 +826,9 @@
                                 "crossLanguageDefinitionId": "Routes.PathParameters.SimpleExpansion.Standard.array.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": [],
-                                "isExactName": false
+                                "decorators": []
                               }
-                            ],
-                            "isExactName": false
+                            ]
                           }
                         ],
                         "responses": [
@@ -883,8 +837,7 @@
                               204
                             ],
                             "headers": [],
-                            "isErrorResponse": false,
-                            "serializationOptions": {}
+                            "isErrorResponse": false
                           }
                         ],
                         "httpMethod": "GET",
@@ -912,13 +865,11 @@
                       "$id": "62",
                       "kind": "basic",
                       "name": "record",
-                      "isExactName": false,
                       "accessibility": "public",
                       "apiVersions": [],
                       "operation": {
                         "$id": "63",
                         "name": "record",
-                        "isExactName": false,
                         "resourceName": "Standard",
                         "accessibility": "public",
                         "parameters": [
@@ -972,11 +923,9 @@
                                 "crossLanguageDefinitionId": "Routes.PathParameters.SimpleExpansion.Standard.record.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": [],
-                                "isExactName": false
+                                "decorators": []
                               }
-                            ],
-                            "isExactName": false
+                            ]
                           }
                         ],
                         "responses": [
@@ -985,8 +934,7 @@
                               204
                             ],
                             "headers": [],
-                            "isErrorResponse": false,
-                            "serializationOptions": {}
+                            "isErrorResponse": false
                           }
                         ],
                         "httpMethod": "GET",
@@ -1040,8 +988,7 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.PathParameters.SimpleExpansion.Standard.endpoint",
-                      "isExactName": false
+                      "crossLanguageDefinitionId": "Routes.PathParameters.SimpleExpansion.Standard.endpoint"
                     }
                   ],
                   "initializedBy": 0,
@@ -1057,20 +1004,17 @@
                   "$id": "72",
                   "kind": "client",
                   "name": "Explode",
-                  "isExactName": false,
                   "namespace": "Routes.PathParameters.SimpleExpansion.Explode",
                   "methods": [
                     {
                       "$id": "73",
                       "kind": "basic",
                       "name": "primitive",
-                      "isExactName": false,
                       "accessibility": "public",
                       "apiVersions": [],
                       "operation": {
                         "$id": "74",
                         "name": "primitive",
-                        "isExactName": false,
                         "resourceName": "Explode",
                         "accessibility": "public",
                         "parameters": [
@@ -1116,11 +1060,9 @@
                                 "crossLanguageDefinitionId": "Routes.PathParameters.SimpleExpansion.Explode.primitive.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": [],
-                                "isExactName": false
+                                "decorators": []
                               }
-                            ],
-                            "isExactName": false
+                            ]
                           }
                         ],
                         "responses": [
@@ -1129,8 +1071,7 @@
                               204
                             ],
                             "headers": [],
-                            "isErrorResponse": false,
-                            "serializationOptions": {}
+                            "isErrorResponse": false
                           }
                         ],
                         "httpMethod": "GET",
@@ -1158,13 +1099,11 @@
                       "$id": "79",
                       "kind": "basic",
                       "name": "array",
-                      "isExactName": false,
                       "accessibility": "public",
                       "apiVersions": [],
                       "operation": {
                         "$id": "80",
                         "name": "array",
-                        "isExactName": false,
                         "resourceName": "Explode",
                         "accessibility": "public",
                         "parameters": [
@@ -1202,11 +1141,9 @@
                                 "crossLanguageDefinitionId": "Routes.PathParameters.SimpleExpansion.Explode.array.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": [],
-                                "isExactName": false
+                                "decorators": []
                               }
-                            ],
-                            "isExactName": false
+                            ]
                           }
                         ],
                         "responses": [
@@ -1215,8 +1152,7 @@
                               204
                             ],
                             "headers": [],
-                            "isErrorResponse": false,
-                            "serializationOptions": {}
+                            "isErrorResponse": false
                           }
                         ],
                         "httpMethod": "GET",
@@ -1244,13 +1180,11 @@
                       "$id": "83",
                       "kind": "basic",
                       "name": "record",
-                      "isExactName": false,
                       "accessibility": "public",
                       "apiVersions": [],
                       "operation": {
                         "$id": "84",
                         "name": "record",
-                        "isExactName": false,
                         "resourceName": "Explode",
                         "accessibility": "public",
                         "parameters": [
@@ -1288,11 +1222,9 @@
                                 "crossLanguageDefinitionId": "Routes.PathParameters.SimpleExpansion.Explode.record.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": [],
-                                "isExactName": false
+                                "decorators": []
                               }
-                            ],
-                            "isExactName": false
+                            ]
                           }
                         ],
                         "responses": [
@@ -1301,8 +1233,7 @@
                               204
                             ],
                             "headers": [],
-                            "isErrorResponse": false,
-                            "serializationOptions": {}
+                            "isErrorResponse": false
                           }
                         ],
                         "httpMethod": "GET",
@@ -1356,8 +1287,7 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.PathParameters.SimpleExpansion.Explode.endpoint",
-                      "isExactName": false
+                      "crossLanguageDefinitionId": "Routes.PathParameters.SimpleExpansion.Explode.endpoint"
                     }
                   ],
                   "initializedBy": 0,
@@ -1376,7 +1306,6 @@
               "$id": "90",
               "kind": "client",
               "name": "PathExpansion",
-              "isExactName": false,
               "namespace": "Routes.PathParameters.PathExpansion",
               "methods": [],
               "parameters": [
@@ -1408,8 +1337,7 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Routes.PathParameters.PathExpansion.endpoint",
-                  "isExactName": false
+                  "crossLanguageDefinitionId": "Routes.PathParameters.PathExpansion.endpoint"
                 }
               ],
               "initializedBy": 0,
@@ -1424,20 +1352,17 @@
                   "$id": "94",
                   "kind": "client",
                   "name": "Standard",
-                  "isExactName": false,
                   "namespace": "Routes.PathParameters.PathExpansion.Standard",
                   "methods": [
                     {
                       "$id": "95",
                       "kind": "basic",
                       "name": "primitive",
-                      "isExactName": false,
                       "accessibility": "public",
                       "apiVersions": [],
                       "operation": {
                         "$id": "96",
                         "name": "primitive",
-                        "isExactName": false,
                         "resourceName": "Standard",
                         "accessibility": "public",
                         "parameters": [
@@ -1483,11 +1408,9 @@
                                 "crossLanguageDefinitionId": "Routes.PathParameters.PathExpansion.Standard.primitive.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": [],
-                                "isExactName": false
+                                "decorators": []
                               }
-                            ],
-                            "isExactName": false
+                            ]
                           }
                         ],
                         "responses": [
@@ -1496,8 +1419,7 @@
                               204
                             ],
                             "headers": [],
-                            "isErrorResponse": false,
-                            "serializationOptions": {}
+                            "isErrorResponse": false
                           }
                         ],
                         "httpMethod": "GET",
@@ -1525,13 +1447,11 @@
                       "$id": "101",
                       "kind": "basic",
                       "name": "array",
-                      "isExactName": false,
                       "accessibility": "public",
                       "apiVersions": [],
                       "operation": {
                         "$id": "102",
                         "name": "array",
-                        "isExactName": false,
                         "resourceName": "Standard",
                         "accessibility": "public",
                         "parameters": [
@@ -1569,11 +1489,9 @@
                                 "crossLanguageDefinitionId": "Routes.PathParameters.PathExpansion.Standard.array.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": [],
-                                "isExactName": false
+                                "decorators": []
                               }
-                            ],
-                            "isExactName": false
+                            ]
                           }
                         ],
                         "responses": [
@@ -1582,8 +1500,7 @@
                               204
                             ],
                             "headers": [],
-                            "isErrorResponse": false,
-                            "serializationOptions": {}
+                            "isErrorResponse": false
                           }
                         ],
                         "httpMethod": "GET",
@@ -1611,13 +1528,11 @@
                       "$id": "105",
                       "kind": "basic",
                       "name": "record",
-                      "isExactName": false,
                       "accessibility": "public",
                       "apiVersions": [],
                       "operation": {
                         "$id": "106",
                         "name": "record",
-                        "isExactName": false,
                         "resourceName": "Standard",
                         "accessibility": "public",
                         "parameters": [
@@ -1655,11 +1570,9 @@
                                 "crossLanguageDefinitionId": "Routes.PathParameters.PathExpansion.Standard.record.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": [],
-                                "isExactName": false
+                                "decorators": []
                               }
-                            ],
-                            "isExactName": false
+                            ]
                           }
                         ],
                         "responses": [
@@ -1668,8 +1581,7 @@
                               204
                             ],
                             "headers": [],
-                            "isErrorResponse": false,
-                            "serializationOptions": {}
+                            "isErrorResponse": false
                           }
                         ],
                         "httpMethod": "GET",
@@ -1723,8 +1635,7 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.PathParameters.PathExpansion.Standard.endpoint",
-                      "isExactName": false
+                      "crossLanguageDefinitionId": "Routes.PathParameters.PathExpansion.Standard.endpoint"
                     }
                   ],
                   "initializedBy": 0,
@@ -1740,20 +1651,17 @@
                   "$id": "112",
                   "kind": "client",
                   "name": "Explode",
-                  "isExactName": false,
                   "namespace": "Routes.PathParameters.PathExpansion.Explode",
                   "methods": [
                     {
                       "$id": "113",
                       "kind": "basic",
                       "name": "primitive",
-                      "isExactName": false,
                       "accessibility": "public",
                       "apiVersions": [],
                       "operation": {
                         "$id": "114",
                         "name": "primitive",
-                        "isExactName": false,
                         "resourceName": "Explode",
                         "accessibility": "public",
                         "parameters": [
@@ -1799,11 +1707,9 @@
                                 "crossLanguageDefinitionId": "Routes.PathParameters.PathExpansion.Explode.primitive.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": [],
-                                "isExactName": false
+                                "decorators": []
                               }
-                            ],
-                            "isExactName": false
+                            ]
                           }
                         ],
                         "responses": [
@@ -1812,8 +1718,7 @@
                               204
                             ],
                             "headers": [],
-                            "isErrorResponse": false,
-                            "serializationOptions": {}
+                            "isErrorResponse": false
                           }
                         ],
                         "httpMethod": "GET",
@@ -1841,13 +1746,11 @@
                       "$id": "119",
                       "kind": "basic",
                       "name": "array",
-                      "isExactName": false,
                       "accessibility": "public",
                       "apiVersions": [],
                       "operation": {
                         "$id": "120",
                         "name": "array",
-                        "isExactName": false,
                         "resourceName": "Explode",
                         "accessibility": "public",
                         "parameters": [
@@ -1885,11 +1788,9 @@
                                 "crossLanguageDefinitionId": "Routes.PathParameters.PathExpansion.Explode.array.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": [],
-                                "isExactName": false
+                                "decorators": []
                               }
-                            ],
-                            "isExactName": false
+                            ]
                           }
                         ],
                         "responses": [
@@ -1898,8 +1799,7 @@
                               204
                             ],
                             "headers": [],
-                            "isErrorResponse": false,
-                            "serializationOptions": {}
+                            "isErrorResponse": false
                           }
                         ],
                         "httpMethod": "GET",
@@ -1927,13 +1827,11 @@
                       "$id": "123",
                       "kind": "basic",
                       "name": "record",
-                      "isExactName": false,
                       "accessibility": "public",
                       "apiVersions": [],
                       "operation": {
                         "$id": "124",
                         "name": "record",
-                        "isExactName": false,
                         "resourceName": "Explode",
                         "accessibility": "public",
                         "parameters": [
@@ -1971,11 +1869,9 @@
                                 "crossLanguageDefinitionId": "Routes.PathParameters.PathExpansion.Explode.record.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": [],
-                                "isExactName": false
+                                "decorators": []
                               }
-                            ],
-                            "isExactName": false
+                            ]
                           }
                         ],
                         "responses": [
@@ -1984,8 +1880,7 @@
                               204
                             ],
                             "headers": [],
-                            "isErrorResponse": false,
-                            "serializationOptions": {}
+                            "isErrorResponse": false
                           }
                         ],
                         "httpMethod": "GET",
@@ -2039,8 +1934,7 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.PathParameters.PathExpansion.Explode.endpoint",
-                      "isExactName": false
+                      "crossLanguageDefinitionId": "Routes.PathParameters.PathExpansion.Explode.endpoint"
                     }
                   ],
                   "initializedBy": 0,
@@ -2059,7 +1953,6 @@
               "$id": "130",
               "kind": "client",
               "name": "LabelExpansion",
-              "isExactName": false,
               "namespace": "Routes.PathParameters.LabelExpansion",
               "methods": [],
               "parameters": [
@@ -2091,8 +1984,7 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Routes.PathParameters.LabelExpansion.endpoint",
-                  "isExactName": false
+                  "crossLanguageDefinitionId": "Routes.PathParameters.LabelExpansion.endpoint"
                 }
               ],
               "initializedBy": 0,
@@ -2107,20 +1999,17 @@
                   "$id": "134",
                   "kind": "client",
                   "name": "Standard",
-                  "isExactName": false,
                   "namespace": "Routes.PathParameters.LabelExpansion.Standard",
                   "methods": [
                     {
                       "$id": "135",
                       "kind": "basic",
                       "name": "primitive",
-                      "isExactName": false,
                       "accessibility": "public",
                       "apiVersions": [],
                       "operation": {
                         "$id": "136",
                         "name": "primitive",
-                        "isExactName": false,
                         "resourceName": "Standard",
                         "accessibility": "public",
                         "parameters": [
@@ -2166,11 +2055,9 @@
                                 "crossLanguageDefinitionId": "Routes.PathParameters.LabelExpansion.Standard.primitive.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": [],
-                                "isExactName": false
+                                "decorators": []
                               }
-                            ],
-                            "isExactName": false
+                            ]
                           }
                         ],
                         "responses": [
@@ -2179,8 +2066,7 @@
                               204
                             ],
                             "headers": [],
-                            "isErrorResponse": false,
-                            "serializationOptions": {}
+                            "isErrorResponse": false
                           }
                         ],
                         "httpMethod": "GET",
@@ -2208,13 +2094,11 @@
                       "$id": "141",
                       "kind": "basic",
                       "name": "array",
-                      "isExactName": false,
                       "accessibility": "public",
                       "apiVersions": [],
                       "operation": {
                         "$id": "142",
                         "name": "array",
-                        "isExactName": false,
                         "resourceName": "Standard",
                         "accessibility": "public",
                         "parameters": [
@@ -2252,11 +2136,9 @@
                                 "crossLanguageDefinitionId": "Routes.PathParameters.LabelExpansion.Standard.array.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": [],
-                                "isExactName": false
+                                "decorators": []
                               }
-                            ],
-                            "isExactName": false
+                            ]
                           }
                         ],
                         "responses": [
@@ -2265,8 +2147,7 @@
                               204
                             ],
                             "headers": [],
-                            "isErrorResponse": false,
-                            "serializationOptions": {}
+                            "isErrorResponse": false
                           }
                         ],
                         "httpMethod": "GET",
@@ -2294,13 +2175,11 @@
                       "$id": "145",
                       "kind": "basic",
                       "name": "record",
-                      "isExactName": false,
                       "accessibility": "public",
                       "apiVersions": [],
                       "operation": {
                         "$id": "146",
                         "name": "record",
-                        "isExactName": false,
                         "resourceName": "Standard",
                         "accessibility": "public",
                         "parameters": [
@@ -2338,11 +2217,9 @@
                                 "crossLanguageDefinitionId": "Routes.PathParameters.LabelExpansion.Standard.record.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": [],
-                                "isExactName": false
+                                "decorators": []
                               }
-                            ],
-                            "isExactName": false
+                            ]
                           }
                         ],
                         "responses": [
@@ -2351,8 +2228,7 @@
                               204
                             ],
                             "headers": [],
-                            "isErrorResponse": false,
-                            "serializationOptions": {}
+                            "isErrorResponse": false
                           }
                         ],
                         "httpMethod": "GET",
@@ -2406,8 +2282,7 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.PathParameters.LabelExpansion.Standard.endpoint",
-                      "isExactName": false
+                      "crossLanguageDefinitionId": "Routes.PathParameters.LabelExpansion.Standard.endpoint"
                     }
                   ],
                   "initializedBy": 0,
@@ -2423,20 +2298,17 @@
                   "$id": "152",
                   "kind": "client",
                   "name": "Explode",
-                  "isExactName": false,
                   "namespace": "Routes.PathParameters.LabelExpansion.Explode",
                   "methods": [
                     {
                       "$id": "153",
                       "kind": "basic",
                       "name": "primitive",
-                      "isExactName": false,
                       "accessibility": "public",
                       "apiVersions": [],
                       "operation": {
                         "$id": "154",
                         "name": "primitive",
-                        "isExactName": false,
                         "resourceName": "Explode",
                         "accessibility": "public",
                         "parameters": [
@@ -2482,11 +2354,9 @@
                                 "crossLanguageDefinitionId": "Routes.PathParameters.LabelExpansion.Explode.primitive.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": [],
-                                "isExactName": false
+                                "decorators": []
                               }
-                            ],
-                            "isExactName": false
+                            ]
                           }
                         ],
                         "responses": [
@@ -2495,8 +2365,7 @@
                               204
                             ],
                             "headers": [],
-                            "isErrorResponse": false,
-                            "serializationOptions": {}
+                            "isErrorResponse": false
                           }
                         ],
                         "httpMethod": "GET",
@@ -2524,13 +2393,11 @@
                       "$id": "159",
                       "kind": "basic",
                       "name": "array",
-                      "isExactName": false,
                       "accessibility": "public",
                       "apiVersions": [],
                       "operation": {
                         "$id": "160",
                         "name": "array",
-                        "isExactName": false,
                         "resourceName": "Explode",
                         "accessibility": "public",
                         "parameters": [
@@ -2568,11 +2435,9 @@
                                 "crossLanguageDefinitionId": "Routes.PathParameters.LabelExpansion.Explode.array.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": [],
-                                "isExactName": false
+                                "decorators": []
                               }
-                            ],
-                            "isExactName": false
+                            ]
                           }
                         ],
                         "responses": [
@@ -2581,8 +2446,7 @@
                               204
                             ],
                             "headers": [],
-                            "isErrorResponse": false,
-                            "serializationOptions": {}
+                            "isErrorResponse": false
                           }
                         ],
                         "httpMethod": "GET",
@@ -2610,13 +2474,11 @@
                       "$id": "163",
                       "kind": "basic",
                       "name": "record",
-                      "isExactName": false,
                       "accessibility": "public",
                       "apiVersions": [],
                       "operation": {
                         "$id": "164",
                         "name": "record",
-                        "isExactName": false,
                         "resourceName": "Explode",
                         "accessibility": "public",
                         "parameters": [
@@ -2654,11 +2516,9 @@
                                 "crossLanguageDefinitionId": "Routes.PathParameters.LabelExpansion.Explode.record.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": [],
-                                "isExactName": false
+                                "decorators": []
                               }
-                            ],
-                            "isExactName": false
+                            ]
                           }
                         ],
                         "responses": [
@@ -2667,8 +2527,7 @@
                               204
                             ],
                             "headers": [],
-                            "isErrorResponse": false,
-                            "serializationOptions": {}
+                            "isErrorResponse": false
                           }
                         ],
                         "httpMethod": "GET",
@@ -2722,8 +2581,7 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.PathParameters.LabelExpansion.Explode.endpoint",
-                      "isExactName": false
+                      "crossLanguageDefinitionId": "Routes.PathParameters.LabelExpansion.Explode.endpoint"
                     }
                   ],
                   "initializedBy": 0,
@@ -2742,7 +2600,6 @@
               "$id": "170",
               "kind": "client",
               "name": "MatrixExpansion",
-              "isExactName": false,
               "namespace": "Routes.PathParameters.MatrixExpansion",
               "methods": [],
               "parameters": [
@@ -2774,8 +2631,7 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Routes.PathParameters.MatrixExpansion.endpoint",
-                  "isExactName": false
+                  "crossLanguageDefinitionId": "Routes.PathParameters.MatrixExpansion.endpoint"
                 }
               ],
               "initializedBy": 0,
@@ -2790,20 +2646,17 @@
                   "$id": "174",
                   "kind": "client",
                   "name": "Standard",
-                  "isExactName": false,
                   "namespace": "Routes.PathParameters.MatrixExpansion.Standard",
                   "methods": [
                     {
                       "$id": "175",
                       "kind": "basic",
                       "name": "primitive",
-                      "isExactName": false,
                       "accessibility": "public",
                       "apiVersions": [],
                       "operation": {
                         "$id": "176",
                         "name": "primitive",
-                        "isExactName": false,
                         "resourceName": "Standard",
                         "accessibility": "public",
                         "parameters": [
@@ -2849,11 +2702,9 @@
                                 "crossLanguageDefinitionId": "Routes.PathParameters.MatrixExpansion.Standard.primitive.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": [],
-                                "isExactName": false
+                                "decorators": []
                               }
-                            ],
-                            "isExactName": false
+                            ]
                           }
                         ],
                         "responses": [
@@ -2862,8 +2713,7 @@
                               204
                             ],
                             "headers": [],
-                            "isErrorResponse": false,
-                            "serializationOptions": {}
+                            "isErrorResponse": false
                           }
                         ],
                         "httpMethod": "GET",
@@ -2891,13 +2741,11 @@
                       "$id": "181",
                       "kind": "basic",
                       "name": "array",
-                      "isExactName": false,
                       "accessibility": "public",
                       "apiVersions": [],
                       "operation": {
                         "$id": "182",
                         "name": "array",
-                        "isExactName": false,
                         "resourceName": "Standard",
                         "accessibility": "public",
                         "parameters": [
@@ -2935,11 +2783,9 @@
                                 "crossLanguageDefinitionId": "Routes.PathParameters.MatrixExpansion.Standard.array.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": [],
-                                "isExactName": false
+                                "decorators": []
                               }
-                            ],
-                            "isExactName": false
+                            ]
                           }
                         ],
                         "responses": [
@@ -2948,8 +2794,7 @@
                               204
                             ],
                             "headers": [],
-                            "isErrorResponse": false,
-                            "serializationOptions": {}
+                            "isErrorResponse": false
                           }
                         ],
                         "httpMethod": "GET",
@@ -2977,13 +2822,11 @@
                       "$id": "185",
                       "kind": "basic",
                       "name": "record",
-                      "isExactName": false,
                       "accessibility": "public",
                       "apiVersions": [],
                       "operation": {
                         "$id": "186",
                         "name": "record",
-                        "isExactName": false,
                         "resourceName": "Standard",
                         "accessibility": "public",
                         "parameters": [
@@ -3021,11 +2864,9 @@
                                 "crossLanguageDefinitionId": "Routes.PathParameters.MatrixExpansion.Standard.record.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": [],
-                                "isExactName": false
+                                "decorators": []
                               }
-                            ],
-                            "isExactName": false
+                            ]
                           }
                         ],
                         "responses": [
@@ -3034,8 +2875,7 @@
                               204
                             ],
                             "headers": [],
-                            "isErrorResponse": false,
-                            "serializationOptions": {}
+                            "isErrorResponse": false
                           }
                         ],
                         "httpMethod": "GET",
@@ -3089,8 +2929,7 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.PathParameters.MatrixExpansion.Standard.endpoint",
-                      "isExactName": false
+                      "crossLanguageDefinitionId": "Routes.PathParameters.MatrixExpansion.Standard.endpoint"
                     }
                   ],
                   "initializedBy": 0,
@@ -3106,20 +2945,17 @@
                   "$id": "192",
                   "kind": "client",
                   "name": "Explode",
-                  "isExactName": false,
                   "namespace": "Routes.PathParameters.MatrixExpansion.Explode",
                   "methods": [
                     {
                       "$id": "193",
                       "kind": "basic",
                       "name": "primitive",
-                      "isExactName": false,
                       "accessibility": "public",
                       "apiVersions": [],
                       "operation": {
                         "$id": "194",
                         "name": "primitive",
-                        "isExactName": false,
                         "resourceName": "Explode",
                         "accessibility": "public",
                         "parameters": [
@@ -3165,11 +3001,9 @@
                                 "crossLanguageDefinitionId": "Routes.PathParameters.MatrixExpansion.Explode.primitive.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": [],
-                                "isExactName": false
+                                "decorators": []
                               }
-                            ],
-                            "isExactName": false
+                            ]
                           }
                         ],
                         "responses": [
@@ -3178,8 +3012,7 @@
                               204
                             ],
                             "headers": [],
-                            "isErrorResponse": false,
-                            "serializationOptions": {}
+                            "isErrorResponse": false
                           }
                         ],
                         "httpMethod": "GET",
@@ -3207,13 +3040,11 @@
                       "$id": "199",
                       "kind": "basic",
                       "name": "array",
-                      "isExactName": false,
                       "accessibility": "public",
                       "apiVersions": [],
                       "operation": {
                         "$id": "200",
                         "name": "array",
-                        "isExactName": false,
                         "resourceName": "Explode",
                         "accessibility": "public",
                         "parameters": [
@@ -3251,11 +3082,9 @@
                                 "crossLanguageDefinitionId": "Routes.PathParameters.MatrixExpansion.Explode.array.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": [],
-                                "isExactName": false
+                                "decorators": []
                               }
-                            ],
-                            "isExactName": false
+                            ]
                           }
                         ],
                         "responses": [
@@ -3264,8 +3093,7 @@
                               204
                             ],
                             "headers": [],
-                            "isErrorResponse": false,
-                            "serializationOptions": {}
+                            "isErrorResponse": false
                           }
                         ],
                         "httpMethod": "GET",
@@ -3293,13 +3121,11 @@
                       "$id": "203",
                       "kind": "basic",
                       "name": "record",
-                      "isExactName": false,
                       "accessibility": "public",
                       "apiVersions": [],
                       "operation": {
                         "$id": "204",
                         "name": "record",
-                        "isExactName": false,
                         "resourceName": "Explode",
                         "accessibility": "public",
                         "parameters": [
@@ -3337,11 +3163,9 @@
                                 "crossLanguageDefinitionId": "Routes.PathParameters.MatrixExpansion.Explode.record.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": [],
-                                "isExactName": false
+                                "decorators": []
                               }
-                            ],
-                            "isExactName": false
+                            ]
                           }
                         ],
                         "responses": [
@@ -3350,8 +3174,7 @@
                               204
                             ],
                             "headers": [],
-                            "isErrorResponse": false,
-                            "serializationOptions": {}
+                            "isErrorResponse": false
                           }
                         ],
                         "httpMethod": "GET",
@@ -3405,8 +3228,7 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.PathParameters.MatrixExpansion.Explode.endpoint",
-                      "isExactName": false
+                      "crossLanguageDefinitionId": "Routes.PathParameters.MatrixExpansion.Explode.endpoint"
                     }
                   ],
                   "initializedBy": 0,
@@ -3428,20 +3250,17 @@
           "$id": "210",
           "kind": "client",
           "name": "QueryParameters",
-          "isExactName": false,
           "namespace": "Routes.QueryParameters",
           "methods": [
             {
               "$id": "211",
               "kind": "basic",
               "name": "templateOnly",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "212",
                 "name": "templateOnly",
-                "isExactName": false,
                 "resourceName": "QueryParameters",
                 "accessibility": "public",
                 "parameters": [
@@ -3484,11 +3303,9 @@
                         "crossLanguageDefinitionId": "Routes.QueryParameters.templateOnly.param",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -3497,8 +3314,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "GET",
@@ -3526,13 +3342,11 @@
               "$id": "217",
               "kind": "basic",
               "name": "explicit",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "218",
                 "name": "explicit",
-                "isExactName": false,
                 "resourceName": "QueryParameters",
                 "accessibility": "public",
                 "parameters": [
@@ -3575,11 +3389,9 @@
                         "crossLanguageDefinitionId": "Routes.QueryParameters.explicit.param",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -3588,8 +3400,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "GET",
@@ -3617,13 +3428,11 @@
               "$id": "223",
               "kind": "basic",
               "name": "annotationOnly",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "224",
                 "name": "annotationOnly",
-                "isExactName": false,
                 "resourceName": "QueryParameters",
                 "accessibility": "public",
                 "parameters": [
@@ -3666,11 +3475,9 @@
                         "crossLanguageDefinitionId": "Routes.QueryParameters.annotationOnly.param",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -3679,8 +3486,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "GET",
@@ -3734,8 +3540,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Routes.QueryParameters.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Routes.QueryParameters.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -3750,7 +3555,6 @@
               "$id": "232",
               "kind": "client",
               "name": "QueryExpansion",
-              "isExactName": false,
               "namespace": "Routes.QueryParameters.QueryExpansion",
               "methods": [],
               "parameters": [
@@ -3782,8 +3586,7 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Routes.QueryParameters.QueryExpansion.endpoint",
-                  "isExactName": false
+                  "crossLanguageDefinitionId": "Routes.QueryParameters.QueryExpansion.endpoint"
                 }
               ],
               "initializedBy": 0,
@@ -3798,20 +3601,17 @@
                   "$id": "236",
                   "kind": "client",
                   "name": "Standard",
-                  "isExactName": false,
                   "namespace": "Routes.QueryParameters.QueryExpansion.Standard",
                   "methods": [
                     {
                       "$id": "237",
                       "kind": "basic",
                       "name": "primitive",
-                      "isExactName": false,
                       "accessibility": "public",
                       "apiVersions": [],
                       "operation": {
                         "$id": "238",
                         "name": "primitive",
-                        "isExactName": false,
                         "resourceName": "Standard",
                         "accessibility": "public",
                         "parameters": [
@@ -3854,11 +3654,9 @@
                                 "crossLanguageDefinitionId": "Routes.QueryParameters.QueryExpansion.Standard.primitive.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": [],
-                                "isExactName": false
+                                "decorators": []
                               }
-                            ],
-                            "isExactName": false
+                            ]
                           }
                         ],
                         "responses": [
@@ -3867,8 +3665,7 @@
                               204
                             ],
                             "headers": [],
-                            "isErrorResponse": false,
-                            "serializationOptions": {}
+                            "isErrorResponse": false
                           }
                         ],
                         "httpMethod": "GET",
@@ -3896,13 +3693,11 @@
                       "$id": "243",
                       "kind": "basic",
                       "name": "array",
-                      "isExactName": false,
                       "accessibility": "public",
                       "apiVersions": [],
                       "operation": {
                         "$id": "244",
                         "name": "array",
-                        "isExactName": false,
                         "resourceName": "Standard",
                         "accessibility": "public",
                         "parameters": [
@@ -3937,11 +3732,9 @@
                                 "crossLanguageDefinitionId": "Routes.QueryParameters.QueryExpansion.Standard.array.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": [],
-                                "isExactName": false
+                                "decorators": []
                               }
-                            ],
-                            "isExactName": false
+                            ]
                           }
                         ],
                         "responses": [
@@ -3950,8 +3743,7 @@
                               204
                             ],
                             "headers": [],
-                            "isErrorResponse": false,
-                            "serializationOptions": {}
+                            "isErrorResponse": false
                           }
                         ],
                         "httpMethod": "GET",
@@ -3979,13 +3771,11 @@
                       "$id": "247",
                       "kind": "basic",
                       "name": "record",
-                      "isExactName": false,
                       "accessibility": "public",
                       "apiVersions": [],
                       "operation": {
                         "$id": "248",
                         "name": "record",
-                        "isExactName": false,
                         "resourceName": "Standard",
                         "accessibility": "public",
                         "parameters": [
@@ -4020,11 +3810,9 @@
                                 "crossLanguageDefinitionId": "Routes.QueryParameters.QueryExpansion.Standard.record.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": [],
-                                "isExactName": false
+                                "decorators": []
                               }
-                            ],
-                            "isExactName": false
+                            ]
                           }
                         ],
                         "responses": [
@@ -4033,8 +3821,7 @@
                               204
                             ],
                             "headers": [],
-                            "isErrorResponse": false,
-                            "serializationOptions": {}
+                            "isErrorResponse": false
                           }
                         ],
                         "httpMethod": "GET",
@@ -4088,8 +3875,7 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.QueryParameters.QueryExpansion.Standard.endpoint",
-                      "isExactName": false
+                      "crossLanguageDefinitionId": "Routes.QueryParameters.QueryExpansion.Standard.endpoint"
                     }
                   ],
                   "initializedBy": 0,
@@ -4105,20 +3891,17 @@
                   "$id": "254",
                   "kind": "client",
                   "name": "Explode",
-                  "isExactName": false,
                   "namespace": "Routes.QueryParameters.QueryExpansion.Explode",
                   "methods": [
                     {
                       "$id": "255",
                       "kind": "basic",
                       "name": "primitive",
-                      "isExactName": false,
                       "accessibility": "public",
                       "apiVersions": [],
                       "operation": {
                         "$id": "256",
                         "name": "primitive",
-                        "isExactName": false,
                         "resourceName": "Explode",
                         "accessibility": "public",
                         "parameters": [
@@ -4161,11 +3944,9 @@
                                 "crossLanguageDefinitionId": "Routes.QueryParameters.QueryExpansion.Explode.primitive.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": [],
-                                "isExactName": false
+                                "decorators": []
                               }
-                            ],
-                            "isExactName": false
+                            ]
                           }
                         ],
                         "responses": [
@@ -4174,8 +3955,7 @@
                               204
                             ],
                             "headers": [],
-                            "isErrorResponse": false,
-                            "serializationOptions": {}
+                            "isErrorResponse": false
                           }
                         ],
                         "httpMethod": "GET",
@@ -4203,13 +3983,11 @@
                       "$id": "261",
                       "kind": "basic",
                       "name": "array",
-                      "isExactName": false,
                       "accessibility": "public",
                       "apiVersions": [],
                       "operation": {
                         "$id": "262",
                         "name": "array",
-                        "isExactName": false,
                         "resourceName": "Explode",
                         "accessibility": "public",
                         "parameters": [
@@ -4244,11 +4022,9 @@
                                 "crossLanguageDefinitionId": "Routes.QueryParameters.QueryExpansion.Explode.array.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": [],
-                                "isExactName": false
+                                "decorators": []
                               }
-                            ],
-                            "isExactName": false
+                            ]
                           }
                         ],
                         "responses": [
@@ -4257,8 +4033,7 @@
                               204
                             ],
                             "headers": [],
-                            "isErrorResponse": false,
-                            "serializationOptions": {}
+                            "isErrorResponse": false
                           }
                         ],
                         "httpMethod": "GET",
@@ -4286,13 +4061,11 @@
                       "$id": "265",
                       "kind": "basic",
                       "name": "record",
-                      "isExactName": false,
                       "accessibility": "public",
                       "apiVersions": [],
                       "operation": {
                         "$id": "266",
                         "name": "record",
-                        "isExactName": false,
                         "resourceName": "Explode",
                         "accessibility": "public",
                         "parameters": [
@@ -4327,11 +4100,9 @@
                                 "crossLanguageDefinitionId": "Routes.QueryParameters.QueryExpansion.Explode.record.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": [],
-                                "isExactName": false
+                                "decorators": []
                               }
-                            ],
-                            "isExactName": false
+                            ]
                           }
                         ],
                         "responses": [
@@ -4340,8 +4111,7 @@
                               204
                             ],
                             "headers": [],
-                            "isErrorResponse": false,
-                            "serializationOptions": {}
+                            "isErrorResponse": false
                           }
                         ],
                         "httpMethod": "GET",
@@ -4395,8 +4165,7 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.QueryParameters.QueryExpansion.Explode.endpoint",
-                      "isExactName": false
+                      "crossLanguageDefinitionId": "Routes.QueryParameters.QueryExpansion.Explode.endpoint"
                     }
                   ],
                   "initializedBy": 0,
@@ -4415,7 +4184,6 @@
               "$id": "272",
               "kind": "client",
               "name": "QueryContinuation",
-              "isExactName": false,
               "namespace": "Routes.QueryParameters.QueryContinuation",
               "methods": [],
               "parameters": [
@@ -4447,8 +4215,7 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Routes.QueryParameters.QueryContinuation.endpoint",
-                  "isExactName": false
+                  "crossLanguageDefinitionId": "Routes.QueryParameters.QueryContinuation.endpoint"
                 }
               ],
               "initializedBy": 0,
@@ -4463,20 +4230,17 @@
                   "$id": "276",
                   "kind": "client",
                   "name": "Standard",
-                  "isExactName": false,
                   "namespace": "Routes.QueryParameters.QueryContinuation.Standard",
                   "methods": [
                     {
                       "$id": "277",
                       "kind": "basic",
                       "name": "primitive",
-                      "isExactName": false,
                       "accessibility": "public",
                       "apiVersions": [],
                       "operation": {
                         "$id": "278",
                         "name": "primitive",
-                        "isExactName": false,
                         "resourceName": "Standard",
                         "accessibility": "public",
                         "parameters": [
@@ -4519,11 +4283,9 @@
                                 "crossLanguageDefinitionId": "Routes.QueryParameters.QueryContinuation.Standard.primitive.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": [],
-                                "isExactName": false
+                                "decorators": []
                               }
-                            ],
-                            "isExactName": false
+                            ]
                           }
                         ],
                         "responses": [
@@ -4532,8 +4294,7 @@
                               204
                             ],
                             "headers": [],
-                            "isErrorResponse": false,
-                            "serializationOptions": {}
+                            "isErrorResponse": false
                           }
                         ],
                         "httpMethod": "GET",
@@ -4561,13 +4322,11 @@
                       "$id": "283",
                       "kind": "basic",
                       "name": "array",
-                      "isExactName": false,
                       "accessibility": "public",
                       "apiVersions": [],
                       "operation": {
                         "$id": "284",
                         "name": "array",
-                        "isExactName": false,
                         "resourceName": "Standard",
                         "accessibility": "public",
                         "parameters": [
@@ -4602,11 +4361,9 @@
                                 "crossLanguageDefinitionId": "Routes.QueryParameters.QueryContinuation.Standard.array.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": [],
-                                "isExactName": false
+                                "decorators": []
                               }
-                            ],
-                            "isExactName": false
+                            ]
                           }
                         ],
                         "responses": [
@@ -4615,8 +4372,7 @@
                               204
                             ],
                             "headers": [],
-                            "isErrorResponse": false,
-                            "serializationOptions": {}
+                            "isErrorResponse": false
                           }
                         ],
                         "httpMethod": "GET",
@@ -4644,13 +4400,11 @@
                       "$id": "287",
                       "kind": "basic",
                       "name": "record",
-                      "isExactName": false,
                       "accessibility": "public",
                       "apiVersions": [],
                       "operation": {
                         "$id": "288",
                         "name": "record",
-                        "isExactName": false,
                         "resourceName": "Standard",
                         "accessibility": "public",
                         "parameters": [
@@ -4685,11 +4439,9 @@
                                 "crossLanguageDefinitionId": "Routes.QueryParameters.QueryContinuation.Standard.record.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": [],
-                                "isExactName": false
+                                "decorators": []
                               }
-                            ],
-                            "isExactName": false
+                            ]
                           }
                         ],
                         "responses": [
@@ -4698,8 +4450,7 @@
                               204
                             ],
                             "headers": [],
-                            "isErrorResponse": false,
-                            "serializationOptions": {}
+                            "isErrorResponse": false
                           }
                         ],
                         "httpMethod": "GET",
@@ -4753,8 +4504,7 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.QueryParameters.QueryContinuation.Standard.endpoint",
-                      "isExactName": false
+                      "crossLanguageDefinitionId": "Routes.QueryParameters.QueryContinuation.Standard.endpoint"
                     }
                   ],
                   "initializedBy": 0,
@@ -4770,20 +4520,17 @@
                   "$id": "294",
                   "kind": "client",
                   "name": "Explode",
-                  "isExactName": false,
                   "namespace": "Routes.QueryParameters.QueryContinuation.Explode",
                   "methods": [
                     {
                       "$id": "295",
                       "kind": "basic",
                       "name": "primitive",
-                      "isExactName": false,
                       "accessibility": "public",
                       "apiVersions": [],
                       "operation": {
                         "$id": "296",
                         "name": "primitive",
-                        "isExactName": false,
                         "resourceName": "Explode",
                         "accessibility": "public",
                         "parameters": [
@@ -4826,11 +4573,9 @@
                                 "crossLanguageDefinitionId": "Routes.QueryParameters.QueryContinuation.Explode.primitive.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": [],
-                                "isExactName": false
+                                "decorators": []
                               }
-                            ],
-                            "isExactName": false
+                            ]
                           }
                         ],
                         "responses": [
@@ -4839,8 +4584,7 @@
                               204
                             ],
                             "headers": [],
-                            "isErrorResponse": false,
-                            "serializationOptions": {}
+                            "isErrorResponse": false
                           }
                         ],
                         "httpMethod": "GET",
@@ -4868,13 +4612,11 @@
                       "$id": "301",
                       "kind": "basic",
                       "name": "array",
-                      "isExactName": false,
                       "accessibility": "public",
                       "apiVersions": [],
                       "operation": {
                         "$id": "302",
                         "name": "array",
-                        "isExactName": false,
                         "resourceName": "Explode",
                         "accessibility": "public",
                         "parameters": [
@@ -4909,11 +4651,9 @@
                                 "crossLanguageDefinitionId": "Routes.QueryParameters.QueryContinuation.Explode.array.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": [],
-                                "isExactName": false
+                                "decorators": []
                               }
-                            ],
-                            "isExactName": false
+                            ]
                           }
                         ],
                         "responses": [
@@ -4922,8 +4662,7 @@
                               204
                             ],
                             "headers": [],
-                            "isErrorResponse": false,
-                            "serializationOptions": {}
+                            "isErrorResponse": false
                           }
                         ],
                         "httpMethod": "GET",
@@ -4951,13 +4690,11 @@
                       "$id": "305",
                       "kind": "basic",
                       "name": "record",
-                      "isExactName": false,
                       "accessibility": "public",
                       "apiVersions": [],
                       "operation": {
                         "$id": "306",
                         "name": "record",
-                        "isExactName": false,
                         "resourceName": "Explode",
                         "accessibility": "public",
                         "parameters": [
@@ -4992,11 +4729,9 @@
                                 "crossLanguageDefinitionId": "Routes.QueryParameters.QueryContinuation.Explode.record.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": [],
-                                "isExactName": false
+                                "decorators": []
                               }
-                            ],
-                            "isExactName": false
+                            ]
                           }
                         ],
                         "responses": [
@@ -5005,8 +4740,7 @@
                               204
                             ],
                             "headers": [],
-                            "isErrorResponse": false,
-                            "serializationOptions": {}
+                            "isErrorResponse": false
                           }
                         ],
                         "httpMethod": "GET",
@@ -5060,8 +4794,7 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.QueryParameters.QueryContinuation.Explode.endpoint",
-                      "isExactName": false
+                      "crossLanguageDefinitionId": "Routes.QueryParameters.QueryContinuation.Explode.endpoint"
                     }
                   ],
                   "initializedBy": 0,
@@ -5083,20 +4816,17 @@
           "$id": "312",
           "kind": "client",
           "name": "InInterface",
-          "isExactName": false,
           "namespace": "Routes",
           "methods": [
             {
               "$id": "313",
               "kind": "basic",
               "name": "fixed",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "314",
                 "name": "fixed",
-                "isExactName": false,
                 "resourceName": "InInterface",
                 "accessibility": "public",
                 "parameters": [],
@@ -5106,8 +4836,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "GET",
@@ -5157,8 +4886,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Routes.InInterface.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Routes.InInterface.endpoint"
             }
           ],
           "initializedBy": 0,

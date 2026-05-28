@@ -6,7 +6,7 @@
     {
       "$id": "1",
       "kind": "constant",
-      "name": "SendContentType",
+      "name": "sendContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -17,13 +17,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "3",
       "kind": "constant",
-      "name": "SendContentType1",
+      "name": "getContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -34,8 +33,7 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     }
   ],
   "models": [
@@ -52,7 +50,6 @@
           "name": "JsonEncodedNameModel"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "6",
@@ -78,8 +75,7 @@
               "name": "wireName"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     }
@@ -89,7 +85,6 @@
       "$id": "8",
       "kind": "client",
       "name": "JsonClient",
-      "isExactName": false,
       "namespace": "Serialization.EncodedName.Json",
       "doc": "Encoded names",
       "methods": [],
@@ -122,8 +117,7 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Serialization.EncodedName.Json.endpoint",
-          "isExactName": false
+          "crossLanguageDefinitionId": "Serialization.EncodedName.Json.endpoint"
         }
       ],
       "initializedBy": 1,
@@ -135,20 +129,17 @@
           "$id": "12",
           "kind": "client",
           "name": "Property",
-          "isExactName": false,
           "namespace": "Serialization.EncodedName.Json.Property",
           "methods": [
             {
               "$id": "13",
               "kind": "basic",
               "name": "send",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "14",
                 "name": "send",
-                "isExactName": false,
                 "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
@@ -185,11 +176,9 @@
                         "crossLanguageDefinitionId": "Serialization.EncodedName.Json.Property.send.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "17",
@@ -225,16 +214,9 @@
                         "crossLanguageDefinitionId": "Serialization.EncodedName.Json.Property.send.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -243,8 +225,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "POST",
@@ -278,13 +259,11 @@
               "$id": "19",
               "kind": "basic",
               "name": "get",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "20",
                 "name": "get",
-                "isExactName": false,
                 "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
@@ -319,11 +298,9 @@
                         "crossLanguageDefinitionId": "Serialization.EncodedName.Json.Property.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -338,12 +315,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -401,8 +373,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Serialization.EncodedName.Json.Property.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Serialization.EncodedName.Json.Property.endpoint"
             }
           ],
           "initializedBy": 0,

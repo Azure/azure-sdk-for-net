@@ -29,8 +29,7 @@
             "$ref": "1"
           },
           "doc": "Version 1",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         }
       ],
       "namespace": "Resiliency.ServiceDriven",
@@ -38,8 +37,7 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "ApiVersionEnum",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     }
   ],
   "constants": [],
@@ -49,7 +47,6 @@
       "$id": "4",
       "kind": "client",
       "name": "ResiliencyServiceDrivenClient",
-      "isExactName": false,
       "namespace": "Resiliency.ServiceDriven",
       "doc": "Test that we can grow up a service spec and service deployment into a multi-versioned service with full client support.",
       "methods": [
@@ -57,7 +54,6 @@
           "$id": "5",
           "kind": "basic",
           "name": "fromNone",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [
             "v1"
@@ -66,7 +62,6 @@
           "operation": {
             "$id": "6",
             "name": "fromNone",
-            "isExactName": false,
             "resourceName": "AddOptionalParam",
             "doc": "Test that currently accepts no parameters, will be updated in next spec to accept a new optional parameter as well",
             "accessibility": "public",
@@ -77,8 +72,7 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false,
-                "serializationOptions": {}
+                "isErrorResponse": false
               }
             ],
             "httpMethod": "HEAD",
@@ -102,7 +96,6 @@
           "$id": "7",
           "kind": "basic",
           "name": "fromOneRequired",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [
             "v1"
@@ -111,7 +104,6 @@
           "operation": {
             "$id": "8",
             "name": "fromOneRequired",
-            "isExactName": false,
             "resourceName": "AddOptionalParam",
             "doc": "Test that currently accepts one required parameter, will be updated in next spec to accept a new optional parameter as well",
             "accessibility": "public",
@@ -157,11 +149,9 @@
                     "crossLanguageDefinitionId": "Resiliency.ServiceDriven.AddOptionalParam.fromOneRequired.parameter",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               }
             ],
             "responses": [
@@ -170,8 +160,7 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false,
-                "serializationOptions": {}
+                "isErrorResponse": false
               }
             ],
             "httpMethod": "GET",
@@ -199,7 +188,6 @@
           "$id": "13",
           "kind": "basic",
           "name": "fromOneOptional",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [
             "v1"
@@ -208,7 +196,6 @@
           "operation": {
             "$id": "14",
             "name": "fromOneOptional",
-            "isExactName": false,
             "resourceName": "AddOptionalParam",
             "doc": "Test that currently accepts one optional parameter, will be updated in next spec to accept a new optional parameter as well",
             "accessibility": "public",
@@ -254,11 +241,9 @@
                     "crossLanguageDefinitionId": "Resiliency.ServiceDriven.AddOptionalParam.fromOneOptional.parameter",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               }
             ],
             "responses": [
@@ -267,8 +252,7 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false,
-                "serializationOptions": {}
+                "isErrorResponse": false
               }
             ],
             "httpMethod": "GET",
@@ -313,8 +297,7 @@
           "serverUrlTemplate": "{endpoint}/resiliency/service-driven/client:v1/service:{serviceDeploymentVersion}/api-version:{apiVersion}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Resiliency.ServiceDriven.endpoint",
-          "isExactName": false
+          "crossLanguageDefinitionId": "Resiliency.ServiceDriven.endpoint"
         },
         {
           "$id": "21",
@@ -336,8 +319,7 @@
           "serverUrlTemplate": "{endpoint}/resiliency/service-driven/client:v1/service:{serviceDeploymentVersion}/api-version:{apiVersion}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Resiliency.ServiceDriven.serviceDeploymentVersion",
-          "isExactName": false
+          "crossLanguageDefinitionId": "Resiliency.ServiceDriven.serviceDeploymentVersion"
         },
         {
           "$id": "23",
@@ -368,8 +350,7 @@
           "serverUrlTemplate": "{endpoint}/resiliency/service-driven/client:v1/service:{serviceDeploymentVersion}/api-version:{apiVersion}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Resiliency.ServiceDriven.apiVersion",
-          "isExactName": false
+          "crossLanguageDefinitionId": "Resiliency.ServiceDriven.apiVersion"
         }
       ],
       "initializedBy": 1,

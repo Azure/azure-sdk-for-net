@@ -27,8 +27,7 @@
             "$ref": "1"
           },
           "doc": "First value.",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         },
         {
           "$id": "4",
@@ -42,8 +41,7 @@
             "$ref": "1"
           },
           "doc": "Second value.",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         }
       ],
       "namespace": "Type.Property.ValueTypes",
@@ -51,8 +49,7 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,Output,Json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "5",
@@ -79,8 +76,7 @@
             "$ref": "5"
           },
           "doc": "First value.",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         },
         {
           "$id": "8",
@@ -94,8 +90,7 @@
             "$ref": "5"
           },
           "doc": "Second value.",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         }
       ],
       "namespace": "Type.Property.ValueTypes",
@@ -103,8 +98,7 @@
       "isFixed": false,
       "isFlags": false,
       "usage": "Input,Output,Json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "9",
@@ -130,8 +124,7 @@
           "enumType": {
             "$ref": "9"
           },
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         },
         {
           "$id": "12",
@@ -144,16 +137,14 @@
           "enumType": {
             "$ref": "9"
           },
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         }
       ],
       "namespace": "Type.Property.ValueTypes",
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,Output,Json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "13",
@@ -179,8 +170,7 @@
           "enumType": {
             "$ref": "13"
           },
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         },
         {
           "$id": "16",
@@ -193,16 +183,14 @@
           "enumType": {
             "$ref": "13"
           },
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         }
       ],
       "namespace": "Type.Property.ValueTypes",
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,Output,Json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "17",
@@ -228,8 +216,7 @@
           "enumType": {
             "$ref": "17"
           },
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         },
         {
           "$id": "20",
@@ -242,16 +229,14 @@
           "enumType": {
             "$ref": "17"
           },
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         }
       ],
       "namespace": "Type.Property.ValueTypes",
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,Output,Json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "21",
@@ -277,16 +262,14 @@
           "enumType": {
             "$ref": "21"
           },
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         }
       ],
       "namespace": "Type.Property.ValueTypes",
       "isFixed": false,
       "isFlags": false,
       "usage": "Input,Output,Json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     }
   ],
   "constants": [
@@ -304,8 +287,7 @@
         "decorators": []
       },
       "value": "hello",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "26",
@@ -321,8 +303,7 @@
         "decorators": []
       },
       "value": 42,
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "28",
@@ -338,8 +319,7 @@
         "decorators": []
       },
       "value": 43.125,
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "30",
@@ -355,13 +335,12 @@
         "decorators": []
       },
       "value": true,
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "32",
       "kind": "constant",
-      "name": "GetAccept",
+      "name": "getContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -372,13 +351,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "34",
       "kind": "constant",
-      "name": "GetAccept1",
+      "name": "putContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -389,13 +367,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "36",
       "kind": "constant",
-      "name": "GetAccept2",
+      "name": "getContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -406,13 +383,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "38",
       "kind": "constant",
-      "name": "GetAccept3",
+      "name": "putContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -423,13 +399,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "40",
       "kind": "constant",
-      "name": "GetAccept4",
+      "name": "getContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -440,13 +415,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "42",
       "kind": "constant",
-      "name": "GetAccept5",
+      "name": "putContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -457,13 +431,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "44",
       "kind": "constant",
-      "name": "GetAccept6",
+      "name": "getContentType3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -474,13 +447,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "46",
       "kind": "constant",
-      "name": "GetAccept7",
+      "name": "putContentType3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -491,13 +463,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "48",
       "kind": "constant",
-      "name": "GetAccept8",
+      "name": "getContentType4",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -508,13 +479,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "50",
       "kind": "constant",
-      "name": "GetAccept9",
+      "name": "putContentType4",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -525,13 +495,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "52",
       "kind": "constant",
-      "name": "GetAccept10",
+      "name": "getContentType5",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -542,13 +511,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "54",
       "kind": "constant",
-      "name": "GetAccept11",
+      "name": "putContentType5",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -559,13 +527,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "56",
       "kind": "constant",
-      "name": "GetAccept12",
+      "name": "getContentType6",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -576,13 +543,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "58",
       "kind": "constant",
-      "name": "GetAccept13",
+      "name": "putContentType6",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -593,13 +559,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "60",
       "kind": "constant",
-      "name": "GetAccept14",
+      "name": "getContentType7",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -610,13 +575,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "62",
       "kind": "constant",
-      "name": "GetAccept15",
+      "name": "putContentType7",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -627,13 +591,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "64",
       "kind": "constant",
-      "name": "GetAccept16",
+      "name": "getContentType8",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -644,13 +607,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "66",
       "kind": "constant",
-      "name": "GetAccept17",
+      "name": "putContentType8",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -661,13 +623,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "68",
       "kind": "constant",
-      "name": "GetAccept18",
+      "name": "getContentType9",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -678,13 +639,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "70",
       "kind": "constant",
-      "name": "GetAccept19",
+      "name": "putContentType9",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -695,13 +655,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "72",
       "kind": "constant",
-      "name": "GetAccept20",
+      "name": "getContentType10",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -712,13 +671,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "74",
       "kind": "constant",
-      "name": "GetAccept21",
+      "name": "putContentType10",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -729,13 +687,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "76",
       "kind": "constant",
-      "name": "GetAccept22",
+      "name": "getContentType11",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -746,13 +703,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "78",
       "kind": "constant",
-      "name": "GetAccept23",
+      "name": "putContentType11",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -763,13 +719,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "80",
       "kind": "constant",
-      "name": "GetAccept24",
+      "name": "getContentType12",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -780,13 +735,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "82",
       "kind": "constant",
-      "name": "GetAccept25",
+      "name": "putContentType12",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -797,13 +751,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "84",
       "kind": "constant",
-      "name": "GetAccept26",
+      "name": "getContentType13",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -814,13 +767,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "86",
       "kind": "constant",
-      "name": "GetAccept27",
+      "name": "putContentType13",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -831,13 +783,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "88",
       "kind": "constant",
-      "name": "GetAccept28",
+      "name": "getContentType14",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -848,13 +799,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "90",
       "kind": "constant",
-      "name": "GetAccept29",
+      "name": "putContentType14",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -865,13 +815,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "92",
       "kind": "constant",
-      "name": "GetAccept30",
+      "name": "getContentType15",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -882,13 +831,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "94",
       "kind": "constant",
-      "name": "GetAccept31",
+      "name": "putContentType15",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -899,13 +847,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "96",
       "kind": "constant",
-      "name": "GetAccept32",
+      "name": "getContentType16",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -916,13 +863,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "98",
       "kind": "constant",
-      "name": "GetAccept33",
+      "name": "putContentType16",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -933,13 +879,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "100",
       "kind": "constant",
-      "name": "GetAccept34",
+      "name": "getContentType17",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -950,13 +895,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "102",
       "kind": "constant",
-      "name": "GetAccept35",
+      "name": "putContentType17",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -967,13 +911,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "104",
       "kind": "constant",
-      "name": "GetAccept36",
+      "name": "getContentType18",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -984,13 +927,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "106",
       "kind": "constant",
-      "name": "GetAccept37",
+      "name": "putContentType18",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1001,13 +943,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "108",
       "kind": "constant",
-      "name": "GetAccept38",
+      "name": "getContentType19",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1018,13 +959,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "110",
       "kind": "constant",
-      "name": "GetAccept39",
+      "name": "putContentType19",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1035,13 +975,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "112",
       "kind": "constant",
-      "name": "GetAccept40",
+      "name": "getContentType20",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1052,13 +991,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "114",
       "kind": "constant",
-      "name": "GetAccept41",
+      "name": "putContentType20",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1069,13 +1007,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "116",
       "kind": "constant",
-      "name": "GetAccept42",
+      "name": "getContentType21",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1086,13 +1023,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "118",
       "kind": "constant",
-      "name": "GetAccept43",
+      "name": "putContentType21",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1103,13 +1039,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "120",
       "kind": "constant",
-      "name": "GetAccept44",
+      "name": "getContentType22",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1120,13 +1055,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "122",
       "kind": "constant",
-      "name": "GetAccept45",
+      "name": "putContentType22",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1137,13 +1071,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "124",
       "kind": "constant",
-      "name": "GetAccept46",
+      "name": "getContentType23",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1154,13 +1087,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "126",
       "kind": "constant",
-      "name": "GetAccept47",
+      "name": "putContentType23",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1171,13 +1103,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "128",
       "kind": "constant",
-      "name": "GetAccept48",
+      "name": "getContentType24",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1188,13 +1119,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "130",
       "kind": "constant",
-      "name": "GetAccept49",
+      "name": "putContentType24",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1205,13 +1135,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "132",
       "kind": "constant",
-      "name": "GetAccept50",
+      "name": "getContentType25",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1222,13 +1151,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "134",
       "kind": "constant",
-      "name": "GetAccept51",
+      "name": "putContentType25",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1239,13 +1167,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "136",
       "kind": "constant",
-      "name": "GetAccept52",
+      "name": "getContentType26",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1256,13 +1183,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "138",
       "kind": "constant",
-      "name": "GetAccept53",
+      "name": "putContentType26",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1273,13 +1199,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "140",
       "kind": "constant",
-      "name": "GetAccept54",
+      "name": "getContentType27",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1290,13 +1215,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "142",
       "kind": "constant",
-      "name": "GetAccept55",
+      "name": "putContentType27",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1307,13 +1231,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "144",
       "kind": "constant",
-      "name": "GetAccept56",
+      "name": "getContentType28",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1324,13 +1247,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "146",
       "kind": "constant",
-      "name": "GetAccept57",
+      "name": "putContentType28",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1341,8 +1263,7 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     }
   ],
   "models": [
@@ -1360,7 +1281,6 @@
           "name": "BooleanProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "149",
@@ -1386,8 +1306,7 @@
               "name": "property"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -1405,7 +1324,6 @@
           "name": "StringProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "152",
@@ -1431,8 +1349,7 @@
               "name": "property"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -1450,7 +1367,6 @@
           "name": "BytesProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "155",
@@ -1477,8 +1393,7 @@
               "name": "property"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -1496,7 +1411,6 @@
           "name": "IntProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "158",
@@ -1522,8 +1436,7 @@
               "name": "property"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -1541,7 +1454,6 @@
           "name": "FloatProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "161",
@@ -1567,8 +1479,7 @@
               "name": "property"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -1586,7 +1497,6 @@
           "name": "DecimalProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "164",
@@ -1612,8 +1522,7 @@
               "name": "property"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -1631,7 +1540,6 @@
           "name": "Decimal128Property"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "167",
@@ -1657,8 +1565,7 @@
               "name": "property"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -1676,7 +1583,6 @@
           "name": "DatetimeProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "170",
@@ -1710,8 +1616,7 @@
               "name": "property"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -1729,7 +1634,6 @@
           "name": "DurationProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "174",
@@ -1763,8 +1667,7 @@
               "name": "property"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -1782,7 +1685,6 @@
           "name": "EnumProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "178",
@@ -1804,8 +1706,7 @@
               "name": "property"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -1823,7 +1724,6 @@
           "name": "ExtensibleEnumProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "180",
@@ -1845,8 +1745,7 @@
               "name": "property"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -1864,7 +1763,6 @@
           "name": "ModelProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "182",
@@ -1886,7 +1784,6 @@
                 "name": "InnerModel"
               }
             },
-            "isExactName": false,
             "properties": [
               {
                 "$id": "184",
@@ -1912,8 +1809,7 @@
                     "name": "property"
                   }
                 },
-                "isHttpMetadata": false,
-                "isExactName": false
+                "isHttpMetadata": false
               }
             ]
           },
@@ -1928,8 +1824,7 @@
               "name": "property"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -1950,7 +1845,6 @@
           "name": "CollectionsStringProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "187",
@@ -1983,8 +1877,7 @@
               "name": "property"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -2002,7 +1895,6 @@
           "name": "CollectionsIntProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "191",
@@ -2035,8 +1927,7 @@
               "name": "property"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -2054,7 +1945,6 @@
           "name": "CollectionsModelProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "195",
@@ -2083,8 +1973,7 @@
               "name": "property"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -2102,7 +1991,6 @@
           "name": "DictionaryStringProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "198",
@@ -2140,8 +2028,7 @@
               "name": "property"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -2159,7 +2046,6 @@
           "name": "NeverProperty"
         }
       },
-      "isExactName": false,
       "properties": []
     },
     {
@@ -2176,7 +2062,6 @@
           "name": "UnknownStringProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "204",
@@ -2202,8 +2087,7 @@
               "name": "property"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -2221,7 +2105,6 @@
           "name": "UnknownIntProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "207",
@@ -2247,8 +2130,7 @@
               "name": "property"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -2266,7 +2148,6 @@
           "name": "UnknownDictProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "210",
@@ -2292,8 +2173,7 @@
               "name": "property"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -2311,7 +2191,6 @@
           "name": "UnknownArrayProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "213",
@@ -2337,8 +2216,7 @@
               "name": "property"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -2356,7 +2234,6 @@
           "name": "StringLiteralProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "216",
@@ -2378,8 +2255,7 @@
               "name": "property"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -2397,7 +2273,6 @@
           "name": "IntLiteralProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "218",
@@ -2419,8 +2294,7 @@
               "name": "property"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -2438,7 +2312,6 @@
           "name": "FloatLiteralProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "220",
@@ -2460,8 +2333,7 @@
               "name": "property"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -2479,7 +2351,6 @@
           "name": "BooleanLiteralProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "222",
@@ -2501,8 +2372,7 @@
               "name": "property"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -2520,7 +2390,6 @@
           "name": "UnionStringLiteralProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "224",
@@ -2542,8 +2411,7 @@
               "name": "property"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -2561,7 +2429,6 @@
           "name": "UnionIntLiteralProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "226",
@@ -2583,8 +2450,7 @@
               "name": "property"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -2602,7 +2468,6 @@
           "name": "UnionFloatLiteralProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "228",
@@ -2624,8 +2489,7 @@
               "name": "property"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -2643,7 +2507,6 @@
           "name": "UnionEnumValueProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "230",
@@ -2665,7 +2528,6 @@
               "decorators": [],
               "name": "ExtendedEnum",
               "isGeneratedName": false,
-              "isExactName": false,
               "namespace": "Type.Property.ValueTypes",
               "valueType": {
                 "$id": "233",
@@ -2681,7 +2543,6 @@
                   "kind": "enumvalue",
                   "decorators": [],
                   "name": "EnumValue2",
-                  "isExactName": false,
                   "value": "value2",
                   "valueType": {
                     "$ref": "233"
@@ -2701,8 +2562,7 @@
               "isUnionAsEnum": true,
               "__accessSet": true
             },
-            "decorators": [],
-            "isExactName": false
+            "decorators": []
           },
           "optional": false,
           "readOnly": false,
@@ -2715,8 +2575,7 @@
               "name": "property"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     }
@@ -2726,7 +2585,6 @@
       "$id": "235",
       "kind": "client",
       "name": "ValueTypesClient",
-      "isExactName": false,
       "namespace": "Type.Property.ValueTypes",
       "doc": "Illustrates various property types for models",
       "methods": [],
@@ -2759,8 +2617,7 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Type.Property.ValueTypes.endpoint",
-          "isExactName": false
+          "crossLanguageDefinitionId": "Type.Property.ValueTypes.endpoint"
         }
       ],
       "initializedBy": 1,
@@ -2772,21 +2629,18 @@
           "$id": "239",
           "kind": "client",
           "name": "Boolean",
-          "isExactName": false,
           "namespace": "Type.Property.ValueTypes",
           "methods": [
             {
               "$id": "240",
               "kind": "basic",
               "name": "get",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get call",
               "operation": {
                 "$id": "241",
                 "name": "get",
-                "isExactName": false,
                 "resourceName": "Boolean",
                 "doc": "Get call",
                 "accessibility": "public",
@@ -2822,11 +2676,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.Boolean.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -2841,12 +2693,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -2878,14 +2725,12 @@
               "$id": "244",
               "kind": "basic",
               "name": "put",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put operation",
               "operation": {
                 "$id": "245",
                 "name": "put",
-                "isExactName": false,
                 "resourceName": "Boolean",
                 "doc": "Put operation",
                 "accessibility": "public",
@@ -2923,11 +2768,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.Boolean.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "248",
@@ -2965,16 +2808,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.Boolean.put.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -2983,8 +2819,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -3044,8 +2879,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.Boolean.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.Boolean.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -3061,21 +2895,18 @@
           "$id": "253",
           "kind": "client",
           "name": "String",
-          "isExactName": false,
           "namespace": "Type.Property.ValueTypes",
           "methods": [
             {
               "$id": "254",
               "kind": "basic",
               "name": "get",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get call",
               "operation": {
                 "$id": "255",
                 "name": "get",
-                "isExactName": false,
                 "resourceName": "String",
                 "doc": "Get call",
                 "accessibility": "public",
@@ -3111,11 +2942,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.String.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -3130,12 +2959,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -3167,14 +2991,12 @@
               "$id": "258",
               "kind": "basic",
               "name": "put",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put operation",
               "operation": {
                 "$id": "259",
                 "name": "put",
-                "isExactName": false,
                 "resourceName": "String",
                 "doc": "Put operation",
                 "accessibility": "public",
@@ -3212,11 +3034,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.String.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "262",
@@ -3254,16 +3074,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.String.put.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -3272,8 +3085,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -3333,8 +3145,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.String.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.String.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -3350,21 +3161,18 @@
           "$id": "267",
           "kind": "client",
           "name": "Bytes",
-          "isExactName": false,
           "namespace": "Type.Property.ValueTypes",
           "methods": [
             {
               "$id": "268",
               "kind": "basic",
               "name": "get",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get call",
               "operation": {
                 "$id": "269",
                 "name": "get",
-                "isExactName": false,
                 "resourceName": "Bytes",
                 "doc": "Get call",
                 "accessibility": "public",
@@ -3400,11 +3208,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.Bytes.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -3419,12 +3225,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -3456,14 +3257,12 @@
               "$id": "272",
               "kind": "basic",
               "name": "put",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put operation",
               "operation": {
                 "$id": "273",
                 "name": "put",
-                "isExactName": false,
                 "resourceName": "Bytes",
                 "doc": "Put operation",
                 "accessibility": "public",
@@ -3501,11 +3300,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.Bytes.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "276",
@@ -3543,16 +3340,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.Bytes.put.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -3561,8 +3351,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -3622,8 +3411,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.Bytes.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.Bytes.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -3639,21 +3427,18 @@
           "$id": "281",
           "kind": "client",
           "name": "Int",
-          "isExactName": false,
           "namespace": "Type.Property.ValueTypes",
           "methods": [
             {
               "$id": "282",
               "kind": "basic",
               "name": "get",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get call",
               "operation": {
                 "$id": "283",
                 "name": "get",
-                "isExactName": false,
                 "resourceName": "Int",
                 "doc": "Get call",
                 "accessibility": "public",
@@ -3689,11 +3474,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.Int.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -3708,12 +3491,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -3745,14 +3523,12 @@
               "$id": "286",
               "kind": "basic",
               "name": "put",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put operation",
               "operation": {
                 "$id": "287",
                 "name": "put",
-                "isExactName": false,
                 "resourceName": "Int",
                 "doc": "Put operation",
                 "accessibility": "public",
@@ -3790,11 +3566,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.Int.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "290",
@@ -3832,16 +3606,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.Int.put.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -3850,8 +3617,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -3911,8 +3677,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.Int.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.Int.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -3928,21 +3693,18 @@
           "$id": "295",
           "kind": "client",
           "name": "Float",
-          "isExactName": false,
           "namespace": "Type.Property.ValueTypes",
           "methods": [
             {
               "$id": "296",
               "kind": "basic",
               "name": "get",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get call",
               "operation": {
                 "$id": "297",
                 "name": "get",
-                "isExactName": false,
                 "resourceName": "Float",
                 "doc": "Get call",
                 "accessibility": "public",
@@ -3978,11 +3740,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.Float.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -3997,12 +3757,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -4034,14 +3789,12 @@
               "$id": "300",
               "kind": "basic",
               "name": "put",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put operation",
               "operation": {
                 "$id": "301",
                 "name": "put",
-                "isExactName": false,
                 "resourceName": "Float",
                 "doc": "Put operation",
                 "accessibility": "public",
@@ -4079,11 +3832,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.Float.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "304",
@@ -4121,16 +3872,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.Float.put.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -4139,8 +3883,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -4200,8 +3943,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.Float.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.Float.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -4217,21 +3959,18 @@
           "$id": "309",
           "kind": "client",
           "name": "Decimal",
-          "isExactName": false,
           "namespace": "Type.Property.ValueTypes",
           "methods": [
             {
               "$id": "310",
               "kind": "basic",
               "name": "get",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get call",
               "operation": {
                 "$id": "311",
                 "name": "get",
-                "isExactName": false,
                 "resourceName": "Decimal",
                 "doc": "Get call",
                 "accessibility": "public",
@@ -4267,11 +4006,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.Decimal.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -4286,12 +4023,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -4323,14 +4055,12 @@
               "$id": "314",
               "kind": "basic",
               "name": "put",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put operation",
               "operation": {
                 "$id": "315",
                 "name": "put",
-                "isExactName": false,
                 "resourceName": "Decimal",
                 "doc": "Put operation",
                 "accessibility": "public",
@@ -4368,11 +4098,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.Decimal.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "318",
@@ -4410,16 +4138,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.Decimal.put.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -4428,8 +4149,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -4489,8 +4209,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.Decimal.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.Decimal.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -4506,21 +4225,18 @@
           "$id": "323",
           "kind": "client",
           "name": "Decimal128",
-          "isExactName": false,
           "namespace": "Type.Property.ValueTypes",
           "methods": [
             {
               "$id": "324",
               "kind": "basic",
               "name": "get",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get call",
               "operation": {
                 "$id": "325",
                 "name": "get",
-                "isExactName": false,
                 "resourceName": "Decimal128",
                 "doc": "Get call",
                 "accessibility": "public",
@@ -4556,11 +4272,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.Decimal128.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -4575,12 +4289,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -4612,14 +4321,12 @@
               "$id": "328",
               "kind": "basic",
               "name": "put",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put operation",
               "operation": {
                 "$id": "329",
                 "name": "put",
-                "isExactName": false,
                 "resourceName": "Decimal128",
                 "doc": "Put operation",
                 "accessibility": "public",
@@ -4657,11 +4364,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.Decimal128.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "332",
@@ -4699,16 +4404,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.Decimal128.put.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -4717,8 +4415,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -4778,8 +4475,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.Decimal128.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.Decimal128.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -4795,21 +4491,18 @@
           "$id": "337",
           "kind": "client",
           "name": "Datetime",
-          "isExactName": false,
           "namespace": "Type.Property.ValueTypes",
           "methods": [
             {
               "$id": "338",
               "kind": "basic",
               "name": "get",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get call",
               "operation": {
                 "$id": "339",
                 "name": "get",
-                "isExactName": false,
                 "resourceName": "Datetime",
                 "doc": "Get call",
                 "accessibility": "public",
@@ -4845,11 +4538,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.Datetime.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -4864,12 +4555,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -4901,14 +4587,12 @@
               "$id": "342",
               "kind": "basic",
               "name": "put",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put operation",
               "operation": {
                 "$id": "343",
                 "name": "put",
-                "isExactName": false,
                 "resourceName": "Datetime",
                 "doc": "Put operation",
                 "accessibility": "public",
@@ -4946,11 +4630,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.Datetime.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "346",
@@ -4988,16 +4670,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.Datetime.put.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -5006,8 +4681,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -5067,8 +4741,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.Datetime.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.Datetime.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -5084,21 +4757,18 @@
           "$id": "351",
           "kind": "client",
           "name": "Duration",
-          "isExactName": false,
           "namespace": "Type.Property.ValueTypes",
           "methods": [
             {
               "$id": "352",
               "kind": "basic",
               "name": "get",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get call",
               "operation": {
                 "$id": "353",
                 "name": "get",
-                "isExactName": false,
                 "resourceName": "Duration",
                 "doc": "Get call",
                 "accessibility": "public",
@@ -5134,11 +4804,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.Duration.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -5153,12 +4821,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -5190,14 +4853,12 @@
               "$id": "356",
               "kind": "basic",
               "name": "put",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put operation",
               "operation": {
                 "$id": "357",
                 "name": "put",
-                "isExactName": false,
                 "resourceName": "Duration",
                 "doc": "Put operation",
                 "accessibility": "public",
@@ -5235,11 +4896,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.Duration.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "360",
@@ -5277,16 +4936,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.Duration.put.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -5295,8 +4947,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -5356,8 +5007,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.Duration.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.Duration.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -5373,21 +5023,18 @@
           "$id": "365",
           "kind": "client",
           "name": "Enum",
-          "isExactName": false,
           "namespace": "Type.Property.ValueTypes",
           "methods": [
             {
               "$id": "366",
               "kind": "basic",
               "name": "get",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get call",
               "operation": {
                 "$id": "367",
                 "name": "get",
-                "isExactName": false,
                 "resourceName": "Enum",
                 "doc": "Get call",
                 "accessibility": "public",
@@ -5423,11 +5070,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.Enum.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -5442,12 +5087,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -5479,14 +5119,12 @@
               "$id": "370",
               "kind": "basic",
               "name": "put",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put operation",
               "operation": {
                 "$id": "371",
                 "name": "put",
-                "isExactName": false,
                 "resourceName": "Enum",
                 "doc": "Put operation",
                 "accessibility": "public",
@@ -5524,11 +5162,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.Enum.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "374",
@@ -5566,16 +5202,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.Enum.put.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -5584,8 +5213,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -5645,8 +5273,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.Enum.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.Enum.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -5662,21 +5289,18 @@
           "$id": "379",
           "kind": "client",
           "name": "ExtensibleEnum",
-          "isExactName": false,
           "namespace": "Type.Property.ValueTypes",
           "methods": [
             {
               "$id": "380",
               "kind": "basic",
               "name": "get",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get call",
               "operation": {
                 "$id": "381",
                 "name": "get",
-                "isExactName": false,
                 "resourceName": "ExtensibleEnum",
                 "doc": "Get call",
                 "accessibility": "public",
@@ -5712,11 +5336,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.ExtensibleEnum.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -5731,12 +5353,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -5768,14 +5385,12 @@
               "$id": "384",
               "kind": "basic",
               "name": "put",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put operation",
               "operation": {
                 "$id": "385",
                 "name": "put",
-                "isExactName": false,
                 "resourceName": "ExtensibleEnum",
                 "doc": "Put operation",
                 "accessibility": "public",
@@ -5813,11 +5428,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.ExtensibleEnum.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "388",
@@ -5855,16 +5468,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.ExtensibleEnum.put.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -5873,8 +5479,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -5934,8 +5539,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.ExtensibleEnum.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.ExtensibleEnum.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -5951,21 +5555,18 @@
           "$id": "393",
           "kind": "client",
           "name": "Model",
-          "isExactName": false,
           "namespace": "Type.Property.ValueTypes",
           "methods": [
             {
               "$id": "394",
               "kind": "basic",
               "name": "get",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get call",
               "operation": {
                 "$id": "395",
                 "name": "get",
-                "isExactName": false,
                 "resourceName": "Model",
                 "doc": "Get call",
                 "accessibility": "public",
@@ -6001,11 +5602,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.Model.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -6020,12 +5619,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -6057,14 +5651,12 @@
               "$id": "398",
               "kind": "basic",
               "name": "put",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put operation",
               "operation": {
                 "$id": "399",
                 "name": "put",
-                "isExactName": false,
                 "resourceName": "Model",
                 "doc": "Put operation",
                 "accessibility": "public",
@@ -6102,11 +5694,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.Model.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "402",
@@ -6144,16 +5734,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.Model.put.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -6162,8 +5745,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -6223,8 +5805,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.Model.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.Model.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -6240,21 +5821,18 @@
           "$id": "407",
           "kind": "client",
           "name": "CollectionsString",
-          "isExactName": false,
           "namespace": "Type.Property.ValueTypes",
           "methods": [
             {
               "$id": "408",
               "kind": "basic",
               "name": "get",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get call",
               "operation": {
                 "$id": "409",
                 "name": "get",
-                "isExactName": false,
                 "resourceName": "CollectionsString",
                 "doc": "Get call",
                 "accessibility": "public",
@@ -6290,11 +5868,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.CollectionsString.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -6309,12 +5885,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -6346,14 +5917,12 @@
               "$id": "412",
               "kind": "basic",
               "name": "put",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put operation",
               "operation": {
                 "$id": "413",
                 "name": "put",
-                "isExactName": false,
                 "resourceName": "CollectionsString",
                 "doc": "Put operation",
                 "accessibility": "public",
@@ -6391,11 +5960,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.CollectionsString.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "416",
@@ -6433,16 +6000,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.CollectionsString.put.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -6451,8 +6011,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -6512,8 +6071,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.CollectionsString.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.CollectionsString.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -6529,21 +6087,18 @@
           "$id": "421",
           "kind": "client",
           "name": "CollectionsInt",
-          "isExactName": false,
           "namespace": "Type.Property.ValueTypes",
           "methods": [
             {
               "$id": "422",
               "kind": "basic",
               "name": "get",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get call",
               "operation": {
                 "$id": "423",
                 "name": "get",
-                "isExactName": false,
                 "resourceName": "CollectionsInt",
                 "doc": "Get call",
                 "accessibility": "public",
@@ -6579,11 +6134,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.CollectionsInt.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -6598,12 +6151,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -6635,14 +6183,12 @@
               "$id": "426",
               "kind": "basic",
               "name": "put",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put operation",
               "operation": {
                 "$id": "427",
                 "name": "put",
-                "isExactName": false,
                 "resourceName": "CollectionsInt",
                 "doc": "Put operation",
                 "accessibility": "public",
@@ -6680,11 +6226,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.CollectionsInt.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "430",
@@ -6722,16 +6266,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.CollectionsInt.put.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -6740,8 +6277,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -6801,8 +6337,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.CollectionsInt.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.CollectionsInt.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -6818,21 +6353,18 @@
           "$id": "435",
           "kind": "client",
           "name": "CollectionsModel",
-          "isExactName": false,
           "namespace": "Type.Property.ValueTypes",
           "methods": [
             {
               "$id": "436",
               "kind": "basic",
               "name": "get",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get call",
               "operation": {
                 "$id": "437",
                 "name": "get",
-                "isExactName": false,
                 "resourceName": "CollectionsModel",
                 "doc": "Get call",
                 "accessibility": "public",
@@ -6868,11 +6400,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.CollectionsModel.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -6887,12 +6417,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -6924,14 +6449,12 @@
               "$id": "440",
               "kind": "basic",
               "name": "put",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put operation",
               "operation": {
                 "$id": "441",
                 "name": "put",
-                "isExactName": false,
                 "resourceName": "CollectionsModel",
                 "doc": "Put operation",
                 "accessibility": "public",
@@ -6969,11 +6492,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.CollectionsModel.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "444",
@@ -7011,16 +6532,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.CollectionsModel.put.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -7029,8 +6543,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -7090,8 +6603,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.CollectionsModel.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.CollectionsModel.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -7107,21 +6619,18 @@
           "$id": "449",
           "kind": "client",
           "name": "DictionaryString",
-          "isExactName": false,
           "namespace": "Type.Property.ValueTypes",
           "methods": [
             {
               "$id": "450",
               "kind": "basic",
               "name": "get",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get call",
               "operation": {
                 "$id": "451",
                 "name": "get",
-                "isExactName": false,
                 "resourceName": "DictionaryString",
                 "doc": "Get call",
                 "accessibility": "public",
@@ -7157,11 +6666,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.DictionaryString.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -7176,12 +6683,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -7213,14 +6715,12 @@
               "$id": "454",
               "kind": "basic",
               "name": "put",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put operation",
               "operation": {
                 "$id": "455",
                 "name": "put",
-                "isExactName": false,
                 "resourceName": "DictionaryString",
                 "doc": "Put operation",
                 "accessibility": "public",
@@ -7258,11 +6758,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.DictionaryString.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "458",
@@ -7300,16 +6798,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.DictionaryString.put.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -7318,8 +6809,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -7379,8 +6869,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.DictionaryString.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.DictionaryString.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -7396,21 +6885,18 @@
           "$id": "463",
           "kind": "client",
           "name": "Never",
-          "isExactName": false,
           "namespace": "Type.Property.ValueTypes",
           "methods": [
             {
               "$id": "464",
               "kind": "basic",
               "name": "get",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get call",
               "operation": {
                 "$id": "465",
                 "name": "get",
-                "isExactName": false,
                 "resourceName": "Never",
                 "doc": "Get call",
                 "accessibility": "public",
@@ -7446,11 +6932,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.Never.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -7465,12 +6949,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -7502,14 +6981,12 @@
               "$id": "468",
               "kind": "basic",
               "name": "put",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put operation",
               "operation": {
                 "$id": "469",
                 "name": "put",
-                "isExactName": false,
                 "resourceName": "Never",
                 "doc": "Put operation",
                 "accessibility": "public",
@@ -7547,11 +7024,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.Never.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "472",
@@ -7589,16 +7064,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.Never.put.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -7607,8 +7075,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -7668,8 +7135,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.Never.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.Never.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -7685,21 +7151,18 @@
           "$id": "477",
           "kind": "client",
           "name": "UnknownString",
-          "isExactName": false,
           "namespace": "Type.Property.ValueTypes",
           "methods": [
             {
               "$id": "478",
               "kind": "basic",
               "name": "get",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get call",
               "operation": {
                 "$id": "479",
                 "name": "get",
-                "isExactName": false,
                 "resourceName": "UnknownString",
                 "doc": "Get call",
                 "accessibility": "public",
@@ -7735,11 +7198,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnknownString.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -7754,12 +7215,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -7791,14 +7247,12 @@
               "$id": "482",
               "kind": "basic",
               "name": "put",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put operation",
               "operation": {
                 "$id": "483",
                 "name": "put",
-                "isExactName": false,
                 "resourceName": "UnknownString",
                 "doc": "Put operation",
                 "accessibility": "public",
@@ -7836,11 +7290,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnknownString.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "486",
@@ -7878,16 +7330,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnknownString.put.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -7896,8 +7341,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -7957,8 +7401,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnknownString.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnknownString.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -7974,21 +7417,18 @@
           "$id": "491",
           "kind": "client",
           "name": "UnknownInt",
-          "isExactName": false,
           "namespace": "Type.Property.ValueTypes",
           "methods": [
             {
               "$id": "492",
               "kind": "basic",
               "name": "get",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get call",
               "operation": {
                 "$id": "493",
                 "name": "get",
-                "isExactName": false,
                 "resourceName": "UnknownInt",
                 "doc": "Get call",
                 "accessibility": "public",
@@ -8024,11 +7464,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnknownInt.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -8043,12 +7481,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -8080,14 +7513,12 @@
               "$id": "496",
               "kind": "basic",
               "name": "put",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put operation",
               "operation": {
                 "$id": "497",
                 "name": "put",
-                "isExactName": false,
                 "resourceName": "UnknownInt",
                 "doc": "Put operation",
                 "accessibility": "public",
@@ -8125,11 +7556,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnknownInt.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "500",
@@ -8167,16 +7596,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnknownInt.put.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -8185,8 +7607,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -8246,8 +7667,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnknownInt.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnknownInt.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -8263,21 +7683,18 @@
           "$id": "505",
           "kind": "client",
           "name": "UnknownDict",
-          "isExactName": false,
           "namespace": "Type.Property.ValueTypes",
           "methods": [
             {
               "$id": "506",
               "kind": "basic",
               "name": "get",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get call",
               "operation": {
                 "$id": "507",
                 "name": "get",
-                "isExactName": false,
                 "resourceName": "UnknownDict",
                 "doc": "Get call",
                 "accessibility": "public",
@@ -8313,11 +7730,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnknownDict.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -8332,12 +7747,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -8369,14 +7779,12 @@
               "$id": "510",
               "kind": "basic",
               "name": "put",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put operation",
               "operation": {
                 "$id": "511",
                 "name": "put",
-                "isExactName": false,
                 "resourceName": "UnknownDict",
                 "doc": "Put operation",
                 "accessibility": "public",
@@ -8414,11 +7822,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnknownDict.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "514",
@@ -8456,16 +7862,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnknownDict.put.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -8474,8 +7873,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -8535,8 +7933,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnknownDict.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnknownDict.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -8552,21 +7949,18 @@
           "$id": "519",
           "kind": "client",
           "name": "UnknownArray",
-          "isExactName": false,
           "namespace": "Type.Property.ValueTypes",
           "methods": [
             {
               "$id": "520",
               "kind": "basic",
               "name": "get",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get call",
               "operation": {
                 "$id": "521",
                 "name": "get",
-                "isExactName": false,
                 "resourceName": "UnknownArray",
                 "doc": "Get call",
                 "accessibility": "public",
@@ -8602,11 +7996,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnknownArray.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -8621,12 +8013,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -8658,14 +8045,12 @@
               "$id": "524",
               "kind": "basic",
               "name": "put",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put operation",
               "operation": {
                 "$id": "525",
                 "name": "put",
-                "isExactName": false,
                 "resourceName": "UnknownArray",
                 "doc": "Put operation",
                 "accessibility": "public",
@@ -8703,11 +8088,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnknownArray.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "528",
@@ -8745,16 +8128,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnknownArray.put.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -8763,8 +8139,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -8824,8 +8199,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnknownArray.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnknownArray.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -8841,21 +8215,18 @@
           "$id": "533",
           "kind": "client",
           "name": "StringLiteral",
-          "isExactName": false,
           "namespace": "Type.Property.ValueTypes",
           "methods": [
             {
               "$id": "534",
               "kind": "basic",
               "name": "get",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get call",
               "operation": {
                 "$id": "535",
                 "name": "get",
-                "isExactName": false,
                 "resourceName": "StringLiteral",
                 "doc": "Get call",
                 "accessibility": "public",
@@ -8891,11 +8262,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.StringLiteral.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -8910,12 +8279,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -8947,14 +8311,12 @@
               "$id": "538",
               "kind": "basic",
               "name": "put",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put operation",
               "operation": {
                 "$id": "539",
                 "name": "put",
-                "isExactName": false,
                 "resourceName": "StringLiteral",
                 "doc": "Put operation",
                 "accessibility": "public",
@@ -8992,11 +8354,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.StringLiteral.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "542",
@@ -9034,16 +8394,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.StringLiteral.put.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -9052,8 +8405,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -9113,8 +8465,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.StringLiteral.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.StringLiteral.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -9130,21 +8481,18 @@
           "$id": "547",
           "kind": "client",
           "name": "IntLiteral",
-          "isExactName": false,
           "namespace": "Type.Property.ValueTypes",
           "methods": [
             {
               "$id": "548",
               "kind": "basic",
               "name": "get",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get call",
               "operation": {
                 "$id": "549",
                 "name": "get",
-                "isExactName": false,
                 "resourceName": "IntLiteral",
                 "doc": "Get call",
                 "accessibility": "public",
@@ -9180,11 +8528,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.IntLiteral.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -9199,12 +8545,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -9236,14 +8577,12 @@
               "$id": "552",
               "kind": "basic",
               "name": "put",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put operation",
               "operation": {
                 "$id": "553",
                 "name": "put",
-                "isExactName": false,
                 "resourceName": "IntLiteral",
                 "doc": "Put operation",
                 "accessibility": "public",
@@ -9281,11 +8620,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.IntLiteral.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "556",
@@ -9323,16 +8660,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.IntLiteral.put.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -9341,8 +8671,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -9402,8 +8731,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.IntLiteral.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.IntLiteral.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -9419,21 +8747,18 @@
           "$id": "561",
           "kind": "client",
           "name": "FloatLiteral",
-          "isExactName": false,
           "namespace": "Type.Property.ValueTypes",
           "methods": [
             {
               "$id": "562",
               "kind": "basic",
               "name": "get",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get call",
               "operation": {
                 "$id": "563",
                 "name": "get",
-                "isExactName": false,
                 "resourceName": "FloatLiteral",
                 "doc": "Get call",
                 "accessibility": "public",
@@ -9469,11 +8794,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.FloatLiteral.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -9488,12 +8811,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -9525,14 +8843,12 @@
               "$id": "566",
               "kind": "basic",
               "name": "put",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put operation",
               "operation": {
                 "$id": "567",
                 "name": "put",
-                "isExactName": false,
                 "resourceName": "FloatLiteral",
                 "doc": "Put operation",
                 "accessibility": "public",
@@ -9570,11 +8886,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.FloatLiteral.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "570",
@@ -9612,16 +8926,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.FloatLiteral.put.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -9630,8 +8937,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -9691,8 +8997,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.FloatLiteral.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.FloatLiteral.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -9708,21 +9013,18 @@
           "$id": "575",
           "kind": "client",
           "name": "BooleanLiteral",
-          "isExactName": false,
           "namespace": "Type.Property.ValueTypes",
           "methods": [
             {
               "$id": "576",
               "kind": "basic",
               "name": "get",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get call",
               "operation": {
                 "$id": "577",
                 "name": "get",
-                "isExactName": false,
                 "resourceName": "BooleanLiteral",
                 "doc": "Get call",
                 "accessibility": "public",
@@ -9758,11 +9060,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.BooleanLiteral.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -9777,12 +9077,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -9814,14 +9109,12 @@
               "$id": "580",
               "kind": "basic",
               "name": "put",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put operation",
               "operation": {
                 "$id": "581",
                 "name": "put",
-                "isExactName": false,
                 "resourceName": "BooleanLiteral",
                 "doc": "Put operation",
                 "accessibility": "public",
@@ -9859,11 +9152,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.BooleanLiteral.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "584",
@@ -9901,16 +9192,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.BooleanLiteral.put.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -9919,8 +9203,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -9980,8 +9263,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.BooleanLiteral.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.BooleanLiteral.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -9997,21 +9279,18 @@
           "$id": "589",
           "kind": "client",
           "name": "UnionStringLiteral",
-          "isExactName": false,
           "namespace": "Type.Property.ValueTypes",
           "methods": [
             {
               "$id": "590",
               "kind": "basic",
               "name": "get",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get call",
               "operation": {
                 "$id": "591",
                 "name": "get",
-                "isExactName": false,
                 "resourceName": "UnionStringLiteral",
                 "doc": "Get call",
                 "accessibility": "public",
@@ -10047,11 +9326,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnionStringLiteral.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -10066,12 +9343,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -10103,14 +9375,12 @@
               "$id": "594",
               "kind": "basic",
               "name": "put",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put operation",
               "operation": {
                 "$id": "595",
                 "name": "put",
-                "isExactName": false,
                 "resourceName": "UnionStringLiteral",
                 "doc": "Put operation",
                 "accessibility": "public",
@@ -10148,11 +9418,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnionStringLiteral.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "598",
@@ -10190,16 +9458,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnionStringLiteral.put.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -10208,8 +9469,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -10269,8 +9529,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnionStringLiteral.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnionStringLiteral.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -10286,21 +9545,18 @@
           "$id": "603",
           "kind": "client",
           "name": "UnionIntLiteral",
-          "isExactName": false,
           "namespace": "Type.Property.ValueTypes",
           "methods": [
             {
               "$id": "604",
               "kind": "basic",
               "name": "get",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get call",
               "operation": {
                 "$id": "605",
                 "name": "get",
-                "isExactName": false,
                 "resourceName": "UnionIntLiteral",
                 "doc": "Get call",
                 "accessibility": "public",
@@ -10336,11 +9592,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnionIntLiteral.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -10355,12 +9609,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -10392,14 +9641,12 @@
               "$id": "608",
               "kind": "basic",
               "name": "put",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put operation",
               "operation": {
                 "$id": "609",
                 "name": "put",
-                "isExactName": false,
                 "resourceName": "UnionIntLiteral",
                 "doc": "Put operation",
                 "accessibility": "public",
@@ -10437,11 +9684,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnionIntLiteral.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "612",
@@ -10479,16 +9724,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnionIntLiteral.put.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -10497,8 +9735,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -10558,8 +9795,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnionIntLiteral.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnionIntLiteral.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -10575,21 +9811,18 @@
           "$id": "617",
           "kind": "client",
           "name": "UnionFloatLiteral",
-          "isExactName": false,
           "namespace": "Type.Property.ValueTypes",
           "methods": [
             {
               "$id": "618",
               "kind": "basic",
               "name": "get",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get call",
               "operation": {
                 "$id": "619",
                 "name": "get",
-                "isExactName": false,
                 "resourceName": "UnionFloatLiteral",
                 "doc": "Get call",
                 "accessibility": "public",
@@ -10625,11 +9858,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnionFloatLiteral.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -10644,12 +9875,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -10681,14 +9907,12 @@
               "$id": "622",
               "kind": "basic",
               "name": "put",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put operation",
               "operation": {
                 "$id": "623",
                 "name": "put",
-                "isExactName": false,
                 "resourceName": "UnionFloatLiteral",
                 "doc": "Put operation",
                 "accessibility": "public",
@@ -10726,11 +9950,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnionFloatLiteral.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "626",
@@ -10768,16 +9990,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnionFloatLiteral.put.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -10786,8 +10001,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -10847,8 +10061,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnionFloatLiteral.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnionFloatLiteral.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -10864,21 +10077,18 @@
           "$id": "631",
           "kind": "client",
           "name": "UnionEnumValue",
-          "isExactName": false,
           "namespace": "Type.Property.ValueTypes",
           "methods": [
             {
               "$id": "632",
               "kind": "basic",
               "name": "get",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get call",
               "operation": {
                 "$id": "633",
                 "name": "get",
-                "isExactName": false,
                 "resourceName": "UnionEnumValue",
                 "doc": "Get call",
                 "accessibility": "public",
@@ -10914,11 +10124,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnionEnumValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -10933,12 +10141,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -10970,14 +10173,12 @@
               "$id": "636",
               "kind": "basic",
               "name": "put",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put operation",
               "operation": {
                 "$id": "637",
                 "name": "put",
-                "isExactName": false,
                 "resourceName": "UnionEnumValue",
                 "doc": "Put operation",
                 "accessibility": "public",
@@ -11015,11 +10216,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnionEnumValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "640",
@@ -11057,16 +10256,9 @@
                         "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnionEnumValue.put.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -11075,8 +10267,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -11136,8 +10327,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnionEnumValue.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Type.Property.ValueTypes.UnionEnumValue.endpoint"
             }
           ],
           "initializedBy": 0,

@@ -8,7 +8,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Pipeline;
-using Service.MultipleServices.ServiceA.SubNamespace;
+using Service.MultipleServices.ServiceA._SubNamespace;
 
 namespace Service.MultipleServices.ServiceA
 {
@@ -25,8 +25,8 @@ namespace Service.MultipleServices.ServiceA
 
         public virtual HttpPipeline Pipeline => throw null;
 
-        public virtual ASubNamespace GetASubNamespaceClient() => throw null;
+        public virtual SubNamespace GetSubNamespaceClient() => throw null;
 
-        public virtual AOperations GetAOperationsClient() => throw null;
+        public virtual Operations GetOperationsClient() => throw null;
     }
 }

@@ -31,16 +31,14 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         }
       ],
       "namespace": "Type.Property.Optional",
       "isFixed": false,
       "isFlags": false,
       "usage": "Input,Output,Json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "5",
@@ -71,16 +69,14 @@
           "enumType": {
             "$ref": "5"
           },
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         }
       ],
       "namespace": "Type.Property.Optional",
       "isFixed": false,
       "isFlags": false,
       "usage": "Input,Output,Json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "9",
@@ -111,16 +107,14 @@
           "enumType": {
             "$ref": "9"
           },
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         }
       ],
       "namespace": "Type.Property.Optional",
       "isFixed": false,
       "isFlags": false,
       "usage": "Input,Output,Json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "13",
@@ -146,8 +140,7 @@
           "enumType": {
             "$ref": "13"
           },
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         },
         {
           "$id": "16",
@@ -160,16 +153,14 @@
           "enumType": {
             "$ref": "13"
           },
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         }
       ],
       "namespace": "Type.Property.Optional",
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,Output,Json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "17",
@@ -195,8 +186,7 @@
           "enumType": {
             "$ref": "17"
           },
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         },
         {
           "$id": "20",
@@ -209,16 +199,14 @@
           "enumType": {
             "$ref": "17"
           },
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         }
       ],
       "namespace": "Type.Property.Optional",
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,Output,Json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "21",
@@ -244,8 +232,7 @@
           "enumType": {
             "$ref": "21"
           },
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         },
         {
           "$id": "24",
@@ -258,16 +245,14 @@
           "enumType": {
             "$ref": "21"
           },
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         }
       ],
       "namespace": "Type.Property.Optional",
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,Output,Json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     }
   ],
   "constants": [
@@ -285,13 +270,12 @@
         "decorators": []
       },
       "value": true,
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "27",
       "kind": "constant",
-      "name": "GetAllAccept",
+      "name": "getAllContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -302,13 +286,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "29",
       "kind": "constant",
-      "name": "GetAllAccept1",
+      "name": "getDefaultContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -319,13 +302,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "31",
       "kind": "constant",
-      "name": "GetAllAccept2",
+      "name": "putAllContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -336,13 +318,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "33",
       "kind": "constant",
-      "name": "GetAllAccept3",
+      "name": "putDefaultContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -353,13 +334,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "35",
       "kind": "constant",
-      "name": "GetAllAccept4",
+      "name": "getAllContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -370,13 +350,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "37",
       "kind": "constant",
-      "name": "GetAllAccept5",
+      "name": "getDefaultContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -387,13 +366,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "39",
       "kind": "constant",
-      "name": "GetAllAccept6",
+      "name": "putAllContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -404,13 +382,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "41",
       "kind": "constant",
-      "name": "GetAllAccept7",
+      "name": "putDefaultContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -421,13 +398,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "43",
       "kind": "constant",
-      "name": "GetAllAccept8",
+      "name": "getAllContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -438,13 +414,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "45",
       "kind": "constant",
-      "name": "GetAllAccept9",
+      "name": "getDefaultContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -455,13 +430,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "47",
       "kind": "constant",
-      "name": "GetAllAccept10",
+      "name": "putAllContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -472,13 +446,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "49",
       "kind": "constant",
-      "name": "GetAllAccept11",
+      "name": "putDefaultContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -489,13 +462,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "51",
       "kind": "constant",
-      "name": "GetAllAccept12",
+      "name": "getAllContentType3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -506,13 +478,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "53",
       "kind": "constant",
-      "name": "GetAllAccept13",
+      "name": "getDefaultContentType3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -523,13 +494,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "55",
       "kind": "constant",
-      "name": "GetAllAccept14",
+      "name": "putAllContentType3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -540,13 +510,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "57",
       "kind": "constant",
-      "name": "GetAllAccept15",
+      "name": "putDefaultContentType3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -557,13 +526,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "59",
       "kind": "constant",
-      "name": "GetAllAccept16",
+      "name": "getAllContentType4",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -574,13 +542,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "61",
       "kind": "constant",
-      "name": "GetAllAccept17",
+      "name": "getDefaultContentType4",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -591,13 +558,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "63",
       "kind": "constant",
-      "name": "GetAllAccept18",
+      "name": "putAllContentType4",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -608,13 +574,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "65",
       "kind": "constant",
-      "name": "GetAllAccept19",
+      "name": "putDefaultContentType4",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -625,13 +590,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "67",
       "kind": "constant",
-      "name": "GetAllAccept20",
+      "name": "getAllContentType5",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -642,13 +606,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "69",
       "kind": "constant",
-      "name": "GetAllAccept21",
+      "name": "getDefaultContentType5",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -659,13 +622,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "71",
       "kind": "constant",
-      "name": "GetAllAccept22",
+      "name": "putAllContentType5",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -676,13 +638,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "73",
       "kind": "constant",
-      "name": "GetAllAccept23",
+      "name": "putDefaultContentType5",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -693,13 +654,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "75",
       "kind": "constant",
-      "name": "GetAllAccept24",
+      "name": "getAllContentType6",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -710,13 +670,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "77",
       "kind": "constant",
-      "name": "GetAllAccept25",
+      "name": "getDefaultContentType6",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -727,13 +686,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "79",
       "kind": "constant",
-      "name": "GetAllAccept26",
+      "name": "putAllContentType6",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -744,13 +702,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "81",
       "kind": "constant",
-      "name": "GetAllAccept27",
+      "name": "putDefaultContentType6",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -761,13 +718,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "83",
       "kind": "constant",
-      "name": "GetAllAccept28",
+      "name": "getAllContentType7",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -778,13 +734,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "85",
       "kind": "constant",
-      "name": "GetAllAccept29",
+      "name": "getDefaultContentType7",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -795,13 +750,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "87",
       "kind": "constant",
-      "name": "GetAllAccept30",
+      "name": "putAllContentType7",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -812,13 +766,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "89",
       "kind": "constant",
-      "name": "GetAllAccept31",
+      "name": "putDefaultContentType7",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -829,13 +782,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "91",
       "kind": "constant",
-      "name": "GetAllAccept32",
+      "name": "getAllContentType8",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -846,13 +798,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "93",
       "kind": "constant",
-      "name": "GetAllAccept33",
+      "name": "getDefaultContentType8",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -863,13 +814,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "95",
       "kind": "constant",
-      "name": "GetAllAccept34",
+      "name": "putAllContentType8",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -880,13 +830,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "97",
       "kind": "constant",
-      "name": "GetAllAccept35",
+      "name": "putDefaultContentType8",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -897,13 +846,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "99",
       "kind": "constant",
-      "name": "GetAllAccept36",
+      "name": "getAllContentType9",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -914,13 +862,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "101",
       "kind": "constant",
-      "name": "GetAllAccept37",
+      "name": "getDefaultContentType9",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -931,13 +878,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "103",
       "kind": "constant",
-      "name": "GetAllAccept38",
+      "name": "putAllContentType9",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -948,13 +894,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "105",
       "kind": "constant",
-      "name": "GetAllAccept39",
+      "name": "putDefaultContentType9",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -965,13 +910,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "107",
       "kind": "constant",
-      "name": "GetAllAccept40",
+      "name": "getAllContentType10",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -982,13 +926,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "109",
       "kind": "constant",
-      "name": "GetAllAccept41",
+      "name": "getDefaultContentType10",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -999,13 +942,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "111",
       "kind": "constant",
-      "name": "GetAllAccept42",
+      "name": "putAllContentType10",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1016,13 +958,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "113",
       "kind": "constant",
-      "name": "GetAllAccept43",
+      "name": "putDefaultContentType10",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1033,13 +974,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "115",
       "kind": "constant",
-      "name": "GetAllAccept44",
+      "name": "getAllContentType11",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1050,13 +990,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "117",
       "kind": "constant",
-      "name": "GetAllAccept45",
+      "name": "getDefaultContentType11",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1067,13 +1006,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "119",
       "kind": "constant",
-      "name": "GetAllAccept46",
+      "name": "putAllContentType11",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1084,13 +1022,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "121",
       "kind": "constant",
-      "name": "GetAllAccept47",
+      "name": "putDefaultContentType11",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1101,13 +1038,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "123",
       "kind": "constant",
-      "name": "GetAllAccept48",
+      "name": "getAllContentType12",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1118,13 +1054,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "125",
       "kind": "constant",
-      "name": "GetAllAccept49",
+      "name": "getDefaultContentType12",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1135,13 +1070,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "127",
       "kind": "constant",
-      "name": "GetAllAccept50",
+      "name": "putAllContentType12",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1152,13 +1086,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "129",
       "kind": "constant",
-      "name": "GetAllAccept51",
+      "name": "putDefaultContentType12",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1169,13 +1102,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "131",
       "kind": "constant",
-      "name": "GetAllAccept52",
+      "name": "getAllContentType13",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1186,13 +1118,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "133",
       "kind": "constant",
-      "name": "GetAllAccept53",
+      "name": "getDefaultContentType13",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1203,13 +1134,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "135",
       "kind": "constant",
-      "name": "GetAllAccept54",
+      "name": "putAllContentType13",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1220,13 +1150,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "137",
       "kind": "constant",
-      "name": "GetAllAccept55",
+      "name": "putDefaultContentType13",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1237,13 +1166,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "139",
       "kind": "constant",
-      "name": "GetAllAccept56",
+      "name": "getAllContentType14",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1254,13 +1182,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "141",
       "kind": "constant",
-      "name": "GetAllAccept57",
+      "name": "getDefaultContentType14",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1271,13 +1198,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "143",
       "kind": "constant",
-      "name": "GetAllAccept58",
+      "name": "putAllContentType14",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1288,13 +1214,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "145",
       "kind": "constant",
-      "name": "GetAllAccept59",
+      "name": "putDefaultContentType14",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1305,13 +1230,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "147",
       "kind": "constant",
-      "name": "GetAllAccept60",
+      "name": "getAllContentType15",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1322,13 +1246,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "149",
       "kind": "constant",
-      "name": "GetAllAccept61",
+      "name": "getRequiredOnlyContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1339,13 +1262,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "151",
       "kind": "constant",
-      "name": "GetAllAccept62",
+      "name": "putAllContentType15",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1356,13 +1278,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "153",
       "kind": "constant",
-      "name": "GetAllAccept63",
+      "name": "putRequiredOnlyContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1373,8 +1294,7 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     }
   ],
   "models": [
@@ -1392,7 +1312,6 @@
           "name": "StringProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "156",
@@ -1418,8 +1337,7 @@
               "name": "property"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -1437,7 +1355,6 @@
           "name": "BytesProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "159",
@@ -1464,8 +1381,7 @@
               "name": "property"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -1483,7 +1399,6 @@
           "name": "DatetimeProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "162",
@@ -1517,8 +1432,7 @@
               "name": "property"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -1536,7 +1450,6 @@
           "name": "DurationProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "166",
@@ -1570,8 +1483,7 @@
               "name": "property"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -1589,7 +1501,6 @@
           "name": "PlainDateProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "170",
@@ -1615,8 +1526,7 @@
               "name": "property"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -1634,7 +1544,6 @@
           "name": "PlainTimeProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "173",
@@ -1660,8 +1569,7 @@
               "name": "property"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -1679,7 +1587,6 @@
           "name": "CollectionsByteProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "176",
@@ -1713,8 +1620,7 @@
               "name": "property"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -1732,7 +1638,6 @@
           "name": "CollectionsModelProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "180",
@@ -1761,8 +1666,7 @@
               "name": "property"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -1780,7 +1684,6 @@
           "name": "StringLiteralProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "183",
@@ -1802,8 +1705,7 @@
               "name": "property"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -1821,7 +1723,6 @@
           "name": "IntLiteralProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "185",
@@ -1843,8 +1744,7 @@
               "name": "property"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -1862,7 +1762,6 @@
           "name": "FloatLiteralProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "187",
@@ -1884,8 +1783,7 @@
               "name": "property"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -1903,7 +1801,6 @@
           "name": "BooleanLiteralProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "189",
@@ -1925,8 +1822,7 @@
               "name": "property"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -1944,7 +1840,6 @@
           "name": "UnionStringLiteralProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "191",
@@ -1966,8 +1861,7 @@
               "name": "property"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -1985,7 +1879,6 @@
           "name": "UnionIntLiteralProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "193",
@@ -2007,8 +1900,7 @@
               "name": "property"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -2026,7 +1918,6 @@
           "name": "UnionFloatLiteralProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "195",
@@ -2048,8 +1939,7 @@
               "name": "property"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -2067,7 +1957,6 @@
           "name": "RequiredAndOptionalProperty"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "197",
@@ -2093,8 +1982,7 @@
               "name": "optionalProperty"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "199",
@@ -2120,8 +2008,7 @@
               "name": "requiredProperty"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     }
@@ -2131,7 +2018,6 @@
       "$id": "201",
       "kind": "client",
       "name": "OptionalClient",
-      "isExactName": false,
       "namespace": "Type.Property.Optional",
       "doc": "Illustrates models with optional properties.",
       "methods": [],
@@ -2164,8 +2050,7 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Type.Property.Optional.endpoint",
-          "isExactName": false
+          "crossLanguageDefinitionId": "Type.Property.Optional.endpoint"
         }
       ],
       "initializedBy": 1,
@@ -2177,21 +2062,18 @@
           "$id": "205",
           "kind": "client",
           "name": "String",
-          "isExactName": false,
           "namespace": "Type.Property.Optional",
           "methods": [
             {
               "$id": "206",
               "kind": "basic",
               "name": "getAll",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get models that will return all properties in the model",
               "operation": {
                 "$id": "207",
                 "name": "getAll",
-                "isExactName": false,
                 "resourceName": "String",
                 "doc": "Get models that will return all properties in the model",
                 "accessibility": "public",
@@ -2227,11 +2109,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.String.getAll.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -2246,12 +2126,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -2283,14 +2158,12 @@
               "$id": "210",
               "kind": "basic",
               "name": "getDefault",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get models that will return the default object",
               "operation": {
                 "$id": "211",
                 "name": "getDefault",
-                "isExactName": false,
                 "resourceName": "String",
                 "doc": "Get models that will return the default object",
                 "accessibility": "public",
@@ -2326,11 +2199,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.String.getDefault.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -2345,12 +2216,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -2382,14 +2248,12 @@
               "$id": "214",
               "kind": "basic",
               "name": "putAll",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put a body with all properties present.",
               "operation": {
                 "$id": "215",
                 "name": "putAll",
-                "isExactName": false,
                 "resourceName": "String",
                 "doc": "Put a body with all properties present.",
                 "accessibility": "public",
@@ -2427,11 +2291,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.String.putAll.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "218",
@@ -2467,16 +2329,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.String.putAll.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -2485,8 +2340,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -2520,14 +2374,12 @@
               "$id": "220",
               "kind": "basic",
               "name": "putDefault",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put a body with default properties.",
               "operation": {
                 "$id": "221",
                 "name": "putDefault",
-                "isExactName": false,
                 "resourceName": "String",
                 "doc": "Put a body with default properties.",
                 "accessibility": "public",
@@ -2565,11 +2417,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.String.putDefault.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "224",
@@ -2605,16 +2455,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.String.putDefault.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -2623,8 +2466,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -2684,8 +2526,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Optional.String.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Type.Property.Optional.String.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -2701,21 +2542,18 @@
           "$id": "229",
           "kind": "client",
           "name": "Bytes",
-          "isExactName": false,
           "namespace": "Type.Property.Optional",
           "methods": [
             {
               "$id": "230",
               "kind": "basic",
               "name": "getAll",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get models that will return all properties in the model",
               "operation": {
                 "$id": "231",
                 "name": "getAll",
-                "isExactName": false,
                 "resourceName": "Bytes",
                 "doc": "Get models that will return all properties in the model",
                 "accessibility": "public",
@@ -2751,11 +2589,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.Bytes.getAll.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -2770,12 +2606,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -2807,14 +2638,12 @@
               "$id": "234",
               "kind": "basic",
               "name": "getDefault",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get models that will return the default object",
               "operation": {
                 "$id": "235",
                 "name": "getDefault",
-                "isExactName": false,
                 "resourceName": "Bytes",
                 "doc": "Get models that will return the default object",
                 "accessibility": "public",
@@ -2850,11 +2679,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.Bytes.getDefault.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -2869,12 +2696,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -2906,14 +2728,12 @@
               "$id": "238",
               "kind": "basic",
               "name": "putAll",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put a body with all properties present.",
               "operation": {
                 "$id": "239",
                 "name": "putAll",
-                "isExactName": false,
                 "resourceName": "Bytes",
                 "doc": "Put a body with all properties present.",
                 "accessibility": "public",
@@ -2951,11 +2771,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.Bytes.putAll.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "242",
@@ -2991,16 +2809,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.Bytes.putAll.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -3009,8 +2820,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -3044,14 +2854,12 @@
               "$id": "244",
               "kind": "basic",
               "name": "putDefault",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put a body with default properties.",
               "operation": {
                 "$id": "245",
                 "name": "putDefault",
-                "isExactName": false,
                 "resourceName": "Bytes",
                 "doc": "Put a body with default properties.",
                 "accessibility": "public",
@@ -3089,11 +2897,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.Bytes.putDefault.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "248",
@@ -3129,16 +2935,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.Bytes.putDefault.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -3147,8 +2946,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -3208,8 +3006,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Optional.Bytes.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Type.Property.Optional.Bytes.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -3225,21 +3022,18 @@
           "$id": "253",
           "kind": "client",
           "name": "Datetime",
-          "isExactName": false,
           "namespace": "Type.Property.Optional",
           "methods": [
             {
               "$id": "254",
               "kind": "basic",
               "name": "getAll",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get models that will return all properties in the model",
               "operation": {
                 "$id": "255",
                 "name": "getAll",
-                "isExactName": false,
                 "resourceName": "Datetime",
                 "doc": "Get models that will return all properties in the model",
                 "accessibility": "public",
@@ -3275,11 +3069,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.Datetime.getAll.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -3294,12 +3086,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -3331,14 +3118,12 @@
               "$id": "258",
               "kind": "basic",
               "name": "getDefault",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get models that will return the default object",
               "operation": {
                 "$id": "259",
                 "name": "getDefault",
-                "isExactName": false,
                 "resourceName": "Datetime",
                 "doc": "Get models that will return the default object",
                 "accessibility": "public",
@@ -3374,11 +3159,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.Datetime.getDefault.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -3393,12 +3176,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -3430,14 +3208,12 @@
               "$id": "262",
               "kind": "basic",
               "name": "putAll",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put a body with all properties present.",
               "operation": {
                 "$id": "263",
                 "name": "putAll",
-                "isExactName": false,
                 "resourceName": "Datetime",
                 "doc": "Put a body with all properties present.",
                 "accessibility": "public",
@@ -3475,11 +3251,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.Datetime.putAll.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "266",
@@ -3515,16 +3289,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.Datetime.putAll.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -3533,8 +3300,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -3568,14 +3334,12 @@
               "$id": "268",
               "kind": "basic",
               "name": "putDefault",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put a body with default properties.",
               "operation": {
                 "$id": "269",
                 "name": "putDefault",
-                "isExactName": false,
                 "resourceName": "Datetime",
                 "doc": "Put a body with default properties.",
                 "accessibility": "public",
@@ -3613,11 +3377,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.Datetime.putDefault.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "272",
@@ -3653,16 +3415,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.Datetime.putDefault.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -3671,8 +3426,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -3732,8 +3486,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Optional.Datetime.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Type.Property.Optional.Datetime.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -3749,21 +3502,18 @@
           "$id": "277",
           "kind": "client",
           "name": "Duration",
-          "isExactName": false,
           "namespace": "Type.Property.Optional",
           "methods": [
             {
               "$id": "278",
               "kind": "basic",
               "name": "getAll",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get models that will return all properties in the model",
               "operation": {
                 "$id": "279",
                 "name": "getAll",
-                "isExactName": false,
                 "resourceName": "Duration",
                 "doc": "Get models that will return all properties in the model",
                 "accessibility": "public",
@@ -3799,11 +3549,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.Duration.getAll.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -3818,12 +3566,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -3855,14 +3598,12 @@
               "$id": "282",
               "kind": "basic",
               "name": "getDefault",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get models that will return the default object",
               "operation": {
                 "$id": "283",
                 "name": "getDefault",
-                "isExactName": false,
                 "resourceName": "Duration",
                 "doc": "Get models that will return the default object",
                 "accessibility": "public",
@@ -3898,11 +3639,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.Duration.getDefault.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -3917,12 +3656,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -3954,14 +3688,12 @@
               "$id": "286",
               "kind": "basic",
               "name": "putAll",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put a body with all properties present.",
               "operation": {
                 "$id": "287",
                 "name": "putAll",
-                "isExactName": false,
                 "resourceName": "Duration",
                 "doc": "Put a body with all properties present.",
                 "accessibility": "public",
@@ -3999,11 +3731,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.Duration.putAll.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "290",
@@ -4039,16 +3769,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.Duration.putAll.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -4057,8 +3780,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -4092,14 +3814,12 @@
               "$id": "292",
               "kind": "basic",
               "name": "putDefault",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put a body with default properties.",
               "operation": {
                 "$id": "293",
                 "name": "putDefault",
-                "isExactName": false,
                 "resourceName": "Duration",
                 "doc": "Put a body with default properties.",
                 "accessibility": "public",
@@ -4137,11 +3857,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.Duration.putDefault.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "296",
@@ -4177,16 +3895,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.Duration.putDefault.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -4195,8 +3906,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -4256,8 +3966,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Optional.Duration.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Type.Property.Optional.Duration.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -4273,21 +3982,18 @@
           "$id": "301",
           "kind": "client",
           "name": "PlainDate",
-          "isExactName": false,
           "namespace": "Type.Property.Optional",
           "methods": [
             {
               "$id": "302",
               "kind": "basic",
               "name": "getAll",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get models that will return all properties in the model",
               "operation": {
                 "$id": "303",
                 "name": "getAll",
-                "isExactName": false,
                 "resourceName": "PlainDate",
                 "doc": "Get models that will return all properties in the model",
                 "accessibility": "public",
@@ -4323,11 +4029,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.PlainDate.getAll.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -4342,12 +4046,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -4379,14 +4078,12 @@
               "$id": "306",
               "kind": "basic",
               "name": "getDefault",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get models that will return the default object",
               "operation": {
                 "$id": "307",
                 "name": "getDefault",
-                "isExactName": false,
                 "resourceName": "PlainDate",
                 "doc": "Get models that will return the default object",
                 "accessibility": "public",
@@ -4422,11 +4119,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.PlainDate.getDefault.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -4441,12 +4136,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -4478,14 +4168,12 @@
               "$id": "310",
               "kind": "basic",
               "name": "putAll",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put a body with all properties present.",
               "operation": {
                 "$id": "311",
                 "name": "putAll",
-                "isExactName": false,
                 "resourceName": "PlainDate",
                 "doc": "Put a body with all properties present.",
                 "accessibility": "public",
@@ -4523,11 +4211,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.PlainDate.putAll.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "314",
@@ -4563,16 +4249,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.PlainDate.putAll.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -4581,8 +4260,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -4616,14 +4294,12 @@
               "$id": "316",
               "kind": "basic",
               "name": "putDefault",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put a body with default properties.",
               "operation": {
                 "$id": "317",
                 "name": "putDefault",
-                "isExactName": false,
                 "resourceName": "PlainDate",
                 "doc": "Put a body with default properties.",
                 "accessibility": "public",
@@ -4661,11 +4337,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.PlainDate.putDefault.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "320",
@@ -4701,16 +4375,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.PlainDate.putDefault.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -4719,8 +4386,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -4780,8 +4446,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Optional.PlainDate.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Type.Property.Optional.PlainDate.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -4797,21 +4462,18 @@
           "$id": "325",
           "kind": "client",
           "name": "PlainTime",
-          "isExactName": false,
           "namespace": "Type.Property.Optional",
           "methods": [
             {
               "$id": "326",
               "kind": "basic",
               "name": "getAll",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get models that will return all properties in the model",
               "operation": {
                 "$id": "327",
                 "name": "getAll",
-                "isExactName": false,
                 "resourceName": "PlainTime",
                 "doc": "Get models that will return all properties in the model",
                 "accessibility": "public",
@@ -4847,11 +4509,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.PlainTime.getAll.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -4866,12 +4526,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -4903,14 +4558,12 @@
               "$id": "330",
               "kind": "basic",
               "name": "getDefault",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get models that will return the default object",
               "operation": {
                 "$id": "331",
                 "name": "getDefault",
-                "isExactName": false,
                 "resourceName": "PlainTime",
                 "doc": "Get models that will return the default object",
                 "accessibility": "public",
@@ -4946,11 +4599,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.PlainTime.getDefault.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -4965,12 +4616,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -5002,14 +4648,12 @@
               "$id": "334",
               "kind": "basic",
               "name": "putAll",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put a body with all properties present.",
               "operation": {
                 "$id": "335",
                 "name": "putAll",
-                "isExactName": false,
                 "resourceName": "PlainTime",
                 "doc": "Put a body with all properties present.",
                 "accessibility": "public",
@@ -5047,11 +4691,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.PlainTime.putAll.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "338",
@@ -5087,16 +4729,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.PlainTime.putAll.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -5105,8 +4740,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -5140,14 +4774,12 @@
               "$id": "340",
               "kind": "basic",
               "name": "putDefault",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put a body with default properties.",
               "operation": {
                 "$id": "341",
                 "name": "putDefault",
-                "isExactName": false,
                 "resourceName": "PlainTime",
                 "doc": "Put a body with default properties.",
                 "accessibility": "public",
@@ -5185,11 +4817,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.PlainTime.putDefault.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "344",
@@ -5225,16 +4855,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.PlainTime.putDefault.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -5243,8 +4866,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -5304,8 +4926,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Optional.PlainTime.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Type.Property.Optional.PlainTime.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -5321,21 +4942,18 @@
           "$id": "349",
           "kind": "client",
           "name": "CollectionsByte",
-          "isExactName": false,
           "namespace": "Type.Property.Optional",
           "methods": [
             {
               "$id": "350",
               "kind": "basic",
               "name": "getAll",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get models that will return all properties in the model",
               "operation": {
                 "$id": "351",
                 "name": "getAll",
-                "isExactName": false,
                 "resourceName": "CollectionsByte",
                 "doc": "Get models that will return all properties in the model",
                 "accessibility": "public",
@@ -5371,11 +4989,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.CollectionsByte.getAll.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -5390,12 +5006,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -5427,14 +5038,12 @@
               "$id": "354",
               "kind": "basic",
               "name": "getDefault",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get models that will return the default object",
               "operation": {
                 "$id": "355",
                 "name": "getDefault",
-                "isExactName": false,
                 "resourceName": "CollectionsByte",
                 "doc": "Get models that will return the default object",
                 "accessibility": "public",
@@ -5470,11 +5079,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.CollectionsByte.getDefault.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -5489,12 +5096,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -5526,14 +5128,12 @@
               "$id": "358",
               "kind": "basic",
               "name": "putAll",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put a body with all properties present.",
               "operation": {
                 "$id": "359",
                 "name": "putAll",
-                "isExactName": false,
                 "resourceName": "CollectionsByte",
                 "doc": "Put a body with all properties present.",
                 "accessibility": "public",
@@ -5571,11 +5171,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.CollectionsByte.putAll.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "362",
@@ -5611,16 +5209,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.CollectionsByte.putAll.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -5629,8 +5220,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -5664,14 +5254,12 @@
               "$id": "364",
               "kind": "basic",
               "name": "putDefault",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put a body with default properties.",
               "operation": {
                 "$id": "365",
                 "name": "putDefault",
-                "isExactName": false,
                 "resourceName": "CollectionsByte",
                 "doc": "Put a body with default properties.",
                 "accessibility": "public",
@@ -5709,11 +5297,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.CollectionsByte.putDefault.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "368",
@@ -5749,16 +5335,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.CollectionsByte.putDefault.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -5767,8 +5346,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -5828,8 +5406,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Optional.CollectionsByte.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Type.Property.Optional.CollectionsByte.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -5845,21 +5422,18 @@
           "$id": "373",
           "kind": "client",
           "name": "CollectionsModel",
-          "isExactName": false,
           "namespace": "Type.Property.Optional",
           "methods": [
             {
               "$id": "374",
               "kind": "basic",
               "name": "getAll",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get models that will return all properties in the model",
               "operation": {
                 "$id": "375",
                 "name": "getAll",
-                "isExactName": false,
                 "resourceName": "CollectionsModel",
                 "doc": "Get models that will return all properties in the model",
                 "accessibility": "public",
@@ -5895,11 +5469,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.CollectionsModel.getAll.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -5914,12 +5486,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -5951,14 +5518,12 @@
               "$id": "378",
               "kind": "basic",
               "name": "getDefault",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get models that will return the default object",
               "operation": {
                 "$id": "379",
                 "name": "getDefault",
-                "isExactName": false,
                 "resourceName": "CollectionsModel",
                 "doc": "Get models that will return the default object",
                 "accessibility": "public",
@@ -5994,11 +5559,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.CollectionsModel.getDefault.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -6013,12 +5576,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -6050,14 +5608,12 @@
               "$id": "382",
               "kind": "basic",
               "name": "putAll",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put a body with all properties present.",
               "operation": {
                 "$id": "383",
                 "name": "putAll",
-                "isExactName": false,
                 "resourceName": "CollectionsModel",
                 "doc": "Put a body with all properties present.",
                 "accessibility": "public",
@@ -6095,11 +5651,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.CollectionsModel.putAll.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "386",
@@ -6135,16 +5689,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.CollectionsModel.putAll.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -6153,8 +5700,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -6188,14 +5734,12 @@
               "$id": "388",
               "kind": "basic",
               "name": "putDefault",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put a body with default properties.",
               "operation": {
                 "$id": "389",
                 "name": "putDefault",
-                "isExactName": false,
                 "resourceName": "CollectionsModel",
                 "doc": "Put a body with default properties.",
                 "accessibility": "public",
@@ -6233,11 +5777,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.CollectionsModel.putDefault.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "392",
@@ -6273,16 +5815,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.CollectionsModel.putDefault.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -6291,8 +5826,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -6352,8 +5886,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Optional.CollectionsModel.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Type.Property.Optional.CollectionsModel.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -6369,21 +5902,18 @@
           "$id": "397",
           "kind": "client",
           "name": "StringLiteral",
-          "isExactName": false,
           "namespace": "Type.Property.Optional",
           "methods": [
             {
               "$id": "398",
               "kind": "basic",
               "name": "getAll",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get models that will return all properties in the model",
               "operation": {
                 "$id": "399",
                 "name": "getAll",
-                "isExactName": false,
                 "resourceName": "StringLiteral",
                 "doc": "Get models that will return all properties in the model",
                 "accessibility": "public",
@@ -6419,11 +5949,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.StringLiteral.getAll.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -6438,12 +5966,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -6475,14 +5998,12 @@
               "$id": "402",
               "kind": "basic",
               "name": "getDefault",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get models that will return the default object",
               "operation": {
                 "$id": "403",
                 "name": "getDefault",
-                "isExactName": false,
                 "resourceName": "StringLiteral",
                 "doc": "Get models that will return the default object",
                 "accessibility": "public",
@@ -6518,11 +6039,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.StringLiteral.getDefault.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -6537,12 +6056,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -6574,14 +6088,12 @@
               "$id": "406",
               "kind": "basic",
               "name": "putAll",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put a body with all properties present.",
               "operation": {
                 "$id": "407",
                 "name": "putAll",
-                "isExactName": false,
                 "resourceName": "StringLiteral",
                 "doc": "Put a body with all properties present.",
                 "accessibility": "public",
@@ -6619,11 +6131,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.StringLiteral.putAll.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "410",
@@ -6659,16 +6169,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.StringLiteral.putAll.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -6677,8 +6180,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -6712,14 +6214,12 @@
               "$id": "412",
               "kind": "basic",
               "name": "putDefault",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put a body with default properties.",
               "operation": {
                 "$id": "413",
                 "name": "putDefault",
-                "isExactName": false,
                 "resourceName": "StringLiteral",
                 "doc": "Put a body with default properties.",
                 "accessibility": "public",
@@ -6757,11 +6257,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.StringLiteral.putDefault.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "416",
@@ -6797,16 +6295,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.StringLiteral.putDefault.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -6815,8 +6306,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -6876,8 +6366,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Optional.StringLiteral.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Type.Property.Optional.StringLiteral.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -6893,21 +6382,18 @@
           "$id": "421",
           "kind": "client",
           "name": "IntLiteral",
-          "isExactName": false,
           "namespace": "Type.Property.Optional",
           "methods": [
             {
               "$id": "422",
               "kind": "basic",
               "name": "getAll",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get models that will return all properties in the model",
               "operation": {
                 "$id": "423",
                 "name": "getAll",
-                "isExactName": false,
                 "resourceName": "IntLiteral",
                 "doc": "Get models that will return all properties in the model",
                 "accessibility": "public",
@@ -6943,11 +6429,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.IntLiteral.getAll.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -6962,12 +6446,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -6999,14 +6478,12 @@
               "$id": "426",
               "kind": "basic",
               "name": "getDefault",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get models that will return the default object",
               "operation": {
                 "$id": "427",
                 "name": "getDefault",
-                "isExactName": false,
                 "resourceName": "IntLiteral",
                 "doc": "Get models that will return the default object",
                 "accessibility": "public",
@@ -7042,11 +6519,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.IntLiteral.getDefault.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -7061,12 +6536,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -7098,14 +6568,12 @@
               "$id": "430",
               "kind": "basic",
               "name": "putAll",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put a body with all properties present.",
               "operation": {
                 "$id": "431",
                 "name": "putAll",
-                "isExactName": false,
                 "resourceName": "IntLiteral",
                 "doc": "Put a body with all properties present.",
                 "accessibility": "public",
@@ -7143,11 +6611,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.IntLiteral.putAll.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "434",
@@ -7183,16 +6649,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.IntLiteral.putAll.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -7201,8 +6660,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -7236,14 +6694,12 @@
               "$id": "436",
               "kind": "basic",
               "name": "putDefault",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put a body with default properties.",
               "operation": {
                 "$id": "437",
                 "name": "putDefault",
-                "isExactName": false,
                 "resourceName": "IntLiteral",
                 "doc": "Put a body with default properties.",
                 "accessibility": "public",
@@ -7281,11 +6737,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.IntLiteral.putDefault.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "440",
@@ -7321,16 +6775,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.IntLiteral.putDefault.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -7339,8 +6786,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -7400,8 +6846,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Optional.IntLiteral.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Type.Property.Optional.IntLiteral.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -7417,21 +6862,18 @@
           "$id": "445",
           "kind": "client",
           "name": "FloatLiteral",
-          "isExactName": false,
           "namespace": "Type.Property.Optional",
           "methods": [
             {
               "$id": "446",
               "kind": "basic",
               "name": "getAll",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get models that will return all properties in the model",
               "operation": {
                 "$id": "447",
                 "name": "getAll",
-                "isExactName": false,
                 "resourceName": "FloatLiteral",
                 "doc": "Get models that will return all properties in the model",
                 "accessibility": "public",
@@ -7467,11 +6909,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.FloatLiteral.getAll.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -7486,12 +6926,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -7523,14 +6958,12 @@
               "$id": "450",
               "kind": "basic",
               "name": "getDefault",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get models that will return the default object",
               "operation": {
                 "$id": "451",
                 "name": "getDefault",
-                "isExactName": false,
                 "resourceName": "FloatLiteral",
                 "doc": "Get models that will return the default object",
                 "accessibility": "public",
@@ -7566,11 +6999,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.FloatLiteral.getDefault.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -7585,12 +7016,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -7622,14 +7048,12 @@
               "$id": "454",
               "kind": "basic",
               "name": "putAll",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put a body with all properties present.",
               "operation": {
                 "$id": "455",
                 "name": "putAll",
-                "isExactName": false,
                 "resourceName": "FloatLiteral",
                 "doc": "Put a body with all properties present.",
                 "accessibility": "public",
@@ -7667,11 +7091,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.FloatLiteral.putAll.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "458",
@@ -7707,16 +7129,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.FloatLiteral.putAll.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -7725,8 +7140,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -7760,14 +7174,12 @@
               "$id": "460",
               "kind": "basic",
               "name": "putDefault",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put a body with default properties.",
               "operation": {
                 "$id": "461",
                 "name": "putDefault",
-                "isExactName": false,
                 "resourceName": "FloatLiteral",
                 "doc": "Put a body with default properties.",
                 "accessibility": "public",
@@ -7805,11 +7217,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.FloatLiteral.putDefault.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "464",
@@ -7845,16 +7255,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.FloatLiteral.putDefault.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -7863,8 +7266,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -7924,8 +7326,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Optional.FloatLiteral.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Type.Property.Optional.FloatLiteral.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -7941,21 +7342,18 @@
           "$id": "469",
           "kind": "client",
           "name": "BooleanLiteral",
-          "isExactName": false,
           "namespace": "Type.Property.Optional",
           "methods": [
             {
               "$id": "470",
               "kind": "basic",
               "name": "getAll",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get models that will return all properties in the model",
               "operation": {
                 "$id": "471",
                 "name": "getAll",
-                "isExactName": false,
                 "resourceName": "BooleanLiteral",
                 "doc": "Get models that will return all properties in the model",
                 "accessibility": "public",
@@ -7991,11 +7389,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.BooleanLiteral.getAll.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -8010,12 +7406,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -8047,14 +7438,12 @@
               "$id": "474",
               "kind": "basic",
               "name": "getDefault",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get models that will return the default object",
               "operation": {
                 "$id": "475",
                 "name": "getDefault",
-                "isExactName": false,
                 "resourceName": "BooleanLiteral",
                 "doc": "Get models that will return the default object",
                 "accessibility": "public",
@@ -8090,11 +7479,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.BooleanLiteral.getDefault.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -8109,12 +7496,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -8146,14 +7528,12 @@
               "$id": "478",
               "kind": "basic",
               "name": "putAll",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put a body with all properties present.",
               "operation": {
                 "$id": "479",
                 "name": "putAll",
-                "isExactName": false,
                 "resourceName": "BooleanLiteral",
                 "doc": "Put a body with all properties present.",
                 "accessibility": "public",
@@ -8191,11 +7571,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.BooleanLiteral.putAll.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "482",
@@ -8231,16 +7609,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.BooleanLiteral.putAll.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -8249,8 +7620,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -8284,14 +7654,12 @@
               "$id": "484",
               "kind": "basic",
               "name": "putDefault",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put a body with default properties.",
               "operation": {
                 "$id": "485",
                 "name": "putDefault",
-                "isExactName": false,
                 "resourceName": "BooleanLiteral",
                 "doc": "Put a body with default properties.",
                 "accessibility": "public",
@@ -8329,11 +7697,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.BooleanLiteral.putDefault.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "488",
@@ -8369,16 +7735,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.BooleanLiteral.putDefault.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -8387,8 +7746,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -8448,8 +7806,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Optional.BooleanLiteral.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Type.Property.Optional.BooleanLiteral.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -8465,21 +7822,18 @@
           "$id": "493",
           "kind": "client",
           "name": "UnionStringLiteral",
-          "isExactName": false,
           "namespace": "Type.Property.Optional",
           "methods": [
             {
               "$id": "494",
               "kind": "basic",
               "name": "getAll",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get models that will return all properties in the model",
               "operation": {
                 "$id": "495",
                 "name": "getAll",
-                "isExactName": false,
                 "resourceName": "UnionStringLiteral",
                 "doc": "Get models that will return all properties in the model",
                 "accessibility": "public",
@@ -8515,11 +7869,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.UnionStringLiteral.getAll.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -8534,12 +7886,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -8571,14 +7918,12 @@
               "$id": "498",
               "kind": "basic",
               "name": "getDefault",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get models that will return the default object",
               "operation": {
                 "$id": "499",
                 "name": "getDefault",
-                "isExactName": false,
                 "resourceName": "UnionStringLiteral",
                 "doc": "Get models that will return the default object",
                 "accessibility": "public",
@@ -8614,11 +7959,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.UnionStringLiteral.getDefault.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -8633,12 +7976,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -8670,14 +8008,12 @@
               "$id": "502",
               "kind": "basic",
               "name": "putAll",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put a body with all properties present.",
               "operation": {
                 "$id": "503",
                 "name": "putAll",
-                "isExactName": false,
                 "resourceName": "UnionStringLiteral",
                 "doc": "Put a body with all properties present.",
                 "accessibility": "public",
@@ -8715,11 +8051,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.UnionStringLiteral.putAll.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "506",
@@ -8755,16 +8089,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.UnionStringLiteral.putAll.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -8773,8 +8100,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -8808,14 +8134,12 @@
               "$id": "508",
               "kind": "basic",
               "name": "putDefault",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put a body with default properties.",
               "operation": {
                 "$id": "509",
                 "name": "putDefault",
-                "isExactName": false,
                 "resourceName": "UnionStringLiteral",
                 "doc": "Put a body with default properties.",
                 "accessibility": "public",
@@ -8853,11 +8177,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.UnionStringLiteral.putDefault.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "512",
@@ -8893,16 +8215,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.UnionStringLiteral.putDefault.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -8911,8 +8226,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -8972,8 +8286,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Optional.UnionStringLiteral.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Type.Property.Optional.UnionStringLiteral.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -8989,21 +8302,18 @@
           "$id": "517",
           "kind": "client",
           "name": "UnionIntLiteral",
-          "isExactName": false,
           "namespace": "Type.Property.Optional",
           "methods": [
             {
               "$id": "518",
               "kind": "basic",
               "name": "getAll",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get models that will return all properties in the model",
               "operation": {
                 "$id": "519",
                 "name": "getAll",
-                "isExactName": false,
                 "resourceName": "UnionIntLiteral",
                 "doc": "Get models that will return all properties in the model",
                 "accessibility": "public",
@@ -9039,11 +8349,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.UnionIntLiteral.getAll.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -9058,12 +8366,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -9095,14 +8398,12 @@
               "$id": "522",
               "kind": "basic",
               "name": "getDefault",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get models that will return the default object",
               "operation": {
                 "$id": "523",
                 "name": "getDefault",
-                "isExactName": false,
                 "resourceName": "UnionIntLiteral",
                 "doc": "Get models that will return the default object",
                 "accessibility": "public",
@@ -9138,11 +8439,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.UnionIntLiteral.getDefault.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -9157,12 +8456,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -9194,14 +8488,12 @@
               "$id": "526",
               "kind": "basic",
               "name": "putAll",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put a body with all properties present.",
               "operation": {
                 "$id": "527",
                 "name": "putAll",
-                "isExactName": false,
                 "resourceName": "UnionIntLiteral",
                 "doc": "Put a body with all properties present.",
                 "accessibility": "public",
@@ -9239,11 +8531,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.UnionIntLiteral.putAll.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "530",
@@ -9279,16 +8569,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.UnionIntLiteral.putAll.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -9297,8 +8580,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -9332,14 +8614,12 @@
               "$id": "532",
               "kind": "basic",
               "name": "putDefault",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put a body with default properties.",
               "operation": {
                 "$id": "533",
                 "name": "putDefault",
-                "isExactName": false,
                 "resourceName": "UnionIntLiteral",
                 "doc": "Put a body with default properties.",
                 "accessibility": "public",
@@ -9377,11 +8657,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.UnionIntLiteral.putDefault.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "536",
@@ -9417,16 +8695,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.UnionIntLiteral.putDefault.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -9435,8 +8706,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -9496,8 +8766,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Optional.UnionIntLiteral.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Type.Property.Optional.UnionIntLiteral.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -9513,21 +8782,18 @@
           "$id": "541",
           "kind": "client",
           "name": "UnionFloatLiteral",
-          "isExactName": false,
           "namespace": "Type.Property.Optional",
           "methods": [
             {
               "$id": "542",
               "kind": "basic",
               "name": "getAll",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get models that will return all properties in the model",
               "operation": {
                 "$id": "543",
                 "name": "getAll",
-                "isExactName": false,
                 "resourceName": "UnionFloatLiteral",
                 "doc": "Get models that will return all properties in the model",
                 "accessibility": "public",
@@ -9563,11 +8829,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.UnionFloatLiteral.getAll.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -9582,12 +8846,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -9619,14 +8878,12 @@
               "$id": "546",
               "kind": "basic",
               "name": "getDefault",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get models that will return the default object",
               "operation": {
                 "$id": "547",
                 "name": "getDefault",
-                "isExactName": false,
                 "resourceName": "UnionFloatLiteral",
                 "doc": "Get models that will return the default object",
                 "accessibility": "public",
@@ -9662,11 +8919,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.UnionFloatLiteral.getDefault.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -9681,12 +8936,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -9718,14 +8968,12 @@
               "$id": "550",
               "kind": "basic",
               "name": "putAll",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put a body with all properties present.",
               "operation": {
                 "$id": "551",
                 "name": "putAll",
-                "isExactName": false,
                 "resourceName": "UnionFloatLiteral",
                 "doc": "Put a body with all properties present.",
                 "accessibility": "public",
@@ -9763,11 +9011,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.UnionFloatLiteral.putAll.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "554",
@@ -9803,16 +9049,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.UnionFloatLiteral.putAll.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -9821,8 +9060,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -9856,14 +9094,12 @@
               "$id": "556",
               "kind": "basic",
               "name": "putDefault",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put a body with default properties.",
               "operation": {
                 "$id": "557",
                 "name": "putDefault",
-                "isExactName": false,
                 "resourceName": "UnionFloatLiteral",
                 "doc": "Put a body with default properties.",
                 "accessibility": "public",
@@ -9901,11 +9137,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.UnionFloatLiteral.putDefault.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "560",
@@ -9941,16 +9175,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.UnionFloatLiteral.putDefault.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -9959,8 +9186,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -10020,8 +9246,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Optional.UnionFloatLiteral.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Type.Property.Optional.UnionFloatLiteral.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -10037,7 +9262,6 @@
           "$id": "565",
           "kind": "client",
           "name": "RequiredAndOptional",
-          "isExactName": false,
           "namespace": "Type.Property.Optional",
           "doc": "Test optional and required properties",
           "methods": [
@@ -10045,14 +9269,12 @@
               "$id": "566",
               "kind": "basic",
               "name": "getAll",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get models that will return all properties in the model",
               "operation": {
                 "$id": "567",
                 "name": "getAll",
-                "isExactName": false,
                 "resourceName": "RequiredAndOptional",
                 "doc": "Get models that will return all properties in the model",
                 "accessibility": "public",
@@ -10088,11 +9310,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.RequiredAndOptional.getAll.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -10107,12 +9327,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -10144,14 +9359,12 @@
               "$id": "570",
               "kind": "basic",
               "name": "getRequiredOnly",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Get models that will return only the required properties",
               "operation": {
                 "$id": "571",
                 "name": "getRequiredOnly",
-                "isExactName": false,
                 "resourceName": "RequiredAndOptional",
                 "doc": "Get models that will return only the required properties",
                 "accessibility": "public",
@@ -10187,11 +9400,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.RequiredAndOptional.getRequiredOnly.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -10206,12 +9417,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -10243,14 +9449,12 @@
               "$id": "574",
               "kind": "basic",
               "name": "putAll",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put a body with all properties present.",
               "operation": {
                 "$id": "575",
                 "name": "putAll",
-                "isExactName": false,
                 "resourceName": "RequiredAndOptional",
                 "doc": "Put a body with all properties present.",
                 "accessibility": "public",
@@ -10288,11 +9492,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.RequiredAndOptional.putAll.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "578",
@@ -10328,16 +9530,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.RequiredAndOptional.putAll.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -10346,8 +9541,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -10381,14 +9575,12 @@
               "$id": "580",
               "kind": "basic",
               "name": "putRequiredOnly",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Put a body with only required properties.",
               "operation": {
                 "$id": "581",
                 "name": "putRequiredOnly",
-                "isExactName": false,
                 "resourceName": "RequiredAndOptional",
                 "doc": "Put a body with only required properties.",
                 "accessibility": "public",
@@ -10426,11 +9618,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.RequiredAndOptional.putRequiredOnly.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "584",
@@ -10466,16 +9656,9 @@
                         "crossLanguageDefinitionId": "Type.Property.Optional.RequiredAndOptional.putRequiredOnly.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -10484,8 +9667,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PUT",
@@ -10545,8 +9727,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Optional.RequiredAndOptional.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Type.Property.Optional.RequiredAndOptional.endpoint"
             }
           ],
           "initializedBy": 0,

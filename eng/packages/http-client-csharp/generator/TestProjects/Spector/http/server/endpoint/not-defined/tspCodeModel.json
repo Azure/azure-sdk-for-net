@@ -9,7 +9,6 @@
       "$id": "1",
       "kind": "client",
       "name": "NotDefinedClient",
-      "isExactName": false,
       "namespace": "Server.Endpoint.NotDefined",
       "doc": "Illustrates server doesn't define endpoint. Client should automatically add an endpoint to let user pass in.",
       "methods": [
@@ -17,13 +16,11 @@
           "$id": "2",
           "kind": "basic",
           "name": "valid",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "3",
             "name": "valid",
-            "isExactName": false,
             "resourceName": "NotDefined",
             "accessibility": "public",
             "parameters": [],
@@ -33,8 +30,7 @@
                   200
                 ],
                 "headers": [],
-                "isErrorResponse": false,
-                "serializationOptions": {}
+                "isErrorResponse": false
               }
             ],
             "httpMethod": "HEAD",
@@ -75,8 +71,7 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Server.Endpoint.NotDefined.endpoint",
-          "isExactName": false
+          "crossLanguageDefinitionId": "Server.Endpoint.NotDefined.endpoint"
         }
       ],
       "initializedBy": 1,

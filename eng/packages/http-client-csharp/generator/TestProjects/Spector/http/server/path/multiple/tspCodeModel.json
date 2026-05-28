@@ -29,8 +29,7 @@
             "$ref": "1"
           },
           "doc": "Version 1.0",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         }
       ],
       "namespace": "Server.Path.Multiple",
@@ -38,8 +37,7 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,ApiVersionEnum",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     }
   ],
   "constants": [],
@@ -49,14 +47,12 @@
       "$id": "4",
       "kind": "client",
       "name": "MultipleClient",
-      "isExactName": false,
       "namespace": "Server.Path.Multiple",
       "methods": [
         {
           "$id": "5",
           "kind": "basic",
           "name": "noOperationParams",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [
             "v1.0"
@@ -64,7 +60,6 @@
           "operation": {
             "$id": "6",
             "name": "noOperationParams",
-            "isExactName": false,
             "resourceName": "Multiple",
             "accessibility": "public",
             "parameters": [],
@@ -74,8 +69,7 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false,
-                "serializationOptions": {}
+                "isErrorResponse": false
               }
             ],
             "httpMethod": "GET",
@@ -99,7 +93,6 @@
           "$id": "7",
           "kind": "basic",
           "name": "withOperationPathParam",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [
             "v1.0"
@@ -107,7 +100,6 @@
           "operation": {
             "$id": "8",
             "name": "withOperationPathParam",
-            "isExactName": false,
             "resourceName": "Multiple",
             "accessibility": "public",
             "parameters": [
@@ -153,11 +145,9 @@
                     "crossLanguageDefinitionId": "Server.Path.Multiple.withOperationPathParam.keyword",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               }
             ],
             "responses": [
@@ -166,8 +156,7 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false,
-                "serializationOptions": {}
+                "isErrorResponse": false
               }
             ],
             "httpMethod": "GET",
@@ -212,8 +201,7 @@
           "serverUrlTemplate": "{endpoint}/server/path/multiple/{apiVersion}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Server.Path.Multiple.endpoint",
-          "isExactName": false
+          "crossLanguageDefinitionId": "Server.Path.Multiple.endpoint"
         },
         {
           "$id": "15",
@@ -240,8 +228,7 @@
           "serverUrlTemplate": "{endpoint}/server/path/multiple/{apiVersion}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Server.Path.Multiple.apiVersion",
-          "isExactName": false
+          "crossLanguageDefinitionId": "Server.Path.Multiple.apiVersion"
         }
       ],
       "initializedBy": 1,

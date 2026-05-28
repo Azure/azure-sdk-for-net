@@ -28,16 +28,14 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         }
       ],
       "namespace": "Versioning.Removed",
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,Output,Json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "4",
@@ -63,8 +61,7 @@
           "enumType": {
             "$ref": "4"
           },
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         },
         {
           "$id": "7",
@@ -77,16 +74,14 @@
           "enumType": {
             "$ref": "4"
           },
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         }
       ],
       "namespace": "Versioning.Removed",
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,Output,Json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "8",
@@ -112,8 +107,7 @@
           "enumType": {
             "$ref": "8"
           },
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         },
         {
           "$id": "11",
@@ -126,16 +120,14 @@
           "enumType": {
             "$ref": "8"
           },
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         }
       ],
       "namespace": "Versioning.Removed",
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,Output,Json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "12",
@@ -162,8 +154,7 @@
             "$ref": "12"
           },
           "doc": "The version v1.",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         }
       ],
       "namespace": "Versioning.Removed",
@@ -171,15 +162,14 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,ApiVersionEnum",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     }
   ],
   "constants": [
     {
       "$id": "15",
       "kind": "constant",
-      "name": "V1ContentType",
+      "name": "v1ContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -190,13 +180,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "17",
       "kind": "constant",
-      "name": "V1ContentType1",
+      "name": "v1ContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -207,13 +196,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "19",
       "kind": "constant",
-      "name": "V1ContentType2",
+      "name": "v2ContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -224,13 +212,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "21",
       "kind": "constant",
-      "name": "V1ContentType3",
+      "name": "v2ContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -241,13 +228,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "23",
       "kind": "constant",
-      "name": "V1ContentType4",
+      "name": "modelV3ContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -258,13 +244,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "25",
       "kind": "constant",
-      "name": "V1ContentType5",
+      "name": "modelV3ContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -275,13 +260,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "27",
       "kind": "constant",
-      "name": "V1ContentType6",
+      "name": "v1InInterfaceContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -292,13 +276,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "29",
       "kind": "constant",
-      "name": "V1ContentType7",
+      "name": "v1InInterfaceContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -309,8 +292,7 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     }
   ],
   "models": [
@@ -327,7 +309,6 @@
           "name": "ModelV1"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "32",
@@ -352,8 +333,7 @@
               "name": "prop"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "34",
@@ -374,8 +354,7 @@
               "name": "enumProp"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "35",
@@ -403,8 +382,7 @@
               }
             ],
             "namespace": "Versioning.Removed",
-            "decorators": [],
-            "isExactName": false
+            "decorators": []
           },
           "optional": false,
           "readOnly": false,
@@ -417,8 +395,7 @@
               "name": "unionProp"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -435,7 +412,6 @@
           "name": "ModelV2"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "40",
@@ -460,8 +436,7 @@
               "name": "prop"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "42",
@@ -486,8 +461,7 @@
               "name": "removedProp"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "44",
@@ -508,8 +482,7 @@
               "name": "enumProp"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "45",
@@ -551,8 +524,7 @@
               }
             ],
             "namespace": "Versioning.Removed",
-            "decorators": [],
-            "isExactName": false
+            "decorators": []
           },
           "optional": false,
           "readOnly": false,
@@ -565,8 +537,7 @@
               "name": "unionProp"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -583,7 +554,6 @@
           "name": "ModelV3"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "52",
@@ -608,8 +578,7 @@
               "name": "id"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "54",
@@ -630,8 +599,7 @@
               "name": "enumProp"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     }
@@ -641,7 +609,6 @@
       "$id": "55",
       "kind": "client",
       "name": "RemovedClient",
-      "isExactName": false,
       "namespace": "Versioning.Removed",
       "doc": "Test for the `@removed` decorator.",
       "methods": [
@@ -649,7 +616,6 @@
           "$id": "56",
           "kind": "basic",
           "name": "v1",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [
             "v1"
@@ -658,7 +624,6 @@
           "operation": {
             "$id": "57",
             "name": "v1",
-            "isExactName": false,
             "resourceName": "Removed",
             "doc": "This operation should not be generated with latest version's signature.",
             "accessibility": "public",
@@ -696,11 +661,9 @@
                     "crossLanguageDefinitionId": "Versioning.Removed.v1.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "60",
@@ -733,11 +696,9 @@
                     "crossLanguageDefinitionId": "Versioning.Removed.v1.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "62",
@@ -773,16 +734,9 @@
                     "crossLanguageDefinitionId": "Versioning.Removed.v1.body",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false,
-                "serializationOptions": {
-                  "json": {
-                    "name": "body"
-                  }
-                }
+                ]
               }
             ],
             "responses": [
@@ -797,12 +751,7 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ],
-                "serializationOptions": {
-                  "json": {
-                    "name": ""
-                  }
-                }
+                ]
               }
             ],
             "httpMethod": "POST",
@@ -843,7 +792,6 @@
           "$id": "64",
           "kind": "basic",
           "name": "v2",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [
             "v1"
@@ -851,7 +799,6 @@
           "operation": {
             "$id": "65",
             "name": "v2",
-            "isExactName": false,
             "resourceName": "Removed",
             "accessibility": "public",
             "parameters": [
@@ -894,11 +841,9 @@
                     "crossLanguageDefinitionId": "Versioning.Removed.v2.param",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "70",
@@ -933,11 +878,9 @@
                     "crossLanguageDefinitionId": "Versioning.Removed.v2.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "72",
@@ -970,11 +913,9 @@
                     "crossLanguageDefinitionId": "Versioning.Removed.v2.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "74",
@@ -1010,16 +951,9 @@
                     "crossLanguageDefinitionId": "Versioning.Removed.v2.body",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false,
-                "serializationOptions": {
-                  "json": {
-                    "name": "body"
-                  }
-                }
+                ]
               }
             ],
             "responses": [
@@ -1034,12 +968,7 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ],
-                "serializationOptions": {
-                  "json": {
-                    "name": ""
-                  }
-                }
+                ]
               }
             ],
             "httpMethod": "POST",
@@ -1083,7 +1012,6 @@
           "$id": "76",
           "kind": "basic",
           "name": "modelV3",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [
             "v1"
@@ -1092,7 +1020,6 @@
           "operation": {
             "$id": "77",
             "name": "modelV3",
-            "isExactName": false,
             "resourceName": "Removed",
             "doc": "This operation will pass different paths and different request bodies based on different versions.",
             "accessibility": "public",
@@ -1130,11 +1057,9 @@
                     "crossLanguageDefinitionId": "Versioning.Removed.modelV3.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "80",
@@ -1167,11 +1092,9 @@
                     "crossLanguageDefinitionId": "Versioning.Removed.modelV3.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "82",
@@ -1207,16 +1130,9 @@
                     "crossLanguageDefinitionId": "Versioning.Removed.modelV3.body",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false,
-                "serializationOptions": {
-                  "json": {
-                    "name": "body"
-                  }
-                }
+                ]
               }
             ],
             "responses": [
@@ -1231,12 +1147,7 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ],
-                "serializationOptions": {
-                  "json": {
-                    "name": ""
-                  }
-                }
+                ]
               }
             ],
             "httpMethod": "POST",
@@ -1294,8 +1205,7 @@
           "serverUrlTemplate": "{endpoint}/versioning/removed/api-version:{version}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Versioning.Removed.endpoint",
-          "isExactName": false
+          "crossLanguageDefinitionId": "Versioning.Removed.endpoint"
         },
         {
           "$id": "86",
@@ -1322,8 +1232,7 @@
           "serverUrlTemplate": "{endpoint}/versioning/removed/api-version:{version}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Versioning.Removed.version",
-          "isExactName": false
+          "crossLanguageDefinitionId": "Versioning.Removed.version"
         }
       ],
       "initializedBy": 1,
@@ -1337,7 +1246,6 @@
           "$id": "88",
           "kind": "client",
           "name": "InterfaceV1",
-          "isExactName": false,
           "namespace": "Versioning.Removed",
           "doc": "This operation group should not be generated with latest version.",
           "methods": [
@@ -1345,7 +1253,6 @@
               "$id": "89",
               "kind": "basic",
               "name": "v1InInterface",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [
                 "v1"
@@ -1353,7 +1260,6 @@
               "operation": {
                 "$id": "90",
                 "name": "v1InInterface",
-                "isExactName": false,
                 "resourceName": "InterfaceV1",
                 "accessibility": "public",
                 "parameters": [
@@ -1390,11 +1296,9 @@
                         "crossLanguageDefinitionId": "Versioning.Removed.InterfaceV1.v1InInterface.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "93",
@@ -1427,11 +1331,9 @@
                         "crossLanguageDefinitionId": "Versioning.Removed.InterfaceV1.v1InInterface.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "95",
@@ -1467,16 +1369,9 @@
                         "crossLanguageDefinitionId": "Versioning.Removed.InterfaceV1.v1InInterface.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -1491,12 +1386,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "POST",
@@ -1554,8 +1444,7 @@
               "serverUrlTemplate": "{endpoint}/versioning/removed/api-version:{version}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Versioning.Removed.InterfaceV1.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Versioning.Removed.InterfaceV1.endpoint"
             },
             {
               "$id": "99",
@@ -1582,8 +1471,7 @@
               "serverUrlTemplate": "{endpoint}/versioning/removed/api-version:{version}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Versioning.Removed.InterfaceV1.version",
-              "isExactName": false
+              "crossLanguageDefinitionId": "Versioning.Removed.InterfaceV1.version"
             }
           ],
           "initializedBy": 0,

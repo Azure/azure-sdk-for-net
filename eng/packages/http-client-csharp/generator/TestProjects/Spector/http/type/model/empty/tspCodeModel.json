@@ -6,7 +6,7 @@
     {
       "$id": "1",
       "kind": "constant",
-      "name": "PutEmptyContentType",
+      "name": "putEmptyContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -17,13 +17,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "3",
       "kind": "constant",
-      "name": "PutEmptyContentType1",
+      "name": "getEmptyContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -34,13 +33,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "5",
       "kind": "constant",
-      "name": "PutEmptyContentType2",
+      "name": "postRoundTripEmptyContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -51,13 +49,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "7",
       "kind": "constant",
-      "name": "PutEmptyContentType3",
+      "name": "postRoundTripEmptyContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -68,8 +65,7 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     }
   ],
   "models": [
@@ -87,7 +83,6 @@
           "name": "EmptyInput"
         }
       },
-      "isExactName": false,
       "properties": []
     },
     {
@@ -104,7 +99,6 @@
           "name": "EmptyOutput"
         }
       },
-      "isExactName": false,
       "properties": []
     },
     {
@@ -121,7 +115,6 @@
           "name": "EmptyInputOutput"
         }
       },
-      "isExactName": false,
       "properties": []
     }
   ],
@@ -130,7 +123,6 @@
       "$id": "12",
       "kind": "client",
       "name": "EmptyClient",
-      "isExactName": false,
       "namespace": "Type.Model.Empty",
       "doc": "Illustrates usage of empty model used in operation's parameters and responses.",
       "methods": [
@@ -138,13 +130,11 @@
           "$id": "13",
           "kind": "basic",
           "name": "putEmpty",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "14",
             "name": "putEmpty",
-            "isExactName": false,
             "resourceName": "Empty",
             "accessibility": "public",
             "parameters": [
@@ -181,11 +171,9 @@
                     "crossLanguageDefinitionId": "Type.Model.Empty.putEmpty.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "17",
@@ -221,16 +209,9 @@
                     "crossLanguageDefinitionId": "Type.Model.Empty.putEmpty.input",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false,
-                "serializationOptions": {
-                  "json": {
-                    "name": "input"
-                  }
-                }
+                ]
               }
             ],
             "responses": [
@@ -239,8 +220,7 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false,
-                "serializationOptions": {}
+                "isErrorResponse": false
               }
             ],
             "httpMethod": "PUT",
@@ -274,13 +254,11 @@
           "$id": "19",
           "kind": "basic",
           "name": "getEmpty",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "20",
             "name": "getEmpty",
-            "isExactName": false,
             "resourceName": "Empty",
             "accessibility": "public",
             "parameters": [
@@ -315,11 +293,9 @@
                     "crossLanguageDefinitionId": "Type.Model.Empty.getEmpty.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               }
             ],
             "responses": [
@@ -334,12 +310,7 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ],
-                "serializationOptions": {
-                  "json": {
-                    "name": ""
-                  }
-                }
+                ]
               }
             ],
             "httpMethod": "GET",
@@ -371,13 +342,11 @@
           "$id": "23",
           "kind": "basic",
           "name": "postRoundTripEmpty",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "24",
             "name": "postRoundTripEmpty",
-            "isExactName": false,
             "resourceName": "Empty",
             "accessibility": "public",
             "parameters": [
@@ -414,11 +383,9 @@
                     "crossLanguageDefinitionId": "Type.Model.Empty.postRoundTripEmpty.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "27",
@@ -451,11 +418,9 @@
                     "crossLanguageDefinitionId": "Type.Model.Empty.postRoundTripEmpty.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "29",
@@ -491,16 +456,9 @@
                     "crossLanguageDefinitionId": "Type.Model.Empty.postRoundTripEmpty.body",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false,
-                "serializationOptions": {
-                  "json": {
-                    "name": "body"
-                  }
-                }
+                ]
               }
             ],
             "responses": [
@@ -515,12 +473,7 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ],
-                "serializationOptions": {
-                  "json": {
-                    "name": ""
-                  }
-                }
+                ]
               }
             ],
             "httpMethod": "POST",
@@ -587,8 +540,7 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Type.Model.Empty.endpoint",
-          "isExactName": false
+          "crossLanguageDefinitionId": "Type.Model.Empty.endpoint"
         }
       ],
       "initializedBy": 1,

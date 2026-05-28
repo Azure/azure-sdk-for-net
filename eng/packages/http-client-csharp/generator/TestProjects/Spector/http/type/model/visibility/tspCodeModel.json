@@ -6,7 +6,7 @@
     {
       "$id": "1",
       "kind": "constant",
-      "name": "GetModelContentType",
+      "name": "getModelContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -17,13 +17,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "3",
       "kind": "constant",
-      "name": "GetModelContentType1",
+      "name": "getModelContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -34,13 +33,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "5",
       "kind": "constant",
-      "name": "GetModelContentType2",
+      "name": "headModelContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -51,13 +49,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "7",
       "kind": "constant",
-      "name": "GetModelContentType3",
+      "name": "putModelContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -68,13 +65,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "9",
       "kind": "constant",
-      "name": "GetModelContentType4",
+      "name": "patchModelContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -85,13 +81,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "11",
       "kind": "constant",
-      "name": "GetModelContentType5",
+      "name": "postModelContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -102,13 +97,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "13",
       "kind": "constant",
-      "name": "GetModelContentType6",
+      "name": "deleteModelContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -119,13 +113,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "15",
       "kind": "constant",
-      "name": "GetModelContentType7",
+      "name": "putReadOnlyModelContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -136,13 +129,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "17",
       "kind": "constant",
-      "name": "GetModelContentType8",
+      "name": "putReadOnlyModelContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -153,8 +145,7 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     }
   ],
   "models": [
@@ -172,7 +163,6 @@
           "name": "VisibilityModel"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "20",
@@ -198,8 +188,7 @@
               "name": "readProp"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "22",
@@ -225,8 +214,7 @@
               "name": "queryProp"
             }
           },
-          "isHttpMetadata": true,
-          "isExactName": false
+          "isHttpMetadata": true
         },
         {
           "$id": "24",
@@ -259,8 +247,7 @@
               "name": "createProp"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "27",
@@ -293,8 +280,7 @@
               "name": "updateProp"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "30",
@@ -320,8 +306,7 @@
               "name": "deleteProp"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -339,7 +324,6 @@
           "name": "ReadOnlyModel"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "33",
@@ -366,8 +350,7 @@
               "name": "optionalNullableIntList"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "35",
@@ -405,8 +388,7 @@
               "name": "optionalStringRecord"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     }
@@ -416,7 +398,6 @@
       "$id": "39",
       "kind": "client",
       "name": "VisibilityClient",
-      "isExactName": false,
       "namespace": "Type.Model.Visibility",
       "doc": "Illustrates models with visibility properties.",
       "methods": [
@@ -424,13 +405,11 @@
           "$id": "40",
           "kind": "basic",
           "name": "getModel",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "41",
             "name": "getModel",
-            "isExactName": false,
             "resourceName": "Visibility",
             "accessibility": "public",
             "parameters": [
@@ -470,8 +449,7 @@
                     "crossLanguageDefinitionId": "Type.Model.Visibility.getModel.input",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   },
                   {
                     "$id": "45",
@@ -489,11 +467,9 @@
                     "crossLanguageDefinitionId": "Type.Model.Visibility.VisibilityModel.queryProp",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "46",
@@ -528,11 +504,9 @@
                     "crossLanguageDefinitionId": "Type.Model.Visibility.getModel.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "48",
@@ -565,11 +539,9 @@
                     "crossLanguageDefinitionId": "Type.Model.Visibility.getModel.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "50",
@@ -593,13 +565,7 @@
                   {
                     "$ref": "44"
                   }
-                ],
-                "isExactName": false,
-                "serializationOptions": {
-                  "json": {
-                    "name": "input"
-                  }
-                }
+                ]
               }
             ],
             "responses": [
@@ -614,12 +580,7 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ],
-                "serializationOptions": {
-                  "json": {
-                    "name": ""
-                  }
-                }
+                ]
               }
             ],
             "httpMethod": "GET",
@@ -660,13 +621,11 @@
           "$id": "51",
           "kind": "basic",
           "name": "headModel",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "52",
             "name": "headModel",
-            "isExactName": false,
             "resourceName": "Visibility",
             "accessibility": "public",
             "parameters": [
@@ -706,14 +665,12 @@
                     "crossLanguageDefinitionId": "Type.Model.Visibility.headModel.input",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   },
                   {
                     "$ref": "45"
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "56",
@@ -748,11 +705,9 @@
                     "crossLanguageDefinitionId": "Type.Model.Visibility.headModel.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "58",
@@ -776,13 +731,7 @@
                   {
                     "$ref": "55"
                   }
-                ],
-                "isExactName": false,
-                "serializationOptions": {
-                  "json": {
-                    "name": "input"
-                  }
-                }
+                ]
               }
             ],
             "responses": [
@@ -791,8 +740,7 @@
                   200
                 ],
                 "headers": [],
-                "isErrorResponse": false,
-                "serializationOptions": {}
+                "isErrorResponse": false
               }
             ],
             "httpMethod": "HEAD",
@@ -826,13 +774,11 @@
           "$id": "59",
           "kind": "basic",
           "name": "putModel",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "60",
             "name": "putModel",
-            "isExactName": false,
             "resourceName": "Visibility",
             "accessibility": "public",
             "parameters": [
@@ -869,11 +815,9 @@
                     "crossLanguageDefinitionId": "Type.Model.Visibility.putModel.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "63",
@@ -909,16 +853,9 @@
                     "crossLanguageDefinitionId": "Type.Model.Visibility.putModel.input",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false,
-                "serializationOptions": {
-                  "json": {
-                    "name": "input"
-                  }
-                }
+                ]
               }
             ],
             "responses": [
@@ -927,8 +864,7 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false,
-                "serializationOptions": {}
+                "isErrorResponse": false
               }
             ],
             "httpMethod": "PUT",
@@ -962,13 +898,11 @@
           "$id": "65",
           "kind": "basic",
           "name": "patchModel",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "66",
             "name": "patchModel",
-            "isExactName": false,
             "resourceName": "Visibility",
             "accessibility": "public",
             "parameters": [
@@ -1005,11 +939,9 @@
                     "crossLanguageDefinitionId": "Type.Model.Visibility.patchModel.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "69",
@@ -1045,16 +977,9 @@
                     "crossLanguageDefinitionId": "Type.Model.Visibility.patchModel.input",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false,
-                "serializationOptions": {
-                  "json": {
-                    "name": "input"
-                  }
-                }
+                ]
               }
             ],
             "responses": [
@@ -1063,8 +988,7 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false,
-                "serializationOptions": {}
+                "isErrorResponse": false
               }
             ],
             "httpMethod": "PATCH",
@@ -1098,13 +1022,11 @@
           "$id": "71",
           "kind": "basic",
           "name": "postModel",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "72",
             "name": "postModel",
-            "isExactName": false,
             "resourceName": "Visibility",
             "accessibility": "public",
             "parameters": [
@@ -1141,11 +1063,9 @@
                     "crossLanguageDefinitionId": "Type.Model.Visibility.postModel.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "75",
@@ -1181,16 +1101,9 @@
                     "crossLanguageDefinitionId": "Type.Model.Visibility.postModel.input",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false,
-                "serializationOptions": {
-                  "json": {
-                    "name": "input"
-                  }
-                }
+                ]
               }
             ],
             "responses": [
@@ -1199,8 +1112,7 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false,
-                "serializationOptions": {}
+                "isErrorResponse": false
               }
             ],
             "httpMethod": "POST",
@@ -1234,13 +1146,11 @@
           "$id": "77",
           "kind": "basic",
           "name": "deleteModel",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "78",
             "name": "deleteModel",
-            "isExactName": false,
             "resourceName": "Visibility",
             "accessibility": "public",
             "parameters": [
@@ -1277,11 +1187,9 @@
                     "crossLanguageDefinitionId": "Type.Model.Visibility.deleteModel.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "81",
@@ -1317,16 +1225,9 @@
                     "crossLanguageDefinitionId": "Type.Model.Visibility.deleteModel.input",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false,
-                "serializationOptions": {
-                  "json": {
-                    "name": "input"
-                  }
-                }
+                ]
               }
             ],
             "responses": [
@@ -1335,8 +1236,7 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false,
-                "serializationOptions": {}
+                "isErrorResponse": false
               }
             ],
             "httpMethod": "DELETE",
@@ -1370,13 +1270,11 @@
           "$id": "83",
           "kind": "basic",
           "name": "putReadOnlyModel",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "84",
             "name": "putReadOnlyModel",
-            "isExactName": false,
             "resourceName": "Visibility",
             "accessibility": "public",
             "parameters": [
@@ -1413,11 +1311,9 @@
                     "crossLanguageDefinitionId": "Type.Model.Visibility.putReadOnlyModel.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "87",
@@ -1450,11 +1346,9 @@
                     "crossLanguageDefinitionId": "Type.Model.Visibility.putReadOnlyModel.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "89",
@@ -1490,16 +1384,9 @@
                     "crossLanguageDefinitionId": "Type.Model.Visibility.putReadOnlyModel.input",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false,
-                "serializationOptions": {
-                  "json": {
-                    "name": "input"
-                  }
-                }
+                ]
               }
             ],
             "responses": [
@@ -1514,12 +1401,7 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ],
-                "serializationOptions": {
-                  "json": {
-                    "name": ""
-                  }
-                }
+                ]
               }
             ],
             "httpMethod": "PUT",
@@ -1586,8 +1468,7 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Type.Model.Visibility.endpoint",
-          "isExactName": false
+          "crossLanguageDefinitionId": "Type.Model.Visibility.endpoint"
         }
       ],
       "initializedBy": 1,

@@ -26,8 +26,7 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         },
         {
           "$id": "4",
@@ -40,16 +39,14 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         }
       ],
       "namespace": "SpecialHeaders.Repeatability",
       "isFixed": true,
       "isFlags": false,
       "usage": "Output",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     }
   ],
   "constants": [],
@@ -59,7 +56,6 @@
       "$id": "5",
       "kind": "client",
       "name": "RepeatabilityClient",
-      "isExactName": false,
       "namespace": "SpecialHeaders.Repeatability",
       "doc": "Illustrates OASIS repeatability headers",
       "methods": [
@@ -67,14 +63,12 @@
           "$id": "6",
           "kind": "basic",
           "name": "immediateSuccess",
-          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "doc": "Check we recognize Repeatability-Request-ID and Repeatability-First-Sent.",
           "operation": {
             "$id": "7",
             "name": "immediateSuccess",
-            "isExactName": false,
             "resourceName": "Repeatability",
             "doc": "Check we recognize Repeatability-Request-ID and Repeatability-First-Sent.",
             "accessibility": "public",
@@ -118,11 +112,9 @@
                     "crossLanguageDefinitionId": "SpecialHeaders.Repeatability.immediateSuccess.repeatabilityRequestID",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               },
               {
                 "$id": "12",
@@ -179,11 +171,9 @@
                     "crossLanguageDefinitionId": "SpecialHeaders.Repeatability.immediateSuccess.repeatabilityFirstSent",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": [],
-                    "isExactName": false
+                    "decorators": []
                   }
-                ],
-                "isExactName": false
+                ]
               }
             ],
             "responses": [
@@ -201,8 +191,7 @@
                     }
                   }
                 ],
-                "isErrorResponse": false,
-                "serializationOptions": {}
+                "isErrorResponse": false
               }
             ],
             "httpMethod": "POST",
@@ -259,8 +248,7 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "SpecialHeaders.Repeatability.endpoint",
-          "isExactName": false
+          "crossLanguageDefinitionId": "SpecialHeaders.Repeatability.endpoint"
         }
       ],
       "initializedBy": 1,
