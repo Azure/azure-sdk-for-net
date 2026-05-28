@@ -3242,3 +3242,5 @@ namespace Azure.DigitalTwins.Core
         internal static string[] GetAuthorizationScopes() => s_adtDefaultScopes;
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE

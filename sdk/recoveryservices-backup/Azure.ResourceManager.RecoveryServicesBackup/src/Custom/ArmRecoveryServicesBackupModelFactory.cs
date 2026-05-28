@@ -64,3 +64,5 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             => BackupGenericProtectedItem(protectedItemType, backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests, isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, vaultId, null);
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE

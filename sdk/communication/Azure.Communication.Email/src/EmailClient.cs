@@ -477,3 +477,5 @@ namespace Azure.Communication.Email
         }
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE

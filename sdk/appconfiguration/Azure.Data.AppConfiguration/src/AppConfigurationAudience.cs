@@ -56,3 +56,5 @@ namespace Azure.Data.AppConfiguration
         public override string ToString() => _value;
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE

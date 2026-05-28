@@ -8,3 +8,4 @@
     <PackageTags>azure;management;arm;resource manager;sqlvirtualmachine</PackageTags>
   </PropertyGroup>
 </Project>
+<!-- Test comment for batching validation - DO NOT MERGE -->
