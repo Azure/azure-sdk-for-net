@@ -203,7 +203,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateDispatchRoutineAsyncRequest(string routineName, BinaryContent content, string foundryFeatures, RequestOptions options)
+        internal PipelineMessage CreateDispatchAsyncRoutineRequest(string routineName, BinaryContent content, string foundryFeatures, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);

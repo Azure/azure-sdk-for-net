@@ -416,36 +416,36 @@ namespace Azure.AI.Projects
         /// <summary> Creates a model version asynchronously with blob content validation. Returns 202 Accepted with a Location header for polling. </summary>
         /// <param name="name"> Name of the model. </param>
         /// <param name="version"> Version of the model. </param>
-        /// <param name="body"> Model version to create. </param>
+        /// <param name="modelVersion"> Model version to create. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="modelVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<CreateAsyncResponse> CreateModelVersionAsync(string name, string version, ModelVersion body, CancellationToken cancellationToken = default)
+        public virtual ClientResult<CreateAsyncResponse> CreateModelVersionAsync(string name, string version, ModelVersion modelVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(modelVersion, nameof(modelVersion));
 
-            ClientResult result = CreateModelVersionAsync(name, version, body, cancellationToken.ToRequestOptions());
+            ClientResult result = CreateModelVersionAsync(name, version, modelVersion, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((CreateAsyncResponse)result, result.GetRawResponse());
         }
 
         /// <summary> Creates a model version asynchronously with blob content validation. Returns 202 Accepted with a Location header for polling. </summary>
         /// <param name="name"> Name of the model. </param>
         /// <param name="version"> Version of the model. </param>
-        /// <param name="body"> Model version to create. </param>
+        /// <param name="modelVersion"> Model version to create. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="modelVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<CreateAsyncResponse>> CreateModelVersionAsyncAsync(string name, string version, ModelVersion body, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<CreateAsyncResponse>> CreateModelVersionAsyncAsync(string name, string version, ModelVersion modelVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(modelVersion, nameof(modelVersion));
 
-            ClientResult result = await CreateModelVersionAsyncAsync(name, version, body, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await CreateModelVersionAsyncAsync(name, version, modelVersion, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((CreateAsyncResponse)result, result.GetRawResponse());
         }
 
@@ -504,36 +504,36 @@ namespace Azure.AI.Projects
         /// <summary> Start or retrieve a pending upload for a model version. </summary>
         /// <param name="name"> Name of the model. </param>
         /// <param name="version"> Version of the model. </param>
-        /// <param name="body"></param>
+        /// <param name="pendingUploadRequest"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="pendingUploadRequest"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<ModelPendingUploadResponse> StartModelPendingUpload(string name, string version, ModelPendingUploadRequest body, CancellationToken cancellationToken = default)
+        public virtual ClientResult<ModelPendingUploadResponse> StartModelPendingUpload(string name, string version, ModelPendingUploadRequest pendingUploadRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(pendingUploadRequest, nameof(pendingUploadRequest));
 
-            ClientResult result = StartModelPendingUpload(name, version, body, cancellationToken.ToRequestOptions());
+            ClientResult result = StartModelPendingUpload(name, version, pendingUploadRequest, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((ModelPendingUploadResponse)result, result.GetRawResponse());
         }
 
         /// <summary> Start or retrieve a pending upload for a model version. </summary>
         /// <param name="name"> Name of the model. </param>
         /// <param name="version"> Version of the model. </param>
-        /// <param name="body"></param>
+        /// <param name="pendingUploadRequest"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="pendingUploadRequest"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<ModelPendingUploadResponse>> StartModelPendingUploadAsync(string name, string version, ModelPendingUploadRequest body, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<ModelPendingUploadResponse>> StartModelPendingUploadAsync(string name, string version, ModelPendingUploadRequest pendingUploadRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(pendingUploadRequest, nameof(pendingUploadRequest));
 
-            ClientResult result = await StartModelPendingUploadAsync(name, version, body, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await StartModelPendingUploadAsync(name, version, pendingUploadRequest, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((ModelPendingUploadResponse)result, result.GetRawResponse());
         }
 
@@ -592,36 +592,36 @@ namespace Azure.AI.Projects
         /// <summary> Get credentials for a model version asset. </summary>
         /// <param name="name"> Name of the model. </param>
         /// <param name="version"> Version of the model. </param>
-        /// <param name="body"></param>
+        /// <param name="credentialRequest"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="credentialRequest"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<DatasetCredential> GetModelCredentials(string name, string version, ModelCredentialRequest body, CancellationToken cancellationToken = default)
+        public virtual ClientResult<DatasetCredential> GetModelCredentials(string name, string version, ModelCredentialRequest credentialRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(credentialRequest, nameof(credentialRequest));
 
-            ClientResult result = GetModelCredentials(name, version, body, cancellationToken.ToRequestOptions());
+            ClientResult result = GetModelCredentials(name, version, credentialRequest, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((DatasetCredential)result, result.GetRawResponse());
         }
 
         /// <summary> Get credentials for a model version asset. </summary>
         /// <param name="name"> Name of the model. </param>
         /// <param name="version"> Version of the model. </param>
-        /// <param name="body"></param>
+        /// <param name="credentialRequest"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="credentialRequest"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<DatasetCredential>> GetModelCredentialsAsync(string name, string version, ModelCredentialRequest body, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<DatasetCredential>> GetModelCredentialsAsync(string name, string version, ModelCredentialRequest credentialRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(credentialRequest, nameof(credentialRequest));
 
-            ClientResult result = await GetModelCredentialsAsync(name, version, body, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await GetModelCredentialsAsync(name, version, credentialRequest, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((DatasetCredential)result, result.GetRawResponse());
         }
     }

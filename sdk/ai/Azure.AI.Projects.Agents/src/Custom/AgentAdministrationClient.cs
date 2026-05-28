@@ -56,7 +56,7 @@ public partial class AgentAdministrationClient
     private AgentToolboxes _cachedAgentsToolboxes;
     private ProjectAgentSkills _cachedAgentSkills;
     private AgentSessionFiles _cachedAgentSessionFiles;
-
+    private AgentOptimizationJobs _cachedAgentOptimizationJobs;
     public AgentAdministrationClient(Uri endpoint, AuthenticationTokenProvider tokenProvider, AgentAdministrationClientOptions options =null)
     {
         Argument.AssertNotNull(endpoint, nameof(endpoint));
@@ -995,5 +995,10 @@ public partial class AgentAdministrationClient
     public virtual AgentSessionFiles GetAgentSessionFiles()
     {
         return Volatile.Read(ref _cachedAgentSessionFiles) ?? Interlocked.CompareExchange(ref _cachedAgentSessionFiles, new AgentSessionFiles(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentSessionFiles;
+    }
+
+    public virtual AgentOptimizationJobs GetAgentOptimizationJobs()
+    {
+        return Volatile.Read(ref _cachedAgentOptimizationJobs) ?? Interlocked.CompareExchange(ref _cachedAgentOptimizationJobs, new AgentOptimizationJobs(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentOptimizationJobs;
     }
 }
