@@ -76,6 +76,116 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(rendered, Does.Not.Contain("string eTag"));
         }
 
+        [Test]
+        public void KeepsExistingFactoryMethodsForSdkModels()
+        {
+            var inputModel = InputFactory.Model(
+                "TestModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("value", InputPrimitiveType.String)]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [inputModel]);
+            var model = plugin.Object.TypeFactory.CreateModel(inputModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var signature = new MethodSignature(
+                "TestModel",
+                $"Creates a test model.",
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                model.Type,
+                $"A test model.",
+                [new ParameterProvider("value", $"Value description", typeof(string))]);
+            var method = new MethodProvider(signature, MethodBodyStatement.Empty, modelFactory);
+            modelFactory.Update(methods: [method]);
+
+            var visitType = typeof(Management.Visitors.ModelFactoryVisitor).GetMethod(
+                "VisitType",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.That(visitType, Is.Not.Null);
+
+            visitType!.Invoke(new Management.Visitors.ModelFactoryVisitor(), [modelFactory]);
+
+            Assert.That(modelFactory.Methods, Has.Count.EqualTo(1));
+            Assert.That(modelFactory.Methods[0].Signature.Name, Is.EqualTo("TestModel"));
+        }
+
+        [Test]
+        public void RestoresMissingLastContractFactoryMethodsForSdkModels()
+        {
+            var inputModel = InputFactory.Model(
+                "TestModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("value", InputPrimitiveType.String)]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [inputModel]);
+            var model = plugin.Object.TypeFactory.CreateModel(inputModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var lastContractView = new TestModelFactoryView(modelFactory.Name);
+            var previousSignature = new MethodSignature(
+                "TestModel",
+                $"Creates a test model.",
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                model.Type,
+                $"A test model.",
+                [new ParameterProvider("value", $"Value description", typeof(string))]);
+            lastContractView.MethodsToBuild = [new MethodProvider(previousSignature, MethodBodyStatement.Empty, lastContractView)];
+            SetLastContractView(modelFactory, lastContractView);
+            modelFactory.Update(methods: []);
+
+            var visitType = typeof(Management.Visitors.ModelFactoryVisitor).GetMethod(
+                "VisitType",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.That(visitType, Is.Not.Null);
+
+            visitType!.Invoke(new Management.Visitors.ModelFactoryVisitor(), [modelFactory]);
+
+            Assert.That(modelFactory.Methods, Has.Count.EqualTo(1));
+            Assert.That(modelFactory.Methods[0].Signature.Name, Is.EqualTo("TestModel"));
+            Assert.That(Management.Visitors.ModelFactoryBackwardCompatHelper.IsBackwardCompatMethod(modelFactory.Methods[0]), Is.True);
+            var rendered = new TypeProviderWriter(modelFactory).Write().Content;
+            Assert.That(rendered, Does.Contain("EditorBrowsable"));
+            Assert.That(rendered, Does.Contain("EditorBrowsableState.Never"));
+            Assert.That(rendered, Does.Contain("return new global::Samples.Models.TestModel"));
+        }
+
+        [Test]
+        public void DoesNotRestoreLastContractFactoryMethodsImplementedByCustomCode()
+        {
+            var inputModel = InputFactory.Model(
+                "TestModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("value", InputPrimitiveType.String)]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [inputModel]);
+            var model = plugin.Object.TypeFactory.CreateModel(inputModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var previousSignature = new MethodSignature(
+                "TestModel",
+                $"Creates a test model.",
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                model.Type,
+                $"A test model.",
+                [new ParameterProvider("value", $"Value description", typeof(string))]);
+            var lastContractView = new TestModelFactoryView(modelFactory.Name);
+            lastContractView.MethodsToBuild = [new MethodProvider(previousSignature, MethodBodyStatement.Empty, lastContractView)];
+            var customCodeView = new TestModelFactoryView(modelFactory.Name);
+            customCodeView.MethodsToBuild = [new MethodProvider(previousSignature, MethodBodyStatement.Empty, customCodeView)];
+            SetLastContractView(modelFactory, lastContractView);
+            ManagementMockHelpers.SetCustomCodeView(modelFactory, customCodeView);
+            modelFactory.Update(methods: []);
+
+            var visitType = typeof(Management.Visitors.ModelFactoryVisitor).GetMethod(
+                "VisitType",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.That(visitType, Is.Not.Null);
+
+            visitType!.Invoke(new Management.Visitors.ModelFactoryVisitor(), [modelFactory]);
+
+            Assert.That(modelFactory.Methods, Is.Empty);
+        }
+
         private static void SetLastContractView(TypeProvider typeProvider, TypeProvider lastContractView)
         {
             typeof(TypeProvider).GetField(

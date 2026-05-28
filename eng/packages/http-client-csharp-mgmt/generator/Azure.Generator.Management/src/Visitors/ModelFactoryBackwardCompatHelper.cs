@@ -10,6 +10,7 @@ using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
@@ -93,6 +94,61 @@ namespace Azure.Generator.Management.Visitors
         {
             return method.Signature.Attributes.Any(a =>
                 a.Type is { IsFrameworkType: true } && a.Type.FrameworkType == typeof(System.ComponentModel.EditorBrowsableAttribute));
+        }
+
+        internal static bool TryCreateBackwardCompatMethod(MethodProvider method, TypeProvider enclosingType, [NotNullWhen(true)] out MethodProvider? updatedMethod)
+        {
+            updatedMethod = null;
+            if (method.Signature.ReturnType is null || !TryGetModelProvider(method.Signature.ReturnType, out var modelProvider))
+            {
+                return false;
+            }
+
+            var constructorParameters = modelProvider.FullConstructor.Signature.Parameters;
+            var directParameterNames = constructorParameters
+                .Where(parameter => TryGetMethodParameter(method, parameter.Name, parameter.Type, out _))
+                .Select(parameter => parameter.Name)
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+            var arguments = new List<ValueExpression>(constructorParameters.Count);
+            foreach (var constructorParameter in constructorParameters)
+            {
+                if (TryBuildCompatibilityArgument(method, constructorParameter, directParameterNames, out var argument))
+                {
+                    arguments.Add(argument.Argument);
+                }
+                else
+                {
+                    arguments.Add(constructorParameter.DefaultValue ?? Default);
+                }
+            }
+
+            updatedMethod = new MethodProvider(
+                CreateBackwardCompatSignature(method.Signature),
+                Return(New.Instance(method.Signature.ReturnType, arguments)),
+                enclosingType);
+            return true;
+        }
+
+        private static MethodSignature CreateBackwardCompatSignature(MethodSignature signature)
+        {
+            var attributes = signature.Attributes.Any(attribute =>
+                attribute.Type is { IsFrameworkType: true } && attribute.Type.FrameworkType == typeof(EditorBrowsableAttribute))
+                    ? signature.Attributes
+                    : [.. signature.Attributes, new AttributeStatement(typeof(EditorBrowsableAttribute), FrameworkEnumValue(EditorBrowsableState.Never))];
+
+            return new MethodSignature(
+                signature.Name,
+                signature.Description,
+                signature.Modifiers,
+                signature.ReturnType,
+                signature.ReturnDescription,
+                signature.Parameters,
+                attributes,
+                signature.GenericArguments,
+                signature.GenericParameterConstraints,
+                signature.ExplicitInterface,
+                signature.NonDocumentComment);
         }
 
         /// <summary>

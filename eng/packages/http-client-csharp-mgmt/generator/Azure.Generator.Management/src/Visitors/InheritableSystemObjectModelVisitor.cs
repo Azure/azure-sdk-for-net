@@ -10,7 +10,6 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.Generator.Management.Visitors;
 
@@ -35,11 +34,6 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
 
     protected override TypeProvider? VisitType(TypeProvider type)
     {
-        if (type is ModelFactoryProvider modelFactory)
-        {
-            UpdateModelFactory(modelFactory);
-        }
-
         if (type is SystemObjectModelProvider systemType)
         {
             UpdateNamespace(systemType);
@@ -52,21 +46,6 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         }
 
         return type;
-    }
-
-    private static void UpdateModelFactory(ModelFactoryProvider modelFactory)
-    {
-        var methods = new List<MethodProvider>();
-        foreach (var method in modelFactory.Methods)
-        {
-            var returnType = method.Signature.ReturnType;
-            if (returnType is not null && KnownManagementTypes.IsKnownManagementType(returnType))
-            {
-                continue;
-            }
-            methods.Add(method);
-        }
-        modelFactory.Update(methods: methods);
     }
 
     private static void UpdateNamespace(SystemObjectModelProvider systemType)
@@ -100,25 +79,20 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             return;
         }
 
-        var baseProperties = EnumerateBaseModelProperties(model.BaseModelProvider!);
+        var basePropertyNames = EnumerateBaseModelProperties(model.BaseModelProvider!);
         var removedPropertyNames = new HashSet<string>();
         var remainingProperties = new List<PropertyProvider>();
 
         foreach (var prop in model.Properties)
         {
-            var serializedName = prop.WireInfo?.SerializedName;
-            string? inheritedPropertyName = null;
-            var matchesInheritedWireName = serializedName is not null &&
-                baseProperties.SerializedNameToPropertyName.TryGetValue(serializedName, out inheritedPropertyName);
+            // Only remove true C# duplicate/shadowing properties. Some services expose
+            // public SDK properties with distinct CLR names but inherited ARM wire names
+            // (for example a model-specific "DefaultName" serialized as "name").
+            // Removing those by wire name would be a public API breaking change.
             if (prop.Modifiers.HasFlag(MethodSignatureModifiers.New)
-                || baseProperties.PropertyNames.Contains(prop.Name)
-                || matchesInheritedWireName)
+                || basePropertyNames.Contains(prop.Name))
             {
                 removedPropertyNames.Add(prop.Name);
-                if (inheritedPropertyName is not null)
-                {
-                    removedPropertyNames.Add(inheritedPropertyName);
-                }
             }
             else
             {
@@ -134,25 +108,19 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         _regularUpdated.Add(model);
     }
 
-    private static (HashSet<string> PropertyNames, Dictionary<string, string> SerializedNameToPropertyName) EnumerateBaseModelProperties(ModelProvider baseModel)
+    private static HashSet<string> EnumerateBaseModelProperties(ModelProvider baseModel)
     {
         var basePropertyNames = new HashSet<string>(StringComparer.Ordinal);
-        var baseSerializedNameToPropertyName = new Dictionary<string, string>(StringComparer.Ordinal);
         ModelProvider? currentModel = baseModel;
         while (currentModel != null)
         {
             foreach (var property in currentModel.Properties)
             {
                 basePropertyNames.Add(property.Name);
-                var serializedName = property.WireInfo?.SerializedName;
-                if (serializedName is not null)
-                {
-                    baseSerializedNameToPropertyName.TryAdd(serializedName, property.Name);
-                }
             }
             currentModel = currentModel.BaseModelProvider;
         }
-        return (basePropertyNames, baseSerializedNameToPropertyName);
+        return basePropertyNames;
     }
 
     private static void StripOrphanedVirtualModifiers(ModelProvider baseModel, HashSet<string> removedPropertyNames)

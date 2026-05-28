@@ -112,7 +112,7 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(propertyNames, Does.Not.Contain("SystemData"));
             Assert.That(propertyNames, Does.Not.Contain("Tags"));
             Assert.That(propertyNames, Does.Not.Contain("Location"));
-            Assert.That(propertyNames, Does.Not.Contain("Name0"));
+            Assert.That(propertyNames, Does.Contain("Name0"));
             Assert.That(propertyNames, Does.Contain("Properties"));
 
             var serialization = result.SerializationProviders.OfType<MrwSerializationTypeDefinition>().Single();
@@ -120,8 +120,7 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(jsonModelWriteCore.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Override), Is.True);
 
             var modelContent = new TypeProviderWriter(result).Write().Content;
-            Assert.That(modelContent, Does.Not.Contain("Name = name0"));
-            Assert.That(modelContent, Does.Not.Contain("Name0"));
+            Assert.That(modelContent, Does.Contain("Name0"));
 
             var serializationContent = new TypeProviderWriter(serialization).Write().Content;
             Assert.That(serializationContent, Does.Contain("protected override void JsonModelWriteCore"));
