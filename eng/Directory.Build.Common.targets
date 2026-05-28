@@ -297,6 +297,13 @@
 
   <!--TODO: end-->
 
+  <!-- *********** Files needed for System.ClientModel distributed tracing ************* -->
+  <ItemGroup Condition="'$(IncludeSystemClientModelSharedSourceForTracing)' == 'true'">
+    <Compile Include="$(SystemClientModelSharedSource)ClientDiagnostics.cs" LinkBase="Shared/SystemClientModel" />
+    <Compile Include="$(SystemClientModelSharedSource)DiagnosticScope.cs" LinkBase="Shared/SystemClientModel" />
+    <Compile Include="$(SystemClientModelSharedSource)DiagnosticScopeFactory.cs" LinkBase="Shared/SystemClientModel" />
+  </ItemGroup>
+
   <!-- *********** Files needed for LRO ************* -->
   <ItemGroup Condition="'$(IncludeOperationsSharedSource)' == 'true'">
     <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared/Core" />

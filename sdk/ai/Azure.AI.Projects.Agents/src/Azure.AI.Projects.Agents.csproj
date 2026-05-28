@@ -27,6 +27,10 @@
     <NoWarn>$(NoWarn);AAIP001</NoWarn>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <IncludeSystemClientModelSharedSourceForTracing>true</IncludeSystemClientModelSharedSourceForTracing>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="OpenAI" />
     <PackageReference Include="Azure.Core" />

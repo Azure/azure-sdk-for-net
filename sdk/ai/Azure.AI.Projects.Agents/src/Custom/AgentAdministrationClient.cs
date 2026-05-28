@@ -74,6 +74,7 @@ public partial class AgentAdministrationClient
         _endpoint = endpoint;
         Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(InternalProjectsClient).Assembly), new BearerTokenPolicy(tokenProvider, _flows) }, Array.Empty<PipelinePolicy>());
         _apiVersion = options.Version;
+        ClientDiagnostics = new ClientDiagnostics(options, true);
     }
 
     /// <summary> Initializes a new instance of AgentsClient. </summary>
@@ -89,6 +90,7 @@ public partial class AgentAdministrationClient
         _endpoint = endpoint;
         Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(AgentAdministrationClient).Assembly) }, Array.Empty<PipelinePolicy>());
         _apiVersion = options.Version;
+        ClientDiagnostics = new ClientDiagnostics(options, true);
     }
 
 
@@ -954,16 +956,16 @@ public partial class AgentAdministrationClient
 
     public virtual AgentToolboxes GetAgentToolboxes()
     {
-        return Volatile.Read(ref _cachedAgentsToolboxes) ?? Interlocked.CompareExchange(ref _cachedAgentsToolboxes, new AgentToolboxes(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentsToolboxes;
+        return Volatile.Read(ref _cachedAgentsToolboxes) ?? Interlocked.CompareExchange(ref _cachedAgentsToolboxes, new AgentToolboxes(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentsToolboxes;
     }
 
     public virtual ProjectAgentSkills GetAgentSkills()
     {
-        return Volatile.Read(ref _cachedAgentSkills) ?? Interlocked.CompareExchange(ref _cachedAgentSkills, new ProjectAgentSkills(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentSkills;
+        return Volatile.Read(ref _cachedAgentSkills) ?? Interlocked.CompareExchange(ref _cachedAgentSkills, new ProjectAgentSkills(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentSkills;
     }
 
     public virtual AgentSessionFiles GetAgentSessionFiles()
     {
-        return Volatile.Read(ref _cachedAgentSessionFiles) ?? Interlocked.CompareExchange(ref _cachedAgentSessionFiles, new AgentSessionFiles(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentSessionFiles;
+        return Volatile.Read(ref _cachedAgentSessionFiles) ?? Interlocked.CompareExchange(ref _cachedAgentSessionFiles, new AgentSessionFiles(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentSessionFiles;
     }
 }

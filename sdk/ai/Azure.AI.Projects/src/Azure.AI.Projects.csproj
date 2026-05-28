@@ -24,6 +24,10 @@
     </NoWarn>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <IncludeSystemClientModelSharedSourceForTracing>true</IncludeSystemClientModelSharedSourceForTracing>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="Azure.Storage.Blobs" />

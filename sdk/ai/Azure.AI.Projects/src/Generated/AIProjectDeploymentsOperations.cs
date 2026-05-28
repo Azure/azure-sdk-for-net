@@ -22,11 +22,13 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Initializes a new instance of AIProjectDeploymentsOperations. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal AIProjectDeploymentsOperations(ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal AIProjectDeploymentsOperations(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint, string apiVersion)
         {
+            ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
@@ -34,6 +36,9 @@ namespace Azure.AI.Projects
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
         /// [Protocol Method] Get a deployed model.
@@ -51,10 +56,20 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult GetDeployment(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectDeploymentsOperations.GetDeployment");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateGetDeploymentRequest(name, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateGetDeploymentRequest(name, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -73,10 +88,20 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> GetDeploymentAsync(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectDeploymentsOperations.GetDeployment");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateGetDeploymentRequest(name, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateGetDeploymentRequest(name, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Get a deployed model. </summary>
@@ -123,7 +148,17 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual CollectionResult GetDeployments(string modelPublisher, string modelName, string deploymentType, RequestOptions options)
         {
-            return new AIProjectDeploymentsOperationsGetDeploymentsCollectionResult(this, modelPublisher, modelName, deploymentType, options);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectDeploymentsOperations.GetDeployments");
+            scope.Start();
+            try
+            {
+                return new AIProjectDeploymentsOperationsGetDeploymentsCollectionResult(this, modelPublisher, modelName, deploymentType, options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -142,7 +177,17 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncCollectionResult GetDeploymentsAsync(string modelPublisher, string modelName, string deploymentType, RequestOptions options)
         {
-            return new AIProjectDeploymentsOperationsGetDeploymentsAsyncCollectionResult(this, modelPublisher, modelName, deploymentType, options);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectDeploymentsOperations.GetDeployments");
+            scope.Start();
+            try
+            {
+                return new AIProjectDeploymentsOperationsGetDeploymentsAsyncCollectionResult(this, modelPublisher, modelName, deploymentType, options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> List all deployed models in the project. </summary>

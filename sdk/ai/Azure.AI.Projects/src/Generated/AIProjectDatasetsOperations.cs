@@ -22,11 +22,13 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Initializes a new instance of AIProjectDatasetsOperations. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal AIProjectDatasetsOperations(ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal AIProjectDatasetsOperations(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint, string apiVersion)
         {
+            ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
@@ -34,6 +36,9 @@ namespace Azure.AI.Projects
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
         /// [Protocol Method] List all versions of the given DatasetVersion
@@ -51,9 +56,19 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual CollectionResult GetDatasetVersions(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectDatasetsOperations.GetDatasetVersions");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return new AIProjectDatasetsOperationsGetDatasetVersionsCollectionResult(this, name, options);
+                return new AIProjectDatasetsOperationsGetDatasetVersionsCollectionResult(this, name, options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -72,9 +87,19 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncCollectionResult GetDatasetVersionsAsync(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectDatasetsOperations.GetDatasetVersions");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return new AIProjectDatasetsOperationsGetDatasetVersionsAsyncCollectionResult(this, name, options);
+                return new AIProjectDatasetsOperationsGetDatasetVersionsAsyncCollectionResult(this, name, options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> List all versions of the given DatasetVersion. </summary>
@@ -116,7 +141,17 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual CollectionResult GetDatasets(RequestOptions options)
         {
-            return new AIProjectDatasetsOperationsGetDatasetsCollectionResult(this, options);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectDatasetsOperations.GetDatasets");
+            scope.Start();
+            try
+            {
+                return new AIProjectDatasetsOperationsGetDatasetsCollectionResult(this, options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -132,7 +167,17 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncCollectionResult GetDatasetsAsync(RequestOptions options)
         {
-            return new AIProjectDatasetsOperationsGetDatasetsAsyncCollectionResult(this, options);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectDatasetsOperations.GetDatasets");
+            scope.Start();
+            try
+            {
+                return new AIProjectDatasetsOperationsGetDatasetsAsyncCollectionResult(this, options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> List the latest version of each DatasetVersion. </summary>
@@ -168,11 +213,21 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult GetDataset(string name, string version, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectDatasetsOperations.GetDataset");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using PipelineMessage message = CreateGetDatasetRequest(name, version, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateGetDatasetRequest(name, version, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -192,11 +247,21 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> GetDatasetAsync(string name, string version, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectDatasetsOperations.GetDataset");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using PipelineMessage message = CreateGetDatasetRequest(name, version, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateGetDatasetRequest(name, version, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Get the specific version of the DatasetVersion. The service returns 404 Not Found error if the DatasetVersion does not exist. </summary>
@@ -248,11 +313,21 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult Delete(string name, string version, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectDatasetsOperations.Delete");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using PipelineMessage message = CreateDeleteRequest(name, version, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateDeleteRequest(name, version, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -272,11 +347,21 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> DeleteAsync(string name, string version, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectDatasetsOperations.Delete");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using PipelineMessage message = CreateDeleteRequest(name, version, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateDeleteRequest(name, version, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Delete the specific version of the DatasetVersion. The service returns 204 No Content if the DatasetVersion was deleted successfully or if the DatasetVersion does not exist. </summary>
@@ -327,12 +412,22 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult CreateOrUpdate(string name, string version, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectDatasetsOperations.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNullOrEmpty(version, nameof(version));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateOrUpdateRequest(name, version, content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateCreateOrUpdateRequest(name, version, content, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -353,12 +448,22 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> CreateOrUpdateAsync(string name, string version, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectDatasetsOperations.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNullOrEmpty(version, nameof(version));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateOrUpdateRequest(name, version, content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateCreateOrUpdateRequest(name, version, content, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -379,12 +484,22 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult PendingUpload(string name, string version, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectDatasetsOperations.PendingUpload");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNullOrEmpty(version, nameof(version));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreatePendingUploadRequest(name, version, content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreatePendingUploadRequest(name, version, content, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -405,12 +520,22 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> PendingUploadAsync(string name, string version, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectDatasetsOperations.PendingUpload");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNullOrEmpty(version, nameof(version));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreatePendingUploadRequest(name, version, content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreatePendingUploadRequest(name, version, content, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Start a new or get an existing pending upload of a dataset for a specific version. </summary>
@@ -466,11 +591,21 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult GetCredentials(string name, string version, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectDatasetsOperations.GetCredentials");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using PipelineMessage message = CreateGetCredentialsRequest(name, version, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateGetCredentialsRequest(name, version, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -490,11 +625,21 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> GetCredentialsAsync(string name, string version, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectDatasetsOperations.GetCredentials");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using PipelineMessage message = CreateGetCredentialsRequest(name, version, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateGetCredentialsRequest(name, version, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Get the SAS credential to access the storage account associated with a Dataset version. </summary>
