@@ -448,17 +448,21 @@ public class AgentsTests : AgentsTestBase
             VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 74)]),
             Protocols = { AgentEndpointProtocol.Responses }
         };
-        AgentsSkill simpleSkill = await skillsClient.CreateSkillAsync(name: SKILL, description: "Calculates the sum of two numbers.", instructions: """
-            To calculate the sum  run
-            ```bash
-            echo $((<first> + <second>))
-            ```
-            ```powershell
-            (<first> + <second>)
-            ```
-            Replace <first> and <second> by the actual summation arguments.
-            """);
-        AgentCard card = new(version: "42", [new AgentCardSkill(id: simpleSkill.SkillId, name: SKILL)]);
+        SkillInlineContent content = new(
+            description: "Calculates the sum of two numbers.",
+            instructions: """
+                To calculate the sum  run
+                ```bash
+                echo $((<first> + <second>))
+                ```
+                ```powershell
+                (<first> + <second>)
+                ```
+                Replace <first> and <second> by the actual summation arguments.
+                """
+        );
+        SkillVersion simpleSkill = await skillsClient.CreateSkillVersionAsync(name: SKILL, inlineContent: content);
+        AgentCard card = new(version: "42", [new AgentCardSkill(id: simpleSkill.Id, name: SKILL)]);
         PatchAgentOptions patchOptions = new()
         {
             AgentEndpoint = config,
@@ -474,7 +478,7 @@ public class AgentsTests : AgentsTestBase
         Assert.That(((FixedRatioVersionSelectionRule)patchedRecord.AgentEndpoint.VersionSelector.VersionSelectionRules[0]).TrafficPercentage, Is.EqualTo(74));
         Assert.That(patchedRecord.AgentCard.Version, Is.EqualTo("42"));
         Assert.That(patchedRecord.AgentCard.Skills, Has.Count.EqualTo(1));
-        Assert.That(patchedRecord.AgentCard.Skills[0].Id, Is.EqualTo(simpleSkill.SkillId));
+        Assert.That(patchedRecord.AgentCard.Skills[0].Id, Is.EqualTo(simpleSkill.Id));
     }
 
     [RecordedTest]
@@ -700,7 +704,7 @@ public class AgentsTests : AgentsTestBase
         AgentAdministrationClient agentsClient = GetTestClient();
         ProjectAgentSkills skillsClient = agentsClient.GetAgentSkills();
         string fileSkillName = $"{SKILL}_file";
-        AgentsSkill skillFromFile = await skillsClient.CreateSkillFromPackageAsync(GetTestFile("roll-dice"));
+        AgentsSkill skillFromFile = await skillsClient.CreateSkillVersionFromFilesAsync("roll-dice", GetTestFile("roll-dice"));
         Assert.That(skillFromFile.Name, Is.EqualTo(fileSkillName));
         Assert.That(skillFromFile.Description, Is.EqualTo("Roll dice using a random number generator."));
         string savePath = Path.Combine(Path.GetTempPath(), "saved_skill");
@@ -709,7 +713,7 @@ public class AgentsTests : AgentsTestBase
             Directory.Delete(savePath, true);
         }
         catch { }
-        BinaryData data = await skillsClient.DownloadSkillAsync(skillFromFile.Name, savePath);
+        BinaryData data = await skillsClient.GetSkillContentAsync(skillFromFile.Name, savePath);
         Assert.That(savePath, Does.Exist);
         string skillMdPath = Path.Combine(savePath, "SKILL.md");
         Assert.That(skillMdPath, Does.Exist);
@@ -732,7 +736,7 @@ public class AgentsTests : AgentsTestBase
     {
         AgentAdministrationClient agentsClient = GetTestClient();
         ProjectAgentSkills skillsClient = agentsClient.GetAgentSkills();
-        string codeSkillName = $"{SKILL}_code", codeSkillName2 = $"{SKILL}_code2";
+        string codeSkillName = $"{SKILL}-code", codeSkillName2 = $"{SKILL}-code2";
         await foreach (AgentsSkill skill1 in skillsClient.GetSkillsAsync())
         {
             if (skill1.Name.StartsWith(SKILL))
@@ -740,19 +744,26 @@ public class AgentsTests : AgentsTestBase
                 await skillsClient.DeleteSkillAsync(skill1.Name);
             }
         }
-        AgentsSkill skillFromCode = await skillsClient.CreateSkillAsync(name: codeSkillName, description: "Calculates the sum of two numbers.", instructions: """
-            To calculate the sum run
-            ```bash
-            echo $((<first> + <second>))
-            ```
-            ```powershell
-            (<first> + <second>)
-            ```
-            Replace <first> and <second> by the actual summation arguments.
-            """);
+        SkillInlineContent content = new(
+            description: "Calculates the sum of two numbers.",
+            instructions: """
+                To calculate the sum run
+                ```bash
+                echo $((<first> + <second>))
+                ```
+                ```powershell
+                (<first> + <second>)
+                ```
+                Replace <first> and <second> by the actual summation arguments.
+                """
+        );
+        SkillVersion skillFromCode = await skillsClient.CreateSkillVersionAsync(name: codeSkillName, inlineContent: content);
+        string oldVersion = skillFromCode.Version;
         Assert.That(skillFromCode.Name, Is.EqualTo(codeSkillName));
         Assert.That(skillFromCode.Description, Is.EqualTo("Calculates the sum of two numbers."));
-        AgentsSkill skillFromCode2 = await skillsClient.CreateSkillAsync(name: codeSkillName2, description: "Divides one number by the other.", instructions: """
+        content = new(
+            description: "Divides one number by the other.",
+            instructions: """
             To calculate the division run
             ```bash
             echo $((<first> / <second>))
@@ -761,26 +772,37 @@ public class AgentsTests : AgentsTestBase
             (<first> + <second>)
             ```
             Replace <first> and <second> by the actual division arguments.
-            """);
+            """
+        );
+        SkillVersion skillFromCode2 = await skillsClient.CreateSkillVersionAsync(name: codeSkillName2, inlineContent: content);
         Assert.That(skillFromCode2.Name, Is.EqualTo(codeSkillName2));
         Assert.That(skillFromCode2.Description, Is.EqualTo("Divides one number by the other."));
         // Update
-        AgentsSkill skill = await skillsClient.UpdateSkillAsync(name: codeSkillName, description: "Calculates the product of two numbers.", instructions: """
-            To calculate the multiplication run
-            ```bash
-            echo $((<first> * <second>))
-            ```
-            ```powershell
-            (<first> * <second>)
-            ```
-            Replace <first> and <second> by the actual multiplication arguments.
-            """);
+        content = new(
+            description: "Calculates the product of two numbers.",
+            instructions: """
+                To calculate the multiplication run
+                ```bash
+                echo $((<first> * <second>))
+                ```
+                ```powershell
+                (<first> * <second>)
+                ```
+                Replace <first> and <second> by the actual multiplication arguments.
+                """
+        );
+        SkillVersion updatedVersion = await skillsClient.CreateSkillVersionAsync(name: codeSkillName, inlineContent: content);
+        AgentsSkill skill = await skillsClient.UpdateSkillAsync(name: codeSkillName, defaultVersion: updatedVersion.Version);
         Assert.That(skill.Name, Is.EqualTo(codeSkillName));
         Assert.That(skill.Description, Is.EqualTo("Calculates the product of two numbers."));
+        skill = await skillsClient.UpdateSkillAsync(name: codeSkillName, defaultVersion: oldVersion);
+        Assert.That(skill.Name, Is.EqualTo(codeSkillName));
+        Assert.That(skill.Description, Is.EqualTo("Calculates the sum of two numbers."));
+        await skillsClient.UpdateSkillAsync(name: codeSkillName, defaultVersion: updatedVersion.Version);
         // Get
-        skillFromCode = await skillsClient.GetSkillAsync(name: codeSkillName);
-        Assert.That(skillFromCode.Name, Is.EqualTo(codeSkillName));
-        Assert.That(skillFromCode.Description, Is.EqualTo("Calculates the product of two numbers."));
+        AgentsSkill retrievedSkill = await skillsClient.GetSkillAsync(name: codeSkillName);
+        Assert.That(retrievedSkill.Name, Is.EqualTo(codeSkillName));
+        Assert.That(retrievedSkill.Description, Is.EqualTo("Calculates the product of two numbers."));
         // List
         HashSet<string> skills = [.. await skillsClient.GetSkillsAsync().Select(x => x.Name).ToListAsync()];
         Assert.That(skills, Does.Contain(codeSkillName));
@@ -802,12 +824,9 @@ public class AgentsTests : AgentsTestBase
         AgentAdministrationClient agentsClient = GetTestClient();
         ProjectAgentSkills skillsClient = agentsClient.GetAgentSkills();
         int initialCount = (await skillsClient.GetSkillsAsync(limit: PAGE_SIZE, order: AgentListOrder.Ascending).ToListAsync()).Count;
-        for (int i = 0; i < PAGE_SIZE + 1; i++)
-        {
-            await skillsClient.CreateSkillAsync(
-                name: $"{SKILL}_{i}",
-                description: "Calculates the sum of two numbers.",
-                instructions: """
+        SkillInlineContent contrent = new(
+            description: "Calculates the sum of two numbers.",
+            instructions: """
                 To calculate the sum  run
                 ```bash
                 echo $((<first> + <second>))
@@ -817,30 +836,37 @@ public class AgentsTests : AgentsTestBase
                 ```
                 Replace <first> and <second> by the actual summation arguments.
                 """
+        );
+        for (int i = 0; i < PAGE_SIZE + 1; i++)
+        {
+            await skillsClient.CreateSkillVersionAsync(
+                name: $"{SKILL}-{i}",
+                inlineContent: contrent
             );
         }
         List<AgentsSkill> records = await skillsClient.GetSkillsAsync(limit: PAGE_SIZE, order: AgentListOrder.Ascending).ToListAsync();
         Assert.That(records.Count, Is.EqualTo(PAGE_SIZE + 1 + initialCount));
         // Go forward.
-        List<AgentsSkill> forward = await skillsClient.GetSkillsAsync(order: AgentListOrder.Ascending, after: records[0].SkillId, limit: PAGE_SIZE).ToListAsync();
+        List<AgentsSkill> forward = await skillsClient.GetSkillsAsync(order: AgentListOrder.Ascending, after: records[0].Id, limit: PAGE_SIZE).ToListAsync();
         Assert.That(forward.Count, Is.EqualTo(records.Count - 1));
-        Assert.That(forward[0].SkillId, Is.EqualTo(records[1].SkillId));
-        Assert.That(forward[forward.Count - 1].SkillId, Is.EqualTo(records[records.Count - 1].SkillId));
+        Assert.That(forward[0].Id, Is.EqualTo(records[1].Id));
+        Assert.That(forward[forward.Count - 1].Id, Is.EqualTo(records[records.Count - 1].Id));
         // Two limits:
-        forward = await skillsClient.GetSkillsAsync(order: AgentListOrder.Ascending, after: records[0].SkillId, before: records[3].SkillId, limit: PAGE_SIZE).ToListAsync();
+        forward = await skillsClient.GetSkillsAsync(order: AgentListOrder.Ascending, after: records[0].Id, before: records[3].Id, limit: PAGE_SIZE).ToListAsync();
         Assert.That(forward.Count, Is.EqualTo(2));
-        Assert.That(forward[0].SkillId, Is.EqualTo(records[1].SkillId));
-        Assert.That(forward[1].SkillId, Is.EqualTo(records[2].SkillId));
+        Assert.That(forward[0].Id, Is.EqualTo(records[1].Id));
+        Assert.That(forward[1].Id, Is.EqualTo(records[2].Id));
+        // Blocked by work item 5312533
         // Go backwards.
-        List<AgentsSkill> backwards = await skillsClient.GetSkillsAsync(order: AgentListOrder.Descending, before: records[0].SkillId, limit: PAGE_SIZE).ToListAsync();
-        Assert.That(backwards.Count, Is.EqualTo(records.Count - 1));
-        Assert.That(backwards[0].SkillId, Is.EqualTo(records[records.Count - 1].SkillId));
-        Assert.That(backwards[backwards.Count - 1].SkillId, Is.EqualTo(records[1].SkillId));
+        //List<AgentsSkill> backwards = await skillsClient.GetSkillsAsync(order: AgentListOrder.Descending, before: records[0].Id, limit: PAGE_SIZE).ToListAsync();
+        //Assert.That(backwards.Count, Is.EqualTo(records.Count - 1));
+        //Assert.That(backwards[0].Id, Is.EqualTo(records[records.Count - 1].Id));
+        //Assert.That(backwards[backwards.Count - 1].Id, Is.EqualTo(records[1].Id));
         // Two limits.
-        backwards = await skillsClient.GetSkillsAsync(order: AgentListOrder.Descending, after: records[records.Count - 1].SkillId, before: records[records.Count - 4].SkillId, limit: PAGE_SIZE).ToListAsync();
-        Assert.That(backwards.Count, Is.EqualTo(2));
-        Assert.That(backwards[0].SkillId, Is.EqualTo(records[records.Count - 2].SkillId));
-        Assert.That(backwards[1].SkillId, Is.EqualTo(records[records.Count - 3].SkillId));
+        //List<AgentsSkill> backwards = await skillsClient.GetSkillsAsync(order: AgentListOrder.Descending, after: records[records.Count - 1].Id, before: records[records.Count - 4].Id, limit: PAGE_SIZE).ToListAsync();
+        //Assert.That(backwards.Count, Is.EqualTo(2));
+        //Assert.That(backwards[0].Id, Is.EqualTo(records[records.Count - 2].Id));
+        //Assert.That(backwards[1].Id, Is.EqualTo(records[records.Count - 3].Id));
     }
 
     #region Helpers
@@ -878,7 +904,7 @@ public class AgentsTests : AgentsTestBase
                 { "AZURE_OPENAI_ENDPOINT", $"https://{accountId}.cognitiveservices.azure.com/" },
                 { "AZURE_OPENAI_CHAT_DEPLOYMENT_NAME", TestEnvironment.FOUNDRY_MODEL_NAME }
             },
-            Image = TestEnvironment.AGENT_DOCKER_IMAGE,
+            ContainerConfiguration = new(TestEnvironment.AGENT_DOCKER_IMAGE)
         };
         ProjectsAgentVersionCreationOptions creationOptions = new(agentDefinition);
         creationOptions.Metadata["enableVnextExperience"] = "true";

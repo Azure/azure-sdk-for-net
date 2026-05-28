@@ -3,74 +3,63 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> The CreateSkillRequest. </summary>
-    internal partial class CreateSkillRequest : IJsonModel<CreateSkillRequest>
+    /// <summary> Inline content for defining a simple skill without uploading files. Follows the agentskills.io SKILL.md specification. </summary>
+    public partial class SkillInlineContent : IJsonModel<SkillInlineContent>
     {
-        /// <summary> Initializes a new instance of <see cref="CreateSkillRequest"/> for deserialization. </summary>
-        internal CreateSkillRequest()
+        /// <summary> Initializes a new instance of <see cref="SkillInlineContent"/> for deserialization. </summary>
+        internal SkillInlineContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CreateSkillRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SkillInlineContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CreateSkillRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SkillInlineContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCreateSkillRequest(document.RootElement, options);
+                        return DeserializeSkillInlineContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CreateSkillRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SkillInlineContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CreateSkillRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SkillInlineContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CreateSkillRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SkillInlineContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CreateSkillRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SkillInlineContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CreateSkillRequest IPersistableModel<CreateSkillRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SkillInlineContent IPersistableModel<SkillInlineContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CreateSkillRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="createSkillRequest"> The <see cref="CreateSkillRequest"/> to serialize into <see cref="BinaryContent"/>. </param>
-        public static implicit operator BinaryContent(CreateSkillRequest createSkillRequest)
-        {
-            if (createSkillRequest == null)
-            {
-                return null;
-            }
-            return BinaryContent.Create(createSkillRequest, ModelSerializationExtensions.WireOptions);
-        }
+        string IPersistableModel<SkillInlineContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CreateSkillRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SkillInlineContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -81,22 +70,24 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CreateSkillRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SkillInlineContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CreateSkillRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SkillInlineContent)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Description))
+            writer.WritePropertyName("description"u8);
+            writer.WriteStringValue(Description);
+            writer.WritePropertyName("instructions"u8);
+            writer.WriteStringValue(Instructions);
+            if (Optional.IsDefined(License))
             {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
+                writer.WritePropertyName("license"u8);
+                writer.WriteStringValue(License);
             }
-            if (Optional.IsDefined(Instructions))
+            if (Optional.IsDefined(Compatibility))
             {
-                writer.WritePropertyName("instructions"u8);
-                writer.WriteStringValue(Instructions);
+                writer.WritePropertyName("compatibility"u8);
+                writer.WriteStringValue(Compatibility);
             }
             if (Optional.IsCollectionDefined(Metadata))
             {
@@ -113,6 +104,21 @@ namespace Azure.AI.Projects.Agents
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(AllowedTools))
+            {
+                writer.WritePropertyName("allowed_tools"u8);
+                writer.WriteStartArray();
+                foreach (string item in AllowedTools)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -133,41 +139,38 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CreateSkillRequest IJsonModel<CreateSkillRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SkillInlineContent IJsonModel<SkillInlineContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CreateSkillRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SkillInlineContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CreateSkillRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SkillInlineContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CreateSkillRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SkillInlineContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCreateSkillRequest(document.RootElement, options);
+            return DeserializeSkillInlineContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CreateSkillRequest DeserializeCreateSkillRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static SkillInlineContent DeserializeSkillInlineContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string name = default;
             string description = default;
             string instructions = default;
+            string license = default;
+            string compatibility = default;
             IDictionary<string, string> metadata = default;
+            IList<string> allowedTools = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("description"u8))
                 {
                     description = prop.Value.GetString();
@@ -176,6 +179,16 @@ namespace Azure.AI.Projects.Agents
                 if (prop.NameEquals("instructions"u8))
                 {
                     instructions = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("license"u8))
+                {
+                    license = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("compatibility"u8))
+                {
+                    compatibility = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("metadata"u8))
@@ -199,12 +212,40 @@ namespace Azure.AI.Projects.Agents
                     metadata = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("allowed_tools"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    allowedTools = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CreateSkillRequest(name, description, instructions, metadata ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
+            return new SkillInlineContent(
+                description,
+                instructions,
+                license,
+                compatibility,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                allowedTools ?? new ChangeTrackingList<string>(),
+                additionalBinaryDataProperties);
         }
     }
 }

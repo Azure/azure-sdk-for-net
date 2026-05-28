@@ -9,27 +9,27 @@ using System.Linq;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The response data for a requested list of items. </summary>
-    internal partial class AgentsPagedResultSkillObject
+    public partial class AgentsPagedResultOptimizationCandidate
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AgentsPagedResultSkillObject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentsPagedResultOptimizationCandidate"/>. </summary>
         /// <param name="data"> The requested list of items. </param>
         /// <param name="hasMore"> A value indicating whether there are additional values available not captured in this list. </param>
-        internal AgentsPagedResultSkillObject(IEnumerable<AgentsSkill> data, bool hasMore)
+        internal AgentsPagedResultOptimizationCandidate(IEnumerable<OptimizationCandidate> data, bool hasMore)
         {
             Data = data.ToList();
             HasMore = hasMore;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgentsPagedResultSkillObject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentsPagedResultOptimizationCandidate"/>. </summary>
         /// <param name="data"> The requested list of items. </param>
         /// <param name="firstId"> The first ID represented in this list. </param>
         /// <param name="lastId"> The last ID represented in this list. </param>
         /// <param name="hasMore"> A value indicating whether there are additional values available not captured in this list. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentsPagedResultSkillObject(IList<AgentsSkill> data, string firstId, string lastId, bool hasMore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentsPagedResultOptimizationCandidate(IList<OptimizationCandidate> data, string firstId, string lastId, bool hasMore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Data = data;
             FirstId = firstId;
@@ -39,7 +39,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> The requested list of items. </summary>
-        public IList<AgentsSkill> Data { get; }
+        public IList<OptimizationCandidate> Data { get; }
 
         /// <summary> The first ID represented in this list. </summary>
         public string FirstId { get; }

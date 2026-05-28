@@ -10,17 +10,21 @@ using System.Threading.Tasks;
 
 namespace Azure.AI.Projects.Agents
 {
-    internal partial class ProjectAgentSkillsGetSkillsAsyncCollectionResult : AsyncCollectionResult
+    internal partial class AgentOptimizationJobsGetAllAsyncCollectionResult : AsyncCollectionResult
     {
-        private readonly ProjectAgentSkills _client;
+        private readonly AgentOptimizationJobs _client;
+        private readonly string _foundryFeatures;
         private readonly int? _limit;
         private readonly string _order;
         private readonly string _after;
         private readonly string _before;
+        private readonly string _status;
+        private readonly string _agentName;
         private readonly RequestOptions _options;
 
-        /// <summary> Initializes a new instance of ProjectAgentSkillsGetSkillsAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ProjectAgentSkills client used to send requests. </param>
+        /// <summary> Initializes a new instance of AgentOptimizationJobsGetAllAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The AgentOptimizationJobs client used to send requests. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="limit">
         /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
         /// default is 20.
@@ -39,14 +43,19 @@ namespace Azure.AI.Projects.Agents
         /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
         /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
         /// </param>
+        /// <param name="status"> Filter to jobs in this lifecycle state. </param>
+        /// <param name="agentName"> Filter to jobs targeting this agent name. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ProjectAgentSkillsGetSkillsAsyncCollectionResult(ProjectAgentSkills client, int? limit, string order, string after, string before, RequestOptions options)
+        public AgentOptimizationJobsGetAllAsyncCollectionResult(AgentOptimizationJobs client, string foundryFeatures, int? limit, string order, string after, string before, string status, string agentName, RequestOptions options)
         {
             _client = client;
+            _foundryFeatures = foundryFeatures;
             _limit = limit;
             _order = order;
             _after = after;
             _before = before;
+            _status = status;
+            _agentName = agentName;
             _options = options;
         }
 
@@ -54,19 +63,19 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The raw pages of the collection. </returns>
         public override async IAsyncEnumerable<ClientResult> GetRawPagesAsync()
         {
-            PipelineMessage message = _client.CreateGetSkillsRequest(_limit, _order, _after, _before, _options);
+            PipelineMessage message = _client.CreateGetAllRequest(_foundryFeatures, _limit, _order, _after, _before, _status, _agentName, _options);
             string nextToken = null;
             while (true)
             {
                 ClientResult result = await GetNextResponseAsync(message).ConfigureAwait(false);
                 yield return result;
 
-                nextToken = ((AgentsPagedResultSkillObject)result).LastId;
+                nextToken = ((AgentsPagedResultOptimizationJob)result).LastId;
                 if (string.IsNullOrEmpty(nextToken))
                 {
                     yield break;
                 }
-                message = _client.CreateGetSkillsRequest(_limit, _order, nextToken, _before, _options);
+                message = _client.CreateGetAllRequest(_foundryFeatures, _limit, _order, nextToken, _before, _status, _agentName, _options);
             }
         }
 
@@ -75,7 +84,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The continuation token for the specified page. </returns>
         public override ContinuationToken GetContinuationToken(ClientResult page)
         {
-            string nextPage = ((AgentsPagedResultSkillObject)page).LastId;
+            string nextPage = ((AgentsPagedResultOptimizationJob)page).LastId;
             if (!string.IsNullOrEmpty(nextPage))
             {
                 return ContinuationToken.FromBytes(BinaryData.FromString(nextPage));

@@ -6,21 +6,22 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Azure.AI.Projects.Agents
 {
-    internal partial class ProjectAgentSkillsGetSkillsAsyncCollectionResultOfT : AsyncCollectionResult<AgentsSkill>
+    internal partial class ProjectAgentSkillsGetSkillVersionsCollectionResult : CollectionResult
     {
         private readonly ProjectAgentSkills _client;
+        private readonly string _name;
         private readonly int? _limit;
         private readonly string _order;
         private readonly string _after;
         private readonly string _before;
         private readonly RequestOptions _options;
 
-        /// <summary> Initializes a new instance of ProjectAgentSkillsGetSkillsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of ProjectAgentSkillsGetSkillVersionsCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ProjectAgentSkills client used to send requests. </param>
+        /// <param name="name"> The name of the skill to list versions for. </param>
         /// <param name="limit">
         /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
         /// default is 20.
@@ -40,9 +41,10 @@ namespace Azure.AI.Projects.Agents
         /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
         /// </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ProjectAgentSkillsGetSkillsAsyncCollectionResultOfT(ProjectAgentSkills client, int? limit, string order, string after, string before, RequestOptions options)
+        public ProjectAgentSkillsGetSkillVersionsCollectionResult(ProjectAgentSkills client, string name, int? limit, string order, string after, string before, RequestOptions options)
         {
             _client = client;
+            _name = name;
             _limit = limit;
             _order = order;
             _after = after;
@@ -52,21 +54,21 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Gets the raw pages of the collection. </summary>
         /// <returns> The raw pages of the collection. </returns>
-        public override async IAsyncEnumerable<ClientResult> GetRawPagesAsync()
+        public override IEnumerable<ClientResult> GetRawPages()
         {
-            PipelineMessage message = _client.CreateGetSkillsRequest(_limit, _order, _after, _before, _options);
+            PipelineMessage message = _client.CreateGetSkillVersionsRequest(_name, _limit, _order, _after, _before, _options);
             string nextToken = null;
             while (true)
             {
-                ClientResult result = await GetNextResponseAsync(message).ConfigureAwait(false);
+                ClientResult result = GetNextResponse(message);
                 yield return result;
 
-                nextToken = ((AgentsPagedResultSkillObject)result).LastId;
+                nextToken = ((AgentsPagedResultSkillVersion)result).LastId;
                 if (string.IsNullOrEmpty(nextToken))
                 {
                     yield break;
                 }
-                message = _client.CreateGetSkillsRequest(_limit, _order, nextToken, _before, _options);
+                message = _client.CreateGetSkillVersionsRequest(_name, _limit, _order, nextToken, _before, _options);
             }
         }
 
@@ -75,7 +77,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The continuation token for the specified page. </returns>
         public override ContinuationToken GetContinuationToken(ClientResult page)
         {
-            string nextPage = ((AgentsPagedResultSkillObject)page).LastId;
+            string nextPage = ((AgentsPagedResultSkillVersion)page).LastId;
             if (!string.IsNullOrEmpty(nextPage))
             {
                 return ContinuationToken.FromBytes(BinaryData.FromString(nextPage));
@@ -86,23 +88,11 @@ namespace Azure.AI.Projects.Agents
             }
         }
 
-        /// <summary> Gets the values from the specified page. </summary>
-        /// <param name="page"></param>
-        /// <returns> The values from the specified page. </returns>
-        protected override async IAsyncEnumerable<AgentsSkill> GetValuesFromPageAsync(ClientResult page)
-        {
-            foreach (AgentsSkill item in ((AgentsPagedResultSkillObject)page).Data)
-            {
-                yield return item;
-                await Task.Yield();
-            }
-        }
-
         /// <summary> Sends the request in the pipeline message and returns the response. </summary>
         /// <param name="message"> The pipeline message containing the request to send. </param>
-        private async ValueTask<ClientResult> GetNextResponseAsync(PipelineMessage message)
+        private ClientResult GetNextResponse(PipelineMessage message)
         {
-            return ClientResult.FromResponse(await _client.Pipeline.ProcessMessageAsync(message, _options).ConfigureAwait(false));
+            return ClientResult.FromResponse(_client.Pipeline.ProcessMessage(message, _options));
         }
     }
 }

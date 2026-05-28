@@ -691,6 +691,36 @@ public partial class AgentAdministrationClient
     }
 
     /// <summary>
+    /// Stops a session.
+    /// Returns 204 No Content when the stop succeeds.
+    /// </summary>
+    /// <param name="agentName"> The name of the agent. </param>
+    /// <param name="sessionId"> The session identifier. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="sessionId"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="sessionId"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    public virtual ClientResult StopSession(string agentName, string sessionId, CancellationToken cancellationToken = default)
+    {
+        return StopSession(agentName, sessionId, default, cancellationToken);
+    }
+
+    /// <summary>
+    /// Stops a session.
+    /// Returns 204 No Content when the stop succeeds.
+    /// </summary>
+    /// <param name="agentName"> The name of the agent. </param>
+    /// <param name="sessionId"> The session identifier. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="sessionId"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="sessionId"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    public virtual async Task<ClientResult> StopSessionAsync(string agentName, string sessionId, CancellationToken cancellationToken = default)
+    {
+        return await StopSessionAsync(agentName, sessionId, default, cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <summary>
     /// Updates an agent endpoint.
     /// <list type="bullet">
     /// <item>

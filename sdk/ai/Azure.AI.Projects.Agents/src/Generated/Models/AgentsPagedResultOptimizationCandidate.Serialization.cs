@@ -11,64 +11,64 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The response data for a requested list of items. </summary>
-    internal partial class AgentsPagedResultSkillObject : IJsonModel<AgentsPagedResultSkillObject>
+    public partial class AgentsPagedResultOptimizationCandidate : IJsonModel<AgentsPagedResultOptimizationCandidate>
     {
-        /// <summary> Initializes a new instance of <see cref="AgentsPagedResultSkillObject"/> for deserialization. </summary>
-        internal AgentsPagedResultSkillObject()
+        /// <summary> Initializes a new instance of <see cref="AgentsPagedResultOptimizationCandidate"/> for deserialization. </summary>
+        internal AgentsPagedResultOptimizationCandidate()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AgentsPagedResultSkillObject PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AgentsPagedResultOptimizationCandidate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentsPagedResultSkillObject>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgentsPagedResultOptimizationCandidate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAgentsPagedResultSkillObject(document.RootElement, options);
+                        return DeserializeAgentsPagedResultOptimizationCandidate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AgentsPagedResultSkillObject)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentsPagedResultOptimizationCandidate)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentsPagedResultSkillObject>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgentsPagedResultOptimizationCandidate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AgentsPagedResultSkillObject)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentsPagedResultOptimizationCandidate)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AgentsPagedResultSkillObject>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AgentsPagedResultOptimizationCandidate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AgentsPagedResultSkillObject IPersistableModel<AgentsPagedResultSkillObject>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AgentsPagedResultOptimizationCandidate IPersistableModel<AgentsPagedResultOptimizationCandidate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AgentsPagedResultSkillObject>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AgentsPagedResultOptimizationCandidate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="AgentsPagedResultSkillObject"/> from. </param>
-        public static explicit operator AgentsPagedResultSkillObject(ClientResult result)
+        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="AgentsPagedResultOptimizationCandidate"/> from. </param>
+        public static explicit operator AgentsPagedResultOptimizationCandidate(ClientResult result)
         {
             PipelineResponse response = result.GetRawResponse();
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAgentsPagedResultSkillObject(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeAgentsPagedResultOptimizationCandidate(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AgentsPagedResultSkillObject>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AgentsPagedResultOptimizationCandidate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -79,14 +79,14 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentsPagedResultSkillObject>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgentsPagedResultOptimizationCandidate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentsPagedResultSkillObject)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentsPagedResultOptimizationCandidate)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("data"u8);
             writer.WriteStartArray();
-            foreach (AgentsSkill item in Data)
+            foreach (OptimizationCandidate item in Data)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -122,30 +122,30 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AgentsPagedResultSkillObject IJsonModel<AgentsPagedResultSkillObject>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AgentsPagedResultOptimizationCandidate IJsonModel<AgentsPagedResultOptimizationCandidate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AgentsPagedResultSkillObject JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AgentsPagedResultOptimizationCandidate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentsPagedResultSkillObject>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgentsPagedResultOptimizationCandidate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentsPagedResultSkillObject)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentsPagedResultOptimizationCandidate)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAgentsPagedResultSkillObject(document.RootElement, options);
+            return DeserializeAgentsPagedResultOptimizationCandidate(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AgentsPagedResultSkillObject DeserializeAgentsPagedResultSkillObject(JsonElement element, ModelReaderWriterOptions options)
+        internal static AgentsPagedResultOptimizationCandidate DeserializeAgentsPagedResultOptimizationCandidate(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<AgentsSkill> data = default;
+            IList<OptimizationCandidate> data = default;
             string firstId = default;
             string lastId = default;
             bool hasMore = default;
@@ -154,10 +154,10 @@ namespace Azure.AI.Projects.Agents
             {
                 if (prop.NameEquals("data"u8))
                 {
-                    List<AgentsSkill> array = new List<AgentsSkill>();
+                    List<OptimizationCandidate> array = new List<OptimizationCandidate>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AgentsSkill.DeserializeAgentsSkill(item, options));
+                        array.Add(OptimizationCandidate.DeserializeOptimizationCandidate(item, options));
                     }
                     data = array;
                     continue;
@@ -182,7 +182,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AgentsPagedResultSkillObject(data, firstId, lastId, hasMore, additionalBinaryDataProperties);
+            return new AgentsPagedResultOptimizationCandidate(data, firstId, lastId, hasMore, additionalBinaryDataProperties);
         }
     }
 }
