@@ -110,21 +110,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         // 3. Without this custom code, only the generated Start*/Set* methods with operation-specific result types
         //    would exist, removing the shipped API surface.
 
-        /// <summary> Backward-compatible shim for Reboot. Use StartReboot instead for richer result type. </summary>
+        /// <summary> Backward-compatible shim for Reboot. Use Restart instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use StartRebootAsync instead.")]
+        [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use RestartAsync instead.")]
         public virtual async Task<ArmOperation<StateUpdateCommonPostActionResult>> RebootAsync(WaitUntil waitUntil, NetworkDeviceRebootContent content, CancellationToken cancellationToken = default)
         {
-            ArmOperation<OperationStatusResult> operation = await StartRebootAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
+            ArmOperation<OperationStatusResult> operation = await RestartAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
             return new CompatArmOperation<OperationStatusResult, StateUpdateCommonPostActionResult>(operation, r => CompatArmOperationConversions.ToStateUpdateResult(r.Error));
         }
 
-        /// <summary> Backward-compatible shim for Reboot. Use StartReboot instead for richer result type. </summary>
+        /// <summary> Backward-compatible shim for Reboot. Use Restart instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use StartReboot instead.")]
+        [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use Restart instead.")]
         public virtual ArmOperation<StateUpdateCommonPostActionResult> Reboot(WaitUntil waitUntil, NetworkDeviceRebootContent content, CancellationToken cancellationToken = default)
         {
-            ArmOperation<OperationStatusResult> operation = StartReboot(waitUntil, content, cancellationToken);
+            ArmOperation<OperationStatusResult> operation = Restart(waitUntil, content, cancellationToken);
             return new CompatArmOperation<OperationStatusResult, StateUpdateCommonPostActionResult>(operation, r => CompatArmOperationConversions.ToStateUpdateResult(r.Error));
         }
 

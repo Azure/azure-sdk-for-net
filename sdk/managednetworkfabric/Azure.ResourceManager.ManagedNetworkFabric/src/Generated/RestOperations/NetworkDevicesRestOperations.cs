@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return message;
         }
 
-        internal HttpMessage CreateStartRebootRequest(Guid subscriptionId, string resourceGroupName, string networkDeviceName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateRestartRequest(Guid subscriptionId, string resourceGroupName, string networkDeviceName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
