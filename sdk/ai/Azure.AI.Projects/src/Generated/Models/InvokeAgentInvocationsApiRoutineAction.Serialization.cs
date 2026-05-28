@@ -9,14 +9,9 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> Dispatches a routine through the raw invocations API. </summary>
+    /// <summary> Dispatches a routine through the raw invocations API. Exactly one of agent_name or agent_endpoint_id must be provided. </summary>
     public partial class InvokeAgentInvocationsApiRoutineAction : RoutineAction, IJsonModel<InvokeAgentInvocationsApiRoutineAction>
     {
-        /// <summary> Initializes a new instance of <see cref="InvokeAgentInvocationsApiRoutineAction"/> for deserialization. </summary>
-        internal InvokeAgentInvocationsApiRoutineAction()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override RoutineAction PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -76,8 +71,28 @@ namespace Azure.AI.Projects
                 throw new FormatException($"The model {nameof(InvokeAgentInvocationsApiRoutineAction)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("agent_endpoint_id"u8);
-            writer.WriteStringValue(AgentEndpointId);
+            if (Optional.IsDefined(AgentName))
+            {
+                writer.WritePropertyName("agent_name"u8);
+                writer.WriteStringValue(AgentName);
+            }
+            if (Optional.IsDefined(AgentEndpointId))
+            {
+                writer.WritePropertyName("agent_endpoint_id"u8);
+                writer.WriteStringValue(AgentEndpointId);
+            }
+            if (Optional.IsDefined(Input))
+            {
+                writer.WritePropertyName("input"u8);
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(Input);
+#else
+                using (JsonDocument document = JsonDocument.Parse(Input))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
             if (Optional.IsDefined(SessionId))
             {
                 writer.WritePropertyName("session_id"u8);
@@ -112,7 +127,9 @@ namespace Azure.AI.Projects
             }
             RoutineActionType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string agentName = default;
             string agentEndpointId = default;
+            BinaryData input = default;
             string sessionId = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -121,9 +138,23 @@ namespace Azure.AI.Projects
                     @type = new RoutineActionType(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("agent_name"u8))
+                {
+                    agentName = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("agent_endpoint_id"u8))
                 {
                     agentEndpointId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("input"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    input = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("session_id"u8))
@@ -136,7 +167,13 @@ namespace Azure.AI.Projects
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InvokeAgentInvocationsApiRoutineAction(@type, additionalBinaryDataProperties, agentEndpointId, sessionId);
+            return new InvokeAgentInvocationsApiRoutineAction(
+                @type,
+                additionalBinaryDataProperties,
+                agentName,
+                agentEndpointId,
+                input,
+                sessionId);
         }
     }
 }
