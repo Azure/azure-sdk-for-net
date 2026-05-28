@@ -56,9 +56,9 @@ internal static class CredentialResolverEngine
         // second GetEnumerator) would blow up when the outer foreach has
         // already started walking it. Pass the materialized list through
         // the recursion so every layer sees the same snapshot.
-        IReadOnlyList<CredentialResolver>? resolverList = resolvers switch
+        IReadOnlyList<CredentialResolver> resolverList = resolvers switch
         {
-            null => null,
+            null => Array.Empty<CredentialResolver>(),
             IReadOnlyList<CredentialResolver> list => list,
             _ => resolvers.ToArray()
         };
@@ -103,7 +103,7 @@ internal static class CredentialResolverEngine
         // Reference-identity (RuntimeHelpers.GetHashCode) is used so distinct
         // instances of the same type don't leak providers into each other,
         // and any GetHashCode override on the resolver is bypassed.
-        if (resolverList is not null)
+        if (resolverList.Count > 0)
         {
             string chainKey = ComputeChainKey(resolverList);
             foreach (CredentialResolver resolver in resolverList)
