@@ -32,7 +32,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         PrivateEndpointConnectionResource IOperationSource<PrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            PrivateEndpointConnectionData data = PrivateEndpointConnectionData.DeserializePrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData data = AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData.DeserializeAzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new PrivateEndpointConnectionResource(_client, data);
         }
 
@@ -42,7 +42,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         async ValueTask<PrivateEndpointConnectionResource> IOperationSource<PrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            PrivateEndpointConnectionData data = PrivateEndpointConnectionData.DeserializePrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData data = AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData.DeserializeAzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new PrivateEndpointConnectionResource(_client, data);
         }
     }

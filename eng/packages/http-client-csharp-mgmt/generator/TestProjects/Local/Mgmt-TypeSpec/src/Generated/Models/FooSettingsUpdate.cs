@@ -11,35 +11,28 @@ using Azure.Generator.MgmtTypeSpec.Tests;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
-    /// <summary> The type used for update operations of the Zoo. </summary>
-    public partial class ZooPatch
+    /// <summary> The type used for update operations of the FooSettings. </summary>
+    public partial class FooSettingsUpdate
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ZooPatch"/>. </summary>
-        public ZooPatch()
+        /// <summary> Initializes a new instance of <see cref="FooSettingsUpdate"/>. </summary>
+        public FooSettingsUpdate()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ZooPatch"/>. </summary>
-        /// <param name="tags"> Resource tags. </param>
+        /// <summary> Initializes a new instance of <see cref="FooSettingsUpdate"/>. </summary>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ZooPatch(IDictionary<string, string> tags, ZooUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FooSettingsUpdate(FooSettingsUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Tags = tags;
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Resource tags. </summary>
-        [WirePath("tags")]
-        public IDictionary<string, string> Tags { get; }
-
         /// <summary> The resource-specific properties for this resource. </summary>
         [WirePath("properties")]
-        public ZooUpdateProperties Properties { get; set; }
+        public FooSettingsUpdateProperties Properties { get; set; }
     }
 }

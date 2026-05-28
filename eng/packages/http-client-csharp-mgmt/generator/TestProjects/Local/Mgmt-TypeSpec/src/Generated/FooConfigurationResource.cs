@@ -320,12 +320,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The resource properties to be updated. </param>
+        /// <param name="properties"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<FooConfigurationResource>> UpdateAsync(FooSettingsPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public virtual async Task<Response<FooConfigurationResource>> UpdateAsync(FooSettingsUpdate properties, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(properties, nameof(properties));
 
             using DiagnosticScope scope = _fooSettingsOperationsClientDiagnostics.CreateScope("FooConfigurationResource.Update");
             scope.Start();
@@ -335,7 +335,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fooSettingsOperationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, FooSettingsPatch.ToRequestContent(patch), context);
+                HttpMessage message = _fooSettingsOperationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, FooSettingsUpdate.ToRequestContent(properties), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FooSettingsData> response = Response.FromValue(FooSettingsData.FromResponse(result), result);
                 if (response.Value == null)
@@ -372,12 +372,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The resource properties to be updated. </param>
+        /// <param name="properties"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<FooConfigurationResource> Update(FooSettingsPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public virtual Response<FooConfigurationResource> Update(FooSettingsUpdate properties, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(properties, nameof(properties));
 
             using DiagnosticScope scope = _fooSettingsOperationsClientDiagnostics.CreateScope("FooConfigurationResource.Update");
             scope.Start();
@@ -387,7 +387,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fooSettingsOperationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, FooSettingsPatch.ToRequestContent(patch), context);
+                HttpMessage message = _fooSettingsOperationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, FooSettingsUpdate.ToRequestContent(properties), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FooSettingsData> response = Response.FromValue(FooSettingsData.FromResponse(result), result);
                 if (response.Value == null)
