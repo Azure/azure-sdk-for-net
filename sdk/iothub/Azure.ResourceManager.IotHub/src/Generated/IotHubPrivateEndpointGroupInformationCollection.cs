@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.IotHub
     /// </summary>
     public partial class IotHubPrivateEndpointGroupInformationCollection : ArmCollection, IEnumerable<IotHubPrivateEndpointGroupInformationResource>, IAsyncEnumerable<IotHubPrivateEndpointGroupInformationResource>
     {
-        private readonly ClientDiagnostics _groupIdInformationsClientDiagnostics;
-        private readonly GroupIdInformations _groupIdInformationsRestClient;
+        private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
+        private readonly PrivateLinkResources _privateLinkResourcesRestClient;
 
         /// <summary> Initializes a new instance of IotHubPrivateEndpointGroupInformationCollection for mocking. </summary>
         protected IotHubPrivateEndpointGroupInformationCollection()
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.IotHub
         internal IotHubPrivateEndpointGroupInformationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(IotHubPrivateEndpointGroupInformationResource.ResourceType, out string iotHubPrivateEndpointGroupInformationApiVersion);
-            _groupIdInformationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotHub", IotHubPrivateEndpointGroupInformationResource.ResourceType.Namespace, Diagnostics);
-            _groupIdInformationsRestClient = new GroupIdInformations(_groupIdInformationsClientDiagnostics, Pipeline, Endpoint, iotHubPrivateEndpointGroupInformationApiVersion ?? "2026-03-01-preview");
+            _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotHub", IotHubPrivateEndpointGroupInformationResource.ResourceType.Namespace, Diagnostics);
+            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, iotHubPrivateEndpointGroupInformationApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.IotHub
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            using DiagnosticScope scope = _groupIdInformationsClientDiagnostics.CreateScope("IotHubPrivateEndpointGroupInformationCollection.Get");
+            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("IotHubPrivateEndpointGroupInformationCollection.Get");
             scope.Start();
             try
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.IotHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupIdInformationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, groupId, context);
+                HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, groupId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<IotHubPrivateEndpointGroupInformationData> response = Response.FromValue(IotHubPrivateEndpointGroupInformationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.IotHub
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            using DiagnosticScope scope = _groupIdInformationsClientDiagnostics.CreateScope("IotHubPrivateEndpointGroupInformationCollection.Get");
+            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("IotHubPrivateEndpointGroupInformationCollection.Get");
             scope.Start();
             try
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.IotHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupIdInformationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, groupId, context);
+                HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, groupId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<IotHubPrivateEndpointGroupInformationData> response = Response.FromValue(IotHubPrivateEndpointGroupInformationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -177,8 +177,8 @@ namespace Azure.ResourceManager.IotHub
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<IotHubPrivateEndpointGroupInformationData, IotHubPrivateEndpointGroupInformationResource>(new GroupIdInformationsGetAllAsyncCollectionResultOfT(
-                _groupIdInformationsRestClient,
+            return new AsyncPageableWrapper<IotHubPrivateEndpointGroupInformationData, IotHubPrivateEndpointGroupInformationResource>(new PrivateLinkResourcesGetAllAsyncCollectionResultOfT(
+                _privateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
@@ -211,8 +211,8 @@ namespace Azure.ResourceManager.IotHub
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<IotHubPrivateEndpointGroupInformationData, IotHubPrivateEndpointGroupInformationResource>(new GroupIdInformationsGetAllCollectionResultOfT(
-                _groupIdInformationsRestClient,
+            return new PageableWrapper<IotHubPrivateEndpointGroupInformationData, IotHubPrivateEndpointGroupInformationResource>(new PrivateLinkResourcesGetAllCollectionResultOfT(
+                _privateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.IotHub
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            using DiagnosticScope scope = _groupIdInformationsClientDiagnostics.CreateScope("IotHubPrivateEndpointGroupInformationCollection.Exists");
+            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("IotHubPrivateEndpointGroupInformationCollection.Exists");
             scope.Start();
             try
             {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.IotHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupIdInformationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, groupId, context);
+                HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, groupId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<IotHubPrivateEndpointGroupInformationData> response = default;
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.IotHub
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            using DiagnosticScope scope = _groupIdInformationsClientDiagnostics.CreateScope("IotHubPrivateEndpointGroupInformationCollection.Exists");
+            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("IotHubPrivateEndpointGroupInformationCollection.Exists");
             scope.Start();
             try
             {
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.IotHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupIdInformationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, groupId, context);
+                HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, groupId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<IotHubPrivateEndpointGroupInformationData> response = default;
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.IotHub
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            using DiagnosticScope scope = _groupIdInformationsClientDiagnostics.CreateScope("IotHubPrivateEndpointGroupInformationCollection.GetIfExists");
+            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("IotHubPrivateEndpointGroupInformationCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.IotHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupIdInformationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, groupId, context);
+                HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, groupId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<IotHubPrivateEndpointGroupInformationData> response = default;
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.IotHub
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            using DiagnosticScope scope = _groupIdInformationsClientDiagnostics.CreateScope("IotHubPrivateEndpointGroupInformationCollection.GetIfExists");
+            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("IotHubPrivateEndpointGroupInformationCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.IotHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupIdInformationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, groupId, context);
+                HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, groupId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<IotHubPrivateEndpointGroupInformationData> response = default;

@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.IotHub
 {
-    internal partial class GroupIdInformations
+    internal partial class PrivateLinkResources
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of GroupIdInformations for mocking. </summary>
-        protected GroupIdInformations()
+        /// <summary> Initializes a new instance of PrivateLinkResources for mocking. </summary>
+        protected PrivateLinkResources()
         {
         }
 
-        /// <summary> Initializes a new instance of GroupIdInformations. </summary>
+        /// <summary> Initializes a new instance of PrivateLinkResources. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal GroupIdInformations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal PrivateLinkResources(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;

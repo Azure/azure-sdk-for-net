@@ -20,37 +20,6 @@ namespace Azure.ResourceManager.IotHub.Models
     public static partial class ArmIotHubModelFactory
     {
 
-        /// <summary> The group information for creating a private endpoint on an IotHub. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The properties for a group information object. </param>
-        /// <returns> A new <see cref="IotHub.IotHubPrivateEndpointGroupInformationData"/> instance for mocking. </returns>
-        public static IotHubPrivateEndpointGroupInformationData IotHubPrivateEndpointGroupInformationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IotHubPrivateEndpointGroupInformationProperties properties = default)
-        {
-            return new IotHubPrivateEndpointGroupInformationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                properties);
-        }
-
-        /// <summary> The properties for a group information object. </summary>
-        /// <param name="groupId"> The group id. </param>
-        /// <param name="requiredMembers"> The required members for a specific group id. </param>
-        /// <param name="requiredDnsZoneNames"> The required DNS zones for a specific group id. </param>
-        /// <returns> A new <see cref="Models.IotHubPrivateEndpointGroupInformationProperties"/> instance for mocking. </returns>
-        public static IotHubPrivateEndpointGroupInformationProperties IotHubPrivateEndpointGroupInformationProperties(string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredDnsZoneNames = default)
-        {
-            requiredMembers ??= new ChangeTrackingList<string>();
-            requiredDnsZoneNames ??= new ChangeTrackingList<string>();
-
-            return new IotHubPrivateEndpointGroupInformationProperties(groupId, requiredMembers.ToList(), requiredDnsZoneNames.ToList(), additionalBinaryDataProperties: null);
-        }
-
         /// <summary> The private endpoint connection of an IotHub. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -729,6 +698,37 @@ namespace Azure.ResourceManager.IotHub.Models
                 certificate,
                 policyResourceId,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The group information for creating a private endpoint on an IotHub. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The properties for a group information object. </param>
+        /// <returns> A new <see cref="IotHub.IotHubPrivateEndpointGroupInformationData"/> instance for mocking. </returns>
+        public static IotHubPrivateEndpointGroupInformationData IotHubPrivateEndpointGroupInformationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IotHubPrivateEndpointGroupInformationProperties properties = default)
+        {
+            return new IotHubPrivateEndpointGroupInformationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> The properties for a group information object. </summary>
+        /// <param name="groupId"> The group id. </param>
+        /// <param name="requiredMembers"> The required members for a specific group id. </param>
+        /// <param name="requiredDnsZoneNames"> The required DNS zones for a specific group id. </param>
+        /// <returns> A new <see cref="Models.IotHubPrivateEndpointGroupInformationProperties"/> instance for mocking. </returns>
+        public static IotHubPrivateEndpointGroupInformationProperties IotHubPrivateEndpointGroupInformationProperties(string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredDnsZoneNames = default)
+        {
+            requiredMembers ??= new ChangeTrackingList<string>();
+            requiredDnsZoneNames ??= new ChangeTrackingList<string>();
+
+            return new IotHubPrivateEndpointGroupInformationProperties(groupId, requiredMembers.ToList(), requiredDnsZoneNames.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> User subscription quota response. </summary>

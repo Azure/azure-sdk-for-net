@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.IotHub
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MessagingEndpointProperties))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
-    [ModelReaderWriterBuildable(typeof(PrivateLinkResources))]
+    [ModelReaderWriterBuildable(typeof(Models.PrivateLinkResources))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RouteCompilationError))]
     [ModelReaderWriterBuildable(typeof(RouteErrorPosition))]

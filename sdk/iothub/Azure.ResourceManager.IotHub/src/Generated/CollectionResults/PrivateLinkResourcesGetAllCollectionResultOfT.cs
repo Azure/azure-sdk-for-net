@@ -14,23 +14,23 @@ using Azure.ResourceManager.IotHub.Models;
 
 namespace Azure.ResourceManager.IotHub
 {
-    internal partial class GroupIdInformationsGetAllCollectionResultOfT : Pageable<IotHubPrivateEndpointGroupInformationData>
+    internal partial class PrivateLinkResourcesGetAllCollectionResultOfT : Pageable<IotHubPrivateEndpointGroupInformationData>
     {
-        private readonly GroupIdInformations _client;
+        private readonly PrivateLinkResources _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _resourceName;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of GroupIdInformationsGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The GroupIdInformations client used to send requests. </param>
+        /// <summary> Initializes a new instance of PrivateLinkResourcesGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The PrivateLinkResources client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the IoT Hub. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public GroupIdInformationsGetAllCollectionResultOfT(GroupIdInformations client, Guid subscriptionId, string resourceGroupName, string resourceName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public PrivateLinkResourcesGetAllCollectionResultOfT(PrivateLinkResources client, Guid subscriptionId, string resourceGroupName, string resourceName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -40,14 +40,14 @@ namespace Azure.ResourceManager.IotHub
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of GroupIdInformationsGetAllCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of PrivateLinkResourcesGetAllCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of GroupIdInformationsGetAllCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of PrivateLinkResourcesGetAllCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<IotHubPrivateEndpointGroupInformationData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = GetNextResponse(pageSizeHint, null);
-            PrivateLinkResources result = PrivateLinkResources.FromResponse(response);
+            Models.PrivateLinkResources result = Models.PrivateLinkResources.FromResponse(response);
             yield return Page<IotHubPrivateEndpointGroupInformationData>.FromValues((IReadOnlyList<IotHubPrivateEndpointGroupInformationData>)result.Value, null, response);
         }
 
