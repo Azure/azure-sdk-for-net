@@ -11,15 +11,15 @@ namespace Azure.AI.VoiceLive.Tests
 {
     /// <summary>
     /// Tests that RequireApprovalOption serializes correctly for MCP approval workflows.
-    /// Regression test for: BinaryData.FromObjectAsJson(MCPApprovalType.Never) was producing "{}"
+    /// Regression test for: BinaryData.FromObjectAsJson(McpApprovalKind.Never) was producing "{}"
     /// instead of "never", causing silent approval behavior changes on the wire.
     /// </summary>
-    public class MCPApprovalTypeSerializationTests
+    public class McpApprovalKindSerializationTests
     {
         [Test]
         public void RequireApproval_Never_SerializesToNeverString()
         {
-            var option = new RequireApprovalOption(MCPApprovalType.Never);
+            var option = new RequireApprovalOption(McpApprovalKind.Never);
             var data = ModelReaderWriter.Write(option, new ModelReaderWriterOptions("J"));
             Assert.AreEqual("\"never\"", data.ToString());
         }
@@ -27,7 +27,7 @@ namespace Azure.AI.VoiceLive.Tests
         [Test]
         public void RequireApproval_Always_SerializesToAlwaysString()
         {
-            var option = new RequireApprovalOption(MCPApprovalType.Always);
+            var option = new RequireApprovalOption(McpApprovalKind.Always);
             var data = ModelReaderWriter.Write(option, new ModelReaderWriterOptions("J"));
             Assert.AreEqual("\"always\"", data.ToString());
         }
@@ -35,9 +35,9 @@ namespace Azure.AI.VoiceLive.Tests
         [Test]
         public void RequireApproval_ImplicitConversion_Works()
         {
-            RequireApprovalOption option = MCPApprovalType.Never;
+            RequireApprovalOption option = McpApprovalKind.Never;
             Assert.IsNotNull(option);
-            Assert.AreEqual(MCPApprovalType.Never, option.ApprovalType);
+            Assert.AreEqual(McpApprovalKind.Never, option.ApprovalType);
         }
 
         [Test]
@@ -62,10 +62,10 @@ namespace Azure.AI.VoiceLive.Tests
         [Test]
         public void RequireApproval_RoundTrips_StringValue()
         {
-            var original = new RequireApprovalOption(MCPApprovalType.Never);
+            var original = new RequireApprovalOption(McpApprovalKind.Never);
             var data = ModelReaderWriter.Write(original, new ModelReaderWriterOptions("J"));
             var deserialized = RequireApprovalOption.FromBinaryData(data);
-            Assert.AreEqual(MCPApprovalType.Never, deserialized.ApprovalType);
+            Assert.AreEqual(McpApprovalKind.Never, deserialized.ApprovalType);
         }
 
         [Test]
@@ -90,10 +90,10 @@ namespace Azure.AI.VoiceLive.Tests
         {
             var server = new VoiceLiveMcpServerDefinition("test-server", "https://example.com/mcp")
             {
-                RequireApproval = MCPApprovalType.Never
+                RequireApproval = McpApprovalKind.Never
             };
 
-            Assert.AreEqual(MCPApprovalType.Never, server.RequireApproval.ApprovalType);
+            Assert.AreEqual(McpApprovalKind.Never, server.RequireApproval.ApprovalType);
         }
     }
 }
