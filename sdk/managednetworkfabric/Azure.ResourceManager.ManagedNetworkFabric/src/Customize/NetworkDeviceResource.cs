@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use StartUpgradeAsync instead.")]
         public virtual async Task<ArmOperation<StateUpdateCommonPostActionResult>> UpgradeAsync(WaitUntil waitUntil, NetworkFabricUpdateVersionContent content, CancellationToken cancellationToken = default)
         {
-            ArmOperation<NetworkDeviceUpgradeResult> operation = await StartUpgradeAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
+            ArmOperation<NetworkDeviceUpgradeResult> operation = await StartUpgradeAsync(waitUntil, ToNetworkDeviceUpgradeContent(content), cancellationToken).ConfigureAwait(false);
             return new CompatArmOperation<NetworkDeviceUpgradeResult, StateUpdateCommonPostActionResult>(operation, r => CompatArmOperationConversions.ToStateUpdateResult(r.Error));
         }
 
@@ -178,8 +178,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use StartUpgrade instead.")]
         public virtual ArmOperation<StateUpdateCommonPostActionResult> Upgrade(WaitUntil waitUntil, NetworkFabricUpdateVersionContent content, CancellationToken cancellationToken = default)
         {
-            ArmOperation<NetworkDeviceUpgradeResult> operation = StartUpgrade(waitUntil, content, cancellationToken);
+            ArmOperation<NetworkDeviceUpgradeResult> operation = StartUpgrade(waitUntil, ToNetworkDeviceUpgradeContent(content), cancellationToken);
             return new CompatArmOperation<NetworkDeviceUpgradeResult, StateUpdateCommonPostActionResult>(operation, r => CompatArmOperationConversions.ToStateUpdateResult(r.Error));
+        }
+
+        private static NetworkDeviceUpgradeContent ToNetworkDeviceUpgradeContent(NetworkFabricUpdateVersionContent content)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return new NetworkDeviceUpgradeContent(content.Version, rwDeviceConfigUri: null, additionalBinaryDataProperties: null);
         }
     }
 }

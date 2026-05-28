@@ -1683,6 +1683,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> NetworkDevice Upgrade Request Properties. </summary>
+        /// <param name="version"> Version to which the device needs to be upgraded. </param>
+        /// <param name="rwDeviceConfigUri"> URL to the file containing Read-write configuration to be applied on the device during upgrade. </param>
+        /// <returns> A new <see cref="Models.NetworkDeviceUpgradeContent"/> instance for mocking. </returns>
+        public static NetworkDeviceUpgradeContent NetworkDeviceUpgradeContent(string version = default, Uri rwDeviceConfigUri = default)
+        {
+            return new NetworkDeviceUpgradeContent(version, rwDeviceConfigUri, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Network Device Upgrade Response. </summary>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="name"> Name of the async operation. </param>

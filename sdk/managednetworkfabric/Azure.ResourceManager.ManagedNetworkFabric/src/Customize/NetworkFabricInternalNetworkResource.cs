@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use SetBgpAdministrativeStateAsync instead.")]
         public virtual async Task<ArmOperation<StateUpdateCommonPostActionResult>> UpdateBgpAdministrativeStateAsync(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
-            ArmOperation<InternalNetworkUpdateBgpAdministrativeStateResult> operation = await SetBgpAdministrativeStateAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
+            ArmOperation<InternalNetworkUpdateBgpAdministrativeStateResult> operation = await SetBgpAdministrativeStateAsync(waitUntil, ToBgpAdministrativeStateContent(content), cancellationToken).ConfigureAwait(false);
             return new CompatArmOperation<InternalNetworkUpdateBgpAdministrativeStateResult, StateUpdateCommonPostActionResult>(operation, r => CompatArmOperationConversions.ToStateUpdateResult(r.Error));
         }
 
@@ -53,8 +53,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use SetBgpAdministrativeState instead.")]
         public virtual ArmOperation<StateUpdateCommonPostActionResult> UpdateBgpAdministrativeState(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
-            ArmOperation<InternalNetworkUpdateBgpAdministrativeStateResult> operation = SetBgpAdministrativeState(waitUntil, content, cancellationToken);
+            ArmOperation<InternalNetworkUpdateBgpAdministrativeStateResult> operation = SetBgpAdministrativeState(waitUntil, ToBgpAdministrativeStateContent(content), cancellationToken);
             return new CompatArmOperation<InternalNetworkUpdateBgpAdministrativeStateResult, StateUpdateCommonPostActionResult>(operation, r => CompatArmOperationConversions.ToStateUpdateResult(r.Error));
+        }
+
+        private static InternalNetworkUpdateBgpAdministrativeStateContent ToBgpAdministrativeStateContent(UpdateAdministrativeStateContent content)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            BgpAdministrativeState? administrativeState = content.State.HasValue
+                ? content.State.Value == AdministrativeEnableState.Enable
+                    ? BgpAdministrativeState.Enabled
+                    : content.State.Value == AdministrativeEnableState.Disable
+                        ? BgpAdministrativeState.Disabled
+                        : new BgpAdministrativeState(content.State.Value.ToString())
+                : null;
+
+            return new InternalNetworkUpdateBgpAdministrativeStateContent(neighborAddress: null, administrativeState, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Backward-compatible shim for UpdateStaticRouteBfdAdministrativeState. Use SetStaticRouteBfdAdministrativeState instead for richer result type. </summary>
