@@ -2544,6 +2544,7 @@
                   "kind": "enumvalue",
                   "decorators": [],
                   "name": "EnumValue2",
+                  "isExactName": false,
                   "value": "value2",
                   "valueType": {
                     "$ref": "233"

@@ -831,25 +831,27 @@ public partial class AgentAdministrationClient
     /// </param>
     /// <param name="filePath"> The path to the entry point file. </param>
     /// <param name="metadata">Metadata, including metadata itself, hosted agent definition and agent description. </param>
-    /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="filePath"/> or is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
-    public virtual ClientResult<ProjectsAgentVersion> CreateAgentVersionFromCode(string agentName, string filePath, CreateAgentVersionFromCodeMetadata metadata, string contentType, CancellationToken cancellationToken = default)
+    public virtual ClientResult<ProjectsAgentVersion> CreateAgentVersionFromCode(string agentName, string filePath, CreateAgentVersionFromCodeMetadata metadata, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
         Argument.AssertNotNullOrEmpty(filePath, nameof(filePath));
 
-        BinaryData data = FileHelper.CreateAndReadZipFileFromDirectory(filePath);
-        string codeZipSha256 = FileHelper.GetSha256Sum(data);
-        CreateAgentFromCodeOptions content = new(metadata, data);
+        BinaryData dataZip = FileHelper.CreateAndReadZipFileFromDirectory(filePath);
+        string codeZipSha256 = FileHelper.GetSha256Sum(dataZip);
+        using MultiPartFormDataBinaryContent content = new();
+        BinaryData metadataPart = ModelReaderWriter.Write(metadata, ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default);
+        content.Add(metadataPart.ToString(), name: "metadata", contentType: "application/json");
+        content.Add(dataZip, name: "code", filename: $"{Path.GetFileName(filePath)}.zip", contentType: "application/zip");
         ClientResult result = CreateAgentVersionFromCode(
             agentName: agentName,
             codeZipSha256: codeZipSha256,
             content: content,
-            contentType: contentType,
+            contentType: content.ContentType,
             foundryFeatures: default,
             options: cancellationToken.ToRequestOptions());
         return ClientResult.FromValue((ProjectsAgentVersion)result, result.GetRawResponse());
@@ -864,25 +866,27 @@ public partial class AgentAdministrationClient
     /// </param>
     /// <param name="filePath"> The path to the entry point file. </param>
     /// <param name="metadata">Metadata, including metadata itself, hosted agent definition and agent description. </param>
-    /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="filePath"/> or is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
-    public virtual async Task<ClientResult<ProjectsAgentVersion>> CreateAgentVersionFromCodeAsync(string agentName, string filePath, CreateAgentVersionFromCodeMetadata metadata, string contentType, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<ProjectsAgentVersion>> CreateAgentVersionFromCodeAsync(string agentName, string filePath, CreateAgentVersionFromCodeMetadata metadata, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
         Argument.AssertNotNullOrEmpty(filePath, nameof(filePath));
 
-        BinaryData data = FileHelper.CreateAndReadZipFileFromDirectory(filePath);
-        string codeZipSha256 = FileHelper.GetSha256Sum(data);
-        CreateAgentFromCodeOptions content = new(metadata, data);
+        BinaryData dataZip = FileHelper.CreateAndReadZipFileFromDirectory(filePath);
+        string codeZipSha256 = FileHelper.GetSha256Sum(dataZip);
+        using MultiPartFormDataBinaryContent content = new();
+        BinaryData metadataPart = ModelReaderWriter.Write(metadata, ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default);
+        content.Add(metadataPart.ToString(), name: "metadata", contentType: "application/json");
+        content.Add(dataZip, name: "code", filename: $"{Path.GetFileName(filePath)}.zip", contentType: "application/zip");
         ClientResult result = await CreateAgentVersionFromCodeAsync(
             agentName: agentName,
             codeZipSha256: codeZipSha256,
             content: content,
-            contentType: contentType,
+            contentType: content.ContentType,
             foundryFeatures: default,
             options: cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         return ClientResult.FromValue((ProjectsAgentVersion)result, result.GetRawResponse());
