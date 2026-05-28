@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -37,9 +38,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Policy description contract properties. </summary>
+        [WirePath("properties")]
         internal PolicyDescriptionContractProperties Properties { get; }
 
         /// <summary> Policy description. </summary>
+        [WirePath("properties.description")]
         public string Description
         {
             get
@@ -49,6 +52,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Binary OR value of the Snippet scope. </summary>
+        [WirePath("properties.scope")]
         public long? Scope
         {
             get

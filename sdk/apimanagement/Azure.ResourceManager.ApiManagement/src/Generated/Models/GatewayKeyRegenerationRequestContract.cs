@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -33,6 +34,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The Key being regenerated. </summary>
+        [WirePath("keyType")]
         public TokenGenerationUsedKeyType KeyType { get; }
     }
 }

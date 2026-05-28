@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Limit control plane API calls to API Management service with version equal to or newer than this value. </summary>
+        [WirePath("minApiVersion")]
         public string MinApiVersion { get; set; }
     }
 }

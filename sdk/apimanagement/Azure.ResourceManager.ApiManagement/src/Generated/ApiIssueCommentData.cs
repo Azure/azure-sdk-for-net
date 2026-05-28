@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Properties of the Issue Comment. </summary>
+        [WirePath("properties")]
         internal IssueCommentContractProperties Properties { get; set; }
 
         /// <summary> Comment text. </summary>
+        [WirePath("properties.text")]
         public string Text
         {
             get
@@ -58,6 +60,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Date and time when the comment was created. </summary>
+        [WirePath("properties.createdDate")]
         public DateTimeOffset? CreatedOn
         {
             get
@@ -75,6 +78,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> A resource identifier for the user who left the comment. </summary>
+        [WirePath("properties.userId")]
         public string UserId
         {
             get

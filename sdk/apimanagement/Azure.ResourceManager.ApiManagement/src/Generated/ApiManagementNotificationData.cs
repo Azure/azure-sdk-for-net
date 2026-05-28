@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Notification entity contract properties. </summary>
+        [WirePath("properties")]
         internal NotificationContractProperties Properties { get; }
 
         /// <summary> Title of the Notification. </summary>
+        [WirePath("properties.title")]
         public string Title
         {
             get
@@ -50,6 +52,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Description of the Notification. </summary>
+        [WirePath("properties.description")]
         public string Description
         {
             get
@@ -59,6 +62,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Recipient Parameter values. </summary>
+        [WirePath("properties.recipients")]
         public RecipientsContractProperties Recipients
         {
             get

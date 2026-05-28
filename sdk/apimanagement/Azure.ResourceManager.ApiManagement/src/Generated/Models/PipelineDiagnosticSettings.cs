@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Diagnostic settings for request. </summary>
+        [WirePath("request")]
         public HttpMessageDiagnostic Request { get; set; }
 
         /// <summary> Diagnostic settings for response. </summary>
+        [WirePath("response")]
         public HttpMessageDiagnostic Response { get; set; }
     }
 }

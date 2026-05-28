@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -37,9 +38,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Recipient Email contract properties. </summary>
+        [WirePath("properties")]
         internal RecipientEmailContractProperties Properties { get; }
 
         /// <summary> User Email subscribed to notification. </summary>
+        [WirePath("properties.email")]
         public string Email
         {
             get

@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Collection of content items. </summary>
+        [WirePath("value")]
         public IReadOnlyList<ContentItemContractData> Value { get; }
 
         /// <summary> Next page link if any. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

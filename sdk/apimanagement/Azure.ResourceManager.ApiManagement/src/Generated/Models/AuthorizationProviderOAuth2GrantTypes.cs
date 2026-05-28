@@ -38,12 +38,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> OAuth2 authorization code grant parameters. </summary>
+        [WirePath("authorizationCode")]
         public IDictionary<string, string> AuthorizationCode { get; }
 
         /// <summary> OAuth2 client credential grant parameters. </summary>
+        [WirePath("clientCredentials")]
         public IDictionary<string, string> ClientCredentials { get; }
 
         /// <summary> OAuth2 authorization code grant with federated identity credentials parameters. </summary>
+        [WirePath("authorizationCodeWithFederatedIdentityCredentials")]
         public AuthorizationProviderOAuth2FederatedIdentityCredentialsGrantType AuthorizationCodeWithFederatedIdentityCredentials { get; set; }
     }
 }

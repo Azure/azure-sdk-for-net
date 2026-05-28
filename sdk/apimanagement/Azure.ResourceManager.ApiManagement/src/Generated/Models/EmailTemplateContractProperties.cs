@@ -47,21 +47,27 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Subject of the Template. </summary>
+        [WirePath("subject")]
         public string Subject { get; }
 
         /// <summary> Email Template Body. This should be a valid XDocument. </summary>
+        [WirePath("body")]
         public string Body { get; }
 
         /// <summary> Title of the Template. </summary>
+        [WirePath("title")]
         public string Title { get; }
 
         /// <summary> Description of the Email Template. </summary>
+        [WirePath("description")]
         public string Description { get; }
 
         /// <summary> Whether the template is the default template provided by API Management or has been edited. </summary>
+        [WirePath("isDefault")]
         public bool? IsDefault { get; }
 
         /// <summary> Email Template Parameter values. </summary>
+        [WirePath("parameters")]
         public IList<EmailTemplateParametersContractProperties> Parameters { get; } = new ChangeTrackingList<EmailTemplateParametersContractProperties>();
     }
 }

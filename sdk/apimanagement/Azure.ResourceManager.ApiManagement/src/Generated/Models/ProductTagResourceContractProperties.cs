@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -39,9 +40,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Identifier of the product in the form of /products/{productId}. </summary>
+        [WirePath("id")]
         public string Id { get; }
 
         /// <summary> Product name. </summary>
+        [WirePath("name")]
         public string Name { get; }
     }
 }

@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Markdown Documentation details. </summary>
+        [WirePath("properties")]
         internal DocumentationContractProperties Properties { get; set; }
 
         /// <summary> documentation title. </summary>
+        [WirePath("properties.title")]
         public string Title
         {
             get
@@ -58,6 +60,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Markdown documentation content. </summary>
+        [WirePath("properties.content")]
         public string Content
         {
             get

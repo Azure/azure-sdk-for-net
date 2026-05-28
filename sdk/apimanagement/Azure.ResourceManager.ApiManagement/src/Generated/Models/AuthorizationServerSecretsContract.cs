@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> oAuth Authorization Server Secrets. </summary>
+        [WirePath("clientSecret")]
         public string ClientSecret { get; }
 
         /// <summary> Can be optionally specified when resource owner password grant type is supported by this authorization server. Default resource owner username. </summary>
+        [WirePath("resourceOwnerUsername")]
         public string ResourceOwnerUsername { get; }
 
         /// <summary> Can be optionally specified when resource owner password grant type is supported by this authorization server. Default resource owner password. </summary>
+        [WirePath("resourceOwnerPassword")]
         public string ResourceOwnerPassword { get; }
     }
 }

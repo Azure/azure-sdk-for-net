@@ -43,12 +43,15 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Properties of the API Management WorkspaceLinks. </summary>
+        [WirePath("properties")]
         internal ApiManagementWorkspaceLinksProperties Properties { get; }
 
         /// <summary> ETag of the resource. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
 
         /// <summary> The link to the API Management service workspace. </summary>
+        [WirePath("properties.workspaceId")]
         public ResourceIdentifier WorkspaceId
         {
             get
@@ -58,6 +61,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> The array of linked gateways. </summary>
+        [WirePath("properties.gateways")]
         public IList<WorkspaceLinksGateway> Gateways
         {
             get

@@ -45,24 +45,31 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Operation result identifier. </summary>
+        [WirePath("id")]
         public string OperationResultIdentifier { get; }
 
         /// <summary> Status of an async operation. </summary>
+        [WirePath("status")]
         public AsyncOperationStatus? Status { get; }
 
         /// <summary> Start time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
+        [WirePath("started")]
         public DateTimeOffset? Started { get; }
 
         /// <summary> Last update time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
+        [WirePath("updated")]
         public DateTimeOffset? Updated { get; }
 
         /// <summary> Optional result info. </summary>
+        [WirePath("resultInfo")]
         public string ResultInfo { get; }
 
         /// <summary> Error Body Contract. </summary>
+        [WirePath("error")]
         public ErrorResponseBody Error { get; }
 
         /// <summary> This property if only provided as part of the TenantConfiguration_Validate operation. It contains the log the entities which will be updated/created/deleted as part of the TenantConfiguration_Deploy operation. </summary>
+        [WirePath("actionLog")]
         public IReadOnlyList<OperationResultLogItemContract> ActionLog { get; } = new ChangeTrackingList<OperationResultLogItemContract>();
     }
 }

@@ -49,30 +49,39 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Identity Provider Type identifier. </summary>
+        [WirePath("type")]
         public IdentityProviderType? Type { get; set; }
 
         /// <summary> The TenantId to use instead of Common when logging into Active Directory. </summary>
+        [WirePath("signinTenant")]
         public string SigninTenant { get; set; }
 
         /// <summary> List of Allowed Tenants when configuring Azure Active Directory login. </summary>
+        [WirePath("allowedTenants")]
         public IList<string> AllowedTenants { get; } = new ChangeTrackingList<string>();
 
         /// <summary> OpenID Connect discovery endpoint hostname for AAD or AAD B2C. </summary>
+        [WirePath("authority")]
         public string Authority { get; set; }
 
         /// <summary> Signup Policy Name. Only applies to AAD B2C Identity Provider. </summary>
+        [WirePath("signupPolicyName")]
         public string SignupPolicyName { get; set; }
 
         /// <summary> Signin Policy Name. Only applies to AAD B2C Identity Provider. </summary>
+        [WirePath("signinPolicyName")]
         public string SigninPolicyName { get; set; }
 
         /// <summary> Profile Editing Policy Name. Only applies to AAD B2C Identity Provider. </summary>
+        [WirePath("profileEditingPolicyName")]
         public string ProfileEditingPolicyName { get; set; }
 
         /// <summary> Password Reset Policy Name. Only applies to AAD B2C Identity Provider. </summary>
+        [WirePath("passwordResetPolicyName")]
         public string PasswordResetPolicyName { get; set; }
 
         /// <summary> The client library to be used in the developer portal. Only applies to AAD and AAD B2C Identity Provider. </summary>
+        [WirePath("clientLibrary")]
         public string ClientLibrary { get; set; }
     }
 }

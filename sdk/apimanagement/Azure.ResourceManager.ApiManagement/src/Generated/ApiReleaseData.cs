@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> ApiRelease entity contract properties. </summary>
+        [WirePath("properties")]
         internal ApiReleaseContractProperties Properties { get; set; }
 
         /// <summary> Identifier of the API the release belongs to. </summary>
+        [WirePath("properties.apiId")]
         public string ApiId
         {
             get
@@ -58,6 +60,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> The time the API was released. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </summary>
+        [WirePath("properties.createdDateTime")]
         public DateTimeOffset? CreatedOn
         {
             get
@@ -67,6 +70,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> The time the API release was updated. </summary>
+        [WirePath("properties.updatedDateTime")]
         public DateTimeOffset? UpdatedOn
         {
             get
@@ -76,6 +80,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Release Notes. </summary>
+        [WirePath("properties.notes")]
         public string Notes
         {
             get

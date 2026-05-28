@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> A terms of service text. </summary>
+        [WirePath("text")]
         public string Text { get; set; }
 
         /// <summary> Display terms of service during a sign-up process. </summary>
+        [WirePath("enabled")]
         public bool? Enabled { get; set; }
 
         /// <summary> Ask user for consent to the terms of service. </summary>
+        [WirePath("consentRequired")]
         public bool? ConsentRequired { get; set; }
     }
 }

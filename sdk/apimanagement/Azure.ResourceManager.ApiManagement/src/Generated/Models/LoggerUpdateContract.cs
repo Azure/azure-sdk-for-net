@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -31,9 +32,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Logger entity update contract properties. </summary>
+        [WirePath("properties")]
         internal LoggerUpdateParameters Properties { get; set; }
 
         /// <summary> Logger type. </summary>
+        [WirePath("properties.loggerType")]
         public LoggerType? LoggerType
         {
             get
@@ -51,6 +54,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Logger description. </summary>
+        [WirePath("properties.description")]
         public string Description
         {
             get
@@ -68,6 +72,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Logger credentials. </summary>
+        [WirePath("properties.credentials")]
         public IDictionary<string, string> Credentials
         {
             get
@@ -81,6 +86,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Whether records are buffered in the logger before publishing. Default is assumed to be true. </summary>
+        [WirePath("properties.isBuffered")]
         public bool? IsBuffered
         {
             get

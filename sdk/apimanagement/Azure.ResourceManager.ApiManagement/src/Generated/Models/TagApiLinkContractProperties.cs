@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Full resource Id of an API. </summary>
+        [WirePath("apiId")]
         public string ApiId { get; set; }
     }
 }

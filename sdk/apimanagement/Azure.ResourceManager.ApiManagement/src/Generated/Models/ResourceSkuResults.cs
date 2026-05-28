@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -36,9 +37,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The list of skus available for the service. </summary>
+        [WirePath("value")]
         public IList<ResourceSkuResult> Value { get; }
 
         /// <summary> The uri to fetch the next page of API Management service Skus. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

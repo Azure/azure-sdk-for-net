@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Product-API link entity contract properties. </summary>
+        [WirePath("properties")]
         internal ProductApiLinkContractProperties Properties { get; set; }
 
         /// <summary> Full resource Id of an API. </summary>
+        [WirePath("properties.apiId")]
         public string ApiId
         {
             get

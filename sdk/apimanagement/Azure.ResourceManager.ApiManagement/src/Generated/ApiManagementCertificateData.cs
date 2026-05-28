@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Certificate properties details. </summary>
+        [WirePath("properties")]
         internal CertificateContractProperties Properties { get; }
 
         /// <summary> Subject attribute of the certificate. </summary>
+        [WirePath("properties.subject")]
         public string Subject
         {
             get
@@ -50,6 +52,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Thumbprint of the certificate. </summary>
+        [WirePath("properties.thumbprint")]
         public string Thumbprint
         {
             get
@@ -59,6 +62,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Expiration date of the certificate. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
+        [WirePath("properties.expirationDate")]
         public DateTimeOffset? ExpireOn
         {
             get
@@ -68,6 +72,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> KeyVault location details of the certificate. </summary>
+        [WirePath("properties.keyVault")]
         public KeyVaultContractProperties KeyVault
         {
             get

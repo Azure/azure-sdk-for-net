@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> NamedValue entity contract properties. </summary>
+        [WirePath("properties")]
         internal NamedValueContractProperties Properties { get; }
 
         /// <summary> Optional tags that when provided can be used to filter the NamedValue list. </summary>
+        [WirePath("properties.tags")]
         public IList<string> Tags
         {
             get
@@ -50,6 +52,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Determines whether the value is a secret and should be encrypted or not. Default value is false. </summary>
+        [WirePath("properties.secret")]
         public bool? Secret
         {
             get
@@ -59,6 +62,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Unique name of NamedValue. It may contain only letters, digits, period, dash, and underscore characters. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName
         {
             get
@@ -68,6 +72,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Value of the NamedValue. Can contain policy expressions. It may not be empty or consist only of whitespace. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </summary>
+        [WirePath("properties.value")]
         public string Value
         {
             get
@@ -77,6 +82,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> KeyVault location details of the namedValue. </summary>
+        [WirePath("properties.keyVault")]
         public KeyVaultContractProperties KeyVault
         {
             get
@@ -86,6 +92,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> The provisioning state. </summary>
+        [WirePath("properties.provisioningState")]
         public string ProvisioningState
         {
             get

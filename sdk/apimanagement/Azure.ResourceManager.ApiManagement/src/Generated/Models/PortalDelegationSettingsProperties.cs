@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -37,18 +38,23 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> A delegation Url. </summary>
+        [WirePath("url")]
         public string Uri { get; set; }
 
         /// <summary> A base64-encoded validation key to validate, that a request is coming from Azure API Management. </summary>
+        [WirePath("validationKey")]
         public string ValidationKey { get; set; }
 
         /// <summary> Subscriptions delegation settings. </summary>
+        [WirePath("subscriptions")]
         internal SubscriptionsDelegationSettingsProperties Subscriptions { get; set; }
 
         /// <summary> User registration delegation settings. </summary>
+        [WirePath("userRegistration")]
         internal RegistrationDelegationSettingsProperties UserRegistration { get; set; }
 
         /// <summary> Enable or disable delegation for subscriptions. </summary>
+        [WirePath("subscriptions.enabled")]
         public bool? SubscriptionsEnabled
         {
             get
@@ -66,6 +72,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Enable or disable delegation for user registration. </summary>
+        [WirePath("userRegistration.enabled")]
         public bool? UserRegistrationEnabled
         {
             get

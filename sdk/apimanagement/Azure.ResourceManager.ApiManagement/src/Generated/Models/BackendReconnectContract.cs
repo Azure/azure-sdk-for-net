@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -37,9 +38,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Reconnect request properties. </summary>
+        [WirePath("properties")]
         internal BackendReconnectProperties Properties { get; set; }
 
         /// <summary> Duration in ISO8601 format after which reconnect will be initiated. Minimum duration of the Reconnect is PT2M. </summary>
+        [WirePath("properties.after")]
         public TimeSpan? After
         {
             get

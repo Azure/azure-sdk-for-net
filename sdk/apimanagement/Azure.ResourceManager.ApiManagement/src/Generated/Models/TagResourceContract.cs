@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -39,15 +40,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Tag associated with the resource. </summary>
+        [WirePath("tag")]
         public TagTagResourceContractProperties Tag { get; }
 
         /// <summary> API associated with the tag. </summary>
+        [WirePath("api")]
         public ApiTagResourceContractProperties Api { get; }
 
         /// <summary> Operation associated with the tag. </summary>
+        [WirePath("operation")]
         public OperationTagResourceContractProperties Operation { get; }
 
         /// <summary> Product associated with the tag. </summary>
+        [WirePath("product")]
         public ProductTagResourceContractProperties Product { get; }
     }
 }

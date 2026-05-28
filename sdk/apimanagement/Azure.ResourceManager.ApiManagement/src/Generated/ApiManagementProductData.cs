@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Product entity contract properties. </summary>
+        [WirePath("properties")]
         internal ProductContractProperties Properties { get; set; }
 
         /// <summary> Product description. May include HTML formatting tags. </summary>
+        [WirePath("properties.description")]
         public string Description
         {
             get
@@ -58,6 +60,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Product terms of use. Developers trying to subscribe to the product will be presented and required to accept these terms before they can complete the subscription process. </summary>
+        [WirePath("properties.terms")]
         public string Terms
         {
             get
@@ -75,6 +78,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Whether a product subscription is required for accessing APIs included in this product. If true, the product is referred to as "protected" and a valid subscription key is required for a request to an API included in the product to succeed. If false, the product is referred to as "open" and requests to an API included in the product can be made without a subscription key. If property is omitted when creating a new product it's value is assumed to be true. </summary>
+        [WirePath("properties.subscriptionRequired")]
         public bool? SubscriptionRequired
         {
             get
@@ -92,6 +96,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> whether subscription approval is required. If false, new subscriptions will be approved automatically enabling developers to call the product’s APIs immediately after subscribing. If true, administrators must manually approve the subscription before the developer can any of the product’s APIs. Can be present only if subscriptionRequired property is present and has a value of false. </summary>
+        [WirePath("properties.approvalRequired")]
         public bool? ApprovalRequired
         {
             get
@@ -109,6 +114,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Whether the number of subscriptions a user can have to this product at the same time. Set to null or omit to allow unlimited per user subscriptions. Can be present only if subscriptionRequired property is present and has a value of false. </summary>
+        [WirePath("properties.subscriptionsLimit")]
         public int? SubscriptionsLimit
         {
             get
@@ -126,6 +132,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Type of supported authentication for the product. The application configuration is required for application-token authentication type. The subscription-key authentication type is used by default. If the property is omitted, the subscription-key authentication type is used. </summary>
+        [WirePath("properties.authenticationType")]
         public IList<ProductAuthType> AuthenticationType
         {
             get
@@ -139,6 +146,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> whether product is published or not. Published products are discoverable by users of developer portal. Non published products are visible only to administrators. Default state of Product is notPublished. </summary>
+        [WirePath("properties.state")]
         public ApiManagementProductState? State
         {
             get
@@ -156,6 +164,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Specifies Microsoft Entra settings needed to authorize product API calls using client application with Microsoft Entra OAuth token. </summary>
+        [WirePath("properties.application.entra")]
         public ProductApplicationContractEntra ApplicationEntra
         {
             get
@@ -173,6 +182,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Product name. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName
         {
             get

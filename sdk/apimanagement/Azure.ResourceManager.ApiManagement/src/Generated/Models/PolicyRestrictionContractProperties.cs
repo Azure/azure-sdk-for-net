@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Path to the policy document. </summary>
+        [WirePath("scope")]
         public string Scope { get; set; }
 
         /// <summary> Indicates if base policy should be enforced for the policy document. </summary>
+        [WirePath("requireBase")]
         public PolicyRestrictionRequireBase? RequireBase { get; set; }
     }
 }

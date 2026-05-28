@@ -36,9 +36,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> List of Emails subscribed for the notification. </summary>
+        [WirePath("emails")]
         public IList<string> Emails { get; }
 
         /// <summary> List of Users subscribed for the notification. </summary>
+        [WirePath("users")]
         public IList<string> Users { get; }
     }
 }

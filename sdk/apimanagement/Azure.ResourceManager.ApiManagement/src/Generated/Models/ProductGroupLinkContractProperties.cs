@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Full resource Id of a group. </summary>
+        [WirePath("groupId")]
         public string GroupId { get; set; }
     }
 }

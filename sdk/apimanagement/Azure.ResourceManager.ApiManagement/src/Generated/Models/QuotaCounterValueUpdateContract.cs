@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -31,9 +32,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Quota counter value details. </summary>
+        [WirePath("properties")]
         internal QuotaCounterValueContractProperties Properties { get; set; }
 
         /// <summary> Number of times Counter was called. </summary>
+        [WirePath("properties.callsCount")]
         public int? CallsCount
         {
             get
@@ -51,6 +54,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Data Transferred in KiloBytes. </summary>
+        [WirePath("properties.kbTransferred")]
         public double? KbTransferred
         {
             get

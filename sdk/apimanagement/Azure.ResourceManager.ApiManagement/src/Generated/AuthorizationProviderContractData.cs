@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Properties of the Authorization Provider Contract. </summary>
+        [WirePath("properties")]
         internal AuthorizationProviderContractProperties Properties { get; set; }
 
         /// <summary> Authorization Provider name. Must be 1 to 300 characters long. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName
         {
             get
@@ -58,6 +60,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Identity provider name. Must be 1 to 300 characters long. </summary>
+        [WirePath("properties.identityProvider")]
         public string IdentityProvider
         {
             get
@@ -75,6 +78,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> OAuth2 settings. </summary>
+        [WirePath("properties.oauth2")]
         public AuthorizationProviderOAuth2Settings Oauth2
         {
             get

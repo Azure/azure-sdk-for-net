@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The identifying name of the contact person/organization. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> The URL pointing to the contact information. MUST be in the format of a URL. </summary>
+        [WirePath("url")]
         public Uri Uri { get; set; }
 
         /// <summary> The email address of the contact person/organization. MUST be in the format of an email address. </summary>
+        [WirePath("email")]
         public string Email { get; set; }
     }
 }

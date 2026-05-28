@@ -36,9 +36,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The link to the API Management service workspace. </summary>
+        [WirePath("workspaceId")]
         public ResourceIdentifier WorkspaceId { get; }
 
         /// <summary> The array of linked gateways. </summary>
+        [WirePath("gateways")]
         public IList<WorkspaceLinksGateway> Gateways { get; } = new ChangeTrackingList<WorkspaceLinksGateway>();
     }
 }

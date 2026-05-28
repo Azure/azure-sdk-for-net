@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The unique resource identifier of the Product. </summary>
+        [WirePath("productId")]
         public string ProductId { get; set; }
     }
 }

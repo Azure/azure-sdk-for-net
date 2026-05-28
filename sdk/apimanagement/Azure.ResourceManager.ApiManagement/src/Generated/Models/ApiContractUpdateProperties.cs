@@ -52,15 +52,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> API name. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; set; }
 
         /// <summary> Absolute URL of the backend service implementing this API. </summary>
+        [WirePath("serviceUrl")]
         public string ServiceUri { get; set; }
 
         /// <summary> Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API. </summary>
+        [WirePath("path")]
         public string Path { get; set; }
 
         /// <summary> Describes on which protocols the operations in this API can be invoked. </summary>
+        [WirePath("protocols")]
         public IList<ApiOperationInvokableProtocol> Protocols { get; } = new ChangeTrackingList<ApiOperationInvokableProtocol>();
     }
 }

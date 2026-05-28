@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gateway details. </summary>
+        [WirePath("properties")]
         internal GatewayContractProperties Properties { get; set; }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Gateway location. </summary>
+        [WirePath("properties.locationData")]
         public ResourceLocationDataContract LocationData
         {
             get
@@ -63,6 +66,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gateway description. </summary>
+        [WirePath("properties.description")]
         public string Description
         {
             get

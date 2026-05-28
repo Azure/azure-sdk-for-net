@@ -40,15 +40,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Flag indicating whether SSL certificate chain validation should be done when using self-signed certificates for this backend host. </summary>
+        [WirePath("validateCertificateChain")]
         public bool? ValidateCertificateChain { get; set; }
 
         /// <summary> Flag indicating whether SSL certificate name validation should be done when using self-signed certificates for this backend host. </summary>
+        [WirePath("validateCertificateName")]
         public bool? ValidateCertificateName { get; set; }
 
         /// <summary> Thumbprints of certificates used by the backend host for TLS communication. </summary>
+        [WirePath("serverCertificateThumbprints")]
         public IList<string> ServerCertificateThumbprints { get; }
 
         /// <summary> Server X509 Certificate Names of the Backend Host. </summary>
+        [WirePath("serverX509Names")]
         public IList<X509CertificateName> ServerX509Names { get; }
     }
 }

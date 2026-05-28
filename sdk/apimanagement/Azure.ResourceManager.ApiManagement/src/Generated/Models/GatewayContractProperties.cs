@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Gateway location. </summary>
+        [WirePath("locationData")]
         public ResourceLocationDataContract LocationData { get; set; }
 
         /// <summary> Gateway description. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
     }
 }

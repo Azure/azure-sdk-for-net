@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Unique name of NamedValue. It may contain only letters, digits, period, dash, and underscore characters. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; }
 
         /// <summary> Value of the NamedValue. Can contain policy expressions. It may not be empty or consist only of whitespace. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
 
         /// <summary> KeyVault location details of the namedValue. </summary>
+        [WirePath("keyVault")]
         public KeyVaultContractCreateProperties KeyVault { get; set; }
     }
 }

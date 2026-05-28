@@ -39,9 +39,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> MCP endpoint name, e.g. 'sse' or 'messages'. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> Relative URL path that must start with '/'. </summary>
+        [WirePath("uriTemplate")]
         public string UriTemplate { get; set; }
     }
 }

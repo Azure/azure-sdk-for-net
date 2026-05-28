@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -47,18 +48,23 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The Key value of the Counter. Must not be empty. </summary>
+        [WirePath("counterKey")]
         public string CounterKey { get; }
 
         /// <summary> Identifier of the Period for which the counter was collected. Must not be empty. </summary>
+        [WirePath("periodKey")]
         public string PeriodKey { get; }
 
         /// <summary> The date of the start of Counter Period. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
+        [WirePath("periodStartTime")]
         public DateTimeOffset PeriodStartOn { get; }
 
         /// <summary> The date of the end of Counter Period. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
+        [WirePath("periodEndTime")]
         public DateTimeOffset PeriodEndOn { get; }
 
         /// <summary> Quota Value Properties. </summary>
+        [WirePath("value")]
         public QuotaCounterValueContractProperties Value { get; }
     }
 }

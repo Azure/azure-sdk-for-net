@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -31,9 +32,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Subscription contract properties. </summary>
+        [WirePath("properties")]
         internal SubscriptionCreateParameterProperties Properties { get; set; }
 
         /// <summary> User (user id path) for whom subscription is being created in form /users/{userId}. </summary>
+        [WirePath("properties.ownerId")]
         public string OwnerId
         {
             get
@@ -51,6 +54,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Scope like /products/{productId} or /apis or /apis/{apiId}. </summary>
+        [WirePath("properties.scope")]
         public string Scope
         {
             get
@@ -60,6 +64,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Subscription name. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Primary subscription key. If not specified during request key will be generated automatically. </summary>
+        [WirePath("properties.primaryKey")]
         public string PrimaryKey
         {
             get
@@ -86,6 +92,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Secondary subscription key. If not specified during request key will be generated automatically. </summary>
+        [WirePath("properties.secondaryKey")]
         public string SecondaryKey
         {
             get
@@ -103,6 +110,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initial subscription state. If no value is specified, subscription is created with Submitted state. Possible states are <i> active – the subscription is active, </i> suspended – the subscription is blocked, and the subscriber cannot call any APIs of the product, <i> submitted – the subscription request has been made by the developer, but has not yet been approved or rejected, </i> rejected – the subscription request has been denied by an administrator, <i> cancelled – the subscription has been cancelled by the developer or administrator, </i> expired – the subscription reached its expiration date and was deactivated. </summary>
+        [WirePath("properties.state")]
         public SubscriptionState? State
         {
             get
@@ -120,6 +128,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Determines whether tracing can be enabled. </summary>
+        [WirePath("properties.allowTracing")]
         public bool? AllowTracing
         {
             get

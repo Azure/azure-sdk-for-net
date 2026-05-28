@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> OpenId Connect Provider contract properties. </summary>
+        [WirePath("properties")]
         internal OpenidConnectProviderContractProperties Properties { get; set; }
 
         /// <summary> User-friendly OpenID Connect Provider name. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName
         {
             get
@@ -58,6 +60,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> User-friendly description of OpenID Connect Provider. </summary>
+        [WirePath("properties.description")]
         public string Description
         {
             get
@@ -75,6 +78,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Metadata endpoint URI. </summary>
+        [WirePath("properties.metadataEndpoint")]
         public string MetadataEndpoint
         {
             get
@@ -92,6 +96,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Client ID of developer console which is the client application. </summary>
+        [WirePath("properties.clientId")]
         public string ClientId
         {
             get
@@ -109,6 +114,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Client Secret of developer console which is the client application. </summary>
+        [WirePath("properties.clientSecret")]
         public string ClientSecret
         {
             get
@@ -126,6 +132,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> If true, the Open ID Connect provider may be used in the developer portal test console. True by default if no value is provided. </summary>
+        [WirePath("properties.useInTestConsole")]
         public bool? UseInTestConsole
         {
             get
@@ -143,6 +150,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> If true, the Open ID Connect provider will be used in the API documentation in the developer portal. False by default if no value is provided. </summary>
+        [WirePath("properties.useInApiDocumentation")]
         public bool? UseInApiDocumentation
         {
             get

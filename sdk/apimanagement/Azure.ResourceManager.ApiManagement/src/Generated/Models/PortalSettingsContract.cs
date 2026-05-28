@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -37,9 +38,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Portal Settings contract properties. </summary>
+        [WirePath("properties")]
         internal PortalSettingsContractProperties Properties { get; }
 
         /// <summary> A delegation Url. </summary>
+        [WirePath("properties.url")]
         public string Uri
         {
             get
@@ -49,6 +52,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> A base64-encoded validation key to validate, that a request is coming from Azure API Management. </summary>
+        [WirePath("properties.validationKey")]
         public string ValidationKey
         {
             get
@@ -58,6 +62,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Redirect Anonymous users to the Sign-In page. </summary>
+        [WirePath("properties.enabled")]
         public bool? Enabled
         {
             get
@@ -67,6 +72,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Terms of service contract properties. </summary>
+        [WirePath("properties.termsOfService")]
         public TermsOfServiceProperties TermsOfService
         {
             get
@@ -76,6 +82,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Enable or disable delegation for subscriptions. </summary>
+        [WirePath("properties.subscriptions.enabled")]
         public bool? SubscriptionsEnabled
         {
             get
@@ -85,6 +92,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Enable or disable delegation for user registration. </summary>
+        [WirePath("properties.userRegistration.enabled")]
         public bool? UserRegistrationEnabled
         {
             get

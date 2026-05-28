@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> True if the name is available and can be used to create a new API Management service; otherwise false. </summary>
+        [WirePath("nameAvailable")]
         public bool? NameAvailable { get; }
 
         /// <summary> If reason == invalid, provide the user with the reason why the given name is invalid, and provide the resource naming requirements so that the user can select a valid name. If reason == AlreadyExists, explain that &lt;resourceName&gt; is already in use, and direct them to select a different name. </summary>
+        [WirePath("message")]
         public string Message { get; }
 
         /// <summary> Invalid indicates the name provided does not match the resource provider’s naming requirements (incorrect length, unsupported characters, etc.)  AlreadyExists indicates that the name is already in use and is therefore unavailable. </summary>
+        [WirePath("reason")]
         public ApiManagementServiceNameUnavailableReason? Reason { get; }
     }
 }

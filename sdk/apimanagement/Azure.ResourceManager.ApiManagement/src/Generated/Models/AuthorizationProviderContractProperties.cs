@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Authorization Provider name. Must be 1 to 300 characters long. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; set; }
 
         /// <summary> Identity provider name. Must be 1 to 300 characters long. </summary>
+        [WirePath("identityProvider")]
         public string IdentityProvider { get; set; }
 
         /// <summary> OAuth2 settings. </summary>
+        [WirePath("oauth2")]
         public AuthorizationProviderOAuth2Settings Oauth2 { get; set; }
     }
 }

@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Email Template entity contract properties. </summary>
+        [WirePath("properties")]
         internal EmailTemplateContractProperties Properties { get; }
 
         /// <summary> Subject of the Template. </summary>
+        [WirePath("properties.subject")]
         public string Subject
         {
             get
@@ -50,6 +52,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Email Template Body. This should be a valid XDocument. </summary>
+        [WirePath("properties.body")]
         public string Body
         {
             get
@@ -59,6 +62,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Title of the Template. </summary>
+        [WirePath("properties.title")]
         public string Title
         {
             get
@@ -68,6 +72,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Description of the Email Template. </summary>
+        [WirePath("properties.description")]
         public string Description
         {
             get
@@ -77,6 +82,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Whether the template is the default template provided by API Management or has been edited. </summary>
+        [WirePath("properties.isDefault")]
         public bool? IsDefault
         {
             get
@@ -86,6 +92,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Email Template Parameter values. </summary>
+        [WirePath("properties.parameters")]
         public IList<EmailTemplateParametersContractProperties> Parameters
         {
             get

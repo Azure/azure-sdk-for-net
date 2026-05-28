@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -43,27 +44,35 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The current provisioning state of the API Management gateway which can be one of the following: Created/Activating/Succeeded/Updating/Failed/Stopped/Terminating/TerminationFailed/Deleted. </summary>
+        [WirePath("provisioningState")]
         public string ProvisioningState { get; }
 
         /// <summary> The provisioning state of the API Management gateway, which is targeted by the long running operation started on the gateway. </summary>
+        [WirePath("targetProvisioningState")]
         public string TargetProvisioningState { get; }
 
         /// <summary> Creation UTC date of the API Management gateway.The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
+        [WirePath("createdAtUtc")]
         public DateTimeOffset? CreatedAtUtc { get; }
 
         /// <summary> Information regarding how the gateway should be exposed. </summary>
+        [WirePath("frontend")]
         internal FrontendConfiguration Frontend { get; set; }
 
         /// <summary> Information regarding how the gateway should integrate with backend systems. </summary>
+        [WirePath("backend")]
         internal BackendConfiguration Backend { get; set; }
 
         /// <summary> Information regarding the Configuration API of the API Management gateway. This is only applicable for API gateway with Standard SKU. </summary>
+        [WirePath("configurationApi")]
         internal GatewayConfigurationApi ConfigurationApi { get; set; }
 
         /// <summary> The type of VPN in which API Management gateway needs to be configured in. </summary>
+        [WirePath("virtualNetworkType")]
         public VirtualNetworkType? VirtualNetworkType { get; set; }
 
         /// <summary> The default hostname of the data-plane gateway to which requests can be sent. This is only applicable for API gateway with Standard SKU. </summary>
+        [WirePath("frontend.defaultHostname")]
         public string FrontendDefaultHostname
         {
             get
@@ -73,6 +82,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The ARM ID of the subnet in which the backend systems are hosted. </summary>
+        [WirePath("backend.subnet.id")]
         public string BackendSubnetId
         {
             get
@@ -90,6 +100,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Hostname to which the agent connects to propagate configuration to the cloud. </summary>
+        [WirePath("configurationApi.hostname")]
         public string ConfigurationApiHostname
         {
             get

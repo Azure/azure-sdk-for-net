@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Properties of the Policy Fragment. </summary>
+        [WirePath("properties")]
         internal PolicyFragmentContractProperties Properties { get; set; }
 
         /// <summary> Contents of the policy fragment. </summary>
+        [WirePath("properties.value")]
         public string Value
         {
             get
@@ -58,6 +60,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Policy fragment description. </summary>
+        [WirePath("properties.description")]
         public string Description
         {
             get
@@ -75,6 +78,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Format of the policy fragment content. </summary>
+        [WirePath("properties.format")]
         public PolicyFragmentContentFormat? Format
         {
             get
@@ -92,6 +96,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> The provisioning state. </summary>
+        [WirePath("properties.provisioningState")]
         public string ProvisioningState
         {
             get

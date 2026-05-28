@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -37,9 +38,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> NamedValue entity contract properties for PUT operation. </summary>
+        [WirePath("properties")]
         internal NamedValueCreateContractProperties Properties { get; set; }
 
         /// <summary> Optional tags that when provided can be used to filter the NamedValue list. </summary>
+        [WirePath("properties.tags")]
         public IList<string> Tags
         {
             get
@@ -53,6 +56,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Determines whether the value is a secret and should be encrypted or not. Default value is false. </summary>
+        [WirePath("properties.secret")]
         public bool? Secret
         {
             get
@@ -70,6 +74,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Unique name of NamedValue. It may contain only letters, digits, period, dash, and underscore characters. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName
         {
             get
@@ -79,6 +84,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Value of the NamedValue. Can contain policy expressions. It may not be empty or consist only of whitespace. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </summary>
+        [WirePath("properties.value")]
         public string Value
         {
             get
@@ -96,6 +102,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> KeyVault location details of the namedValue. </summary>
+        [WirePath("properties.keyVault")]
         public KeyVaultContractCreateProperties KeyVault
         {
             get

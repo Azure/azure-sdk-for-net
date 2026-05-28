@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The type of service accessed by the Api Management Service, e.g., Azure Storage, Azure SQL Database, and Azure Active Directory. </summary>
+        [WirePath("category")]
         public string Category { get; }
 
         /// <summary> The endpoints that the Api Management Service reaches the service at. </summary>
+        [WirePath("endpoints")]
         public IReadOnlyList<EndpointDependency> Endpoints { get; }
     }
 }

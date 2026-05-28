@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -37,9 +38,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Properties of the Operation Contract. </summary>
+        [WirePath("properties")]
         internal OperationResultContractProperties Properties { get; }
 
         /// <summary> Operation result identifier. </summary>
+        [WirePath("properties.id")]
         public string OperationResultIdentifier
         {
             get
@@ -49,6 +52,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Status of an async operation. </summary>
+        [WirePath("properties.status")]
         public AsyncOperationStatus? Status
         {
             get
@@ -58,6 +62,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Start time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
+        [WirePath("properties.started")]
         public DateTimeOffset? Started
         {
             get
@@ -67,6 +72,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Last update time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
+        [WirePath("properties.updated")]
         public DateTimeOffset? Updated
         {
             get
@@ -76,6 +82,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Optional result info. </summary>
+        [WirePath("properties.resultInfo")]
         public string ResultInfo
         {
             get
@@ -85,6 +92,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Error Body Contract. </summary>
+        [WirePath("properties.error")]
         public ErrorResponseBody Error
         {
             get
@@ -94,6 +102,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> This property if only provided as part of the TenantConfiguration_Validate operation. It contains the log the entities which will be updated/created/deleted as part of the TenantConfiguration_Deploy operation. </summary>
+        [WirePath("properties.actionLog")]
         public IReadOnlyList<OperationResultLogItemContract> ActionLog
         {
             get

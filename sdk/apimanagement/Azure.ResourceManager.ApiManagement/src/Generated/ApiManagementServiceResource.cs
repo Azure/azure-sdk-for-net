@@ -5326,7 +5326,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="templateName"> Email Template Name Identifier. </param>
+        /// <param name="templateName"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> GetEntityTagAsync(TemplateName templateName, CancellationToken cancellationToken = default)
         {
@@ -5370,7 +5370,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="templateName"> Email Template Name Identifier. </param>
+        /// <param name="templateName"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response GetEntityTag(TemplateName templateName, CancellationToken cancellationToken = default)
         {
@@ -8141,7 +8141,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gets the details of the email template specified by its identifier. </summary>
-        /// <param name="templateName"> Email Template Name Identifier. </param>
+        /// <param name="templateName"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public virtual async Task<Response<ApiManagementEmailTemplateResource>> GetApiManagementEmailTemplateAsync(TemplateName templateName, CancellationToken cancellationToken = default)
@@ -8150,7 +8150,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gets the details of the email template specified by its identifier. </summary>
-        /// <param name="templateName"> Email Template Name Identifier. </param>
+        /// <param name="templateName"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public virtual Response<ApiManagementEmailTemplateResource> GetApiManagementEmailTemplate(TemplateName templateName, CancellationToken cancellationToken = default)

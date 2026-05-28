@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> OAuth authorization server identifier. </summary>
+        [WirePath("authorizationServerId")]
         public string AuthorizationServerId { get; set; }
 
         /// <summary> operations scope. </summary>
+        [WirePath("scope")]
         public string Scope { get; set; }
     }
 }

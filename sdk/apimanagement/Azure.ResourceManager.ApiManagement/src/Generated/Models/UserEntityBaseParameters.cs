@@ -37,12 +37,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Account state. Specifies whether the user is active or not. Blocked users are unable to sign into the developer portal or call any APIs of subscribed products. Default state is Active. </summary>
+        [WirePath("state")]
         public ApiManagementUserState? State { get; set; }
 
         /// <summary> Optional note about a user set by the administrator. </summary>
+        [WirePath("note")]
         public string Note { get; set; }
 
         /// <summary> Collection of user identities. </summary>
+        [WirePath("identities")]
         public IList<UserIdentityContract> Identities { get; } = new ChangeTrackingList<UserIdentityContract>();
     }
 }

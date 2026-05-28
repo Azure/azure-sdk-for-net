@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Client ID of the application in the identity provider. </summary>
+        [WirePath("clientId")]
         public string ClientId { get; set; }
 
         /// <summary> The type of client assertion used for federated identity credentials. </summary>
+        [WirePath("clientAssertionType")]
         public string ClientAssertionType { get; }
 
         /// <summary> The resource URI for the target service. </summary>
+        [WirePath("resourceUri")]
         public string ResourceUri { get; set; }
 
         /// <summary> Tenant ID of the identity provider. </summary>
+        [WirePath("tenantId")]
         public string TenantId { get; set; }
     }
 }

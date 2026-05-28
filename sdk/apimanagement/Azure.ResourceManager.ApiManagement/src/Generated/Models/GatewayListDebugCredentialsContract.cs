@@ -46,12 +46,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Credentials expiration in ISO8601 format. Maximum duration of the credentials is PT1H. When property is not specified, them value PT1H is used. </summary>
+        [WirePath("credentialsExpireAfter")]
         public TimeSpan? CredentialsExpireAfter { get; set; }
 
         /// <summary> Purposes of debug credential. </summary>
+        [WirePath("purposes")]
         public IList<GatewayListDebugCredentialsContractPurpose> Purposes { get; }
 
         /// <summary> Full resource Id of an API. </summary>
+        [WirePath("apiId")]
         public ResourceIdentifier ApiId { get; }
     }
 }

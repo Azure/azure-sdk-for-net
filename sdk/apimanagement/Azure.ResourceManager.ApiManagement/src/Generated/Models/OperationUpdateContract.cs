@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -31,9 +32,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Properties of the API Operation entity that can be updated. </summary>
+        [WirePath("properties")]
         internal OperationUpdateContractProperties Properties { get; set; }
 
         /// <summary> Collection of URL template parameters. </summary>
+        [WirePath("properties.templateParameters")]
         public IList<ParameterContract> TemplateParameters
         {
             get
@@ -47,6 +50,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Description of the operation. May include HTML formatting tags. </summary>
+        [WirePath("properties.description")]
         public string Description
         {
             get
@@ -64,6 +68,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> An entity containing request details. </summary>
+        [WirePath("properties.request")]
         public RequestContract Request
         {
             get
@@ -81,6 +86,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Array of Operation responses. </summary>
+        [WirePath("properties.responses")]
         public IList<ResponseContract> Responses
         {
             get
@@ -94,6 +100,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Operation Policies. </summary>
+        [WirePath("properties.policies")]
         public string Policies
         {
             get
@@ -111,6 +118,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Operation Name. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName
         {
             get
@@ -128,6 +136,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> A Valid HTTP Operation Method. Typical Http Methods like GET, PUT, POST but not limited by only them. </summary>
+        [WirePath("properties.method")]
         public string Method
         {
             get
@@ -145,6 +154,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Relative URL template identifying the target resource for this operation. May include parameters. Example: /customers/{cid}/orders/{oid}/?date={date}. </summary>
+        [WirePath("properties.urlTemplate")]
         public string UrlTemplate
         {
             get

@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Sign-up settings contract properties. </summary>
+        [WirePath("properties")]
         internal PortalSignupSettingsProperties Properties { get; set; }
 
         /// <summary> Allow users to sign up on a developer portal. </summary>
+        [WirePath("properties.enabled")]
         public bool? Enabled
         {
             get
@@ -58,6 +60,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Terms of service contract properties. </summary>
+        [WirePath("properties.termsOfService")]
         public TermsOfServiceProperties TermsOfService
         {
             get

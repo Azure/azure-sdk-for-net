@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -31,9 +32,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Properties supplied to Create Tag operation. </summary>
+        [WirePath("properties")]
         internal TagContractProperties Properties { get; set; }
 
         /// <summary> Tag name. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName
         {
             get

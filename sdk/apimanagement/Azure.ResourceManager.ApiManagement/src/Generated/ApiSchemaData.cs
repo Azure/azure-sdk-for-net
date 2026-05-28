@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Properties of the API Schema. </summary>
+        [WirePath("properties")]
         internal SchemaContractProperties Properties { get; set; }
 
         /// <summary> Must be a valid a media type used in a Content-Type header as defined in the RFC 2616. Media type of the schema document (e.g. application/json, application/xml). &lt;/br&gt; - `Swagger` Schema use `application/vnd.ms-azure-apim.swagger.definitions+json` &lt;/br&gt; - `WSDL` Schema use `application/vnd.ms-azure-apim.xsd+xml` &lt;/br&gt; - `OpenApi` Schema use `application/vnd.oai.openapi.components+json` &lt;/br&gt; - `WADL Schema` use `application/vnd.ms-azure-apim.wadl.grammars+xml` &lt;/br&gt; - `OData Schema` use `application/vnd.ms-azure-apim.odata.schema` &lt;/br&gt; - `gRPC Schema` use `text/protobuf`. </summary>
+        [WirePath("properties.contentType")]
         public string ContentType
         {
             get
@@ -58,6 +60,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> The provisioning state. </summary>
+        [WirePath("properties.provisioningState")]
         public string ProvisioningState
         {
             get
@@ -67,6 +70,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Json escaped string defining the document representing the Schema. Used for schemas other than Swagger/OpenAPI. </summary>
+        [WirePath("properties.document.value")]
         public string Value
         {
             get
@@ -84,6 +88,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Types definitions. Used for Swagger/OpenAPI v1 schemas only, null otherwise. </summary>
+        [WirePath("properties.document.definitions")]
         public BinaryData Definitions
         {
             get
@@ -101,6 +106,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Types definitions. Used for Swagger/OpenAPI v2/v3 schemas only, null otherwise. </summary>
+        [WirePath("properties.document.components")]
         public BinaryData Components
         {
             get

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -31,9 +32,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Wiki details. </summary>
+        [WirePath("properties")]
         internal WikiContractProperties Properties { get; set; }
 
         /// <summary> Collection wiki documents included into this wiki. </summary>
+        [WirePath("properties.documents")]
         public IList<WikiDocumentationContract> Documents
         {
             get

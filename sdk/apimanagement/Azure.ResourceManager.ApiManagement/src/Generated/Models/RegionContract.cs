@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Region name. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> whether Region is the master region. </summary>
+        [WirePath("isMasterRegion")]
         public bool? IsMasterRegion { get; }
 
         /// <summary> whether Region is deleted. </summary>
+        [WirePath("isDeleted")]
         public bool? IsDeleted { get; }
     }
 }

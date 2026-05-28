@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Full resource Id of an API operation. </summary>
+        [WirePath("operationId")]
         public string OperationId { get; set; }
     }
 }

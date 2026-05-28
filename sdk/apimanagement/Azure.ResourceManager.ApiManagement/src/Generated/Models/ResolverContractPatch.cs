@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -31,9 +32,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Properties of the GraphQL API Resolver entity that can be updated. </summary>
+        [WirePath("properties")]
         internal ResolverUpdateContractProperties Properties { get; set; }
 
         /// <summary> Resolver Name. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName
         {
             get
@@ -51,6 +54,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Path is type/field being resolved. </summary>
+        [WirePath("properties.path")]
         public string Path
         {
             get
@@ -68,6 +72,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Description of the resolver. May include HTML formatting tags. </summary>
+        [WirePath("properties.description")]
         public string Description
         {
             get

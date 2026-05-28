@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -31,9 +32,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Subscription Update contract properties. </summary>
+        [WirePath("properties")]
         internal SubscriptionUpdateParameterProperties Properties { get; set; }
 
         /// <summary> User identifier path: /users/{userId}. </summary>
+        [WirePath("properties.ownerId")]
         public string OwnerId
         {
             get
@@ -51,6 +54,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Scope like /products/{productId} or /apis or /apis/{apiId}. </summary>
+        [WirePath("properties.scope")]
         public string Scope
         {
             get
@@ -68,6 +72,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Subscription expiration date. The setting is for audit purposes only and the subscription is not automatically expired. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
+        [WirePath("properties.expirationDate")]
         public DateTimeOffset? ExpireOn
         {
             get
@@ -85,6 +90,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Subscription name. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName
         {
             get
@@ -102,6 +108,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Primary subscription key. </summary>
+        [WirePath("properties.primaryKey")]
         public string PrimaryKey
         {
             get
@@ -119,6 +126,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Secondary subscription key. </summary>
+        [WirePath("properties.secondaryKey")]
         public string SecondaryKey
         {
             get
@@ -136,6 +144,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Subscription state. Possible states are <i> active – the subscription is active, </i> suspended – the subscription is blocked, and the subscriber cannot call any APIs of the product, <i> submitted – the subscription request has been made by the developer, but has not yet been approved or rejected, </i> rejected – the subscription request has been denied by an administrator, <i> cancelled – the subscription has been cancelled by the developer or administrator, </i> expired – the subscription reached its expiration date and was deactivated. </summary>
+        [WirePath("properties.state")]
         public SubscriptionState? State
         {
             get
@@ -153,6 +162,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Comments describing subscription state change by the administrator when the state is changed to the 'rejected'. </summary>
+        [WirePath("properties.stateComment")]
         public string StateComment
         {
             get
@@ -170,6 +180,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Determines whether tracing can be enabled. </summary>
+        [WirePath("properties.allowTracing")]
         public bool? AllowTracing
         {
             get

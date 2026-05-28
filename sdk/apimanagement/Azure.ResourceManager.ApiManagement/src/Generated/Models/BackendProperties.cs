@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Backend Service Fabric Cluster Properties. </summary>
+        [WirePath("serviceFabricCluster")]
         public BackendServiceFabricClusterProperties ServiceFabricCluster { get; set; }
     }
 }

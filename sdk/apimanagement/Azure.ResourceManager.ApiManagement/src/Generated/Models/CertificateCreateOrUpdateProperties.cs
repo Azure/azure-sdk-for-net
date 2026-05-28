@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Base 64 encoded certificate using the application/x-pkcs12 representation. </summary>
+        [WirePath("data")]
         public string Data { get; set; }
 
         /// <summary> Password for the Certificate. </summary>
+        [WirePath("password")]
         public string Password { get; set; }
 
         /// <summary> KeyVault location details of the certificate. </summary>
+        [WirePath("keyVault")]
         public KeyVaultContractCreateProperties KeyVault { get; set; }
     }
 }

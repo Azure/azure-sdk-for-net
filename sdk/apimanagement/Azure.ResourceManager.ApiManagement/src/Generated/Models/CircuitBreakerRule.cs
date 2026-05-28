@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -39,21 +40,27 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The rule name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> The conditions for tripping the circuit breaker. </summary>
+        [WirePath("failureCondition")]
         public CircuitBreakerFailureCondition FailureCondition { get; set; }
 
         /// <summary> The duration for which the circuit will be tripped. </summary>
+        [WirePath("tripDuration")]
         public TimeSpan? TripDuration { get; set; }
 
         /// <summary> flag to accept Retry-After header from the backend. </summary>
+        [WirePath("acceptRetryAfter")]
         public bool? AcceptRetryAfter { get; set; }
 
         /// <summary> The response of the backend when the circuit breaker gets open. </summary>
+        [WirePath("failureResponse")]
         internal BackendFailureResponse FailureResponse { get; set; }
 
         /// <summary> The status code of the response. </summary>
+        [WirePath("failureResponse.statusCode")]
         public int? FailureResponseStatusCode
         {
             get

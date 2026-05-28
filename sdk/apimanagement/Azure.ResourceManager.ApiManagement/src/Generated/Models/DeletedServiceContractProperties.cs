@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Fully-qualified API Management Service Resource ID. </summary>
+        [WirePath("serviceId")]
         public string ServiceId { get; }
 
         /// <summary> UTC Date and Time when the service will be automatically purged. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </summary>
+        [WirePath("scheduledPurgeDate")]
         public DateTimeOffset? ScheduledPurgeOn { get; }
 
         /// <summary> UTC Timestamp when the service was soft-deleted. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </summary>
+        [WirePath("deletionDate")]
         public DateTimeOffset? DeletedOn { get; }
     }
 }

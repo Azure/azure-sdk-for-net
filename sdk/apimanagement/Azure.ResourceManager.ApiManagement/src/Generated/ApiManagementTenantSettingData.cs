@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> TenantSettings entity contract properties. </summary>
+        [WirePath("properties")]
         internal TenantSettingsContractProperties Properties { get; }
 
         /// <summary> Tenant settings. </summary>
+        [WirePath("properties.settings")]
         public IDictionary<string, string> Settings
         {
             get

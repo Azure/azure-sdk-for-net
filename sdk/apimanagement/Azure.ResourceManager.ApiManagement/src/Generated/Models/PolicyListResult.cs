@@ -37,12 +37,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Policy Contract value. </summary>
+        [WirePath("value")]
         public IList<ApiManagementPolicyData> Value { get; }
 
         /// <summary> Total record count number. </summary>
+        [WirePath("count")]
         public long? Count { get; }
 
         /// <summary> Next page link if any. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Properties of the portal revisions. </summary>
+        [WirePath("properties")]
         internal PortalRevisionContractProperties Properties { get; set; }
 
         /// <summary> Portal revision description. </summary>
+        [WirePath("properties.description")]
         public string Description
         {
             get
@@ -58,6 +60,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Portal revision publishing status details. </summary>
+        [WirePath("properties.statusDetails")]
         public string StatusDetails
         {
             get
@@ -67,6 +70,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Status of the portal's revision. </summary>
+        [WirePath("properties.status")]
         public PortalRevisionStatus? Status
         {
             get
@@ -76,6 +80,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Indicates if the portal's revision is public. </summary>
+        [WirePath("properties.isCurrent")]
         public bool? IsCurrent
         {
             get
@@ -93,6 +98,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Portal's revision creation date and time. </summary>
+        [WirePath("properties.createdDateTime")]
         public DateTimeOffset? CreatedOn
         {
             get
@@ -102,6 +108,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Last updated date and time. </summary>
+        [WirePath("properties.updatedDateTime")]
         public DateTimeOffset? UpdatedOn
         {
             get
@@ -111,6 +118,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> The provisioning state. </summary>
+        [WirePath("properties.provisioningState")]
         public string ProvisioningState
         {
             get

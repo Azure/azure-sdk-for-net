@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -51,39 +52,51 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Backend Title. </summary>
+        [WirePath("title")]
         public string Title { get; set; }
 
         /// <summary> Backend Description. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
 
         /// <summary> Management Uri of the Resource in External System. This URL can be the Arm Resource Id of Logic Apps, Function Apps or API Apps. </summary>
+        [WirePath("resourceId")]
         public string ResourceId { get; set; }
 
         /// <summary> Backend Properties contract. </summary>
+        [WirePath("properties")]
         internal BackendProperties Properties { get; set; }
 
         /// <summary> Backend Credentials Contract Properties. </summary>
+        [WirePath("credentials")]
         public BackendCredentialsContract Credentials { get; set; }
 
         /// <summary> Backend gateway Contract Properties. </summary>
+        [WirePath("proxy")]
         public BackendProxyContract Proxy { get; set; }
 
         /// <summary> Backend TLS Properties. </summary>
+        [WirePath("tls")]
         public BackendTlsProperties Tls { get; set; }
 
         /// <summary> Backend Circuit Breaker Configuration. </summary>
+        [WirePath("circuitBreaker")]
         internal BackendCircuitBreaker CircuitBreaker { get; set; }
 
         /// <summary> Azure region in which the backend is deployed. Can be optionally specified to use features such as carbon-optimized load balancer. </summary>
+        [WirePath("azureRegion")]
         public string AzureRegion { get; set; }
 
         /// <summary> Backend Pool Properties. </summary>
+        [WirePath("pool")]
         public BackendBaseParametersPool Pool { get; set; }
 
         /// <summary> Type of the backend. A backend can be either Single or Pool. </summary>
+        [WirePath("type")]
         public BackendType? Type { get; set; }
 
         /// <summary> Backend Service Fabric Cluster Properties. </summary>
+        [WirePath("properties.serviceFabricCluster")]
         public BackendServiceFabricClusterProperties BackendServiceFabricCluster
         {
             get
@@ -101,6 +114,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The rules for tripping the backend. </summary>
+        [WirePath("circuitBreaker.rules")]
         public IList<CircuitBreakerRule> CircuitBreakerRules
         {
             get

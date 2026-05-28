@@ -70,27 +70,35 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> User-friendly authorization server name. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; set; }
 
         /// <summary> If true, the authorization server may be used in the developer portal test console. True by default if no value is provided. </summary>
+        [WirePath("useInTestConsole")]
         public bool? UseInTestConsole { get; set; }
 
         /// <summary> If true, the authorization server will be used in the API documentation in the developer portal. False by default if no value is provided. </summary>
+        [WirePath("useInApiDocumentation")]
         public bool? UseInApiDocumentation { get; set; }
 
         /// <summary> Optional reference to a page where client or app registration for this authorization server is performed. Contains absolute URL to entity being referenced. </summary>
+        [WirePath("clientRegistrationEndpoint")]
         public string ClientRegistrationEndpoint { get; set; }
 
         /// <summary> OAuth authorization endpoint. See http://tools.ietf.org/html/rfc6749#section-3.2. </summary>
+        [WirePath("authorizationEndpoint")]
         public string AuthorizationEndpoint { get; set; }
 
         /// <summary> Form of an authorization grant, which the client uses to request the access token. </summary>
+        [WirePath("grantTypes")]
         public IList<GrantType> GrantTypes { get; } = new ChangeTrackingList<GrantType>();
 
         /// <summary> Client or app id registered with this authorization server. </summary>
+        [WirePath("clientId")]
         public string ClientId { get; set; }
 
         /// <summary> Client or app secret registered with this authorization server. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </summary>
+        [WirePath("clientSecret")]
         public string ClientSecret { get; set; }
     }
 }

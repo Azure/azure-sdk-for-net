@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Name of the Sku. </summary>
+        [WirePath("name")]
         public ApiGatewaySkuType? Name { get; set; }
 
         /// <summary> Capacity of the SKU (number of deployed units of the SKU). </summary>
+        [WirePath("capacity")]
         public int? Capacity { get; set; }
     }
 }

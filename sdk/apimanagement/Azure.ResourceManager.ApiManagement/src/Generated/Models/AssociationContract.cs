@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -37,9 +38,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Association entity contract properties. </summary>
+        [WirePath("properties")]
         internal AssociationContractProperties Properties { get; set; }
 
         /// <summary> Provisioning state. </summary>
+        [WirePath("properties.provisioningState")]
         public AssociationContractPropertiesProvisioningState? ProvisioningState
         {
             get

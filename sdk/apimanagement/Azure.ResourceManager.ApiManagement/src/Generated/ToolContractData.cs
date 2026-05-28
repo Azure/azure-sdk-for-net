@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Properties of the Tool Contract. </summary>
+        [WirePath("properties")]
         internal ToolContractProperties Properties { get; set; }
 
         /// <summary> Tool Name. MCP tool name must contain only letters, numbers, underscores, and hyphens. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName
         {
             get
@@ -58,6 +60,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Description of the tool. </summary>
+        [WirePath("properties.description")]
         public string Description
         {
             get
@@ -75,6 +78,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Identifier of the operation this MCP tool is associated with in the form of /apis/{apiId}/operations/{operationId}. </summary>
+        [WirePath("properties.operationId")]
         public string OperationId
         {
             get

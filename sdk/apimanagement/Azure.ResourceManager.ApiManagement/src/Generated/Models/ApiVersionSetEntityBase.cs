@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Description of API Version Set. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
 
         /// <summary> Name of query parameter that indicates the API Version if versioningScheme is set to `query`. </summary>
+        [WirePath("versionQueryName")]
         public string VersionQueryName { get; set; }
 
         /// <summary> Name of HTTP header parameter that indicates the API Version if versioningScheme is set to `header`. </summary>
+        [WirePath("versionHeaderName")]
         public string VersionHeaderName { get; set; }
     }
 }

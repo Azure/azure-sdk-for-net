@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Backend entity contract properties. </summary>
+        [WirePath("properties")]
         internal BackendContractProperties Properties { get; set; }
 
         /// <summary> Backend Title. </summary>
+        [WirePath("properties.title")]
         public string Title
         {
             get
@@ -58,6 +60,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Backend Description. </summary>
+        [WirePath("properties.description")]
         public string Description
         {
             get
@@ -75,6 +78,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Management Uri of the Resource in External System. This URL can be the Arm Resource Id of Logic Apps, Function Apps or API Apps. </summary>
+        [WirePath("properties.resourceId")]
         public string ResourceId
         {
             get
@@ -92,6 +96,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Backend Credentials Contract Properties. </summary>
+        [WirePath("properties.credentials")]
         public BackendCredentialsContract Credentials
         {
             get
@@ -109,6 +114,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Backend gateway Contract Properties. </summary>
+        [WirePath("properties.proxy")]
         public BackendProxyContract Proxy
         {
             get
@@ -126,6 +132,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Backend TLS Properties. </summary>
+        [WirePath("properties.tls")]
         public BackendTlsProperties Tls
         {
             get
@@ -143,6 +150,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Azure region in which the backend is deployed. Can be optionally specified to use features such as carbon-optimized load balancer. </summary>
+        [WirePath("properties.azureRegion")]
         public string AzureRegion
         {
             get
@@ -160,6 +168,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Backend Pool Properties. </summary>
+        [WirePath("properties.pool")]
         public BackendBaseParametersPool Pool
         {
             get
@@ -177,6 +186,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Type of the backend. A backend can be either Single or Pool. </summary>
+        [WirePath("properties.type")]
         public BackendType? Type
         {
             get
@@ -194,6 +204,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Backend Service Fabric Cluster Properties. </summary>
+        [WirePath("properties.properties.serviceFabricCluster")]
         public BackendServiceFabricClusterProperties BackendServiceFabricCluster
         {
             get
@@ -211,6 +222,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> The rules for tripping the backend. </summary>
+        [WirePath("properties.circuitBreaker.rules")]
         public IList<CircuitBreakerRule> CircuitBreakerRules
         {
             get
@@ -224,6 +236,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Runtime Url of the Backend. Required when backend type is 'Single'. </summary>
+        [WirePath("properties.url")]
         public string Uri
         {
             get
@@ -241,6 +254,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Backend communication protocol. Required when backend type is 'Single'. </summary>
+        [WirePath("properties.protocol")]
         public BackendProtocol? Protocol
         {
             get

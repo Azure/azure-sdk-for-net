@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Wiki details. </summary>
+        [WirePath("properties")]
         internal WikiContractProperties Properties { get; set; }
 
         /// <summary> Collection wiki documents included into this wiki. </summary>
+        [WirePath("properties.documents")]
         public IList<WikiDocumentationContract> Documents
         {
             get

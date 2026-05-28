@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Location of service. </summary>
+        [WirePath("location")]
         public string Location { get; }
 
         /// <summary> Network status in Location. </summary>
+        [WirePath("networkStatus")]
         public NetworkStatusContract NetworkStatus { get; }
     }
 }

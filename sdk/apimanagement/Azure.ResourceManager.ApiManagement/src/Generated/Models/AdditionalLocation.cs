@@ -67,39 +67,51 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The location name of the additional region among Azure Data center regions. </summary>
+        [WirePath("location")]
         public AzureLocation Location { get; set; }
 
         /// <summary> SKU properties of the API Management service. </summary>
+        [WirePath("sku")]
         public ApiManagementServiceSkuProperties Sku { get; set; }
 
         /// <summary> A list of availability zones denoting where the resource needs to come from. </summary>
+        [WirePath("zones")]
         public IList<string> Zones { get; }
 
         /// <summary> Public Static Load Balanced IP addresses of the API Management service in the additional location. Available only for Basic, Standard, Premium and Isolated SKU. </summary>
+        [WirePath("publicIPAddresses")]
         public IReadOnlyList<IPAddress> PublicIPAddresses { get; }
 
         /// <summary> Private Static Load Balanced IP addresses of the API Management service which is deployed in an Internal Virtual Network in a particular additional location. Available only for Basic, Standard, Premium and Isolated SKU. </summary>
+        [WirePath("privateIPAddresses")]
         public IReadOnlyList<IPAddress> PrivateIPAddresses { get; }
 
         /// <summary> Public Standard SKU IP V4 based IP address to be associated with Virtual Network deployed service in the location. Supported only for Premium SKU being deployed in Virtual Network. </summary>
+        [WirePath("publicIpAddressId")]
         public string PublicIpAddressId { get; set; }
 
         /// <summary> Virtual network configuration for the location. </summary>
+        [WirePath("virtualNetworkConfiguration")]
         public VirtualNetworkConfiguration VirtualNetworkConfiguration { get; set; }
 
         /// <summary> Gateway URL of the API Management service in the Region. </summary>
+        [WirePath("gatewayRegionalUrl")]
         public Uri GatewayRegionalUri { get; }
 
         /// <summary> Property can be used to enable NAT Gateway for this API Management service. </summary>
+        [WirePath("natGatewayState")]
         public ApiManagementNatGatewayState? NatGatewayState { get; set; }
 
         /// <summary> Outbound public IPV4 address prefixes associated with NAT Gateway deployed service. Available only for Premium SKU on stv2 platform. </summary>
+        [WirePath("outboundPublicIPAddresses")]
         public IReadOnlyList<string> OutboundPublicIPAddresses { get; }
 
         /// <summary> Property only valid for an Api Management service deployed in multiple locations. This can be used to disable the gateway in this additional location. </summary>
+        [WirePath("disableGateway")]
         public bool? DisableGateway { get; set; }
 
         /// <summary> Compute Platform Version running the service. </summary>
+        [WirePath("platformVersion")]
         public PlatformVersion? PlatformVersion { get; }
     }
 }

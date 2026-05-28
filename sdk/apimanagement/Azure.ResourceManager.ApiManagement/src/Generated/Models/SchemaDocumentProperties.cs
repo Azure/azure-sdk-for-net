@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -36,6 +37,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Json escaped string defining the document representing the Schema. Used for schemas other than Swagger/OpenAPI. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
 
         /// <summary>
@@ -64,6 +66,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("definitions")]
         public BinaryData Definitions { get; set; }
 
         /// <summary>
@@ -92,6 +95,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("components")]
         public BinaryData Components { get; set; }
     }
 }

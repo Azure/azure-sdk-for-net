@@ -37,15 +37,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Array of HTTP Headers to log. </summary>
+        [WirePath("headers")]
         public IList<string> Headers { get; }
 
         /// <summary> Body logging settings. </summary>
+        [WirePath("body")]
         internal BodyDiagnosticSettings Body { get; set; }
 
         /// <summary> Data masking settings. </summary>
+        [WirePath("dataMasking")]
         public DataMasking DataMasking { get; set; }
 
         /// <summary> Number of request body bytes to log. </summary>
+        [WirePath("body.bytes")]
         public int? BodyBytes
         {
             get

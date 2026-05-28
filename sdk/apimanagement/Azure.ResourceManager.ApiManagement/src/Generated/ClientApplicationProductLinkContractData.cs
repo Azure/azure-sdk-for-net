@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Client application - product link entity contract properties. </summary>
+        [WirePath("properties")]
         internal ClientApplicationProductLinkContractProperties Properties { get; set; }
 
         /// <summary> The unique resource identifier of the Product. </summary>
+        [WirePath("properties.productId")]
         public string ProductId
         {
             get

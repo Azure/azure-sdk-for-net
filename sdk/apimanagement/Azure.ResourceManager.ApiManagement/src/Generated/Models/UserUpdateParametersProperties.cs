@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -36,15 +37,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Email address. Must not be empty and must be unique within the service instance. </summary>
+        [WirePath("email")]
         public string Email { get; set; }
 
         /// <summary> User Password. </summary>
+        [WirePath("password")]
         public string Password { get; set; }
 
         /// <summary> First name. </summary>
+        [WirePath("firstName")]
         public string FirstName { get; set; }
 
         /// <summary> Last name. </summary>
+        [WirePath("lastName")]
         public string LastName { get; set; }
     }
 }

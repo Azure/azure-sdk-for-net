@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -29,6 +30,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Last time sync and refresh status of secret from key vault. </summary>
+        [WirePath("lastStatus")]
         public KeyVaultLastAccessStatusContractProperties LastStatus { get; }
     }
 }

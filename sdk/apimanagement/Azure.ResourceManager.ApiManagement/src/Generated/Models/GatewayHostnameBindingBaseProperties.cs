@@ -46,15 +46,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The current provisioning state of the API Management gateway hostname binding. </summary>
+        [WirePath("provisioningState")]
         public string ProvisioningState { get; }
 
         /// <summary> The default hostname of the data-plane gateway. </summary>
+        [WirePath("hostname")]
         public string Hostname { get; set; }
 
         /// <summary> The link to the API Management service workspace. </summary>
+        [WirePath("keyVault")]
         public GatewayHostnameBindingKeyVault KeyVault { get; set; }
 
         /// <summary> The hostnames of the data-plane gateway to which requests can be sent. </summary>
+        [WirePath("certificate")]
         public GatewayHostnameBindingCertificate Certificate { get; }
     }
 }

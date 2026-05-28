@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Sign-in settings contract properties. </summary>
+        [WirePath("properties")]
         internal PortalSigninSettingProperties Properties { get; set; }
 
         /// <summary> Redirect Anonymous users to the Sign-In page. </summary>
+        [WirePath("properties.enabled")]
         public bool? Enabled
         {
             get

@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Tag-API link entity contract properties. </summary>
+        [WirePath("properties")]
         internal TagOperationLinkContractProperties Properties { get; set; }
 
         /// <summary> Full resource Id of an API operation. </summary>
+        [WirePath("properties.operationId")]
         public string OperationId
         {
             get

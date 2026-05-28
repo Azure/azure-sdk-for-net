@@ -37,12 +37,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Issue Comment values. </summary>
+        [WirePath("value")]
         public IReadOnlyList<ApiIssueCommentData> Value { get; }
 
         /// <summary> Total record count number across all pages. </summary>
+        [WirePath("count")]
         public long? Count { get; }
 
         /// <summary> Next page link if any. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

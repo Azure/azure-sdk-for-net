@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -43,24 +44,31 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> User-friendly OpenID Connect Provider name. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; set; }
 
         /// <summary> User-friendly description of OpenID Connect Provider. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
 
         /// <summary> Metadata endpoint URI. </summary>
+        [WirePath("metadataEndpoint")]
         public string MetadataEndpoint { get; set; }
 
         /// <summary> Client ID of developer console which is the client application. </summary>
+        [WirePath("clientId")]
         public string ClientId { get; set; }
 
         /// <summary> Client Secret of developer console which is the client application. </summary>
+        [WirePath("clientSecret")]
         public string ClientSecret { get; set; }
 
         /// <summary> If true, the Open ID Connect provider may be used in the developer portal test console. True by default if no value is provided. </summary>
+        [WirePath("useInTestConsole")]
         public bool? UseInTestConsole { get; set; }
 
         /// <summary> If true, the Open ID Connect provider will be used in the API documentation in the developer portal. False by default if no value is provided. </summary>
+        [WirePath("useInApiDocumentation")]
         public bool? UseInApiDocumentation { get; set; }
     }
 }

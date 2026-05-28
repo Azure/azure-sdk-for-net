@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -31,9 +32,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> User entity update contract properties. </summary>
+        [WirePath("properties")]
         internal UserUpdateParametersProperties Properties { get; set; }
 
         /// <summary> Account state. Specifies whether the user is active or not. Blocked users are unable to sign into the developer portal or call any APIs of subscribed products. Default state is Active. </summary>
+        [WirePath("properties.state")]
         public ApiManagementUserState? State
         {
             get
@@ -51,6 +54,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Optional note about a user set by the administrator. </summary>
+        [WirePath("properties.note")]
         public string Note
         {
             get
@@ -68,6 +72,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Collection of user identities. </summary>
+        [WirePath("properties.identities")]
         public IList<UserIdentityContract> Identities
         {
             get
@@ -81,6 +86,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Email address. Must not be empty and must be unique within the service instance. </summary>
+        [WirePath("properties.email")]
         public string Email
         {
             get
@@ -98,6 +104,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> User Password. </summary>
+        [WirePath("properties.password")]
         public string Password
         {
             get
@@ -115,6 +122,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> First name. </summary>
+        [WirePath("properties.firstName")]
         public string FirstName
         {
             get
@@ -132,6 +140,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Last name. </summary>
+        [WirePath("properties.lastName")]
         public string LastName
         {
             get

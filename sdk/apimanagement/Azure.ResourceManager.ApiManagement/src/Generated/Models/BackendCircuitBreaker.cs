@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The rules for tripping the backend. </summary>
+        [WirePath("rules")]
         public IList<CircuitBreakerRule> Rules { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The issuer URL of the federated identity credentials. </summary>
+        [WirePath("issuer")]
         public string Issuer { get; }
 
         /// <summary> The subject identifier of the federated identity credentials. </summary>
+        [WirePath("subject")]
         public string Subject { get; }
 
         /// <summary> The audience of the federated identity credentials. </summary>
+        [WirePath("audience")]
         public string Audience { get; }
     }
 }

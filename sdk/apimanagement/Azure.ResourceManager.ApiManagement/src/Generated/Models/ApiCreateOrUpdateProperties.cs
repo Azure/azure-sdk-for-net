@@ -71,12 +71,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Content value when Importing an API. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
 
         /// <summary> Format of the Content in which the API is getting imported. New formats can be added in the future. </summary>
+        [WirePath("format")]
         public ContentFormat? Format { get; set; }
 
         /// <summary> Criteria to limit import of WSDL to a subset of the document. </summary>
+        [WirePath("wsdlSelector")]
         public ApiCreateOrUpdatePropertiesWsdlSelector WsdlSelector { get; set; }
 
         /// <summary>
@@ -87,9 +90,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// * `graphql` creates GraphQL API.
         /// New types can be added in the future.
         /// </summary>
+        [WirePath("apiType")]
         public SoapApiType? SoapApiType { get; set; }
 
         /// <summary> Strategy of translating required query parameters to template ones. By default has value 'template'. Possible values: 'template', 'query'. </summary>
+        [WirePath("translateRequiredQueryParameters")]
         public TranslateRequiredQueryParametersConduct? TranslateRequiredQueryParametersConduct { get; set; }
     }
 }

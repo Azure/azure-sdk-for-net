@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -40,12 +41,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Content type identifier. </summary>
+        [WirePath("id")]
         public string ContentTypeIdentifier { get; set; }
 
         /// <summary> Content type name. Must be 1 to 250 characters long. </summary>
+        [WirePath("name")]
         public string ContentTypeName { get; set; }
 
         /// <summary> Content type description. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
 
         /// <summary>
@@ -74,9 +78,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("schema")]
         public BinaryData Schema { get; set; }
 
         /// <summary> Content type version. </summary>
+        [WirePath("version")]
         public string Version { get; set; }
     }
 }

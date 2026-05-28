@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Transport type for Model Context Protocol API. </summary>
+        [WirePath("transportType")]
         public McpTransportType? TransportType { get; set; }
 
         /// <summary> Collection of MCP endpoint definitions with relative URLs. </summary>
+        [WirePath("endpoints")]
         public IList<McpEndpoint> Endpoints { get; }
     }
 }

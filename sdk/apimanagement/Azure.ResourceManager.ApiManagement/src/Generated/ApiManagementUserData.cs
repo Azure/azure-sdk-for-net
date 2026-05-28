@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> User entity contract properties. </summary>
+        [WirePath("properties")]
         internal UserContractProperties Properties { get; }
 
         /// <summary> Account state. Specifies whether the user is active or not. Blocked users are unable to sign into the developer portal or call any APIs of subscribed products. Default state is Active. </summary>
+        [WirePath("properties.state")]
         public ApiManagementUserState? State
         {
             get
@@ -50,6 +52,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Optional note about a user set by the administrator. </summary>
+        [WirePath("properties.note")]
         public string Note
         {
             get
@@ -59,6 +62,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Collection of user identities. </summary>
+        [WirePath("properties.identities")]
         public IList<UserIdentityContract> Identities
         {
             get
@@ -68,6 +72,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> First name. </summary>
+        [WirePath("properties.firstName")]
         public string FirstName
         {
             get
@@ -77,6 +82,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Last name. </summary>
+        [WirePath("properties.lastName")]
         public string LastName
         {
             get
@@ -86,6 +92,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Email address. </summary>
+        [WirePath("properties.email")]
         public string Email
         {
             get
@@ -95,6 +102,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Date of user registration. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
+        [WirePath("properties.registrationDate")]
         public DateTimeOffset? RegistrationOn
         {
             get
@@ -104,6 +112,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Collection of groups user is part of. </summary>
+        [WirePath("properties.groups")]
         public IReadOnlyList<GroupContractProperties> Groups
         {
             get

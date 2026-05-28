@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -32,6 +33,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The link to the API Management gateway. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; }
     }
 }

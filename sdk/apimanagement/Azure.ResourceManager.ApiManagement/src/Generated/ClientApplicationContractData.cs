@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Client application entity contract properties. </summary>
+        [WirePath("properties")]
         internal ClientApplicationContractProperties Properties { get; set; }
 
         /// <summary> Client application name. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName
         {
             get
@@ -58,6 +60,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Client application description. </summary>
+        [WirePath("properties.description")]
         public string Description
         {
             get
@@ -75,6 +78,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> A resource identifier for the user who owns the application. </summary>
+        [WirePath("properties.ownerId")]
         public string OwnerId
         {
             get
@@ -92,6 +96,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Microsoft EntraID Application ID (Client ID). This is the value that is used to identify the application when it is requesting access tokens from Microsoft EntraID. This property is read-only and will be set by the system when the application is created. </summary>
+        [WirePath("properties.entraApplicationId")]
         public string EntraApplicationId
         {
             get
@@ -101,6 +106,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Tenant ID is a unique identifier (a GUID) for an organization directory in Microsoft’s cloud. It’s used to identify tenants across Microsoft services. </summary>
+        [WirePath("properties.entraTenantId")]
         public string EntraTenantId
         {
             get
@@ -110,6 +116,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Client application state. The value derives the state of an application based on the statuses of its associated ClientApplicationProductLinks. </summary>
+        [WirePath("properties.state")]
         public ClientApplicationState? State
         {
             get

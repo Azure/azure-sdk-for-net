@@ -46,12 +46,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The type of identity used for the resource. The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity and a set of user assigned identities. The type 'None' will remove any identities from the service. </summary>
+        [WirePath("type")]
         public ApimIdentityType Type { get; set; }
 
         /// <summary> The principal id of the identity. </summary>
+        [WirePath("principalId")]
         public string PrincipalId { get; }
 
         /// <summary> The client tenant id of the identity. </summary>
+        [WirePath("tenantId")]
         public string TenantId { get; }
 
         /// <summary>
@@ -60,6 +63,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/
         /// providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
         /// </summary>
+        [WirePath("userAssignedIdentities")]
         public IDictionary<string, UserIdentityProperties> UserAssignedIdentities { get; }
     }
 }

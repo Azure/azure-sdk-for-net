@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> The developer portal configuration contract properties. </summary>
+        [WirePath("properties")]
         internal PortalConfigProperties Properties { get; set; }
 
         /// <summary> Enable or disable Basic authentication method. </summary>
+        [WirePath("properties.enableBasicAuth")]
         public bool? EnableBasicAuth
         {
             get
@@ -58,6 +60,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> The developer portal delegation settings. </summary>
+        [WirePath("properties.delegation")]
         public PortalConfigDelegationProperties Delegation
         {
             get
@@ -75,6 +78,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> The developer portal Content Security Policy (CSP) settings. </summary>
+        [WirePath("properties.csp")]
         public PortalConfigCspProperties Csp
         {
             get
@@ -92,6 +96,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Redirect anonymous users to the sign-in page. </summary>
+        [WirePath("properties.signin.require")]
         public bool? Require
         {
             get
@@ -109,6 +114,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Terms of service settings. </summary>
+        [WirePath("properties.signup.termsOfService")]
         public PortalConfigTermsOfServiceProperties SignupTermsOfService
         {
             get
@@ -126,6 +132,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Allowed origins, e.g. `https://trusted.com`. </summary>
+        [WirePath("properties.cors.allowedOrigins")]
         public IList<string> CorsAllowedOrigins
         {
             get

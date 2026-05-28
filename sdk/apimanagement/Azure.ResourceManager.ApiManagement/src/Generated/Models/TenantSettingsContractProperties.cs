@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Tenant settings. </summary>
+        [WirePath("settings")]
         public IDictionary<string, string> Settings { get; } = new ChangeTrackingDictionary<string, string>();
     }
 }

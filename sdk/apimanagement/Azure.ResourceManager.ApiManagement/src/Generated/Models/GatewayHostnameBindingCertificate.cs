@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The thumbprint of the certificate. </summary>
+        [WirePath("thumbprint")]
         public string Thumbprint { get; }
 
         /// <summary> The subject of the certificate. </summary>
+        [WirePath("subject")]
         public string Subject { get; }
 
         /// <summary> The expiration date of the certificate. </summary>
+        [WirePath("expiry")]
         public DateTimeOffset? Expiry { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The minimum http status code. </summary>
+        [WirePath("min")]
         public int? Min { get; set; }
 
         /// <summary> The maximum http status code. </summary>
+        [WirePath("max")]
         public int? Max { get; set; }
     }
 }

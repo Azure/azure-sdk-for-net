@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -35,15 +36,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The type of resource the SKU applies to. </summary>
+        [WirePath("resourceType")]
         public string ResourceType { get; }
 
         /// <summary> Specifies API Management SKU. </summary>
+        [WirePath("sku")]
         internal ResourceSku Sku { get; }
 
         /// <summary> Specifies the number of API Management units. </summary>
+        [WirePath("capacity")]
         public ResourceSkuCapacity Capacity { get; }
 
         /// <summary> Name of the Sku. </summary>
+        [WirePath("sku.name")]
         public ApiManagementServiceSkuType? SkuName
         {
             get

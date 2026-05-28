@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -31,9 +32,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Cache update properties details. </summary>
+        [WirePath("properties")]
         internal CacheUpdateProperties Properties { get; set; }
 
         /// <summary> Cache description. </summary>
+        [WirePath("properties.description")]
         public string Description
         {
             get
@@ -51,6 +54,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Runtime connection string to cache. </summary>
+        [WirePath("properties.connectionString")]
         public string ConnectionString
         {
             get
@@ -68,6 +72,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Location identifier to use cache from (should be either 'default' or valid Azure region identifier). </summary>
+        [WirePath("properties.useFromLocation")]
         public string UseFromLocation
         {
             get
@@ -85,6 +90,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Original uri of entity in external system cache points to. </summary>
+        [WirePath("properties.resourceId")]
         public string ResourceId
         {
             get

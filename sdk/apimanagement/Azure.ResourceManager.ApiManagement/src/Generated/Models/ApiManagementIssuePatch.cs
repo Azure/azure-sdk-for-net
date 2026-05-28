@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -31,9 +32,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Issue entity Update contract properties. </summary>
+        [WirePath("properties")]
         internal IssueUpdateContractProperties Properties { get; set; }
 
         /// <summary> Date and time when the issue was created. </summary>
+        [WirePath("properties.createdDate")]
         public DateTimeOffset? CreatedOn
         {
             get
@@ -51,6 +54,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Status of the issue. </summary>
+        [WirePath("properties.state")]
         public State? State
         {
             get
@@ -68,6 +72,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> A resource identifier for the API the issue was created for. </summary>
+        [WirePath("properties.apiId")]
         public string ApiId
         {
             get
@@ -85,6 +90,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The issue title. </summary>
+        [WirePath("properties.title")]
         public string Title
         {
             get
@@ -102,6 +108,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Text describing the issue. </summary>
+        [WirePath("properties.description")]
         public string Description
         {
             get
@@ -119,6 +126,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> A resource identifier for the user created the issue. </summary>
+        [WirePath("properties.userId")]
         public string UserId
         {
             get

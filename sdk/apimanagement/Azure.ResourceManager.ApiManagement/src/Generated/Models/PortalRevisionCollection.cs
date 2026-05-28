@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Collection of portal revisions. </summary>
+        [WirePath("value")]
         public IReadOnlyList<ApiManagementPortalRevisionData> Value { get; }
 
         /// <summary> Next page link, if any. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

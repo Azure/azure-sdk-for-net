@@ -6,8 +6,7 @@
     <PackageId>Azure.ResourceManager.ApiManagement</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.ApiManagement.</Description>
     <PackageTags>azure;management;arm;resource manager;apimanagement</PackageTags>
-    <IncludeTypeSpecDependency>true</IncludeTypeSpecDependency>
-    <!-- Suppress AOT warnings in generated code until the generator is updated -->
+    <!-- IL2026/IL3050 fire on generated calls to ModelReaderWriter.Read<T>, which is the AOT/trim-unfriendly reflection overload. Until the MPG generator switches to the ModelReaderWriterContext overload, suppress at the package level. -->
     <NoWarn>$(NoWarn);IL2026;IL3050</NoWarn>
   </PropertyGroup>
 </Project>

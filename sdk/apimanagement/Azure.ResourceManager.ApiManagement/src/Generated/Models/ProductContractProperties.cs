@@ -41,6 +41,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Product name. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; set; }
     }
 }

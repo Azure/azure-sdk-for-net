@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Key vault secret identifier for client secret. When provided, client secret will be retrieved from the provided key vault secret. </summary>
+        [WirePath("secretIdentifier")]
         public string SecretIdentifier { get; set; }
     }
 }

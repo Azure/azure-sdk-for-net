@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Properties of the Issue Attachment. </summary>
+        [WirePath("properties")]
         internal IssueAttachmentContractProperties Properties { get; set; }
 
         /// <summary> Filename by which the binary data will be saved. </summary>
+        [WirePath("properties.title")]
         public string Title
         {
             get
@@ -58,6 +60,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Either 'link' if content is provided via an HTTP link or the MIME type of the Base64-encoded binary data provided in the 'content' property. </summary>
+        [WirePath("properties.contentFormat")]
         public string ContentFormat
         {
             get
@@ -75,6 +78,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> An HTTP link or Base64-encoded binary data. </summary>
+        [WirePath("properties.content")]
         public string Content
         {
             get

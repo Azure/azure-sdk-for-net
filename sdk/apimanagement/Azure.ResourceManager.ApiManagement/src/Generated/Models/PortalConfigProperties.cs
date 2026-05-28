@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -41,24 +42,31 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Enable or disable Basic authentication method. </summary>
+        [WirePath("enableBasicAuth")]
         public bool? EnableBasicAuth { get; set; }
 
         /// <summary> Gets or sets the Signin. </summary>
+        [WirePath("signin")]
         internal PortalConfigPropertiesSignin Signin { get; set; }
 
         /// <summary> Gets or sets the Signup. </summary>
+        [WirePath("signup")]
         internal PortalConfigPropertiesSignup Signup { get; set; }
 
         /// <summary> The developer portal delegation settings. </summary>
+        [WirePath("delegation")]
         public PortalConfigDelegationProperties Delegation { get; set; }
 
         /// <summary> The developer portal Cross-Origin Resource Sharing (CORS) settings. </summary>
+        [WirePath("cors")]
         internal PortalConfigCorsProperties Cors { get; set; }
 
         /// <summary> The developer portal Content Security Policy (CSP) settings. </summary>
+        [WirePath("csp")]
         public PortalConfigCspProperties Csp { get; set; }
 
         /// <summary> Redirect anonymous users to the sign-in page. </summary>
+        [WirePath("signin.require")]
         public bool? Require
         {
             get
@@ -76,6 +84,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Terms of service settings. </summary>
+        [WirePath("signup.termsOfService")]
         public PortalConfigTermsOfServiceProperties SignupTermsOfService
         {
             get
@@ -93,6 +102,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Allowed origins, e.g. `https://trusted.com`. </summary>
+        [WirePath("cors.allowedOrigins")]
         public IList<string> CorsAllowedOrigins
         {
             get

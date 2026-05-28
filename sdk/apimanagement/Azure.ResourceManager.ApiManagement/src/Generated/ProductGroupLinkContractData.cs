@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Product-group link entity contract properties. </summary>
+        [WirePath("properties")]
         internal ProductGroupLinkContractProperties Properties { get; set; }
 
         /// <summary> Full resource Id of a group. </summary>
+        [WirePath("properties.groupId")]
         public string GroupId
         {
             get

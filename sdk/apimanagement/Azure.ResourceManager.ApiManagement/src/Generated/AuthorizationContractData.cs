@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Properties of the Authorization Contract. </summary>
+        [WirePath("properties")]
         internal AuthorizationContractProperties Properties { get; set; }
 
         /// <summary> Authorization type options. </summary>
+        [WirePath("properties.authorizationType")]
         public AuthorizationType? AuthorizationType
         {
             get
@@ -58,6 +60,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> OAuth2 grant type options. </summary>
+        [WirePath("properties.oauth2grantType")]
         public OAuth2GrantType? OAuth2GrantType
         {
             get
@@ -75,6 +78,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Authorization parameters. </summary>
+        [WirePath("properties.parameters")]
         public IDictionary<string, string> Parameters
         {
             get
@@ -88,6 +92,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Authorization error details. </summary>
+        [WirePath("properties.error")]
         public AuthorizationError Error
         {
             get
@@ -105,6 +110,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Status of the Authorization. </summary>
+        [WirePath("properties.status")]
         public string Status
         {
             get

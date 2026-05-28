@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> AccessInformation entity contract properties. </summary>
+        [WirePath("properties")]
         internal AccessInformationContractProperties Properties { get; }
 
         /// <summary> Access Information type ('access' or 'gitAccess'). </summary>
+        [WirePath("properties.id")]
         public string AccessInfoType
         {
             get
@@ -50,6 +52,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Principal (User) Identifier. </summary>
+        [WirePath("properties.principalId")]
         public string PrincipalId
         {
             get
@@ -59,6 +62,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Determines whether direct access is enabled. </summary>
+        [WirePath("properties.enabled")]
         public bool? Enabled
         {
             get

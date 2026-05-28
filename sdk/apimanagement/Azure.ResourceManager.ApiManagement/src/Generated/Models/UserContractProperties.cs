@@ -40,18 +40,23 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> First name. </summary>
+        [WirePath("firstName")]
         public string FirstName { get; }
 
         /// <summary> Last name. </summary>
+        [WirePath("lastName")]
         public string LastName { get; }
 
         /// <summary> Email address. </summary>
+        [WirePath("email")]
         public string Email { get; }
 
         /// <summary> Date of user registration. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
+        [WirePath("registrationDate")]
         public DateTimeOffset? RegistrationOn { get; }
 
         /// <summary> Collection of groups user is part of. </summary>
+        [WirePath("groups")]
         public IReadOnlyList<GroupContractProperties> Groups { get; } = new ChangeTrackingList<GroupContractProperties>();
     }
 }

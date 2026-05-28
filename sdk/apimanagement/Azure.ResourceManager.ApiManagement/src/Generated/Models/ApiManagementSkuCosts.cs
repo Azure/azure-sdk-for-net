@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Used for querying price from commerce. </summary>
+        [WirePath("meterID")]
         public string MeterID { get; }
 
         /// <summary> The multiplier is needed to extend the base metered cost. </summary>
+        [WirePath("quantity")]
         public long? Quantity { get; }
 
         /// <summary> An invariant to show the extended unit. </summary>
+        [WirePath("extendedUnit")]
         public string ExtendedUnit { get; }
     }
 }

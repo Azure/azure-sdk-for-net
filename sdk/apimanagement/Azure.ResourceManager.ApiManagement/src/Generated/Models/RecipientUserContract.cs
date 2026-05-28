@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -37,9 +38,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Recipient User entity contract properties. </summary>
+        [WirePath("properties")]
         internal RecipientUsersContractProperties Properties { get; }
 
         /// <summary> API Management UserId subscribed to notification. </summary>
+        [WirePath("properties.userId")]
         public string UserId
         {
             get

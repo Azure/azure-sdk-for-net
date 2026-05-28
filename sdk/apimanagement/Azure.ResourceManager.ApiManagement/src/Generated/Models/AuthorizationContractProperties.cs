@@ -41,18 +41,23 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Authorization type options. </summary>
+        [WirePath("authorizationType")]
         public AuthorizationType? AuthorizationType { get; set; }
 
         /// <summary> OAuth2 grant type options. </summary>
+        [WirePath("oauth2grantType")]
         public OAuth2GrantType? OAuth2GrantType { get; set; }
 
         /// <summary> Authorization parameters. </summary>
+        [WirePath("parameters")]
         public IDictionary<string, string> Parameters { get; } = new ChangeTrackingDictionary<string, string>();
 
         /// <summary> Authorization error details. </summary>
+        [WirePath("error")]
         public AuthorizationError Error { get; set; }
 
         /// <summary> Status of the Authorization. </summary>
+        [WirePath("status")]
         public string Status { get; set; }
     }
 }

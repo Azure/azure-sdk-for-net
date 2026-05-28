@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Properties of the Authorization Contract. </summary>
+        [WirePath("properties")]
         internal AuthorizationAccessPolicyContractProperties Properties { get; set; }
 
         /// <summary> The allowed Azure Active Directory Application IDs. </summary>
+        [WirePath("properties.appIds")]
         public IList<string> AppIds
         {
             get
@@ -54,6 +56,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> The Tenant Id. </summary>
+        [WirePath("properties.tenantId")]
         public string TenantId
         {
             get
@@ -71,6 +74,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> The Object Id. </summary>
+        [WirePath("properties.objectId")]
         public string ObjectId
         {
             get

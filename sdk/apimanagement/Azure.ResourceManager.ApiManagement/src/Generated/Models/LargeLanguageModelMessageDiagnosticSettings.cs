@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Specifies which message should be logged. Currently there is only 'all' option. </summary>
+        [WirePath("messages")]
         public LlmMessageLogTypes? Messages { get; set; }
 
         /// <summary> Maximum size of message to logs in bytes. The default size is 32KB. </summary>
+        [WirePath("maxSizeInBytes")]
         public int? MaxSizeInBytes { get; set; }
     }
 }

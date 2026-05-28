@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -43,24 +44,31 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Portal revision description. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
 
         /// <summary> Portal revision publishing status details. </summary>
+        [WirePath("statusDetails")]
         public string StatusDetails { get; }
 
         /// <summary> Status of the portal's revision. </summary>
+        [WirePath("status")]
         public PortalRevisionStatus? Status { get; }
 
         /// <summary> Indicates if the portal's revision is public. </summary>
+        [WirePath("isCurrent")]
         public bool? IsCurrent { get; set; }
 
         /// <summary> Portal's revision creation date and time. </summary>
+        [WirePath("createdDateTime")]
         public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> Last updated date and time. </summary>
+        [WirePath("updatedDateTime")]
         public DateTimeOffset? UpdatedOn { get; }
 
         /// <summary> The provisioning state. </summary>
+        [WirePath("provisioningState")]
         public string ProvisioningState { get; }
     }
 }

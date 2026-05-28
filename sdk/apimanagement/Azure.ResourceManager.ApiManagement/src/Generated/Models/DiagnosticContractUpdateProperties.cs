@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -49,33 +50,43 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Specifies for what type of messages sampling settings should not apply. </summary>
+        [WirePath("alwaysLog")]
         public AlwaysLog? AlwaysLog { get; set; }
 
         /// <summary> Resource Id of a target logger. </summary>
+        [WirePath("loggerId")]
         public string LoggerId { get; set; }
 
         /// <summary> Sampling settings for Diagnostic. </summary>
+        [WirePath("sampling")]
         public SamplingSettings Sampling { get; set; }
 
         /// <summary> Diagnostic settings for incoming/outgoing HTTP messages to the Gateway. </summary>
+        [WirePath("frontend")]
         public PipelineDiagnosticSettings Frontend { get; set; }
 
         /// <summary> Diagnostic settings for incoming/outgoing HTTP messages to the Backend. </summary>
+        [WirePath("backend")]
         public PipelineDiagnosticSettings Backend { get; set; }
 
         /// <summary> Log the ClientIP. Default is false. </summary>
+        [WirePath("logClientIp")]
         public bool? LogClientIp { get; set; }
 
         /// <summary> Sets correlation protocol to use for Application Insights diagnostics. </summary>
+        [WirePath("httpCorrelationProtocol")]
         public HttpCorrelationProtocol? HttpCorrelationProtocol { get; set; }
 
         /// <summary> The verbosity level applied to traces emitted by trace policies. </summary>
+        [WirePath("verbosity")]
         public TraceVerbosityLevel? Verbosity { get; set; }
 
         /// <summary> The format of the Operation Name for Application Insights telemetries. Default is Name. </summary>
+        [WirePath("operationNameFormat")]
         public OperationNameFormat? OperationNameFormat { get; set; }
 
         /// <summary> Emit custom metrics via emit-metric policy. Applicable only to Application Insights diagnostic settings. </summary>
+        [WirePath("metrics")]
         public bool? Metrics { get; set; }
     }
 }

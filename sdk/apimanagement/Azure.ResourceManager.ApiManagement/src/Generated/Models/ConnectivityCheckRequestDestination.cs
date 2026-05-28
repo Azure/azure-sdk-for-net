@@ -41,9 +41,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Destination address. Can either be an IP address or a FQDN. </summary>
+        [WirePath("address")]
         public string Address { get; }
 
         /// <summary> Destination port. </summary>
+        [WirePath("port")]
         public long Port { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -31,9 +32,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Deploy Configuration Parameter contract properties. </summary>
+        [WirePath("properties")]
         internal DeployConfigurationParameterProperties Properties { get; set; }
 
         /// <summary> The name of the Git branch from which the configuration is to be deployed to the configuration database. </summary>
+        [WirePath("properties.branch")]
         public string Branch
         {
             get
@@ -43,6 +46,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The value enforcing deleting subscriptions to products that are deleted in this update. </summary>
+        [WirePath("properties.force")]
         public bool? Force
         {
             get
