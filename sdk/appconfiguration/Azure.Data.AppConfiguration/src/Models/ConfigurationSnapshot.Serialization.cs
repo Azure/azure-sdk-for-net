@@ -23,6 +23,7 @@ namespace Azure.Data.AppConfiguration
             long? size = default;
             long? itemsCount = default;
             IDictionary<string, string> tags = default;
+            string description = default;
             string etag = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -126,6 +127,11 @@ namespace Azure.Data.AppConfiguration
                     tags = dictionary;
                     continue;
                 }
+                if (property.NameEquals("description"))
+                {
+                    description = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("etag"))
                 {
                     etag = property.Value.GetString();
@@ -139,11 +145,13 @@ namespace Azure.Data.AppConfiguration
                 snapshotComposition,
                 created,
                 expires,
-                retentionPeriod,
+                retentionPeriod.HasValue ? TimeSpan.FromSeconds(retentionPeriod.Value) : null,
                 size,
                 itemsCount,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                new ETag(etag));
+                description,
+                new ETag(etag),
+                additionalBinaryDataProperties: null);
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -217,6 +225,11 @@ namespace Azure.Data.AppConfiguration
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
