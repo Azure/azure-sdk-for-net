@@ -8,52 +8,25 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Models
 {
     /// <summary> The parameters to provide for the Bot. </summary>
     public partial class BotProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BotProperties"/>. </summary>
         /// <param name="displayName"> The Name of the bot. </param>
         /// <param name="endpoint"> The bot's endpoint. </param>
         /// <param name="msaAppId"> Microsoft App Id for the bot. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="displayName"/> or <paramref name="msaAppId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="displayName"/>, <paramref name="endpoint"/> or <paramref name="msaAppId"/> is null. </exception>
         public BotProperties(string displayName, Uri endpoint, string msaAppId)
         {
             Argument.AssertNotNull(displayName, nameof(displayName));
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(msaAppId, nameof(msaAppId));
 
             DisplayName = displayName;
@@ -65,6 +38,7 @@ namespace Azure.ResourceManager.BotService.Models
             EnabledChannels = new ChangeTrackingList<string>();
             LuisAppIds = new ChangeTrackingList<string>();
             PrivateEndpointConnections = new ChangeTrackingList<BotServicePrivateEndpointConnectionData>();
+            NetworkSecurityPerimeterConfigurations = new ChangeTrackingList<BotServiceNetworkSecurityPerimeterConfigurationData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BotProperties"/>. </summary>
@@ -99,12 +73,13 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="schemaTransformationVersion"> The channel schema transformation version for the bot. </param>
         /// <param name="storageResourceId"> The storage resourceId for the bot. </param>
         /// <param name="privateEndpointConnections"> List of Private Endpoint Connections configured for the bot. </param>
+        /// <param name="networkSecurityPerimeterConfigurations"> List of Network Security Perimeter configurations for the bot. </param>
         /// <param name="openWithHint"> The hint to browser (e.g. protocol handler) on how to open the bot for authoring. </param>
         /// <param name="appPasswordHint"> The hint (e.g. keyVault secret resourceId) on how to fetch the app secret. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="publishingCredentials"> Publishing credentials of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BotProperties(string displayName, string description, Uri iconUri, Uri endpoint, string endpointVersion, IDictionary<string, string> allSettings, IDictionary<string, string> parameters, Uri manifestUri, BotMsaAppType? msaAppType, string msaAppId, string msaAppTenantId, ResourceIdentifier msaAppMSIResourceId, IReadOnlyList<string> configuredChannels, IReadOnlyList<string> enabledChannels, string developerAppInsightKey, string developerAppInsightsApiKey, string developerAppInsightsApplicationId, IList<string> luisAppIds, string luisKey, bool? isCmekEnabled, Uri cmekKeyVaultUri, string cmekEncryptionStatus, Guid? tenantId, BotServicePublicNetworkAccess? publicNetworkAccess, bool? isStreamingSupported, bool? isDeveloperAppInsightsApiKeySet, string migrationToken, bool? isLocalAuthDisabled, string schemaTransformationVersion, ResourceIdentifier storageResourceId, IReadOnlyList<BotServicePrivateEndpointConnectionData> privateEndpointConnections, string openWithHint, string appPasswordHint, string provisioningState, string publishingCredentials, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BotProperties(string displayName, string description, Uri iconUri, Uri endpoint, string endpointVersion, IDictionary<string, string> allSettings, IDictionary<string, string> parameters, Uri manifestUri, BotMsaAppType? msaAppType, string msaAppId, string msaAppTenantId, ResourceIdentifier msaAppMSIResourceId, IReadOnlyList<string> configuredChannels, IReadOnlyList<string> enabledChannels, string developerAppInsightKey, string developerAppInsightsApiKey, string developerAppInsightsApplicationId, IList<string> luisAppIds, string luisKey, bool? isCmekEnabled, Uri cmekKeyVaultUri, string cmekEncryptionStatus, Guid? tenantId, BotServicePublicNetworkAccess? publicNetworkAccess, bool? isStreamingSupported, bool? isDeveloperAppInsightsApiKeySet, string migrationToken, bool? isLocalAuthDisabled, string schemaTransformationVersion, ResourceIdentifier storageResourceId, IReadOnlyList<BotServicePrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<BotServiceNetworkSecurityPerimeterConfigurationData> networkSecurityPerimeterConfigurations, string openWithHint, string appPasswordHint, string provisioningState, string publishingCredentials, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             Description = description;
@@ -137,86 +112,119 @@ namespace Azure.ResourceManager.BotService.Models
             SchemaTransformationVersion = schemaTransformationVersion;
             StorageResourceId = storageResourceId;
             PrivateEndpointConnections = privateEndpointConnections;
+            NetworkSecurityPerimeterConfigurations = networkSecurityPerimeterConfigurations;
             OpenWithHint = openWithHint;
             AppPasswordHint = appPasswordHint;
             ProvisioningState = provisioningState;
             PublishingCredentials = publishingCredentials;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="BotProperties"/> for deserialization. </summary>
-        internal BotProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The Name of the bot. </summary>
         public string DisplayName { get; set; }
+
         /// <summary> The description of the bot. </summary>
         public string Description { get; set; }
+
         /// <summary> The Icon Url of the bot. </summary>
         public Uri IconUri { get; set; }
+
         /// <summary> The bot's endpoint. </summary>
         public Uri Endpoint { get; set; }
+
         /// <summary> The bot's endpoint version. </summary>
         public string EndpointVersion { get; }
+
         /// <summary> Contains resource all settings defined as key/value pairs. </summary>
         public IDictionary<string, string> AllSettings { get; }
+
         /// <summary> Contains resource parameters defined as key/value pairs. </summary>
         public IDictionary<string, string> Parameters { get; }
+
         /// <summary> The bot's manifest url. </summary>
         public Uri ManifestUri { get; set; }
+
         /// <summary> Microsoft App Type for the bot. </summary>
         public BotMsaAppType? MsaAppType { get; set; }
+
         /// <summary> Microsoft App Id for the bot. </summary>
         public string MsaAppId { get; set; }
+
         /// <summary> Microsoft App Tenant Id for the bot. </summary>
         public string MsaAppTenantId { get; set; }
+
         /// <summary> Microsoft App Managed Identity Resource Id for the bot. </summary>
         public ResourceIdentifier MsaAppMSIResourceId { get; set; }
+
         /// <summary> Collection of channels for which the bot is configured. </summary>
         public IReadOnlyList<string> ConfiguredChannels { get; }
+
         /// <summary> Collection of channels for which the bot is enabled. </summary>
         public IReadOnlyList<string> EnabledChannels { get; }
+
         /// <summary> The Application Insights key. </summary>
         public string DeveloperAppInsightKey { get; set; }
+
         /// <summary> The Application Insights Api Key. </summary>
         public string DeveloperAppInsightsApiKey { get; set; }
+
         /// <summary> The Application Insights App Id. </summary>
         public string DeveloperAppInsightsApplicationId { get; set; }
+
         /// <summary> Collection of LUIS App Ids. </summary>
         public IList<string> LuisAppIds { get; }
+
         /// <summary> The LUIS Key. </summary>
         public string LuisKey { get; set; }
+
         /// <summary> Whether Cmek is enabled. </summary>
         public bool? IsCmekEnabled { get; set; }
+
         /// <summary> The CMK Url. </summary>
         public Uri CmekKeyVaultUri { get; set; }
+
         /// <summary> The CMK encryption status. </summary>
         public string CmekEncryptionStatus { get; }
+
         /// <summary> The Tenant Id for the bot. </summary>
         public Guid? TenantId { get; set; }
+
         /// <summary> Whether the bot is in an isolated network. </summary>
         public BotServicePublicNetworkAccess? PublicNetworkAccess { get; set; }
+
         /// <summary> Whether the bot is streaming supported. </summary>
         public bool? IsStreamingSupported { get; set; }
+
         /// <summary> Whether the bot is developerAppInsightsApiKey set. </summary>
         public bool? IsDeveloperAppInsightsApiKeySet { get; }
+
         /// <summary> Token used to migrate non Azure bot to azure subscription. </summary>
         public string MigrationToken { get; }
+
         /// <summary> Opt-out of local authentication and ensure only MSI and AAD can be used exclusively for authentication. </summary>
         public bool? IsLocalAuthDisabled { get; set; }
+
         /// <summary> The channel schema transformation version for the bot. </summary>
         public string SchemaTransformationVersion { get; set; }
+
         /// <summary> The storage resourceId for the bot. </summary>
         public ResourceIdentifier StorageResourceId { get; set; }
+
         /// <summary> List of Private Endpoint Connections configured for the bot. </summary>
         public IReadOnlyList<BotServicePrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+
+        /// <summary> List of Network Security Perimeter configurations for the bot. </summary>
+        public IReadOnlyList<BotServiceNetworkSecurityPerimeterConfigurationData> NetworkSecurityPerimeterConfigurations { get; }
+
         /// <summary> The hint to browser (e.g. protocol handler) on how to open the bot for authoring. </summary>
         public string OpenWithHint { get; set; }
+
         /// <summary> The hint (e.g. keyVault secret resourceId) on how to fetch the app secret. </summary>
         public string AppPasswordHint { get; set; }
+
         /// <summary> Provisioning state of the resource. </summary>
         public string ProvisioningState { get; }
+
         /// <summary> Publishing credentials of the resource. </summary>
         public string PublishingCredentials { get; set; }
     }

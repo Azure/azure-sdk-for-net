@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public readonly partial struct WorkloadItemType : IEquatable<WorkloadItemType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="WorkloadItemType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public WorkloadItemType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InvalidValue = "Invalid";
         private const string SqlInstanceValue = "SQLInstance";
         private const string SqlDatabaseValue = "SQLDataBase";
@@ -31,39 +24,70 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string SapAseDatabaseValue = "SAPAseDatabase";
         private const string SapHanaDBInstanceValue = "SAPHanaDBInstance";
 
-        /// <summary> Invalid. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadItemType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public WorkloadItemType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Invalid. </summary>
         public static WorkloadItemType Invalid { get; } = new WorkloadItemType(InvalidValue);
-        /// <summary> SQLInstance. </summary>
+
+        /// <summary> Gets the SqlInstance. </summary>
         public static WorkloadItemType SqlInstance { get; } = new WorkloadItemType(SqlInstanceValue);
-        /// <summary> SQLDataBase. </summary>
+
+        /// <summary> Gets the SqlDatabase. </summary>
         public static WorkloadItemType SqlDatabase { get; } = new WorkloadItemType(SqlDatabaseValue);
-        /// <summary> SAPHanaSystem. </summary>
+
+        /// <summary> Gets the SapHanaSystem. </summary>
         public static WorkloadItemType SapHanaSystem { get; } = new WorkloadItemType(SapHanaSystemValue);
-        /// <summary> SAPHanaDatabase. </summary>
+
+        /// <summary> Gets the SapHanaDatabase. </summary>
         public static WorkloadItemType SapHanaDatabase { get; } = new WorkloadItemType(SapHanaDatabaseValue);
-        /// <summary> SAPAseSystem. </summary>
+
+        /// <summary> Gets the SapAseSystem. </summary>
         public static WorkloadItemType SapAseSystem { get; } = new WorkloadItemType(SapAseSystemValue);
-        /// <summary> SAPAseDatabase. </summary>
+
+        /// <summary> Gets the SapAseDatabase. </summary>
         public static WorkloadItemType SapAseDatabase { get; } = new WorkloadItemType(SapAseDatabaseValue);
-        /// <summary> SAPHanaDBInstance. </summary>
+
+        /// <summary> Gets the SapHanaDBInstance. </summary>
         public static WorkloadItemType SapHanaDBInstance { get; } = new WorkloadItemType(SapHanaDBInstanceValue);
+
         /// <summary> Determines if two <see cref="WorkloadItemType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WorkloadItemType left, WorkloadItemType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WorkloadItemType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WorkloadItemType left, WorkloadItemType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WorkloadItemType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WorkloadItemType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WorkloadItemType(string value) => new WorkloadItemType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WorkloadItemType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WorkloadItemType?(string value) => value == null ? null : new WorkloadItemType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WorkloadItemType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WorkloadItemType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

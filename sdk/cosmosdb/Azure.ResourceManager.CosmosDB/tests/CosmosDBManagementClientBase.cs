@@ -72,8 +72,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 new CosmosDBAccountCreateOrUpdateContent(AzureLocation.WestUS2, locations)
                 {
                     Kind = kind,
-                    ConsistencyPolicy = new ConsistencyPolicy(DefaultConsistencyLevel.BoundedStaleness, MaxStalenessPrefix, MaxIntervalInSeconds,null),
-                    IPRules = { new CosmosDBIPAddressOrRange("23.43.230.120",null) },
+                    ConsistencyPolicy = new ConsistencyPolicy(DefaultConsistencyLevel.BoundedStaleness, MaxStalenessPrefix, MaxIntervalInSeconds, null),
+                    IPRules = { new CosmosDBIPAddressOrRange("23.43.230.120", null) },
                     IsVirtualNetworkFilterEnabled = true,
                     EnableAutomaticFailover = false,
                     ConnectorOffer = ConnectorOffer.Small,

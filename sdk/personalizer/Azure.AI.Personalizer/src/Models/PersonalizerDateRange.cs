@@ -8,5 +8,5 @@ namespace Azure.AI.Personalizer
 {
     /// <summary> Initializes a new instance of DateRange. </summary>
     [CodeGenModel("DateRange")]
-    internal partial class PersonalizerDateRange {}
+    internal partial class PersonalizerDateRange { }
 }

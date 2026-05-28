@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
     internal static partial class SqlVmAssessmentDayOfWeekExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this SqlVmAssessmentDayOfWeek value) => value switch
         {
             SqlVmAssessmentDayOfWeek.Monday => "Monday",
@@ -23,15 +24,37 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SqlVmAssessmentDayOfWeek value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static SqlVmAssessmentDayOfWeek ToSqlVmAssessmentDayOfWeek(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Monday")) return SqlVmAssessmentDayOfWeek.Monday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Tuesday")) return SqlVmAssessmentDayOfWeek.Tuesday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Wednesday")) return SqlVmAssessmentDayOfWeek.Wednesday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Thursday")) return SqlVmAssessmentDayOfWeek.Thursday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Friday")) return SqlVmAssessmentDayOfWeek.Friday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Saturday")) return SqlVmAssessmentDayOfWeek.Saturday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Sunday")) return SqlVmAssessmentDayOfWeek.Sunday;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Monday"))
+            {
+                return SqlVmAssessmentDayOfWeek.Monday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Tuesday"))
+            {
+                return SqlVmAssessmentDayOfWeek.Tuesday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Wednesday"))
+            {
+                return SqlVmAssessmentDayOfWeek.Wednesday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Thursday"))
+            {
+                return SqlVmAssessmentDayOfWeek.Thursday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Friday"))
+            {
+                return SqlVmAssessmentDayOfWeek.Friday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Saturday"))
+            {
+                return SqlVmAssessmentDayOfWeek.Saturday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Sunday"))
+            {
+                return SqlVmAssessmentDayOfWeek.Sunday;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SqlVmAssessmentDayOfWeek value.");
         }
     }

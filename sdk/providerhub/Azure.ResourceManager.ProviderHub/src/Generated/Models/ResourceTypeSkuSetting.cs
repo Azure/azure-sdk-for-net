@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
     /// <summary> The ResourceTypeSkuSetting. </summary>
     public partial class ResourceTypeSkuSetting
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResourceTypeSkuSetting"/>. </summary>
         /// <param name="name"> The name. </param>
@@ -74,8 +46,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="capacity"> The capacity. </param>
         /// <param name="costs"> The costs. </param>
         /// <param name="capabilities"> The capabilities. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceTypeSkuSetting(string name, string tier, string size, string family, string kind, IList<string> locations, IList<ResourceTypeSkuLocationInfo> locationInfo, IList<string> requiredQuotaIds, IList<string> requiredFeatures, ResourceTypeSkuCapacity capacity, IList<ResourceTypeSkuCost> costs, IList<ResourceSkuCapability> capabilities, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceTypeSkuSetting(string name, string tier, string size, string family, string kind, IList<string> locations, IList<ResourceTypeSkuLocationInfo> locationInfo, IList<string> requiredQuotaIds, IList<string> requiredFeatures, ResourceTypeSkuCapacity capacity, IList<ResourceTypeSkuCost> costs, IList<ResourceSkuCapability> capabilities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Tier = tier;
@@ -89,36 +61,42 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Capacity = capacity;
             Costs = costs;
             Capabilities = capabilities;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ResourceTypeSkuSetting"/> for deserialization. </summary>
-        internal ResourceTypeSkuSetting()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name. </summary>
         public string Name { get; set; }
+
         /// <summary> The tier. </summary>
         public string Tier { get; set; }
+
         /// <summary> The size. </summary>
         public string Size { get; set; }
+
         /// <summary> The family. </summary>
         public string Family { get; set; }
+
         /// <summary> The kind. </summary>
         public string Kind { get; set; }
+
         /// <summary> The locations. </summary>
         public IList<string> Locations { get; }
+
         /// <summary> The location info. </summary>
         public IList<ResourceTypeSkuLocationInfo> LocationInfo { get; }
+
         /// <summary> The required quota ids. </summary>
         public IList<string> RequiredQuotaIds { get; }
+
         /// <summary> The required features. </summary>
         public IList<string> RequiredFeatures { get; }
+
         /// <summary> The capacity. </summary>
         public ResourceTypeSkuCapacity Capacity { get; set; }
+
         /// <summary> The costs. </summary>
         public IList<ResourceTypeSkuCost> Costs { get; }
+
         /// <summary> The capabilities. </summary>
         public IList<ResourceSkuCapability> Capabilities { get; }
     }

@@ -20,12 +20,14 @@
     <PackageReference Include="Microsoft.Azure.SignalR.Protocols" />
     <PackageReference Include="Microsoft.Azure.SignalR.Serverless.Protocols" />
     <PackageReference Include="Microsoft.Extensions.Azure" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
     <!--Microsoft.Azure.SignalR.Management is not compatible with central version 1.2.0 yet.
-    Tracked by issue https://github.com/Azure/azure-sdk-for-net/issues/51460 -->
-    <PackageReference Include="Microsoft.AspNetCore.Http.Connections" VersionOverride="1.0.15" />
+    Tracked by issue https://github.com/Azure/azure-sdk-for-net/issues/51460
+    Version is scoped in eng/centralpackagemanagement/overrides -->
+    <PackageReference Include="Microsoft.AspNetCore.Http.Connections" />
   </ItemGroup>
 </Project>

@@ -3,11 +3,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Health.Insights.RadiologyInsights.Tests.Infrastructure;
 using NUnit.Framework;
-using System.Threading.Tasks;
 
 namespace Azure.Health.Insights.RadiologyInsights.Tests
 {

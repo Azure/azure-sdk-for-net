@@ -1,0 +1,37 @@
+<Project>
+  <!-- ============================================================== -->
+  <!--             INTEGRATION LIBRARY DEPENDENCIES                   -->
+  <!--                                                                -->
+  <!-- Integration libraries integrate Azure services with specific   -->
+  <!-- hosting platforms such as Azure WebJobs, Azure Functions, and   -->
+  <!-- Azure SignalR. These provide bindings, triggers, and protocol   -->
+  <!-- support for those platforms.                                    -->
+  <!-- ============================================================== -->
+  <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Microsoft.'))">
+    <PackageVersion Include="Microsoft.Azure.WebJobs" Version="3.0.44" />
+    <PackageVersion Include="Microsoft.Azure.WebJobs.Host.Storage" Version="5.0.1" />
+    <PackageVersion Include="Microsoft.Azure.SignalR.Management" Version="1.32.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition ="'$(IsClientLibrary)' == 'true'
+      and $(MSBuildProjectName.StartsWith('Microsoft.'))
+      and '$(IsTestProject)' != 'true'
+      and '$(IsTestSupportProject)' != 'true'
+      and '$(IsPerfProject)' != 'true'
+      and '$(IsStressProject)' != 'true'
+      and '$(IsSamplesProject)' != 'true'">
+    <PackageVersion Include="Apache.Avro" Version="1.12.1" />
+    <PackageVersion Include="CloudNative.CloudEvents" Version="2.8.0" />
+    <PackageVersion Include="CloudNative.CloudEvents.SystemTextJson" Version="$(CloudNativeCloudEventsSystemTextJsonVersion)" />
+    <PackageVersion Include="Google.Protobuf" Version="3.33.2" />
+    <PackageVersion Include="Grpc.Tools" Version="2.76.0" PrivateAssets="all" />
+    <PackageVersion Include="MessagePack" Version="2.5.192" />
+    <PackageVersion Include="Microsoft.Azure.SignalR" Version="1.32.0" />
+    <PackageVersion Include="Microsoft.Azure.SignalR.Protocols" Version="1.32.0" />
+    <PackageVersion Include="Microsoft.Azure.SignalR.Serverless.Protocols" Version="1.10.0" />
+    <PackageVersion Include="Microsoft.Azure.WebJobs.Sources" Version="3.0.44" PrivateAssets="All" />
+    <PackageVersion Include="Microsoft.Azure.WebJobs.Extensions.Rpc" Version="3.0.44" />
+    <PackageVersion Include="Microsoft.Spatial" Version="$(MicrosoftSpatialVersion)" />
+    <PackageVersion Include="Newtonsoft.Json" Version="$(NewtonsoftJsonVersion)" />
+  </ItemGroup>
+</Project>

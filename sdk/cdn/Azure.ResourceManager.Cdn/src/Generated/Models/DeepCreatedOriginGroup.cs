@@ -7,123 +7,112 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// The origin group for CDN content which is added when creating a CDN endpoint. Traffic is sent to the origins within the origin group based on origin health.
-    /// Serialized Name: DeepCreatedOriginGroup
-    /// </summary>
+    /// <summary> The origin group for CDN content which is added when creating a CDN endpoint. Traffic is sent to the origins within the origin group based on origin health. </summary>
     public partial class DeepCreatedOriginGroup
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DeepCreatedOriginGroup"/>. </summary>
-        /// <param name="name">
-        /// Origin group name which must be unique within the endpoint.
-        /// Serialized Name: DeepCreatedOriginGroup.name
-        /// </param>
+        /// <param name="name"> Origin group name which must be unique within the endpoint. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public DeepCreatedOriginGroup(string name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            Origins = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DeepCreatedOriginGroup"/>. </summary>
-        /// <param name="name">
-        /// Origin group name which must be unique within the endpoint.
-        /// Serialized Name: DeepCreatedOriginGroup.name
-        /// </param>
-        /// <param name="healthProbeSettings">
-        /// Health probe settings to the origin that is used to determine the health of the origin.
-        /// Serialized Name: DeepCreatedOriginGroup.properties.healthProbeSettings
-        /// </param>
-        /// <param name="origins">
-        /// The source of the content being delivered via CDN within given origin group.
-        /// Serialized Name: DeepCreatedOriginGroup.properties.origins
-        /// </param>
-        /// <param name="trafficRestorationTimeToHealedOrNewEndpointsInMinutes">
-        /// Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported.
-        /// Serialized Name: DeepCreatedOriginGroup.properties.trafficRestorationTimeToHealedOrNewEndpointsInMinutes
-        /// </param>
-        /// <param name="responseBasedOriginErrorDetectionSettings">
-        /// The JSON object that contains the properties to determine origin health using real requests/responses.This property is currently not supported.
-        /// Serialized Name: DeepCreatedOriginGroup.properties.responseBasedOriginErrorDetectionSettings
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeepCreatedOriginGroup(string name, HealthProbeSettings healthProbeSettings, IList<WritableSubResource> origins, int? trafficRestorationTimeToHealedOrNewEndpointsInMinutes, ResponseBasedOriginErrorDetectionSettings responseBasedOriginErrorDetectionSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="name"> Origin group name which must be unique within the endpoint. </param>
+        /// <param name="properties"> Properties of the origin group created on the CDN endpoint. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DeepCreatedOriginGroup(string name, DeepCreatedOriginGroupProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            HealthProbeSettings = healthProbeSettings;
-            Origins = origins;
-            TrafficRestorationTimeToHealedOrNewEndpointsInMinutes = trafficRestorationTimeToHealedOrNewEndpointsInMinutes;
-            ResponseBasedOriginErrorDetectionSettings = responseBasedOriginErrorDetectionSettings;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeepCreatedOriginGroup"/> for deserialization. </summary>
-        internal DeepCreatedOriginGroup()
-        {
-        }
-
-        /// <summary>
-        /// Origin group name which must be unique within the endpoint.
-        /// Serialized Name: DeepCreatedOriginGroup.name
-        /// </summary>
+        /// <summary> Origin group name which must be unique within the endpoint. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
-        /// <summary>
-        /// Health probe settings to the origin that is used to determine the health of the origin.
-        /// Serialized Name: DeepCreatedOriginGroup.properties.healthProbeSettings
-        /// </summary>
-        public HealthProbeSettings HealthProbeSettings { get; set; }
-        /// <summary>
-        /// The source of the content being delivered via CDN within given origin group.
-        /// Serialized Name: DeepCreatedOriginGroup.properties.origins
-        /// </summary>
-        public IList<WritableSubResource> Origins { get; }
-        /// <summary>
-        /// Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported.
-        /// Serialized Name: DeepCreatedOriginGroup.properties.trafficRestorationTimeToHealedOrNewEndpointsInMinutes
-        /// </summary>
-        public int? TrafficRestorationTimeToHealedOrNewEndpointsInMinutes { get; set; }
-        /// <summary>
-        /// The JSON object that contains the properties to determine origin health using real requests/responses.This property is currently not supported.
-        /// Serialized Name: DeepCreatedOriginGroup.properties.responseBasedOriginErrorDetectionSettings
-        /// </summary>
-        public ResponseBasedOriginErrorDetectionSettings ResponseBasedOriginErrorDetectionSettings { get; set; }
+
+        /// <summary> Properties of the origin group created on the CDN endpoint. </summary>
+        [WirePath("properties")]
+        internal DeepCreatedOriginGroupProperties Properties { get; set; }
+
+        /// <summary> Health probe settings to the origin that is used to determine the health of the origin. </summary>
+        [WirePath("properties.healthProbeSettings")]
+        public HealthProbeSettings HealthProbeSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HealthProbeSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DeepCreatedOriginGroupProperties();
+                }
+                Properties.HealthProbeSettings = value;
+            }
+        }
+
+        /// <summary> The source of the content being delivered via CDN within given origin group. </summary>
+        [WirePath("properties.origins")]
+        public IList<WritableSubResource> Origins
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DeepCreatedOriginGroupProperties();
+                }
+                return Properties.Origins;
+            }
+        }
+
+        /// <summary> Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported. </summary>
+        [WirePath("properties.trafficRestorationTimeToHealedOrNewEndpointsInMinutes")]
+        public int? TrafficRestorationTimeToHealedOrNewEndpointsInMinutes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TrafficRestorationTimeToHealedOrNewEndpointsInMinutes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DeepCreatedOriginGroupProperties();
+                }
+                Properties.TrafficRestorationTimeToHealedOrNewEndpointsInMinutes = value;
+            }
+        }
+
+        /// <summary> The JSON object that contains the properties to determine origin health using real requests/responses.This property is currently not supported. </summary>
+        [WirePath("properties.responseBasedOriginErrorDetectionSettings")]
+        public ResponseBasedOriginErrorDetectionSettings ResponseBasedOriginErrorDetectionSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResponseBasedOriginErrorDetectionSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DeepCreatedOriginGroupProperties();
+                }
+                Properties.ResponseBasedOriginErrorDetectionSettings = value;
+            }
+        }
     }
 }

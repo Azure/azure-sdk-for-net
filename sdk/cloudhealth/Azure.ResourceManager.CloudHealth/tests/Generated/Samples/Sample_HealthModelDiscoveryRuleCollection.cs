@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.CloudHealth.Samples
             string discoveryRuleName = "myDiscoveryRule";
             HealthModelDiscoveryRuleData data = new HealthModelDiscoveryRuleData
             {
-                Properties = new HealthModelDiscoveryRuleProperties("resources | where subscriptionId == '7ddfffd7-9b32-40df-1234-828cbd55d6f4' | where resourceGroup == 'my-rg'", "authSetting1", DiscoveryRuleRelationshipDiscoveryBehavior.Enabled, DiscoveryRuleRecommendedSignalsBehavior.Enabled, null)
+                Properties = new HealthModelDiscoveryRuleProperties("resources | where subscriptionId == '7ddfffd7-9b32-40df-1234-828cbd55d6f4' | where resourceGroup == 'my-rg'", "authSetting1", DiscoveryRuleRelationshipDiscoveryBehavior.Enabled, DiscoveryRuleRecommendedSignalsBehavior.Enabled)
                 {
                     DisplayName = "myDisplayName",
                 },

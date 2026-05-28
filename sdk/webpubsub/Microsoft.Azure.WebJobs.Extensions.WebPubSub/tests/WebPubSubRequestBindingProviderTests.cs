@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebPubSub.Common;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using NUnit.Framework;
 
@@ -24,8 +25,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
                    .AddEnvironmentVariables()
                    .Build();
             var mockResolver = new Mock<INameResolver>(MockBehavior.Strict);
-            var options = new WebPubSubFunctionsOptions();
-            _provider = new WebPubSubContextBindingProvider(mockResolver.Object, _configuration, options);
+            var options = new WebPubSubServiceAccessOptions();
+            var accessFactory = new WebPubSubServiceAccessFactory(_configuration, TestAzureComponentFactory.Instance);
+            _provider = new WebPubSubContextBindingProvider(mockResolver.Object, _configuration, options, accessFactory, NullLogger.Instance);
         }
 
         [TestCase]

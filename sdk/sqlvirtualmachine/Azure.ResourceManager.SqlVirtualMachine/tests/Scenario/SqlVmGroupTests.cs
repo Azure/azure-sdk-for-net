@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 using System.Xml;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.SqlVirtualMachine.Models;
-using Azure.ResourceManager.Storage;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.SqlVirtualMachine.Models;
+using Azure.ResourceManager.Storage;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Tests

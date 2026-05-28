@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Dns
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
                     using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
@@ -146,11 +146,11 @@ namespace Azure.ResourceManager.Dns
             {
                 if (property.NameEquals("etag"u8))
                 {
-                     if (property.Value.ValueKind == JsonValueKind.Null)
-                     {
-                         continue;
-                     }
-                     etag = new ETag(property.Value.GetString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))

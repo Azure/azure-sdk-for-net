@@ -13,7 +13,7 @@ namespace Azure.AI.OpenAI;
 public partial class UserSecurityContext
 {
     /// <summary> The name of the application. Sensitive personal information should not be included in this field. </summary>
-    public string ApplicationName { get; set;}
+    public string ApplicationName { get; set; }
     /// <summary> This identifier is the Microsoft Entra ID (formerly Azure Active Directory) user object ID used to authenticate end-users within the generative AI application. Sensitive personal information should not be included in this field. </summary>
     public string EndUserId { get; set; }
     /// <summary> The Microsoft 365 tenant ID the end user belongs to. It's required when the generative AI application is multitenant. </summary>

@@ -8,69 +8,108 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Astro;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Astro.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmAstroModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Astro.AstroOrganizationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+
+        /// <summary> Organization Resource by Astronomer. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Astro.AstroOrganizationData"/> instance for mocking. </returns>
-        public static AstroOrganizationData AstroOrganizationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, AstroOrganizationProperties properties = null, ManagedServiceIdentity identity = null)
+        public static AstroOrganizationData AstroOrganizationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AstroOrganizationProperties properties = default, ManagedServiceIdentity identity = default)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new AstroOrganizationData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 properties,
-                identity,
-                serializedAdditionalRawData: null);
+                identity);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AstroOrganizationProperties"/>. </summary>
+        /// <summary> Properties specific to Data Organization resource. </summary>
         /// <param name="marketplace"> Marketplace details of the resource. </param>
         /// <param name="user"> Details of the user. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="partnerOrganizationProperties"> Organization properties. </param>
         /// <returns> A new <see cref="Models.AstroOrganizationProperties"/> instance for mocking. </returns>
-        public static AstroOrganizationProperties AstroOrganizationProperties(AstroMarketplaceDetails marketplace = null, AstroUserDetails user = null, AstroResourceProvisioningState? provisioningState = null, AstroPartnerOrganizationProperties partnerOrganizationProperties = null)
+        public static AstroOrganizationProperties AstroOrganizationProperties(AstroMarketplaceDetails marketplace = default, AstroUserDetails user = default, AstroResourceProvisioningState? provisioningState = default, AstroPartnerOrganizationProperties partnerOrganizationProperties = default)
         {
-            return new AstroOrganizationProperties(marketplace, user, provisioningState, partnerOrganizationProperties, serializedAdditionalRawData: null);
+            return new AstroOrganizationProperties(marketplace, user, provisioningState, partnerOrganizationProperties, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AstroSingleSignOnProperties"/>. </summary>
+        /// <summary> Offer details for the marketplace that is selected by the user. </summary>
+        /// <param name="publisherId"> Publisher Id for the marketplace offer. </param>
+        /// <param name="offerId"> Offer Id for the marketplace offer. </param>
+        /// <param name="planId"> Plan Id for the marketplace offer. </param>
+        /// <param name="planName"> Plan Name for the marketplace offer. </param>
+        /// <param name="termUnit"> Plan Display Name for the marketplace offer. </param>
+        /// <param name="termId"> Plan Display Name for the marketplace offer. </param>
+        /// <param name="renewalMode"> Subscription renewal mode. </param>
+        /// <param name="endOn"> Current subscription end date and time. </param>
+        /// <returns> A new <see cref="Models.AstroOfferDetails"/> instance for mocking. </returns>
+        public static AstroOfferDetails AstroOfferDetails(string publisherId = default, string offerId = default, string planId = default, string planName = default, string termUnit = default, string termId = default, AstroRenewalMode? renewalMode = default, DateTimeOffset? endOn = default)
+        {
+            return new AstroOfferDetails(
+                publisherId,
+                offerId,
+                planId,
+                planName,
+                termUnit,
+                termId,
+                renewalMode,
+                endOn,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Properties specific to Single Sign On Resource. </summary>
         /// <param name="singleSignOnState"> State of the Single Sign On for the organization. </param>
         /// <param name="enterpriseAppId"> AAD enterprise application Id used to setup SSO. </param>
         /// <param name="singleSignOnUri"> URL for SSO to be used by the partner to redirect the user to their system. </param>
         /// <param name="aadDomains"> List of AAD domains fetched from Microsoft Graph for user. </param>
         /// <param name="provisioningState"> Provisioning State of the resource. </param>
         /// <returns> A new <see cref="Models.AstroSingleSignOnProperties"/> instance for mocking. </returns>
-        public static AstroSingleSignOnProperties AstroSingleSignOnProperties(AstroSingleSignOnState? singleSignOnState = null, string enterpriseAppId = null, Uri singleSignOnUri = null, IEnumerable<string> aadDomains = null, AstroResourceProvisioningState? provisioningState = null)
+        public static AstroSingleSignOnProperties AstroSingleSignOnProperties(AstroSingleSignOnState? singleSignOnState = default, string enterpriseAppId = default, Uri singleSignOnUri = default, IEnumerable<string> aadDomains = default, AstroResourceProvisioningState? provisioningState = default)
         {
-            aadDomains ??= new List<string>();
+            aadDomains ??= new ChangeTrackingList<string>();
 
             return new AstroSingleSignOnProperties(
                 singleSignOnState,
                 enterpriseAppId,
                 singleSignOnUri,
-                aadDomains?.ToList(),
+                aadDomains.ToList(),
                 provisioningState,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The type used for update operations of the OrganizationResource. </summary>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.AstroOrganizationPatch"/> instance for mocking. </returns>
+        public static AstroOrganizationPatch AstroOrganizationPatch(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, AstroOrganizationUpdateProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new AstroOrganizationPatch(identity, tags, properties, additionalBinaryDataProperties: null);
         }
     }
 }

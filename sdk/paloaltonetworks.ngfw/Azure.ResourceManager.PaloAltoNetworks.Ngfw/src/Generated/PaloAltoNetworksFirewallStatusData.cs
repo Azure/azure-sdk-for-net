@@ -13,79 +13,96 @@ using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
-    /// <summary>
-    /// A class representing the PaloAltoNetworksFirewallStatus data model.
-    /// Firewall Status
-    /// </summary>
+    /// <summary> Firewall Status. </summary>
     public partial class PaloAltoNetworksFirewallStatusData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PaloAltoNetworksFirewallStatusData"/>. </summary>
-        public PaloAltoNetworksFirewallStatusData()
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        internal PaloAltoNetworksFirewallStatusData(FirewallStatusProperty properties)
         {
+            Properties = properties;
         }
 
         /// <summary> Initializes a new instance of <see cref="PaloAltoNetworksFirewallStatusData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="isPanoramaManaged"> Panorama Managed: Default is False. Default will be CloudSec managed. </param>
-        /// <param name="healthStatus"> Current status of the Firewall. </param>
-        /// <param name="healthReason"> Detail description of current health of the Firewall. </param>
-        /// <param name="panoramaStatus"> Panorama Status. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PaloAltoNetworksFirewallStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FirewallBooleanType? isPanoramaManaged, FirewallHealthStatus? healthStatus, string healthReason, FirewallPanoramaStatus panoramaStatus, FirewallProvisioningStateType? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        internal PaloAltoNetworksFirewallStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, FirewallStatusProperty properties) : base(id, name, resourceType, systemData)
         {
-            IsPanoramaManaged = isPanoramaManaged;
-            HealthStatus = healthStatus;
-            HealthReason = healthReason;
-            PanoramaStatus = panoramaStatus;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
+
+        /// <summary> The resource-specific properties for this resource. </summary>
+        internal FirewallStatusProperty Properties { get; }
 
         /// <summary> Panorama Managed: Default is False. Default will be CloudSec managed. </summary>
-        public FirewallBooleanType? IsPanoramaManaged { get; }
+        public FirewallBooleanType? IsPanoramaManaged
+        {
+            get
+            {
+                return Properties.IsPanoramaManaged;
+            }
+        }
+
         /// <summary> Current status of the Firewall. </summary>
-        public FirewallHealthStatus? HealthStatus { get; }
+        public FirewallHealthStatus? HealthStatus
+        {
+            get
+            {
+                return Properties.HealthStatus;
+            }
+        }
+
         /// <summary> Detail description of current health of the Firewall. </summary>
-        public string HealthReason { get; }
+        public string HealthReason
+        {
+            get
+            {
+                return Properties.HealthReason;
+            }
+        }
+
         /// <summary> Panorama Status. </summary>
-        public FirewallPanoramaStatus PanoramaStatus { get; }
+        public FirewallPanoramaStatus PanoramaStatus
+        {
+            get
+            {
+                return Properties.PanoramaStatus;
+            }
+        }
+
         /// <summary> Provisioning state of the resource. </summary>
-        public FirewallProvisioningStateType? ProvisioningState { get; }
+        public FirewallProvisioningStateType? ProvisioningState
+        {
+            get
+            {
+                return Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Strata Cloud Manager. </summary>
+        public FirewallBooleanType? IsStrataCloudManaged
+        {
+            get
+            {
+                return Properties.IsStrataCloudManaged;
+            }
+        }
+
+        /// <summary> This field is only present if Strata Cloud Manager is managing the policy for this firewall. </summary>
+        public StrataCloudManagerInfo StrataCloudManagerInfo
+        {
+            get
+            {
+                return Properties.StrataCloudManagerInfo;
+            }
+        }
     }
 }

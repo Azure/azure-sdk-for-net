@@ -1,0 +1,114 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System.Diagnostics;
+using System.Text.Json;
+using Azure.AI.AgentServer.Core;
+using Azure.AI.AgentServer.Responses.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
+
+namespace Azure.AI.AgentServer.Responses.Internal;
+
+/// <summary>
+/// An <see cref="IResult"/> implementation that streams pre-processed response events as SSE.
+/// All event processing (validation, auto-stamping, publisher push, error recovery,
+/// persistence) is handled by <see cref="ResponseOrchestrator"/>. This class is
+/// responsible only for SSE wire-format output, keep-alive heartbeats, and
+/// background-mode client-disconnect handling.
+/// </summary>
+internal sealed class SseResult : IResult
+{
+    private readonly IAsyncEnumerable<ResponseStreamEvent> _events;
+    private readonly ResponseExecution _execution;
+    private readonly CancellationTokenSource _linkedCts;
+    private readonly JsonSerializerOptions _jsonOptions;
+    private readonly ILogger _logger;
+    private readonly TimeSpan _keepAliveInterval;
+
+    public SseResult(
+        IAsyncEnumerable<ResponseStreamEvent> events,
+        ResponseExecution execution,
+        CancellationTokenSource linkedCts,
+        JsonSerializerOptions jsonOptions,
+        ILogger logger,
+        TimeSpan keepAliveInterval)
+    {
+        _events = events;
+        _execution = execution;
+        _linkedCts = linkedCts;
+        _jsonOptions = jsonOptions;
+        _logger = logger;
+        _keepAliveInterval = keepAliveInterval;
+    }
+
+    public async Task ExecuteAsync(HttpContext httpContext)
+    {
+        // Set SSE headers
+        httpContext.Response.ContentType = "text/event-stream; charset=utf-8";
+        httpContext.Response.Headers["Cache-Control"] = "no-cache";
+        httpContext.Response.Headers["Connection"] = "keep-alive";
+        httpContext.Response.Headers["X-Accel-Buffering"] = "no";
+
+        var responseId = _execution.ResponseId;
+        _logger.LogInformation("SSE stream started for response {ResponseId}", responseId);
+
+        await using var keepAliveSession = SseKeepAliveSession.Start(
+            httpContext.Response.Body, _keepAliveInterval, _logger, $"response {responseId}");
+        var sseWriter = new SseWriter(keepAliveSession, _jsonOptions);
+
+        try
+        {
+            var sseDisconnected = false;
+
+            await foreach (var evt in _events)
+            {
+                if (!sseDisconnected)
+                {
+                    try
+                    {
+                        await sseWriter.WriteEventAsync(evt, evt.SequenceNumber,
+                            _execution.IsBackground ? CancellationToken.None : httpContext.RequestAborted);
+                    }
+                    catch when (_execution.IsBackground && httpContext.RequestAborted.IsCancellationRequested)
+                    {
+                        sseDisconnected = true;
+                        _logger.LogInformation(
+                            "SSE client disconnected for bg response {ResponseId}, handler continues",
+                            responseId);
+                    }
+                }
+            }
+
+            _logger.LogInformation(
+                "SSE stream completed for response {ResponseId}", responseId);
+        }
+        catch (OperationCanceledException) when (httpContext.RequestAborted.IsCancellationRequested)
+        {
+            // Non-bg client disconnected — orchestrator handles status via ClientDisconnected flag
+            _logger.LogInformation(
+                "SSE stream cancelled (client disconnect) for response {ResponseId}", responseId);
+        }
+        catch (Exception ex)
+        {
+            // Any error (pre-created failure, cancellation before response.created, etc.)
+            // — tag the Activity span and write a standalone SSE error event with
+            // full fidelity from the exception.
+            ResponsesExceptionFilter.RecordException(Activity.Current, ex);
+            _logger.LogWarning(ex,
+                "SSE stream error for response {ResponseId}", responseId);
+            try
+            {
+                await sseWriter.WriteErrorEventAsync(ApiErrorFactory.ToSseErrorEvent(ex));
+            }
+            catch
+            {
+                // Stream may be broken — best effort
+            }
+        }
+        finally
+        {
+            _linkedCts.Dispose();
+        }
+    }
+}

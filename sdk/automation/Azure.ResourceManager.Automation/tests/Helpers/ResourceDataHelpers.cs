@@ -1,18 +1,18 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using System.Threading.Tasks;
+using Azure.Core;
 using Azure.ResourceManager.Automation.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
-using Azure.Core;
-using System;
-using System.Text;
-using Azure.ResourceManager.Resources;
-using System.Threading.Tasks;
 using NUnit.Framework.Internal;
-using System.IO;
 
 namespace Azure.ResourceManager.Automation.Tests.Helpers
 {
@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.Automation.Tests.Helpers
             var data = new DscConfigurationCreateOrUpdateContent(new AutomationContentSource()
             {
                 Hash = new AutomationContentHash("sha256", "A9E5DB56BA21513F61E0B3868816FDC6D4DF5131F5617D7FF0D769674BD5072F"),
-                Value = "Configuration "+name+@" { Node SampleConfiguration.localhost { WindowsFeature IIS { Name = ""Web - Server""; Ensure = ""Present""; }}}",
+                Value = "Configuration " + name + @" { Node SampleConfiguration.localhost { WindowsFeature IIS { Name = ""Web - Server""; Ensure = ""Present""; }}}",
                 SourceType = AutomationContentSourceType.EmbeddedContent,
                 Version = "1.0.0"
             })
             {
-                Description= "new sample configuration test",
+                Description = "new sample configuration test",
                 Location = AzureLocation.EastUS,
             };
             return data;

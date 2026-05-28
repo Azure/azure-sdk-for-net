@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.IotOperations.Models
     public readonly partial struct KafkaAuthMethod : IEquatable<KafkaAuthMethod>
     {
         private readonly string _value;
+        /// <summary> SystemAssignedManagedIdentity type. </summary>
+        private const string SystemAssignedManagedIdentityValue = "SystemAssignedManagedIdentity";
+        /// <summary> UserAssignedManagedIdentity type. </summary>
+        private const string UserAssignedManagedIdentityValue = "UserAssignedManagedIdentity";
+        /// <summary> Sasl Option. </summary>
+        private const string SaslValue = "Sasl";
+        /// <summary> x509Certificate Option. </summary>
+        private const string X509CertificateValue = "X509Certificate";
+        /// <summary> Anonymous Option. </summary>
+        private const string AnonymousValue = "Anonymous";
 
         /// <summary> Initializes a new instance of <see cref="KafkaAuthMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KafkaAuthMethod(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SystemAssignedManagedIdentityValue = "SystemAssignedManagedIdentity";
-        private const string UserAssignedManagedIdentityValue = "UserAssignedManagedIdentity";
-        private const string SaslValue = "Sasl";
-        private const string X509CertificateValue = "X509Certificate";
-        private const string AnonymousValue = "Anonymous";
+            _value = value;
+        }
 
         /// <summary> SystemAssignedManagedIdentity type. </summary>
         public static KafkaAuthMethod SystemAssignedManagedIdentity { get; } = new KafkaAuthMethod(SystemAssignedManagedIdentityValue);
+
         /// <summary> UserAssignedManagedIdentity type. </summary>
         public static KafkaAuthMethod UserAssignedManagedIdentity { get; } = new KafkaAuthMethod(UserAssignedManagedIdentityValue);
+
         /// <summary> Sasl Option. </summary>
         public static KafkaAuthMethod Sasl { get; } = new KafkaAuthMethod(SaslValue);
+
         /// <summary> x509Certificate Option. </summary>
         public static KafkaAuthMethod X509Certificate { get; } = new KafkaAuthMethod(X509CertificateValue);
+
         /// <summary> Anonymous Option. </summary>
         public static KafkaAuthMethod Anonymous { get; } = new KafkaAuthMethod(AnonymousValue);
+
         /// <summary> Determines if two <see cref="KafkaAuthMethod"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(KafkaAuthMethod left, KafkaAuthMethod right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="KafkaAuthMethod"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(KafkaAuthMethod left, KafkaAuthMethod right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="KafkaAuthMethod"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="KafkaAuthMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator KafkaAuthMethod(string value) => new KafkaAuthMethod(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="KafkaAuthMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator KafkaAuthMethod?(string value) => value == null ? null : new KafkaAuthMethod(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KafkaAuthMethod other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(KafkaAuthMethod other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

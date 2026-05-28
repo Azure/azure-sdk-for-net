@@ -13,43 +13,11 @@ using Azure.ResourceManager.Peering.Models;
 
 namespace Azure.ResourceManager.Peering
 {
-    /// <summary>
-    /// A class representing the PeeringRegisteredPrefix data model.
-    /// The customer's prefix that is registered by the peering service provider.
-    /// </summary>
+    /// <summary> The customer's prefix that is registered by the peering service provider. </summary>
     public partial class PeeringRegisteredPrefixData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PeeringRegisteredPrefixData"/>. </summary>
         public PeeringRegisteredPrefixData()
@@ -57,35 +25,72 @@ namespace Azure.ResourceManager.Peering
         }
 
         /// <summary> Initializes a new instance of <see cref="PeeringRegisteredPrefixData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="prefix"> The customer's prefix from which traffic originates. </param>
-        /// <param name="prefixValidationState"> The prefix validation state. </param>
-        /// <param name="peeringServicePrefixKey"> The peering service prefix key that is to be shared with the customer. </param>
-        /// <param name="errorMessage"> The error message associated with the validation state, if any. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PeeringRegisteredPrefixData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string prefix, PeeringPrefixValidationState? prefixValidationState, string peeringServicePrefixKey, string errorMessage, PeeringProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The properties that define a registered prefix. </param>
+        internal PeeringRegisteredPrefixData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PeeringRegisteredPrefixProperties properties) : base(id, name, resourceType, systemData)
         {
-            Prefix = prefix;
-            PrefixValidationState = prefixValidationState;
-            PeeringServicePrefixKey = peeringServicePrefixKey;
-            ErrorMessage = errorMessage;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
+        /// <summary> The properties that define a registered prefix. </summary>
+        internal PeeringRegisteredPrefixProperties Properties { get; set; }
+
         /// <summary> The customer's prefix from which traffic originates. </summary>
-        public string Prefix { get; set; }
+        public string Prefix
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Prefix;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PeeringRegisteredPrefixProperties();
+                }
+                Properties.Prefix = value;
+            }
+        }
+
         /// <summary> The prefix validation state. </summary>
-        public PeeringPrefixValidationState? PrefixValidationState { get; }
+        public PeeringPrefixValidationState? PrefixValidationState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrefixValidationState;
+            }
+        }
+
         /// <summary> The peering service prefix key that is to be shared with the customer. </summary>
-        public string PeeringServicePrefixKey { get; }
+        public string PeeringServicePrefixKey
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PeeringServicePrefixKey;
+            }
+        }
+
         /// <summary> The error message associated with the validation state, if any. </summary>
-        public string ErrorMessage { get; }
+        public string ErrorMessage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ErrorMessage;
+            }
+        }
+
         /// <summary> The provisioning state of the resource. </summary>
-        public PeeringProvisioningState? ProvisioningState { get; }
+        public PeeringProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

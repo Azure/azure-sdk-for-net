@@ -37,7 +37,13 @@ namespace Azure.ResourceManager.StorageDiscovery
             return subscriptionResource.GetCachedClient(client => new MockableStorageDiscoverySubscriptionResource(client, subscriptionResource.Id));
         }
 
-        /// <summary> Gets an object representing a <see cref="StorageDiscoveryWorkspaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="StorageDiscoveryWorkspaceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableStorageDiscoveryArmClient.GetStorageDiscoveryWorkspaceResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
@@ -49,7 +55,13 @@ namespace Azure.ResourceManager.StorageDiscovery
             return GetMockableStorageDiscoveryArmClient(client).GetStorageDiscoveryWorkspaceResource(id);
         }
 
-        /// <summary> Gets a collection of StorageDiscoveryWorkspaces in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <summary>
+        /// Gets a collection of StorageDiscoveryWorkspaces in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableStorageDiscoveryResourceGroupResource.GetStorageDiscoveryWorkspaces()"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of StorageDiscoveryWorkspaces and their operations over a StorageDiscoveryWorkspaceResource. </returns>
@@ -60,7 +72,13 @@ namespace Azure.ResourceManager.StorageDiscovery
             return GetMockableStorageDiscoveryResourceGroupResource(resourceGroupResource).GetStorageDiscoveryWorkspaces();
         }
 
-        /// <summary> Get a StorageDiscoveryWorkspace. </summary>
+        /// <summary>
+        /// Get a StorageDiscoveryWorkspace
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableStorageDiscoveryResourceGroupResource.GetStorageDiscoveryWorkspaceAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="storageDiscoveryWorkspaceName"> The name of the StorageDiscoveryWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -73,7 +91,13 @@ namespace Azure.ResourceManager.StorageDiscovery
             return await GetMockableStorageDiscoveryResourceGroupResource(resourceGroupResource).GetStorageDiscoveryWorkspaceAsync(storageDiscoveryWorkspaceName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Get a StorageDiscoveryWorkspace. </summary>
+        /// <summary>
+        /// Get a StorageDiscoveryWorkspace
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableStorageDiscoveryResourceGroupResource.GetStorageDiscoveryWorkspace(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="storageDiscoveryWorkspaceName"> The name of the StorageDiscoveryWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -86,7 +110,13 @@ namespace Azure.ResourceManager.StorageDiscovery
             return GetMockableStorageDiscoveryResourceGroupResource(resourceGroupResource).GetStorageDiscoveryWorkspace(storageDiscoveryWorkspaceName, cancellationToken);
         }
 
-        /// <summary> List StorageDiscoveryWorkspace resources by subscription ID. </summary>
+        /// <summary>
+        /// List StorageDiscoveryWorkspace resources by subscription ID
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableStorageDiscoverySubscriptionResource.GetStorageDiscoveryWorkspacesAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
@@ -98,7 +128,13 @@ namespace Azure.ResourceManager.StorageDiscovery
             return GetMockableStorageDiscoverySubscriptionResource(subscriptionResource).GetStorageDiscoveryWorkspacesAsync(cancellationToken);
         }
 
-        /// <summary> List StorageDiscoveryWorkspace resources by subscription ID. </summary>
+        /// <summary>
+        /// List StorageDiscoveryWorkspace resources by subscription ID
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableStorageDiscoverySubscriptionResource.GetStorageDiscoveryWorkspaces(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>

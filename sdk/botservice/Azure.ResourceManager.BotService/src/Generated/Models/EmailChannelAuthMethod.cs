@@ -11,8 +11,8 @@ namespace Azure.ResourceManager.BotService.Models
     public enum EmailChannelAuthMethod
     {
         /// <summary> Basic authentication. </summary>
-        Password = 0,
+        Password,
         /// <summary> Modern authentication. </summary>
-        Graph = 1
+        Graph
     }
 }

@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -14,27 +16,26 @@ namespace Azure.ResourceManager.DataBox.Models
     public partial class AddressValidationResult : DataBoxValidationInputResult
     {
         /// <summary> Initializes a new instance of <see cref="AddressValidationResult"/>. </summary>
-        internal AddressValidationResult()
+        internal AddressValidationResult() : base(DataBoxValidationInputDiscriminator.ValidateAddress)
         {
             AlternateAddresses = new ChangeTrackingList<DataBoxShippingAddress>();
-            ValidationType = DataBoxValidationInputDiscriminator.ValidateAddress;
         }
 
         /// <summary> Initializes a new instance of <see cref="AddressValidationResult"/>. </summary>
         /// <param name="validationType"> Identifies the type of validation response. </param>
         /// <param name="error"> Error code and message of validation response. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="validationStatus"> The address validation status. </param>
         /// <param name="alternateAddresses"> List of alternate addresses. </param>
-        internal AddressValidationResult(DataBoxValidationInputDiscriminator validationType, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData, AddressValidationStatus? validationStatus, IReadOnlyList<DataBoxShippingAddress> alternateAddresses) : base(validationType, error, serializedAdditionalRawData)
+        internal AddressValidationResult(DataBoxValidationInputDiscriminator validationType, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties, AddressValidationStatus? validationStatus, IReadOnlyList<DataBoxShippingAddress> alternateAddresses) : base(validationType, error, additionalBinaryDataProperties)
         {
             ValidationStatus = validationStatus;
             AlternateAddresses = alternateAddresses;
-            ValidationType = validationType;
         }
 
         /// <summary> The address validation status. </summary>
         public AddressValidationStatus? ValidationStatus { get; }
+
         /// <summary> List of alternate addresses. </summary>
         public IReadOnlyList<DataBoxShippingAddress> AlternateAddresses { get; }
     }

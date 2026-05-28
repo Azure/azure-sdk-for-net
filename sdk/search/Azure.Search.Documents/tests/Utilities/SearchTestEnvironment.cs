@@ -8,7 +8,7 @@ namespace Azure.Search.Documents.Tests
     /// <summary>
     /// Gets variables created from test-resources.json.
     /// </summary>
-    public class SearchTestEnvironment: TestEnvironment
+    public class SearchTestEnvironment : TestEnvironment
     {
         /// <summary>
         /// The name of the variable for <see cref="RecordedClientSecret"/>.
@@ -104,5 +104,11 @@ namespace Azure.Search.Documents.Tests
         /// Gets the optional OpenAI URL used used for Vector Search.
         /// </summary>
         public string OpenAIEndpoint => GetRecordedOptionalVariable("OPENAI_ENDPOINT");
+
+        /// <summary>
+        /// Gets the environment of the Azure resource group to be used for Live tests (e.g. AzureCloud).
+        /// Returns "AzureCloud" as default if the ENVIRONMENT variable is not set.
+        /// </summary>
+        public new string AzureEnvironment => GetRecordedOptionalVariable("ENVIRONMENT") ?? "AzureCloud";
     }
 }

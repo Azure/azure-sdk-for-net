@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     /// <summary> Description of the IoT hub. </summary>
     public partial class IotHubDefinitionDescription
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="IotHubDefinitionDescription"/>. </summary>
         /// <param name="applyAllocationPolicy"> flag for applying allocationPolicy or not for a given iot hub. </param>
@@ -52,30 +23,29 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <param name="name"> Host name of the IoT hub. </param>
         /// <param name="connectionString"> Connection string of the IoT hub. </param>
         /// <param name="location"> ARM region of the IoT hub. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IotHubDefinitionDescription(bool? applyAllocationPolicy, int? allocationWeight, string name, string connectionString, AzureLocation location, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubDefinitionDescription(bool? applyAllocationPolicy, int? allocationWeight, string name, string connectionString, AzureLocation location, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ApplyAllocationPolicy = applyAllocationPolicy;
             AllocationWeight = allocationWeight;
             Name = name;
             ConnectionString = connectionString;
             Location = location;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="IotHubDefinitionDescription"/> for deserialization. </summary>
-        internal IotHubDefinitionDescription()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> flag for applying allocationPolicy or not for a given iot hub. </summary>
         public bool? ApplyAllocationPolicy { get; set; }
+
         /// <summary> weight to apply for a given iot h. </summary>
         public int? AllocationWeight { get; set; }
+
         /// <summary> Host name of the IoT hub. </summary>
         public string Name { get; }
+
         /// <summary> Connection string of the IoT hub. </summary>
         public string ConnectionString { get; set; }
+
         /// <summary> ARM region of the IoT hub. </summary>
         public AzureLocation Location { get; set; }
     }

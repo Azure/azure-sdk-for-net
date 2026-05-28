@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Static Site User ARM resource. </summary>
+    /// <summary>
+    /// Static Site User ARM resource.
+    /// Serialized Name: StaticSiteUserARMResource
+    /// </summary>
     public partial class StaticSiteUser : ResourceData
     {
         /// <summary>
@@ -57,11 +60,26 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="provider"> The identity provider for the static site user. </param>
-        /// <param name="userId"> The user id for the static site user. </param>
-        /// <param name="displayName"> The display name for the static site user. </param>
-        /// <param name="roles"> The roles for the static site user, in free-form string format. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="provider">
+        /// The identity provider for the static site user.
+        /// Serialized Name: StaticSiteUserARMResource.properties.provider
+        /// </param>
+        /// <param name="userId">
+        /// The user id for the static site user.
+        /// Serialized Name: StaticSiteUserARMResource.properties.userId
+        /// </param>
+        /// <param name="displayName">
+        /// The display name for the static site user.
+        /// Serialized Name: StaticSiteUserARMResource.properties.displayName
+        /// </param>
+        /// <param name="roles">
+        /// The roles for the static site user, in free-form string format
+        /// Serialized Name: StaticSiteUserARMResource.properties.roles
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal StaticSiteUser(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string provider, string userId, string displayName, string roles, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -73,19 +91,34 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The identity provider for the static site user. </summary>
+        /// <summary>
+        /// The identity provider for the static site user.
+        /// Serialized Name: StaticSiteUserARMResource.properties.provider
+        /// </summary>
         [WirePath("properties.provider")]
         public string Provider { get; }
-        /// <summary> The user id for the static site user. </summary>
+        /// <summary>
+        /// The user id for the static site user.
+        /// Serialized Name: StaticSiteUserARMResource.properties.userId
+        /// </summary>
         [WirePath("properties.userId")]
         public string UserId { get; }
-        /// <summary> The display name for the static site user. </summary>
+        /// <summary>
+        /// The display name for the static site user.
+        /// Serialized Name: StaticSiteUserARMResource.properties.displayName
+        /// </summary>
         [WirePath("properties.displayName")]
         public string DisplayName { get; }
-        /// <summary> The roles for the static site user, in free-form string format. </summary>
+        /// <summary>
+        /// The roles for the static site user, in free-form string format
+        /// Serialized Name: StaticSiteUserARMResource.properties.roles
+        /// </summary>
         [WirePath("properties.roles")]
         public string Roles { get; set; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }

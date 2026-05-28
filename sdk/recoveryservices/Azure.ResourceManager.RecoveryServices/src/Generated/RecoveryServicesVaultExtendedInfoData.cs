@@ -7,48 +7,18 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.RecoveryServices.Models;
 
 namespace Azure.ResourceManager.RecoveryServices
 {
-    /// <summary>
-    /// A class representing the RecoveryServicesVaultExtendedInfo data model.
-    /// Vault extended information.
-    /// </summary>
+    /// <summary> Vault extended information. </summary>
     public partial class RecoveryServicesVaultExtendedInfoData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RecoveryServicesVaultExtendedInfoData"/>. </summary>
         public RecoveryServicesVaultExtendedInfoData()
@@ -56,35 +26,92 @@ namespace Azure.ResourceManager.RecoveryServices
         }
 
         /// <summary> Initializes a new instance of <see cref="RecoveryServicesVaultExtendedInfoData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="integrityKey"> Integrity key. </param>
-        /// <param name="encryptionKey"> Encryption key. </param>
-        /// <param name="encryptionKeyThumbprint"> Encryption key thumbprint. </param>
-        /// <param name="algorithm"> Algorithm for Vault ExtendedInfo. </param>
-        /// <param name="etag"> etag for the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RecoveryServicesVaultExtendedInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string integrityKey, string encryptionKey, string encryptionKeyThumbprint, string algorithm, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Vault extended information. </param>
+        /// <param name="eTag"> etag for the resource. </param>
+        internal RecoveryServicesVaultExtendedInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, VaultExtendedInfo properties, ETag? eTag) : base(id, name, resourceType, systemData)
         {
-            IntegrityKey = integrityKey;
-            EncryptionKey = encryptionKey;
-            EncryptionKeyThumbprint = encryptionKeyThumbprint;
-            Algorithm = algorithm;
-            ETag = etag;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            ETag = eTag;
         }
 
-        /// <summary> Integrity key. </summary>
-        public string IntegrityKey { get; set; }
-        /// <summary> Encryption key. </summary>
-        public string EncryptionKey { get; set; }
-        /// <summary> Encryption key thumbprint. </summary>
-        public string EncryptionKeyThumbprint { get; set; }
-        /// <summary> Algorithm for Vault ExtendedInfo. </summary>
-        public string Algorithm { get; set; }
+        /// <summary> Vault extended information. </summary>
+        internal VaultExtendedInfo Properties { get; set; }
+
         /// <summary> etag for the resource. </summary>
         public ETag? ETag { get; set; }
+
+        /// <summary> Integrity key. </summary>
+        public string IntegrityKey
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IntegrityKey;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VaultExtendedInfo();
+                }
+                Properties.IntegrityKey = value;
+            }
+        }
+
+        /// <summary> Encryption key. </summary>
+        public string EncryptionKey
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EncryptionKey;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VaultExtendedInfo();
+                }
+                Properties.EncryptionKey = value;
+            }
+        }
+
+        /// <summary> Encryption key thumbprint. </summary>
+        public string EncryptionKeyThumbprint
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EncryptionKeyThumbprint;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VaultExtendedInfo();
+                }
+                Properties.EncryptionKeyThumbprint = value;
+            }
+        }
+
+        /// <summary> Algorithm for Vault ExtendedInfo. </summary>
+        public string Algorithm
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Algorithm;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VaultExtendedInfo();
+                }
+                Properties.Algorithm = value;
+            }
+        }
     }
 }

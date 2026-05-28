@@ -37,7 +37,13 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             return subscriptionResource.GetCachedClient(client => new MockableInformaticaDataManagementSubscriptionResource(client, subscriptionResource.Id));
         }
 
-        /// <summary> Gets an object representing a <see cref="InformaticaOrganizationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="InformaticaOrganizationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableInformaticaDataManagementArmClient.GetInformaticaOrganizationResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
@@ -49,7 +55,13 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             return GetMockableInformaticaDataManagementArmClient(client).GetInformaticaOrganizationResource(id);
         }
 
-        /// <summary> Gets an object representing a <see cref="InformaticaServerlessRuntimeResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="InformaticaServerlessRuntimeResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableInformaticaDataManagementArmClient.GetInformaticaServerlessRuntimeResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
@@ -61,7 +73,13 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             return GetMockableInformaticaDataManagementArmClient(client).GetInformaticaServerlessRuntimeResource(id);
         }
 
-        /// <summary> Gets a collection of InformaticaOrganizations in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <summary>
+        /// Gets a collection of InformaticaOrganizations in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableInformaticaDataManagementResourceGroupResource.GetInformaticaOrganizations()"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of InformaticaOrganizations and their operations over a InformaticaOrganizationResource. </returns>
@@ -72,7 +90,13 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             return GetMockableInformaticaDataManagementResourceGroupResource(resourceGroupResource).GetInformaticaOrganizations();
         }
 
-        /// <summary> Get a InformaticaOrganizationResource. </summary>
+        /// <summary>
+        /// Get a InformaticaOrganizationResource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableInformaticaDataManagementResourceGroupResource.GetInformaticaOrganizationAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="organizationName"> Name of the Organizations resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -85,7 +109,13 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             return await GetMockableInformaticaDataManagementResourceGroupResource(resourceGroupResource).GetInformaticaOrganizationAsync(organizationName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Get a InformaticaOrganizationResource. </summary>
+        /// <summary>
+        /// Get a InformaticaOrganizationResource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableInformaticaDataManagementResourceGroupResource.GetInformaticaOrganization(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="organizationName"> Name of the Organizations resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -98,7 +128,13 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             return GetMockableInformaticaDataManagementResourceGroupResource(resourceGroupResource).GetInformaticaOrganization(organizationName, cancellationToken);
         }
 
-        /// <summary> List InformaticaOrganizationResource resources by subscription ID. </summary>
+        /// <summary>
+        /// List InformaticaOrganizationResource resources by subscription ID
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableInformaticaDataManagementSubscriptionResource.GetInformaticaOrganizationsAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
@@ -110,7 +146,13 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             return GetMockableInformaticaDataManagementSubscriptionResource(subscriptionResource).GetInformaticaOrganizationsAsync(cancellationToken);
         }
 
-        /// <summary> List InformaticaOrganizationResource resources by subscription ID. </summary>
+        /// <summary>
+        /// List InformaticaOrganizationResource resources by subscription ID
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableInformaticaDataManagementSubscriptionResource.GetInformaticaOrganizations(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>

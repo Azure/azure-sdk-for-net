@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ElasticSan
 {
-    internal class ElasticSanVolumeOperationSource : IOperationSource<ElasticSanVolumeResource>
+    /// <summary></summary>
+    internal partial class ElasticSanVolumeOperationSource : IOperationSource<ElasticSanVolumeResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ElasticSanVolumeOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ElasticSanVolumeResource IOperationSource<ElasticSanVolumeResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ElasticSanVolumeData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerElasticSanContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ElasticSanVolumeData data = ElasticSanVolumeData.DeserializeElasticSanVolumeData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ElasticSanVolumeResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ElasticSanVolumeResource> IOperationSource<ElasticSanVolumeResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ElasticSanVolumeData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerElasticSanContext.Default);
-            return await Task.FromResult(new ElasticSanVolumeResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ElasticSanVolumeData data = ElasticSanVolumeData.DeserializeElasticSanVolumeData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ElasticSanVolumeResource(_client, data);
         }
     }
 }

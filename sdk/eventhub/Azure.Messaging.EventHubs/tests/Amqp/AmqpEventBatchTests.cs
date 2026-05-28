@@ -253,7 +253,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
                 else
                 {
-                    Assert.That(batch.TryAdd(new EventData(new byte[0])), Is.True, $"The addition for index: { index } should fit and be accepted.");
+                    Assert.That(batch.TryAdd(new EventData(new byte[0])), Is.True, $"The addition for index: {index} should fit and be accepted.");
                 }
             }
         }
@@ -291,7 +291,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < eventMessages.Length; ++index)
             {
-                Assert.That(batch.TryAdd(new EventData(new byte[0])), Is.True, $"The addition for index: { index } should fit and be accepted.");
+                Assert.That(batch.TryAdd(new EventData(new byte[0])), Is.True, $"The addition for index: {index} should fit and be accepted.");
             }
 
             Assert.That(batch.Count, Is.EqualTo(eventMessages.Length), "The count should have been set when the batch was updated.");
@@ -367,7 +367,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < batchEvents.Length; ++index)
             {
-                Assert.That(batchEnumerableList.Contains(eventMessages[index]), $"The event at index: { index } was not in the enumerable.");
+                Assert.That(batchEnumerableList.Contains(eventMessages[index]), $"The event at index: {index} was not in the enumerable.");
             }
         }
 
@@ -404,14 +404,14 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < eventMessages.Length; ++index)
             {
-                Assert.That(batch.TryAdd(new EventData(new byte[0])), Is.True, $"The addition for index: { index } should fit and be accepted.");
+                Assert.That(batch.TryAdd(new EventData(new byte[0])), Is.True, $"The addition for index: {index} should fit and be accepted.");
             }
 
             // Validate that the AMQP messages have not been disposed.
 
             for (var index = 0; index < eventMessages.Length; ++index)
             {
-                Assert.That(() => eventMessages[index].ThrowIfDisposed(), Throws.Nothing, $"The message at index: { index } should not have been disposed.");
+                Assert.That(() => eventMessages[index].ThrowIfDisposed(), Throws.Nothing, $"The message at index: {index} should not have been disposed.");
             }
 
             // Dispose the batch and verify that the messages held by the batch have been disposed.
@@ -420,7 +420,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < eventMessages.Length; ++index)
             {
-                Assert.That(() => eventMessages[index].ThrowIfDisposed(), Throws.InstanceOf<ObjectDisposedException>(), $"The message at index: { index } should have been disposed.");
+                Assert.That(() => eventMessages[index].ThrowIfDisposed(), Throws.InstanceOf<ObjectDisposedException>(), $"The message at index: {index} should have been disposed.");
             }
         }
 
@@ -457,7 +457,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < eventMessages.Length; ++index)
             {
-                Assert.That(batch.TryAdd(new EventData(new byte[0])), Is.True, $"The addition for index: { index } should fit and be accepted.");
+                Assert.That(batch.TryAdd(new EventData(new byte[0])), Is.True, $"The addition for index: {index} should fit and be accepted.");
             }
 
             // Dispose the batch and verify that each message has also been disposed.
@@ -523,7 +523,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < eventMessages.Length; ++index)
             {
-                Assert.That(batch.TryAdd(new EventData(new byte[0])), Is.True, $"The addition for index: { index } should fit and be accepted.");
+                Assert.That(batch.TryAdd(new EventData(new byte[0])), Is.True, $"The addition for index: {index} should fit and be accepted.");
             }
 
             // Dispose the batch and verify that each message has also been disposed.
@@ -581,9 +581,9 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     ++sequenceIndex;
 
-                    Assert.That(sequence, Is.GreaterThan(firstSequence), $"The sequence number for index: { sequenceIndex } should be greater than the initial sequence number.");
-                    Assert.That(group, Is.EqualTo(expectedGroupId), $"The group for index: { sequenceIndex } should match.");
-                    Assert.That(owner, Is.EqualTo(expectedOwnerLevel), $"The owner for index: { sequenceIndex } should match.");
+                    Assert.That(sequence, Is.GreaterThan(firstSequence), $"The sequence number for index: {sequenceIndex} should be greater than the initial sequence number.");
+                    Assert.That(group, Is.EqualTo(expectedGroupId), $"The group for index: {sequenceIndex} should match.");
+                    Assert.That(owner, Is.EqualTo(expectedOwnerLevel), $"The owner for index: {sequenceIndex} should match.");
                 }
             };
 
@@ -602,7 +602,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < eventMessages.Length; ++index)
             {
-                Assert.That(batch.TryAdd(new EventData(new byte[0])), Is.True, $"The addition for index: { index } should fit and be accepted.");
+                Assert.That(batch.TryAdd(new EventData(new byte[0])), Is.True, $"The addition for index: {index} should fit and be accepted.");
             }
 
             // Sequence the batch and validate the final state.
@@ -677,7 +677,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < eventMessages.Length; ++index)
             {
-                Assert.That(batch.TryAdd(new EventData(new byte[0])), Is.True, $"The addition for index: { index } should fit and be accepted.");
+                Assert.That(batch.TryAdd(new EventData(new byte[0])), Is.True, $"The addition for index: {index} should fit and be accepted.");
             }
 
             // Sequence the batch and validate the final state.
@@ -709,8 +709,8 @@ namespace Azure.Messaging.EventHubs.Tests
             public Func<EventData, string, AmqpMessage> CreateMessageFromEventHandler = (_e, _p) => null;
             public Func<IEnumerable<EventData>, string, AmqpMessage> CreateBatchFromEventsHandler = (_e, _p) => null;
             public Func<IEnumerable<AmqpMessage>, string, AmqpMessage> CreateBatchFromMessagesHandler = (_m, _p) => null;
-            public Action<AmqpMessage, int?, long?, short?> ApplyPublisherPropertiesToAmqpMessageHandler = (_m, _s, _g, _o) => {};
-            public Action<AmqpMessage> RemovePublishingPropertiesFromAmqpMessageHandler = _m => {};
+            public Action<AmqpMessage, int?, long?, short?> ApplyPublisherPropertiesToAmqpMessageHandler = (_m, _s, _g, _o) => { };
+            public Action<AmqpMessage> RemovePublishingPropertiesFromAmqpMessageHandler = _m => { };
             public override AmqpMessage CreateMessageFromEvent(EventData source, string partitionKey = null) => CreateMessageFromEventHandler(source, partitionKey);
             public override AmqpMessage CreateBatchFromEvents(IReadOnlyCollection<EventData> source, string partitionKey = null) => CreateBatchFromEventsHandler(source, partitionKey);
             public override AmqpMessage CreateBatchFromMessages(IReadOnlyCollection<AmqpMessage> source, string partitionKey = null) => CreateBatchFromMessagesHandler(source, partitionKey);

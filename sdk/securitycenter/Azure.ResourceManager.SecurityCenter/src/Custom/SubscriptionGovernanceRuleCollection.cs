@@ -4,9 +4,9 @@
 #nullable disable
 
 using System;
-using System.ComponentModel;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.SecurityCenter
             TryGetApiVersion(SubscriptionGovernanceRuleResource.ResourceType, out string subscriptionGovernanceRuleGovernanceRuleApiVersion);
             _subscriptionGovernanceRuleGovernanceRuleRestClient = new SubscriptionGovernanceRuleRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionGovernanceRuleGovernanceRuleApiVersion);
 #if DEBUG
-			ValidateResourceId(Id);
+            ValidateResourceId(Id);
 #endif
         }
 

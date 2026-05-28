@@ -1,0 +1,6 @@
+<Project>
+  <!-- Azure.Core.TestFramework needs pinned AutoRest version (workaround for pipeline conflicts) -->
+  <ItemGroup>
+    <PackageVersion Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20231107.1" />
+  </ItemGroup>
+</Project>

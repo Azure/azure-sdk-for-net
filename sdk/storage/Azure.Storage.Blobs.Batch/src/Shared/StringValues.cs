@@ -176,7 +176,8 @@ namespace Azure.Core.Http.Multipart
                 }
 #if NETCOREAPP
                 // Create the new string
-                return string.Create(length, values, (span, strings) => {
+                return string.Create(length, values, (span, strings) =>
+                {
                     var offset = 0;
                     // Skip null and empty values
                     for (var i = 0; i < strings.Length; i++)

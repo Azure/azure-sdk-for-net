@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -14,74 +15,117 @@ namespace Azure.ResourceManager.ProviderHub.Models
     public readonly partial struct ResourceRoutingType : IEquatable<ResourceRoutingType>
     {
         private readonly string _value;
+        /// <summary> The resource routing type is default. </summary>
+        private const string DefaultValue = "Default";
+        /// <summary> The resource routing type is proxy only. </summary>
+        private const string ProxyOnlyValue = "ProxyOnly";
+        /// <summary> The resource routing type is host based. </summary>
+        private const string HostBasedValue = "HostBased";
+        /// <summary> The resource routing type is extension. </summary>
+        private const string ExtensionValue = "Extension";
+        /// <summary> The resource routing type is tenant. </summary>
+        private const string TenantValue = "Tenant";
+        /// <summary> The resource routing type is fanout. </summary>
+        private const string FanoutValue = "Fanout";
+        /// <summary> The resource routing type is location based. </summary>
+        private const string LocationBasedValue = "LocationBased";
+        /// <summary> The resource routing type is failover. </summary>
+        private const string FailoverValue = "Failover";
+        /// <summary> The resource routing type is cascade extension. </summary>
+        private const string CascadeExtensionValue = "CascadeExtension";
+        /// <summary> The resource routing type is child fanout. </summary>
+        private const string ChildFanoutValue = "ChildFanout";
+        /// <summary> The resource routing type is cascade authorized extension. </summary>
+        private const string CascadeAuthorizedExtensionValue = "CascadeAuthorizedExtension";
+        /// <summary> The resource routing type is bypass endpoint selection optimization. </summary>
+        private const string BypassEndpointSelectionOptimizationValue = "BypassEndpointSelectionOptimization";
+        /// <summary> The resource routing type is location mapping. </summary>
+        private const string LocationMappingValue = "LocationMapping";
+        /// <summary> The resource routing type is service fanout. </summary>
+        private const string ServiceFanoutValue = "ServiceFanout";
 
         /// <summary> Initializes a new instance of <see cref="ResourceRoutingType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ResourceRoutingType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DefaultValue = "Default";
-        private const string ProxyOnlyValue = "ProxyOnly";
-        private const string HostBasedValue = "HostBased";
-        private const string ExtensionValue = "Extension";
-        private const string TenantValue = "Tenant";
-        private const string FanoutValue = "Fanout";
-        private const string LocationBasedValue = "LocationBased";
-        private const string FailoverValue = "Failover";
-        private const string CascadeExtensionValue = "CascadeExtension";
-        private const string ChildFanoutValue = "ChildFanout";
-        private const string CascadeAuthorizedExtensionValue = "CascadeAuthorizedExtension";
-        private const string BypassEndpointSelectionOptimizationValue = "BypassEndpointSelectionOptimization";
-        private const string LocationMappingValue = "LocationMapping";
-        private const string ServiceFanoutValue = "ServiceFanout";
+            _value = value;
+        }
 
         /// <summary> The resource routing type is default. </summary>
         public static ResourceRoutingType Default { get; } = new ResourceRoutingType(DefaultValue);
+
         /// <summary> The resource routing type is proxy only. </summary>
         public static ResourceRoutingType ProxyOnly { get; } = new ResourceRoutingType(ProxyOnlyValue);
+
         /// <summary> The resource routing type is host based. </summary>
         public static ResourceRoutingType HostBased { get; } = new ResourceRoutingType(HostBasedValue);
+
         /// <summary> The resource routing type is extension. </summary>
         public static ResourceRoutingType Extension { get; } = new ResourceRoutingType(ExtensionValue);
+
         /// <summary> The resource routing type is tenant. </summary>
         public static ResourceRoutingType Tenant { get; } = new ResourceRoutingType(TenantValue);
+
         /// <summary> The resource routing type is fanout. </summary>
         public static ResourceRoutingType Fanout { get; } = new ResourceRoutingType(FanoutValue);
+
         /// <summary> The resource routing type is location based. </summary>
         public static ResourceRoutingType LocationBased { get; } = new ResourceRoutingType(LocationBasedValue);
+
         /// <summary> The resource routing type is failover. </summary>
         public static ResourceRoutingType Failover { get; } = new ResourceRoutingType(FailoverValue);
+
         /// <summary> The resource routing type is cascade extension. </summary>
         public static ResourceRoutingType CascadeExtension { get; } = new ResourceRoutingType(CascadeExtensionValue);
+
         /// <summary> The resource routing type is child fanout. </summary>
         public static ResourceRoutingType ChildFanout { get; } = new ResourceRoutingType(ChildFanoutValue);
+
         /// <summary> The resource routing type is cascade authorized extension. </summary>
         public static ResourceRoutingType CascadeAuthorizedExtension { get; } = new ResourceRoutingType(CascadeAuthorizedExtensionValue);
+
         /// <summary> The resource routing type is bypass endpoint selection optimization. </summary>
         public static ResourceRoutingType BypassEndpointSelectionOptimization { get; } = new ResourceRoutingType(BypassEndpointSelectionOptimizationValue);
+
         /// <summary> The resource routing type is location mapping. </summary>
         public static ResourceRoutingType LocationMapping { get; } = new ResourceRoutingType(LocationMappingValue);
+
         /// <summary> The resource routing type is service fanout. </summary>
         public static ResourceRoutingType ServiceFanout { get; } = new ResourceRoutingType(ServiceFanoutValue);
+
         /// <summary> Determines if two <see cref="ResourceRoutingType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ResourceRoutingType left, ResourceRoutingType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ResourceRoutingType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ResourceRoutingType left, ResourceRoutingType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ResourceRoutingType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ResourceRoutingType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ResourceRoutingType(string value) => new ResourceRoutingType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ResourceRoutingType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ResourceRoutingType?(string value) => value == null ? null : new ResourceRoutingType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ResourceRoutingType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ResourceRoutingType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

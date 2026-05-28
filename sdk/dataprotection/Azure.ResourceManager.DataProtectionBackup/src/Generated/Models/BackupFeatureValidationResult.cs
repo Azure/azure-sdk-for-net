@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -14,26 +15,25 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     public partial class BackupFeatureValidationResult : BackupFeatureValidationResultBase
     {
         /// <summary> Initializes a new instance of <see cref="BackupFeatureValidationResult"/>. </summary>
-        internal BackupFeatureValidationResult()
+        internal BackupFeatureValidationResult() : base("FeatureValidationResponse")
         {
             Features = new ChangeTrackingList<BackupSupportedFeature>();
-            ObjectType = "FeatureValidationResponse";
         }
 
         /// <summary> Initializes a new instance of <see cref="BackupFeatureValidationResult"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="featureType"> backup support feature type. </param>
         /// <param name="features"> Response features. </param>
-        internal BackupFeatureValidationResult(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, BackupSupportedFeatureType? featureType, IReadOnlyList<BackupSupportedFeature> features) : base(objectType, serializedAdditionalRawData)
+        internal BackupFeatureValidationResult(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, BackupSupportedFeatureType? featureType, IReadOnlyList<BackupSupportedFeature> features) : base(objectType, additionalBinaryDataProperties)
         {
             FeatureType = featureType;
             Features = features;
-            ObjectType = objectType ?? "FeatureValidationResponse";
         }
 
         /// <summary> backup support feature type. </summary>
         public BackupSupportedFeatureType? FeatureType { get; }
+
         /// <summary> Response features. </summary>
         public IReadOnlyList<BackupSupportedFeature> Features { get; }
     }

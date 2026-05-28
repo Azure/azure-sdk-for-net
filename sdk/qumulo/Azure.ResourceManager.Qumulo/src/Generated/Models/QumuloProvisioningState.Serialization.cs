@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Qumulo.Models
 {
     internal static partial class QumuloProvisioningStateExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this QumuloProvisioningState value) => value switch
         {
             QumuloProvisioningState.NotSpecified => "NotSpecified",
@@ -25,17 +26,45 @@ namespace Azure.ResourceManager.Qumulo.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown QumuloProvisioningState value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static QumuloProvisioningState ToQumuloProvisioningState(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotSpecified")) return QumuloProvisioningState.NotSpecified;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Accepted")) return QumuloProvisioningState.Accepted;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Creating")) return QumuloProvisioningState.Creating;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Updating")) return QumuloProvisioningState.Updating;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deleting")) return QumuloProvisioningState.Deleting;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Succeeded")) return QumuloProvisioningState.Succeeded;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed")) return QumuloProvisioningState.Failed;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Canceled")) return QumuloProvisioningState.Canceled;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deleted")) return QumuloProvisioningState.Deleted;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotSpecified"))
+            {
+                return QumuloProvisioningState.NotSpecified;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Accepted"))
+            {
+                return QumuloProvisioningState.Accepted;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Creating"))
+            {
+                return QumuloProvisioningState.Creating;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Updating"))
+            {
+                return QumuloProvisioningState.Updating;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deleting"))
+            {
+                return QumuloProvisioningState.Deleting;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Succeeded"))
+            {
+                return QumuloProvisioningState.Succeeded;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed"))
+            {
+                return QumuloProvisioningState.Failed;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Canceled"))
+            {
+                return QumuloProvisioningState.Canceled;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deleted"))
+            {
+                return QumuloProvisioningState.Deleted;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown QumuloProvisioningState value.");
         }
     }

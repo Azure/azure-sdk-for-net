@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Avs.Models
     public readonly partial struct ParameterOptionalityStatus : IEquatable<ParameterOptionalityStatus>
     {
         private readonly string _value;
+        /// <summary> is optional. </summary>
+        private const string OptionalValue = "Optional";
+        /// <summary> is required. </summary>
+        private const string RequiredValue = "Required";
 
         /// <summary> Initializes a new instance of <see cref="ParameterOptionalityStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ParameterOptionalityStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OptionalValue = "Optional";
-        private const string RequiredValue = "Required";
+            _value = value;
+        }
 
         /// <summary> is optional. </summary>
         public static ParameterOptionalityStatus Optional { get; } = new ParameterOptionalityStatus(OptionalValue);
+
         /// <summary> is required. </summary>
         public static ParameterOptionalityStatus Required { get; } = new ParameterOptionalityStatus(RequiredValue);
+
         /// <summary> Determines if two <see cref="ParameterOptionalityStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ParameterOptionalityStatus left, ParameterOptionalityStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ParameterOptionalityStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ParameterOptionalityStatus left, ParameterOptionalityStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ParameterOptionalityStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ParameterOptionalityStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ParameterOptionalityStatus(string value) => new ParameterOptionalityStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ParameterOptionalityStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ParameterOptionalityStatus?(string value) => value == null ? null : new ParameterOptionalityStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ParameterOptionalityStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ParameterOptionalityStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

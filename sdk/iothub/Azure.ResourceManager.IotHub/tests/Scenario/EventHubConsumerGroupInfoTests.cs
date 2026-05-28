@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
             string iotHubName = Recording.GenerateAssetName("IotHub-");
             string consumerGroupName = Recording.GenerateAssetName("consumerGroup-");
             var iothub = await CreateIotHub(_resourceGroup, iotHubName);
-            var consumerGroupInfos = await CreateConsumerGroup(iothub,consumerGroupName);
+            var consumerGroupInfos = await CreateConsumerGroup(iothub, consumerGroupName);
             Assert.IsNotNull(consumerGroupInfos);
             Assert.AreEqual(consumerGroupName, consumerGroupInfos.Data.Name);
         }

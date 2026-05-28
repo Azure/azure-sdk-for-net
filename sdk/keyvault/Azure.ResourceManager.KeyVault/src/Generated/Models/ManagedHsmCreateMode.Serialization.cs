@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 {
     internal static partial class ManagedHsmCreateModeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ManagedHsmCreateMode value) => value switch
         {
             ManagedHsmCreateMode.Default => "default",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.KeyVault.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ManagedHsmCreateMode value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ManagedHsmCreateMode ToManagedHsmCreateMode(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "default")) return ManagedHsmCreateMode.Default;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "recover")) return ManagedHsmCreateMode.Recover;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "default"))
+            {
+                return ManagedHsmCreateMode.Default;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "recover"))
+            {
+                return ManagedHsmCreateMode.Recover;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ManagedHsmCreateMode value.");
         }
     }

@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new AvroDataset(
                 type,
                 description,
-                structure   ,
+                structure,
                 schema,
                 linkedServiceName,
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),

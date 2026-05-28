@@ -45,7 +45,7 @@ function Build-Emitter {
         Copy-Item $file -Destination $outputPath
 
         if (!$TargetNpmJsFeed) {
-            $feedUrl = "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js-test-autorest/npm/registry"
+            $feedUrl = "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js/npm/registry"
 
             $packageJson = Get-Content -Path "./package.json" | ConvertFrom-Json
             $packageVersion = $packageJson.version
@@ -115,7 +115,7 @@ Build-Emitter -packageRoot $packageRoot -outputPath $outputPath -overrides $over
 
 # Pack the generator
 Push-Location "$packageRoot/generator"
-$generatorSolutionFile = Get-ChildItem -Path . -Filter "*.sln" -File | Select-Object -First 1
+$generatorSolutionFile = Get-ChildItem -Path . -Filter "*.slnx" -File | Select-Object -First 1
 $generatorName = $generatorSolutionFile.BaseName
 try {
     Write-Host "Working in $PWD"

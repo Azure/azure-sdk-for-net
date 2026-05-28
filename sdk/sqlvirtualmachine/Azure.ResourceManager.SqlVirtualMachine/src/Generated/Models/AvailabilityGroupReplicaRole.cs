@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SqlVirtualMachine;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     public readonly partial struct AvailabilityGroupReplicaRole : IEquatable<AvailabilityGroupReplicaRole>
     {
         private readonly string _value;
+        private const string PrimaryValue = "Primary";
+        private const string SecondaryValue = "Secondary";
 
         /// <summary> Initializes a new instance of <see cref="AvailabilityGroupReplicaRole"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AvailabilityGroupReplicaRole(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string PrimaryValue = "PRIMARY";
-        private const string SecondaryValue = "SECONDARY";
-
-        /// <summary> PRIMARY. </summary>
+        /// <summary> Gets the Primary. </summary>
         public static AvailabilityGroupReplicaRole Primary { get; } = new AvailabilityGroupReplicaRole(PrimaryValue);
-        /// <summary> SECONDARY. </summary>
+
+        /// <summary> Gets the Secondary. </summary>
         public static AvailabilityGroupReplicaRole Secondary { get; } = new AvailabilityGroupReplicaRole(SecondaryValue);
+
         /// <summary> Determines if two <see cref="AvailabilityGroupReplicaRole"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AvailabilityGroupReplicaRole left, AvailabilityGroupReplicaRole right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AvailabilityGroupReplicaRole"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AvailabilityGroupReplicaRole left, AvailabilityGroupReplicaRole right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AvailabilityGroupReplicaRole"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AvailabilityGroupReplicaRole"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AvailabilityGroupReplicaRole(string value) => new AvailabilityGroupReplicaRole(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AvailabilityGroupReplicaRole"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AvailabilityGroupReplicaRole?(string value) => value == null ? null : new AvailabilityGroupReplicaRole(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AvailabilityGroupReplicaRole other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AvailabilityGroupReplicaRole other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

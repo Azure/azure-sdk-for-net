@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class RuntimeProtectionStatus : IUtf8JsonSerializable, IJsonModel<RuntimeProtectionStatus>
+    /// <summary> RuntimeProtectionStatus represents the runtime protection status of the bare metal machine. </summary>
+    public partial class RuntimeProtectionStatus : IJsonModel<RuntimeProtectionStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RuntimeProtectionStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RuntimeProtectionStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RuntimeProtectionStatus>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeRuntimeProtectionStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RuntimeProtectionStatus)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RuntimeProtectionStatus>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RuntimeProtectionStatus)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RuntimeProtectionStatus>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RuntimeProtectionStatus IPersistableModel<RuntimeProtectionStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RuntimeProtectionStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RuntimeProtectionStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,41 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RuntimeProtectionStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RuntimeProtectionStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RuntimeProtectionStatus)} does not support writing '{format}' format.");
             }
-
+            if (options.Format != "W" && Optional.IsDefined(AgentHealthStatus))
+            {
+                writer.WritePropertyName("agentHealthStatus"u8);
+                writer.WriteStringValue(AgentHealthStatus.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(AgentHealthStatusIssues))
+            {
+                writer.WritePropertyName("agentHealthStatusIssues"u8);
+                writer.WriteStartArray();
+                foreach (string item in AgentHealthStatusIssues)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(AgentLicenseStatus))
+            {
+                writer.WritePropertyName("agentLicenseStatus"u8);
+                writer.WriteStringValue(AgentLicenseStatus.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(DefinitionUpdateMode))
+            {
+                writer.WritePropertyName("definitionUpdateMode"u8);
+                writer.WriteStringValue(DefinitionUpdateMode.Value.ToString());
+            }
             if (options.Format != "W" && Optional.IsDefined(DefinitionsLastUpdated))
             {
                 writer.WritePropertyName("definitionsLastUpdated"u8);
@@ -43,6 +113,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 writer.WritePropertyName("definitionsVersion"u8);
                 writer.WriteStringValue(DefinitionsVersion);
+            }
+            if (options.Format != "W" && Optional.IsDefined(EnforcementLevel))
+            {
+                writer.WritePropertyName("enforcementLevel"u8);
+                writer.WriteStringValue(EnforcementLevel.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(ScanCompletedOn))
             {
@@ -59,15 +134,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WritePropertyName("scanStartedTime"u8);
                 writer.WriteStringValue(ScanStartedOn.Value, "O");
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -76,120 +151,159 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
         }
 
-        RuntimeProtectionStatus IJsonModel<RuntimeProtectionStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RuntimeProtectionStatus IJsonModel<RuntimeProtectionStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RuntimeProtectionStatus JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RuntimeProtectionStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RuntimeProtectionStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RuntimeProtectionStatus)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeRuntimeProtectionStatus(document.RootElement, options);
         }
 
-        internal static RuntimeProtectionStatus DeserializeRuntimeProtectionStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static RuntimeProtectionStatus DeserializeRuntimeProtectionStatus(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            RuntimeProtectionAgentHealthStatus? agentHealthStatus = default;
+            IReadOnlyList<string> agentHealthStatusIssues = default;
+            RuntimeProtectionAgentLicenseStatus? agentLicenseStatus = default;
+            RuntimeProtectionDefinitionUpdateMode? definitionUpdateMode = default;
             DateTimeOffset? definitionsLastUpdated = default;
             string definitionsVersion = default;
-            DateTimeOffset? scanCompletedTime = default;
-            DateTimeOffset? scanScheduledTime = default;
-            DateTimeOffset? scanStartedTime = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            RuntimeProtectionEnforcementLevel? enforcementLevel = default;
+            DateTimeOffset? scanCompletedOn = default;
+            DateTimeOffset? scanScheduledOn = default;
+            DateTimeOffset? scanStartedOn = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("definitionsLastUpdated"u8))
+                if (prop.NameEquals("agentHealthStatus"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    definitionsLastUpdated = property.Value.GetDateTimeOffset("O");
+                    agentHealthStatus = new RuntimeProtectionAgentHealthStatus(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("definitionsVersion"u8))
+                if (prop.NameEquals("agentHealthStatusIssues"u8))
                 {
-                    definitionsVersion = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("scanCompletedTime"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    scanCompletedTime = property.Value.GetDateTimeOffset("O");
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    agentHealthStatusIssues = array;
                     continue;
                 }
-                if (property.NameEquals("scanScheduledTime"u8))
+                if (prop.NameEquals("agentLicenseStatus"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    scanScheduledTime = property.Value.GetDateTimeOffset("O");
+                    agentLicenseStatus = new RuntimeProtectionAgentLicenseStatus(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("scanStartedTime"u8))
+                if (prop.NameEquals("definitionUpdateMode"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    scanStartedTime = property.Value.GetDateTimeOffset("O");
+                    definitionUpdateMode = new RuntimeProtectionDefinitionUpdateMode(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("definitionsLastUpdated"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    definitionsLastUpdated = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (prop.NameEquals("definitionsVersion"u8))
+                {
+                    definitionsVersion = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("enforcementLevel"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enforcementLevel = new RuntimeProtectionEnforcementLevel(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("scanCompletedTime"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    scanCompletedOn = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (prop.NameEquals("scanScheduledTime"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    scanScheduledOn = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (prop.NameEquals("scanStartedTime"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    scanStartedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new RuntimeProtectionStatus(
+                agentHealthStatus,
+                agentHealthStatusIssues ?? new ChangeTrackingList<string>(),
+                agentLicenseStatus,
+                definitionUpdateMode,
                 definitionsLastUpdated,
                 definitionsVersion,
-                scanCompletedTime,
-                scanScheduledTime,
-                scanStartedTime,
-                serializedAdditionalRawData);
+                enforcementLevel,
+                scanCompletedOn,
+                scanScheduledOn,
+                scanStartedOn,
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<RuntimeProtectionStatus>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RuntimeProtectionStatus>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(RuntimeProtectionStatus)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        RuntimeProtectionStatus IPersistableModel<RuntimeProtectionStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RuntimeProtectionStatus>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeRuntimeProtectionStatus(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RuntimeProtectionStatus)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<RuntimeProtectionStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

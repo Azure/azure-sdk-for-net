@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.AI.Language.Conversations;
 
 namespace Azure.AI.Language.Conversations.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.AI.Language.Conversations.Models
     public readonly partial struct TranscriptContentType : IEquatable<TranscriptContentType>
     {
         private readonly string _value;
+        /// <summary> Lexical content type. </summary>
+        private const string LexicalValue = "lexical";
+        /// <summary> ITN content type. </summary>
+        private const string ItnValue = "itn";
+        /// <summary> Masked ITN content type. </summary>
+        private const string MaskedItnValue = "maskedItn";
+        /// <summary> Text content type. </summary>
+        private const string TextValue = "text";
 
         /// <summary> Initializes a new instance of <see cref="TranscriptContentType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TranscriptContentType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string LexicalValue = "lexical";
-        private const string ItnValue = "itn";
-        private const string MaskedItnValue = "maskedItn";
-        private const string TextValue = "text";
+            _value = value;
+        }
 
         /// <summary> Lexical content type. </summary>
         public static TranscriptContentType Lexical { get; } = new TranscriptContentType(LexicalValue);
+
         /// <summary> ITN content type. </summary>
         public static TranscriptContentType Itn { get; } = new TranscriptContentType(ItnValue);
+
         /// <summary> Masked ITN content type. </summary>
         public static TranscriptContentType MaskedItn { get; } = new TranscriptContentType(MaskedItnValue);
+
         /// <summary> Text content type. </summary>
         public static TranscriptContentType Text { get; } = new TranscriptContentType(TextValue);
+
         /// <summary> Determines if two <see cref="TranscriptContentType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TranscriptContentType left, TranscriptContentType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="TranscriptContentType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TranscriptContentType left, TranscriptContentType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="TranscriptContentType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="TranscriptContentType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator TranscriptContentType(string value) => new TranscriptContentType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="TranscriptContentType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TranscriptContentType?(string value) => value == null ? null : new TranscriptContentType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TranscriptContentType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(TranscriptContentType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Batch
 {
-    internal class BatchAccountOperationSource : IOperationSource<BatchAccountResource>
+    /// <summary></summary>
+    internal partial class BatchAccountOperationSource : IOperationSource<BatchAccountResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal BatchAccountOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         BatchAccountResource IOperationSource<BatchAccountResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<BatchAccountData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerBatchContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            BatchAccountData data = BatchAccountData.DeserializeBatchAccountData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new BatchAccountResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<BatchAccountResource> IOperationSource<BatchAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<BatchAccountData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerBatchContext.Default);
-            return await Task.FromResult(new BatchAccountResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            BatchAccountData data = BatchAccountData.DeserializeBatchAccountData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new BatchAccountResource(_client, data);
         }
     }
 }

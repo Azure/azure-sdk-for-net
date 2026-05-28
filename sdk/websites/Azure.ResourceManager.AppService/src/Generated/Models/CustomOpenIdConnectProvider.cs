@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The configuration settings of the custom Open ID Connect provider. </summary>
+    /// <summary>
+    /// The configuration settings of the custom Open ID Connect provider.
+    /// Serialized Name: CustomOpenIdConnectProvider
+    /// </summary>
     public partial class CustomOpenIdConnectProvider
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomOpenIdConnectProvider"/>. </summary>
-        /// <param name="isEnabled"> &lt;code&gt;false&lt;/code&gt; if the custom Open ID provider provider should not be enabled; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
-        /// <param name="registration"> The configuration settings of the app registration for the custom Open ID Connect provider. </param>
-        /// <param name="login"> The configuration settings of the login flow of the custom Open ID Connect provider. </param>
+        /// <param name="isEnabled">
+        /// &lt;code&gt;false&lt;/code&gt; if the custom Open ID provider provider should not be enabled; otherwise, &lt;code&gt;true&lt;/code&gt;.
+        /// Serialized Name: CustomOpenIdConnectProvider.enabled
+        /// </param>
+        /// <param name="registration">
+        /// The configuration settings of the app registration for the custom Open ID Connect provider.
+        /// Serialized Name: CustomOpenIdConnectProvider.registration
+        /// </param>
+        /// <param name="login">
+        /// The configuration settings of the login flow of the custom Open ID Connect provider.
+        /// Serialized Name: CustomOpenIdConnectProvider.login
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CustomOpenIdConnectProvider(bool? isEnabled, OpenIdConnectRegistration registration, OpenIdConnectLogin login, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,13 +75,22 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> &lt;code&gt;false&lt;/code&gt; if the custom Open ID provider provider should not be enabled; otherwise, &lt;code&gt;true&lt;/code&gt;. </summary>
+        /// <summary>
+        /// &lt;code&gt;false&lt;/code&gt; if the custom Open ID provider provider should not be enabled; otherwise, &lt;code&gt;true&lt;/code&gt;.
+        /// Serialized Name: CustomOpenIdConnectProvider.enabled
+        /// </summary>
         [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
-        /// <summary> The configuration settings of the app registration for the custom Open ID Connect provider. </summary>
+        /// <summary>
+        /// The configuration settings of the app registration for the custom Open ID Connect provider.
+        /// Serialized Name: CustomOpenIdConnectProvider.registration
+        /// </summary>
         [WirePath("registration")]
         public OpenIdConnectRegistration Registration { get; set; }
-        /// <summary> The configuration settings of the login flow of the custom Open ID Connect provider. </summary>
+        /// <summary>
+        /// The configuration settings of the login flow of the custom Open ID Connect provider.
+        /// Serialized Name: CustomOpenIdConnectProvider.login
+        /// </summary>
         [WirePath("login")]
         public OpenIdConnectLogin Login { get; set; }
     }

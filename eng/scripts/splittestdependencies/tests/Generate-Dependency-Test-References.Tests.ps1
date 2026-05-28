@@ -32,7 +32,7 @@ Describe "Split-Project-File-To-Groups" -Tag "UnitTest" {
     # Passed cases
     It "Split project list into groups" -TestCases @(
         @{ projectFile = "$PSScriptRoot/inputs/projects.txt"; excludeTargetService=$true ; NumOfTestProjectsPerJob = 20; length = 9 }
-        @{ projectFile = "$PSScriptRoot/inputs/projects.txt"; excludeTargetService=$false ; NumOfTestProjectsPerJob = 20; length = 10 }
+        @{ projectFile = "$PSScriptRoot/inputs/projects.txt"; excludeTargetService=$false ; NumOfTestProjectsPerJob = 20; length = 9 }
         @{ projectFile = "$PSScriptRoot/inputs/projects.txt"; excludeTargetService=$true ; NumOfTestProjectsPerJob = 180; length = 1 }
         @{ projectFile = "$PSScriptRoot/inputs/projects.txt"; excludeTargetService=$true ; NumOfTestProjectsPerJob = 178; length = 1 }
     ) {

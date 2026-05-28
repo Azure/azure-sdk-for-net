@@ -157,7 +157,7 @@ namespace Azure.Core.Tests
             Assert.NotNull(operation);
             Assert.AreEqual(operationId, operation.Id);
             Assert.False(operation.HasCompleted);
-            Assert.AreEqual((int)HttpStatusCode.Accepted,operation.GetRawResponse().Status);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, operation.GetRawResponse().Status);
         }
 
         [Test]

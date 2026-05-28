@@ -10,7 +10,7 @@ using Azure.Developer.Playwright.Interface;
 
 namespace Azure.Developer.Playwright.Implementation
 {
-    internal class PlaywrightVersion: IPlaywrightVersion
+    internal class PlaywrightVersion : IPlaywrightVersion
     {
         public void ValidatePlaywrightVersion()
         {
@@ -49,7 +49,7 @@ namespace Azure.Developer.Playwright.Implementation
             }
         }
 
-        internal  (int Major, int Minor) GetVersionInfo(string version)
+        internal (int Major, int Minor) GetVersionInfo(string version)
         {
             var parts = version.Split('.');
             if (parts.Length < 2 ||

@@ -13,88 +13,94 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    /// <summary>
-    /// A class representing the DataBoxEdgeAlert data model.
-    /// Alert on the data box edge/gateway device.
-    /// </summary>
+    /// <summary> Alert on the data box edge/gateway device. </summary>
     public partial class DataBoxEdgeAlertData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeAlertData"/>. </summary>
         public DataBoxEdgeAlertData()
         {
-            DetailedInformation = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeAlertData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="title"> Alert title. </param>
-        /// <param name="alertType"> Alert type. </param>
-        /// <param name="appearedOn"> UTC time when the alert appeared. </param>
-        /// <param name="recommendation"> Alert recommendation. </param>
-        /// <param name="severity"> Severity of the alert. </param>
-        /// <param name="errorDetails"> Error details of the alert. </param>
-        /// <param name="detailedInformation"> Alert details. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataBoxEdgeAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string title, string alertType, DateTimeOffset? appearedOn, string recommendation, DataBoxEdgeAlertSeverity? severity, DataBoxEdgeAlertErrorDetails errorDetails, IReadOnlyDictionary<string, string> detailedInformation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of alert. </param>
+        internal DataBoxEdgeAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AlertProperties properties) : base(id, name, resourceType, systemData)
         {
-            Title = title;
-            AlertType = alertType;
-            AppearedOn = appearedOn;
-            Recommendation = recommendation;
-            Severity = severity;
-            ErrorDetails = errorDetails;
-            DetailedInformation = detailedInformation;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
+        /// <summary> Properties of alert. </summary>
+        internal AlertProperties Properties { get; }
+
         /// <summary> Alert title. </summary>
-        public string Title { get; }
+        public string Title
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Title;
+            }
+        }
+
         /// <summary> Alert type. </summary>
-        public string AlertType { get; }
+        public string AlertType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AlertType;
+            }
+        }
+
         /// <summary> UTC time when the alert appeared. </summary>
-        public DateTimeOffset? AppearedOn { get; }
+        public DateTimeOffset? AppearedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AppearedOn;
+            }
+        }
+
         /// <summary> Alert recommendation. </summary>
-        public string Recommendation { get; }
+        public string Recommendation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Recommendation;
+            }
+        }
+
         /// <summary> Severity of the alert. </summary>
-        public DataBoxEdgeAlertSeverity? Severity { get; }
+        public DataBoxEdgeAlertSeverity? Severity
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Severity;
+            }
+        }
+
         /// <summary> Error details of the alert. </summary>
-        public DataBoxEdgeAlertErrorDetails ErrorDetails { get; }
+        public DataBoxEdgeAlertErrorDetails ErrorDetails
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ErrorDetails;
+            }
+        }
+
         /// <summary> Alert details. </summary>
-        public IReadOnlyDictionary<string, string> DetailedInformation { get; }
+        public IReadOnlyDictionary<string, string> DetailedInformation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DetailedInformation;
+            }
+        }
     }
 }

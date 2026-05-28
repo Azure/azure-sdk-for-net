@@ -42,7 +42,7 @@ public partial class Sample_PersistentAgents_Vector_Store_Batch_Enterprise_File_
 
         VectorStoreFileBatch vctFile = await client.VectorStores.CreateVectorStoreFileBatchAsync(
             vectorStoreId: vectorStore.Id,
-            dataSources: [ ds ]
+            dataSources: [ds]
         );
         Console.WriteLine($"Created vector store file batch, vector store file batch ID: {vctFile.Id}");
 

@@ -9,14 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ClusterNodeTypeDescription : IUtf8JsonSerializable, IJsonModel<ClusterNodeTypeDescription>
+    /// <summary> Describes a node type in the cluster, each node type represents sub set of nodes in the cluster. </summary>
+    public partial class ClusterNodeTypeDescription : IJsonModel<ClusterNodeTypeDescription>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterNodeTypeDescription>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ClusterNodeTypeDescription"/> for deserialization. </summary>
+        internal ClusterNodeTypeDescription()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ClusterNodeTypeDescription PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ClusterNodeTypeDescription>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeClusterNodeTypeDescription(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ClusterNodeTypeDescription)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ClusterNodeTypeDescription>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ClusterNodeTypeDescription)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ClusterNodeTypeDescription>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ClusterNodeTypeDescription IPersistableModel<ClusterNodeTypeDescription>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ClusterNodeTypeDescription>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ClusterNodeTypeDescription>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +74,11 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClusterNodeTypeDescription>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ClusterNodeTypeDescription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ClusterNodeTypeDescription)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsCollectionDefined(PlacementProperties))
@@ -43,6 +88,11 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 foreach (var item in PlacementProperties)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
@@ -54,6 +104,11 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 foreach (var item in Capacities)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
@@ -101,15 +156,15 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WritePropertyName("httpGatewayTokenAuthEndpointPort"u8);
                 writer.WriteNumberValue(HttpGatewayTokenAuthEndpointPort.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -118,22 +173,27 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
         }
 
-        ClusterNodeTypeDescription IJsonModel<ClusterNodeTypeDescription>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ClusterNodeTypeDescription IJsonModel<ClusterNodeTypeDescription>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ClusterNodeTypeDescription JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClusterNodeTypeDescription>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ClusterNodeTypeDescription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ClusterNodeTypeDescription)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeClusterNodeTypeDescription(document.RootElement, options);
         }
 
-        internal static ClusterNodeTypeDescription DeserializeClusterNodeTypeDescription(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ClusterNodeTypeDescription DeserializeClusterNodeTypeDescription(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -150,134 +210,146 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             int vmInstanceCount = default;
             int? reverseProxyEndpointPort = default;
             bool? isStateless = default;
-            bool? multipleAvailabilityZones = default;
+            bool? isMultipleAvailabilityZonesSupported = default;
             int? httpGatewayTokenAuthEndpointPort = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    name = property.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("placementProperties"u8))
+                if (prop.NameEquals("placementProperties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     placementProperties = dictionary;
                     continue;
                 }
-                if (property.NameEquals("capacities"u8))
+                if (prop.NameEquals("capacities"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     capacities = dictionary;
                     continue;
                 }
-                if (property.NameEquals("clientConnectionEndpointPort"u8))
+                if (prop.NameEquals("clientConnectionEndpointPort"u8))
                 {
-                    clientConnectionEndpointPort = property.Value.GetInt32();
+                    clientConnectionEndpointPort = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("httpGatewayEndpointPort"u8))
+                if (prop.NameEquals("httpGatewayEndpointPort"u8))
                 {
-                    httpGatewayEndpointPort = property.Value.GetInt32();
+                    httpGatewayEndpointPort = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("durabilityLevel"u8))
+                if (prop.NameEquals("durabilityLevel"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    durabilityLevel = new ClusterDurabilityLevel(property.Value.GetString());
+                    durabilityLevel = new ClusterDurabilityLevel(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("applicationPorts"u8))
+                if (prop.NameEquals("applicationPorts"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    applicationPorts = ClusterEndpointRangeDescription.DeserializeClusterEndpointRangeDescription(property.Value, options);
+                    applicationPorts = ClusterEndpointRangeDescription.DeserializeClusterEndpointRangeDescription(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("ephemeralPorts"u8))
+                if (prop.NameEquals("ephemeralPorts"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    ephemeralPorts = ClusterEndpointRangeDescription.DeserializeClusterEndpointRangeDescription(property.Value, options);
+                    ephemeralPorts = ClusterEndpointRangeDescription.DeserializeClusterEndpointRangeDescription(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("isPrimary"u8))
+                if (prop.NameEquals("isPrimary"u8))
                 {
-                    isPrimary = property.Value.GetBoolean();
+                    isPrimary = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("vmInstanceCount"u8))
+                if (prop.NameEquals("vmInstanceCount"u8))
                 {
-                    vmInstanceCount = property.Value.GetInt32();
+                    vmInstanceCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("reverseProxyEndpointPort"u8))
+                if (prop.NameEquals("reverseProxyEndpointPort"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    reverseProxyEndpointPort = property.Value.GetInt32();
+                    reverseProxyEndpointPort = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("isStateless"u8))
+                if (prop.NameEquals("isStateless"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isStateless = property.Value.GetBoolean();
+                    isStateless = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("multipleAvailabilityZones"u8))
+                if (prop.NameEquals("multipleAvailabilityZones"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    multipleAvailabilityZones = property.Value.GetBoolean();
+                    isMultipleAvailabilityZonesSupported = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("httpGatewayTokenAuthEndpointPort"u8))
+                if (prop.NameEquals("httpGatewayTokenAuthEndpointPort"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    httpGatewayTokenAuthEndpointPort = property.Value.GetInt32();
+                    httpGatewayTokenAuthEndpointPort = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ClusterNodeTypeDescription(
                 name,
                 placementProperties ?? new ChangeTrackingDictionary<string, string>(),
@@ -291,40 +363,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 vmInstanceCount,
                 reverseProxyEndpointPort,
                 isStateless,
-                multipleAvailabilityZones,
+                isMultipleAvailabilityZonesSupported,
                 httpGatewayTokenAuthEndpointPort,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<ClusterNodeTypeDescription>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ClusterNodeTypeDescription>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ClusterNodeTypeDescription)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ClusterNodeTypeDescription IPersistableModel<ClusterNodeTypeDescription>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ClusterNodeTypeDescription>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeClusterNodeTypeDescription(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ClusterNodeTypeDescription)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ClusterNodeTypeDescription>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

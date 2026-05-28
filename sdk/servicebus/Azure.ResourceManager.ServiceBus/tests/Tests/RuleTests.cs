@@ -3,10 +3,10 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using NUnit.Framework;
-using Azure.ResourceManager.Resources;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.ServiceBus.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ServiceBus.Tests
 {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
             //create rule with correlation filter
             string ruleName2 = Recording.GenerateAssetName("rule");
-            ServiceBusRuleResource rule2 = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName2, new ServiceBusRuleData(){FilterType = ServiceBusFilterType.CorrelationFilter})).Value;
+            ServiceBusRuleResource rule2 = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName2, new ServiceBusRuleData() { FilterType = ServiceBusFilterType.CorrelationFilter })).Value;
             Assert.NotNull(rule2);
             Assert.AreEqual(rule2.Id.Name, ruleName2);
 

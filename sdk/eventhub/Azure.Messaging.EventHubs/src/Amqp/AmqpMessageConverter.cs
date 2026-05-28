@@ -444,26 +444,26 @@ namespace Azure.Messaging.EventHubs.Amqp
                     return bufferListStream.ReadBytes((int)stream.Length);
 
                 case MemoryStream memStreamSource:
-                {
-                    using var memStreamCopy = new MemoryStream((int)(memStreamSource.Length - memStreamSource.Position));
-                    memStreamSource.CopyTo(memStreamCopy, StreamBufferSizeInBytes);
-                    if (!memStreamCopy.TryGetBuffer(out ArraySegment<byte> segment))
                     {
-                        segment = new ArraySegment<byte>(memStreamCopy.ToArray());
+                        using var memStreamCopy = new MemoryStream((int)(memStreamSource.Length - memStreamSource.Position));
+                        memStreamSource.CopyTo(memStreamCopy, StreamBufferSizeInBytes);
+                        if (!memStreamCopy.TryGetBuffer(out ArraySegment<byte> segment))
+                        {
+                            segment = new ArraySegment<byte>(memStreamCopy.ToArray());
+                        }
+                        return segment;
                     }
-                    return segment;
-                }
 
                 default:
-                {
-                    using var memStreamCopy = new MemoryStream(StreamBufferSizeInBytes);
-                    stream.CopyTo(memStreamCopy, StreamBufferSizeInBytes);
-                    if (!memStreamCopy.TryGetBuffer(out ArraySegment<byte> segment))
                     {
-                        segment = new ArraySegment<byte>(memStreamCopy.ToArray());
+                        using var memStreamCopy = new MemoryStream(StreamBufferSizeInBytes);
+                        stream.CopyTo(memStreamCopy, StreamBufferSizeInBytes);
+                        if (!memStreamCopy.TryGetBuffer(out ArraySegment<byte> segment))
+                        {
+                            segment = new ArraySegment<byte>(memStreamCopy.ToArray());
+                        }
+                        return segment;
                     }
-                    return segment;
-                }
             }
         }
     }

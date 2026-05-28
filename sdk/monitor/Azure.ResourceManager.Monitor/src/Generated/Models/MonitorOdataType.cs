@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> specifies the type of the alert criteria. </summary>
+    /// <summary> Specifies the type of the alert criteria. Previously undocumented values might be returned. </summary>
     internal readonly partial struct MonitorOdataType : IEquatable<MonitorOdataType>
     {
         private readonly string _value;
@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.Monitor.Models
         private const string MicrosoftAzureMonitorSingleResourceMultipleMetricCriteriaValue = "Microsoft.Azure.Monitor.SingleResourceMultipleMetricCriteria";
         private const string MicrosoftAzureMonitorMultipleResourceMultipleMetricCriteriaValue = "Microsoft.Azure.Monitor.MultipleResourceMultipleMetricCriteria";
         private const string MicrosoftAzureMonitorWebtestLocationAvailabilityCriteriaValue = "Microsoft.Azure.Monitor.WebtestLocationAvailabilityCriteria";
+        private const string MicrosoftAzureMonitorPromQLCriteriaValue = "Microsoft.Azure.Monitor.PromQLCriteria";
 
         /// <summary> Microsoft.Azure.Monitor.SingleResourceMultipleMetricCriteria. </summary>
         public static MonitorOdataType MicrosoftAzureMonitorSingleResourceMultipleMetricCriteria { get; } = new MonitorOdataType(MicrosoftAzureMonitorSingleResourceMultipleMetricCriteriaValue);
@@ -32,6 +33,8 @@ namespace Azure.ResourceManager.Monitor.Models
         public static MonitorOdataType MicrosoftAzureMonitorMultipleResourceMultipleMetricCriteria { get; } = new MonitorOdataType(MicrosoftAzureMonitorMultipleResourceMultipleMetricCriteriaValue);
         /// <summary> Microsoft.Azure.Monitor.WebtestLocationAvailabilityCriteria. </summary>
         public static MonitorOdataType MicrosoftAzureMonitorWebtestLocationAvailabilityCriteria { get; } = new MonitorOdataType(MicrosoftAzureMonitorWebtestLocationAvailabilityCriteriaValue);
+        /// <summary> Microsoft.Azure.Monitor.PromQLCriteria. </summary>
+        public static MonitorOdataType MicrosoftAzureMonitorPromQLCriteria { get; } = new MonitorOdataType(MicrosoftAzureMonitorPromQLCriteriaValue);
         /// <summary> Determines if two <see cref="MonitorOdataType"/> values are the same. </summary>
         public static bool operator ==(MonitorOdataType left, MonitorOdataType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MonitorOdataType"/> values are not the same. </summary>

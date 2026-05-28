@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Messaging.EventHubs.Consumer;
 using Azure.Identity;
+using Azure.Messaging.EventHubs.Consumer;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests

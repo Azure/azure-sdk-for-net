@@ -3,10 +3,10 @@
 
 #nullable disable
 
+using System.Threading;
 using Azure.Core;
 using Azure.ResourceManager.Reservations.Models;
 using Azure.ResourceManager.Resources;
-using System.Threading;
 
 namespace Azure.ResourceManager.Reservations.Mocking
 {

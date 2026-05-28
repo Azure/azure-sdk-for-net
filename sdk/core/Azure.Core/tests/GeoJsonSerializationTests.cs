@@ -105,11 +105,11 @@ namespace Azure.Core.Tests
             Assert.AreEqual("hello", point.CustomProperties["additionalString"]);
             Assert.AreEqual(null, point.CustomProperties["additionalNull"]);
             Assert.AreEqual(true, point.CustomProperties["additionalBool"]);
-            Assert.AreEqual(new object[] {1, 2.2, 9999999999999999999L, "hello", true, null}, point.CustomProperties["additionalArray"]);
+            Assert.AreEqual(new object[] { 1, 2.2, 9999999999999999999L, "hello", true, null }, point.CustomProperties["additionalArray"]);
 
             Assert.AreEqual(true, point.TryGetCustomProperty("additionalObject", out var obj));
             Assert.True(obj is IReadOnlyDictionary<string, object>);
-            var dictionary = (IReadOnlyDictionary<string, object>) obj;
+            var dictionary = (IReadOnlyDictionary<string, object>)obj;
             Assert.AreEqual(1, dictionary["additionalNumber"]);
             Assert.AreEqual(2.2, dictionary["additionalNumber2"]);
         }
@@ -254,10 +254,10 @@ namespace Azure.Core.Tests
             var input = $"{{ \"type\": \"GeometryCollection\", \"geometries\": [{{ \"type\": \"Point\", \"coordinates\": [{PS(0)}] }}, {{ \"type\": \"LineString\", \"coordinates\": [ [{PS(1)}], [{PS(2)}] ] }}] }}";
 
             var collection = AssertRoundtrip<GeoCollection>(input);
-            var point = (GeoPoint) collection.Geometries[0];
+            var point = (GeoPoint)collection.Geometries[0];
             Assert.AreEqual(P(0), point.Coordinates);
 
-            var lineString = (GeoLineString) collection.Geometries[1];
+            var lineString = (GeoLineString)collection.Geometries[1];
             Assert.AreEqual(P(1), lineString.Coordinates[0]);
             Assert.AreEqual(P(2), lineString.Coordinates[1]);
 
@@ -284,7 +284,7 @@ namespace Azure.Core.Tests
             return new GeoPosition(1.1 * number, 2.2 * number, 3.3 * number);
         }
 
-        private T AssertRoundtrip<T>(string json) where T: GeoObject
+        private T AssertRoundtrip<T>(string json) where T : GeoObject
         {
             var element = JsonDocument.Parse(json).RootElement;
             var geometry = GeoJsonConverter.Read(element);

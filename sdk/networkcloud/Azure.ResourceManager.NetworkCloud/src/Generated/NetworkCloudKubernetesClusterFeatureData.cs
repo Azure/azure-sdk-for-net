@@ -7,106 +7,113 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    /// <summary>
-    /// A class representing the NetworkCloudKubernetesClusterFeature data model.
-    /// KubernetesClusterFeature represents the feature of a Kubernetes cluster.
-    /// </summary>
+    /// <summary> KubernetesClusterFeature represents the feature of a Kubernetes cluster. </summary>
     public partial class NetworkCloudKubernetesClusterFeatureData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudKubernetesClusterFeatureData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public NetworkCloudKubernetesClusterFeatureData(AzureLocation location) : base(location)
         {
-            Options = new ChangeTrackingList<StringKeyValuePair>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudKubernetesClusterFeatureData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="etag"> Resource ETag. </param>
-        /// <param name="availabilityLifecycle"> The lifecycle indicator of the feature. </param>
-        /// <param name="detailedStatus"> The detailed status of the feature. </param>
-        /// <param name="detailedStatusMessage"> The descriptive message for the detailed status of the feature. </param>
-        /// <param name="options"> The configured options for the feature. </param>
-        /// <param name="provisioningState"> The provisioning state of the Kubernetes cluster feature. </param>
-        /// <param name="required"> The indicator of if the feature is required or optional. Optional features may be deleted by the user, while required features are managed with the kubernetes cluster lifecycle. </param>
-        /// <param name="version"> The version of the feature. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudKubernetesClusterFeatureData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, KubernetesClusterFeatureAvailabilityLifecycle? availabilityLifecycle, KubernetesClusterFeatureDetailedStatus? detailedStatus, string detailedStatusMessage, IList<StringKeyValuePair> options, KubernetesClusterFeatureProvisioningState? provisioningState, KubernetesClusterFeatureRequired? required, string version, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The list of the resource properties. </param>
+        /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
+        internal NetworkCloudKubernetesClusterFeatureData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, KubernetesClusterFeatureProperties properties, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
         {
-            ETag = etag;
-            AvailabilityLifecycle = availabilityLifecycle;
-            DetailedStatus = detailedStatus;
-            DetailedStatusMessage = detailedStatusMessage;
-            Options = options;
-            ProvisioningState = provisioningState;
-            Required = required;
-            Version = version;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            ETag = eTag;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkCloudKubernetesClusterFeatureData"/> for deserialization. </summary>
-        internal NetworkCloudKubernetesClusterFeatureData()
-        {
-        }
+        /// <summary> The list of the resource properties. </summary>
+        internal KubernetesClusterFeatureProperties Properties { get; set; }
 
-        /// <summary> Resource ETag. </summary>
+        /// <summary> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </summary>
         public ETag? ETag { get; }
-        /// <summary> The lifecycle indicator of the feature. </summary>
-        public KubernetesClusterFeatureAvailabilityLifecycle? AvailabilityLifecycle { get; }
-        /// <summary> The detailed status of the feature. </summary>
-        public KubernetesClusterFeatureDetailedStatus? DetailedStatus { get; }
-        /// <summary> The descriptive message for the detailed status of the feature. </summary>
-        public string DetailedStatusMessage { get; }
+
         /// <summary> The configured options for the feature. </summary>
-        public IList<StringKeyValuePair> Options { get; }
-        /// <summary> The provisioning state of the Kubernetes cluster feature. </summary>
-        public KubernetesClusterFeatureProvisioningState? ProvisioningState { get; }
+        public IList<StringKeyValuePair> Options
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new KubernetesClusterFeatureProperties();
+                }
+                return Properties.Options;
+            }
+        }
+
+        /// <summary> The lifecycle indicator of the feature. </summary>
+        public KubernetesClusterFeatureAvailabilityLifecycle? AvailabilityLifecycle
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AvailabilityLifecycle;
+            }
+        }
+
+        /// <summary> The detailed status of the feature. </summary>
+        public KubernetesClusterFeatureDetailedStatus? DetailedStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DetailedStatus;
+            }
+        }
+
+        /// <summary> The descriptive message for the detailed status of the feature. </summary>
+        public string DetailedStatusMessage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DetailedStatusMessage;
+            }
+        }
+
         /// <summary> The indicator of if the feature is required or optional. Optional features may be deleted by the user, while required features are managed with the kubernetes cluster lifecycle. </summary>
-        public KubernetesClusterFeatureRequired? Required { get; }
+        public KubernetesClusterFeatureRequired? Required
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Required;
+            }
+        }
+
         /// <summary> The version of the feature. </summary>
-        public string Version { get; }
+        public string Version
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Version;
+            }
+        }
+
+        /// <summary> The provisioning state of the Kubernetes cluster feature. </summary>
+        public KubernetesClusterFeatureProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Monitor.Query.Logs.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Monitor.Query.Logs
 {
@@ -78,10 +79,9 @@ namespace Azure.Monitor.Query.Logs
             }
 
             _endpoint = endpoint;
-            _tokenCredential = credential;
             _apiVersion = options.Version;
 
-            Pipeline = HttpPipelineBuilder.Build(options, [new BearerTokenAuthenticationPolicy(_tokenCredential, scopes)]);
+            Pipeline = HttpPipelineBuilder.Build(options, [new BearerTokenAuthenticationPolicy(credential, scopes)]);
             ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 

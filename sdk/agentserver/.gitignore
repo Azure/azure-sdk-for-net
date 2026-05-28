@@ -1,0 +1,21 @@
+# TypeSpec emitter output (intermediate; committed files are in Generated/)
+Azure.AI.AgentServer.Responses/src/TypeSpec/tsp-output/**
+# Un-ignore parent directories so Git traverses into them
+!Azure.AI.AgentServer.Responses/src/TypeSpec/tsp-output/src/
+!Azure.AI.AgentServer.Responses/src/TypeSpec/tsp-output/src/Custom/
+!Azure.AI.AgentServer.Responses/src/TypeSpec/tsp-output/src/Custom/**
+
+# Python bytecode
+__pycache__/
+*.pyc
+
+# npm lockfiles are committed to ensure reproducible installs
+
+# Copilot + Spec Kit — local-only files (never committed)
+# Bootstrap with: ./scripts/Bootstrap-Copilot.ps1
+.specify/
+.speckit/
+.github/
+specs/
+
+.specs/

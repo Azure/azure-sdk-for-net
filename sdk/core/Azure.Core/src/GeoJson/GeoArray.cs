@@ -10,7 +10,7 @@ namespace Azure.Core.GeoJson
     /// Represents a geometry coordinates array
     /// </summary>
     /// <typeparam name="T">The type of the value.</typeparam>
-    public readonly struct GeoArray<T>: IReadOnlyList<T>
+    public readonly struct GeoArray<T> : IReadOnlyList<T>
     {
         private readonly object _container;
 
@@ -30,10 +30,10 @@ namespace Azure.Core.GeoJson
                 return _container switch
                 {
                     T[] array => array[index],
-                    GeoPointCollection pointCollection => (T) (object) pointCollection.Points[index].Coordinates,
-                    GeoLineStringCollection lineCollection => (T) (object) lineCollection.Lines[index].Coordinates,
-                    GeoPolygon polygon => (T) (object) polygon.Rings[index].Coordinates,
-                    GeoPolygonCollection polygonCollection => (T) (object) polygonCollection.Polygons[index].Coordinates,
+                    GeoPointCollection pointCollection => (T)(object)pointCollection.Points[index].Coordinates,
+                    GeoLineStringCollection lineCollection => (T)(object)lineCollection.Lines[index].Coordinates,
+                    GeoPolygon polygon => (T)(object)polygon.Rings[index].Coordinates,
+                    GeoPolygonCollection polygonCollection => (T)(object)polygonCollection.Polygons[index].Coordinates,
                     _ => default!
                 };
             }
@@ -75,7 +75,7 @@ namespace Azure.Core.GeoJson
         /// Enumerates the elements of a <see cref="GeoArray{T}"/>
         /// </summary>
 #pragma warning disable CA1034
-        public struct Enumerator: IEnumerator<T>
+        public struct Enumerator : IEnumerator<T>
         {
             private readonly GeoArray<T> _array;
             private int _index;

@@ -205,7 +205,7 @@ namespace Azure.Communication.Identity
         /// <param name="scopes">List of <see cref="CommunicationTokenScope"/> scopes for the token.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual Response<CommunicationUserIdentifierAndToken> CreateUserAndToken(string customId, IEnumerable<CommunicationTokenScope> scopes, CancellationToken cancellationToken = default)
-            =>  CreateUserAndToken(customId, scopes, default, cancellationToken);
+            => CreateUserAndToken(customId, scopes, default, cancellationToken);
 
         /// <summary>Creates a new <see cref="CommunicationUserIdentifier"/>.</summary>
         /// <param name="scopes">List of <see cref="CommunicationTokenScope"/> scopes for the token.</param>

@@ -20,7 +20,7 @@ This sample shows the basics of enabling OpenTelemetry support in your applicati
 To connect to your Project's Application Insights instance, set the `APPLICATIONINSIGHTS_CONNECTION_STRING` environment variable to point to your resource. This can be retrieved from the project client as follows (async option also available):
 
 ```C# Snippet:AI_Projects_TelemetryExampleSync
-var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 
 Console.WriteLine("Get the Application Insights connection string.");

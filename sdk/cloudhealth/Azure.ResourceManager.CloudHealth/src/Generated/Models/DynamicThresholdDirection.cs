@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CloudHealth;
 
 namespace Azure.ResourceManager.CloudHealth.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.CloudHealth.Models
     public readonly partial struct DynamicThresholdDirection : IEquatable<DynamicThresholdDirection>
     {
         private readonly string _value;
+        /// <summary> Lower than. </summary>
+        private const string LowerThanValue = "LowerThan";
+        /// <summary> Greater than. </summary>
+        private const string GreaterThanValue = "GreaterThan";
+        /// <summary> Greater or Lower Than. </summary>
+        private const string GreaterOrLowerThanValue = "GreaterOrLowerThan";
 
         /// <summary> Initializes a new instance of <see cref="DynamicThresholdDirection"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DynamicThresholdDirection(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string LowerThanValue = "LowerThan";
-        private const string GreaterThanValue = "GreaterThan";
-        private const string GreaterOrLowerThanValue = "GreaterOrLowerThan";
+            _value = value;
+        }
 
         /// <summary> Lower than. </summary>
         public static DynamicThresholdDirection LowerThan { get; } = new DynamicThresholdDirection(LowerThanValue);
+
         /// <summary> Greater than. </summary>
         public static DynamicThresholdDirection GreaterThan { get; } = new DynamicThresholdDirection(GreaterThanValue);
+
         /// <summary> Greater or Lower Than. </summary>
         public static DynamicThresholdDirection GreaterOrLowerThan { get; } = new DynamicThresholdDirection(GreaterOrLowerThanValue);
+
         /// <summary> Determines if two <see cref="DynamicThresholdDirection"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DynamicThresholdDirection left, DynamicThresholdDirection right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DynamicThresholdDirection"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DynamicThresholdDirection left, DynamicThresholdDirection right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DynamicThresholdDirection"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DynamicThresholdDirection"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DynamicThresholdDirection(string value) => new DynamicThresholdDirection(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DynamicThresholdDirection"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DynamicThresholdDirection?(string value) => value == null ? null : new DynamicThresholdDirection(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DynamicThresholdDirection other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DynamicThresholdDirection other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -99,11 +99,11 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
                 for (var index = 0; index < 5; ++index)
                 {
-                    var eventData = new EventData($"Event #{ index }");
+                    var eventData = new EventData($"Event #{index}");
 
                     if (!eventBatch.TryAdd(eventData))
                     {
-                        throw new Exception($"The event at { index } could not be added.");
+                        throw new Exception($"The event at {index} could not be added.");
                     }
                 }
 
@@ -148,7 +148,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             producer.SendEventBatchFailedAsync += args =>
             {
-                Debug.WriteLine($"Publishing failed for { args.EventBatch.Count } events.  Error: '{ args.Exception.Message }'");
+                Debug.WriteLine($"Publishing failed for {args.EventBatch.Count} events.  Error: '{args.Exception.Message}'");
                 return Task.CompletedTask;
             };
 
@@ -156,15 +156,15 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             producer.SendEventBatchSucceededAsync += args =>
             {
-               Debug.WriteLine($"{ args.EventBatch.Count } events were published to partition: '{ args.PartitionId }.");
-               return Task.CompletedTask;
+                Debug.WriteLine($"{args.EventBatch.Count} events were published to partition: '{args.PartitionId}.");
+                return Task.CompletedTask;
             };
 
             try
             {
                 for (var index = 0; index < 5; ++index)
                 {
-                    var eventData = new EventData($"Event #{ index }");
+                    var eventData = new EventData($"Event #{index}");
                     await producer.EnqueueEventAsync(eventData);
                 }
             }
@@ -216,11 +216,11 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
                 for (var index = 0; index < 5; ++index)
                 {
-                    var eventData = new EventData($"Event #{ index }");
+                    var eventData = new EventData($"Event #{index}");
 
                     if (!eventBatch.TryAdd(eventData))
                     {
-                        throw new Exception($"The event at { index } could not be added.");
+                        throw new Exception($"The event at {index} could not be added.");
                     }
                 }
 
@@ -265,7 +265,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             producer.SendEventBatchFailedAsync += args =>
             {
-                Debug.WriteLine($"Publishing failed for { args.EventBatch.Count } events.  Error: '{ args.Exception.Message }'");
+                Debug.WriteLine($"Publishing failed for {args.EventBatch.Count} events.  Error: '{args.Exception.Message}'");
                 return Task.CompletedTask;
             };
 
@@ -273,8 +273,8 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             producer.SendEventBatchSucceededAsync += args =>
             {
-               Debug.WriteLine($"{ args.EventBatch.Count } events were published to partition: '{ args.PartitionId }.");
-               return Task.CompletedTask;
+                Debug.WriteLine($"{args.EventBatch.Count} events were published to partition: '{args.PartitionId}.");
+                return Task.CompletedTask;
             };
 
             try
@@ -286,7 +286,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
                 for (var index = 0; index < 5; ++index)
                 {
-                    var eventData = new EventData($"Event #{ index }");
+                    var eventData = new EventData($"Event #{index}");
                     await producer.EnqueueEventAsync(eventData, enqueueOptions);
                 }
             }
@@ -340,11 +340,11 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
                 for (var index = 0; index < 5; ++index)
                 {
-                    var eventData = new EventData($"Event #{ index }");
+                    var eventData = new EventData($"Event #{index}");
 
                     if (!eventBatch.TryAdd(eventData))
                     {
-                        throw new Exception($"The event at { index } could not be added.");
+                        throw new Exception($"The event at {index} could not be added.");
                     }
                 }
 
@@ -389,7 +389,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             producer.SendEventBatchFailedAsync += args =>
             {
-                Debug.WriteLine($"Publishing failed for { args.EventBatch.Count } events.  Error: '{ args.Exception.Message }'");
+                Debug.WriteLine($"Publishing failed for {args.EventBatch.Count} events.  Error: '{args.Exception.Message}'");
                 return Task.CompletedTask;
             };
 
@@ -397,8 +397,8 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             producer.SendEventBatchSucceededAsync += args =>
             {
-               Debug.WriteLine($"{ args.EventBatch.Count } events were published to partition: '{ args.PartitionId }.");
-               return Task.CompletedTask;
+                Debug.WriteLine($"{args.EventBatch.Count} events were published to partition: '{args.PartitionId}.");
+                return Task.CompletedTask;
             };
 
             try
@@ -412,7 +412,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
                 for (var index = 0; index < 5; ++index)
                 {
-                    var eventData = new EventData($"Event #{ index }");
+                    var eventData = new EventData($"Event #{index}");
                     await producer.EnqueueEventAsync(eventData, enqueueOptions);
                 }
             }
@@ -458,7 +458,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             producer.SendEventBatchFailedAsync += args =>
             {
-                Debug.WriteLine($"Publishing failed for { args.EventBatch.Count } events.  Error: '{ args.Exception.Message }'");
+                Debug.WriteLine($"Publishing failed for {args.EventBatch.Count} events.  Error: '{args.Exception.Message}'");
                 return Task.CompletedTask;
             };
 
@@ -466,16 +466,16 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             producer.SendEventBatchSucceededAsync += args =>
             {
-               Debug.WriteLine($"{ args.EventBatch.Count } events were published to partition: '{ args.PartitionId }.");
-               return Task.CompletedTask;
+                Debug.WriteLine($"{args.EventBatch.Count} events were published to partition: '{args.PartitionId}.");
+                return Task.CompletedTask;
             };
 
             try
             {
                 var eventData = new EventData("Hello, Event Hubs!")
                 {
-                   MessageId = "H1",
-                   ContentType = "application/json"
+                    MessageId = "H1",
+                    ContentType = "application/json"
                 };
 
                 eventData.Properties.Add("EventType", "com.microsoft.samples.hello-event");
@@ -486,8 +486,8 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
                 eventData = new EventData("Goodbye, Event Hubs!")
                 {
-                   MessageId = "G1",
-                   ContentType = "application/json"
+                    MessageId = "G1",
+                    ContentType = "application/json"
                 };
 
                 eventData.Properties.Add("EventType", "com.microsoft.samples.goodbye-event");
@@ -548,7 +548,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             producer.SendEventBatchFailedAsync += args =>
             {
-                Debug.WriteLine($"Publishing failed for { args.EventBatch.Count } events.  Error: '{ args.Exception.Message }'");
+                Debug.WriteLine($"Publishing failed for {args.EventBatch.Count} events.  Error: '{args.Exception.Message}'");
                 return Task.CompletedTask;
             };
 
@@ -556,15 +556,15 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             producer.SendEventBatchSucceededAsync += args =>
             {
-               Debug.WriteLine($"{ args.EventBatch.Count } events were published to partition: '{ args.PartitionId }.");
-               return Task.CompletedTask;
+                Debug.WriteLine($"{args.EventBatch.Count} events were published to partition: '{args.PartitionId}.");
+                return Task.CompletedTask;
             };
 
             try
             {
                 for (var index = 0; index < 5; ++index)
                 {
-                    var eventData = new EventData($"Event #{ index }");
+                    var eventData = new EventData($"Event #{index}");
                     await producer.EnqueueEventAsync(eventData);
                 }
             }
@@ -718,11 +718,11 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
                 for (var index = 0; index < 5; ++index)
                 {
-                    var eventData = new EventData($"Event #{ index }");
+                    var eventData = new EventData($"Event #{index}");
 
                     if (!eventBatch.TryAdd(eventData))
                     {
-                        throw new Exception($"The event at { index } could not be added.");
+                        throw new Exception($"The event at {index} could not be added.");
                     }
                 }
 
