@@ -100,7 +100,6 @@ Treat deleted custom code as **suspect by default**. Re-add only the smallest co
 | Problem | Decorator |
 |---------|-----------|
 | Wrong property type | `@@alternateType(Model.prop, targetType, "csharp")` |
-| Wrong resource model keyname type | `@@alternateType(Model.name, targetType, "csharp")` |
 | Wrong name | `@@clientName(target, "NewName", "csharp")` |
 | Model should be input and output | `@@usage(Model, Usage.input, "csharp")` (decorator appends; only specify the missing flag) |
 | Needs pageable return type | `@@markAsPageable(Interface.op, "csharp")` |
