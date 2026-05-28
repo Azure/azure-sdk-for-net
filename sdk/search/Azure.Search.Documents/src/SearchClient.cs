@@ -1387,7 +1387,7 @@ namespace Azure.Search.Documents
 
                             // Cache the client and raw response so we can abstract
                             // away server-side paging
-                            results.ConfigurePaging(this, message.Response);
+                            results.ConfigurePaging(this, message.Response, querySourceAuthorization, enableElevatedRead);
 
                             return Response.FromValue(results, message.Response);
                         }
