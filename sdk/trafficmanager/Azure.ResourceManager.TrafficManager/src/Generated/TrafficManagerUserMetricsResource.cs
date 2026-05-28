@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.TrafficManager
         {
             TryGetApiVersion(ResourceType, out string trafficManagerUserMetricsApiVersion);
             _trafficManagerUserMetricsKeysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.TrafficManager", ResourceType.Namespace, Diagnostics);
-            _trafficManagerUserMetricsKeysRestClient = new TrafficManagerUserMetricsKeys(_trafficManagerUserMetricsKeysClientDiagnostics, Pipeline, Endpoint, trafficManagerUserMetricsApiVersion ?? "2024-04-01-preview");
+            _trafficManagerUserMetricsKeysRestClient = new TrafficManagerUserMetricsKeys(_trafficManagerUserMetricsKeysClientDiagnostics, Pipeline, Endpoint, trafficManagerUserMetricsApiVersion ?? "2022-04-01");
             ValidateResourceId(id);
         }
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-04-01-preview. </description>
+        /// <description> 2022-04-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _trafficManagerUserMetricsKeysRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), context);
+                HttpMessage message = _trafficManagerUserMetricsKeysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TrafficManagerUserMetricData> response = Response.FromValue(TrafficManagerUserMetricData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-04-01-preview. </description>
+        /// <description> 2022-04-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _trafficManagerUserMetricsKeysRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), context);
+                HttpMessage message = _trafficManagerUserMetricsKeysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TrafficManagerUserMetricData> response = Response.FromValue(TrafficManagerUserMetricData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-04-01-preview. </description>
+        /// <description> 2022-04-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _trafficManagerUserMetricsKeysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), context);
+                HttpMessage message = _trafficManagerUserMetricsKeysRestClient.CreateGetRequest(Id.SubscriptionId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TrafficManagerUserMetricData> response = Response.FromValue(TrafficManagerUserMetricData.FromResponse(result), result);
                 if (response.Value == null)
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-04-01-preview. </description>
+        /// <description> 2022-04-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _trafficManagerUserMetricsKeysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), context);
+                HttpMessage message = _trafficManagerUserMetricsKeysRestClient.CreateGetRequest(Id.SubscriptionId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TrafficManagerUserMetricData> response = Response.FromValue(TrafficManagerUserMetricData.FromResponse(result), result);
                 if (response.Value == null)

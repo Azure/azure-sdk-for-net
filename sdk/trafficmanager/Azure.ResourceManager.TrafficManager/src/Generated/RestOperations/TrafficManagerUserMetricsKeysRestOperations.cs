@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.TrafficManager
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(Guid subscriptionId, RequestContext context)
+        internal HttpMessage CreateGetRequest(string subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Network/trafficManagerUserMetricsKeys/default", false);
             if (_apiVersion != null)
             {
@@ -60,12 +60,12 @@ namespace Azure.ResourceManager.TrafficManager
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Network/trafficManagerUserMetricsKeys/default", false);
             if (_apiVersion != null)
             {
@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.TrafficManager
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Network/trafficManagerUserMetricsKeys/default", false);
             if (_apiVersion != null)
             {
