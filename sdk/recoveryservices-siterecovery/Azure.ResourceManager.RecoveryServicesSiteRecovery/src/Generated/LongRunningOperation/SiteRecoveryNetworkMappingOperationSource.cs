@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
-    internal class SiteRecoveryNetworkMappingOperationSource : IOperationSource<SiteRecoveryNetworkMappingResource>
+    /// <summary></summary>
+    internal partial class SiteRecoveryNetworkMappingOperationSource : IOperationSource<SiteRecoveryNetworkMappingResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal SiteRecoveryNetworkMappingOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         SiteRecoveryNetworkMappingResource IOperationSource<SiteRecoveryNetworkMappingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SiteRecoveryNetworkMappingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            SiteRecoveryNetworkMappingData data = SiteRecoveryNetworkMappingData.DeserializeSiteRecoveryNetworkMappingData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new SiteRecoveryNetworkMappingResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<SiteRecoveryNetworkMappingResource> IOperationSource<SiteRecoveryNetworkMappingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SiteRecoveryNetworkMappingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
-            return await Task.FromResult(new SiteRecoveryNetworkMappingResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            SiteRecoveryNetworkMappingData data = SiteRecoveryNetworkMappingData.DeserializeSiteRecoveryNetworkMappingData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new SiteRecoveryNetworkMappingResource(_client, data);
         }
     }
 }
