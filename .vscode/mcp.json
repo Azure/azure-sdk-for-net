@@ -1,6 +1,5 @@
 {
-  "_comment": "Workspace MCP config for Copilot CLI. Mirror of .vscode/mcp.json (which is for VS Code and uses the 'servers' key instead of 'mcpServers'). Keep both files in sync — enforced by eng/scripts/Verify-McpConfigSync.ps1 in CI.",
-  "mcpServers": {
+  "servers": {
     "azure-sdk-mcp": {
       "type": "stdio",
       "command": "pwsh",
