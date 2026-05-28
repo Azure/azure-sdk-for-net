@@ -12,52 +12,56 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> Input image content part. </summary>
-    public partial class RequestImageContentPart : VoiceLiveContentPart, IJsonModel<RequestImageContentPart>
+    /// <summary>
+    /// Audio-based end-of-turn detection. Operates directly on the input audio
+    /// stream rather than text. Use `threshold_level` and `timeout_ms` to tune
+    /// detection.
+    /// </summary>
+    public partial class SmartEndOfTurnDetection : EouDetection, IJsonModel<SmartEndOfTurnDetection>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override VoiceLiveContentPart PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override EouDetection PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RequestImageContentPart>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SmartEndOfTurnDetection>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRequestImageContentPart(document.RootElement, options);
+                        return DeserializeSmartEndOfTurnDetection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RequestImageContentPart)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SmartEndOfTurnDetection)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RequestImageContentPart>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SmartEndOfTurnDetection>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RequestImageContentPart)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SmartEndOfTurnDetection)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RequestImageContentPart>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SmartEndOfTurnDetection>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RequestImageContentPart IPersistableModel<RequestImageContentPart>.Create(BinaryData data, ModelReaderWriterOptions options) => (RequestImageContentPart)PersistableModelCreateCore(data, options);
+        SmartEndOfTurnDetection IPersistableModel<SmartEndOfTurnDetection>.Create(BinaryData data, ModelReaderWriterOptions options) => (SmartEndOfTurnDetection)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RequestImageContentPart>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SmartEndOfTurnDetection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RequestImageContentPart>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SmartEndOfTurnDetection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -68,76 +72,76 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RequestImageContentPart>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SmartEndOfTurnDetection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RequestImageContentPart)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SmartEndOfTurnDetection)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Uri))
+            if (Optional.IsDefined(ThresholdLevel))
             {
-                writer.WritePropertyName("image_url"u8);
-                writer.WriteStringValue(Uri.AbsoluteUri);
+                writer.WritePropertyName("threshold_level"u8);
+                writer.WriteStringValue(ThresholdLevel.Value.ToString());
             }
-            if (Optional.IsDefined(Detail))
+            if (Optional.IsDefined(TimeoutMs))
             {
-                writer.WritePropertyName("detail"u8);
-                writer.WriteStringValue(Detail.Value.ToString());
+                writer.WritePropertyName("timeout_ms"u8);
+                writer.WriteNumberValue(TimeoutMs.Value);
             }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RequestImageContentPart IJsonModel<RequestImageContentPart>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (RequestImageContentPart)JsonModelCreateCore(ref reader, options);
+        SmartEndOfTurnDetection IJsonModel<SmartEndOfTurnDetection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SmartEndOfTurnDetection)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override VoiceLiveContentPart JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override EouDetection JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RequestImageContentPart>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SmartEndOfTurnDetection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RequestImageContentPart)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SmartEndOfTurnDetection)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRequestImageContentPart(document.RootElement, options);
+            return DeserializeSmartEndOfTurnDetection(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RequestImageContentPart DeserializeRequestImageContentPart(JsonElement element, ModelReaderWriterOptions options)
+        internal static SmartEndOfTurnDetection DeserializeSmartEndOfTurnDetection(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ContentPartType @type = default;
+            EouDetectionModel model = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            Uri uri = default;
-            RequestImageContentPartDetail? detail = default;
+            EouThresholdLevel? thresholdLevel = default;
+            int? timeoutMs = default;
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("type"u8))
+                if (prop.NameEquals("model"u8))
                 {
-                    @type = new ContentPartType(prop.Value.GetString());
+                    model = new EouDetectionModel(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("image_url"u8))
+                if (prop.NameEquals("threshold_level"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    uri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    thresholdLevel = new EouThresholdLevel(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("detail"u8))
+                if (prop.NameEquals("timeout_ms"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    detail = new RequestImageContentPartDetail(prop.Value.GetString());
+                    timeoutMs = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -145,7 +149,7 @@ namespace Azure.AI.VoiceLive
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RequestImageContentPart(@type, additionalBinaryDataProperties, uri, detail);
+            return new SmartEndOfTurnDetection(model, additionalBinaryDataProperties, thresholdLevel, timeoutMs);
         }
     }
 }

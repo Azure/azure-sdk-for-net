@@ -11,23 +11,23 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Azure avatar voice sync configuration. Uses personal voice synthesis with avatar character. </summary>
-    public partial class AzureAvatarVoiceSyncVoice : AzureVoice
+    public partial class AzureAvatarSyncVoice : AzureVoice
     {
-        /// <summary> Initializes a new instance of <see cref="AzureAvatarVoiceSyncVoice"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureAvatarSyncVoice"/>. </summary>
         /// <param name="model"> Underlying neural model to use. </param>
-        public AzureAvatarVoiceSyncVoice(PersonalVoiceModels model) : base(AzureVoiceType.AvatarVoiceSync)
+        public AzureAvatarSyncVoice(PersonalVoiceModels model) : base(AzureVoiceType.AvatarVoiceSync)
         {
             Model = model;
             PreferLocales = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureAvatarVoiceSyncVoice"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureAvatarSyncVoice"/>. </summary>
         /// <param name="type"> The type of the Azure voice. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="model"> Underlying neural model to use. </param>
         /// <param name="temperature"> Temperature must be between 0.0 and 1.0. </param>
-        /// <param name="customLexiconUrl"> URL of a custom lexicon file for pronunciation customization. </param>
-        /// <param name="customTextNormalizationUrl"> URL of a custom text normalization endpoint. </param>
+        /// <param name="customLexiconUri"> URL of a custom lexicon file for pronunciation customization. </param>
+        /// <param name="customTextNormalizationUri"> URL of a custom text normalization endpoint. </param>
         /// <param name="preferLocales">
         /// Preferred locales in BCP-47 format that change the accents of languages.
         /// If not set, TTS uses the default accent for each language (e.g., American English for English,
@@ -64,12 +64,12 @@ namespace Azure.AI.VoiceLive
         /// Typical values: a named level (`silent`, `x-soft`, `soft`, `medium`, `loud`, `x-loud`, `default`),
         /// an absolute number from 0.0 to 100.0, or a relative change (e.g., `+10`, `-6dB`).
         /// </param>
-        internal AzureAvatarVoiceSyncVoice(AzureVoiceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, PersonalVoiceModels model, float? temperature, string customLexiconUrl, string customTextNormalizationUrl, IList<string> preferLocales, string locale, string style, string pitch, string rate, string volume) : base(@type, additionalBinaryDataProperties)
+        internal AzureAvatarSyncVoice(AzureVoiceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, PersonalVoiceModels model, float? temperature, Uri customLexiconUri, Uri customTextNormalizationUri, IList<string> preferLocales, string locale, string style, string pitch, string rate, string volume) : base(@type, additionalBinaryDataProperties)
         {
             Model = model;
             Temperature = temperature;
-            CustomLexiconUrl = customLexiconUrl;
-            CustomTextNormalizationUrl = customTextNormalizationUrl;
+            CustomLexiconUri = customLexiconUri;
+            CustomTextNormalizationUri = customTextNormalizationUri;
             PreferLocales = preferLocales;
             Locale = locale;
             Style = style;
@@ -85,10 +85,10 @@ namespace Azure.AI.VoiceLive
         public float? Temperature { get; set; }
 
         /// <summary> URL of a custom lexicon file for pronunciation customization. </summary>
-        public string CustomLexiconUrl { get; set; }
+        public Uri CustomLexiconUri { get; set; }
 
         /// <summary> URL of a custom text normalization endpoint. </summary>
-        public string CustomTextNormalizationUrl { get; set; }
+        public Uri CustomTextNormalizationUri { get; set; }
 
         /// <summary>
         /// Preferred locales in BCP-47 format that change the accents of languages.

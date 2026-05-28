@@ -30,34 +30,34 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary> Initializes a new instance of <see cref="AvatarConfiguration"/>. </summary>
-        /// <param name="type"> Type of avatar to use. </param>
+        /// <param name="avatarKind"> Type of avatar to use. </param>
         /// <param name="iceServers"> Optional list of ICE servers to use for WebRTC connection establishment. </param>
         /// <param name="character"> The character name or ID used for the avatar. </param>
         /// <param name="style"> Optional avatar style, such as emotional tone or speaking style. </param>
-        /// <param name="model"> Base model to use for the avatar. Required for photo avatar. </param>
+        /// <param name="baseMode"> Base model to use for the avatar. Required for photo avatar. </param>
         /// <param name="customized"> Indicates whether the avatar is customized or not. </param>
         /// <param name="video"> Optional video configuration including resolution, bitrate, and codec. </param>
         /// <param name="scene"> Configuration for the avatar's zoom level, position, rotation and movement amplitude in the video frame. </param>
         /// <param name="outputProtocol"> Output protocol for avatar streaming. Default is 'webrtc'. </param>
-        /// <param name="outputAuditAudio"> When enabled, forwards audit audio via WebSocket for review/debugging purposes, even when avatar output is delivered via WebRTC. </param>
+        /// <param name="auditOutputAudio"> When enabled, forwards audit audio via WebSocket for review/debugging purposes, even when avatar output is delivered via WebRTC. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AvatarConfiguration(AvatarConfigTypes? @type, IList<IceServer> iceServers, string character, string style, PhotoAvatarBaseModes? model, bool customized, VideoParams video, SceneParams scene, AvatarOutputProtocol? outputProtocol, bool? outputAuditAudio, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AvatarConfiguration(AvatarConfigTypes? avatarKind, IList<IceServer> iceServers, string character, string style, PhotoAvatarBaseMode? baseMode, bool customized, VideoParams video, SceneParams scene, AvatarOutputProtocol? outputProtocol, bool? auditOutputAudio, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            AvatarKind = avatarKind;
             IceServers = iceServers;
             Character = character;
             Style = style;
-            Model = model;
+            BaseMode = baseMode;
             Customized = customized;
             Video = video;
             Scene = scene;
             OutputProtocol = outputProtocol;
-            OutputAuditAudio = outputAuditAudio;
+            AuditOutputAudio = auditOutputAudio;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Type of avatar to use. </summary>
-        public AvatarConfigTypes? Type { get; set; }
+        public AvatarConfigTypes? AvatarKind { get; set; }
 
         /// <summary> Optional list of ICE servers to use for WebRTC connection establishment. </summary>
         public IList<IceServer> IceServers { get; }
@@ -69,7 +69,7 @@ namespace Azure.AI.VoiceLive
         public string Style { get; set; }
 
         /// <summary> Base model to use for the avatar. Required for photo avatar. </summary>
-        public PhotoAvatarBaseModes? Model { get; set; }
+        public PhotoAvatarBaseMode? BaseMode { get; set; }
 
         /// <summary> Indicates whether the avatar is customized or not. </summary>
         public bool Customized { get; set; }
@@ -84,6 +84,6 @@ namespace Azure.AI.VoiceLive
         public AvatarOutputProtocol? OutputProtocol { get; set; }
 
         /// <summary> When enabled, forwards audit audio via WebSocket for review/debugging purposes, even when avatar output is delivered via WebRTC. </summary>
-        public bool? OutputAuditAudio { get; set; }
+        public bool? AuditOutputAudio { get; set; }
     }
 }

@@ -11,16 +11,16 @@ using System.ComponentModel;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Photo avatar base modes. </summary>
-    public readonly partial struct PhotoAvatarBaseModes : IEquatable<PhotoAvatarBaseModes>
+    public readonly partial struct PhotoAvatarBaseMode : IEquatable<PhotoAvatarBaseMode>
     {
         private readonly string _value;
         /// <summary> VASA-1 model. </summary>
         private const string Vasa1Value = "vasa-1";
 
-        /// <summary> Initializes a new instance of <see cref="PhotoAvatarBaseModes"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhotoAvatarBaseMode"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PhotoAvatarBaseModes(string value)
+        public PhotoAvatarBaseMode(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -28,32 +28,32 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary> VASA-1 model. </summary>
-        public static PhotoAvatarBaseModes Vasa1 { get; } = new PhotoAvatarBaseModes(Vasa1Value);
+        public static PhotoAvatarBaseMode Vasa1 { get; } = new PhotoAvatarBaseMode(Vasa1Value);
 
-        /// <summary> Determines if two <see cref="PhotoAvatarBaseModes"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="PhotoAvatarBaseMode"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(PhotoAvatarBaseModes left, PhotoAvatarBaseModes right) => left.Equals(right);
+        public static bool operator ==(PhotoAvatarBaseMode left, PhotoAvatarBaseMode right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="PhotoAvatarBaseModes"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="PhotoAvatarBaseMode"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(PhotoAvatarBaseModes left, PhotoAvatarBaseModes right) => !left.Equals(right);
+        public static bool operator !=(PhotoAvatarBaseMode left, PhotoAvatarBaseMode right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="PhotoAvatarBaseModes"/>. </summary>
+        /// <summary> Converts a string to a <see cref="PhotoAvatarBaseMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PhotoAvatarBaseModes(string value) => new PhotoAvatarBaseModes(value);
+        public static implicit operator PhotoAvatarBaseMode(string value) => new PhotoAvatarBaseMode(value);
 
-        /// <summary> Converts a string to a <see cref="PhotoAvatarBaseModes"/>. </summary>
+        /// <summary> Converts a string to a <see cref="PhotoAvatarBaseMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PhotoAvatarBaseModes?(string value) => value == null ? null : new PhotoAvatarBaseModes(value);
+        public static implicit operator PhotoAvatarBaseMode?(string value) => value == null ? null : new PhotoAvatarBaseMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is PhotoAvatarBaseModes other && Equals(other);
+        public override bool Equals(object obj) => obj is PhotoAvatarBaseMode other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(PhotoAvatarBaseModes other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(PhotoAvatarBaseMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

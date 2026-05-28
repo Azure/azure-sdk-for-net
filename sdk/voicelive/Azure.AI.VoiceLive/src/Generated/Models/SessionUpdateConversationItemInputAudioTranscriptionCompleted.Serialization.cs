@@ -95,11 +95,11 @@ namespace Azure.AI.VoiceLive
             writer.WriteNumberValue(ContentIndex);
             writer.WritePropertyName("transcript"u8);
             writer.WriteStringValue(Transcript);
-            if (Optional.IsCollectionDefined(Logprobs))
+            if (Optional.IsCollectionDefined(LogProbs))
             {
                 writer.WritePropertyName("logprobs"u8);
                 writer.WriteStartArray();
-                foreach (LogProbProperties item in Logprobs)
+                foreach (LogProbProperties item in LogProbs)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -148,7 +148,7 @@ namespace Azure.AI.VoiceLive
             string itemId = default;
             int contentIndex = default;
             string transcript = default;
-            IList<LogProbProperties> logprobs = default;
+            IList<LogProbProperties> logProbs = default;
             IList<TranscriptionPhrase> phrases = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -188,7 +188,7 @@ namespace Azure.AI.VoiceLive
                     {
                         array.Add(LogProbProperties.DeserializeLogProbProperties(item, options));
                     }
-                    logprobs = array;
+                    logProbs = array;
                     continue;
                 }
                 if (prop.NameEquals("phrases"u8))
@@ -217,7 +217,7 @@ namespace Azure.AI.VoiceLive
                 itemId,
                 contentIndex,
                 transcript,
-                logprobs ?? new ChangeTrackingList<LogProbProperties>(),
+                logProbs ?? new ChangeTrackingList<LogProbProperties>(),
                 phrases ?? new ChangeTrackingList<TranscriptionPhrase>());
         }
     }

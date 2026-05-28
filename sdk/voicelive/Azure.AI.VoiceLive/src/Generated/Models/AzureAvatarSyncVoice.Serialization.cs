@@ -13,10 +13,10 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Azure avatar voice sync configuration. Uses personal voice synthesis with avatar character. </summary>
-    public partial class AzureAvatarVoiceSyncVoice : AzureVoice, IJsonModel<AzureAvatarVoiceSyncVoice>
+    public partial class AzureAvatarSyncVoice : AzureVoice, IJsonModel<AzureAvatarSyncVoice>
     {
-        /// <summary> Initializes a new instance of <see cref="AzureAvatarVoiceSyncVoice"/> for deserialization. </summary>
-        internal AzureAvatarVoiceSyncVoice()
+        /// <summary> Initializes a new instance of <see cref="AzureAvatarSyncVoice"/> for deserialization. </summary>
+        internal AzureAvatarSyncVoice()
         {
         }
 
@@ -24,45 +24,45 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AzureVoice PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureAvatarVoiceSyncVoice>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureAvatarSyncVoice>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAzureAvatarVoiceSyncVoice(document.RootElement, options);
+                        return DeserializeAzureAvatarSyncVoice(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureAvatarVoiceSyncVoice)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureAvatarSyncVoice)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureAvatarVoiceSyncVoice>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureAvatarSyncVoice>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AzureAvatarVoiceSyncVoice)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureAvatarSyncVoice)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AzureAvatarVoiceSyncVoice>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AzureAvatarSyncVoice>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureAvatarVoiceSyncVoice IPersistableModel<AzureAvatarVoiceSyncVoice>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureAvatarVoiceSyncVoice)PersistableModelCreateCore(data, options);
+        AzureAvatarSyncVoice IPersistableModel<AzureAvatarSyncVoice>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureAvatarSyncVoice)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AzureAvatarVoiceSyncVoice>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AzureAvatarSyncVoice>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AzureAvatarVoiceSyncVoice>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AzureAvatarSyncVoice>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -73,10 +73,10 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureAvatarVoiceSyncVoice>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureAvatarSyncVoice>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureAvatarVoiceSyncVoice)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureAvatarSyncVoice)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("model"u8);
@@ -86,15 +86,15 @@ namespace Azure.AI.VoiceLive
                 writer.WritePropertyName("temperature"u8);
                 writer.WriteNumberValue(Temperature.Value);
             }
-            if (Optional.IsDefined(CustomLexiconUrl))
+            if (Optional.IsDefined(CustomLexiconUri))
             {
                 writer.WritePropertyName("custom_lexicon_url"u8);
-                writer.WriteStringValue(CustomLexiconUrl);
+                writer.WriteStringValue(CustomLexiconUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(CustomTextNormalizationUrl))
+            if (Optional.IsDefined(CustomTextNormalizationUri))
             {
                 writer.WritePropertyName("custom_text_normalization_url"u8);
-                writer.WriteStringValue(CustomTextNormalizationUrl);
+                writer.WriteStringValue(CustomTextNormalizationUri.AbsoluteUri);
             }
             if (Optional.IsCollectionDefined(PreferLocales))
             {
@@ -140,24 +140,24 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureAvatarVoiceSyncVoice IJsonModel<AzureAvatarVoiceSyncVoice>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AzureAvatarVoiceSyncVoice)JsonModelCreateCore(ref reader, options);
+        AzureAvatarSyncVoice IJsonModel<AzureAvatarSyncVoice>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AzureAvatarSyncVoice)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AzureVoice JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureAvatarVoiceSyncVoice>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureAvatarSyncVoice>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureAvatarVoiceSyncVoice)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureAvatarSyncVoice)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAzureAvatarVoiceSyncVoice(document.RootElement, options);
+            return DeserializeAzureAvatarSyncVoice(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AzureAvatarVoiceSyncVoice DeserializeAzureAvatarVoiceSyncVoice(JsonElement element, ModelReaderWriterOptions options)
+        internal static AzureAvatarSyncVoice DeserializeAzureAvatarSyncVoice(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -167,8 +167,8 @@ namespace Azure.AI.VoiceLive
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             PersonalVoiceModels model = default;
             float? temperature = default;
-            string customLexiconUrl = default;
-            string customTextNormalizationUrl = default;
+            Uri customLexiconUri = default;
+            Uri customTextNormalizationUri = default;
             IList<string> preferLocales = default;
             string locale = default;
             string style = default;
@@ -198,12 +198,20 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("custom_lexicon_url"u8))
                 {
-                    customLexiconUrl = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    customLexiconUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("custom_text_normalization_url"u8))
                 {
-                    customTextNormalizationUrl = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    customTextNormalizationUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("prefer_locales"u8))
@@ -257,13 +265,13 @@ namespace Azure.AI.VoiceLive
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AzureAvatarVoiceSyncVoice(
+            return new AzureAvatarSyncVoice(
                 @type,
                 additionalBinaryDataProperties,
                 model,
                 temperature,
-                customLexiconUrl,
-                customTextNormalizationUrl,
+                customLexiconUri,
+                customTextNormalizationUri,
                 preferLocales ?? new ChangeTrackingList<string>(),
                 locale,
                 style,

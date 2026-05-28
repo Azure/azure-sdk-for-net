@@ -32,7 +32,7 @@ namespace Azure.AI.VoiceLive
             ItemId = itemId;
             ContentIndex = contentIndex;
             Transcript = transcript;
-            Logprobs = new ChangeTrackingList<LogProbProperties>();
+            LogProbs = new ChangeTrackingList<LogProbProperties>();
             Phrases = new ChangeTrackingList<TranscriptionPhrase>();
         }
 
@@ -43,14 +43,14 @@ namespace Azure.AI.VoiceLive
         /// <param name="itemId"> The ID of the user message item containing the audio. </param>
         /// <param name="contentIndex"> The index of the content part containing the audio. </param>
         /// <param name="transcript"> The transcribed text. </param>
-        /// <param name="logprobs"> The log probabilities of the transcription tokens. </param>
+        /// <param name="logProbs"> The log probabilities of the transcription tokens. </param>
         /// <param name="phrases"> The transcription phrases with timing information. </param>
-        internal SessionUpdateConversationItemInputAudioTranscriptionCompleted(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemId, int contentIndex, string transcript, IList<LogProbProperties> logprobs, IList<TranscriptionPhrase> phrases) : base(@type, eventId, additionalBinaryDataProperties)
+        internal SessionUpdateConversationItemInputAudioTranscriptionCompleted(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemId, int contentIndex, string transcript, IList<LogProbProperties> logProbs, IList<TranscriptionPhrase> phrases) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ItemId = itemId;
             ContentIndex = contentIndex;
             Transcript = transcript;
-            Logprobs = logprobs;
+            LogProbs = logProbs;
             Phrases = phrases;
         }
 
@@ -64,7 +64,7 @@ namespace Azure.AI.VoiceLive
         public string Transcript { get; }
 
         /// <summary> The log probabilities of the transcription tokens. </summary>
-        public IList<LogProbProperties> Logprobs { get; }
+        public IList<LogProbProperties> LogProbs { get; }
 
         /// <summary> The transcription phrases with timing information. </summary>
         public IList<TranscriptionPhrase> Phrases { get; }

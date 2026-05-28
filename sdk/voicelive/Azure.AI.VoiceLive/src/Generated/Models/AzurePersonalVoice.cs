@@ -32,8 +32,8 @@ namespace Azure.AI.VoiceLive
         /// <param name="name"> Voice name cannot be empty. </param>
         /// <param name="temperature"> Temperature must be between 0.0 and 1.0. </param>
         /// <param name="model"> Underlying neural model to use for personal voice. </param>
-        /// <param name="customLexiconUrl"> URL of a custom lexicon file for pronunciation customization. </param>
-        /// <param name="customTextNormalizationUrl"> URL of a custom text normalization endpoint. </param>
+        /// <param name="customLexiconUri"> URL of a custom lexicon file for pronunciation customization. </param>
+        /// <param name="customTextNormalizationUri"> URL of a custom text normalization endpoint. </param>
         /// <param name="preferLocales">
         /// Preferred locales in BCP-47 format that change the accents of languages.
         /// If not set, TTS uses the default accent for each language (e.g., American English for English,
@@ -70,13 +70,13 @@ namespace Azure.AI.VoiceLive
         /// Typical values: a named level (`silent`, `x-soft`, `soft`, `medium`, `loud`, `x-loud`, `default`),
         /// an absolute number from 0.0 to 100.0, or a relative change (e.g., `+10`, `-6dB`).
         /// </param>
-        internal AzurePersonalVoice(AzureVoiceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, float? temperature, PersonalVoiceModels model, string customLexiconUrl, string customTextNormalizationUrl, IList<string> preferLocales, string locale, string style, string pitch, string rate, string volume) : base(@type, additionalBinaryDataProperties)
+        internal AzurePersonalVoice(AzureVoiceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, float? temperature, PersonalVoiceModels model, Uri customLexiconUri, Uri customTextNormalizationUri, IList<string> preferLocales, string locale, string style, string pitch, string rate, string volume) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Temperature = temperature;
             Model = model;
-            CustomLexiconUrl = customLexiconUrl;
-            CustomTextNormalizationUrl = customTextNormalizationUrl;
+            CustomLexiconUri = customLexiconUri;
+            CustomTextNormalizationUri = customTextNormalizationUri;
             PreferLocales = preferLocales;
             Locale = locale;
             Style = style;
@@ -95,10 +95,10 @@ namespace Azure.AI.VoiceLive
         public PersonalVoiceModels Model { get; set; }
 
         /// <summary> URL of a custom lexicon file for pronunciation customization. </summary>
-        public string CustomLexiconUrl { get; set; }
+        public Uri CustomLexiconUri { get; set; }
 
         /// <summary> URL of a custom text normalization endpoint. </summary>
-        public string CustomTextNormalizationUrl { get; set; }
+        public Uri CustomTextNormalizationUri { get; set; }
 
         /// <summary>
         /// Preferred locales in BCP-47 format that change the accents of languages.
