@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public virtual async Task<ArmOperation<StateUpdateCommonPostActionResult>> ResyncAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             ArmOperation<NetworkTapResyncResult> operation = await StartResyncAsync(waitUntil, cancellationToken).ConfigureAwait(false);
-            return new CompatArmOperation<NetworkTapResyncResult, StateUpdateCommonPostActionResult>(operation, r => CompatArmOperationConversions.ToStateUpdateResult(r.Error));
+            return new CompatArmOperation<NetworkTapResyncResult, StateUpdateCommonPostActionResult>(operation, r => ToStateUpdateResult(r.Error));
         }
 
         /// <summary> Backward-compatible shim for Resync. Use StartResync instead for richer result type. </summary>
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public virtual ArmOperation<StateUpdateCommonPostActionResult> Resync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             ArmOperation<NetworkTapResyncResult> operation = StartResync(waitUntil, cancellationToken);
-            return new CompatArmOperation<NetworkTapResyncResult, StateUpdateCommonPostActionResult>(operation, r => CompatArmOperationConversions.ToStateUpdateResult(r.Error));
+            return new CompatArmOperation<NetworkTapResyncResult, StateUpdateCommonPostActionResult>(operation, r => ToStateUpdateResult(r.Error));
         }
 
         /// <summary> Backward-compatible shim for UpdateAdministrativeState. Use SetAdministrativeState instead for richer result type. </summary>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public virtual async Task<ArmOperation<DeviceUpdateCommonPostActionResult>> UpdateAdministrativeStateAsync(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             ArmOperation<UpdateAdministrativeStateResult> operation = await SetAdministrativeStateAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
-            return new CompatArmOperation<UpdateAdministrativeStateResult, DeviceUpdateCommonPostActionResult>(operation, r => CompatArmOperationConversions.ToDeviceUpdateResult(r.Error));
+            return new CompatArmOperation<UpdateAdministrativeStateResult, DeviceUpdateCommonPostActionResult>(operation, r => ToDeviceUpdateResult(r.Error));
         }
 
         /// <summary> Backward-compatible shim for UpdateAdministrativeState. Use SetAdministrativeState instead for richer result type. </summary>
@@ -142,7 +142,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public virtual ArmOperation<DeviceUpdateCommonPostActionResult> UpdateAdministrativeState(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             ArmOperation<UpdateAdministrativeStateResult> operation = SetAdministrativeState(waitUntil, content, cancellationToken);
-            return new CompatArmOperation<UpdateAdministrativeStateResult, DeviceUpdateCommonPostActionResult>(operation, r => CompatArmOperationConversions.ToDeviceUpdateResult(r.Error));
+            return new CompatArmOperation<UpdateAdministrativeStateResult, DeviceUpdateCommonPostActionResult>(operation, r => ToDeviceUpdateResult(r.Error));
         }
+
+        private static StateUpdateCommonPostActionResult ToStateUpdateResult(ResponseError error)
+            => new StateUpdateCommonPostActionResult(error, additionalBinaryDataProperties: null, configurationState: null);
+
+        private static DeviceUpdateCommonPostActionResult ToDeviceUpdateResult(ResponseError error)
+            => new DeviceUpdateCommonPostActionResult(error, additionalBinaryDataProperties: null, configurationState: null, successfulDevices: Array.Empty<string>(), failedDevices: Array.Empty<string>());
     }
 }

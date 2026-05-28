@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public virtual async Task<ArmOperation<StateUpdateCommonPostActionResult>> ResyncAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             ArmOperation<NetworkTapRuleResyncResult> operation = await StartResyncAsync(waitUntil, cancellationToken).ConfigureAwait(false);
-            return new CompatArmOperation<NetworkTapRuleResyncResult, StateUpdateCommonPostActionResult>(operation, r => CompatArmOperationConversions.ToStateUpdateResult(r.Error));
+            return new CompatArmOperation<NetworkTapRuleResyncResult, StateUpdateCommonPostActionResult>(operation, r => ToStateUpdateResult(r.Error));
         }
 
         /// <summary> Backward-compatible shim for Resync. Use StartResync instead for richer result type. </summary>
@@ -124,7 +124,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public virtual ArmOperation<StateUpdateCommonPostActionResult> Resync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             ArmOperation<NetworkTapRuleResyncResult> operation = StartResync(waitUntil, cancellationToken);
-            return new CompatArmOperation<NetworkTapRuleResyncResult, StateUpdateCommonPostActionResult>(operation, r => CompatArmOperationConversions.ToStateUpdateResult(r.Error));
+            return new CompatArmOperation<NetworkTapRuleResyncResult, StateUpdateCommonPostActionResult>(operation, r => ToStateUpdateResult(r.Error));
         }
+
+        private static StateUpdateCommonPostActionResult ToStateUpdateResult(ResponseError error)
+            => new StateUpdateCommonPostActionResult(error, additionalBinaryDataProperties: null, configurationState: null);
     }
 }

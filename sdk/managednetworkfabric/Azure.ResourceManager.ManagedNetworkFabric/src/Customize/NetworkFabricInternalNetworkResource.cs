@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public virtual async Task<ArmOperation<StateUpdateCommonPostActionResult>> UpdateAdministrativeStateAsync(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             ArmOperation<UpdateAdministrativeStateResult> operation = await SetAdministrativeStateAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
-            return new CompatArmOperation<UpdateAdministrativeStateResult, StateUpdateCommonPostActionResult>(operation, r => CompatArmOperationConversions.ToStateUpdateResult(r.Error));
+            return new CompatArmOperation<UpdateAdministrativeStateResult, StateUpdateCommonPostActionResult>(operation, r => ToStateUpdateResult(r.Error));
         }
 
         /// <summary> Backward-compatible shim for UpdateAdministrativeState. Use SetAdministrativeState instead for richer result type. </summary>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public virtual ArmOperation<StateUpdateCommonPostActionResult> UpdateAdministrativeState(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             ArmOperation<UpdateAdministrativeStateResult> operation = SetAdministrativeState(waitUntil, content, cancellationToken);
-            return new CompatArmOperation<UpdateAdministrativeStateResult, StateUpdateCommonPostActionResult>(operation, r => CompatArmOperationConversions.ToStateUpdateResult(r.Error));
+            return new CompatArmOperation<UpdateAdministrativeStateResult, StateUpdateCommonPostActionResult>(operation, r => ToStateUpdateResult(r.Error));
         }
 
         /// <summary> Backward-compatible shim for UpdateBgpAdministrativeState. Use SetBgpAdministrativeState instead for richer result type. </summary>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public virtual async Task<ArmOperation<StateUpdateCommonPostActionResult>> UpdateBgpAdministrativeStateAsync(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             ArmOperation<InternalNetworkUpdateBgpAdministrativeStateResult> operation = await SetBgpAdministrativeStateAsync(waitUntil, ToBgpAdministrativeStateContent(content), cancellationToken).ConfigureAwait(false);
-            return new CompatArmOperation<InternalNetworkUpdateBgpAdministrativeStateResult, StateUpdateCommonPostActionResult>(operation, r => CompatArmOperationConversions.ToStateUpdateResult(r.Error));
+            return new CompatArmOperation<InternalNetworkUpdateBgpAdministrativeStateResult, StateUpdateCommonPostActionResult>(operation, r => ToStateUpdateResult(r.Error));
         }
 
         /// <summary> Backward-compatible shim for UpdateBgpAdministrativeState. Use SetBgpAdministrativeState instead for richer result type. </summary>
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public virtual ArmOperation<StateUpdateCommonPostActionResult> UpdateBgpAdministrativeState(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             ArmOperation<InternalNetworkUpdateBgpAdministrativeStateResult> operation = SetBgpAdministrativeState(waitUntil, ToBgpAdministrativeStateContent(content), cancellationToken);
-            return new CompatArmOperation<InternalNetworkUpdateBgpAdministrativeStateResult, StateUpdateCommonPostActionResult>(operation, r => CompatArmOperationConversions.ToStateUpdateResult(r.Error));
+            return new CompatArmOperation<InternalNetworkUpdateBgpAdministrativeStateResult, StateUpdateCommonPostActionResult>(operation, r => ToStateUpdateResult(r.Error));
         }
 
         private static InternalNetworkUpdateBgpAdministrativeStateContent ToBgpAdministrativeStateContent(UpdateAdministrativeStateContent content)
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public virtual async Task<ArmOperation<StateUpdateCommonPostActionResult>> UpdateStaticRouteBfdAdministrativeStateAsync(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             ArmOperation<UpdateAdministrativeStateResult> operation = await SetStaticRouteBfdAdministrativeStateAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
-            return new CompatArmOperation<UpdateAdministrativeStateResult, StateUpdateCommonPostActionResult>(operation, r => CompatArmOperationConversions.ToStateUpdateResult(r.Error));
+            return new CompatArmOperation<UpdateAdministrativeStateResult, StateUpdateCommonPostActionResult>(operation, r => ToStateUpdateResult(r.Error));
         }
 
         /// <summary> Backward-compatible shim for UpdateStaticRouteBfdAdministrativeState. Use SetStaticRouteBfdAdministrativeState instead for richer result type. </summary>
@@ -87,7 +87,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public virtual ArmOperation<StateUpdateCommonPostActionResult> UpdateStaticRouteBfdAdministrativeState(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             ArmOperation<UpdateAdministrativeStateResult> operation = SetStaticRouteBfdAdministrativeState(waitUntil, content, cancellationToken);
-            return new CompatArmOperation<UpdateAdministrativeStateResult, StateUpdateCommonPostActionResult>(operation, r => CompatArmOperationConversions.ToStateUpdateResult(r.Error));
+            return new CompatArmOperation<UpdateAdministrativeStateResult, StateUpdateCommonPostActionResult>(operation, r => ToStateUpdateResult(r.Error));
         }
+
+        private static StateUpdateCommonPostActionResult ToStateUpdateResult(ResponseError error)
+            => new StateUpdateCommonPostActionResult(error, additionalBinaryDataProperties: null, configurationState: null);
     }
 }
