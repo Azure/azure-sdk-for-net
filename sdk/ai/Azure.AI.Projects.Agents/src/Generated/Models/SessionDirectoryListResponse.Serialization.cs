@@ -10,7 +10,7 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> Response from listing a directory in a session sandbox. </summary>
+    /// <summary> The SessionDirectoryListResponse. </summary>
     public partial class SessionDirectoryListResponse : IJsonModel<SessionDirectoryListResponse>
     {
         /// <summary> Initializes a new instance of <see cref="SessionDirectoryListResponse"/> for deserialization. </summary>
@@ -84,6 +84,18 @@ namespace Azure.AI.Projects.Agents
             {
                 throw new FormatException($"The model {nameof(SessionDirectoryListResponse)} does not support writing '{format}' format.");
             }
+            if (Optional.IsDefined(FirstId))
+            {
+                writer.WritePropertyName("first_id"u8);
+                writer.WriteStringValue(FirstId);
+            }
+            if (Optional.IsDefined(LastId))
+            {
+                writer.WritePropertyName("last_id"u8);
+                writer.WriteStringValue(LastId);
+            }
+            writer.WritePropertyName("has_more"u8);
+            writer.WriteBooleanValue(HasMore);
             writer.WritePropertyName("path"u8);
             writer.WriteStringValue(Path);
             writer.WritePropertyName("entries"u8);
@@ -135,11 +147,29 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
+            string firstId = default;
+            string lastId = default;
+            bool hasMore = default;
             string path = default;
             IList<SessionDirectoryEntry> entries = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("first_id"u8))
+                {
+                    firstId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("last_id"u8))
+                {
+                    lastId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("has_more"u8))
+                {
+                    hasMore = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (prop.NameEquals("path"u8))
                 {
                     path = prop.Value.GetString();
@@ -160,7 +190,13 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SessionDirectoryListResponse(path, entries, additionalBinaryDataProperties);
+            return new SessionDirectoryListResponse(
+                firstId,
+                lastId,
+                hasMore,
+                path,
+                entries,
+                additionalBinaryDataProperties);
         }
     }
 }

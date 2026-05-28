@@ -8,31 +8,48 @@ using System.Linq;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> Response from listing a directory in a session sandbox. </summary>
+    /// <summary> The SessionDirectoryListResponse. </summary>
     public partial class SessionDirectoryListResponse
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SessionDirectoryListResponse"/>. </summary>
+        /// <param name="hasMore"> A value indicating whether there are additional values available not captured in this list. </param>
         /// <param name="path"> The path that was listed, relative to the session home directory. </param>
         /// <param name="entries"> The directory entries. </param>
-        internal SessionDirectoryListResponse(string path, IEnumerable<SessionDirectoryEntry> entries)
+        internal SessionDirectoryListResponse(bool hasMore, string path, IEnumerable<SessionDirectoryEntry> entries)
         {
+            HasMore = hasMore;
             Path = path;
             Entries = entries.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="SessionDirectoryListResponse"/>. </summary>
+        /// <param name="firstId"> The first ID represented in this list. </param>
+        /// <param name="lastId"> The last ID represented in this list. </param>
+        /// <param name="hasMore"> A value indicating whether there are additional values available not captured in this list. </param>
         /// <param name="path"> The path that was listed, relative to the session home directory. </param>
         /// <param name="entries"> The directory entries. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SessionDirectoryListResponse(string path, IList<SessionDirectoryEntry> entries, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SessionDirectoryListResponse(string firstId, string lastId, bool hasMore, string path, IList<SessionDirectoryEntry> entries, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            FirstId = firstId;
+            LastId = lastId;
+            HasMore = hasMore;
             Path = path;
             Entries = entries;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The first ID represented in this list. </summary>
+        public string FirstId { get; }
+
+        /// <summary> The last ID represented in this list. </summary>
+        public string LastId { get; }
+
+        /// <summary> A value indicating whether there are additional values available not captured in this list. </summary>
+        public bool HasMore { get; }
 
         /// <summary> The path that was listed, relative to the session home directory. </summary>
         public string Path { get; }

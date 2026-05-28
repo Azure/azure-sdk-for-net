@@ -1416,15 +1416,24 @@ namespace Azure.AI.Projects.Agents
             return new SessionFileWriteResponse(path, bytesWritten, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Response from listing a directory in a session sandbox. </summary>
+        /// <summary> The SessionDirectoryListResponse. </summary>
+        /// <param name="firstId"> The first ID represented in this list. </param>
+        /// <param name="lastId"> The last ID represented in this list. </param>
+        /// <param name="hasMore"> A value indicating whether there are additional values available not captured in this list. </param>
         /// <param name="path"> The path that was listed, relative to the session home directory. </param>
         /// <param name="entries"> The directory entries. </param>
         /// <returns> A new <see cref="Agents.SessionDirectoryListResponse"/> instance for mocking. </returns>
-        public static SessionDirectoryListResponse SessionDirectoryListResponse(string path = default, IEnumerable<SessionDirectoryEntry> entries = default)
+        public static SessionDirectoryListResponse SessionDirectoryListResponse(string firstId = default, string lastId = default, bool hasMore = default, string path = default, IEnumerable<SessionDirectoryEntry> entries = default)
         {
             entries ??= new ChangeTrackingList<SessionDirectoryEntry>();
 
-            return new SessionDirectoryListResponse(path, entries.ToList(), additionalBinaryDataProperties: null);
+            return new SessionDirectoryListResponse(
+                firstId,
+                lastId,
+                hasMore,
+                path,
+                entries.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> A single entry in a directory listing. </summary>

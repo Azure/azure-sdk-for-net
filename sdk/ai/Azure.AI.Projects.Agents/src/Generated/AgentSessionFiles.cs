@@ -201,6 +201,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary>
         /// [Protocol Method] List files and directories at a given path in the session sandbox.
         /// Returns only the immediate children of the specified directory (non-recursive).
+        /// If path is not provided, lists the session home directory.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -209,21 +210,50 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         /// <param name="agentName"> The name of the agent. </param>
         /// <param name="agentSessionId"> The session ID. </param>
-        /// <param name="path"> The directory path to list, relative to the session home directory. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="path"> The directory path to list, relative to the session home directory. Defaults to the home directory if not provided. </param>
         /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
+        /// <param name="limit">
+        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
+        /// default is 20.
+        /// </param>
+        /// <param name="order">
+        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
+        /// for descending order.
+        /// </param>
+        /// <param name="after">
+        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
+        /// </param>
+        /// <param name="before">
+        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
+        /// </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult GetSessionFiles(string agentName, string agentSessionId, string path, string foundryFeatures, string userIsolationKey, RequestOptions options)
+        internal virtual CollectionResult GetSessionFiles(string agentName, string agentSessionId, string foundryFeatures, string path, string userIsolationKey, int? limit, string order, string after, string before, RequestOptions options)
         {
-            using PipelineMessage message = CreateGetSessionFilesRequest(agentName, agentSessionId, path, foundryFeatures, userIsolationKey, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            return new AgentSessionFilesGetSessionFilesCollectionResult(
+                this,
+                agentName,
+                agentSessionId,
+                foundryFeatures,
+                path,
+                userIsolationKey,
+                limit,
+                order,
+                after,
+                before,
+                options);
         }
 
         /// <summary>
         /// [Protocol Method] List files and directories at a given path in the session sandbox.
         /// Returns only the immediate children of the specified directory (non-recursive).
+        /// If path is not provided, lists the session home directory.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -232,50 +262,136 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         /// <param name="agentName"> The name of the agent. </param>
         /// <param name="agentSessionId"> The session ID. </param>
-        /// <param name="path"> The directory path to list, relative to the session home directory. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="path"> The directory path to list, relative to the session home directory. Defaults to the home directory if not provided. </param>
         /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
+        /// <param name="limit">
+        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
+        /// default is 20.
+        /// </param>
+        /// <param name="order">
+        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
+        /// for descending order.
+        /// </param>
+        /// <param name="after">
+        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
+        /// </param>
+        /// <param name="before">
+        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
+        /// </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> GetSessionFilesAsync(string agentName, string agentSessionId, string path, string foundryFeatures, string userIsolationKey, RequestOptions options)
+        internal virtual AsyncCollectionResult GetSessionFilesAsync(string agentName, string agentSessionId, string foundryFeatures, string path, string userIsolationKey, int? limit, string order, string after, string before, RequestOptions options)
         {
-            using PipelineMessage message = CreateGetSessionFilesRequest(agentName, agentSessionId, path, foundryFeatures, userIsolationKey, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            return new AgentSessionFilesGetSessionFilesAsyncCollectionResult(
+                this,
+                agentName,
+                agentSessionId,
+                foundryFeatures,
+                path,
+                userIsolationKey,
+                limit,
+                order,
+                after,
+                before,
+                options);
         }
 
         /// <summary>
         /// List files and directories at a given path in the session sandbox.
         /// Returns only the immediate children of the specified directory (non-recursive).
+        /// If path is not provided, lists the session home directory.
         /// </summary>
         /// <param name="agentName"> The name of the agent. </param>
         /// <param name="agentSessionId"> The session ID. </param>
-        /// <param name="path"> The directory path to list, relative to the session home directory. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="path"> The directory path to list, relative to the session home directory. Defaults to the home directory if not provided. </param>
         /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
+        /// <param name="limit">
+        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
+        /// default is 20.
+        /// </param>
+        /// <param name="order">
+        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
+        /// for descending order.
+        /// </param>
+        /// <param name="after">
+        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
+        /// </param>
+        /// <param name="before">
+        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<SessionDirectoryListResponse> GetSessionFiles(string agentName, string agentSessionId, string path, AgentDefinitionOptInKeys? foundryFeatures = default, string userIsolationKey = default, CancellationToken cancellationToken = default)
+        internal virtual CollectionResult<SessionDirectoryEntry> GetSessionFiles(string agentName, string agentSessionId, AgentDefinitionOptInKeys? foundryFeatures = default, string path = default, string userIsolationKey = default, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
         {
-            ClientResult result = GetSessionFiles(agentName, agentSessionId, path, foundryFeatures?.ToSerialString(), userIsolationKey, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((SessionDirectoryListResponse)result, result.GetRawResponse());
+            return new AgentSessionFilesGetSessionFilesCollectionResultOfT(
+                this,
+                agentName,
+                agentSessionId,
+                foundryFeatures?.ToSerialString(),
+                path,
+                userIsolationKey,
+                limit,
+                order?.ToString(),
+                after,
+                before,
+                cancellationToken.ToRequestOptions());
         }
 
         /// <summary>
         /// List files and directories at a given path in the session sandbox.
         /// Returns only the immediate children of the specified directory (non-recursive).
+        /// If path is not provided, lists the session home directory.
         /// </summary>
         /// <param name="agentName"> The name of the agent. </param>
         /// <param name="agentSessionId"> The session ID. </param>
-        /// <param name="path"> The directory path to list, relative to the session home directory. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="path"> The directory path to list, relative to the session home directory. Defaults to the home directory if not provided. </param>
         /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
+        /// <param name="limit">
+        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
+        /// default is 20.
+        /// </param>
+        /// <param name="order">
+        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
+        /// for descending order.
+        /// </param>
+        /// <param name="after">
+        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
+        /// </param>
+        /// <param name="before">
+        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<SessionDirectoryListResponse>> GetSessionFilesAsync(string agentName, string agentSessionId, string path, AgentDefinitionOptInKeys? foundryFeatures = default, string userIsolationKey = default, CancellationToken cancellationToken = default)
+        internal virtual AsyncCollectionResult<SessionDirectoryEntry> GetSessionFilesAsync(string agentName, string agentSessionId, AgentDefinitionOptInKeys? foundryFeatures = default, string path = default, string userIsolationKey = default, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
         {
-            ClientResult result = await GetSessionFilesAsync(agentName, agentSessionId, path, foundryFeatures?.ToSerialString(), userIsolationKey, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((SessionDirectoryListResponse)result, result.GetRawResponse());
+            return new AgentSessionFilesGetSessionFilesAsyncCollectionResultOfT(
+                this,
+                agentName,
+                agentSessionId,
+                foundryFeatures?.ToSerialString(),
+                path,
+                userIsolationKey,
+                limit,
+                order?.ToString(),
+                after,
+                before,
+                cancellationToken.ToRequestOptions());
         }
 
         /// <summary>
