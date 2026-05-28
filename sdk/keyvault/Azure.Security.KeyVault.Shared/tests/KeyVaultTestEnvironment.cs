@@ -125,7 +125,7 @@ namespace Azure.Security.KeyVault.Tests
             if (Mode != RecordedTestMode.Playback && !IsEkmEnabled)
             {
                 throw new IgnoreException(
-                    "EKM live tests require AZURE_KEYVAULT_EKM_ENABLED=true and a provisioned EKM proxy.");
+                    "EKM live tests require EKM_PROXY_HOST and EKM_SERVER_CA_CERTIFICATE to be defined");
             }
         }
 
