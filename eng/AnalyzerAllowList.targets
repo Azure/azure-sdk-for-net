@@ -64,15 +64,26 @@
     <PropertyGroup>
       <_ProjectAllowedNoWarn>@(_AllowListNoWarn -> '%(Code)', ';')</_ProjectAllowedNoWarn>
     </PropertyGroup>
+  </Target>
 
-    <!--
-      Apply the approved codes to $(NoWarn) so projects don't have to duplicate them
-      in their csproj. The allow-list file is the single source of truth: an entry
-      both approves the suppression AND makes it take effect at compile time.
+  <!--
+    Apply the approved codes to $(NoWarn) so projects don't have to duplicate them
+    in their csproj. The allow-list file is the single source of truth: an entry
+    both approves the suppression AND makes it take effect at compile time.
 
-      ReadAnalyzerAllowList runs via DependsOnTargets from ValidateNoWarn, which is
-      BeforeTargets="CoreCompile", so $(NoWarn) is updated before the compiler reads it.
-    -->
+    This runs independently before CoreCompile (with no DesignTimeBuild guard) so
+    allow-listed suppressions are applied during both regular and design-time builds.
+    Design-time builds (IDE IntelliSense / error squiggles) invoke CoreCompile too;
+    if injection only ran via ValidateNoWarn (which is design-time-skipped for the
+    AZSDK0002 enforcement), the IDE would surface analyzer warnings that the
+    command-line build suppresses — pressuring developers to re-add csproj <NoWarn>
+    entries and defeating the single-source-of-truth design.
+  -->
+  <Target
+    Name="ApplyAnalyzerAllowListNoWarn"
+    BeforeTargets="CoreCompile"
+    DependsOnTargets="ReadAnalyzerAllowList"
+    Condition="'$(IsShippingClientLibrary)' == 'true'">
     <PropertyGroup Condition="'$(_ProjectAllowedNoWarn)' != ''">
       <NoWarn>$(NoWarn);$(_ProjectAllowedNoWarn)</NoWarn>
     </PropertyGroup>

@@ -234,8 +234,11 @@ namespace Azure.AI.Projects
         public virtual ProjectInsights Insights => GetProjectInsightsClient();
         /// <summary> Gets the client for managing project schedules. </summary>
         public virtual ProjectSchedules Schedules => GetProjectSchedulesClient();
+        /// <summary> Gets the client for managing model deployments and capabilities. </summary>
         public virtual AIProjectModels Models => GetAIProjectModelsClient();
+        /// <summary> Gets the client for managing evaluator generation jobs. </summary>
         public virtual EvaluatorGenerationJobs EvaluatorGenerationJobs => GetEvaluatorGenerationJobsClient();
+        /// <summary> Gets the client for managing data generation jobs. </summary>
         public virtual DataGenerationJobs DataGenerationJobs => GetDataGenerationJobsClient();
         /// <summary> Gets the client for telemetry operations. </summary>
         public virtual AIProjectTelemetry Telemetry { get => new AIProjectTelemetry(this); }

@@ -248,9 +248,9 @@ try {
   $allowFile = Join-Path $allowDir 'TestAutoInject.txt'
   Set-Content -Path $allowFile -Value "# justification`nnowarn:CA5555`n" -Encoding UTF8
 
-  # Add a probe target that runs after ReadAnalyzerAllowList and echoes $(NoWarn).
+  # Add a probe target that runs after ApplyAnalyzerAllowListNoWarn and echoes $(NoWarn).
   $probeXml = @'
-  <Target Name="ProbeNoWarn" DependsOnTargets="ReadAnalyzerAllowList">
+  <Target Name="ProbeNoWarn" DependsOnTargets="ApplyAnalyzerAllowListNoWarn">
     <Message Importance="High" Text="NoWarnProbe:$(NoWarn)" />
   </Target>
 '@
@@ -272,6 +272,18 @@ try {
   Assert-Scenario 'auto-injected allow-list code does not trigger AZSDK0002' {
     param($x) $x.Output -notmatch 'error AZSDK0002'
   } $rv
+
+  # And confirm injection ALSO happens during design-time builds (VS IntelliSense
+  # / error squiggles set DesignTimeBuild=true). ValidateNoWarn is skipped in that
+  # mode, but ApplyAnalyzerAllowListNoWarn must still run so the IDE sees the
+  # same effective $(NoWarn) as a command-line build — otherwise developers see
+  # warnings in VS that the CLI build suppresses, pressuring them to re-add
+  # csproj-level <NoWarn> entries and defeating the single-source-of-truth design.
+  $output = & dotnet msbuild $proj '/t:ProbeNoWarn' '/nologo' '/v:m' '/p:DesignTimeBuild=true' 2>&1
+  $rdt = @{ ExitCode = $LASTEXITCODE; Output = ($output -join "`n") }
+  Assert-Scenario 'allow-listed nowarn:CODE is auto-injected even when DesignTimeBuild=true' {
+    param($x) $x.Output -match 'NoWarnProbe:[^\r\n]*\bCA5555\b'
+  } $rdt
 } finally { if (-not $KeepTemp) { Remove-Item -Recurse -Force $dir } }
 
 # ----------------------------------------------------------------------------
