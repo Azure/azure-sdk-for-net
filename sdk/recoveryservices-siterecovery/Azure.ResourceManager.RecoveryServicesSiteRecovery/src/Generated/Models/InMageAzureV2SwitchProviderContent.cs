@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="targetFabricId"> The target fabric Id. </param>
         /// <param name="targetApplianceId"> The target appliance Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetVaultId"/>, <paramref name="targetFabricId"/> or <paramref name="targetApplianceId"/> is null. </exception>
-        public InMageAzureV2SwitchProviderContent(ResourceIdentifier targetVaultId, ResourceIdentifier targetFabricId, string targetApplianceId)
+        public InMageAzureV2SwitchProviderContent(ResourceIdentifier targetVaultId, ResourceIdentifier targetFabricId, string targetApplianceId) : base("InMageAzureV2")
         {
             Argument.AssertNotNull(targetVaultId, nameof(targetVaultId));
             Argument.AssertNotNull(targetFabricId, nameof(targetFabricId));
@@ -28,32 +29,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             TargetVaultId = targetVaultId;
             TargetFabricId = targetFabricId;
             TargetApplianceId = targetApplianceId;
-            InstanceType = "InMageAzureV2";
         }
 
         /// <summary> Initializes a new instance of <see cref="InMageAzureV2SwitchProviderContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="targetVaultId"> The target vault Id. </param>
         /// <param name="targetFabricId"> The target fabric Id. </param>
         /// <param name="targetApplianceId"> The target appliance Id. </param>
-        internal InMageAzureV2SwitchProviderContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier targetVaultId, ResourceIdentifier targetFabricId, string targetApplianceId) : base(instanceType, serializedAdditionalRawData)
+        internal InMageAzureV2SwitchProviderContent(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier targetVaultId, ResourceIdentifier targetFabricId, string targetApplianceId) : base(instanceType, additionalBinaryDataProperties)
         {
             TargetVaultId = targetVaultId;
             TargetFabricId = targetFabricId;
             TargetApplianceId = targetApplianceId;
-            InstanceType = instanceType ?? "InMageAzureV2";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="InMageAzureV2SwitchProviderContent"/> for deserialization. </summary>
-        internal InMageAzureV2SwitchProviderContent()
-        {
         }
 
         /// <summary> The target vault Id. </summary>
         public ResourceIdentifier TargetVaultId { get; }
+
         /// <summary> The target fabric Id. </summary>
         public ResourceIdentifier TargetFabricId { get; }
+
         /// <summary> The target appliance Id. </summary>
         public string TargetApplianceId { get; }
     }

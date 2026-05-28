@@ -74,15 +74,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="networkRackType"> Network Rack SKU name. </param>
         /// <param name="networkFabricId"> ARM resource ID of the Network Fabric. </param>
         /// <param name="networkDevices"> List of network device ARM resource IDs. </param>
+        /// <param name="lastOperation"> Details of the last operation performed on the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkRackData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, NetworkRackType? networkRackType, ResourceIdentifier networkFabricId, IReadOnlyList<ResourceIdentifier> networkDevices, NetworkFabricProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkRackData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, NetworkRackType? networkRackType, ResourceIdentifier networkFabricId, IReadOnlyList<ResourceIdentifier> networkDevices, LastOperationProperties lastOperation, NetworkFabricProvisioningState? provisioningState, NetworkFabricConfigurationState? configurationState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Annotation = annotation;
             NetworkRackType = networkRackType;
             NetworkFabricId = networkFabricId;
             NetworkDevices = networkDevices;
+            LastOperation = lastOperation;
             ProvisioningState = provisioningState;
+            ConfigurationState = configurationState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -99,7 +103,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public ResourceIdentifier NetworkFabricId { get; set; }
         /// <summary> List of network device ARM resource IDs. </summary>
         public IReadOnlyList<ResourceIdentifier> NetworkDevices { get; }
+        /// <summary> Details of the last operation performed on the resource. </summary>
+        internal LastOperationProperties LastOperation { get; }
+        /// <summary> Details status of the last operation performed on the resource. </summary>
+        public string LastOperationDetails
+        {
+            get => LastOperation?.Details;
+        }
+
         /// <summary> Provisioning state of the resource. </summary>
         public NetworkFabricProvisioningState? ProvisioningState { get; }
+        /// <summary> Configuration state of the resource. </summary>
+        public NetworkFabricConfigurationState? ConfigurationState { get; }
     }
 }

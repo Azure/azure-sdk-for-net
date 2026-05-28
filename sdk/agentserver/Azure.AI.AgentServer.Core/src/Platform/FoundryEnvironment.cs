@@ -60,6 +60,23 @@ public static class FoundryEnvironment
     public static TimeSpan SseKeepAliveInterval { get; private set; }
 
     /// <summary>
+    /// The WebSocket Ping/Pong keep-alive interval used by the
+    /// <c>invocations_ws</c> protocol. Sourced from the <c>WS_KEEPALIVE_INTERVAL</c>
+    /// environment variable (value in integer seconds). When absent, zero, or
+    /// unparseable, returns <see cref="Timeout.InfiniteTimeSpan"/> (disabled —
+    /// Kestrel default of 30s does <em>not</em> apply because Core sets the
+    /// option explicitly to honour the spec's "disabled by default" contract).
+    /// </summary>
+    /// <remarks>
+    /// Wired into ASP.NET Core's <c>WebSocketOptions.KeepAliveInterval</c> so a
+    /// positive value emits RFC 6455 protocol-level Ping frames (opcode
+    /// <c>0x9</c>) at the configured cadence. The Foundry hosting platform
+    /// auto-injects this env var; configure it locally to test long-lived WS
+    /// connections through upstream proxy / load-balancer idle timeouts.
+    /// </remarks>
+    public static TimeSpan WebSocketKeepAliveInterval { get; private set; }
+
+    /// <summary>
     /// Indicates whether the process is running in a Foundry hosted environment.
     /// Returns <c>true</c> when the <c>FOUNDRY_HOSTING_ENVIRONMENT</c> environment variable
     /// is set to a non-empty value.
@@ -80,7 +97,7 @@ public static class FoundryEnvironment
     /// <summary>
     /// The managed identity client ID of the agent blueprint.
     /// Sourced from the <c>FOUNDRY_AGENT_BLUEPRINT_CLIENT_ID</c> environment variable.
-    /// Stamped as <c>gen_ai.agent.blueprint.id</c> on telemetry spans.
+    /// Stamped as <c>microsoft.a365.agent.blueprint.id</c> on telemetry spans.
     /// </summary>
     public static string? AgentBlueprintClientId { get; private set; }
 
@@ -136,6 +153,15 @@ public static class FoundryEnvironment
             && int.TryParse(sseEnv, out var seconds)
             && seconds > 0
                 ? TimeSpan.FromSeconds(seconds)
+                : Timeout.InfiniteTimeSpan;
+
+        // WebSocket keep-alive: disabled (InfiniteTimeSpan) unless a positive integer seconds value is set.
+        // Read from `WS_KEEPALIVE_INTERVAL`; wired to Kestrel's `WebSocketOptions.KeepAliveInterval`.
+        var wsEnv = Environment.GetEnvironmentVariable("WS_KEEPALIVE_INTERVAL");
+        WebSocketKeepAliveInterval = !string.IsNullOrEmpty(wsEnv)
+            && int.TryParse(wsEnv, out var wsSeconds)
+            && wsSeconds > 0
+                ? TimeSpan.FromSeconds(wsSeconds)
                 : Timeout.InfiniteTimeSpan;
 
         // IsHosted: true when the FOUNDRY_HOSTING_ENVIRONMENT environment variable exists

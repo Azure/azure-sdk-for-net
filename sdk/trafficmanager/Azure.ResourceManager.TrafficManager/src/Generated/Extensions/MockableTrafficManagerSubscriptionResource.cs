@@ -41,54 +41,6 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         private Profiles ProfilesRestClient => _profilesRestClient ??= new Profiles(ProfilesClientDiagnostics, Pipeline, Endpoint, "2022-04-01");
 
         /// <summary>
-        /// Get the subscription-level key used for Real User Metrics collection.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/trafficManagerUserMetricsKeys/default. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> UserMetricsModels_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2022-04-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<TrafficManagerUserMetricsResource>> GetTrafficManagerUserMetricAsync(CancellationToken cancellationToken = default)
-        {
-            return await GetTrafficManagerUserMetrics().GetAsync(cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the subscription-level key used for Real User Metrics collection.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/trafficManagerUserMetricsKeys/default. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> UserMetricsModels_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2022-04-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<TrafficManagerUserMetricsResource> GetTrafficManagerUserMetric(CancellationToken cancellationToken = default)
-        {
-            return GetTrafficManagerUserMetrics().Get(cancellationToken);
-        }
-
-        /// <summary>
         /// Lists all Traffic Manager profiles within a subscription.
         /// <list type="bullet">
         /// <item>
