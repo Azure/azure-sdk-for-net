@@ -10,12 +10,9 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    // CosmosDBAccountKeyList extends CosmosDBAccountReadOnlyKeyList. Both classes
-    // generate an `internal static FromResponse(Response)` helper with the same
-    // signature, which triggers CS0108 (hides inherited member). The MPG generator
-    // does not emit `new` on the derived helper. Suppress the generated helper and
-    // re-emit it with the `new` modifier so the hide is explicit and the warning
-    // is silenced without globally suppressing CS0108.
+    // CosmosDBAccountKeyList extends CosmosDBAccountReadOnlyKeyList; both emit
+    // `internal static FromResponse(Response)`, causing CS0108 because MPG does not emit `new`
+    // on the derived helper. Suppress and re-emit with `new` to make the hide explicit.
     [CodeGenSuppress("FromResponse", typeof(Response))]
     public partial class CosmosDBAccountKeyList
     {

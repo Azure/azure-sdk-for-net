@@ -5,18 +5,12 @@ using Azure.Core;
 using Azure.ResourceManager.CosmosDB.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
-// MPG emits ThroughputSettingData (the Get/list response data type for throughput
-// settings) with `Properties: ThroughputSettingsProperties` as a nested envelope and
-// the flattened `Resource` accessor as GET-ONLY because ThroughputSettingsProperties
-// has a required `resource` ctor arg, so BuildSetterForSafeFlatten cannot synthesize
-// a lazy-create setter (@@flattenProperty has the same limitation). The legacy
-// AutoRest-generated SDK exposed `Resource` as top-level read/write via
-// x-ms-client-flatten. Suppress the read-only generated members and re-emit
-// Properties (internal) plus Resource as a setter-bearing proxy that re-creates the
-// inner ThroughputSettingsProperties leaf with the new value, preserving the
-// historical SDK shape without a spec change.
 namespace Azure.ResourceManager.CosmosDB
 {
+    // Back-compat: 1.4.0 GA exposed Resource as top-level { get; set; } via x-ms-client-flatten.
+    // MPG emits it as get-only because ThroughputSettingsProperties has a required `resource` ctor arg
+    // (BuildSetterForSafeFlatten cannot synthesize lazy-create setters). Suppress and re-emit
+    // Properties (internal) + Resource as a setter-bearing proxy that re-creates the inner holder.
     [CodeGenSuppress("Properties")]
     [CodeGenSuppress("Resource")]
     public partial class ThroughputSettingData

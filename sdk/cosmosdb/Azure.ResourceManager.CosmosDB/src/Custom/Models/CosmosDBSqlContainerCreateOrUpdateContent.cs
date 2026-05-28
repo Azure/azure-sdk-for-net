@@ -5,18 +5,13 @@ using System;
 using Azure.Core;
 using Microsoft.TypeSpec.Generator.Customizations;
 
-// Spec wraps SqlContainerCreateUpdateParameters in a TrackedResource-extending
-// custom model (client.tsp:2098-2113) so the SDK class inherits TrackedResourceData
-// for legacy back-compat. The wrapper keeps `properties: SqlContainerCreateUpdateProperties`
-// as a nested envelope; MPG emits Resource/Options as GET-ONLY flatten proxies because
-// the inner properties model has required ctor args and BuildSetterForSafeFlatten cannot
-// synthesize lazy-create setters (@@flattenProperty has the same limitation). Legacy
-// AutoRest exposed Resource/Options as top-level read/write via x-ms-client-flatten.
-// Suppress the read-only generated members and re-emit Properties (internal),
-// Resource and Options as setter-bearing proxies that mutate the inner leaf,
-// preserving the legacy SDK shape without a spec change. See client.tsp:2025-2041.
 namespace Azure.ResourceManager.CosmosDB.Models
 {
+    // Back-compat: 1.4.0 GA exposed Resource/Options as top-level get/set on the
+    // TrackedResource wrapper, but MPG emits them as GET-ONLY flatten proxies because
+    // the inner SqlContainerCreateUpdateProperties holder has required ctor args
+    // (BuildSetterForSafeFlatten cannot synthesize lazy-create setters). Re-emit
+    // Properties (internal) and Resource/Options as setter-bearing proxies.
     [CodeGenSuppress("Properties")]
     [CodeGenSuppress("Resource")]
     [CodeGenSuppress("Options")]

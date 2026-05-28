@@ -431,6 +431,15 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
             return new CosmosDBLocationResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="CassandraClusterResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CassandraClusterResource"/> object. </returns>
+        public virtual CassandraClusterResource GetCassandraClusterResource(ResourceIdentifier id)
+        {
+            CassandraClusterResource.ValidateResourceId(id);
+            return new CassandraClusterResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="CassandraDataCenterResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CassandraDataCenterResource"/> object. </returns>

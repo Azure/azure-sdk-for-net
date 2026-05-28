@@ -10,22 +10,14 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Microsoft.TypeSpec.Generator.Customizations;
 
-// The unbranded SCM generator currently mishandles `@@responseAsBool` on a `@head` op:
-//   * it adds a spurious `string accept` parameter to both the public method and the
-//     RestClient builder (HEAD has nothing to negotiate, original swagger has no Accept),
-//   * the generated method body deserializes via `ModelReaderWriter.Read<bool>(...)`
-//     (bool is not IPersistableModel; trips IL2026/IL3050 under net10.0 trim/AOT),
-//   * and emits `if (response.Value == null)` for a value-type T (CS0472).
-// This produces 10 build errors. Until the generator is fixed, suppress the broken
-// overloads and re-emit the historical AutoRest-compatible signature here, mapping
-// HTTP 200 -> true and 404 -> false directly off the response status code.
-//
-// Tracking issue: https://github.com/Azure/azure-sdk-for-net/issues/59089
-
 namespace Azure.ResourceManager.CosmosDB.Mocking
 {
-    [CodeGenSuppress("CheckNameExistsDatabaseAccount", typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("CheckNameExistsDatabaseAccountAsync", typeof(string), typeof(string), typeof(CancellationToken))]
+    // MPG transforms @head + @@responseAsBool into a raw Response-returning method;
+    // 1.4.0 GA shipped Response<bool>. Suppress the generated overload and re-emit the
+    // bool-unwrapping signature (HTTP 200 -> true, 404 -> false).
+    // TODO: remove once https://github.com/Azure/azure-sdk-for-net/issues/59089 is resolved.
+    [CodeGenSuppress("CheckNameExistsDatabaseAccount", typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("CheckNameExistsDatabaseAccountAsync", typeof(string), typeof(CancellationToken))]
     public partial class MockableCosmosDBTenantResource
     {
         /// <summary>

@@ -9,11 +9,10 @@ using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    // The MPG generator emits AddTag/RemoveTag/SetTags bodies that call
-    // this.UpdateAsync(WaitUntil, ThroughputSettingData, CancellationToken),
-    // but throughput resources only expose CreateOrUpdate (PUT) - there is no
-    // PATCH operation, so no Update method is generated. Provide thin shims
-    // that translate the call into CreateOrUpdate so the tag helpers compile.
+    // Generator tag-helper fallback calls this.UpdateAsync(WaitUntil, ThroughputSettingData, CT);
+    // throughput resources only expose CreateOrUpdate (PUT). Shim Update -> CreateOrUpdate so the
+    // generated tag helpers compile; the tag-resource happy path is unaffected.
+    // TODO: remove once https://github.com/Azure/azure-sdk-for-net/issues/58747 is resolved.
     public partial class CassandraKeyspaceThroughputSettingResource
     {
         private Task<ArmOperation<CassandraKeyspaceThroughputSettingResource>> UpdateAsync(WaitUntil waitUntil, ThroughputSettingData data, CancellationToken cancellationToken = default)

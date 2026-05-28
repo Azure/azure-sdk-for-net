@@ -9,15 +9,15 @@ using System.Threading;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB.Models;
 
-// Back-compat surface for RestorableCosmosDBAccountResource:
-//   * GetRestorableSqlDatabases / -Async         -> now emitted by the generator (renamed via @@clientName).
-//   * GetRestorableGremlinResources / -Async     -> now emitted by the generator (renamed via @@clientName).
-//   * GetRestorableTableResources / -Async       -> now emitted by the generator (renamed via @@clientName).
-// Only the [Obsolete] stubs for the legacy `DatabaseRestoreResourceInfo`-shaped methods
-// (GetRestorableSqlResources / GetRestorableMongoDBResources) remain, plus a 2-argument
-// overload of GetRestorableMongoDBCollections to preserve the previously shipped API.
 namespace Azure.ResourceManager.CosmosDB
 {
+    // Back-compat surface for RestorableCosmosDBAccountResource:
+    //   * GetRestorableSqlDatabases / -Async         -> now emitted by the generator (renamed via @@clientName).
+    //   * GetRestorableGremlinResources / -Async     -> now emitted by the generator (renamed via @@clientName).
+    //   * GetRestorableTableResources / -Async       -> now emitted by the generator (renamed via @@clientName).
+    // Only the [Obsolete] stubs for the legacy `DatabaseRestoreResourceInfo`-shaped methods
+    // (GetRestorableSqlResources / GetRestorableMongoDBResources) remain, plus a 2-argument
+    // overload of GetRestorableMongoDBCollections to preserve the previously shipped API.
     public partial class RestorableCosmosDBAccountResource
     {
         /// <summary>

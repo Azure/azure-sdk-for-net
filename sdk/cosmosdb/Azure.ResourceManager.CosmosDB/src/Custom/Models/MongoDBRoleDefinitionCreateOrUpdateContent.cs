@@ -5,12 +5,10 @@ using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    // MPG flattens MongoRoleDefinitionResource.type onto this wrapper, and the
-    // client.tsp @@clientName(MongoRoleDefinitionResource.type, "RoleDefinitionType", "csharp")
-    // renames the flattened property to RoleDefinitionType (consistent with MongoDBRoleDefinitionData).
-    // The baseline SDK historically named it DefinitionType *only* on this CreateOrUpdateContent
-    // type — TypeSpec cannot give the same source field two different csharp names per
-    // containing model, so we expose a back-compat alias here to satisfy ApiCompat.
+    // MPG flattens MongoRoleDefinitionResource.type onto this wrapper; client.tsp @@clientName
+    // renames it to RoleDefinitionType (matching MongoDBRoleDefinitionData). But 1.4.0 GA named it
+    // DefinitionType *only* on this wrapper — TypeSpec cannot give one source field two csharp
+    // names per containing model, so expose a back-compat alias here.
     public partial class MongoDBRoleDefinitionCreateOrUpdateContent
     {
         /// <summary> Indicates whether the Role Definition was built-in or user created. </summary>

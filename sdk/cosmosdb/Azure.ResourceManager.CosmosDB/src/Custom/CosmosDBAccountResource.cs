@@ -10,16 +10,12 @@ using System.Threading.Tasks;
 using Azure.ResourceManager.CosmosDB.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
-// The historical AutoRest-based SDK exposed `listConnectionStrings` as a
-// Pageable<CosmosDBAccountConnectionString> for back-compat (the wire response is
-// a single non-paged object with an inline ConnectionStrings array).
-//
-// MPG/TCGC currently emits this op as Response<DatabaseAccountListConnectionStringsResult>
-// and the `Legacy.markAsPageable` decorator declared in client.tsp:2310 has no effect
-// for this single-object shape. Suppress the generated overloads and re-implement the
-// historical Pageable surface here so customer code keeps compiling.
 namespace Azure.ResourceManager.CosmosDB
 {
+    // Back-compat: 1.4.0 GA exposed listConnectionStrings as Pageable<CosmosDBAccountConnectionString>
+    // (wire response is a single non-paged object with an inline array). MPG emits
+    // Response<DatabaseAccountListConnectionStringsResult> and @@Legacy.markAsPageable has no effect
+    // on this single-object shape, so suppress the generated overloads and re-emit the Pageable surface.
     [CodeGenSuppress("GetConnectionStrings", typeof(CancellationToken))]
     [CodeGenSuppress("GetConnectionStringsAsync", typeof(CancellationToken))]
     public partial class CosmosDBAccountResource
@@ -68,9 +64,8 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        // Direct rest-client calls because the generated GetConnectionStrings overloads are
-        // suppressed via [CodeGenSuppress] above. Mirrors the body the generator produced
-        // (Generated/CosmosDBAccountResource.cs ~lines 1654-1722).
+        // Mirrors the generator-emitted body (suppressed above): direct rest-client call via
+        // CreateGetConnectionStringsRequest + Response.FromValue.
         private Response<DatabaseAccountListConnectionStringsResult> GetConnectionStringsCore(CancellationToken cancellationToken)
         {
             using Azure.Core.Pipeline.DiagnosticScope scope = _databaseAccountsClientDiagnostics.CreateScope("CosmosDBAccountResource.GetConnectionStrings");

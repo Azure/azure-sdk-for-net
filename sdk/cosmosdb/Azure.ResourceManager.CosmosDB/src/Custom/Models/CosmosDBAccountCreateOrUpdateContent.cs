@@ -8,28 +8,14 @@ using System.Collections.Generic;
 using Azure.Core;
 using Microsoft.TypeSpec.Generator.Customizations;
 
-// The MPG generator emits all flattened properties on the wrapper as get-only
-// proxies onto the inner `DatabaseAccountCreateUpdateProperties` holder because
-// the holder has required ctor parameters (locations, databaseAccountOfferType)
-// and the generator cannot synthesize a lazy-create setter. The previously shipped
-// AutoRest contract exposed these properties as { get; set; }. Suppress each
-// get-only property and re-emit it with both accessors so the historical surface
-// is preserved without touching wire-serialization.
-//
-// Notes:
-//   * The element TYPES (Uri for KeyVaultKeyUri, IList<ResourceIdentifier> for
-//     NetworkAclBypassResourceIds, ManagedServiceIdentity for Identity) come from
-//     @@alternateType in client.tsp; the get+set re-emission below is still required
-//     because the inner holder is flattened-with-required-ctor-params and the
-//     generator can't synthesize lazy-create setters for spread members.
-//   * Identity is the only property NOT aliased here — it is inherited from the
-//     TrackedResource base via the wrapper model in client.tsp.
-//   * A back-compat 2-arg public ctor is restored to match the previously shipped
-//     `(AzureLocation location, IEnumerable<CosmosDBAccountLocation> locations)`
-//     signature; the generator only emits the 3-arg required-form ctor.
-
 namespace Azure.ResourceManager.CosmosDB.Models
 {
+    // 1.4.0 GA exposed these properties as { get; set; } at top level via x-ms-client-flatten;
+    // MPG emits get-only proxies because DatabaseAccountCreateUpdateProperties has required ctor
+    // args (BuildSetterForSafeFlatten cannot synthesize lazy-create setters). Suppress and re-emit
+    // with both accessors. Element types (Uri, IList<ResourceIdentifier>, etc.) come from
+    // @@alternateType in client.tsp. Identity is inherited from TrackedResource (not aliased here).
+    // Restored 2-arg ctor matches the previously shipped public surface.
     [CodeGenSuppress("AnalyticalStorageSchemaType")]
     [CodeGenSuppress("ApiServerVersion")]
     [CodeGenSuppress("BackupPolicy")]

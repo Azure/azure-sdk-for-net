@@ -15,11 +15,3 @@
 # eng/apicompatbaselines/Azure.ResourceManager.CognitiveServices.txt for
 # CognitiveServices.Models.ServiceAccountApiProperties.AdditionalProperties.
 CannotRemoveAttribute : Attribute 'Azure.ResourceManager.CosmosDB.WirePathAttribute' exists on 'Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceProperties.AdditionalProperties' in the contract but not the implementation.
-
-# CassandraClusters_Deallocate gained an optional 'x-ms-force-deallocate' header parameter
-# in API version 2025-11-01-preview. The MPG generator surfaces it as an optional
-# 'string xMsForceDeallocate = default' positional argument on Deallocate/DeallocateAsync.
-# Source-compat is preserved (call sites that omit the argument still work), but the old
-# 2-arg signature is gone from the assembly's metadata.
-MembersMustExist : Member 'public Azure.ResourceManager.ArmOperation Azure.ResourceManager.CosmosDB.CassandraClusterResource.Deallocate(Azure.WaitUntil, System.Threading.CancellationToken)' does not exist in the implementation but it does exist in the contract.
-MembersMustExist : Member 'public System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> Azure.ResourceManager.CosmosDB.CassandraClusterResource.DeallocateAsync(Azure.WaitUntil, System.Threading.CancellationToken)' does not exist in the implementation but it does exist in the contract.

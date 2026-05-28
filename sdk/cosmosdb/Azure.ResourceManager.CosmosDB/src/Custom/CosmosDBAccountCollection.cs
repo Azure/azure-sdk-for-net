@@ -12,23 +12,12 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.CosmosDB.Models;
 
-// MPG codegen drops Collection.CreateOrUpdate for DatabaseAccount because
-// `DatabaseAccountGetResults.tsp` declares the PUT op via the low-level
-// `Azure.ResourceManager.Foundations.ArmCreateOperation<...>` template (chosen so the
-// request body type `DatabaseAccountCreateUpdateParameters` can differ from the
-// resource model `DatabaseAccountGetResults`). TCGC's resource-method classifier does
-// not recognize this template and tags the op with `kind: "List"` instead of
-// `kind: "Create"` (see tspCodeModel.json for `Microsoft.DocumentDB.DatabaseAccounts.createOrUpdate`).
-// As a result `ResourceCollectionClientProvider.BuildCreateOrUpdateMethods` short-circuits
-// (_create == null) and CosmosDBAccountCollection.CreateOrUpdate / CreateOrUpdateAsync
-// are never emitted.
-//
-// Re-emit them here against the generated `DatabaseAccounts.CreateCreateOrUpdateRequest`
-// rest method, with LRO final-state-via Location to match the spec's
-// `ArmLroLocationHeader<FinalResult = DatabaseAccountGetResults>`.
-
 namespace Azure.ResourceManager.CosmosDB
 {
+    // TCGC classifies DatabaseAccounts_CreateOrUpdate as `kind: "List"` (not `Create`) because the
+    // PUT op uses Azure.ResourceManager.Foundations.ArmCreateOperation with a request body type
+    // different from the resource model. MPG then drops Collection.CreateOrUpdate / CreateOrUpdateAsync.
+    // Re-emit them against the generated CreateCreateOrUpdateRequest with final-state-via Location.
     public partial class CosmosDBAccountCollection
     {
         /// <summary>

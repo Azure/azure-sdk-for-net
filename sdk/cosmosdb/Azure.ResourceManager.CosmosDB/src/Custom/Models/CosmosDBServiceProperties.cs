@@ -12,12 +12,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class CosmosDBServiceProperties
     {
-        // Restore the historical parameterless public constructor that the AutoRest-generated
-        // SDK exposed. The MPG generator now only emits a discriminator-taking public ctor.
-        // Chain to it with `default(CosmosDBServiceType)` so the generated ctor body handles
-        // initializing the `_additionalBinaryDataProperties` backing field — that way this
-        // customization does NOT touch the generated field directly (which would be fragile if
-        // the generator ever renames or relocates it).
+        // 1.4.0 GA exposed a public parameterless ctor; MPG now emits only the discriminator-taking
+        // public ctor. Re-add the parameterless ctor and chain to the generated one (so the generated
+        // body initializes _additionalBinaryDataProperties without this customization touching the field).
         /// <summary> Initializes a new instance of <see cref="CosmosDBServiceProperties"/>. </summary>
         public CosmosDBServiceProperties() : this(default(CosmosDBServiceType))
         {

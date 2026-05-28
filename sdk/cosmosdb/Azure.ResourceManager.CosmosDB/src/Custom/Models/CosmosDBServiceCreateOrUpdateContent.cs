@@ -8,22 +8,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    // CosmosDBServiceCreateOrUpdateContent is generated as a wrapper around a
-    // ServiceResourceCreateUpdateProperties envelope (Properties property). The
-    // legacy SDK exposed InstanceSize, InstanceCount and ServiceType as top-level
-    // read/write properties via x-ms-client-flatten. The MPG generator does not
-    // flatten this envelope (the inner properties model is a discriminated base
-    // with required ctor args, so @@flattenProperty / BuildSetterForSafeFlatten
-    // cannot synthesize lazy-create setters). Re-emit the historical top-level
-    // accessors as proxies onto Properties to preserve back-compat without a spec
-    // change. The [WirePath] attributes mirror the wire-format paths the legacy
-    // AutoRest SDK exposed on the flattened surface.
-    //
-    // Setters guard against a null Properties holder rather than throwing the
-    // less actionable NullReferenceException. ServiceType is additionally guarded
-    // against a null assignment because it is the polymorphism discriminator on
-    // the inner ServiceResourceCreateUpdateProperties model; silently coercing
-    // null to the default enum value would corrupt the request body.
+    // Back-compat: 1.4.0 GA exposed InstanceSize/InstanceCount/ServiceType as top-level
+    // { get; set; } via x-ms-client-flatten. MPG cannot flatten because the inner
+    // ServiceResourceCreateUpdateProperties is a discriminated base with required ctor args
+    // (BuildSetterForSafeFlatten cannot synthesize lazy-create setters). Re-emit as proxies
+    // onto Properties; setters guard null Properties, and ServiceType (the discriminator)
+    // additionally rejects null to avoid corrupting the request body.
     public partial class CosmosDBServiceCreateOrUpdateContent
     {
         private const string PropertiesNotInitializedMessage =
