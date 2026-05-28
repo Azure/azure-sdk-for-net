@@ -175,6 +175,110 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new HybridComputeResourceUpdate(tags, additionalBinaryDataProperties: null);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="locationData"> Metadata pertaining to the geographic location of the resource. </param>
+        /// <param name="agentConfiguration"> Configurable properties that the user can set locally via the azcmagent config command, or remotely via ARM. </param>
+        /// <param name="serviceStatuses"> Statuses of dependent services that are reported back to ARM. </param>
+        /// <param name="hardwareProfile"> Information about the machine's hardware. </param>
+        /// <param name="firmwareProfile"> Information about the machine's firmware. </param>
+        /// <param name="agentUpgrade"> The info of the machine w.r.t Agent Upgrade. </param>
+        /// <param name="osProfile"> Specifies the operating system settings for the hybrid machine. </param>
+        /// <param name="licenseProfile"> Specifies the License related properties for a machine. </param>
+        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
+        /// <param name="status"> The status of the hybrid machine agent. </param>
+        /// <param name="lastStatusChange"> The time of the last status change. </param>
+        /// <param name="errorDetails"> Details about the error state. </param>
+        /// <param name="agentVersion"> The hybrid machine agent full version. </param>
+        /// <param name="vmId"> Specifies the hybrid machine unique ID. </param>
+        /// <param name="displayName"> Specifies the hybrid machine display name. </param>
+        /// <param name="machineFqdn"> Specifies the hybrid machine FQDN. </param>
+        /// <param name="clientPublicKey"> Public Key that the client provides to be used during initial resource onboarding. </param>
+        /// <param name="identityKeyStore"> Specifies the identity key store a machine is using. </param>
+        /// <param name="tpmEkCertificate"> Endorsement Key Certificate of the Trusted Platform Module (TPM) that the client provides to be used during initial resource onboarding. </param>
+        /// <param name="osName"> The Operating System running on the hybrid machine. </param>
+        /// <param name="osVersion"> The version of Operating System running on the hybrid machine. </param>
+        /// <param name="osType"> The type of Operating System (windows/linux). </param>
+        /// <param name="vmUuid"> Specifies the Arc Machine's unique SMBIOS ID. </param>
+        /// <param name="extensions"> Machine Extensions information (deprecated field). </param>
+        /// <param name="osSku"> Specifies the Operating System product SKU. </param>
+        /// <param name="osEdition"> The edition of the Operating System. </param>
+        /// <param name="domainName"> Specifies the Windows domain name. </param>
+        /// <param name="adFqdn"> Specifies the AD fully qualified display name. </param>
+        /// <param name="dnsFqdn"> Specifies the DNS fully qualified display name. </param>
+        /// <param name="privateLinkScopeResourceId"> The resource id of the private link scope this machine is assigned to, if any. </param>
+        /// <param name="parentClusterResourceId"> The resource id of the parent cluster (Azure HCI) this machine is assigned to, if any. </param>
+        /// <param name="hardwareResourceId"> Specifies the resource ID of the associated hardware device. Only settable by HCI RP. </param>
+        /// <param name="msSqlDiscovered"> Specifies whether any MS SQL instance is discovered on the machine. </param>
+        /// <param name="detectedProperties"> Detected properties from the machine. </param>
+        /// <param name="storageDisks"> The disks on the machine. </param>
+        /// <param name="cloudMetadataProvider"> Specifies the cloud provider (Azure/AWS/GCP...). </param>
+        /// <param name="networkInterfaces"> The list of network interfaces. </param>
+        /// <param name="resources"> The list of extensions affiliated to the machine. </param>
+        /// <param name="identity"> Identity for the resource. </param>
+        /// <param name="kind"> Indicates which kind of Arc machine placement on-premises, such as HCI, SCVMM or VMware etc. </param>
+        /// <returns> A new <see cref="HybridCompute.HybridComputeMachineData"/> instance for mocking. </returns>
+        public static HybridComputeMachineData HybridComputeMachineData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HybridComputeLocation locationData = default, AgentConfiguration agentConfiguration = default, HybridComputeServiceStatuses serviceStatuses = default, HybridComputeHardwareProfile hardwareProfile = default, HybridComputeFirmwareProfile firmwareProfile = default, AgentUpgrade agentUpgrade = default, HybridComputeOSProfile osProfile = default, LicenseProfileMachineInstanceView licenseProfile = default, string provisioningState = default, HybridComputeStatusType? status = default, DateTimeOffset? lastStatusChange = default, IEnumerable<ResponseError> errorDetails = default, string agentVersion = default, Guid? vmId = default, string displayName = default, string machineFqdn = default, string clientPublicKey = default, IdentityKeyStore? identityKeyStore = default, string tpmEkCertificate = default, string osName = default, string osVersion = default, string osType = default, Guid? vmUuid = default, IEnumerable<MachineExtensionInstanceView> extensions = default, string osSku = default, string osEdition = default, string domainName = default, string adFqdn = default, string dnsFqdn = default, ResourceIdentifier privateLinkScopeResourceId = default, ResourceIdentifier parentClusterResourceId = default, ResourceIdentifier hardwareResourceId = default, string msSqlDiscovered = default, IReadOnlyDictionary<string, string> detectedProperties = default, IEnumerable<HybridComputeDisk> storageDisks = default, string cloudMetadataProvider = default, IEnumerable<HybridComputeNetworkInterface> networkInterfaces = default, IEnumerable<HybridComputeMachineExtensionData> resources = default, ManagedServiceIdentity identity = default, ArcKindEnum? kind = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            resources ??= new ChangeTrackingList<HybridComputeMachineExtensionData>();
+
+            return new HybridComputeMachineData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                locationData is null && agentConfiguration is null && serviceStatuses is null && hardwareProfile is null && firmwareProfile is null && agentUpgrade is null && osProfile is null && licenseProfile is null && provisioningState is null && status is null && lastStatusChange is null && errorDetails is null && agentVersion is null && vmId is null && displayName is null && machineFqdn is null && clientPublicKey is null && identityKeyStore is null && tpmEkCertificate is null && osName is null && osVersion is null && osType is null && vmUuid is null && extensions is null && osSku is null && osEdition is null && domainName is null && adFqdn is null && dnsFqdn is null && privateLinkScopeResourceId is null && parentClusterResourceId is null && hardwareResourceId is null && msSqlDiscovered is null && detectedProperties is null && storageDisks is null && cloudMetadataProvider is null && networkInterfaces is null ? default : new MachineProperties(
+                    locationData,
+                    agentConfiguration,
+                    serviceStatuses,
+                    hardwareProfile,
+                    new StorageProfile((storageDisks ?? new ChangeTrackingList<HybridComputeDisk>()).ToList(), null),
+                    firmwareProfile,
+                    new HybridComputeCloudMetadata(cloudMetadataProvider, null),
+                    agentUpgrade,
+                    osProfile,
+                    licenseProfile,
+                    provisioningState,
+                    status,
+                    lastStatusChange,
+                    (errorDetails ?? new ChangeTrackingList<ResponseError>()).ToList(),
+                    agentVersion,
+                    vmId,
+                    displayName,
+                    machineFqdn,
+                    clientPublicKey,
+                    identityKeyStore,
+                    tpmEkCertificate,
+                    osName,
+                    osVersion,
+                    osType,
+                    vmUuid,
+                    (extensions ?? new ChangeTrackingList<MachineExtensionInstanceView>()).ToList(),
+                    osSku,
+                    osEdition,
+                    domainName,
+                    adFqdn,
+                    dnsFqdn,
+                    privateLinkScopeResourceId,
+                    parentClusterResourceId,
+                    hardwareResourceId,
+                    msSqlDiscovered,
+                    detectedProperties,
+                    new HybridComputeNetworkProfile((networkInterfaces ?? new ChangeTrackingList<HybridComputeNetworkInterface>()).ToList(), null),
+                    null),
+                resources.ToList(),
+                identity,
+                kind);
+        }
+
         /// <summary> Configurable properties that the user can set locally via the azcmagent config command, or remotely via ARM. </summary>
         /// <param name="proxyUri"> Specifies the URL of the proxy to be used. </param>
         /// <param name="incomingConnectionsPorts"> Specifies the list of ports that the agent will be able to listen on. </param>
@@ -985,6 +1089,27 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 tags,
                 location,
                 properties);
+        }
+
+        /// <summary> Properties that define a Azure Arc PrivateLinkScope resource. </summary>
+        /// <param name="publicNetworkAccess"> Indicates whether machines associated with the private link scope can also use public Azure Arc service endpoints. </param>
+        /// <param name="provisioningState"> Current state of this PrivateLinkScope: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Provisioning ,Succeeded, Canceled and Failed. </param>
+        /// <param name="privateLinkScopeId"> The Guid id of the private link scope. </param>
+        /// <param name="privateEndpointConnections"> The collection of associated Private Endpoint Connections. </param>
+        /// <param name="serviceExtensions"> Enable private link validation for an Azure Arc Extension. </param>
+        /// <returns> A new <see cref="Models.HybridComputePrivateLinkScopeProperties"/> instance for mocking. </returns>
+        public static HybridComputePrivateLinkScopeProperties HybridComputePrivateLinkScopeProperties(HybridComputePublicNetworkAccessType? publicNetworkAccess = default, string provisioningState = default, string privateLinkScopeId = default, IEnumerable<PrivateEndpointConnectionDataModel> privateEndpointConnections = default, IEnumerable<ServiceExtension> serviceExtensions = default)
+        {
+            privateEndpointConnections ??= new ChangeTrackingList<PrivateEndpointConnectionDataModel>();
+            serviceExtensions ??= new ChangeTrackingList<ServiceExtension>();
+
+            return new HybridComputePrivateLinkScopeProperties(
+                publicNetworkAccess,
+                provisioningState,
+                privateLinkScopeId,
+                privateEndpointConnections.ToList(),
+                serviceExtensions.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> The Data Model for a Private Endpoint Connection associated with a Private Link Scope. </summary>
