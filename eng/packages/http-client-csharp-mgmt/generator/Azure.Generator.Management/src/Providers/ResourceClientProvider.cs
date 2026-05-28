@@ -395,9 +395,13 @@ namespace Azure.Generator.Management.Providers
                 else
                 {
                     var asyncMethodName = ResourceHelpers.GetOperationMethodName(methodKind, true, false);
-                    operationMethods.Add(BuildResourceOperationMethod(method, restClientInfo, true, asyncMethodName, isFakeLro));
+                    operationMethods.Add(methodKind == ResourceOperationKind.CheckExistence
+                        ? new CheckExistenceOperationMethodProvider(this, _operationContext, restClientInfo, method, true, asyncMethodName)
+                        : BuildResourceOperationMethod(method, restClientInfo, true, asyncMethodName, isFakeLro));
                     var methodName = ResourceHelpers.GetOperationMethodName(methodKind, false, false);
-                    operationMethods.Add(BuildResourceOperationMethod(method, restClientInfo, false, methodName, isFakeLro));
+                    operationMethods.Add(methodKind == ResourceOperationKind.CheckExistence
+                        ? new CheckExistenceOperationMethodProvider(this, _operationContext, restClientInfo, method, false, methodName)
+                        : BuildResourceOperationMethod(method, restClientInfo, false, methodName, isFakeLro));
                 }
             }
 

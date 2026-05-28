@@ -199,6 +199,122 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
+        /// Checks if the Bar exists.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Bars_Head. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BarResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<bool>> HeadAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarResource.Head");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _barsRestClient.CreateHeadRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response response = message.Response;
+                if (response.Status >= 200 && response.Status < 300)
+                {
+                    return Response.FromValue(true, response);
+                }
+                else
+                {
+                    if (response.Status >= 400 && response.Status < 500)
+                    {
+                        return Response.FromValue(false, response);
+                    }
+                    else
+                    {
+                        throw new RequestFailedException(response);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks if the Bar exists.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Bars_Head. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BarResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<bool> Head(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarResource.Head");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _barsRestClient.CreateHeadRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response response = message.Response;
+                if (response.Status >= 200 && response.Status < 300)
+                {
+                    return Response.FromValue(true, response);
+                }
+                else
+                {
+                    if (response.Status >= 400 && response.Status < 500)
+                    {
+                        return Response.FromValue(false, response);
+                    }
+                    else
+                    {
+                        throw new RequestFailedException(response);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Update a Bar
         /// <list type="bullet">
         /// <item>

@@ -177,7 +177,7 @@ namespace Azure.Generator.Management.Tests.Providers
         }
 
         [TestCase]
-        public void Verify_CheckExistenceOperation_IsNotEmitted()
+        public void Verify_CheckExistenceOperationMethod()
         {
             var (client, models) = InputResourceData.ClientWithResource(includeCheckExistence: true);
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
@@ -190,15 +190,40 @@ namespace Azure.Generator.Management.Tests.Providers
                 .FirstOrDefault();
             Assert.That(collectionProvider, Is.Not.Null);
 
-            var generatedMethodNames = resourceProvider!.Methods
-                .Concat(collectionProvider!.Methods)
+            var resourceMethodNames = resourceProvider!.Methods
+                .Select(m => m.Signature.Name)
+                .ToList();
+            var collectionMethodNames = collectionProvider!.Methods
                 .Select(m => m.Signature.Name)
                 .ToList();
 
-            Assert.That(
-                generatedMethodNames.Any(n => n.Contains("CheckExistence", StringComparison.OrdinalIgnoreCase)),
-                Is.False,
-                $"CheckExistence is detected in metadata but should not be emitted yet. Methods: {string.Join(", ", generatedMethodNames)}");
+            Assert.That(resourceMethodNames, Does.Contain("CheckExistence"));
+            Assert.That(resourceMethodNames, Does.Contain("CheckExistenceAsync"));
+            Assert.That(collectionMethodNames, Does.Not.Contain("CheckExistence"));
+            Assert.That(collectionMethodNames, Does.Not.Contain("CheckExistenceAsync"));
+
+            var syncMethod = resourceProvider.Methods.Single(m => m.Signature.Name == "CheckExistence");
+            Assert.That(syncMethod.Signature.Modifiers, Is.EqualTo(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual));
+            Assert.That(syncMethod.Signature.Parameters.Count, Is.EqualTo(1));
+            Assert.That(syncMethod.Signature.Parameters[0].Type.FrameworkType, Is.EqualTo(typeof(CancellationToken)));
+            Assert.That(syncMethod.Signature.ReturnType?.FrameworkType, Is.EqualTo(typeof(Response<>)));
+            Assert.That(syncMethod.Signature.ReturnType?.Arguments[0].FrameworkType, Is.EqualTo(typeof(bool)));
+
+            var asyncMethod = resourceProvider.Methods.Single(m => m.Signature.Name == "CheckExistenceAsync");
+            Assert.That(asyncMethod.Signature.Modifiers, Is.EqualTo(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual | MethodSignatureModifiers.Async));
+            Assert.That(asyncMethod.Signature.Parameters.Count, Is.EqualTo(1));
+            Assert.That(asyncMethod.Signature.Parameters[0].Type.FrameworkType, Is.EqualTo(typeof(CancellationToken)));
+            Assert.That(asyncMethod.Signature.ReturnType?.FrameworkType, Is.EqualTo(typeof(Task<>)));
+            Assert.That(asyncMethod.Signature.ReturnType?.Arguments[0].FrameworkType, Is.EqualTo(typeof(Response<>)));
+            Assert.That(asyncMethod.Signature.ReturnType?.Arguments[0].Arguments[0].FrameworkType, Is.EqualTo(typeof(bool)));
+
+            var bodyStatements = syncMethod.BodyStatements?.ToDisplayString();
+            Assert.That(bodyStatements, Is.Not.Null);
+            Assert.That(bodyStatements, Does.Contain("CreateCheckExistenceRequest"));
+            Assert.That(bodyStatements, Does.Contain("this.Pipeline.Send(message, context.CancellationToken);"));
+            Assert.That(bodyStatements, Does.Contain("return global::Azure.Response.FromValue(true, response);"));
+            Assert.That(bodyStatements, Does.Contain("return global::Azure.Response.FromValue(false, response);"));
+            Assert.That(bodyStatements, Does.Contain("throw new global::Azure.RequestFailedException(response);"));
         }
 
         [TestCase]

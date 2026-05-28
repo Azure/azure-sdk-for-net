@@ -2,6 +2,7 @@ import "@azure-tools/typespec-client-generator-core";
 import "./foo.tsp";
 
 using TypeSpec.Rest;
+using TypeSpec.Http;
 using Azure.ResourceManager;
 
 namespace MgmtTypeSpec;
@@ -36,6 +37,10 @@ interface Bars {
   createOrUpdate is ArmResourceCreateOrUpdateAsync<Bar>;
 
   get is ArmResourceRead<Bar>;
+
+  @doc("Checks if the Bar exists.")
+  @head
+  head(...ResourceInstanceParameters<Bar, Azure.ResourceManager.Foundations.BaseParameters<Bar>>): OkResponse | ErrorResponse;
 
   delete is ArmResourceDeleteWithoutOkAsync<Bar>;
 
